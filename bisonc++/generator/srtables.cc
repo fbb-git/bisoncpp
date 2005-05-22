@@ -1,0 +1,15 @@
+#include "generator.ih"
+
+void Generator::srTables(ostream &out) const
+{
+    out << "\n"
+        "// State info and SR transitions for each state.\n"
+        "\n";
+
+    State::WSAContext context = {d_baseclassScope, out};
+
+    for_each(d_itemSets.states().begin(), d_itemSets.states().end(),
+                Wrap1<State const *, State::WSAContext>
+                          (&State::writeStateArray, context));
+    out << endl;
+}

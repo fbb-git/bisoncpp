@@ -1,0 +1,20 @@
+#include "generator.h"
+
+#include <algorithm>
+#include <sstream>
+#include <ostream>
+#include <iomanip>
+
+#include "../wrap1.h"
+#include "../arg/arg.h"
+#include "../rules/rules.h"
+#include "../parser/parser.h"
+#include "../terminal/terminal.h"
+#include "../nonterminal/nonterminal.h"
+#include "../production/production.h"
+#include "../state/state.h"
+#include "../itemsets/itemsets.h"
+
+using namespace std;
+using namespace FBB;
+

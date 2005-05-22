@@ -1,0 +1,36 @@
+%lsp-needed
+%scanner scanner/scanner.h
+
+%token NR
+
+%%
+
+lines:
+    lines line  // 1
+|
+                // 2
+;
+
+line:
+    content     // 3
+    '\n'
+    {
+        cout << "Line token newline at " << @2.first_line << endl;
+    }
+;
+
+content:
+    expr        // 4
+|
+    error       // 5
+|
+    // empty    // 6
+;
+
+expr:
+    NR              // 7
+    {
+        cout << "NR returns value " << $1 << endl;
+    }
+;
+

@@ -1,0 +1,13 @@
+#!/bin/sh
+
+case $1 in
+    (clean)
+        rm -rf Pa* p*
+    ;;
+    (demo)
+        bisonc++ -V conflict
+    ;;
+    (*)
+        echo "$0 [clean|demo] to clean or generate files"
+    ;;
+esac

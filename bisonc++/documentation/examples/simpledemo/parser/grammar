@@ -1,0 +1,63 @@
+%scanner ../scanner/scanner.h
+
+%token NUMBER
+
+%union
+{
+    int
+        i;
+    unsigned
+        u;
+    std::string
+        *s;
+};
+
+%type<i>
+    number
+
+%class-name Parser
+%filenames parser
+
+%%
+
+expressions:
+    expressions
+    expression
+    {
+        std::cout << "? " << std::flush;
+    }
+|
+    {
+        std::cout << "Provide lines containing   number + number =   or  q\n"
+                "? " << std::flush;
+    }
+
+;
+
+expression:
+    number
+    '+'
+    number
+    '='
+    {
+        std::cout << $1 << " + " << $3 << " = " << $1 + $3 << "\n";
+    }
+|
+    'q'
+    {
+        std::cout << "Done\n";
+        ACCEPT();
+    }
+;
+
+number:
+    NUMBER
+    {
+        $$ = atoi(d_scanner.YYText());
+    }
+;
+
+
+
+
+

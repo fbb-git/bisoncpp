@@ -1,0 +1,6 @@
+#include "symbol.h"
+
+#include "../msg/msg.h"
+
+using namespace std;
+

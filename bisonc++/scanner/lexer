@@ -1,0 +1,190 @@
+%{
+    #define _SKIP_YYFLEXLEXER_
+    #include "scanner.ih"
+
+    /* 
+        WARNING: 
+
+        DUE TO #define DIRECTIVES IN THE FLEX SKELETON/PROGRAM
+        DO NOT USE `REJECT' IN RULES/CODE. ALSO, THE PARSER CANNOT
+        DEFINE A `REJECT' CONSTANT, AS THIS `REJECT' IS ALSO EXPANDED
+        BY THE CPP PREPROCESSOR.
+    */
+
+%}
+
+%option yyclass="Scanner" outfile="yylex.cc"
+%option c++ 8bit warn noyywrap yylineno
+%option debug
+
+%x string comment quote
+
+OCTAL   [0-7]
+OCT3    OCTAL{3}
+HEX     [0-9a-fA-F]
+HEX2    HEX{2}
+ID1     [a-zA-Z_]
+ID2     [0-9a-zA-Z_]
+IDENT   {ID1}{ID2}*
+
+%%
+
+[ \t]+                      {
+                                if (d_retWS)
+                                {
+                                    d_retWS = false;
+                                    //strcpy(yytext, " ");
+                                    return WS;
+                                }
+                            }
+                            
+[\n]+                       {
+                                if (d_retWS)
+                                {
+                                    d_retWS = false;
+                                    yytext[1] = 0;  // change multiple empty
+                                                    // lines into a single \n
+                                    return WS;
+                                }
+                            }
+                            
+"'"                         {
+                                BEGIN quote;
+                                yymore();
+                            }
+                            
+"\""                        {
+                                BEGIN string;
+                                yymore();
+                            }
+                            
+<string>\n                  {
+                                multiLineString();
+                                yymore();
+                            }
+<string>"\""                {
+                                BEGIN INITIAL;
+                                return STRING;
+                            }
+
+<string>"\\".               |              
+<string>.                   yymore();
+                            
+                            
+"//".*                      {
+                                if (d_retWS)
+                                {
+                                    d_retWS = false;
+                                    yytext[0] = 0;
+                                    return WS;
+                                }
+                            }
+                            
+"/*"                        {
+                                d_commentChar = ' ';
+                                BEGIN comment;
+                            }
+                            
+<comment>.                  
+
+<comment>\n                 d_commentChar = '\n';
+                            
+<comment>"*/"               {
+                                BEGIN INITIAL;
+                                if (d_retWS)
+                                {
+                                    d_retWS = false;
+                                    yytext[0] = d_commentChar;
+                                    yytext[1] = 0;
+                                    return WS;
+                                }
+                            }
+                            
+<quote>"\\"{OCT3}"'"        {
+                                BEGIN INITIAL;  
+                                octal();        // quoted octal constant
+                                return QUOTE;
+                            }
+                            
+<quote>"\\x"{HEX2}"'"       {
+                                BEGIN INITIAL;
+                                hexadecimal(); // quoted hex constant
+                                return QUOTE;
+                            }
+                            
+<quote>"\\"[abfnrtv]"'"     {
+                                BEGIN INITIAL;
+                                escape();       // quoted escape char
+                                return QUOTE;
+                            }    
+<quote>"\\"."'"             {
+                                BEGIN INITIAL;  // other quoted escaped char
+                                d_number = yytext[2];
+                                return QUOTE;
+                            }
+<quote>."'"                 {
+                                BEGIN INITIAL;  // simple quoted constant
+                                d_number = yytext[1];
+                                return QUOTE;
+                            }
+                            
+"<"[ \t]*{IDENT}[ \t]*">"       return TYPENAME;
+
+
+"%baseclass-header"[ \t]*       {
+                                    d_retWS = true;
+                                    return BASECLASS_HEADER;
+                                }
+"%baseclass-preinclude"[ \t]*   {
+                                    d_retWS = true;
+                                    return BASECLASS_PREINCLUDE;
+                                }
+"%class-header"[ \t]*           {
+                                    d_retWS = true;
+                                    return CLASS_HEADER;
+                                }
+"%debug"                        return DEBUGFLAG;
+"%error-verbose"                return ERROR_VERBOSE;
+"%expect"                       return EXPECT;
+"%filenames"[ \t]*              {
+                                    d_retWS = true;
+                                    return FILENAMES;
+                                }
+"%implementation-header"[ \t]*  {
+                                    d_retWS = true;
+                                    return IMPLEMENTATION_HEADER;
+                                }
+"%left"                         return LEFT;
+"%lines"                        return LINES;
+"%locationstruct"               return LOCATIONSTRUCT;
+"%lsp-needed"                   return LSP_NEEDED;
+"%ltype"                        return LTYPE;
+"%namespace"                    return NAMESPACE;
+"%nonassoc"                     return NONASSOC;
+"%parsefun-source"[ \t]*        {
+                                    d_retWS = true;
+                                    return PARSEFUN_SOURCE;
+                                }
+"%class-name"                   return CLASS_NAME;
+"%prec"                         return PREC;
+"%right"                        return RIGHT;
+"%scanner"[ \t]*                {
+                                    d_retWS = true;
+                                    return SCANNER_INCLUDE;
+                                }
+"%start"                        return START;
+"%stype"                        return STYPE;
+"%token"                        return TOKEN;
+"%type"                         return TYPE;
+"%union"                        return UNION;
+"%%"                            return TWO_PERCENTS;
+
+{IDENT}                         return IDENTIFIER;
+
+{IDENT}[ \t\n]*":"              return RULE;
+
+[0-9]+                          return setNumber();
+
+.                               return yytext[0];
+
+%%

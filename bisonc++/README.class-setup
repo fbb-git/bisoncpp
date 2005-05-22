@@ -1,0 +1,54 @@
+		                          Errno
+		                            |
+        +---------------------------+
+	    |                           |
+		|                          Msg
+		|                           | 
+		|        +------------------+ 
+		|        |                  |
+		|        |               Element
+		|        |                  |
+		|        |              FirstSet
+		|        |                  |
+		|        |                  +-----------------------+
+		|        |                  |                       |
+		|        |               Symbol                     |
+		|        |                  |                       |
+		|        |              Terminal                    |
+		|        |                  |                       |
+		|        |  Block   +-------+-------+               |
+		|        |    |     |               |               |
+		|        +----+-----+               |               |
+		|        |          |               |               |
+		|        |      Production      FollowSet           |
+		|        |          |               |               |
+		|        |          +-------+-------+               |
+		|        |                  |                       |
+		|        |              NonTerminal                 |
+		|        |                  |                       |
+		|        |          +-------+-------+               |
+		|        |          |               |               |
+		|        |       Symtab           Rules        LookaheadSet
+		|        |          |               |               |
+       Arg     Scanner      |               +-------+       |
+		|        |          |               |       |       |
+		|        |          |               |       +-------+
+		|        |          |               |       | 
+		+--------+----------+-------+-------+       |
+		                            |               |
+		                          Parser            |
+		                            |             Item
+		                            |               |
+		                            |             State
+		                            |               |
+		                            |            ItemSets
+		                            |               |
+		                            +-------+-------+
+		                                    |
+		                                Generator    
+		                                    |
+		                                 bisonc++
+
+Upred1: State::beforedot: Unarypredicate calling member of the iterator
+        object, passing it an argument
+

@@ -1,0 +1,7 @@
+#include "lookaheadset.h"
+
+#include "../wrap1.h"
+
+using namespace std;
+using namespace FBB;
+

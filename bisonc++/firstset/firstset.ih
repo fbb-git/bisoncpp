@@ -1,0 +1,12 @@
+#include "firstset.h"
+
+#include <algorithm>
+#include <iterator>
+#include <ostream>
+#include <iostream>
+
+#include "../wrap1.h"
+
+using namespace std;
+using namespace FBB;
+

@@ -1,0 +1,59 @@
+Examples, how to use them and what they do:
+
+bison++Example.NEW: The original example provided by Alain Coetmeur.
+
+        compile by running `make'
+        The program can be run by having it read test1.txt or test2.txt from
+        its stdin.
+        It has no other purpose (as far as I can see).
+
+bison++Example.ORG/ The original (unmodified) example provided by Alain
+        Coetmeur. 
+
+        Included as a collector's item only. Doesn't work as-is.
+
+annotations: The parser evaluating int and double and mixed type expressions,
+        as described in the `Concrete Examples' chapter of the C++
+        Annotations. It converts expressions to RPN.
+
+        Run `build clean' to cleanup, `build demo' to create the program.
+
+calcgen:  A simple calculator. Enter expressions using +, -, *, /, () on a
+        line, and then press Enter. Errors are recovered by skipping to the
+        next newline. Empty lines are ok. Terminate by entering  q
+
+        Run `build clean' to cleanup, `build demo' to create the program.
+
+calculator: the example described in the man-page
+
+        Run `build clean' to cleanup, `build demo' to create the program.
+
+conflict: Not a running program, but a grammar showing various conflicts and
+        the way bisonc++ resolves them. 
+
+        Run `build clean' to cleanup, `build demo' to generate the files
+        
+input:   a simple parser reading numbers or names following a prompt. Enter
+        ^D (or a syntactical error) to stop the program.
+
+        Run `build clean' to cleanup, `build demo' to create the program.
+
+location: demonstrates the use of passing d_loc and d_val to the scanner to
+        allow the scanner to assign semantic values to tokens.
+
+        Enter lines (to see the first_line field of the LTYPE struct being
+        used, enter a number to see the effect of assignments to d_val.
+
+        Run `build clean' to cleanup, `build demo' to create the program.
+
+simpledemo: Very simple demo program. 
+
+        Run `build clean' to cleanup, `build demo' to create the program.
+
+        It expects lines like 4 + 5 =
+        To stop, enter 'q'
+
+
+
+
+

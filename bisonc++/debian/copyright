@@ -1,0 +1,17 @@
+This package was debianized by Frank B. Brokken <f.b.brokken@rc.rug.nl> on
+Thu, 27 Jan 2005 22:34:50 +0100.
+
+It was downloaded from
+    ftp://ftp.rug.nl/contrib/frank/software/linux/bisonc++X.YY.ZZ.tar.gz 
+
+Copyright:  
+    Bisonc++ parser generator
+    Copyright (c) 2005 by
+      Frank B. Brokken
+
+Upstream Author(s): Frank B. Brokken <f.b.brokken@rc.rug.nl>
+
+License:
+
+    Academic Public License / GPL
+

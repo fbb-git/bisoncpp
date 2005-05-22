@@ -1,0 +1,12 @@
+#include "rules.h"
+
+#include <iostream>
+#include <sstream>
+#include <iterator>
+#include <algorithm>
+
+#include "../msg/msg.h"
+
+using namespace std;
+// using namespace FBB;
+
