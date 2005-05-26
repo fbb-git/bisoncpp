@@ -107,11 +107,7 @@ class State
             std::ostream &out;
         };
 
-        State()
-        :
-            d_type(NORMAL)
-        {}
-
+        State();
         State(Item const &item);
 
         bool beforeDot(Symbol const &symbol) const;
