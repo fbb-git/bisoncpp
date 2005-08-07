@@ -40,8 +40,8 @@ void ItemSets::searchState(Symbol const *value, SSContext &context)
 
         // at this point we have a state to go to for a rule in `state'.
         // So, the action will be `shift' to that state (if symbol is a T) 
-        // AND the current rule has . symbol in its rhs.
-        // Set the goto to that state, is symbol is a non-terminal symbol.
+        // AND the current rule has `. symbol' in its rhs.
+        // Set the goto to that state, if its symbol is a non-terminal symbol.
         
         // when determining the next state, see if the next state's
         // lookahaed set associated with the item needs enlargement. If so, do
@@ -53,7 +53,7 @@ void ItemSets::searchState(Symbol const *value, SSContext &context)
                      nextStateIdx << info;
 
             dest->setShiftTerminal(symbol);          // found new state
-            context.state.setShift(Terminal::downcast(&symbol), nextStateIdx);  
+            context.state.setShift(Terminal::downcast(&symbol), nextStateIdx);
         }
         else
         {
@@ -66,7 +66,8 @@ void ItemSets::searchState(Symbol const *value, SSContext &context)
                     context.state.inheritedTerminal()->display() << info;
 
             dest->setShiftTerminal(context.state);
-            context.state.setGoto(NonTerminal::downcast(&symbol), nextStateIdx);
+            context.state.setGoto(NonTerminal::downcast(&symbol), 
+                                                                nextStateIdx);
         }
 
         if (nextStateIdx != context.obj.d_state.size())

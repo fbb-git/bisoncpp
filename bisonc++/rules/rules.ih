@@ -6,6 +6,7 @@
 #include <algorithm>
 
 #include "../msg/msg.h"
+#include "../shiftreduce/shiftreduce.h"
 
 using namespace std;
 // using namespace FBB;

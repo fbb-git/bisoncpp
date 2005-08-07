@@ -1,0 +1,4 @@
+     bf(%error-verbose) nl()    
+            (This directive is not yet available)nl()
+            if defined the parser stack is dumped when an error is detected
+            by the bf(parse()) member function.

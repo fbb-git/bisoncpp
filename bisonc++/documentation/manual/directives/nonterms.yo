@@ -1,0 +1,16 @@
+When tt(%union) is used to specify multiple value types, the value type of
+each nonterminal symbol for which values are used must be specified. This is
+done with a tt(%type) declaration, like this:
+        verb(
+    %type <type> nonterminal...
+        )
+    Here tt(nonterminal) is the name of a nonterminal symbol, and type is the
+name given in the tt(%union) to the alternative that you want (see section
+ref(COLLECTION)). Any number of nonterminal symbols can be specified in
+the same tt(%type) declaration, if they have the same value type. Use spaces
+to separate the symbol names.
+
+    It is also possible to declare the value type of a terminal symbol. To do
+this, use the same <type> construction in a declaration for the terminal
+symbol. All kinds of token declarations allow <type>.
+

@@ -5,7 +5,7 @@ To create a new debian package:
 
     1. Keep the bisonc++/ name
     
-    2. Define the next version in bisonc++/version.cc
+    2. Define the next version in bisonc++/VERSION
 
        THEN (upgrade the version for each new distribution):
 

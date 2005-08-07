@@ -24,6 +24,7 @@ class Rules
     static Terminal s_errorTerminal;
     static Terminal s_defaultTerminal;
     static Terminal s_eofTerminal;
+    static Symbol *s_startSymbol;
 
     std::vector<Terminal *> d_terminal;  // the vector holding information 
                                         // about defined terminal symbols
@@ -176,6 +177,11 @@ class Rules
         Production *startProduction()
         {
             return d_currentProduction;
+        }
+
+        static Symbol const *startSymbol() 
+        {
+            return s_startSymbol;
         }
 
         std::vector<NonTerminal const *> const &nonTerminals() const

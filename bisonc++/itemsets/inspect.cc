@@ -6,6 +6,7 @@ void ItemSets::inspect(unsigned idx)
 
     msg() << "\n"
             "Inspecting state " << idx << " having kernel items:" << info;
+
     state.showKernel();
 
         // if the rules only have trailing dots, then they cannot generate

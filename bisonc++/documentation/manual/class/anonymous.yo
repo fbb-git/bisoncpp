@@ -1,0 +1,55 @@
+    In the file defining the bf(parse()) function (see section
+ref(PARSESOURCE)) the following types and variables are defined in the
+anonymous namespace. These are mentioned here for the sake of completeness,
+and are not normally accessible to other parts of the parser.
+    itemization(
+    it() bf(ReservedTokens):nl()
+       This enumeration defines some token values used internally by the
+        parsing functions. They are:
+        verb(
+    _UNDETERMINED_ = -2,
+    _EOF_          = -1,
+    _error_        = 256,
+       )
+       These tokens are used by the parser to determine whether another token
+        should be requested from the lexical scanner, and to handle
+        error-conditions. 
+    it() bf(SR) (Shift-Reduce Info):nl()
+       This bf(struct) provides the shift/reduce information for the various
+        grammatical states. bf(SR) values are collected in arrays, one array
+        per grammatical state. These array, named bf(s_)tt(<nr>), 
+        where tt<nr> is a state number are defined in the anonymous namespace
+        as well. The bf(SR) elements consist of two unions,
+        defining fields that are applicable to, respectively, the first,
+        intermediate and the last array elements.nl()
+       The first element of each array consists of (1st field) a bf(StateType)
+        and (2nd field) the index of the last array element;
+       intermediate elements consist of (1st field) a symbol value and (2nd
+        field) (if negative) the production rule number reducing to the
+        indicated symbol value or (if positive) the next state when the symbol
+        given in the 1st field is the current token; 
+       the last element of each array consists of (1st field) a placeholder for
+        the current token and (2nd field) the (negative) rule number to reduce
+        to by default or the (positive) number of an error-state to go to when
+        an erroneous token has been retrieved. If the 2nd field is zero, no
+        error or default action has been defined for the state, and
+        error-recovery is attepted.
+    it() bf(StateType):nl()
+       This enumeration defines the type of the various grammar-states. They
+        are: 
+        verb(
+    NORMAL,
+    HAS_ERROR_ITEM,
+    IS_ERROR_STATE,
+       )
+       bf(HAS_ERROR_ITEM) is used for a state having at least one
+        error-production. bf(IS_ERROR_STATE) is used for a state from which
+        error recovery is attempted. So, while in these states tokens are
+        retrieved until a token from where parsing may continue is seen by the
+        parser. All other states are bf(NORMAL) states.
+    it() bf(PI) (Production Info):nl()
+       This bf(struct) provides information about production rules. It has two
+        fields: bf(d_nonTerm) is the identification number of the production's
+        non-terminal, bf(d_size) represents the number of elements of the
+        productin rule.
+    )

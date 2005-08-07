@@ -24,8 +24,9 @@ void setClasses()
 
     CLASSES +=  "errno msg element firstset symbol terminal "
                 "block "
-                "production followset nonterminal "
-                "symtab rules lookaheadset  "
+                "production followset "
+                "nonterminal shiftreduce "
+                "symtab rules lookaheadset "
                 "arg "
                 "parser "
                 "item state itemsets "
@@ -506,13 +507,9 @@ void setlibs()
     #endif
 }
 
-void prog(string type)
+void prog()
 {
-    if (type == "local")
-        system("cp parser/dataskel.local parser/dataskel.cc");
-    else
-        system("cp parser/dataskel.debian parser/dataskel.cc");
-
+    system("mkdir -p bin");
     initialize();
     setlibs();
 
@@ -521,56 +518,139 @@ void prog(string type)
         "bisonc++.cc",              // program source
         "bisonc++" 
     );
+
+    system(P_NOCHECK, 
+            "bin/bisonc++ --help > documentation/manual/invoking/usage");
 }
 
 
-void buildprogram(string type)
+void dprog()
 {
-    system("mkdir -p bin");
-    prog(type);
+    system("cp parser/dataskel.debian parser/dataskel.cc");
+    prog();
+}
 
-    chdir("documentation/man");
-    if ("bisonc++.yo" younger "bisonc++.man")
-        exec("yodl2man bisonc++");
+void lprog()
+{
+    system("cp parser/dataskel.local parser/dataskel.cc");
+    prog();
+}
+
+void release()
+{
+    if ("../VERSION" younger "release.yo")
+        system("gcc -E VERSION.h | grep -v '#' | sed 's/\"//g' > release.yo");
+}
+
+void man()
+{
+    chdir("documentation");
+    release();
+
+    chdir("man");
+
+    if 
+    (
+        "bisonc++.yo" younger "bisonc++.man"
+        ||
+        "../release.yo" younger "bisonc++.man"
+
+    )
+    {
+        exec("yodl2man -o bisonc++.1 bisonc++");
+        exec("yodl2html -o bisonc++man.html bisonc++");
+    }
+
     chdir("../..");
+}
+
+void manual()
+{
+    chdir("documentation");
+    release();
+
+    chdir("manual");
+    exec("yodl2html -l 3 bisonc++.yo");
+
+    chdir("../../");
+}
+
+void debian()
+{
+    dprog();
+    man();
+    manual();
+}
+
+void local()
+{
+    lprog();
+    man();
+    manual();
 }
 
 void install(string where)
 {
+    string docbase;
+
     if (where == "")
     {
         printf("missing location to install as argument 2\n");
         exit(1);
     }
 
-    system("mkdir -p " + where + "/usr");
-
+    printf("\ninstall bisonc++\n");
     system("mkdir -p " + where + "/usr/bin");
     system("cp -p " + programname + " " + where + "/usr/bin");
 
-    // skeleton files
+    printf("\ninstall skeleton files\n");
     system("mkdir -p " + where + "/usr/share/bisonc++");
     system("cp -p share/* " + where + "/usr/share/bisonc++");
 
-    // manual page
-    system("mkdir -p " + where + "/usr/share/man/man1");
-    system("gzip < documentation/man/bisonc++.man > " + 
-                    where + "/usr/share/man/man1/bisonc++.1.gz");
+    printf("\ninstall manual page in .../man1\n");
+    system("mkdir -p " +    where + "/usr/share/man/man1");
+    system("gzip < documentation/man/bisonc++.1 > " + 
+                            where + "/usr/share/man/man1/bisonc++.1.gz");
 
-    // documentation
-    system("mkdir -p " + where + "/usr/share/doc/bisonc++");
-    chdir("documentation");
-    system("cp -r examples html bison.ps.org ../" + 
-                    where + "/usr/share/doc/bisonc++");
-    system("cp -r man/calculator ../" + 
-                    where + "/usr/share/doc/bisonc++/examples");
-    chdir("..");
+    printf("\ninstall remaining documentation under "
+                                                "/usr/share/doc/bisonc++:\n");
+    docbase = where + "/usr/share/doc/bisonc++/";
+    system("mkdir -p " + docbase);
+
+        printf("\ninstall COPYING\n");
+        system("cp COPYING " + docbase);
+
+        printf("\ninstall bison docs\n");
+        system("mkdir -p " +    docbase + "bison-docs");
+
+        system("cp -r documentation/{html,bison.ps.org} " + 
+                                docbase + "bison-docs");
+
+        printf("\ninstall raw examples\n");
+        system("mkdir -p " +    docbase + "examples");
+        system("cp -r documentation/examples " + 
+                                docbase + "examples");
+
+        printf("\ninstall man-page info\n");
+        system("mkdir -p " +    docbase + "man");
+        system("cp documentation/man/bisonc++man.html " + 
+                                docbase + "man");
+        system("cp -r documentation/man/calculator " + 
+                                docbase + "man");
+
+        printf("\ninstall manual info\n");
+        system("mkdir -p " +    docbase + "manual");
+        system("cp -r documentation/manual/*.html " + 
+                                docbase + "manual");
 }
 
 void cleanup()
 {
-    system("rm -rf debian/bisonc++/usr bin/* o */o libbisonc++.a "
-                    "build-stamp configure-stamp");
+    system("rm -rf debian/bisonc++/usr bin o */o libbisonc++.a "
+                    "build-stamp configure-stamp ");
+    chdir("documentation");
+    system("rm -rf release.yo man/*.{1,html} manual/*.html"
+            "manual/invoking/usage");
 }
 
 void main(int argc, list argv)
@@ -584,13 +664,20 @@ void main(int argc, list argv)
             "\n"
             "Build what? Options are:\n"
             "   clean: clean up\n"
-            "   install WHERE: install the products under WHERE "
-                                                "(following `build package')\n"
-            "                  The Debian installation process will install "
-                                                        "under ./debian/\n"
             "   debian: build bisonc++ for the debian package "
                                                     "(after `clean')\n"
-            "   local: build bisonc++ for local use (after `clean')\n"
+            "           performs: build dprog, build man, build manual\n"
+            "   dprog:  build the bisonc++ program for the debian package\n"
+            "   install WHERE: install the products under WHERE "
+                                                "(following `build debian')\n"
+            "                  The Debian installation process will install "
+                                                        "under ./debian/\n"
+            "   lprog:  build the bisonc++ program for local use\n"
+            "   local:  build bisonc++ for local use (after `clean')\n"
+            "           performs: build lprog, build man, build manual\n"
+            "   man:    build the bisonc++ man-page (.1, .html versions)\n"
+            "   manual: build the bisonc++ manual\n"
+            "   prog:   build the bisonc++ program as found\n"
             "\n"
         );
         exit(1);
@@ -601,12 +688,22 @@ void main(int argc, list argv)
 
     if (arg1 == "clean")
         cleanup();
+    else if (arg1 == "debian")
+        debian();
+    else if (arg1 == "dprog")
+        dprog();
     else if (arg1 == "install")
         install(element(2, argv));
+    else if (arg1 == "lprog")
+        lprog();
     else if (arg1 == "local")
-        buildprogram("local");
-    else if (arg1 == "debian")
-        buildprogram("debian");
+        local();
+    else if (arg1 == "man")
+        man();
+    else if (arg1 == "manual")
+        manual();
+    else if (arg1 == "prog")
+        prog();
     else
     {
         printf("request `", arg1, "' not yet available\n");
