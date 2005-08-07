@@ -1,3 +1,43 @@
+bisonc++ (0.98.004) unstable; urgency=low
+
+  * When new lookahead set elements are added to existing states,
+    d_recheckState in itemsets/lookaheads.cc (ItemSets::checkLookaheads()) was
+    reassigned to the state index whose lookaheadset was enlarged. However, if
+    that happened for existing state `i' and then, during the same
+    state-inspection, for state `j' where j > i, then the recheck would start
+    at `j' rather than `i'. This problem was solved by giving d_recheckState
+    only a lower value than its current value.
+    
+    With R/R conflicts involving `ACCEPT' reductions (with, e.g., `S_$: S .'),
+    ACCEPT is selected as the chosen alternative. See State::setReduce()
+    (state/setreduce.cc). Since this matches with the `first reduction rule'
+    principle, it should be ok.
+    
+    %stype specifications may consist of multiple elements: the remainder of
+    the line beyond %stype is interpreted as the type definition. The
+    specification should (therefore) not contain comment or other characters
+    that are not part of the actual type definition. The man-page is adapted
+    accordingly. Same holds true for the %ltype directive
+    
+    Added a check whether the grammar derives a sentence
+    (itemsets/derivesentence.cc). If not, a fatal error is issued. This
+    happens at the end of the program's actions, and at this point files
+    etc. have already been generated. They are kept rather than removed for
+    further reference. Grammars not deriving sentences should probably not be
+    used.
+    
+    The original Bison documentation has been converted to a Bisonc++ user
+    guide. Furthermore, a html-converted manual page is now available under
+    /usr/share/doc/bisonc++/man
+
+    The `calculator' example used in the man-page is now under
+    /usr/share/doc/bisonc++/man/calculator 
+
+    Bisonc++ is distributed under the Academic Free License, see the file
+    COPYING in /usr/share/doc/bisonc++
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun,  7 Aug 2005 13:49:07 +0200
+
 bisonc++ (0.98.003) unstable; urgency=low
 
   * Incomplete default State constructor now explicitly defined, prevents

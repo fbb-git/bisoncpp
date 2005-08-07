@@ -1,7 +1,7 @@
 Source: bisonc++
 Section: devel
 Priority: optional
-Maintainer: Frank B. Brokken <f.b.brokken@rc.rug.nl>
+Maintainer: Frank B. Brokken <f.b.brokken@rug.nl>
 Build-Depends: debhelper (>= 4.0.0), icmake (>= 6.22-2)
 Standards-Version: 3.6.1
 

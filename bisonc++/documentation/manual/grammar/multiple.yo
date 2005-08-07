@@ -1,0 +1,7 @@
+Most programs that use B() parse only one language and therefore contain
+only one B() parser. But what if you want to parse more than one language
+with the same program? Since B() constructs em(class) rather than a
+em(parsing function), this problem can be easily solved: simply define your
+second (third, fourth, ...) parser class, each having its own unique
+class-name, using the tt(%class-name) directive, and construct parser objects
+of each of the defined classes.

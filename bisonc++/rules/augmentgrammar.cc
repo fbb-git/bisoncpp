@@ -11,6 +11,7 @@ void Rules::augmentGrammar(Symbol *start)
     addProduction();
 
     s_acceptProductionNr = d_currentProduction->nr();
+    s_startSymbol = start;
 
     addElement(start);
     d_currentRule->setEOFinFollow();

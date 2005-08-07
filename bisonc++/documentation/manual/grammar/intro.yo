@@ -1,0 +1,14 @@
+B() takes as input a context-free grammar specification and produces a
+bf(C++) class offering various predefined members, among which the member
+tt(parse()), that recognizes correct instances of the grammar.
+
+In this chapter the organization and specification of such a grammar file is
+discussed in detail.
+
+Having read this chapter you should be able to define a grammar for which
+B() can generate a class, including a member that will recognize
+correctly formulated (in terms of your grammar) input, using all the features
+and facilities offered by B() to specify a grammar. In principle this
+grammar will be in the class of bf(LALR(1)) grammars (see, e.g., em(Aho, Sethi
+& Ullman), 19xx).
+

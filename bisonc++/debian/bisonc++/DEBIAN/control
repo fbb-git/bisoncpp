@@ -1,12 +1,12 @@
 Package: bisonc++
-Version: 0.98.003
+Version: 0.98.004
 Section: devel
 Priority: optional
 Architecture: i386
 Depends: libc6 (>= 2.3.2.ds1-21), libgcc1 (>= 1:3.4.1-3), libstdc++5 (>= 1:3.3.4-1)
 Suggests: bison
-Installed-Size: 1408
-Maintainer: Frank B. Brokken <f.b.brokken@rc.rug.nl>
+Installed-Size: 1768
+Maintainer: Frank B. Brokken <f.b.brokken@rug.nl>
 Description: Bison-style parser generator for C++
  Bisonc++ was designed after `bison++' by Alain Coetmeur. Bisonc++ adds to
  this a cleaner class-design, in which a base-class is offered to communicate
