@@ -1,2 +1,2 @@
 #!/bin/sh
-scp index.html fbb@shell.sourceforge.net:/home/groups/b/bi/bisoncpp/htdocs/
+scp bisoncpp.jpg index.html fbb@shell.sourceforge.net:/home/groups/b/bi/bisoncpp/htdocs/
