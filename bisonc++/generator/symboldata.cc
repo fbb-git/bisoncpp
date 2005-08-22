@@ -16,10 +16,10 @@ void Generator::symbolData(ostream &out) const
     TContext context = {out};
 
     for_each(d_rules.terminals().begin(), d_rules.terminals().end(),
-            Wrap1<Terminal const *, TContext>(&Generator::terminal, context));
+            Wrap1c<Terminal, TContext>(&Generator::terminal, context));
 
     for_each(d_rules.nonTerminals().begin(), d_rules.nonTerminals().end(),
-            Wrap1<NonTerminal const *, TContext>
+            Wrap1c<NonTerminal, TContext>
                  (&Generator::nonTerminal, context));
 
     out <<  "};\n"

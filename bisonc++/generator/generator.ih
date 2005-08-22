@@ -5,8 +5,9 @@
 #include <ostream>
 #include <iomanip>
 
-#include "../wrap1.h"
-#include "../arg/arg.h"
+#include <bobcat/wrap1c>
+#include <bobcat/arg>
+
 #include "../rules/rules.h"
 #include "../parser/parser.h"
 #include "../terminal/terminal.h"

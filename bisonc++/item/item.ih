@@ -5,8 +5,9 @@
 #include <iostream>
 #include <iomanip>
 
-#include "../msg/msg.h"
+#include <bobcat/msg>
 #include "../firstset/firstset.h"
 
 using namespace std;
+using namespace FBB;
 

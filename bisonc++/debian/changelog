@@ -1,3 +1,11 @@
+bisonc++ (0.98.005) unstable; urgency=low
+
+  * Removed the classes Arg, Errno, Msg and Wrap1, using the Bobcat library's
+    versions of these classes from now on. No feature-changes.
+    Added minor modifications to the `build' script.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 22 Aug 2005 13:05:28 +0200
+
 bisonc++ (0.98.004) unstable; urgency=low
 
   * When new lookahead set elements are added to existing states,

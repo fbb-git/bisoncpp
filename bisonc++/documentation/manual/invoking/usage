@@ -1,7 +1,7 @@
 
 bisonc++ by Frank B. Brokken (f.b.brokken@rug.nl)
 
-LALR(1) Parser Generator V 0.98.004
+LALR(1) Parser Generator V 0.98.005
 Copyright (c) GPL 2005. NO WARRANTY.
 Designed after `bison++' (1.21.9-1) by Alain Coetmeur <coetmeur@icdc.fr>
 

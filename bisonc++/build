@@ -22,12 +22,11 @@ void setClasses()
 //  ADD ADDITIONAL DIRECTORIES CONTAINING SOURCES OF CLASSES HERE
 //  Use the construction `CLASSES += "classname1 classname2";' etc.
 
-    CLASSES +=  "errno msg element firstset symbol terminal "
+    CLASSES +=  "element firstset symbol terminal "
                 "block "
                 "production followset "
                 "nonterminal shiftreduce "
                 "symtab rules lookaheadset "
-                "arg "
                 "parser "
                 "item state itemsets "
                 "generator "
@@ -101,7 +100,7 @@ void setClasses()
 
 #define ECHO_REQUEST       1
 
-#define LIBS               ""
+#define LIBS               "bobcat"
 #define LIBPATH            ""
 
 #define GRAMBUILD
@@ -127,7 +126,22 @@ int
     nClasses,           // number of classes/subdirectories
     program;            // 1: program is built
 list
+    envir,              // environment variables
     classes;            // list of classes/directories
+
+string getenv(string target)
+{
+    int idx;
+    string env;
+
+    for (idx = 0; idx < sizeof(envir); ++idx)
+    {
+        env = element(idx, envir);
+        if (env == target)
+            return element(idx + 1, envir);
+    }
+    return "";
+}
 
 /*
                                  S C A N N E R . I M
@@ -646,14 +660,23 @@ void install(string where)
 
 void cleanup()
 {
-    system("rm -rf debian/bisonc++/usr bin o */o libbisonc++.a "
-                    "build-stamp configure-stamp ");
+    system("rm -rf debian/bisonc++ build-stamp configure-stamp ");
+
+    if (getenv("BISONCPP") == "minimal")
+    {
+        printf("\n"
+                "WARNING: PERFORMED MINIMAL CLEANUP\n"
+                "\n");
+        return;
+    }
+
+    system("rm -rf bin o */o libbisonc++.a ");
     chdir("documentation");
     system("rm -rf release.yo man/*.{1,html} manual/*.html"
             "manual/invoking/usage");
 }
 
-void main(int argc, list argv)
+void main(int argc, list argv, list envp)
 {
     string arg1;
 
@@ -663,7 +686,8 @@ void main(int argc, list argv)
         (
             "\n"
             "Build what? Options are:\n"
-            "   clean: clean up\n"
+            "   clean: clean up. Define the BISONCPP=minimal environment\n"
+            "           variable to perform mimimal cleaning. Use with care!\n"
             "   debian: build bisonc++ for the debian package "
                                                     "(after `clean')\n"
             "           performs: build dprog, build man, build manual\n"
@@ -682,6 +706,8 @@ void main(int argc, list argv)
         );
         exit(1);
     }
+
+    envir = envp;
 
     programname = BUILD_PROGRAM;
     arg1 = element(1, argv);

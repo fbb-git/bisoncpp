@@ -16,7 +16,7 @@ void ItemSets::derive(unsigned state)
     State::ActionConstIterators actions = stateRef.actionConstIterators();
 
     for_each(actions.first, actions.second,
-        Wrap1<State::ActionTable::value_type const &, ItemSets>
+        Wrap1c<State::ActionTable::value_type, ItemSets>
             (&ItemSets::deriveAction, *this));
 
     if (Production const *production = stateRef.defaultReduction())

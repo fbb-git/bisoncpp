@@ -26,7 +26,7 @@ void ItemSets::inspect(unsigned idx)
     SSContext context = {*d_state[idx], *this};
 
     for_each(state.gotoSet().begin(), state.gotoSet().end(),
-        Wrap1<Symbol const *, SSContext>            
+        Wrap1c<Symbol, SSContext>            
             (&ItemSets::searchState, context));
 }
 
