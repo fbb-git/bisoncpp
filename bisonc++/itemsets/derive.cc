@@ -1,6 +1,9 @@
 #include "itemsets.ih"
 
-// See derivesentence.cc
+// This function is part of the set of functions which determine whether a
+// grammar derives any sentences. See derivesentence.cc
+
+// Called by derivesentence.cc
 
 void ItemSets::derive(unsigned state) 
 {

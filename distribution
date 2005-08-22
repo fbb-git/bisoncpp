@@ -1,5 +1,4 @@
 #!/bin/sh
 PROJECT=bisoncpp
 
-setenv DEBEMAIL f.b.brokken@rug.nl
-dpkg-buildpackage -rfakeroot 2>&1 | tee /tmp/$PROJECT 
+dpkg-buildpackage -mf.b.brokken@rug.nl  -rfakeroot 2>&1 | tee /tmp/$PROJECT 

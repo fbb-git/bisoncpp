@@ -1,6 +1,9 @@
 #include "itemsets.ih"
 
-// see derive().
+// This function is part of the set of functions which determine whether a
+// grammar derives any sentences. See derivesentence.cc
+
+// called by `derive()'.
 
 //  at shift:
 //      when shifting to a not yet visited state, call derive() recursively
@@ -10,6 +13,9 @@
 //      determine the length `l' of the rule, and consider StateInfo of the
 //      state at stackdepth `l': if that N is not in d_processed, put it in
 //      d_marked.
+
+// at accept (NOT IN 0.98.004 !!!)
+//      we're done, throw OK
 
 void ItemSets::deriveAction(State::ActionTable::value_type const &action, 
                             ItemSets &itemSets)
@@ -36,7 +42,10 @@ void ItemSets::deriveAction(State::ActionTable::value_type const &action,
         return;
     }
 
+    if (action.second.accept())
+        throw true;
+
     msg() << "Internal Error in ItemSets::deriveAction():\n"
-            "               action is neither `shift', nor `reduce'" <<
+            "               action is not `shift',  `reduce' or `accept'" <<
             fatal;
 }

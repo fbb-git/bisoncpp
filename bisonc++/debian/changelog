@@ -2,7 +2,15 @@ bisonc++ (0.98.005) unstable; urgency=low
 
   * Removed the classes Arg, Errno, Msg and Wrap1, using the Bobcat library's
     versions of these classes from now on. No feature-changes.
+
     Added minor modifications to the `build' script.
+
+    Annoying Error: The function `ItemSets::deriveAction()' did not recognize
+    the `ACCEPT' action, so some (most ?) grammars could not be properly
+    recognized. I applied a quick hack: if an action isn't `shift' or
+    `reduce', it can be `accept', resulting in acceptance of the grammar. This
+    solves the actual problem, but I'll have to insepct this in a bit more
+    detail. For now, it should work ok.
 
  -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 22 Aug 2005 13:05:28 +0200
 
