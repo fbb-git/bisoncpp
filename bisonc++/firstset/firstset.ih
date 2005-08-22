@@ -5,7 +5,7 @@
 #include <ostream>
 #include <iostream>
 
-#include "../wrap1.h"
+#include <bobcat/wrap1c>
 
 using namespace std;
 using namespace FBB;

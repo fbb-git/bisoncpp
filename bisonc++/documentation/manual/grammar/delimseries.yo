@@ -1,0 +1,25 @@
+A series of elements which are separated from each other using some delimiter
+again normally uses left-recursion. For example, a bf(C++) variable definition
+list consists of one or more identifiers, separated by comma's. If there is
+only one identifier no comma is used. Here is the rule defining a list using
+separators: 
+        verb(
+    variables:
+        IDENTIFIER
+    |
+        variables ',' IDENTIFIER
+        )
+    The above rule can be used as a prototype for recognizing a series of
+delimited elements. The generic form of this rule could be formulated as
+follows:
+        verb(
+    series:
+        unit
+    |
+        series delimiter unit
+        )
+    Note that the single element is em(first) recognized, whereafter the
+left-recursive alternative may be recognized repeatedly. In fact, this rule is
+not really different from the standard rule for a series, which does not hold
+true for the rule to recognize an em(optional) series of delimited elements,
+covered in the next section.

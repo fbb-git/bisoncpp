@@ -17,7 +17,7 @@ void State::inspectNonKernelProductions(NonKernelValue const &nonKernelValue,
                              nonKernelValue.second};
 
     for_each(nonTerm->productions().begin(), nonTerm->productions().end(),
-        Wrap1<Production const *, AISA0Context>
+        Wrap1c<Production, AISA0Context>
                   (&State::addIfSymbolAt0, context2));
 }
 

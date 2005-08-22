@@ -1,0 +1,35 @@
+includefile(algorithm/intro.yo)
+
+lsect(LOOKAHEAD)(Look-Ahead Tokens)
+includefile(algorithm/lookahead.yo)
+
+lsect(SHIFTREDUCE)(Shift/Reduce Conflicts)
+includefile(algorithm/conflicts.yo)
+
+sect(Operator Precedence)
+includefile(algorithm/precedence.yo)
+
+    subsect(When Precedence is Needed)
+    includefile(algorithm/whenprec.yo)
+
+    subsect(Specifying Operator Precedence)
+    includefile(algorithm/specifying.yo)
+
+    subsect(Precedence Examples)
+    includefile(algorithm/precdemos.yo)
+
+    subsect(How Precedence Works)
+    includefile(algorithm/howprec.yo)
+
+lsect(CONDEP)(Context-Dependent Precedence)
+includefile(algorithm/condep.yo)
+
+sect(Parser States)
+includefile(algorithm/states.yo)
+
+sect(Reduce/Reduce Conflicts)
+includefile(algorithm/reduce.yo)
+
+lsect(MYSTERIOUS)(Mysterious Reduce/Reduce Conflicts)
+includefile(algorithm/mysterious.yo)
+

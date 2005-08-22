@@ -4,7 +4,7 @@
 #include <map>
 #include <sstream>
 
-#include "../msg/msg.h"
+#include <bobcat/msg>
 #include "../symtab/symtab.h"
 #include "../block/block.h"
 #include "../scanner/scanner.h"

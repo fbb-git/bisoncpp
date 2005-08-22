@@ -2,6 +2,11 @@ NOUSERMACRO(yyparse parse lex yylex error setDebug ParserBase throw ACCEPT
         ABORT errok clearin RECOVERING print done prompt Parse 
         debug setSval setLoc)
 
+includefile(../release.yo)
+
+htmlbodyopt(text)(#27408B)
+htmlbodyopt(bgcolor)(#FFFAF0)
+whenhtml(mailto(Frank B. Brokken: f.b.brokken@rug.nl))
 
 DEFINEMACRO(lsoption)(3)(\
     bf(--ARG1)=tt(ARG3) (bf(-ARG2))\
@@ -22,7 +27,8 @@ DELETEMACRO(tt)
 DEFINEMACRO(tt)(1)(em(ARG1))
 
 COMMENT( man-request, section, date, distribution file, general name)
-manpage(bisonc++)(1)(2005)(bisonc++.tar.gz)(bisonc++ parser generator)
+manpage(bisonc++)(1)(CURYRS)(bisonc++.CURVERS.tar.gz)
+        (bisonc++ parser generator)
 
 COMMENT( man-request, larger title )
 manpagename(bisonc++)(Generate a C++ parser class and parsing function)
@@ -98,7 +104,7 @@ about specifying and decorating grammars.
 used by bf(bison++), however, is greatly modified. Actually, all bf(%define)
 declarations are replaced by their (former) first arguments. Furthermore,
 `macro-style' declarations are no longer supported or required. Finally, all
-declarations use lower-case characters only and do not contain underscore
+directives use lower-case characters only and do not contain underscore
 characters (but sometimes hyphens). E.g., bf(%define DEBUG) is now declared as
 bf(%debug); bf(%define LSP_NEEDED) is now declared as bf(%lsp-needed) (note
 the hyphen).
@@ -109,7 +115,7 @@ bic().  Basically, bic() concentrates on its main tasks: the definition of an
 initial parser class and the implementation of its parsing function bf(int
 parse()), leaving all other parts of the parser class' definition to the
 programmer.
-    it() Having specified the grammar and (usually) some declarations bic() is
+    it() Having specified the grammar and (usually) some directives bic() is
 able to generate files defining the parser class and the implementation of the
 member function bf(parse()) and its support functions. See the next section
 for details about the various files that may be written by bic().
@@ -199,7 +205,7 @@ arguments if their associated long options require arguments as well.
     it() lsoption(baseclass-preinclude)(H)(header)nl()
            Use tt(header) as the pathname to the file preincluded in the
             parser's base-class header. This option is useful in situations
-            where the base class heaer file refers to types which might not
+            where the base class header file refers to types which might not
             yet be known. E.g., with bf(%union) a bf(std::string *) field
             might be used. Since the class bf(std::string) might not yet be
             known to the compiler once it processes the base class header file
@@ -288,7 +294,7 @@ arguments if their associated long options require arguments as well.
            Do not put bf(#line) preprocessor directives in the file containing
             the parser's bf(parse()) function. This option is primarily useful
             in combination with the bf(%lines) directive, to suppress that
-            declaration. It also overrides option bf(--lines), though.
+            directive. It also overrides option bf(--lines), though.
     it() lsoption(namespace)(n)(namespace)nl()
            Define the parser base class, the paser class and the parser
             implentations in the namespace tt(namespace). By default
@@ -360,11 +366,11 @@ arguments if their associated long options require arguments as well.
             Display bic()'s version number and terminate.
     )
 
-manpagesection(DECLARATIONS)
+manpagesection(DIRECTIVES)
 
-    The following declarations can be used in the initial section of the
-grammar specification file. When command-line options for declarations exist,
-they overrule the corresponding declarations given in the grammar
+    The following directives can be used in the initial section of the
+grammar specification file. When command-line options for directives exist,
+they overrule the corresponding directives given in the grammar
 specification file.
     itemization(
     it() bf(%baseclass-header) tt(header) nl()
@@ -384,7 +390,7 @@ specification file.
             class. This directive is overridden by the
             bf(--class-header) or bf(-c) command-line options.
     it() bf(%class-name) tt(parser-class-name) nl()
-           Declares the name of this parser. This declaration replaces the
+           Declares the name of this parser. This directive replaces the
             bf(%name) declaration previously used by bf(bison++). It defines
             the name of the bf(C++) class that will be generated. Contrary to
             bf(bison++)'s bf(%name) declaration, bf(%class-name) may appear
@@ -421,7 +427,7 @@ specification file.
            Defining this causes bic() to include code into the generated
             parser using the standard location stack.  The token-location type
             defaults to the following struct, defined in the parser's base
-            class when this declaration is specified: 
+            class when this directive is specified: 
            verb(
     struct LTYPE
     {
@@ -437,9 +443,12 @@ specification file.
            Specifies a user-defined token location type. 
            If bf(%ltype) is used, tt(typename) should be the name of an
             alternate (predefined) type (e.g., bf(unsigned)). It should not be
-            used if a bf(%locationstruct) specification is used (see
-            below). Within the parser class, this type may be used as
-            bf(LTYPE). 
+            used if a bf(%locationstruct) specification is defined (see
+            below). Within the parser class, this type will be available as
+            the type `bf(LTYPE)'.  All text on the line following bf(%ltype)
+            is used for the tt(typename) specification. It should therefore
+            not contain comment or any other characters that are not part of
+            the actual type definition.
     it() bf(%namespace) tt(namespace) nl()
            Define the parser class in the namespace tt(namespace). By default
             no namespace is defined. If this options is used the
@@ -458,7 +467,7 @@ specification file.
             adopted for this argument, tt(header) will (by default) be
             surrounded by double quotes.  However, when the argument is
             surrounded by pointed brackets tt(#include <header>) will be
-            included. Note that using this declaration implies the definition
+            included. Note that using this directive implies the definition
             of a composed tt(Scanner d_scanner) data member into the generated
             parser, as well as a predefined bf(int lex()) member, returning
             tt(d_scanner.yylex()). If this is inappropriate, a user defined
@@ -468,8 +477,11 @@ specification file.
             tt(typename) should be the name of an unstructured type (e.g.,
             bf(unsigned)). By default it is bf(int). See bf(YYSTYPE) in
             bf(bison).  It should not be used if a bf(%union) specification is
-            used.  Within the parser class, this type may be used as
-            bf(STYPE).
+            defined.  Within the parser class, this type will be available as
+            the type `bf(STYPE)'. All text on the line following bf(%stype) is
+            used for the tt(typename) specification. It should therefore not
+            contain comment or any other characters that are not part of the
+            actual type definition.
     it() bf(%locationstruct) tt(struct-definition) nl() 
            Defines the organization of the location-struct data type
             bf(LTYPE). This struct should be specified analogously to the way
@@ -481,8 +493,8 @@ specification file.
             Acts identically to the bf(bison) and bf(bison++) declaration. 
             as with bison generate a union for semantic type. 
             The union is named bf(STYPE). If no bf(%union) is
-            declared, a simple stack-type may be defined using the bf(STYPE)
-            declaration. If no bf(STYPE) declaration is used, the default
+            declared, a simple stack-type may be defined using the bf(%stype)
+            directive. If no bf(%stype) directive is used, the default
             stacktype (bf(int)) is used.
     )
 
@@ -500,7 +512,7 @@ generated by bic() (tt(`Parser Class'::) prefixes are silently implied):
     it() bf(Tokens):nl()
            The enumeration type of all the symbolic tokens defined in the
             grammar file (i.e., bic()'s input file). The scanner should be
-            prepared to return these symbolic tokens (note that, since the
+            prepared to return these symbolic tokens Note that, since the
             symbolic tokens are defined in the parser's class and not in the
             scanner's class, the lexical scanner must prefix the parser's
             class name to the symbolic token names when they are
@@ -541,7 +553,7 @@ protected members inherited from the parser's base class.
     PARSE_ABORT = 1
         )
         (which are of course the bf(parse()) function's return values).
-     )
+     ))
 
 
 manpagesection(PRIVATE MEMBER FUNCTIONS)
@@ -591,7 +603,7 @@ members inherited from the parser's base class.
        Used internally by the parsing function. Not to be called otherwise.
     it() bf(int lex()):nl()
        This member may be pre-implemented using the bf(scanner) option or
-        declaration (see above) or it em(must) be implemented by the
+        directive (see above) or it em(must) be implemented by the
         programmer. It interfaces to the lexical scanner, and should
         return the next token produced by the lexical scanner, either as a
         plain character or as one of the symbolic tokens defined in the
@@ -780,7 +792,7 @@ no semantic errors occur (in particular, no divisions by zero). The grammar is
 decorated with actions performed when the corresponding grammatical production
 rule is recognized. The grammar itself is rather standard and straightforward,
 but note the first part of the specification file, containing various other
-declarations, among which the bf(%scanner) declaration, resulting in a
+directives, among which the bf(%scanner) directive, resulting in a
 composed bf(d_scanner) object as well as an implementation of the member
 function bf(int lex()). In this example, a common bf(Scanner) class
 construction strategy was used: the class bf(Scanner) was derived from the
@@ -869,7 +881,7 @@ who based his work on bf(bison), GNU version 1.21.
 generator, closely following the construction process as described in Aho,
 Sethi and Ullman's (1986) book bf(Compilers) (i.e., the em(Dragon book)).  It
 the uses same grammar specification as bf(bison) and bf(bison++), and it uses
-practically the same options and declarations as bic() versions earlier than
+practically the same options and directives as bic() versions earlier than
 0.98. Variables, declarations and macros that are obsolete were removed. 
 Since bic() is a completely new program, it will most likely contain
 bugs. Please report bugs to the author:

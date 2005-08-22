@@ -1,0 +1,429 @@
+
+
+
+Production Rules:
+    1: input ->    <empty>
+    2: input -> input line
+    3: line -> '\n'
+    4: line -> exp '\n'
+    5: exp -> NUM
+    6: exp -> exp '+' exp
+    7: exp -> exp '-' exp
+    8: exp -> exp '*' exp
+    9: exp -> exp '/' exp
+    10: exp -> '-' exp
+    11: exp -> exp '^' exp
+    12: exp -> '(' exp ')'
+    13: input_$ -> input
+
+
+GRAMMAR STATES:
+
+State 0
+
+    input_$ ->  . input   (rule 13)
+              Lookahead set { <EOF> }
+
+    All production rules (using dot == 0) of:
+      input   Lookahead set { NUM '-' '\n' '(' <EOF> }
+
+    on input:    shift, and go to state 1
+
+    _default_:   reduce, using production
+                1: input ->    <empty>
+
+State 1
+
+    input_$ -> input  .   (rule 13)
+              Lookahead set { <EOF> }
+
+    input -> input  . line   (rule 2)
+              Lookahead set { NUM '-' '\n' '(' <EOF> }
+
+    All production rules (using dot == 0) of:
+      line    Lookahead set { NUM '-' '\n' '(' <EOF> }
+      exp     Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    on NUM:      shift, and go to state 2
+    on '-':      shift, and go to state 3
+    on '\n':     shift, and go to state 5
+    on '(':      shift, and go to state 7
+    on line:     shift, and go to state 4
+    on exp:      shift, and go to state 6
+
+State 2 (inherited terminal: NUM)
+
+    exp -> NUM  .   (rule 5)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' ')' }
+
+
+    _default_:   reduce, using production
+                5: exp -> NUM
+
+State 3 (inherited terminal: '-')
+
+    exp -> '-'  . exp   (rule 10)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' ')' }
+
+    All production rules (using dot == 0) of:
+      exp     Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    on NUM:      shift, and go to state 2
+    on '-':      shift, and go to state 3
+    on '(':      shift, and go to state 7
+    on exp:      shift, and go to state 8
+
+State 4
+
+    input -> input line  .   (rule 2)
+              Lookahead set { NUM '-' '\n' '(' <EOF> }
+
+
+    _default_:   reduce, using production
+                2: input -> input line
+
+State 5 (inherited terminal: '\n')
+
+    line -> '\n'  .   (rule 3)
+              Lookahead set { NUM '-' '\n' '(' <EOF> }
+
+
+    _default_:   reduce, using production
+                3: line -> '\n'
+
+State 6
+
+    line -> exp  . '\n'   (rule 4)
+              Lookahead set { NUM '-' '\n' '(' <EOF> }
+
+    exp -> exp  . '+' exp   (rule 6)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    exp -> exp  . '-' exp   (rule 7)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    exp -> exp  . '*' exp   (rule 8)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    exp -> exp  . '/' exp   (rule 9)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    exp -> exp  . '^' exp   (rule 11)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    on '-':      shift, and go to state 9
+    on '+':      shift, and go to state 10
+    on '*':      shift, and go to state 11
+    on '/':      shift, and go to state 12
+    on '^':      shift, and go to state 13
+    on '\n':     shift, and go to state 14
+
+State 7 (inherited terminal: '(')
+
+    exp -> '('  . exp ')'   (rule 12)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' ')' }
+
+    All production rules (using dot == 0) of:
+      exp     Lookahead set { '-' '+' '*' '/' '^' ')' }
+
+    on NUM:      shift, and go to state 2
+    on '-':      shift, and go to state 3
+    on '(':      shift, and go to state 7
+    on exp:      shift, and go to state 15
+
+State 8 (inherited terminal: '-')
+
+    exp -> '-' exp  .   (rule 10)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    exp -> exp  . '+' exp   (rule 6)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    exp -> exp  . '-' exp   (rule 7)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    exp -> exp  . '*' exp   (rule 8)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    exp -> exp  . '/' exp   (rule 9)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    exp -> exp  . '^' exp   (rule 11)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    on '^':      shift, and go to state 13
+
+    _default_:   reduce, using production
+                10: exp -> '-' exp
+
+    Actions suppressed by the default conflict resolution procedures:
+    [on '^':      reduce, using production
+                10: exp -> '-' exp]
+
+State 9 (inherited terminal: '-')
+
+    exp -> exp '-'  . exp   (rule 7)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' ')' }
+
+    All production rules (using dot == 0) of:
+      exp     Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    on NUM:      shift, and go to state 2
+    on '-':      shift, and go to state 3
+    on '(':      shift, and go to state 7
+    on exp:      shift, and go to state 16
+
+State 10 (inherited terminal: '+')
+
+    exp -> exp '+'  . exp   (rule 6)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' ')' }
+
+    All production rules (using dot == 0) of:
+      exp     Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    on NUM:      shift, and go to state 2
+    on '-':      shift, and go to state 3
+    on '(':      shift, and go to state 7
+    on exp:      shift, and go to state 17
+
+State 11 (inherited terminal: '*')
+
+    exp -> exp '*'  . exp   (rule 8)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' ')' }
+
+    All production rules (using dot == 0) of:
+      exp     Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    on NUM:      shift, and go to state 2
+    on '-':      shift, and go to state 3
+    on '(':      shift, and go to state 7
+    on exp:      shift, and go to state 18
+
+State 12 (inherited terminal: '/')
+
+    exp -> exp '/'  . exp   (rule 9)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' ')' }
+
+    All production rules (using dot == 0) of:
+      exp     Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    on NUM:      shift, and go to state 2
+    on '-':      shift, and go to state 3
+    on '(':      shift, and go to state 7
+    on exp:      shift, and go to state 19
+
+State 13 (inherited terminal: '^')
+
+    exp -> exp '^'  . exp   (rule 11)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' ')' }
+
+    All production rules (using dot == 0) of:
+      exp     Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    on NUM:      shift, and go to state 2
+    on '-':      shift, and go to state 3
+    on '(':      shift, and go to state 7
+    on exp:      shift, and go to state 20
+
+State 14 (inherited terminal: '\n')
+
+    line -> exp '\n'  .   (rule 4)
+              Lookahead set { NUM '-' '\n' '(' <EOF> }
+
+
+    _default_:   reduce, using production
+                4: line -> exp '\n'
+
+State 15 (inherited terminal: '(')
+
+    exp -> '(' exp  . ')'   (rule 12)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' ')' }
+
+    exp -> exp  . '+' exp   (rule 6)
+              Lookahead set { '-' '+' '*' '/' '^' ')' }
+
+    exp -> exp  . '-' exp   (rule 7)
+              Lookahead set { '-' '+' '*' '/' '^' ')' }
+
+    exp -> exp  . '*' exp   (rule 8)
+              Lookahead set { '-' '+' '*' '/' '^' ')' }
+
+    exp -> exp  . '/' exp   (rule 9)
+              Lookahead set { '-' '+' '*' '/' '^' ')' }
+
+    exp -> exp  . '^' exp   (rule 11)
+              Lookahead set { '-' '+' '*' '/' '^' ')' }
+
+    on '-':      shift, and go to state 9
+    on '+':      shift, and go to state 10
+    on '*':      shift, and go to state 11
+    on '/':      shift, and go to state 12
+    on '^':      shift, and go to state 13
+    on ')':      shift, and go to state 21
+
+State 16 (inherited terminal: '-')
+
+    exp -> exp '-' exp  .   (rule 7)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    exp -> exp  . '+' exp   (rule 6)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    exp -> exp  . '-' exp   (rule 7)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    exp -> exp  . '*' exp   (rule 8)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    exp -> exp  . '/' exp   (rule 9)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    exp -> exp  . '^' exp   (rule 11)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    on '*':      shift, and go to state 11
+    on '/':      shift, and go to state 12
+    on '^':      shift, and go to state 13
+
+    _default_:   reduce, using production
+                7: exp -> exp '-' exp
+
+    Actions suppressed by the default conflict resolution procedures:
+    [on '*':      reduce, using production
+                7: exp -> exp '-' exp]
+    [on '/':      reduce, using production
+                7: exp -> exp '-' exp]
+    [on '^':      reduce, using production
+                7: exp -> exp '-' exp]
+
+State 17 (inherited terminal: '+')
+
+    exp -> exp '+' exp  .   (rule 6)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    exp -> exp  . '+' exp   (rule 6)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    exp -> exp  . '-' exp   (rule 7)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    exp -> exp  . '*' exp   (rule 8)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    exp -> exp  . '/' exp   (rule 9)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    exp -> exp  . '^' exp   (rule 11)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    on '*':      shift, and go to state 11
+    on '/':      shift, and go to state 12
+    on '^':      shift, and go to state 13
+
+    _default_:   reduce, using production
+                6: exp -> exp '+' exp
+
+    Actions suppressed by the default conflict resolution procedures:
+    [on '*':      reduce, using production
+                6: exp -> exp '+' exp]
+    [on '/':      reduce, using production
+                6: exp -> exp '+' exp]
+    [on '^':      reduce, using production
+                6: exp -> exp '+' exp]
+
+State 18 (inherited terminal: '*')
+
+    exp -> exp '*' exp  .   (rule 8)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    exp -> exp  . '+' exp   (rule 6)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    exp -> exp  . '-' exp   (rule 7)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    exp -> exp  . '*' exp   (rule 8)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    exp -> exp  . '/' exp   (rule 9)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    exp -> exp  . '^' exp   (rule 11)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    on '^':      shift, and go to state 13
+
+    _default_:   reduce, using production
+                8: exp -> exp '*' exp
+
+    Actions suppressed by the default conflict resolution procedures:
+    [on '^':      reduce, using production
+                8: exp -> exp '*' exp]
+
+State 19 (inherited terminal: '/')
+
+    exp -> exp '/' exp  .   (rule 9)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    exp -> exp  . '+' exp   (rule 6)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    exp -> exp  . '-' exp   (rule 7)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    exp -> exp  . '*' exp   (rule 8)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    exp -> exp  . '/' exp   (rule 9)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    exp -> exp  . '^' exp   (rule 11)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    on '^':      shift, and go to state 13
+
+    _default_:   reduce, using production
+                9: exp -> exp '/' exp
+
+    Actions suppressed by the default conflict resolution procedures:
+    [on '^':      reduce, using production
+                9: exp -> exp '/' exp]
+
+State 20 (inherited terminal: '^')
+
+    exp -> exp '^' exp  .   (rule 11)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' ')' }
+
+    exp -> exp  . '+' exp   (rule 6)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    exp -> exp  . '-' exp   (rule 7)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    exp -> exp  . '*' exp   (rule 8)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    exp -> exp  . '/' exp   (rule 9)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    exp -> exp  . '^' exp   (rule 11)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' }
+
+    on '^':      shift, and go to state 13
+
+    _default_:   reduce, using production
+                11: exp -> exp '^' exp
+
+    Actions suppressed by the default conflict resolution procedures:
+    [on '^':      reduce, using production
+                11: exp -> exp '^' exp]
+
+State 21 (inherited terminal: ')')
+
+    exp -> '(' exp ')'  .   (rule 12)
+              Lookahead set { '-' '+' '*' '/' '^' '\n' ')' }
+
+
+    _default_:   reduce, using production
+                12: exp -> '(' exp ')'
+

@@ -1,5 +1,6 @@
 #include "bisonc++.h"
+#include "VERSION"
 
-char version[] = "0.98.002";
-char year[] = "2005";
+char version[] = VERSION;
+char year[] = YEARS;
 

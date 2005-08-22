@@ -1,0 +1,9 @@
+    bf(%debug) nl() 
+           Provide bf(parse()) and its support functions with debugging code,
+            showing the actual parsing process on the standard output
+            stream. When included, the debugging output is active by default,
+            but its activity may be controlled using the bf(setDebug(bool
+            on-off)) member. Note that no tt(#ifdef DEBUG) macros are used
+            anymore. By rerunning b() without the bf(--debug) option an
+            equivalent parser is generated not containing the debugging
+            code. 

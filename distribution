@@ -1,0 +1,4 @@
+#!/bin/sh
+PROJECT=bisoncpp
+
+dpkg-buildpackage -mf.b.brokken@rug.nl  -rfakeroot 2>&1 | tee /tmp/$PROJECT 
