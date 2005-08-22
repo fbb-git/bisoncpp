@@ -1,0 +1,4 @@
+    bf(%class-header) tt(header) nl()
+           Defines the pathname of the file containing the parser 
+            class. This directive is overridden by the
+            bf(--class-header) or bf(-c) command-line options.

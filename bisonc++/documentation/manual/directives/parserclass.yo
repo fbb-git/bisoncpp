@@ -1,0 +1,15 @@
+By default, B() will define a parser-class named tt(Parser). If this is
+not appropriate, the directive tt(%class-name) may be used as follows:
+        verb(
+    %class-name parser-class-name
+        )
+    This directive defines the name of the bf(C++) class that will be
+generated. It may be defined only once. 
+
+    If you're familiar with the Bison++ program, please note:
+    itemization(
+    it() This directive replaces the bf(%name) directive previously used by
+Bison++. 
+    it() Contrary to Bison++'s bf(%name) directive, bf(%class-name) may
+appear anywhere in the directive section of the grammar specification file.
+    )

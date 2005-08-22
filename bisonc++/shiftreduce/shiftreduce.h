@@ -7,12 +7,12 @@ class ShiftReduce
 {
     union
     {
-        unsigned d_state;
-        Production const *d_production;
+        unsigned d_state;               
+        Production const *d_production; 
     };
 
     unsigned d_status;
-        
+
     public:
         enum Status
         {
@@ -48,6 +48,10 @@ class ShiftReduce
         Production const *production() const
         {
             return d_production;
+        }
+        bool reduce() const
+        {
+            return d_status & REDUCE;
         }
         bool reported() const
         {

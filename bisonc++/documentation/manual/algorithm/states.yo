@@ -1,0 +1,29 @@
+The member function tt(parse()) is implemented using a finite-state
+machine. The values pushed on the parser stack are not simply token type
+codes; they represent the entire sequence of terminal and nonterminal symbols
+at or near the top of the stack. The current state collects all the
+information about previous input which is relevant to deciding what to do
+next.
+
+Each time a look-ahead token is read, the current parser state together with
+the current (not yet processed) token are looked up in a table. This table
+entry can say em(Shift the token). This also specifies a new parser state,
+which is then pushed onto the top of the parser stack. Or it can say em(Reduce
+using rule number n). This means that a certain number of tokens or groupings
+are taken off the top of the stack, and that the rule's grouping becomes the
+`next token' to be considered. That `next token' is then used in combination
+with the state then at the stack's top, to determine the next state to
+consider. This (next) state is then again pushed on the stack, and a new token
+is requested from the lexical scanner, and the process repeats itself.
+
+There are two special situations the parsing algorithm must consider:
+    itemization(
+    it() First, the lexical scanner may reach em(end-of-input). If the current
+state on top of the parser's stack is the start-state, then the reduction
+(which is called for in this situation) is in fact the (successful) end of the
+parsing process, and tt(parse()) returns the value 0, indicating a successful
+parsing. 
+    it() There is one other alternative: the table can say that the 
+token is erroneous in the current state. This causes error processing to begin
+(see chapter ref(RECOVERY)).
+    )

@@ -7,8 +7,15 @@ void Parser::setStype()
     
     d_stackDecl = "typedef ";
 
-    if (d_scanner.lex() != Scanner::IDENTIFIER)
-        lineMsg() << "`%stype IDENTIFIER' expected" << err;
-    else
-        (d_stackDecl += d_scanner.text()) += " STYPE;\n";
+    if (d_scanner.lex() == Scanner::IDENTIFIER)
+    {
+        string const &type = d_scanner.trimmedText();
+        if (type.length())
+        {
+            (d_stackDecl += type) += " STYPE;\n";
+            return;
+        }
+    }
+
+   lineMsg() << "`%stype type-definition' expected" << err;
 }

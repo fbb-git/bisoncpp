@@ -1,0 +1,56 @@
+
+bisonc++ by Frank B. Brokken (f.b.brokken@rug.nl)
+
+LALR(1) Parser Generator V 0.98.005
+Copyright (c) GPL 2005. NO WARRANTY.
+Designed after `bison++' (1.21.9-1) by Alain Coetmeur <coetmeur@icdc.fr>
+
+Usage: bisonc++ [OPTIONS] file
+Where:
+  [OPTIONS] - zero or more optional arguments (int options between
+              parentheses. Short options require arguments if their
+              long option variants do too):
+   --baseclass-preinclude=<header> (-H):
+           preinclude header in the base-class header file.
+           Use [header] to include <header>, otherwise "header"
+           will be included.
+   --baseclass-skeleton=<skeleton> (-B):
+           location of the baseclass header skeleton
+   --baseclass-header=<header> (-b):
+           filename holding the base class definition.
+   --class-skeleton=<skeleton> (-C):
+           location of the class header skeleton
+   --class-header=<header> (-c):
+           filename holding the parser class definition.
+   --construction:
+           write details about the grammar analysis to stdout.
+   --debug: generates #define DEBUG 1 in the parse function's source
+   --filenames=<filename> (-f):
+           filename of output files (overruling the default filename)
+   --force-class-header: overwrite an existing class header file
+   --force-implementation-header: overwrite an existing implementation
+           header file
+   --help (-h): produce this information (and terminate)
+   --implementation-skeleton=<skeleton> (-I):
+           location of the implementation header skeleton
+   --implementation-header=<header> (-i):
+           filename holding the implementation header.
+   --lines (-l): put #line directives in generated output
+   --namespace <namespace>, (-n):
+            define the parser in the mentioned namespace
+   --no-baseclass-header: don't create the parser's base class header
+   --no-parse-member: don't create the member parse()
+   --parser-skeleton=<parserskel> (-P):
+           location of the parse function's skeleton
+   --parser-source=<source> (-p):
+          filename holding the parse function's source.
+   --scanner=<header-file> (-s):
+          include `header-file' declaring the class Scanner, and call
+          d_scanner.yylex() in lex()
+   --show-filenames:
+          show the names of the used/generated files on standard error
+   --version (-v):
+           display bisonc++'s version and terminate
+   --verbose:
+           generate verbose description of the analyzed grammar
+
