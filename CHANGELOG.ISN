@@ -1,3 +1,7 @@
+the version tags got mixed up. The last tag is v0-98-005a, corresponding to
+the package version 0.98.005. This file is NOT tagged v0-98-005a, but should
+come with an untagged version just after v0-98-005a
+
 --none so far--
 
 
