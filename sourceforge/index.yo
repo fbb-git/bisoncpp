@@ -13,7 +13,7 @@ report(Bisonc++)
 
 center(
     htmlcommand(
-        <img src="bisoncpp.jpg" border="0" alt="Bisonc++ Image" />
+        <img src="bison.jpg" border="0" alt="Bisonc++ Image" />
         <p>
         <a href="http://sourceforge.net">
         <img src="http://sourceforge.net/sflogo.php?group_id=127615&amp;type=2"

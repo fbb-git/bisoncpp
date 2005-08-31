@@ -2,4 +2,9 @@
 
 yodl2html index.yo
 
-scp ../bisonc++/documentation/man*/*.html bisoncpp.jpg index.html fbb@shell.sourceforge.net:/home/groups/b/bi/bisoncpp/htdocs/
+scp ../bisonc++/documentation/man*/*.html index.html \
+    fbb@shell.sourceforge.net:/home/groups/b/bi/bisoncpp/htdocs/
+
+#scp bisons.jpg \
+#    fbb@shell.sourceforge.net:/home/groups/b/bi/bisoncpp/htdocs/bison.jpg
+
