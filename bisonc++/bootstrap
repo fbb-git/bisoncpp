@@ -10,7 +10,7 @@ run()
     $* || exit 1
 }
 
-run mkdir -p o $BIN $SKEL $MAN $DOC/man $DOC/bison-docs $DOC/manual
+run mkdir -p o $BIN $SKEL $MAN $DOC/{man,bison-docs}
 
 run cd scanner 
 [ -e yylex.cc ] || run flex lexer
@@ -42,47 +42,9 @@ done
 [ -e libbisonc++.a ] || run ar rs libbisonc++.a o/*.o */o/*o
 run g++ -o ${BIN}/bisonc++ -lbisonc++ -L. -lbobcat -s
 
-run cp -r share/* ${SKEL}
-
-run cp COPYING ${DOC}
-
-run cp -r documentation/examples ${DOC}/examples
-run cp -r documentation/man/calculator ${DOC}/man
-run cp -r documentation/{html,bison.ps.org} ${DOC}/bison-docs
-
-
-[ "$1" == "all" ] || exit 0
-
-gcc -E VERSION.h | grep -v '#' | sed 's/\"//g' > release.yo
-
-
-run cd documentation/man
-
-if [ ! -e bisonc++.1 -o \
-        bisonc++.yo -nt bisonc++.man -o \
-        ../../release.yo -nt bisonc++.1 ] 
-then
-    run yodl2man  -o bisonc++.1 bisonc++
-    run yodl2html -o bisonc++man.html bisonc++
-fi
-
-gzip < bisonc++.1 > ${MAN}/usr/share/man/man1/bisonc++.1.gz
-run cp bisonc++man.html ${DOC}/man
-
-
-
-run cd ../manual
-
-[ -e verbinsert ] || run g++ -o verbinsert ../../contrib/verbinsert.cc -s
-
-PATH=$PATH:`pwd`
-
-[ -e invoking/usage ] || run ${BIN}/bisonc++ --help > invoking/usage
-
-run yodl2html -l 3 bisonc++.yo
-
-run cp *.html ${DOC}/manual
-
-# run cd ../..
-
-
+run cp -r share/*   ${SKEL}
+run cp -r documentation/bisonc++/usr/share/man/man1/*       ${MAN}
+run cp -r COPYING documentation/examples                    ${DOC}
+run cp -r documentation/man/calculator                      ${DOC}/man
+run cp -r documentation/{html,bison.ps.org}                 ${DOC}/bison-docs
+run cp -r documentation/bisonc++/usr/share/doc/bisonc++/manual  ${DOC}

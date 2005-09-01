@@ -1,6 +1,9 @@
-#BASE=/usr
-BASE=/home/frank/tmp/bisonc++demo
+BASE=/tmp/bisonc++
     # BASE=is the directory below which ALL bisonc++ files will be stored.
+    #
+    # For an operational installation, you probably must be `root', and 
+    # BASE=/usr is suggested. `BASE' itself is not used outside of this file,
+    # so feel free to define BIN, SKEL, MAN and DOC in any which way you like.
 
 BIN=${BASE}/bin
     # the directory in which bisonc++ will be stored

@@ -584,17 +584,9 @@ void man()
 
 void manual()
 {
-    string path;
-
     release();
 
     chdir("documentation/manual");
-    path = chdir(".") + ":" + getenv("PATH");
-
-    if (!exists("verbinsert"))
-        exec("g++", "-o", "verbinsert", "../../contrib/verbinsert.cc", "-s");
-    
-    putenv(path);
     exec("yodl2html -l 3 bisonc++.yo");
     chdir("../../");
 }
@@ -682,8 +674,9 @@ void cleanup()
 
     system("rm -rf parser/SKEL bin o */o libbisonc++.a release.yo");
     chdir("documentation");
-    system("rm -rf manual/verbinsert man/*.{1,html} manual/*.html"
-            "manual/invoking/usage");
+    system("rm -rf man/*.{1,html} manual/*.html"
+            "manual/invoking/usage bisonc++");
+
 }
 
 void main(int argc, list argv, list envp)

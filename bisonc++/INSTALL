@@ -1,12 +1,9 @@
-To Install bisonc++ `by hand' perform the following steps:
+To Install bisonc++ by hand instead of using the binary distribution or using
+icmake's build script perform the following steps:
 
     1. Inspect the values of the variables in the file INSTALL.cf
-       Modify them when necessary.
+       Modify these when necessary.
 
     2. Make sure the bobcat library has been installed.
 
-    3. Run `sh bootstrap' to compile and install bisonc++
-       Run `sh bootstrap all' to compile and install bisconc++ as well as the
-       bisonc++ specific documentation.
-       This will only succeed if yodl has been installed on your system.
-
+    3. Run `./bootstrap' to compile and install bisonc++

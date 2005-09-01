@@ -1,4 +1,23 @@
 #!/bin/sh
 PROJECT=bisoncpp
 
+cvsremove
+
+cd bisonc++
+
+build clean
+build debian
+build install documentation/bisonc++
+
+cd documentation/bisonc++/usr
+rm -rf bin share/doc/bisonc++/{man,examples,bison-docs,COPYING}
+rm -rf share/bisonc++
+cd ../../..
+
+export BISONCPP=minimal 
 dpkg-buildpackage -mf.b.brokken@rug.nl  -rfakeroot 2>&1 | tee /tmp/$PROJECT 
+
+cd ..
+
+cvsrestore
+
