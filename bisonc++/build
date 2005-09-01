@@ -540,13 +540,18 @@ void prog()
 
 void dprog()
 {
-    system("cp parser/dataskel.debian parser/dataskel.cc");
+    system("echo \"#define _Skel_ \\\"/usr/share/bisonc++\\\"\""
+                                                    " > parser/SKEL");
+    exec("touch", "parser/dataskel.cc");
     prog();
 }
 
 void lprog()
 {
-    system("cp parser/dataskel.local parser/dataskel.cc");
+    system("echo \"#define _Skel_ "
+        "\\\"/home/frank/cvs/frank/bisonc++fbb/bisonc++/share"
+        "/usr/share/bisonc++\\\"\" > parser/SKEL");
+    exec("touch", "parser/dataskel.cc");
     prog();
 }
 
@@ -558,16 +563,15 @@ void release()
 
 void man()
 {
-    chdir("documentation");
     release();
 
-    chdir("man");
+    chdir("documentation/man");
 
     if 
     (
-        "bisonc++.yo" younger "bisonc++.man"
+        "bisonc++.yo" younger "bisonc++.1"
         ||
-        "../release.yo" younger "bisonc++.man"
+        "../../release.yo" younger "bisonc++.1"
 
     )
     {
@@ -580,12 +584,18 @@ void man()
 
 void manual()
 {
-    chdir("documentation");
+    string path;
+
     release();
 
-    chdir("manual");
-    exec("yodl2html -l 3 bisonc++.yo");
+    chdir("documentation/manual");
+    path = chdir(".") + ":" + getenv("PATH");
 
+    if (!exists("verbinsert"))
+        exec("g++", "-o", "verbinsert", "../../contrib/verbinsert.cc", "-s");
+    
+    putenv(path);
+    exec("yodl2html -l 3 bisonc++.yo");
     chdir("../../");
 }
 
@@ -670,9 +680,9 @@ void cleanup()
         return;
     }
 
-    system("rm -rf bin o */o libbisonc++.a release.yo");
+    system("rm -rf parser/SKEL bin o */o libbisonc++.a release.yo");
     chdir("documentation");
-    system("rm -rf man/*.{1,html} manual/*.html"
+    system("rm -rf manual/verbinsert man/*.{1,html} manual/*.html"
             "manual/invoking/usage");
 }
 

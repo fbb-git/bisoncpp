@@ -1,0 +1,88 @@
+#!/bin/sh
+
+. INSTALL.cf
+
+echo "#define _Skel_  \"$SKEL\"" > parser/SKEL
+
+run()
+{
+    echo "$*"
+    $* || exit 1
+}
+
+run mkdir -p o $BIN $SKEL $MAN $DOC/man $DOC/bison-docs $DOC/manual
+
+run cd scanner 
+[ -e yylex.cc ] || run flex lexer
+run cd ..
+
+for src in *.cc
+do
+    BASE=${src%\.[^\.]*}
+    [ o/${BASE}.o -nt ${src} ] || run g++ -Wall -O3 -o o/${BASE}.o -c ${src}
+done
+
+NR=0
+for x in element firstset symbol terminal block production followset \
+         nonterminal symtab rules lookaheadset scanner parser \
+         item state itemsets generator 
+do
+    run cd $x
+    run mkdir -p o
+    for src in *.cc
+    do
+        BASE=${src%\.[^\.]*}
+        [ o/${NR}${BASE}.o -nt ${src} ] ||
+            run g++ -Wall -O3 -o  o/${NR}${BASE}.o -c ${src}
+    done
+    run cd ..
+    let NR=${NR}+1
+done
+
+[ -e libbisonc++.a ] || run ar rs libbisonc++.a o/*.o */o/*o
+run g++ -o ${BIN}/bisonc++ -lbisonc++ -L. -lbobcat -s
+
+run cp -r share/* ${SKEL}
+
+run cp COPYING ${DOC}
+
+run cp -r documentation/examples ${DOC}/examples
+run cp -r documentation/man/calculator ${DOC}/man
+run cp -r documentation/{html,bison.ps.org} ${DOC}/bison-docs
+
+
+[ "$1" == "all" ] || exit 0
+
+gcc -E VERSION.h | grep -v '#' | sed 's/\"//g' > release.yo
+
+
+run cd documentation/man
+
+if [ ! -e bisonc++.1 -o \
+        bisonc++.yo -nt bisonc++.man -o \
+        ../../release.yo -nt bisonc++.1 ] 
+then
+    run yodl2man  -o bisonc++.1 bisonc++
+    run yodl2html -o bisonc++man.html bisonc++
+fi
+
+gzip < bisonc++.1 > ${MAN}/usr/share/man/man1/bisonc++.1.gz
+run cp bisonc++man.html ${DOC}/man
+
+
+
+run cd ../manual
+
+[ -e verbinsert ] || run g++ -o verbinsert ../../contrib/verbinsert.cc -s
+
+PATH=$PATH:`pwd`
+
+[ -e invoking/usage ] || run ${BIN}/bisonc++ --help > invoking/usage
+
+run yodl2html -l 3 bisonc++.yo
+
+run cp *.html ${DOC}/manual
+
+# run cd ../..
+
+

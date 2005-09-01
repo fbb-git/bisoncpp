@@ -1,7 +1,7 @@
 #include "parser.ih"
+#include "SKEL"
 
-char Parser::s_defaultBaseclassSkeleton[] = 
-            "/usr/share/bisonc++/bisonc++base.h";
+char Parser::s_defaultBaseclassSkeleton[] = _Skel_ "/bisonc++base.h";
 char Parser::s_defaultClassSkeleton[]    = 
             "/usr/share/bisonc++/bisonc++.h";
 char Parser::s_defaultImplementationSkeleton[]    = 

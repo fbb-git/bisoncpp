@@ -2,6 +2,8 @@ the version tags got mixed up. The last tag is v0-98-005a, corresponding to
 the package version 0.98.005. This file is NOT tagged v0-98-005a, but should
 come with an untagged version just after v0-98-005a
 
+added a bootstrap script (for 0.98.006)
+
 --none so far--
 
 
