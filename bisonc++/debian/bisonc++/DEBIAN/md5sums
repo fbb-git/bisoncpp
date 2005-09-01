@@ -3,7 +3,7 @@
 681260dcbc9a5b10ea8aece82cd5c45d  usr/share/bisonc++/bisonc++.h
 72cdfc50d6af15d4e388c0aa0bac4269  usr/share/bisonc++/bisonc++.ih
 1bc0704d0e7857e86d7327021147fed9  usr/share/bisonc++/bisonc++base.h
-0c7d87c84bcad41a748e0e5edc83b027  usr/share/man/man1/bisonc++.1.gz
+da8a636473335f8dd088bd1eb7d5d9f3  usr/share/man/man1/bisonc++.1.gz
 282964a89262cef063700c9bb6c3217d  usr/share/doc/bisonc++/bison-docs/html/bison.html
 4e9bd3a67627f3473a803fafb5bcd5bd  usr/share/doc/bisonc++/bison-docs/html/bison_1.html
 66d32387c680e4dbbf30a3d58e3b4ff9  usr/share/doc/bisonc++/bison-docs/html/bison_10.html
@@ -50,14 +50,14 @@ dbeb477cff8ac6127832e61e50956b6f  usr/share/doc/bisonc++/examples/examples/bison
 f3c6f48516a1bb0cd56b26d54f2e4211  usr/share/doc/bisonc++/examples/examples/bison++Example.NEW/make
 38879c9b13087bb9a1bafde8213f5813  usr/share/doc/bisonc++/examples/examples/bison++Example.NEW/test.txt
 842c41249c0012221ca0522d425f4d1c  usr/share/doc/bisonc++/examples/examples/bison++Example.NEW/test2.txt
-858022ac97e8e0d40837c0744e80724a  usr/share/doc/bisonc++/examples/examples/bison++Example.NEW/FlexLexer.h.gz
+deb0d75dbf776d74e90c8f6bce79fec0  usr/share/doc/bisonc++/examples/examples/bison++Example.NEW/FlexLexer.h.gz
 d8ccb1b729845b5cc3acad10ec6c06a4  usr/share/doc/bisonc++/examples/examples/bison++Example.ORG/Makefile
 1f22b3eebbc75804c783684d2d9c0752  usr/share/doc/bisonc++/examples/examples/bison++Example.ORG/MyCompiler.cc
 a3e999932465c6867cb062fcfc990a4e  usr/share/doc/bisonc++/examples/examples/bison++Example.ORG/MyParser.y
 dc8aa15fd78174de6249d36d4bce229b  usr/share/doc/bisonc++/examples/examples/bison++Example.ORG/MyScanner.l
 38879c9b13087bb9a1bafde8213f5813  usr/share/doc/bisonc++/examples/examples/bison++Example.ORG/test.txt
 842c41249c0012221ca0522d425f4d1c  usr/share/doc/bisonc++/examples/examples/bison++Example.ORG/test2.txt
-8697110f02088db91208352f17760f72  usr/share/doc/bisonc++/examples/examples/bison++Example.ORG/FlexLexer.h.gz
+62d41b96acb7c47c665dc91f5e427d67  usr/share/doc/bisonc++/examples/examples/bison++Example.ORG/FlexLexer.h.gz
 0a907f39594428a8f94908745d9ba2c7  usr/share/doc/bisonc++/examples/examples/calcgen/Parser.ih
 3b62b2503b2519206bcf68ce5f116015  usr/share/doc/bisonc++/examples/examples/calcgen/build
 61b07bd1f39575e15ffb32e09bf58b30  usr/share/doc/bisonc++/examples/examples/calcgen/example.cc
@@ -100,7 +100,7 @@ c3fc4ae37542df5b5b66a8d112d8f130  usr/share/doc/bisonc++/man/calculator/parser/c
 5a9bdd8e29ffde378581069ff70e7ffc  usr/share/doc/bisonc++/man/calculator/parser/calculator.ih
 02c352910d8db9861de3a1c6c24d5323  usr/share/doc/bisonc++/man/calculator/parser/calculatorbase.h
 aafe8beb92c7c88dc49b192f3bc9b968  usr/share/doc/bisonc++/man/calculator/parser/grammar
-b34f4aa71967578145b21e8584e6dead  usr/share/doc/bisonc++/man/calculator/parser/parse.cc.gz
+2064e8bb93da304ee90d528a16033333  usr/share/doc/bisonc++/man/calculator/parser/parse.cc.gz
 bc3822bf595542a4cb438c45c3f31295  usr/share/doc/bisonc++/man/calculator/scanner/lexer
 86fca53e12493400e0e8a2435662800a  usr/share/doc/bisonc++/man/calculator/scanner/scanner.h
 b907f640141473f1070992a27cf9f49e  usr/share/doc/bisonc++/man/calculator/scanner/scanner.ih
@@ -115,5 +115,5 @@ c83e33c87e39b101b2b769e92ca3ad16  usr/share/doc/bisonc++/manual/bisonc++01.html
 c752d9580e00a63ebddc3e1102f83e33  usr/share/doc/bisonc++/manual/bisonc++08.html
 052077e1bf85799173fde8ad9b281efd  usr/share/doc/bisonc++/manual/bisonc++09.html
 9c4e019872020e297d0b2f406196139c  usr/share/doc/bisonc++/copyright
-fbce51af1cf923648665c6264c7008fd  usr/share/doc/bisonc++/COPYING.gz
+8625748f9c0c9734e5f936165a51cc97  usr/share/doc/bisonc++/COPYING.gz
 ddfa7dc74d4f66a32b264f9f8b1382be  usr/share/doc/bisonc++/changelog.gz

@@ -123,6 +123,7 @@ string                  // contain options for
     current,            // contains name of current dir.
     programname;        // the name of the program to create
 int
+    minimal,            // minimal construction/cleanup
     nClasses,           // number of classes/subdirectories
     program;            // 1: program is built
 list
@@ -594,6 +595,13 @@ void manual()
 void debian()
 {
     dprog();
+    if (minimal)
+    {
+        printf("\n"
+                "WARNING: BISONCPP = minimal: NO MAN/MANUAL CONSTRUCTION\n"
+                "\n");
+        return;
+    }
     man();
     manual();
 }
@@ -664,7 +672,7 @@ void cleanup()
 {
     system("rm -rf debian/bisonc++ build-stamp configure-stamp ");
 
-    if (getenv("BISONCPP") == "minimal")
+    if (minimal)
     {
         printf("\n"
                 "WARNING: PERFORMED MINIMAL CLEANUP\n"
@@ -711,6 +719,8 @@ void main(int argc, list argv, list envp)
     }
 
     envir = envp;
+
+    minimal = getenv("BISONCPP") == "minimal";
 
     programname = BUILD_PROGRAM;
     arg1 = element(1, argv);
