@@ -1,0 +1,5 @@
+#!/bin/sh
+
+yodl2html index.yo
+
+scp index.html fbb@shell.sourceforge.net:/home/groups/b/bi/bisoncpp/htdocs/
