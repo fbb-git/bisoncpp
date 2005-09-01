@@ -2,7 +2,7 @@ NOUSERMACRO(yyparse parse lex yylex error setDebug ParserBase throw ACCEPT
         ABORT errok clearin RECOVERING print done prompt Parse 
         debug setSval setLoc)
 
-includefile(../release.yo)
+includefile(../../release.yo)
 
 htmlbodyopt(text)(#27408B)
 htmlbodyopt(bgcolor)(#FFFAF0)
@@ -27,7 +27,7 @@ DELETEMACRO(tt)
 DEFINEMACRO(tt)(1)(em(ARG1))
 
 COMMENT( man-request, section, date, distribution file, general name)
-manpage(bisonc++)(1)(CURYRS)(bisonc++.CURVERS.tar.gz)
+manpage(bisonc++)(1)(_CurYrs_)(bisonc++._CurVers_.tar.gz)
         (bisonc++ parser generator)
 
 COMMENT( man-request, larger title )

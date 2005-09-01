@@ -1,15 +1,17 @@
 htmlbodyopt(text)(#27408B)
 htmlbodyopt(bgcolor)(#FFFAF0)
 
+includefile(../bisonc++/release.yo)
+
 mailto(fbbrokken@users.sourceforge.net)
 
 affiliation(Computing Center, University of Groningen)
 
 notableofcontents()
 
-report(Bisonc++)
+report(Bisonc++ V _CurVers_)
       (Frank B. Brokken (f.b.brokken@rug.nl)nl())
-      (2005)
+      (_CurYrs_)
 
 center(
     htmlcommand(

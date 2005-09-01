@@ -552,7 +552,7 @@ void lprog()
 
 void release()
 {
-    if ("../VERSION" younger "release.yo")
+    if ("VERSION" younger "release.yo")
         system("gcc -E VERSION.h | grep -v '#' | sed 's/\"//g' > release.yo");
 }
 
@@ -670,9 +670,9 @@ void cleanup()
         return;
     }
 
-    system("rm -rf bin o */o libbisonc++.a ");
+    system("rm -rf bin o */o libbisonc++.a release.yo");
     chdir("documentation");
-    system("rm -rf release.yo man/*.{1,html} manual/*.html"
+    system("rm -rf man/*.{1,html} manual/*.html"
             "manual/invoking/usage");
 }
 
@@ -730,6 +730,8 @@ void main(int argc, list argv, list envp)
         manual();
     else if (arg1 == "prog")
         prog();
+    else if (arg1 == "release")
+        release();
     else
     {
         printf("request `", arg1, "' not yet available\n");
