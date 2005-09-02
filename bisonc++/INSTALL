@@ -1,5 +1,5 @@
-To Install bisonc++ by hand instead of using the binary distribution or using
-icmake's build script perform the following steps:
+To Install bisonc++ by hand instead of using the binary distribution perform
+the following steps:
 
     1. Inspect the values of the variables in the file INSTALL.cf
        Modify these when necessary.
