@@ -5,8 +5,6 @@ cvsremove
 
 cd bisonc++
 
-export BISONCPP=minimal 
-
 make/clean
 make/program
 make/man
