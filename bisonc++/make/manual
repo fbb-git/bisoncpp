@@ -10,8 +10,6 @@ req()
     $* || exit 1
 }
 
-make/special
-
 mkdir -p tmp/manual
 
 req cd documentation/manual
