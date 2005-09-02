@@ -1,0 +1,17 @@
+#!/bin/sh
+
+. INSTALL.cf
+
+req()
+{
+    echo "$*"
+    eval "$*" || exit 1
+}
+
+
+[ INSTALL.cf -nt parser/SKEL ] &&
+                 req "echo \"#define _Skel_  \\\"$SKEL\\\"\" > parser/SKEL"
+
+[ ! -e release.yo -o VERSION -nt release.yo ] &&
+    req "gcc -E VERSION.h | grep -v '#' | sed 's/\\\"//g' > release.yo"
+

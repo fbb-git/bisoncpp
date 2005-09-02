@@ -5,14 +5,12 @@ cvsremove
 
 cd bisonc++
 
-build clean
-build debian
-build install documentation/bisonc++
+export BISONCPP=minimal 
 
-cd documentation/bisonc++/usr
-rm -rf bin share/doc/bisonc++/{man,examples,bison-docs,COPYING}
-rm -rf share/bisonc++
-cd ../../..
+make/clean
+make/program
+make/man
+make/manual
 
 export BISONCPP=minimal 
 dpkg-buildpackage -mf.b.brokken@rug.nl  -rfakeroot 2>&1 | tee /tmp/$PROJECT 

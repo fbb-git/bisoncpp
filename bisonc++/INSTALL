@@ -6,4 +6,13 @@ icmake's build script perform the following steps:
 
     2. Make sure the bobcat library has been installed.
 
-    3. Run `./bootstrap' to compile and install bisonc++
+    3. Run `./make/program' to compile bisonc++
+
+        Note: it's not `make program'
+    
+    4. Run (probably as root) ./make/install to install
+
+        Note: it's not `make install'
+
+    Following the installation nothing in this directory tree is required
+    for the proper functioning of bisonc++, so consider removing it.
