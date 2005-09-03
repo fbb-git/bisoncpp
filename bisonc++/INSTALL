@@ -8,11 +8,11 @@ the following steps:
 
     3. Run `./make/program' to compile bisonc++
 
-        Note: it's not `make program'
+        Note: it's NOT `make program'
     
     4. Run (probably as root) ./make/install to install
 
-        Note: it's not `make install'
+        Note: it's NOT `make install'
 
     Following the installation nothing in this directory tree is required
     for the proper functioning of bisonc++, so consider removing it.

@@ -1,3 +1,12 @@
+bisonc++ (0.98.006) unstable; urgency=low
+
+  * Removed the dependency on `icmake'. No change of functionality
+    See the instructions in the `INSTALL' file when you want to compile and
+    install `bisonc++' yourself, rather than using the binary (.deb)
+    distribution. 
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat,  3 Sep 2005 17:42:29 +0200
+
 bisonc++ (0.98.005) unstable; urgency=low
 
   * Removed the classes Arg, Errno, Msg and Wrap1, using the Bobcat library's
