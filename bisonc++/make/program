@@ -12,7 +12,7 @@ req()
 
 mkdir -p tmp/bin tmp/o
 
-make/special
+make/special skel
 make/scanner
 make/library
 
