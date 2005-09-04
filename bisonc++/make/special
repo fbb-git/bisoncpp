@@ -1,0 +1,31 @@
+#!/bin/sh
+
+. INSTALL.cf
+
+req()
+{
+    echo "$*"
+    $* || exit 1
+}
+
+reqeval()
+{
+    echo "$*"
+    eval "$*" || exit 1
+}
+
+
+if [ "$1" == "skel" ] 
+then
+    [ INSTALL.cf -nt parser/SKEL ] &&
+             reqeval "echo \"#define _Skel_  \\\"$SKEL\\\"\" > parser/SKEL"
+    exit 0
+fi
+
+
+[ ! -e release.yo -o VERSION -nt release.yo ] &&
+    reqeval "gcc -E VERSION.h | grep -v '#' | sed 's/\\\"//g' > release.yo"
+
+cd documentation/manual/invoking/
+[ ! -e usage ] 
+    reqeval "../../../tmp/bin/bisonc++ --usage > usage"

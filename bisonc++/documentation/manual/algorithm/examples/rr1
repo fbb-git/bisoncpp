@@ -1,0 +1,30 @@
+%stype char *
+%token WORD
+
+%%
+
+sequence: 
+    // empty 
+    { 
+        cout << "empty sequence\n"; 
+    }
+| 
+    maybeword
+| 
+    sequence WORD
+    { 
+        cout << "added word " << $2 << endl;
+    }
+;
+
+maybeword: 
+    // empty 
+    { 
+        cout << "empty maybeword\n"; 
+    }
+| 
+    WORD
+    { 
+        cout << "single word " << $1 << endl;
+    }
+;

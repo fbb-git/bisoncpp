@@ -3,9 +3,9 @@
 
 #include <iostream>
 #include <string>
+#include <bobcat/arg>
+#include <bobcat/errno>
 
-#include "errno/errno.h"
-#include "arg/arg.h"
 #include "rules/rules.h"
 #include "parser/parser.h"
 #include "itemsets/itemsets.h"

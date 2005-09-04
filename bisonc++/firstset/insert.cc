@@ -9,7 +9,7 @@ ostream &FirstSet::insert(ostream &out) const
 
                                 // passing Element const * values
     for_each(begin(), end(), 
-        Wrap1<Element const *, Element::SDContext>
+        Wrap1c<Element, Element::SDContext>
                   (&Element::sDisplay, context));
 
     if (d_epsilon)

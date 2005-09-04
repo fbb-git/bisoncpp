@@ -1,0 +1,7 @@
+B() assumes by default that the start symbol for the grammar is the first
+nonterminal em(specified) in the grammar specification section. The programmer
+may override this restriction with the tt(%start) directive as follows:
+        verb(
+    %start symbol
+        )
+

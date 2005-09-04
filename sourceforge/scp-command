@@ -1,0 +1,10 @@
+#!/bin/sh
+
+yodl2html index.yo
+
+scp ../bisonc++/tmp/man*/*.html index.html \
+    fbb@shell.sourceforge.net:/home/groups/b/bi/bisoncpp/htdocs/
+
+#scp bisons.jpg \
+#    fbb@shell.sourceforge.net:/home/groups/b/bi/bisoncpp/htdocs/bison.jpg
+

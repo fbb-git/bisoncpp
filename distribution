@@ -1,0 +1,28 @@
+#!/bin/sh
+PROJECT=bisoncpp
+
+cvsremove
+
+mkdir -p tmp
+
+cd bisonc++
+
+make/clean
+make/program
+make/man
+make/manual
+
+mv tmp/bin ../tmp
+mv tmp/o   ../tmp
+mv libbisonc++.a ../tmp
+
+export BISONCPP=minimal 
+dpkg-buildpackage -mf.b.brokken@rug.nl  -rfakeroot 2>&1 | tee /tmp/$PROJECT 
+
+cd ..
+rm -rf tmp
+
+cvsrestore
+
+
+

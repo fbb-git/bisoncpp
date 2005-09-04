@@ -12,6 +12,7 @@ void State::setReduce(Terminal const *token, Production const *production)
     {
         msg() << "   On " << tokenName << " reduce, using " << production << 
                 info;
+
         d_action.insert
         (
             ActionTable::value_type
@@ -31,6 +32,7 @@ void State::setReduce(Terminal const *token, Production const *production)
     //        iterations. 
                 
     ShiftReduce &sr = parsTabIterator->second;
+    bool sr_accept = sr.accept();
 
     if 
     (
@@ -38,7 +40,7 @@ void State::setReduce(Terminal const *token, Production const *production)
         ||
         sr.production() == production       // or this reduction already
         ||                                  // set
-            sr.accept()
+            sr_accept
             && 
             productionNr == Rules::acceptProductionNr()
     )   
@@ -52,7 +54,7 @@ void State::setReduce(Terminal const *token, Production const *production)
                 "    Reduce-reduce conflict on " << tokenName << ":\n"
                 "       reduce by production " << production << spool;
 
-        if (sr.accept())
+        if (sr_accept)
             msg() << " or ACCEPT" << info;
         else
             msg() << "\n"
@@ -61,7 +63,11 @@ void State::setReduce(Terminal const *token, Production const *production)
         Production const *solved;
         Production const *suppressed;
 
-        if (production->nr() < sr.production()->nr())
+        // sr may be `accept' instead of a `production'.
+        // so here, if sr.accept() holds true, what do we do?
+        // Let's prefer `accept' for the time being. 
+
+        if (!sr_accept && production->nr() < sr.production()->nr())
         {
             solved = production;
             suppressed = sr.production();
@@ -76,9 +82,13 @@ void State::setReduce(Terminal const *token, Production const *production)
         (
             ActionTable::value_type(token, ShiftReduce(suppressed))
         );
-        
-        msg() << "Conflict solved using the lower numbered "
-                                                    "production rule (" << 
+
+
+        if (sr_accept)        
+            msg() << "Conflict solved using `ACCEPT'" << info;
+        else
+            msg() << "Conflict solved using the lower numbered "
+                                                        "production rule (" << 
                 solved->nr() << ")" << info;
 
         sr.setProduction(solved);

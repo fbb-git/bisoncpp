@@ -15,7 +15,7 @@
 bool State::beforeDot(Symbol const &symbol) const
 {
     return find_if(d_kernel.begin(), d_kernel.end(),
-                    Wrap1<Item const &, Symbol const, bool>
+                    Wrap1c<Item, Symbol const, bool>
                                (&Item::ifBeforeDot, symbol))
             != d_kernel.end();
 }

@@ -4,9 +4,10 @@
 #include <algorithm>
 #include <iomanip>
 
-#include "../msg/msg.h"
+#include <bobcat/msg>
 
 using namespace std;
+using namespace FBB;
 
 
 /*

@@ -1,0 +1,18 @@
+In a simple program it may be sufficient to use the same data type for the
+semantic values of all language constructs. This was true in the RPN and infix
+calculator examples (see, e.g., sections ref(RPN) and ref(CALC)).
+
+B()'s default is to use type tt(int) for all semantic values. To specify
+some other type, the directive tt(%stype) must be used, like this:
+        verb(
+    %stype double
+        )
+    This directive must go in the directives section of the grammar file
+(see section ref(OUTLINE)). As a result of this, the parser class will define
+a em(private type) tt(STYPE) as tt(double): Semantic values of language
+constructs always have the type tt(STYPE), and an internally used data member
+tt(d_val) that could be used by the lexical scanner to associate a semantic
+value with a returned token is defined as
+        verb(
+    STYPE d_val;
+        )

@@ -1,0 +1,5 @@
+COPTS="-Wall -O3"
+LOPTS="-lbobcat -lbisonc++ -L. -s"
+LIBRARY="libbisonc++.a"
+MAIN=bisonc++.cc
+EXECUTABLE=bisonc++
