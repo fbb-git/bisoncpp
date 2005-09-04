@@ -13,14 +13,6 @@ then
     echo "
     WARNING: PERFORMED MINIMAL CLEANUP
     "
-
-    if [ -e ../tmp ] 
-    then
-        mv ../tmp/libbisconc++.a .
-        mv ../tmp/bin   tmp
-        mv ../tmp/o     tmp
-    fi
-
     exit 0
 fi
 

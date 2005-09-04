@@ -10,16 +10,26 @@ req()
     $* || exit 1
 }
 
-mkdir -p tmp/bin tmp/o
+if [ -e ../tmp/libbisonc++.a ] 
+then
+    mv ../tmp/libbisonc++.a .
+    mv ../tmp/*             tmp
+else
+    mkdir -p tmp/bin tmp/o
 
-make/special skel
-make/scanner
-make/library
+    make/special skel
+    make/scanner
+    make/library
+    
+    BASE=${MAIN%\.[^\.]*}
+    OBJ=tmp/o/${BASE}.o
+    
+    [ ! -e $OBJ -o $MAIN -nt $OBJ ] &&
+                         req g++ $COPTS -o $OBJ -c $MAIN
+    
+    req g++ -o tmp/bin/$EXECUTABLE $OBJ $LOPTS
+fi
 
-BASE=${MAIN%\.[^\.]*}
-OBJ=tmp/o/${BASE}.o
 
-[ ! -e $OBJ -o $MAIN -nt $OBJ ] &&
-                     req g++ $COPTS -o $OBJ -c $MAIN
 
-req g++ -o tmp/bin/$EXECUTABLE $OBJ $LOPTS
+
