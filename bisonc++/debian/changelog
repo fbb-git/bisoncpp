@@ -1,3 +1,16 @@
+bisonc++ (0.98.007) unstable; urgency=low
+
+  * Added a README.flex file giving some background information about the
+    provided implementation of the lexical scanner (bisonc++/scanner/yylex.cc)
+
+    Modified the compilation scripts: bisconc++/flex/FlexLexer.h is now
+    included by default. This FlexLexer.h file is expected by
+    bisonc++/scanner/yylex.cc and by the Scanner class.
+
+    Simplified some compilation scripts.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri,  9 Sep 2005 11:42:24 +0200
+
 bisonc++ (0.98.006) unstable; urgency=low
 
   * Removed the dependency on `icmake'. No change of functionality

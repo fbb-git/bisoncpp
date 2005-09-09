@@ -1,14 +1,3 @@
-0.98.007
-
-Added a README.flex file giving some background information about the provided
-implementation of the lexical scanner (bisonc++/scanner/yylex.cc)
-
-Modified the compilation scripts: bisconc++/flex/FlexLexer.h is now 
-included by default. This FlexLexer.h file is expected by
-bisonc++/scanner/yylex.cc and by the Scanner class. 
-
-Simplified some compilation scripts.
-
 --none so far--
 
 
