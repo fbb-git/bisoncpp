@@ -3,7 +3,11 @@ PROJECT=bisoncpp
 
 cvsremove
 
-mkdir -p tmp
+if [ ! -e usage ] 
+then
+    echo g++ -o usage usage.cc bisonc++/usage.cc
+    g++ -o usage usage.cc bisonc++/usage.cc
+fi
 
 cd bisonc++
 
@@ -12,23 +16,19 @@ cp /usr/include/FlexLexer.h flex
 
 make/clean
 
+../usage > documentation/manual/invoking/usage
+
 cd scanner 
 [ -e yylex.cc ] || req flex lexer
 cd ..
 
-make/program
 make/man
 make/manual
-
-mv tmp/bin ../tmp
-mv tmp/o   ../tmp
-mv libbisonc++.a ../tmp
 
 export BISONCPP=minimal 
 dpkg-buildpackage -mf.b.brokken@rug.nl  -rfakeroot 2>&1 | tee /tmp/$PROJECT 
 
 cd ..
-rm -rf tmp
 
 cvsrestore
 

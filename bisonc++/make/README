@@ -25,7 +25,3 @@ Support scripts called by the `program' script are:
     parameters  - defines the names of the library, the program source, etc.
 
     special     - performs special tasks: creates release.yo and parser/SKEL
-
-    scanner     - constructs scanner/yylex.cc from scanner/lexer using flex
-
-    
