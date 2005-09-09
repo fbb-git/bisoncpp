@@ -18,7 +18,6 @@ else
     mkdir -p tmp/bin tmp/o
 
     make/special skel
-    make/scanner
     make/library
     
     BASE=${MAIN%\.[^\.]*}

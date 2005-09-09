@@ -12,6 +12,7 @@ NR=0
 for x in `cat CLASSES`
 do
     req cd $x
+    [ $x == scanner -o $x == parser ] && FLEX=-I../flex
     SRC=`find ./ -regex '.*\.cc' -maxdepth 1 -printf "%f\n"`
     [ "$SRC" == "" ] && (cd ..; continue)
     mkdir -p o
@@ -22,10 +23,11 @@ do
         [ -e $OBJ -a $src -nt $OBJ  -o \
           ! -e $OBJ -a \
             \( ! -e ../$LIBRARY -o $src -nt ../$LIBRARY \) ] &&
-                             req g++ $COPTS -o  $OBJ -c ${src}
+                             req g++ $FLEX $COPTS -o  $OBJ -c ${src}
     done
     cd ..
     let NR=${NR}+1
+    FLEX=
 done
 
 echo compiling extra sources

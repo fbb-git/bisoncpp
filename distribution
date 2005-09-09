@@ -7,7 +7,15 @@ mkdir -p tmp
 
 cd bisonc++
 
+mkdir -p flex
+cp /usr/include/FlexLexer.h flex
+
 make/clean
+
+cd scanner 
+[ -e yylex.cc ] || req flex lexer
+cd ..
+
 make/program
 make/man
 make/manual

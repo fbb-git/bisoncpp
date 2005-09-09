@@ -29,3 +29,7 @@ fi
 cd documentation/manual/invoking/
 [ ! -e usage ] 
     reqeval "../../../tmp/bin/bisonc++ --usage > usage"
+
+
+
+

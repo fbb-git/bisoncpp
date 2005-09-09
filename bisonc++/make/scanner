@@ -1,13 +1,13 @@
-#!/bin/sh
-
-req()
-{
-    echo "$*"
-    $* || exit 1
-}
-
-req cd scanner 
-
-[ -e yylex.cc ] || req flex lexer
-
-cd ..
+# #!/bin/sh
+# 
+# req()
+# {
+#     echo "$*"
+#     $* || exit 1
+# }
+# 
+# req cd scanner 
+# 
+# [ -e yylex.cc ] || req flex lexer
+# 
+# cd ..
