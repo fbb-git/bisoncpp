@@ -1,0 +1,20 @@
+The grammar rules for a language determine only the syntax. The semantics are
+determined by the semantic values associated with various tokens and
+groupings, and by the actions taken when various groupings are recognized.
+
+For example, the calculator calculates properly because the value associated
+with each expression is the proper number; it adds properly because the action
+for the grouping `x + y' is to add the numbers associated with x and y.
+
+In this section defining the semantics of a language will be addressed. The
+following topics will be covered:
+    itemization(
+    it() url(Specifying one data type for all semantic values)(datatypes);
+    it() url(Specifying several alternative data types)(union);
+    it() url(Specifying  Actions)(actions) (an action is the semantic
+        definition of a grammar rule);
+    it() url(Specifying data types for actions to operate on)(actiontypes);
+    it() url(Specifying when and how to put actions in the middle of a
+rule)(midrule) (most actions go at the end of a rule. In some situations it
+may be desirable to put an action in in the middle of a rule).
+    )

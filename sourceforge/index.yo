@@ -1,0 +1,46 @@
+htmlbodyopt(text)(#27408B)
+htmlbodyopt(bgcolor)(#FFFAF0)
+
+includefile(../bisonc++/release.yo)
+
+mailto(fbbrokken@users.sourceforge.net)
+
+affiliation(Computing Center, University of Groningen)
+
+notableofcontents()
+
+report(Bisonc++ V _CurVers_)
+      (Frank B. Brokken (f.b.brokken@rug.nl)nl())
+      (_CurYrs_)
+
+center(
+    htmlcommand(
+        <img src="bison.jpg" border="0" alt="Bisonc++ Image" />
+        <p>
+        <a href="http://sourceforge.net">
+        <img src="http://sourceforge.net/sflogo.php?group_id=127615&amp;type=2"
+        width="125" height="37" border="0" alt="SourceForge.net Logo" />
+        </a>)
+    )
+
+This is the main page of the Bisonc++ project as hosted on Sourceforge.net.
+
+The project itself can be reached at 
+lurl(http://sourceforge.net/projects/bisoncpp/)
+
+    itemization(
+    it() Here is url(the Bisonc++ userguide)(bisonc++.html).
+    it() Here is the url(html-version of the Bisonc++ man-page)
+                (bisonc++man.html).
+    )
+
+Enjoy Bisonc++ !
+
+includefile(../../PROJECTS.yo)
+
+Contact the author through url(his sourceforge e-mail address)
+                              (mailto:fbbrokken@users.sourceforge.net)
+
+
+
+

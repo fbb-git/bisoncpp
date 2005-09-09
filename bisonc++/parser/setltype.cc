@@ -7,10 +7,19 @@ void Parser::setLtype()
     
     d_locationDecl = "typedef ";
 
-    if (d_scanner.lex() != Scanner::IDENTIFIER)
-        lineMsg() << "`%ltype IDENTIFIER' expected" << err;
-    else
-        (d_locationDecl += d_scanner.text()) += " LTYPE;\n";
+    if (d_scanner.lex() == Scanner::IDENTIFIER)
+    {
+        string const &type = d_scanner.trimmedText();
+        if (type.length())
+        {
+            (d_locationDecl += type) += " LTYPE;\n";
+            d_lspNeeded = true;
+            return;
+        }
+    }
 
-    d_lspNeeded = true;
+   lineMsg() << "`%ltype type-definition' expected" << err;
 }
+
+
+

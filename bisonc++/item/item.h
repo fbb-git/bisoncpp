@@ -4,7 +4,6 @@
 
 #include "../production/production.h"
 #include "../lookaheadset/lookaheadset.h"
-// #include "../rules/rules.h"
 
 class Item
 {
@@ -66,9 +65,6 @@ class Item
 
         static void showKernel(Item const &item); // show a kernel item
 };
-
-//        bool operator<(Item const &other) const;
-
 
 #endif
 

@@ -1,7 +1,8 @@
 #include "itemsets.h"
 
-#include "../wrap1.h"
-#include "../msg/msg.h"
+#include <bobcat/wrap1c>
+#include <bobcat/msg>
+
 #include "../rules/rules.h"
 
 using namespace std;

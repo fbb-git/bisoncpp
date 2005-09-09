@@ -1,0 +1,26 @@
+#!/bin/sh
+
+. INSTALL.cf
+. make/parameters
+
+req()
+{
+    echo "$*"
+    $* || exit 1
+}
+
+mkdir -p tmp/bin tmp/o
+
+make/special skel
+make/library
+
+BASE=${MAIN%\.[^\.]*}
+OBJ=tmp/o/${BASE}.o
+
+[ ! -e $OBJ -o $MAIN -nt $OBJ ] && req g++ $COPTS -o $OBJ -c $MAIN
+
+req g++ -o tmp/bin/$EXECUTABLE $OBJ $LOPTS
+
+
+
+

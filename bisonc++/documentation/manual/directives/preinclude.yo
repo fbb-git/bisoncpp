@@ -1,0 +1,8 @@
+     bf(%baseclass-preinclude) tt(header)nl()
+           Use tt(header) as the pathname to the file pre-included in the
+            parser's base-class header. See the description of the
+            bf(--baseclass-preinclude) option for details about this option.
+            Like the convention adopted for this argument, tt(header) will (by
+            default) be surrounded by double quotes.  However, when the
+            argument is surrounded by pointed brackets tt(#include <header>)
+            will be included.

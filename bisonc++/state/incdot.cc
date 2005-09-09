@@ -9,11 +9,11 @@ void State::incDot(State *dest, Symbol const &symbol) const
     IIContext context = {dest, symbol};
 
     for_each(d_kernel.begin(), d_kernel.end(),
-        Wrap1<Item const &, IIContext>(&State::inspectItem, context));
+        Wrap1c<Item, IIContext>(&State::inspectItem, context));
 
 
     for_each(d_nonKernel.begin(), d_nonKernel.end(), 
-        Wrap1<NonKernelValue const &, IIContext>
+        Wrap1c<NonKernelValue, IIContext>
                   (&State::inspectNonKernelProductions, context));
 }
 

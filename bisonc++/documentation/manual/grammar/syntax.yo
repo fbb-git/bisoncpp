@@ -1,0 +1,62 @@
+A B() grammar rule has the following general form:
+        verb( 
+    result: 
+        components
+        ...
+    ;
+        )
+    where em(result) is the nonterminal symbol that this rule describes and
+em(components) are various terminal and nonterminal symbols that are put
+together by this rule (see section ref(SYMBOLS)). For example,
+        verb(
+    exp:    
+        exp '+' exp
+    ;
+        )
+    means that two groupings of type tt(exp), with a `+' token in between, can
+be combined into a larger grouping of type tt(exp).
+
+    Whitespace in rules is significant only to separate symbols. You can add
+extra whitespace as you wish.
+
+    Scattered among the components can be em(actions) that determine the
+semantics of the rule. An action looks like this:
+        verb(
+    {
+        C++ statements
+    }
+        )
+    Usually there is only one action and it follows the components. See
+section ref(ACTIONS).
+
+    Multiple rules for the same result can be written separately or can be
+joined with the vertical-bar character `|' as follows:
+        verb(
+    result: 
+        rule1-components
+        ...
+    | 
+        rule2-components...
+        ...
+    ;
+        )
+    They are still considered distinct rules even when joined in this way.
+
+    If em(components) in a rule is em(empty), it means that em(result) can
+match the empty string. For example, here is how to define a comma-separated
+sequence of zero or more tt(exp) groupings:
+        verb(
+    expseq:   
+        // empty 
+    | 
+        expseq1
+    ;
+
+    expseq1:  
+        exp
+    | 
+        expseq1 ',' exp
+    ;
+        )
+    It is customary to write a comment `tt(// empty)' in each rule with no
+components.

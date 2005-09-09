@@ -1,0 +1,29 @@
+Use the tt(%left), tt(%right) or tt(%nonassoc) directive to declare a token
+and specify its precedence and associativity, all at once. These are called
+em(precedence directives). See section ref(PRECEDENCE), for general
+information on operator precedence. The syntaxis of a precedence directive is
+comparable to  that of tt(%token): either
+        verb(
+    %left symbols...
+        )
+    or
+        verb(
+    %left <type> symbols...
+        )
+    And indeed any of these directives serves the purposes of tt(%token). But
+in addition, they specify the associativity and relative precedence for all
+the symbols:
+    itemization(
+    it() The em(associativity) of an operator tt(op) determines how repeated
+uses of the operator em(nest): whether `tt(x op y op z)' is parsed by grouping
+tt(x) with tt(y) first or by grouping tt(y) with tt(z) first. tt(%left)
+specifies em(left-associativity) (grouping tt(x) with tt(y) first) and
+tt(%right) specifies em(right-associativity) (grouping tt(y) with tt(z)
+first). tt(%nonassoc) specifies em(no) associativity, which means that `tt(x
+op y op z)' is not a defined operation, and could be considered an error.
+    it() The precedence of an operator determines how it nests with other
+operators. All the tokens declared in a single precedence directive have equal
+precedence and nest together according to their associativity. When two tokens
+declared in different precedence directives associate, the one declared
+em(later) has the higher precedence and is grouped em(first).
+    )

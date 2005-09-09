@@ -1,0 +1,4 @@
+ bf(%parsefun-source) tt(source) nl()
+           Defines the pathname of the file containing the parser member
+            bf(parse()). This directive is overridden by the 
+            bf(--parse-source) or bf(-p) command-line options.

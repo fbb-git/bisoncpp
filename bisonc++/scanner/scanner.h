@@ -84,6 +84,9 @@ class Scanner: public yyFlexLexer
         {                                   // a std::string
             return d_text;
         }
+        std::string const &trimmedText();   // same as text(), but surrounding
+                                            // ws removed.
+
         std::string const &canonicalQuote();
         int token() const                   // return the current token    
         {

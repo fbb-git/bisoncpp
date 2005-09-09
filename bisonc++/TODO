@@ -1,0 +1,5 @@
+- %nonassoc should probably produce an error when %nonassoc operators are used
+  repeatedly. 
+- make error recovery configurable in the sense that a series of tokens must
+  have been successfully processed before error messages are generated again
+  (see documentation/manual/error/intro.yo)

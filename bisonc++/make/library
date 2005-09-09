@@ -1,0 +1,52 @@
+#!/bin/sh
+
+. make/parameters
+
+req()
+{
+    echo "$*"
+    $* || exit 1
+}
+
+NR=0
+for x in `cat CLASSES`
+do
+    req cd $x
+    SRC=`find ./ -regex '.*\.cc' -maxdepth 1 -printf "%f\n"`
+    [ "$SRC" == "" ] && (cd ..; continue)
+    mkdir -p o
+    for src in $SRC
+    do
+        BASE=${src%\.[^\.]*}
+        OBJ=o/${NR}${BASE}.o
+        [ -e $OBJ -a $src -nt $OBJ  -o \
+          ! -e $OBJ -a \
+            \( ! -e ../$LIBRARY -o $src -nt ../$LIBRARY \) ] &&
+                     req g++ -I../flex $COPTS -o  $OBJ -c ${src}
+    done
+    cd ..
+    let NR=${NR}+1
+done
+
+echo compiling extra sources
+for src in *.cc
+do
+    [ "$src" == "$MAIN" ] && continue
+
+    mkdir -p o
+
+    BASE=${src%\.[^\.]*}
+    OBJ=o/${BASE}.o
+    [ -e $OBJ -a $src -nt $OBJ  -o \
+      ! -e $OBJ -a \
+        \( ! -e $LIBRARY -o $src -nt $LIBRARY \) ] &&
+                         req g++ -Iflex $COPTS -o  $OBJ -c $src
+done
+
+
+OBJ=`find ./ -regex '.*\.o' -and -not -name bisonc++.o -print`
+[ "$OBJ" == "" ] && exit 0
+
+req ar rs $LIBRARY $OBJ
+req rm $OBJ
+
