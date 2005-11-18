@@ -1,3 +1,12 @@
+bisonc++ (0.98.400) unstable; urgency=low
+
+  * state/writestatearray.cc adds {} around individual union values to allow
+    warningless compilation of the generated parse.cc file by g++-4.0.
+
+    bisonc++ is now itself too compiled by g++-4.0.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri, 18 Nov 2005 22:46:06 +0100
+
 bisonc++ (0.98.007) unstable; urgency=low
 
   * Added a README.flex file giving some background information about the

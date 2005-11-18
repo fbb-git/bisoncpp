@@ -1,8 +1,3 @@
-state/writestatearray.cc adds {} around individual union values to allow
-warningless compilation of the generated parse.cc file by g++-4.0.
-
-bisonc++ is now itself too compiled by g++-4.0.
-
 --none so far--
 
 

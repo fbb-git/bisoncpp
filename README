@@ -11,7 +11,7 @@ To create a new debian package:
 
             cd bisonc++/debian
             dch -v [version just set in version.cc]
-            cd ..
+            cd ../..
 
 
     (See also: file:///usr/share/doc/maint-guide/
