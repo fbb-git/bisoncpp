@@ -1,0 +1,7 @@
+     bf(%namespace) tt(namespace) nl()
+           Define the parser class in the namespace tt(namespace). By default
+            no namespace is defined. If this options is used the
+            implementation header will contain a commented out tt(using
+            namespace) directive for the requested namespace.  This
+            directive is overridden by the bf(--namespace) command-line
+            option.

@@ -1,0 +1,9 @@
+A em(reentrant) program is one which does not alter in the course of
+execution; in other words, it consists entirely of pure (read-only)
+code. Reentrancy is important whenever asynchronous execution is possible; for
+example, a nonreentrant program may not be safe to call from a signal
+handler. In systems with multiple threads of control, a nonreentrant program
+must be called only within interlocks.
+
+Currently, B() generates a parser which is em(not) reentrant. There are
+no plans to change this in the near future.

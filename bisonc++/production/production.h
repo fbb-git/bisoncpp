@@ -91,7 +91,9 @@ class Production: public std::vector<Symbol *>
         Symbol *vectorIdx(unsigned idx) const;
 };
 
+    // only the rule.
 std::ostream &operator<<(std::ostream &out, Production const &production);
+    // the rule, preceded by its number.
 std::ostream &operator<<(std::ostream &out, Production const *production);
 
 #endif

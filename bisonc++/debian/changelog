@@ -1,3 +1,97 @@
+bisonc++ (0.98.400) unstable; urgency=low
+
+  * state/writestatearray.cc adds {} around individual union values to allow
+    warningless compilation of the generated parse.cc file by g++-4.0.
+
+    bisonc++ is now itself too compiled by g++-4.0.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri, 18 Nov 2005 22:46:06 +0100
+
+bisonc++ (0.98.007) unstable; urgency=low
+
+  * Added a README.flex file giving some background information about the
+    provided implementation of the lexical scanner (bisonc++/scanner/yylex.cc)
+
+    Modified the compilation scripts: bisconc++/flex/FlexLexer.h is now
+    included by default. This FlexLexer.h file is expected by
+    bisonc++/scanner/yylex.cc and by the Scanner class.
+
+    Simplified some compilation scripts.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri,  9 Sep 2005 11:42:24 +0200
+
+bisonc++ (0.98.006) unstable; urgency=low
+
+  * Removed the dependency on `icmake'. No change of functionality
+    See the instructions in the `INSTALL' file when you want to compile and
+    install `bisonc++' yourself, rather than using the binary (.deb)
+    distribution. 
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat,  3 Sep 2005 17:42:29 +0200
+
+bisonc++ (0.98.005) unstable; urgency=low
+
+  * Removed the classes Arg, Errno, Msg and Wrap1, using the Bobcat library's
+    versions of these classes from now on. No feature-changes.
+
+    Added minor modifications to the `build' script.
+
+    Annoying Error: The function `ItemSets::deriveAction()' did not recognize
+    the `ACCEPT' action, so some (most ?) grammars could not be properly
+    recognized. I applied a quick hack: if an action isn't `shift' or
+    `reduce', it can be `accept', resulting in acceptance of the grammar. This
+    solves the actual problem, but I'll have to insepct this in a bit more
+    detail. For now, it should work ok.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 22 Aug 2005 13:05:28 +0200
+
+bisonc++ (0.98.004) unstable; urgency=low
+
+  * When new lookahead set elements are added to existing states,
+    d_recheckState in itemsets/lookaheads.cc (ItemSets::checkLookaheads()) was
+    reassigned to the state index whose lookaheadset was enlarged. However, if
+    that happened for existing state `i' and then, during the same
+    state-inspection, for state `j' where j > i, then the recheck would start
+    at `j' rather than `i'. This problem was solved by giving d_recheckState
+    only a lower value than its current value.
+    
+    With R/R conflicts involving `ACCEPT' reductions (with, e.g., `S_$: S .'),
+    ACCEPT is selected as the chosen alternative. See State::setReduce()
+    (state/setreduce.cc). Since this matches with the `first reduction rule'
+    principle, it should be ok.
+    
+    %stype specifications may consist of multiple elements: the remainder of
+    the line beyond %stype is interpreted as the type definition. The
+    specification should (therefore) not contain comment or other characters
+    that are not part of the actual type definition. The man-page is adapted
+    accordingly. Same holds true for the %ltype directive
+    
+    Added a check whether the grammar derives a sentence
+    (itemsets/derivesentence.cc). If not, a fatal error is issued. This
+    happens at the end of the program's actions, and at this point files
+    etc. have already been generated. They are kept rather than removed for
+    further reference. Grammars not deriving sentences should probably not be
+    used.
+    
+    The original Bison documentation has been converted to a Bisonc++ user
+    guide. Furthermore, a html-converted manual page is now available under
+    /usr/share/doc/bisonc++/man
+
+    The `calculator' example used in the man-page is now under
+    /usr/share/doc/bisonc++/man/calculator 
+
+    Bisonc++ is distributed under the Academic Free License, see the file
+    COPYING in /usr/share/doc/bisonc++
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun,  7 Aug 2005 13:49:07 +0200
+
+bisonc++ (0.98.003) unstable; urgency=low
+
+  * Incomplete default State constructor now explicitly defined, prevents
+    the incidental erroneous rapporting of conflicts for some states.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Thu, 26 May 2005 07:21:20 +0200
+
 bisonc++ (0.98.002) unstable; urgency=low
 
   * The Wrap1 configurable unary predicate template class replaces various

@@ -1,0 +1,17 @@
+#!/bin/sh
+
+case $1 in
+    (clean)
+        rm parser/[pP]arse* rpn
+    ;;
+    (rpn)
+        cd parser
+        bisonc++ -V -l grammar
+
+        cd ..
+        g++ -Wall -o rpn *.cc */*.cc
+    ;;
+    (*)
+        echo "$0 [clean|rpn] to clean or build the rpn program"
+    ;;
+esac

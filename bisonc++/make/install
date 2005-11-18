@@ -1,0 +1,54 @@
+#!/bin/sh
+
+# Argument 1: optional prefix path to installation paths, e.g., debian/debian
+
+. INSTALL.cf
+. make/parameters
+
+req()
+{
+    echo "$*"
+    $* || exit 1
+}
+
+reqeval()
+{
+    echo "$*"
+    eval "$*" || exit 1
+}
+
+    # install the executable
+req mkdir -p $1$BIN
+req cp tmp/bin/* $1$BIN
+
+    # install the skeleton files
+req mkdir -p $1$SKEL
+req cp share/* $1$SKEL
+
+    # install the manual page bisonc++.1
+req mkdir -p $1$MAN/man1
+reqeval "gzip < tmp/man/bisonc++.1 > $1$MAN/bisonc++.1.gz"
+
+    # install the manual page bisonc++man.html
+req mkdir -p $1$DOC/man
+req cp tmp/manhtml/bisonc++man.html $1$DOC/man
+
+    # install the information directly in and under $DOC
+    # COPYING
+reqeval "gzip < COPYING > $1$DOC/COPYING.gz"
+
+    # bison's docs
+req mkdir -p $1$DOC/bison-docs
+req cp -r documentation/{html,bison.ps.org} $1$DOC/bison-docs
+
+    # examples
+req mkdir -p $1$DOC/examples
+req cp -r documentation/examples $1$DOC
+req cp -r documentation/man/calculator $1$DOC/examples
+
+    # manual
+req cp -r tmp/manual $1$DOC
+
+
+
+

@@ -1,0 +1,167 @@
+    Where available, single letter options are listed between parentheses
+following their associated long-option variants. Single letter options require
+arguments if their associated long options require arguments as well.
+    itemization(
+    it() lsoption(baseclass-preinclude)(H)(header)nl()
+           Use tt(header) as the pathname to the file preincluded in the
+            parser's base-class header. This option is useful in situations
+            where the base class header file refers to types which might not
+            yet be known. E.g., with bf(%union) a bf(std::string *) field
+            might be used. Since the class bf(std::string) might not yet be
+            known to the compiler once it processes the base class header file
+            we need a way to inform the compiler about these classes and
+            types. The suggested procedure is to use a pre-include header file
+            declaring the required types. By default tt(header) will be
+            surrounded by double quotes (using, e.g., tt(#include "header")).
+            When the argument is surrounded by pointed brackets
+            tt(#include <header>) will be included. In the latter case,
+            quotes might be required to escape interpretation by the shell
+            (e.g., using tt(-H '<header>')).
+    it() lsoption(baseclass-header)(b)(header)nl()
+           Use tt(header) as the pathname of the file containing the parser's
+            base class. This class defines, e.g., the parser's symbolic
+            tokens. Defaults to the name of the parser class plus the suffix
+            tt(base.h). It is generated, unless otherwise indicated (see
+            bf(--no-baseclass-header) and bf(--dont-rewrite-baseclass-header)
+            below).
+    it() lsoption(baseclass-skeleton)(B)(skeleton)nl() 
+           Use tt(skeleton) as the pathname of the file containing the
+            skeleton of the parser's base class. Its filename defaults to
+            tt(bisonc++base.h).
+    it() lsoption(class-header)(c)(header)nl()
+           Use tt(header) as the pathname of the file containing the parser
+            class. Defaults to the name of the parser class plus the suffix
+            tt(.h)
+    it() lsoption(class-skeleton)(C)(skeleton)nl()
+           Use tt(skeleton) as the pathname of the file containing the
+            skeleton of the parser class. Its filename defaults to
+            tt(bisonc++.h). The environment variable tt(BISON_SIMPLE_H)
+            is not inspected anymore.
+    it() loption(construction)nl() 
+           This option may be specified to write details about the
+            construction of the parsing tables to the standard output
+            stream. This information is primarily useful for developers, and
+            augments the information written to the verbose grammar output
+            file, produced by the bf(--verbose) option.
+    it() loption(debug)nl() 
+           Provide bf(parse()) and its support functions with debugging code,
+            showing the actual parsing process on the standard output
+            stream. When included, the debugging output is active by default,
+            but its activity may be controlled using the bf(setDebug(bool
+            on-off)) member. Note that no tt(#ifdef DEBUG) macros are used
+            anymore. By rerunning b()() without the bf(--debug) option an
+            equivalent parser is generated not containing the debugging
+            code. 
+    it() lsoption(filenames)(f)(filename)nl()
+           Specify a filename to use for all files produced by b()(). 
+            Specific options overriding particular filenames are also
+            available (which then, in turn, overide the name specified by this
+            option).
+    it() loption(force-class-header)nl()
+           By default the generated class header is not overwritten once it
+            has been created. This option can be used to force the
+            (re)writing of the file containing the parser's class.
+    it() loption(force-implementation-header)nl()
+           By default the generated implementation header is not overwritten
+            once it has been created. This option can be used to force the
+            (re)writing of the implementation header file.
+    it() loption(help) (soption(h))nl()
+            Write basic usage information to the standard output stream and
+            terminate. 
+    it() lsoption(implementation-header)(i)(header)nl()
+           Use tt(header) as the pathname of the file containing the
+            implementation header. Defaults to the name of the generated
+            parser class plus the suffix tt(.ih). The implementation header
+            should contain all directives and declarations em(only) used by
+            the implementations of the parser's member functions. It is the
+            only header file that is included by the source file containing
+            bf(parse())'s implementation . User defined implementation of
+            other class members may use the same convention, thus
+            concentrating all directives and declarations that are required
+            for the compilation of other source files belonging to the parser
+            class in one header file.
+    it() lsoption(implementation-skeleton)(I)(skeleton)nl()
+           Use tt(skeleton) as the pathname of the file containing the
+            skeleton of the implementation header. Its filename defaults to
+            tt(bisonc++.ih).
+    it() loption(lines) (soption(l))nl() 
+           Put bf(#line) preprocessor directives in the file containing the
+            parser's bf(parse()) function. By including this option the
+            compiler and debuggers will associate errors with lines in your
+            grammar specification file, rather than with the source file
+            containing the bf(parse()) function itself.
+    it() loption(no-lines)nl() 
+           Do not put bf(#line) preprocessor directives in the file containing
+            the parser's bf(parse()) function. This option is primarily useful
+            in combination with the bf(%lines) directive, to suppress that
+            directive. It also overrides option bf(--lines), though.
+    it() lsoption(namespace)(n)(namespace)nl()
+           Define the parser base class, the paser class and the parser
+            implentations in the namespace tt(namespace). By default
+            no namespace is defined. If this options is used the
+            implementation header will contain a commented out tt(using
+            namespace) declaration for the requested namespace. 
+    it() loption(no-baseclass-header)nl()
+           Do not write the file containing the parser class' base class, even
+            if that file doesn't yet exist. By default the file containing the
+            parser's base class is (re)written each time b()() is called. Note
+            that this option should normally be avoided, as the base class
+            defines the symbolic terminal tokens that are returned by the
+            lexical scanner. By suppressing the construction of this file any
+            modification in these terminal tokens will not be communicated to
+            the lexical scanner.
+    it() loption(no-parse-member)nl()
+           Do not write the file containing the parser's predefined parser
+            member functions, even if that file doesn't yet exist. By default
+            the file containing the parser's bf(parse()) member function is
+            (re)written each time b()() is called. Note that this option
+            should normally be avoided, as this file contains parsing
+            tables which are altered whenever the grammar definition is
+            modified. 
+    it() lsoption(parsefun-source)(p)(source)nl()
+           Define tt(source) as the name of the source file containing the
+            parser member function bf(parse()). Defaults to tt(parse.cc).
+    it() lsoption(parsefun-skeleton)(P)(skeleton)nl()
+           Use tt(skeleton) as the pathname of the file containing the parsing
+            member function's skeleton. Its filename defaults to
+            tt(bisonc++.cc). The environment variable tt(BISON_SIMPLE) is not
+            inspected anymore.
+    it() lsoption(scanner)(s)(header)nl()
+           Use tt(header) as the pathname to the file defining a class
+            bf(Scanner), offering a member bf(int yylex()) producing the next
+            token from the input stream to be analyzed by the parser generated
+            by b()(). When this option is used the parser's member bf(int
+            lex()) will be predefined as 
+                verb(
+    int lex()
+    {
+        return d_scanner.yylex();
+    }
+                )
+           and an object tt(Scanner d_scanner) will be composed into the
+            parser. The tt(d_scanner) object will be constructed using its
+            default constructor. If another constructor is required, the
+            parser class may be provided with an appropriate (overloaded)
+            parser constructor after having constructed the default parser
+            class header file using b()().  By default tt(header) will be
+            surrounded by double quotes (using, e.g., tt(#include "header")).
+            When the argument is surrounded by pointed brackets tt(#include
+            <header>) will be included. In the latter case, quotes might be
+            required to escape interpretation by the shell (e.g., using tt(-s
+            '<header>')).
+    it() loption(show-filenames)nl() 
+           Write the names of the files that are generated to the 
+            standard error stream.
+    it() loption(verbose) (soption(V))nl() 
+           Write a file containing verbose descriptions of
+            the parser states and what is done for each type of look-ahead
+            token in that state.  This file also describes all conflicts
+            detected in the grammar, both those resolved by operator
+            precedence and those that remain unresolved.  By default it will
+            not be created, but if requested it will receive the filename
+            tt(<parse>.output), where tt(<parse>) is the filename (without the
+            tt(.cc) extension) of the file containing bf(parse())'s
+            implementation.
+    it() loption(version) (soption(v))nl()
+            Display b()()'s version number and terminate.
+    )

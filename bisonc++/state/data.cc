@@ -1,5 +1,6 @@
 #include "state.ih"
 
+unsigned State::s_acceptingState;
 unsigned State::s_nShiftReduceConflicts;
 unsigned State::s_nReduceReduceConflicts;
 char const *State::s_stateName[] = 

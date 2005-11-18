@@ -4,8 +4,9 @@
 #include <functional>
 #include <iomanip>
 
-#include "../wrap1.h"
-#include "../msg/msg.h"
+#include <bobcat/msg>
+#include <bobcat/wrap1c>
+
 #include "../rules/rules.h"
 #include "../lookaheadset/lookaheadset.h"
 #include "../nonterminal/nonterminal.h"

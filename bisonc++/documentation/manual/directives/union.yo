@@ -1,0 +1,27 @@
+The tt(%union) directive specifies the entire collection of possible data
+types for semantic values. The keyword tt(%union) is followed by a pair of
+braces containing the same thing that goes inside a union in bf(C++).
+For example:
+        verb(
+    %union {
+      double u_val;
+      symrec *u_tptr;
+    };
+        )
+    This says that the two alternative types are tt(double) and tt(symrec
+*). They are given names tt(u_val) and tt(u_tptr); these names are used in the
+tt(%token) and tt(%type) directives to pick one of the types for a terminal or
+nonterminal symbol (see section ref(NONTERMS)).
+
+    Notes:
+    itemization(
+    it() The semicolon following the closing brace is em(optional).
+    it() bf(C++) does not allow class types to be used in tt(union)
+        definitions. Consequently, they cannot be used in tt(%union)
+        directives either. When a class type variant is required, a
+        em(pointer) to a class object should be used. The responsibility for
+        the correct destruction of the pointed-to class objects lies with the
+        programmer. See also section ref(MORETYPES).
+    )
+
+

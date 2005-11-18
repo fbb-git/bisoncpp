@@ -4,7 +4,7 @@ void usage(string const &program_name)
 {
     cout << 
     "\n" <<
-    program_name << " by Frank B. Brokken (f.b.brokken@rc.rug.nl)\n"
+    program_name << " by Frank B. Brokken (f.b.brokken@rug.nl)\n"
     "\n"
     "LALR(1) Parser Generator V "  << version << "\n"
     "Copyright (c) GPL " << year << ". NO WARRANTY.\n"
