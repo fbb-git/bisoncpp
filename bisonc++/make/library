@@ -22,7 +22,7 @@ do
         [ -e $OBJ -a $src -nt $OBJ  -o \
           ! -e $OBJ -a \
             \( ! -e ../$LIBRARY -o $src -nt ../$LIBRARY \) ] &&
-                     req g++ -I../flex $COPTS -o  $OBJ -c ${src}
+                     req $GCC -I../flex $COPTS -o  $OBJ -c ${src}
     done
     cd ..
     let NR=${NR}+1
@@ -40,7 +40,7 @@ do
     [ -e $OBJ -a $src -nt $OBJ  -o \
       ! -e $OBJ -a \
         \( ! -e $LIBRARY -o $src -nt $LIBRARY \) ] &&
-                         req g++ -Iflex $COPTS -o  $OBJ -c $src
+                         req $GCC -Iflex $COPTS -o  $OBJ -c $src
 done
 
 

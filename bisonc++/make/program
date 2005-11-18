@@ -17,9 +17,9 @@ make/library
 BASE=${MAIN%\.[^\.]*}
 OBJ=tmp/o/${BASE}.o
 
-[ ! -e $OBJ -o $MAIN -nt $OBJ ] && req g++ $COPTS -o $OBJ -c $MAIN
+[ ! -e $OBJ -o $MAIN -nt $OBJ ] && req $GCC $COPTS -o $OBJ -c $MAIN
 
-req g++ -o tmp/bin/$EXECUTABLE $OBJ $LOPTS
+req $GCC -o tmp/bin/$EXECUTABLE $OBJ $LOPTS
 
 
 

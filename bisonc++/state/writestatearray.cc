@@ -36,10 +36,17 @@ void State::writeStateArray(State const *sp, WSAContext &context)
     context.out << "\n" 
             "SR s_" << state.d_idx << "[] =\n"
             "{\n" <<
-            "    {" << s_stateName[state.d_type] << ", " <<
-            (usesShift ? "" : "-") <<   
-            (state.d_action.size() + state.d_goto.size() - nDefaults + 1) << 
-            "}," << (usesShift ? " // SHIFTS" : "") << "\n";
+            "    {"
+                    "{" << 
+                        s_stateName[state.d_type] << 
+                    "}, "
+                    "{" <<
+                        (usesShift ? "" : "-") <<   
+                        (state.d_action.size() + state.d_goto.size() - 
+                                                            nDefaults + 1) << 
+                    "}"
+                "}," << 
+                        (usesShift ? " // SHIFTS" : "") << "\n";
 
     for 
     (
@@ -55,12 +62,16 @@ void State::writeStateArray(State const *sp, WSAContext &context)
 
         Symbol const *symbol = actionIter->first;
 
-        context.out <<  "    {";
+        context.out <<  
+        "    {"
+               "{";
 
         if (symbol->isSymbolic() && !symbol->isReserved())
             context.out << context.baseclassScope;
 
-        context.out << symbol->display() << ", ";
+        context.out << symbol->display() << 
+                "}, "
+                "{";
         if (sr.accept())
             context.out << "PARSE_ACCEPT";
         else
@@ -72,7 +83,9 @@ void State::writeStateArray(State const *sp, WSAContext &context)
                     : 
                         -sr.production()->nr()
                 );
-        context.out << "},\n";
+        context.out << 
+                "}"
+            "},\n";
     }
 
     for 
@@ -81,17 +94,30 @@ void State::writeStateArray(State const *sp, WSAContext &context)
             gotoIter != state.d_goto.end();
                 ++gotoIter
     )
-        context.out << "    {" << gotoIter->first->nr() << ", " <<
-                            gotoIter->second << "}, // " << 
+        context.out << 
+            "    {"
+                    "{" << 
+                        gotoIter->first->nr() << 
+                    "}, "
+                    "{" <<
+                            gotoIter->second << 
+                    "}"
+                "}, // " << 
                             gotoIter->first->name() << "\n";
 
 
     if (defaultReduction)
-        context.out << "    {0, " << 
-                static_cast<int>(-defaultReduction->nr()) << 
-                "} // DEFAULT_REDUCTION\n";
+        context.out << 
+            "    {"
+                    "{"
+                        "0"
+                    "}, "
+                    "{" << 
+                        static_cast<int>(-defaultReduction->nr()) << 
+                    "}"
+                 "} // DEFAULT_REDUCTION\n";
     else
-        context.out << "    {0, 0}\n";
+        context.out << "    {{0}, {0}}\n";
 
     context.out << "};\n";
 
