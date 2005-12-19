@@ -2,7 +2,7 @@
 
 Parser::Parser(Rules &rules)
 :
-    d_arg(Arg::getInstance()),
+    d_arg(Arg::instance()),
     d_rules(rules),
     d_scanner(d_arg[0]),
     d_debugFlag(d_arg.option(0, "debug")),
