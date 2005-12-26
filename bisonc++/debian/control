@@ -2,12 +2,12 @@ Source: bisonc++
 Section: devel
 Priority: optional
 Maintainer: Frank B. Brokken <f.b.brokken@rug.nl>
-Build-Depends: debhelper (>= 4.0.0), g++ (>= 3.3), bobcat-dev (>= 1.0.0)
+Build-Depends: debhelper (>= 4.0.0), g++ (>= 4.0.2-2), bobcat-dev (>= 1.6.0)
 Standards-Version: 3.6.1
 
 Package: bisonc++
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, bobcat (>= 1.6.0)
 Suggests: bison
 Description: Bison-style parser generator for C++ 
  Bisonc++ was designed after `bison++' by Alain Coetmeur. Bisonc++ adds to 

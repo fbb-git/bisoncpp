@@ -1,3 +1,9 @@
+bisonc++ (0.98.402) unstable; urgency=low
+
+  * links against bobcat 1.6.0, using bobcat's new Arg:: interface
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 26 Dec 2005 19:25:42 +0100
+
 bisonc++ (0.98.400) unstable; urgency=low
 
   * state/writestatearray.cc adds {} around individual union values to allow
