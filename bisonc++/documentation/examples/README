@@ -24,9 +24,8 @@ calcgen:  A simple calculator. Enter expressions using +, -, *, /, () on a
 
         Run `build clean' to cleanup, `build demo' to create the program.
 
-calculator: the example described in the man-page
-
-        Run `build clean' to cleanup, `build demo' to create the program.
+calculator: the example described in the man-page has moved to
+        `man/calculator' 
 
 conflict: Not a running program, but a grammar showing various conflicts and
         the way bisonc++ resolves them. 

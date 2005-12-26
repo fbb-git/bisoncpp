@@ -1,0 +1,23 @@
+#!/bin/sh
+
+req()
+{
+    echo "$*"
+    $* || exit 1
+}
+
+req rm -rf debian/bisonc++ build-stamp configure-stamp
+
+if [ "$BISONCPP" == "minimal" ] 
+then
+    echo "
+    WARNING: PERFORMED MINIMAL CLEANUP
+    "
+    exit 0
+fi
+
+req rm -rf parser/SKEL tmp o */o libbisonc++.a release.yo
+req cd documentation
+req rm -rf man/*.{1,html} 
+req rm -rf manual/manual-stamp manual/*.html manual/invoking/usage bisonc++
+

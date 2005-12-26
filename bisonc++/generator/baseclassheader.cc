@@ -2,7 +2,7 @@
 
 void Generator::baseclassHeader() const
 {
-    if (Arg::getInstance().option(0, "no-baseclass-header"))
+    if (Arg::instance().option(0, "no-baseclass-header"))
         return;
 
     ofstream out;

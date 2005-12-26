@@ -1,0 +1,4 @@
+This chapter introduces many of the basic concepts without which the details
+of b() will not make sense. If you do not already know how to use
+b(), bison++ or bison, it is advised to start by reading this chapter
+carefully. 

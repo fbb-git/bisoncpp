@@ -5,7 +5,7 @@ To create a new debian package:
 
     1. Keep the bisonc++/ name
     
-    2. Define the next version in bisonc++/version.cc
+    2. Define the next version in bisonc++/VERSION
 
        THEN (upgrade the version for each new distribution):
 
@@ -22,18 +22,12 @@ To create a new debian package:
             (file:///usr/share/doc/maint-guide/
                 maint-guide.en.html/ch-build.en.html#s-completebuild):
 
-        From the directory where this file is located in, do:
+        From the directory in which this file is located, do
 
-        cvsremove
-        cd bisonc++
-        dpkg-buildpackage -rfakeroot
-
-        cd ..
-        cvsrestore
-
-    optionally:
-        cvs commit 
-        cvs tag v<version>-<revision>-<subrevision>
+            ./distribution
+        and optionally:
+            cvs commit 
+            cvs tag v<version>-<revision>-<subrevision>
         
     4. Partial reruns (instead of full recompilation from scratch):
         run in bisonc++/

@@ -24,7 +24,6 @@ configure: configure-stamp
 configure-stamp:
 	dh_testdir
 	# Add here commands to configure the package.
-
 	touch configure-stamp
 
 
@@ -34,7 +33,7 @@ build-stamp: configure-stamp
 	dh_testdir
 
 	# compile the package.
-	./build debian
+	./make/program
 
 	touch build-stamp
 
@@ -44,7 +43,7 @@ clean:
 	rm -f build-stamp configure-stamp
 
 	# Add here commands to clean up after the build process.
-	./build clean
+	./make/clean
 
 	dh_clean 
 
@@ -55,7 +54,7 @@ install: build
 	dh_installdirs
 
 	# Add here commands to install the package into debian/bisonc++.
-	./build install debian/bisonc++
+	./make/install debian/bisonc++
 
 
 # Build architecture-independent files here.
