@@ -26,7 +26,7 @@ req mkdir -p $1$SKEL
 req cp share/* $1$SKEL
 
     # install the manual page bisonc++.1
-req mkdir -p $1$MAN/man1
+req mkdir -p $1$MAN
 reqeval "gzip < tmp/man/bisonc++.1 > $1$MAN/bisonc++.1.gz"
 
     # install the manual page bisonc++man.html
