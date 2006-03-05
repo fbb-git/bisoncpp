@@ -5,8 +5,9 @@
 #include <iterator>
 #include <algorithm>
 
-#include "../msg/msg.h"
+#include <bobcat/msg>
+#include "../shiftreduce/shiftreduce.h"
 
 using namespace std;
-// using namespace FBB;
+using namespace FBB;
 

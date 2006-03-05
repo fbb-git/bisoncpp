@@ -1,0 +1,36 @@
+#!/bin/sh
+PROJECT=bisoncpp
+
+cvsremove
+
+if [ ! -e usage ] 
+then
+    echo g++ -o usage usage.cc bisonc++/usage.cc
+    g++ -o usage usage.cc bisonc++/usage.cc
+fi
+
+cd bisonc++
+
+mkdir -p flex
+cp /usr/include/FlexLexer.h flex
+
+make/clean
+
+../usage > documentation/manual/invoking/usage
+
+cd scanner 
+[ -e yylex.cc ] || req flex lexer
+cd ..
+
+make/man
+make/manual
+
+export BISONCPP=minimal 
+dpkg-buildpackage -mf.b.brokken@rug.nl  -rfakeroot 2>&1 | tee /tmp/$PROJECT 
+
+cd ..
+
+cvsrestore
+
+
+

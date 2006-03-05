@@ -1,0 +1,94 @@
+%union
+{
+    double u_val;
+    double *u_symbol;
+    double (*u_fun)(double);
+}
+
+%token <u_val>  NUM         // Simple double precision number
+%token <u_symbol> VAR       // Variable
+%token <u_fun>  FNCT        // Function
+%type  <u_val>  exp
+
+%right '='
+%left '-' '+'
+%left '*' '/'
+%left NEG                   // negation--unary minus 
+%right '^'                  // exponentiation        
+
+%%
+//GRAMMAR
+input:    
+        // empty 
+| 
+        input line
+;
+
+//LINE
+line:   
+        '\n'
+| 
+        exp '\n'  
+        { 
+            cout << "\t" << $1 << endl;
+        }
+| 
+        error '\n'
+;
+//=
+
+exp:      
+        NUM             
+| 
+        VAR                
+        { 
+            $$ = *$1;
+        }
+| 
+        VAR '=' exp        
+        { 
+            $$ = *$1 = $3;
+        }
+| 
+        FNCT '(' exp ')'   
+        { 
+            $$ = (*$1)($3); 
+        }
+| 
+        exp '+' exp 
+        { 
+            $$ = $1 + $3;
+        }
+| 
+        exp '-' exp 
+        { 
+            $$ = $1 - $3;
+        }
+| 
+        exp '*' exp 
+        { 
+            $$ = $1 * $3;
+        }
+| 
+        exp '/' exp 
+        { 
+            $$ = $1 / $3;
+        }
+| 
+        '-' exp %prec NEG
+        { 
+            $$ = -$2;
+        }
+|
+        // Exponentiation:
+        exp '^' exp 
+        { 
+            $$ = pow($1, $3);
+        }
+|
+        '(' exp ')'
+        { 
+            $$ = $2;
+        }
+;
+//=

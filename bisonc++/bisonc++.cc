@@ -82,14 +82,6 @@ try
 
     rules.assignNonTerminalNumbers();
 
-    Generator generator(rules, parser, itemSets);
-
-    generator.baseclassHeader();
-    generator.classHeader();
-    generator.implementationHeader();
-
-    generator.parseFunction();
-
     rules.setVerbose(parser.verboseSource());
 
     State::showConflicts();
@@ -101,7 +93,28 @@ try
 
     rules.showRules();
 
-    itemSets.showParsingTables();
+    Generator generator(rules, parser, itemSets);
+
+    generator.baseclassHeader();
+    generator.classHeader();
+    generator.implementationHeader();
+
+    generator.parseFunction();
+
+    itemSets.showParsingTables();   // Note that the generator may change a
+                                    // state, which will then affect the shown
+                                    // parsing tables. This is done in
+                                    // Generator::srtables, calling
+                                    // State::writeStateArray(). This latter
+                                    // function may set a State's
+                                    // d_defaultReduction field. Consider
+                                    // removing this modification from
+                                    // writeStateArray(), moving it to a
+                                    // separate State member, so that
+                                    // Generator merely produces the generated
+                                    // parser.
+
+    itemSets.deriveSentence();
 
     return 0;
 }
@@ -114,6 +127,3 @@ catch(int x)
 {
     return x;
 }
-
-
-

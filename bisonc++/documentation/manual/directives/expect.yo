@@ -1,0 +1,29 @@
+B() normally warns if there are any conflicts in the grammar (see section
+ref(SHIFTREDUCE)), but many real grammars have harmless em(shift/reduce
+conflicts) which are resolved in a predictable way and would be difficult to
+eliminate. It is desirable to suppress the warning about these conflicts
+unless the number of conflicts changes. You can do this with the tt(%expect)
+declaration.  The declaration looks like this:
+        verb(
+    %expect n
+        ) 
+    Here tt(n) is a decimal integer. The declaration says there should be no
+warning if there are tt(n) shift/reduce conflicts and no em(reduce/reduce
+conflicts). The usual warning is given if there are either em(more) or
+em(fewer) conflicts, em(or) if there are em(any) reduce/reduce conflicts.
+
+In general, using tt(%expect) involves these steps:
+    itemization(
+    it() Compile your grammar without tt(%expect). Use the `tt(-V)' option to
+get a verbose list of where the conflicts occur. B() will also print the
+number of conflicts.
+    it() Check each of the conflicts to make sure that B()'s default
+resolution is what you really want. If not, rewrite the grammar and go back to
+the beginning.
+    it() Add an tt(%expect) declaration, copying the number tt(n) from the
+number which B() printed.
+    )
+    Now B() will stop annoying you about the conflicts you have checked,
+but it will warn you again if changes in the grammar result in additional
+conflicts.
+

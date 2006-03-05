@@ -1,0 +1,34 @@
+If you have chosen a single data type for semantic values, the tt($$) and
+tt($n) constructs always have that data type.
+
+If you have used a tt(%union) directive to specify a variety of data types,
+then you must declare a choice among these types for each terminal or
+nonterminal symbol that can have a semantic value. Then each time you use
+tt($$) or tt($n), its data type is determined by which symbol it refers to in
+the rule. In this example,
+        verb(
+    exp:    
+        ...
+    | 
+        exp '+' exp
+        { 
+            $$ = $1 + $3; 
+        }
+        )
+    tt($1) and tt($3) refer to instances of exp, so they all have the data
+type declared for the nonterminal symbol exp. If tt($2) were used, it would
+have the data type declared for the terminal symbol 'tt(+)', whatever that
+might be.
+
+    Alternatively, you can specify the data type when you refer to the value,
+by inserting `tt(<type>)' after the `tt($)' at the beginning of the
+reference. For example, if you have defined types as shown here:
+        verb(
+    %union 
+    {
+        int u_int;
+        double u_double;
+    };
+        )
+    then you can write tt($<u_int>1) to refer to the first subunit of the rule
+as an integer, or tt($<u_double>1) to refer to it as a double.

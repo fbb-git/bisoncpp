@@ -35,19 +35,6 @@ class State
     typedef NonKernelMap::value_type 
             NonKernelValue;
 
-    typedef std::map<Terminal const *, ShiftReduce>
-            ActionTable;
-    typedef ActionTable::iterator 
-            ActionTableIter;
-    typedef ActionTable::const_iterator 
-            ActionTableConstIter;
-    typedef std::map<NonTerminal const *, unsigned>
-            GoToTable;
-    typedef GoToTable::const_iterator 
-            GoToTableConstIter;
-    typedef std::set<Symbol const *>
-            GoToSet;
-
     struct IIContext                        // inspectItemContext
     {
         State *dest;
@@ -67,32 +54,51 @@ class State
         State &obj;
     };
     
-    std::vector<Item>   d_kernel;
-    NonKernelMap        d_nonKernel;
-                      
-    GoToTable           d_goto;             //goto table
-    ActionTable         d_action;           // action table
-    ActionTable         d_suppressed;       // suppressed actions due to
-                                            // default conflict resolution
-                      
-    GoToSet             d_gotoSet; // first elements of this state's
-                                    // production rules. Used
-                                    // to determine the GoTos from this
-                                    // state, in combination with the
-                                    // kernel-state elements beyond the
-                                    // dot-positions.
-                      
-    Terminal const     *d_inheritedTerminal;
-    Type                d_type;
-    mutable Production const   *d_defaultReduction;
+    public:
+        typedef std::map<Terminal const *, ShiftReduce>
+                ActionTable;
+        typedef ActionTable::iterator 
+                ActionTableIter;
+        typedef ActionTable::const_iterator 
+                ActionTableConstIter;
+        typedef std::pair<ActionTableConstIter, ActionTableConstIter>
+                ActionConstIterators;
 
-    unsigned            d_nShiftReduceConflicts;           
-    unsigned            d_nReduceReduceConflicts;           
-    unsigned            d_idx;
+        typedef std::map<NonTerminal const *, unsigned>
+                GoToTable;
+        typedef GoToTable::const_iterator 
+                GoToTableConstIter;
+        typedef std::set<Symbol const *>
+                GoToSet;
 
-    static unsigned s_nShiftReduceConflicts;
-    static unsigned s_nReduceReduceConflicts;
-    static char const *s_stateName[];       // ascii-text representations of
+    private:
+        std::vector<Item>   d_kernel;
+        NonKernelMap        d_nonKernel;
+                          
+        GoToTable           d_goto;             //goto table
+        ActionTable         d_action;           // action table
+        ActionTable         d_suppressed;       // suppressed actions due to
+                                                // default conflict resolution
+                          
+        GoToSet             d_gotoSet; // first elements of this state's
+                                        // production rules. Used
+                                        // to determine the GoTos from this
+                                        // state, in combination with the
+                                        // kernel-state elements beyond the
+                                        // dot-positions.
+                          
+        Terminal const     *d_inheritedTerminal;
+        Type                d_type;
+        mutable Production const   *d_defaultReduction;
+    
+        unsigned            d_nShiftReduceConflicts;           
+        unsigned            d_nReduceReduceConflicts;           
+        unsigned            d_idx;
+    
+        static unsigned s_acceptingState;
+        static unsigned s_nShiftReduceConflicts;
+        static unsigned s_nReduceReduceConflicts;
+        static char const *s_stateName[];   // ascii-text representations of
                                             // the state types
 
     public:
@@ -107,15 +113,28 @@ class State
             std::ostream &out;
         };
 
-        State()
-        :
-            d_type(NORMAL)
-        {}
-
+        State();
         State(Item const &item);
+
+        ActionConstIterators actionConstIterators() const
+        {
+            return ActionConstIterators
+                            (d_action.begin(), d_action.end());
+        }
+
+        static unsigned acceptingState()
+        {
+            return s_acceptingState;
+        }
+        bool acceptState() const
+        {
+            return d_idx == s_acceptingState;
+        }
 
         bool beforeDot(Symbol const &symbol) const;
         void closure(); 
+
+        unsigned gotoState(NonTerminal const *nonTerminal) const;
         std::set<Symbol const *> const &gotoSet() const
         {
             return d_gotoSet;
@@ -162,13 +181,17 @@ class State
         static void showConflicts();
 
         void showKernel() const;
-//        void showLookahead(char const *name) const;
 
         static void showTables(State const *state);
 
         Terminal const *inheritedTerminal() const
         {
             return d_inheritedTerminal;
+        }
+
+        Production const *defaultReduction() const
+        {
+            return d_defaultReduction;
         }
 
         static void writeStateArray(State const *state, WSAContext &context);

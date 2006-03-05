@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-    // expect <typename> or not, if not a  `<' character
+    // expect <typename> or not, if not at a  `<' character
 
 unsigned Parser::extractType(string *type, unsigned pos)
 {

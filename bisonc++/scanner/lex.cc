@@ -20,6 +20,7 @@ namespace {
         "LSP_NEEDED",
         "LTYPE",
         "NAMESPACE",
+        "NEG_DOLLAR",
         "NONASSOC",
         "NUMBER",
         "PARSEFUN_SOURCE",
