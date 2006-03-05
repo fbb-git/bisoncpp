@@ -456,6 +456,13 @@ specification file.
             namespace) declaration for the requested namespace.  This
             directive is overridden by the bf(--namespace) command-line
             option.
+    it() bf(%negative-dollar-indices) nl()
+           Do not generate warnings when zero- or negative dollar-indices are
+            used in the grammar's action blocks. Zero or negative
+            dollar-indices are commonly used to implement inherited
+            attributes, and should normally be avoided. When used, they can be
+            specified like tt($-1) or tt($<type>-1), where tt(type) is a
+            tt(%union) field-name.
     it() bf(%parsefun-source) tt(source) nl()
            Defines the pathname of the file containing the parser member
             bf(parse()). This directive is overridden by the 

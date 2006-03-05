@@ -55,6 +55,9 @@ includefile(directives/intro.yo)
     subsect(%namespace: Using a namespace)
     includefile(directives/namespace.yo)
 
+    subsect(%negative-dollar-indices: Using constructions like $-1)
+    includefile(directives/negative.yo)
+
     subsect(%stype: The semantic stack type)
     includefile(directives/stype.yo)
 

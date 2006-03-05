@@ -12,15 +12,16 @@ req()
 mkdir -p tmp/bin tmp/o
 
 make/special skel
-make/library
+make/library || exit 1
 
 BASE=${MAIN%\.[^\.]*}
 OBJ=tmp/o/${BASE}.o
 
-[ ! -e $OBJ -o $MAIN -nt $OBJ ] && req $GCC $COPTS -o $OBJ -c $MAIN
+if [ ! -e $OBJ -o $MAIN -nt $OBJ ] ; then
+    req $GCC $COPTS -o $OBJ -c $MAIN
+fi
 
 req $GCC -o tmp/bin/$EXECUTABLE $OBJ $LOPTS
-
 
 
 

@@ -1,3 +1,27 @@
+bisonc++ (0.98.500) unstable; urgency=low
+
+  * Handling of $<type>i and $<type>$ repaired, added the 
+    %negative-dollar-indices directive.
+
+    $<type> specifications were not properly parsed. Instead of $<type>i or
+    $<type>$ constructions like $i<type> and $$<type> were parsed, which is
+    contrary to the manual's specification. The function parsing the $-values
+    is defined in parser/handledollar.cc. 
+
+    The handling of negative $-indices is improved. Negative $-indices are
+    used when synthesizing attributes. In that context, $0 is useful, since it
+    refers to the nonterminal matched before the current rule is starting to
+    be used, allowing rules like `vardef: typename varlist ' where `varlist'
+    inherits the type specification defined at `typename'. 
+
+    In most situations indices are positive. Therefore bisonc++ will warn when
+    zero or non-positive $-indices are seen. The %negative-dollar-indices
+    directive may be used to suppress these warnings.
+
+    $-indices exceeding the number of elements continue to cause an error. 
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun,  5 Mar 2006 13:59:08 +0100
+
 bisonc++ (0.98.402) unstable; urgency=low
 
   * links against bobcat 1.6.0, using bobcat's new Arg:: interface

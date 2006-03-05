@@ -68,4 +68,5 @@ which you can use this reliably:
     As long as tt(bar) is used em(only) in the fashion shown here, tt($0)
 always refers to the tt(expr) which precedes bar in the definition of tt(foo).
 But as mentioned: it's a risky practice, which should be avoided if at all
-possible. 
+possible. See also section ref(SPECIAL).
+

@@ -2,7 +2,7 @@ Source: bisonc++
 Section: devel
 Priority: optional
 Maintainer: Frank B. Brokken <f.b.brokken@rug.nl>
-Build-Depends: debhelper (>= 4.0.0), g++ (>= 4.0.2-2), bobcat-dev (>= 1.6.0)
+Build-Depends: debhelper (>= 4.0.0), bobcat-dev (>= 1.6.0)
 Standards-Version: 3.6.1
 
 Package: bisonc++
@@ -19,6 +19,9 @@ Description: Bison-style parser generator for C++
  old-style yyparse() function.  Bisonc++ offers many options, among which the
  possibility to define the class in a separate namespace. Bisonc++ merely
  generates C++ code. If C code is required, bison should be used.
+ .
+ Compilation requires g++ (>= 4.0.2-2), but the debian control file chokes on
+ this requirement for reasons unknown to me.
 
 
 

@@ -16,7 +16,14 @@
 class Scanner: public yyFlexLexer
 {
     public:
+
+        // *******************************************************
         // When modifying this enum, also adapt nameOf[] in lex.cc
+        // Also, parser/data.cc must be recompiled
+        // The order of the enum-values is important: their order
+        // must be followed by the ordering used in lex.cc
+        // *******************************************************
+
         enum Token
         {
             UNAVAILABLE             = 256,      // for d_lastToken  22
@@ -38,6 +45,7 @@ class Scanner: public yyFlexLexer
             LSP_NEEDED,
             LTYPE,
             NAMESPACE,
+            NEG_DOLLAR,
             NONASSOC,
             NUMBER,
             PARSEFUN_SOURCE,

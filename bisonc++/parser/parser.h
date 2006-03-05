@@ -62,6 +62,7 @@ class Parser
     bool        d_generateBaseclass;
     bool        d_lines;
     bool        d_lspNeeded;
+    bool        d_negativeDollarIndices;
     std::string d_baseclassHeader;
     std::string d_baseclassSkeleton;
     std::string d_classHeader;
@@ -157,10 +158,11 @@ class Parser
         std::string verboseSource() const;
 
     private:
-        unsigned blockElement(std::string *replacement, unsigned pos, 
-                              unsigned nElements);
-        unsigned blockReturn(std::string *replacement, unsigned pos);
         void checkBlocktype();
+
+                                        // called from handleDollar
+        bool defaultReturn(unsigned pos);
+
         void definePathname(std::string *sp);
 
         Symbol *defineNonTerminal(std::string const &name, 
@@ -173,7 +175,10 @@ class Parser
 
         int elementNr(unsigned *idx, std::string const &text);
 
-                                            // called from handleDollar()
+                                        // called from handleDollar
+        bool explicitElement(unsigned pos, unsigned nElements);
+        bool explicitReturn(unsigned pos);
+
         unsigned extractType(std::string *type, unsigned pos);
         unsigned extractIndex(int *idx, unsigned pos) const;
 
@@ -198,6 +203,13 @@ class Parser
         void nestedBlock();
         void newProduction();
         std::string nextHiddenName();
+
+        void noDefaultTypeWarning() const;
+
+                                        // called from handleDollar
+        bool numberedElement(unsigned pos, unsigned nElements);
+
+
         void parseAssociations(Terminal::Association association);
         void parseDeclarations();
 
@@ -215,7 +227,10 @@ class Parser
 
         void setAccessorVariables();
         void setName(std::string *target, char const *extension);
-
+        void setNegativeDollar()
+        {
+            d_negativeDollarIndices = true;
+        }        
         void setPrecedence();               // called by parseProduction()
         void showEmpty() const;
         unsigned skipIgnore(unsigned pos);  // used by processBlock()

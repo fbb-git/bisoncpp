@@ -12,7 +12,7 @@ NR=0
 for x in `cat CLASSES`
 do
     req cd $x
-    SRC=`find ./ -regex '.*\.cc' -maxdepth 1 -printf "%f\n"`
+    SRC=`find ./  -maxdepth 1 -regex '.*\.cc' -printf "%f\n"`
     [ "$SRC" == "" ] && (cd ..; continue)
     mkdir -p o
     for src in $SRC
@@ -43,10 +43,8 @@ do
                          req $GCC -Iflex $COPTS -o  $OBJ -c $src
 done
 
-
 OBJ=`find ./ -regex '.*\.o' -and -not -name bisonc++.o -print`
 [ "$OBJ" == "" ] && exit 0
 
 req ar rs $LIBRARY $OBJ
 req rm $OBJ
-
