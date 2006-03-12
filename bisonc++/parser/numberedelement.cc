@@ -9,21 +9,24 @@ bool Parser::numberedElement(unsigned pos, unsigned nElements)
 
     string const &idxType = d_rules.sType(idx);
 
-    if (idx <= 0)                   // type of the $i can't be determined
+    if (idx > static_cast<int>(nElements)) // $i refers beyond this rule
+        lineMsg() << "In  " << d_rules.name() << 
+                    ": $" << idx << " used, but the rule has only " << 
+                    nElements << " elements" << err;
+    else if (d_unionDeclared)
     {
-        if (!d_negativeDollarIndices)
-            lineMsg() << "In " << d_rules.name() << 
+        if (idx <= 0)                   // type of the $i can't be determined
+        {                               // and indices <= 0 are not accepted
+            if (!d_negativeDollarIndices)
+                lineMsg() << "In " << d_rules.name() << 
                         ": cannot determine default type of $" << 
                         idx << warning;
-    }
-    else if (idx > static_cast<int>(nElements)) // $i refers beyond this rule
-            lineMsg() << "In  " << d_rules.name() << 
-                        ": $" << idx << " used, but the rule has only " << 
-                        nElements << " elements" << err;
-    else if (!idxType.length())     // $i has no default type
+        }
+        else if (!idxType.length())     // or $i without type association
             lineMsg() << "$" << idx << " of `" << d_rules.name() << 
                          "' has no default type-association" << warning;
-        
+    }        
+
     ostringstream os;
     os << s_semanticValueStack << "[" << indexToOffset(idx, nElements) << "]";
     string replacement = os.str();

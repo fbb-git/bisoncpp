@@ -10,7 +10,8 @@ Parser::Parser(Rules &rules)
     d_generateBaseclass(!d_arg.option(0, "dont-rewrite-baseclass-header")),
     d_lines(false),
     d_lspNeeded(false),
-    d_negativeDollarIndices(false)
+    d_negativeDollarIndices(false),
+    d_unionDeclared(false)
 {
     d_arg.option(&d_nameSpace, 'n');
     d_arg.option(&d_parsefunSource, 'p');

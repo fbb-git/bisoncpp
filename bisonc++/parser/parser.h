@@ -63,6 +63,7 @@ class Parser
     bool        d_lines;
     bool        d_lspNeeded;
     bool        d_negativeDollarIndices;
+    bool        d_unionDeclared;            // see setuniondecl.cc
     std::string d_baseclassHeader;
     std::string d_baseclassSkeleton;
     std::string d_classHeader;

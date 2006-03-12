@@ -32,3 +32,4 @@ bool Parser::explicitReturn(unsigned pos)
 
     return true;            // this block uses $$
 }
+

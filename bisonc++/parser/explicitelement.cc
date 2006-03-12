@@ -12,24 +12,38 @@ bool Parser::explicitElement(unsigned pos, unsigned nElements)
 
     string const &idxType = d_rules.sType(idx); // get the idx'th default type
 
-    if (idx > static_cast<int>(nElements))      // $i refers beyond this rule
+
+    if (!d_unionDeclared)               // no %union: no explicit types
+        lineMsg() << "No %union declaration: can't resolve $<" << 
+            explicitType << ">" << idx << " for element $" << idx << 
+            " in `" << d_rules.name()  << warning;
+
+                                        // $i refers beyond this rule
+    else if (idx > static_cast<int>(nElements))      
         lineMsg() << "In  " << d_rules.name() << 
-                    ": $<" << idxType << ">" << idx << 
+                    ": $<" << explicitType << ">" << idx << 
                     " used, but the rule has only " << 
-                    nElements << " elements" << err;
-    else if 
+                    nElements << " elements" << warning;
+
+    else if                                     
     (
-        !idxType.length()                       // idx'th element has no type
+        !idxType.length()               // idx'th element has no type
         && 
-        explicitType.length()                   // and explicit type was used
+        explicitType.length()           // but explicit type was used
     )
     {            
-        if (idx > 0 || !d_negativeDollarIndices)
+        if 
+        (                               // and either:
+            idx > 0                     // a positive index
+            || 
+            !d_negativeDollarIndices    // or don't accept indices <= 0
+        )                             
             lineMsg() << "Using $<" << explicitType << ">" << idx << 
                 " for "<< (idx <= 0 ? "type-indeterminable" : "") <<
                 " element $" << idx << " in `" << 
                 d_rules.name() << "'" << warning;
     }
+
 
     ostringstream os;
     os << s_semanticValueStack << "[" << indexToOffset(idx, nElements) << 
