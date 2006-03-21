@@ -9,6 +9,11 @@ class Symbol: public Element
     std::string const d_name;
     std::string d_stype;        // Type assigned by explicit symbol type 
                                 // association, e.g. %type <int> symbol
+                                // but there's also a type association with
+                                // symbols when no %union is specified. In
+                                // that case it's either the default (int) or
+                                // %stype-defined type.
+    
     int d_type;
     mutable bool d_used;
     

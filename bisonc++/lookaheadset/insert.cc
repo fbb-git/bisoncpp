@@ -7,7 +7,7 @@ ostream &LookaheadSet::insert(ostream &out) const
     Element::SDContext context = {out, " "};
 
     for_each(begin(), end(),
-        Wrap1<Element const *, Element::SDContext>
+        Wrap1c<Element, Element::SDContext>
                   (&Element::sDisplay, context));
 
     if (d_EOF)

@@ -17,7 +17,7 @@
 %option c++ 8bit warn noyywrap yylineno
 %option debug
 
-%x string comment quote
+%x string comment quote stype
 
 OCTAL   [0-7]
 OCT3    OCTAL{3}
@@ -160,6 +160,7 @@ IDENT   {ID1}{ID2}*
 "%lsp-needed"                   return LSP_NEEDED;
 "%ltype"                        return LTYPE;
 "%namespace"                    return NAMESPACE;
+"%negative-dollar-indices"      return NEG_DOLLAR;
 "%nonassoc"                     return NONASSOC;
 "%parsefun-source"[ \t]*        {
                                     d_retWS = true;
@@ -173,7 +174,16 @@ IDENT   {ID1}{ID2}*
                                     return SCANNER_INCLUDE;
                                 }
 "%start"                        return START;
-"%stype"                        return STYPE;
+"%stype"                        {
+                                    BEGIN stype;
+                                    return STYPE;
+                                }
+
+<stype>.*                       {
+                                    BEGIN INITIAL;
+                                    return IDENTIFIER;
+                                }
+
 "%token"                        return TOKEN;
 "%type"                         return TYPE;
 "%union"                        return UNION;

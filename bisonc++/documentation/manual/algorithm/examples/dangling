@@ -1,0 +1,13 @@
+%token IF ELSE VAR
+
+%%
+
+stmt:     
+    VAR ';'
+|
+    IF '(' VAR ')' stmt
+|
+    IF '(' VAR ')' stmt ELSE stmt
+;
+
+

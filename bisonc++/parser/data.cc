@@ -20,6 +20,7 @@ Parser::ActionMap::value_type Parser::s_info[] =
     Value(Scanner::LSP_NEEDED,          &Parser::setLspNeeded),
     Value(Scanner::LTYPE,               &Parser::setLtype),
     Value(Scanner::NAMESPACE,           &Parser::setNameSpace),
+    Value(Scanner::NEG_DOLLAR,          &Parser::setNegativeDollar),
     Value(Scanner::NONASSOC,            &Parser::setNonAssoc),
     Value(Scanner::PARSEFUN_SOURCE,     &Parser::setParsefunSource),
     Value(Scanner::SCANNER_INCLUDE,     &Parser::setScannerInclude),

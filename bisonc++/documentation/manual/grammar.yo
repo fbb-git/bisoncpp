@@ -1,0 +1,137 @@
+includefile(grammar/intro.yo)
+
+lsect(OUTLINE)(Outline of a Bisonc++ Grammar File)
+includefile(grammar/outline.yo)
+
+lsect(SYMBOLS)(Symbols, Terminal and Nonterminal Symbols)
+includefile(grammar/symbols.yo)
+
+lsect(RULES)(Syntax of Grammar Rules)
+includefile(grammar/syntax.yo)
+
+lsect(RECURSIVE)(Writing recursive rules)
+includefile(grammar/recursive.yo)
+
+lsect(DEFSEM)(Defining Language Semantics)
+includefile(grammar/semantics.yo)
+
+    lsubsect(SEMANTICTYPES)(Data Types of Semantic Values)
+    includefile(grammar/datatypes.yo)
+
+    lsubsect(MORETYPES)(More Than One Value Type)
+    includefile(grammar/union.yo)
+
+    lsubsect(ACTIONS)(Actions)
+    includefile(grammar/actions.yo)
+
+    subsect(Data Types of Values in Actions)
+    includefile(grammar/actiontypes.yo)
+
+    lsubsect(MIDACTIONS)(Actions in Mid-Rule)
+    includefile(grammar/midrule.yo)
+
+lsect(DIRECTIVES)(Bisonc++ Directives)
+includefile(directives/intro.yo)
+
+    lsubsect(TOKTYPENAMES)(%token: Token Type Names)
+    includefile(directives/tokens.yo)
+
+    lsubsect(PRECEDENCE)(%left, %right, %nonassoc: Operator Precedence)
+    includefile(directives/precedence.yo)
+
+    lsubsect(NONTERMS)(%type: Nonterminal Symbols)
+    includefile(directives/nonterms.yo)
+
+    lsubsect(EXPECT)(%expect: Suppressing Conflict Warnings)
+    includefile(directives/expect.yo)
+
+    subsect(%start: The Start-Symbol)
+    includefile(directives/start.yo)
+
+    lsubsect(PARSERCLASS)
+            (%class-name: Choosing the Name of the Parser Class)
+    includefile(directives/parserclass.yo)
+
+    subsect(%namespace: Using a namespace)
+    includefile(directives/namespace.yo)
+
+    subsect(%negative-dollar-indices: Using constructions like $-1)
+    includefile(directives/negative.yo)
+
+    subsect(%stype: The semantic stack type)
+    includefile(directives/stype.yo)
+
+    lsubsect(COLLECTION)(%union: The Collection of Value Types) 
+    includefile(directives/union.yo)
+
+    lsubsect(LSPNEEDED)(%lsp-needed: Using the default location type)
+    includefile(directives/lneeded.yo)
+
+    lsubsect(LTYPE)(%ltype: Using an existing location type)
+    includefile(directives/ltype.yo)
+
+    lsubsect(LOCSTRUCT)
+            (%locationstruct: Specifying a dedicated location struct)
+    includefile(directives/locstruct.yo)
+
+    lsubsect(SCANNER)(%scanner: Using a standard scanner interface)
+    includefile(directives/scanner.yo)
+
+    subsect(Directives controlling generated filenames)
+    includefile(directives/output.yo)
+
+        lsubsubsect(BCHEADER)
+            (%baseclass-header: the Parser's Base Class header)
+        includefile(directives/baseclass.yo)
+
+        lsubsubsect(CHEADER)
+            (%class-header: the Parser's Class header)
+        includefile(directives/classhdr.yo)
+
+        subsubsect(%implementation-header: the Implementation Header)
+        includefile(directives/imphdr.yo)
+
+        lsubsubsect(PARSESOURCE)
+                   (%parsefun-source: the parse() function's sourcefile)
+        includefile(directives/parse.yo)
+
+        lsubsubsect(FILES)
+            (%files: the generic filename)
+        includefile(directives/filenames.yo)
+
+    subsect(%baseclass-preinclude: header included by the baseclass)
+    includefile(directives/preinclude.yo)
+
+    subsect(%debug: Adding debugging code to the `parse()' member)
+    includefile(directives/debug.yo)
+
+    subsect(%error-verbose: (To Do) Dumping the parser stack)
+    includefile(directives/errorverbose.yo)
+
+    subsect(%lines: Insert `#line' directives)
+    includefile(directives/lines.yo)
+
+sect(Basic Grammatical Constructions)
+includefile(grammar/gramcons.yo)
+
+    subsect(Plain Alternatives)
+    includefile(grammar/alternatives.yo)
+
+    subsect(One Or More Alternatives, No Separators)
+    includefile(grammar/series.yo)
+
+    lsubsect(OPTSERIES)(Zero Or More Alternatives, No Separators)
+    includefile(grammar/optseries.yo)
+
+    subsect(One Or More Alternatives, Using Separators)
+    includefile(grammar/delimseries.yo)
+
+    subsect(Zero Or More Alternatives, Using Separators)
+    includefile(grammar/optdelim.yo)
+
+    subsect(Nested Blocks)
+    includefile(grammar/nested.yo)
+
+sect(Multiple Parsers in the Same Program)
+includefile(grammar/multiple.yo)
+

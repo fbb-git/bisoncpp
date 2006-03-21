@@ -1,5 +1,0 @@
-#include "msg.ih"
-
-Msg::() const
-{
-}

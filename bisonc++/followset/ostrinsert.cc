@@ -8,7 +8,7 @@ ostream &FollowSet::ostrInsert(ostream &out) const
 
                             // passing Element const *
     for_each(begin(), end(), 
-        Wrap1<Element const *, Element::SDContext>
+        Wrap1c<Element, Element::SDContext>
              (&Element::sDisplay, context));
 
     if (d_EOF)

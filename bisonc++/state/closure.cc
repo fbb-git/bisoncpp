@@ -49,7 +49,7 @@ void State::closure()
     {
         msg() << "\n"
                 "Computing the closure for" << spool;
-        itemIt->show();    
+        itemIt->show();
         inspectProduction(itemIt->production(), itemIt->dot(), 
                           itemIt->lookaheadSet());
     }

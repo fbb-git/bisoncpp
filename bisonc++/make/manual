@@ -1,0 +1,28 @@
+#!/bin/sh
+
+. INSTALL.cf
+
+make/special
+
+req()
+{
+    echo "$*"
+    $* || exit 1
+}
+
+mkdir -p tmp/manual
+
+req cd documentation/manual
+
+for yo in *.yo */*.yo
+do
+    if [ ! -e manual-stamp -o $yo -nt manual-stamp ]
+    then
+        req yodl2html -l 3 bisonc++.yo
+        req touch manual-stamp
+        req mv *.html ../../tmp/manual
+    fi
+done
+
+cd ../..
+

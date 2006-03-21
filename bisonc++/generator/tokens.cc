@@ -7,7 +7,7 @@ void Generator::tokens(ostream &out) const
     SSContext context = {&symbolicTokens};
 
     for_each(d_rules.terminals().begin(), d_rules.terminals().end(), 
-        Wrap1<Terminal const *, SSContext>
+        Wrap1c<Terminal, SSContext>
                   (&Generator::selectSymbolic, context));
 
     key(out);

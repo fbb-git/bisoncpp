@@ -9,6 +9,11 @@ void Parser::setUnionDecl()
         lineMsg() << "%union or %stype multiply declared" << err;
 
     d_stackDecl = "struct STYPE\n";
+    d_unionDeclared = true;         // if a %union is used, then the rules
+                                    // MUST have an associated return type if
+                                    // a plain $$ is used. Also, a union must
+                                    // be available if a $<field> construction
+                                    // is used.
 
     if (!d_scanner.block(&d_block))
         lineMsg() << "`%union { ... }' expected" << err;
