@@ -1,3 +1,23 @@
+bisonc++ (0.98.510) unstable; urgency=low
+
+  * When no %union has been declared, no $$ warnings are issued anymore about
+    non-exisiting types;
+    When no %union has been declared a $<type>i or $<type>$ warning is issued
+    about non-exisiting types.
+
+    The State table (in the generated parse.cc file) containing `PARSE_ACCEPT'
+    was created with a `REDUCE' indication for grammars whose start symbol's
+    production rules were non-repetitive. This was repaired in
+    state/writestatearray.cc by setting the (positive) non-reduce indication
+    for states using shifts and/or the accept state.
+
+    The logic in writeStateArray() was modifed: a separate ShiftReduce::Status
+    variable is now used to store the possible actions: SHIFT, REDUCE or
+    ACCEPT. The tables show `SHIFTS' if a state uses shifts; `ACCEPTS' if a
+    state contains PARSE_ACCEPT; and `REDUCE' otherwise.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 21 Mar 2006 20:47:49 +0100
+
 bisonc++ (0.98.500) unstable; urgency=low
 
   * Handling of $<type>i and $<type>$ repaired, added the 

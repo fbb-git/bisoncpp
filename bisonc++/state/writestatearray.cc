@@ -5,10 +5,12 @@ void State::writeStateArray(State const *sp, WSAContext &context)
     State const &state = *sp;
 
     unsigned nDefaults = 0;
-    bool usesShift = false; // when a state uses a shift, then its last index
-                            // value is stored as a positive value. This is
-                            // used by the parser to see whether another token
-                            // should be retrieved from the lexical scanner.
+    ShiftReduce::Status shiftStatus = ShiftReduce::REDUCE;
+                            // when a state uses shifts/accept, then its last
+                            // index value is stored as a positive value. This
+                            // is used by the parser to see whether another
+                            // token should be retrieved from the lexical
+                            // scanner.
 
     Production const *defaultReduction = 0;
 
@@ -21,9 +23,11 @@ void State::writeStateArray(State const *sp, WSAContext &context)
     {
         ShiftReduce const &sr = actionIter->second;
 
-        if (sr.shift())
-            usesShift = true;
-        else if (!sr.accept())
+        if (sr.accept())
+            reinterpret_cast<int &>(shiftStatus) |= ShiftReduce::ACCEPT;
+        else if (sr.shift())
+            reinterpret_cast<int &>(shiftStatus) |= ShiftReduce::SHIFT;
+        else 
         {
             if (!defaultReduction)
                 defaultReduction = actionIter->second.production();
@@ -41,12 +45,26 @@ void State::writeStateArray(State const *sp, WSAContext &context)
                         s_stateName[state.d_type] << 
                     "}, "
                     "{" <<
-                        (usesShift ? "" : "-") <<   
+                    (
+                        shiftStatus & 
+                        (ShiftReduce::ACCEPT | ShiftReduce::SHIFT) ? 
+                            "" 
+                        : 
+                            "-"
+                    ) <<   
                         (state.d_action.size() + state.d_goto.size() - 
                                                             nDefaults + 1) << 
                     "}"
-                "}," << 
-                        (usesShift ? " // SHIFTS" : "") << "\n";
+                "}, // " <<
+                (
+                        shiftStatus & ShiftReduce::ACCEPT ?
+                            "ACCEPTS" 
+                    :
+                        shiftStatus & ShiftReduce::SHIFT ?
+                            "SHIFTS"
+                    :
+                            "REDUCES"
+                ) << "\n";
 
     for 
     (
