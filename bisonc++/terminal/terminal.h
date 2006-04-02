@@ -66,6 +66,11 @@ class Terminal: public Symbol
         {
             ++s_priority;
         }
+        static void resetPriority()     // see Parser::parseDeclarations()
+        {
+            s_priority = 0;
+        }
+
         static bool Terminal::setUnique(unsigned value);    // true if unique
         static void unused(Terminal const *terminal);
         static unsigned maxValue()
