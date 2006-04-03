@@ -9,6 +9,7 @@ Terminal::Terminal(string const &name, string const &literal, Type type)
     d_association(UNDEFINED),
     d_priority(s_priority),
     d_literal(literal),
+    d_readableLiteral(literal),
     d_firstSet(this)
 {
     setReserved();

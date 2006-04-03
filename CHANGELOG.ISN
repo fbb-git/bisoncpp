@@ -1,3 +1,23 @@
+THESE CHANGES HAVE NOT YET BEEN INCORPORATED IN A NEW DEBIAN VERSION
+
+Following the preamble, the token-priority is reset to 0. This prevents the
+assignment of high token values to character tokens only appearing in the
+grammar and not in the preamble. 
+
+_default_ entries are removed from the generated parser. They occurred in
+strangely formatted grammar, usually when all tokens were specified as
+explicit reductions. This doesn't happen anymore, since the Reductions class
+will either remove _default_ in this case or will make it a true default
+reduction, at the end of the SR tables.
+
+Printable character tokens are also displayed using their char-representation
+
+NEW class (and directory) Reductions
+NEW files
+    terminal/activate.cc
+    state/setstatusorreduce.cc
+    various state/writeXXX.cc functions
+
 --none so far--
 
 

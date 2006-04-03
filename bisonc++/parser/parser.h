@@ -172,7 +172,8 @@ class Parser
         void defineTerminal(std::string const &name, 
                             Symbol::Type type,
                             Terminal::Association association, 
-                            std::string stype);
+                            std::string stype,
+                            Terminal::Status status);
 
         int elementNr(unsigned *idx, std::string const &text);
 

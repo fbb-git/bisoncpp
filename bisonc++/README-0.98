@@ -23,11 +23,7 @@ have overlooked various subtleties.
 Do not hesitate to contact me when you encounter a bug. A (small) grammar
 illustrating your point is then always extremely useful.
 
-If you need bisonc++'s version 0.91: it's (among other locations) still at
-ftp://ftp.rug.nl/contrib/frank/software/linux/bisonc++. 
-
-
 Frank.
-May 2005.
+May 2005-April 2006
 
 (f.b.brokken@rug.nl)

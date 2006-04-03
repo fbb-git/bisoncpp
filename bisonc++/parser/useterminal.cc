@@ -2,19 +2,25 @@
 
 Terminal *Parser::useTerminal() 
 {
+    static Terminal *tp;
+
     string const &name = d_scanner.canonicalQuote();
 
     if (Symbol *sp = d_symtab.lookup(name))
     {
         if (sp->isTerminal())
-            return Terminal::downcast(sp);
+        {
+            tp = Terminal::downcast(sp);
+            tp->activate();
+            return tp;
+        }
 
         multiplyDefined(sp, name);
         return 0;
     }
 
-    Terminal *tp = new Terminal(name, Symbol::CHAR_TERMINAL,
-                                d_scanner.number());
+    tp = new Terminal(name, Symbol::CHAR_TERMINAL, Terminal::ACTIVE,
+                      d_scanner.number());
 
     d_symtab.insert
     (

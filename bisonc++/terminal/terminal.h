@@ -31,6 +31,13 @@ class Terminal: public Symbol
             LARGER  = 1,
         };
 
+        enum Status
+        {
+            NOT_ACTIVE,
+            ACTIVE,
+            PREDEFINED,
+        };
+            
     private:
         static std::set<unsigned> s_valueSet;   // all terminal token values
         static unsigned s_priority;
@@ -38,14 +45,18 @@ class Terminal: public Symbol
         static unsigned s_value;        // value assigned, unless explictly
                                         // requested
         static unsigned s_maxValue;     // maximum assigned terminal value
+        static unsigned s_nActive;
+
+        Status d_status;                // used in production rules
 
         unsigned d_value;
         Association d_association;
         unsigned d_priority;
+
         std::string d_literal;
+        std::string d_readableLiteral;
 
         FirstSet d_firstSet;
-
     public:
         static Terminal *downcast(Symbol *sp)
         {
@@ -78,8 +89,14 @@ class Terminal: public Symbol
             return s_maxValue;
         }
 
+        static unsigned nActive()
+        {
+            return s_nActive;
+        }
+
         Terminal(std::string const &name, 
                     Type type,
+                    Status status = NOT_ACTIVE,
                     unsigned value = DEFAULT, 
                     Association association = UNDEFINED, 
                     std::string const &stype = ""); // stype: type assigned by 
@@ -116,6 +133,7 @@ class Terminal: public Symbol
         {
             return d_value;
         }
+        void activate();
 
         virtual FirstSet const &firstSet() const
         {
@@ -137,7 +155,12 @@ class Terminal: public Symbol
 
         virtual std::string const &display() const
         {
-            return literal();
+            return d_readableLiteral;
+        }
+
+        Status status() const
+        {
+            return d_status;
         }
 
     private:

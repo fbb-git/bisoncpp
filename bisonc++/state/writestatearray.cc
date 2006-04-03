@@ -1,42 +1,38 @@
 #include "state.ih"
 
+//        struct StatusOrReduce
+//        {
+//            Reductions &reductions;
+//            ShiftReduce::Status status;
+//        };
+
 void State::writeStateArray(State const *sp, WSAContext &context)
 {
     State const &state = *sp;
 
-    unsigned nDefaults = 0;
-    ShiftReduce::Status shiftStatus = ShiftReduce::REDUCE;
+    Reductions reductions;
                             // when a state uses shifts/accept, then its last
                             // index value is stored as a positive value. This
                             // is used by the parser to see whether another
                             // token should be retrieved from the lexical
                             // scanner.
+    StatusOrReduce sor = {reductions, ShiftReduce::REDUCE};
 
-    Production const *defaultReduction = 0;
+    msg() << "\n"
+            "Inspecting reductions of state " << state.d_idx << info;
 
-    for 
-    (
-        ActionTableConstIter actionIter = state.d_action.begin();
-            actionIter != state.d_action.end();
-                ++actionIter
-    )
-    {
-        ShiftReduce const &sr = actionIter->second;
+        // visit the elements in the action table d_action: register if the
+        // state is the ACCEPT state and/or uses shifts. All reductions are
+        // handled by the Reductions object, receiving a pointer to a token
+        // and a pointer to a production
 
-        if (sr.accept())
-            reinterpret_cast<int &>(shiftStatus) |= ShiftReduce::ACCEPT;
-        else if (sr.shift())
-            reinterpret_cast<int &>(shiftStatus) |= ShiftReduce::SHIFT;
-        else 
-        {
-            if (!defaultReduction)
-                defaultReduction = actionIter->second.production();
-
-            nDefaults += 
-                defaultReduction == actionIter->second.production();
-        }
-    }
+     for_each(state.d_action.begin(), state.d_action.end(),
+             Wrap1c<ActionTable::value_type, StatusOrReduce>
+                   (&setStatusOrReduce, sor));
+ 
+     reductions.setDefault();
     
+            // Write the table header
     context.out << "\n" 
             "SR s_" << state.d_idx << "[] =\n"
             "{\n" <<
@@ -46,100 +42,54 @@ void State::writeStateArray(State const *sp, WSAContext &context)
                     "}, "
                     "{" <<
                     (
-                        shiftStatus & 
+                        sor.status & 
                         (ShiftReduce::ACCEPT | ShiftReduce::SHIFT) ? 
                             "" 
                         : 
                             "-"
                     ) <<   
-                        (state.d_action.size() + state.d_goto.size() - 
-                                                            nDefaults + 1) << 
+                    (
+                        state.d_action.size() - reductions.count() + 
+                        reductions.used() + state.d_goto.size() + 1
+                    ) <<
                     "}"
                 "}, // " <<
+                        state.d_action.size()   << ", " <<  // temporarily
+                        reductions.used()       << " (" << 
+                        reductions.count()      << "), " << 
+                        state.d_goto.size()     << " "  <<
                 (
-                        shiftStatus & ShiftReduce::ACCEPT ?
+                        sor.status & ShiftReduce::ACCEPT ?
                             "ACCEPTS" 
                     :
-                        shiftStatus & ShiftReduce::SHIFT ?
+                        sor.status & ShiftReduce::SHIFT ?
                             "SHIFTS"
                     :
                             "REDUCES"
                 ) << "\n";
 
-    for 
-    (
-        ActionTableConstIter actionIter = state.d_action.begin();
-            actionIter != state.d_action.end();
-                ++actionIter
-    )
-    {
-        ShiftReduce const &sr = actionIter->second;
+       // write the accept and shift transitions
+    for_each(state.d_action.begin(), state.d_action.end(),
+            Wrap1c<ActionTable::value_type, WSAContext>
+                  (&writeAcceptAndShiftTransition, context));
 
-        if (defaultReduction && sr.production() == defaultReduction)
-            continue;
+        // write the goto transitions
+    for_each(state.d_goto.begin(), state.d_goto.end(), 
+        Wrap1c<GoToTable::value_type, ostream>
+              (&writeGoToTransition, context.out));
 
-        Symbol const *symbol = actionIter->first;
-
-        context.out <<  
-        "    {"
-               "{";
-
-        if (symbol->isSymbolic() && !symbol->isReserved())
-            context.out << context.baseclassScope;
-
-        context.out << symbol->display() << 
-                "}, "
-                "{";
-        if (sr.accept())
-            context.out << "PARSE_ACCEPT";
-        else
-            context.out << 
-                static_cast<int>
-                (
-                    sr.shift() ? 
-                        sr.state() 
-                    : 
-                        -sr.production()->nr()
-                );
-        context.out << 
-                "}"
-            "},\n";
-    }
-
-    for 
-    (
-        GoToTableConstIter gotoIter = state.d_goto.begin();
-            gotoIter != state.d_goto.end();
-                ++gotoIter
-    )
-        context.out << 
-            "    {"
-                    "{" << 
-                        gotoIter->first->nr() << 
-                    "}, "
-                    "{" <<
-                            gotoIter->second << 
-                    "}"
-                "}, // " << 
-                            gotoIter->first->name() << "\n";
-
-
-    if (defaultReduction)
-        context.out << 
-            "    {"
-                    "{"
-                        "0"
-                    "}, "
-                    "{" << 
-                        static_cast<int>(-defaultReduction->nr()) << 
-                    "}"
-                 "} // DEFAULT_REDUCTION\n";
-    else
-        context.out << "    {{0}, {0}}\n";
+     if (!reductions.hasDefaultReduction())
+         context.out << "    {{0}, {0}}\n";
+     else
+         context.out << 
+             "    {"
+                     "{0}, "
+                     "{" << 
+                        -reductions.defaultReduction() <<
+                     "}"
+                  "} // DEFAULT_REDUCTION\n";
 
     context.out << "};\n";
-
-    state.d_defaultReduction = defaultReduction;
 }
 
 

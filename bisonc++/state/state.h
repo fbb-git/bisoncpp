@@ -9,6 +9,7 @@
 #include "../item/item.h"
 #include "../firstset/firstset.h"
 #include "../shiftreduce/shiftreduce.h"
+#include "../reductions/reductions.h"
 
 class NonTerminal;
 class LookaheadSet;
@@ -230,6 +231,15 @@ class State
                     LookaheadSet const &lookaheadSet);
 
         void setReduce(Terminal const *token, Production const *production);
+
+        struct StatusOrReduce
+        {
+            Reductions &reductions;
+            ShiftReduce::Status status;
+        };
+        static void setStatusOrReduce(ActionTable::value_type const &action,
+                                      StatusOrReduce &context);
+
         void shiftReduceConflict(std::string const &tokenName, 
                                 unsigned nextStateIdx,
                                 Production const *production);
@@ -243,6 +253,12 @@ class State
 
         static void showNonKernelItem(NonKernelValue const &nonKernel);
 
+        static void writeAcceptAndShiftTransition
+                (ActionTable::value_type const &action, WSAContext &context);
+        static void writeNonDefaultReduction
+                (Reductions::Pair const &reduction, WSAContext &context);
+        static void writeGoToTransition
+                (GoToTable::value_type const &goTo, std::ostream &out);
 };
 
 #endif

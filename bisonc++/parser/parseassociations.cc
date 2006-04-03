@@ -29,12 +29,13 @@ void Parser:: parseAssociations(Terminal::Association association)
     
             case Scanner::QUOTE:
                 defineTerminal(d_scanner.canonicalQuote(), 
-                                Symbol::CHAR_TERMINAL, association, stype);
+                                Symbol::CHAR_TERMINAL, association, stype,
+                                Terminal::NOT_ACTIVE);
             continue;
             
             case Scanner::IDENTIFIER:
                 defineTerminal(d_scanner.text(), Symbol::SYMBOLIC_TERMINAL,
-                                association, stype);
+                                association, stype, Terminal::NOT_ACTIVE);
             continue;
 
             case Scanner::NUMBER:
