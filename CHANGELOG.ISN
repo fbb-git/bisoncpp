@@ -1,4 +1,16 @@
+
 THESE CHANGES HAVE NOT YET BEEN INCORPORATED IN A NEW DEBIAN VERSION
+
+060408:
+
+    Documentation about handling LA-sets added (README.states) Added check for
+    left-recursive rules in state/addimpliednonterminals.cc: in those case the
+    nonterminal (using the appropriate LA-set) has already been added to the
+    non-kernel items of a state, so this rule does not have to be
+    inspected. If it would be inspected, it would result in an inappropriately
+    enlarged LA-set.
+
+before 060408:
 
 Following the preamble, the token-priority is reset to 0. This prevents the
 assignment of high token values to character tokens only appearing in the
