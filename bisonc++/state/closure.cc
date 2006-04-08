@@ -5,37 +5,25 @@
         // For each state, visit all its items (rule, dot, {lookahead})  
 
         // At each item look for rules having `. N x' where `x' the remainder
-        // of the rules.  (x possibly empty).  For each of these rules:
-        // determine {first} = FIRST(x element in {lookahead}) Then for each
-        // of N's rules, add (N -> . rule, {first}) to the state.
+        // of the rules.  (x possibly empty).  For each of these rules
+        // (below, {LA} means a set of look-ahead terminal tokens):
+        // determine {LA} = FIRST(x, {current lookahead}) Then for each
+        // of N's rules, add (N -> . rule, {LA}) to the current state.
 
         // Implementation: 
 
-        // N's rules all have the same {first} set, so only N, {first} needs
-        // to be added.  
-
-        // If {first-a} is FIRST(x a) and {first-b} is FIRST(x b), then adding
-        // rule-a = (N -> . rule, FIRST(x a)) and rule-b = N -> . rule,
-        // FIRST(x b) will either be twice N -> . rule, FIRST(x), if <e> not
-        // in FIRST<x> or the same rule (N -> . rule) having also a and b in
-        // their lookahead sets will be added. So, in order to determine
-        //                      {first} = FIRST(x   element in {lookahead})
-        // determine FIRST(x). If it contains <e>, then remove <e> and add
-        // {lookahead}.
+        // N's rules all receive the same {LA} set, so only N, {LA} needs
+        // to be added to the current state. In order to determine
+        //          {LA} = FIRST(x, {lookahead})
+        // FIRST(x) is determined. If it contains <e>, then <e> is removed and
+        // {lookahead} is added (see also ../README.states)
         
         // So:
         //  1. Look for rules having    . N x
-        //  2. Determine {f} = FIRST(x), add {lookahead} to FIRST(x). if 
-        //                    {lookahead} contains <e>, remove <e>
-        //  3. Add N FIRST(x, {f) to the state. 
-        //  4. Do this also for N -> . M rules 
-
-        // if N has an empty production, then look also for rules . N P x
-        // for these, 
-        //  2a. Determine {f} = FIRST(x), add {lookahead} to FIRST(x). if 
-        //                    {lookahead} contains <e>, remove <e>
-        //  3. Add P FIRST(x, {f) to the state. 
-        //  4. Do this also for P -> . L rules 
+        //  2. Determine {f} = FIRST(x).
+        //  3. If {f} contains <e>, remove <e> and add {lookahead}
+        //  3. Add N {f) to the state. 
+        //  4. Repeat this process for all N -> . M rules 
 
 
 void State::closure() 
@@ -50,6 +38,7 @@ void State::closure()
         msg() << "\n"
                 "Computing the closure for" << spool;
         itemIt->show();
+
         inspectProduction(itemIt->production(), itemIt->dot(), 
                           itemIt->lookaheadSet());
     }

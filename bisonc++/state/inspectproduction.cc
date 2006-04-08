@@ -11,13 +11,18 @@ void State::inspectProduction(
 
     if (!production.size())
     {
+            // An empty production is reduced. No further inspection required.
+
         d_defaultReduction = &production;
         setReduce(Rules::defaultTerminal(), &production);
         return;
     }
 
+            // When the dot reaches the end of the production, no further
+            // inspection is required either
     if (dot >=  production.size())
         return;
+
 
     // in this state, the elements before the dots are remembered, since they
     // are the transition elements to which the goto's will go. 
@@ -27,9 +32,10 @@ void State::inspectProduction(
     // non-kernel items.  
 
     // Fortunately, at addImpliedNonTerminal() this function is also called,
-    // to add nonkernel rules to the current state, and therefore, the first
-    // elements of the production rules of the nonterminals found there are
-    // automatically added to the gotoSet as well.
+    // to add nonkernel rules to the current state. 
+    // Therefore, the first elements of the production rules of the
+    // nonterminals found there are automatically added to the gotoSet as
+    // well.
 
     Symbol const &symbol = production[dot];
 
@@ -46,7 +52,8 @@ void State::inspectProduction(
         return;
     }
 
-    // It this point we know that the symbol n beyond the . is a N
+
+    // It this point we know that the symbol n beyond the . is an N
 
     // compute FIRST for the rhs beyond n
     LookaheadSet firstSet;

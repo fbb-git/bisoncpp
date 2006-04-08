@@ -9,12 +9,16 @@ void State::findFirst(LookaheadSet *firstSet, Production::const_iterator begin,
                         // add *begin's FIRST-set
         *firstSet += (*begin)->firstSet();
 
+//      msg() << "{LA} (isn) is: " << *firstSet << info;
+
         if (!firstSet->hasEpsilon())        // no Epsilon in a firstset, then
+        {
+//          msg() << "{LA} is: " << *firstSet << info;
             return;                         // there's nothing more to add
-//            msg() << "LA-set is: " << *firstSet << info;
+        }
     }
 
     firstSet->rmEpsilon();
     *firstSet += lookaheadSet;              // add lookahead set
-//    msg() << "LA-set is: " << *firstSet << info;
+//  msg() << "{LA} includes initial {LA}: " << *firstSet << info;
 }
