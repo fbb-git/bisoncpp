@@ -1,13 +1,5 @@
 #include "state.ih"
 
-// struct WSAContext                       // writeStateArrayContext
-// {
-//     std::string const &baseclassScope;
-//     std::ostream &out;
-//      State &state;        
-// };
-
-
 void State::writeTransition(TransitionMapValue const &transit, 
                             WSAContext &context)
 {

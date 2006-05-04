@@ -57,7 +57,8 @@ try
 
     arg.versionHelp(usage, version, 1);
 
-    if (arg.option(0, "construction"))
+    bool construction = arg.option(0, "construction");
+    if (construction)
         Msg::setDisplay(true);
 
     Rules rules;
@@ -89,6 +90,8 @@ try
     rules.showUnusedNonTerminals();
 
     rules.showRules();
+
+    State::showConflicts();
 
     Grammar grammar;
     grammar.deriveSentence();

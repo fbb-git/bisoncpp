@@ -1,5 +1,12 @@
 Examples, how to use them and what they do:
 
+Some examples call bisonc++ from the tmp/bin directory. Thus they can be run
+after executing make/program. The `build' scripts in which this happens also
+have a standard BISONC definition, calling bisonc++ from its standard
+location. Bij commenting out the BISONC definition calling tmp/bin/bisonc++
+the standard bisonc++ can be called.
+
+
 bison++Example.NEW: The original example provided by Alain Coetmeur.
 
         compile by running `make'

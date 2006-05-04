@@ -15,11 +15,8 @@ Parser::Parser(Rules &rules)
 {
     d_arg.option(&d_nameSpace, 'n');
     d_arg.option(&d_parsefunSource, 'p');
-
-//    predefine(Rules::defaultTerminal());
     predefine(Rules::errorTerminal());
     predefine(Rules::eofTerminal());
-//    predefine(Rules::laTerminal());         
 }
 
 

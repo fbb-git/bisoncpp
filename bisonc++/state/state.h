@@ -79,6 +79,8 @@ class State
             return d_transition;
         }
 
+        static void showConflicts();
+
         static void define(Production const *start);   
                                 // define all the grammar-states and
                                 // lookaheads 

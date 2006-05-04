@@ -9,12 +9,5 @@ FollowSet &FollowSet::operator+=(FirstSet const &firstSet)
 
     insert(sourceSet->begin(), sourceSet->end());
 
-//        cout << "FOLLOW = ";
-//        copy(begin(), end(),
-//                ostream_iterator<char>(cout, " "));
-//        if (hasEOF())
-//            cout << "<$>";
-//        cout << endl;
-
     return *this;
 }

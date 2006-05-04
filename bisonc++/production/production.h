@@ -39,11 +39,6 @@ class Production: public std::vector<Symbol *>
 
         Production(Symbol const *nonTerminal);
 
-//        Symbol &operator[](unsigned idx) 
-//        {
-//            return *vectorIdx(idx);
-//        }
-
         Symbol const *atIdx(unsigned idx) const
         {
             return vectorIdx(idx);

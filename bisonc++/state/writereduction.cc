@@ -1,11 +1,5 @@
 #include "state.ih"
 
-// struct WRContext                       // writeReductionContext
-// {
-//     std::ostream &out;
-//     int nr;
-// };
-
 void State::writeReduction(ReduceMapValue const &reduce, ostream &out)
 {
     WRContext context = {out, reduce.first->nr()};

@@ -5,6 +5,7 @@
 #include <sstream>
 
 #include <bobcat/msg>
+
 #include "../symtab/symtab.h"
 #include "../block/block.h"
 #include "../scanner/scanner.h"
@@ -173,8 +174,6 @@ class Parser
                             Symbol::Type type,
                             Terminal::Association association, 
                             std::string stype);
-//,
-//                            Terminal::Status status);
 
         int elementNr(unsigned *idx, std::string const &text);
 

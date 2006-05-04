@@ -11,7 +11,6 @@ Terminal *Parser::useTerminal()
         if (sp->isTerminal())
         {
             tp = Terminal::downcast(sp);
-//            tp->activate();
             return tp;
         }
 
@@ -19,9 +18,7 @@ Terminal *Parser::useTerminal()
         return 0;
     }
 
-    tp = new Terminal(name, Symbol::CHAR_TERMINAL,
-// Terminal::ACTIVE,
-                      d_scanner.number());
+    tp = new Terminal(name, Symbol::CHAR_TERMINAL, d_scanner.number());
 
     d_symtab.insert
     (

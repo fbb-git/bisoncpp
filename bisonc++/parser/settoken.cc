@@ -25,7 +25,6 @@ void Parser::setToken()
             case Scanner::IDENTIFIER:
                 defineTerminal(d_scanner.text(), Symbol::SYMBOLIC_TERMINAL,
                                Terminal::UNDEFINED, stype);
-//, Terminal::ACTIVE);
                 d_rules.setLastPriority(0);
             continue;
 

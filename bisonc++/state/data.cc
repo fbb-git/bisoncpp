@@ -1,6 +1,5 @@
 #include "state.ih"
 
-// unsigned State::s_acceptingState;
 char const *State::s_stateName[] = 
     {
         "NORMAL",
