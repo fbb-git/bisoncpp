@@ -8,7 +8,7 @@
 
 #include "rules/rules.h"
 #include "parser/parser.h"
-#include "itemsets/itemsets.h"
+#include "grammar/grammar.h"
 #include "generator/generator.h"
 
 using namespace std;

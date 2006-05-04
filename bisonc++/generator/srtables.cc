@@ -8,7 +8,7 @@ void Generator::srTables(ostream &out) const
 
     State::WSAContext context = {d_baseclassScope, out};
 
-    for_each(d_itemSets.states().begin(), d_itemSets.states().end(),
+    for_each(State::begin(), State::end(),
                 Wrap1c<State, State::WSAContext>
                           (&State::writeStateArray, context));
     out << endl;

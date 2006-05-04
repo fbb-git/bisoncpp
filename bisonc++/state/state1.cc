@@ -1,12 +1,10 @@
 #include "state.ih"
 
-State::State(Item const &item)
+State::State(unsigned idx)
 :
-    d_kernel(1, item),
-    d_inheritedTerminal(Rules::defaultTerminal()),  // no inheritedTerminal 
-                                                    // so far.
     d_type(NORMAL),
-    d_defaultReduction(0),
-    d_nShiftReduceConflicts(0),
-    d_nReduceReduceConflicts(0)
+    d_idx(idx),
+    d_construct(true),
+    d_nTransitions(0),
+    d_defaultReduction(0)
 {}

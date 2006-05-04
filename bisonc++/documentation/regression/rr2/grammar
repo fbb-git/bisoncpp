@@ -1,0 +1,29 @@
+%token DELIM TEXT
+
+%%     
+
+line:
+      line
+      mstring
+|
+      /* empty */
+;
+
+mstring:
+      mstring
+      atom
+|
+      atom
+;
+
+atom:
+      opt_delimiter
+      TEXT
+;
+ 
+opt_delimiter:
+      opt_delimiter
+      DELIM    
+|
+      /* empty */
+;

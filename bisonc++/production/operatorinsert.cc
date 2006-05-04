@@ -5,7 +5,7 @@ std::ostream &operator<<(std::ostream &out, Production const &production)
     out << production.lhs()->name() << " ->";
 
     if (!production.size())
-        return out <<  "    <empty>";
+        return out <<  " <empty>";
 
     for 
     (

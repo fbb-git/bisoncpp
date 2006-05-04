@@ -9,11 +9,11 @@ void Generator::stateArray(ostream &out) const
             "SR *s_state[] =\n"
             "{\n";
 
-    for (unsigned idx = 0; idx < d_itemSets.nStates(); ++idx)
+    for (unsigned idx = 0; idx < State::nStates(); ++idx)
         out << "  s_" << idx << "," << ((idx + 1) % n == 0 ? "\n" : "");
 
     
-    out << (d_itemSets.nStates() % n ? "\n" : "") <<
+    out << (State::nStates() % n ? "\n" : "") <<
             "};\n"
             "\n";
 }

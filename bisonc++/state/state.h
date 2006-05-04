@@ -1,265 +1,276 @@
-#ifndef _INCLUDED_STATE_
-#define _INCLUDED_STATE_
+#ifndef _INCLUDED_STATE_H_
+#define _INCLUDED_STATE_H_
 
 #include <vector>
 #include <map>
-#include <ostream>
 
-#include "../terminal/terminal.h"
 #include "../item/item.h"
-#include "../firstset/firstset.h"
-#include "../shiftreduce/shiftreduce.h"
-#include "../reductions/reductions.h"
+#include "../lookaheadset/lookaheadset.h"
 
-class NonTerminal;
-class LookaheadSet;
+#include "../srconflict/srconflict.h"
+#include "../rrconflict/rrconflict.h"
+#include "../transition/transition.h"
+
+class Production;
 
 class State
 {
-    enum Action
-    {
-        CONFLICT,
-        SHIFT_TOKEN,
-        REDUCE_RULE
-    };
-    enum Type           // modify data.cc when this enum changes
-    {
-        NORMAL,
-        HAS_ERROR_ITEM,
-        IS_ERROR_STATE
-    };    
-
-    typedef std::vector<Item>::iterator 
-            KernelIterator;
-    typedef std::map<NonTerminal const *, LookaheadSet>
-            NonKernelMap;
-    typedef NonKernelMap::value_type 
-            NonKernelValue;
-
-    struct IIContext                        // inspectItemContext
-    {
-        State *dest;
-        Symbol const &symbol;
-    };
-
-    struct AISA0Context                    // addIfSymbolAt0Context
-    {
-        State *dest;
-        Symbol const &symbol;
-        LookaheadSet const &lookaheadSet;
-    };
-
-    struct MDORContext                      // midDotOrReduceContext
-    {
-        bool *onlyTrailingDots;
-        State &obj;
-    };
-    
     public:
-        typedef std::map<Terminal const *, ShiftReduce>
-                ActionTable;
-        typedef ActionTable::iterator 
-                ActionTableIter;
-        typedef ActionTable::const_iterator 
-                ActionTableConstIter;
-        typedef std::pair<ActionTableConstIter, ActionTableConstIter>
-                ActionConstIterators;
-
-        typedef std::map<NonTerminal const *, unsigned>
-                GoToTable;
-        typedef GoToTable::const_iterator 
-                GoToTableConstIter;
-        typedef std::set<Symbol const *>
-                GoToSet;
-
+        typedef std::map<Symbol const *, Transition *> TransitionMap;
+	    typedef TransitionMap::value_type              TransitionMapValue;
+	    typedef TransitionMap::iterator                TransitionMapIterator;
+	
     private:
-        std::vector<Item>   d_kernel;
-        NonKernelMap        d_nonKernel;
-                          
-        GoToTable           d_goto;             //goto table
-        ActionTable         d_action;           // action table
-        ActionTable         d_suppressed;       // suppressed actions due to
-                                                // default conflict resolution
-                          
-        GoToSet             d_gotoSet; // first elements of this state's
-                                        // production rules. Used
-                                        // to determine the GoTos from this
-                                        // state, in combination with the
-                                        // kernel-state elements beyond the
-                                        // dot-positions.
-                          
-        Terminal const     *d_inheritedTerminal;
-        Type                d_type;
-        mutable Production const   *d_defaultReduction;
-    
-        unsigned            d_nShiftReduceConflicts;           
-        unsigned            d_nReduceReduceConflicts;           
-        unsigned            d_idx;
-    
-        static unsigned s_acceptingState;
-        static unsigned s_nShiftReduceConflicts;
-        static unsigned s_nReduceReduceConflicts;
-        static char const *s_stateName[];   // ascii-text representations of
-                                            // the state types
-
+	    enum Type           // modify data.cc when this enum changes
+	    {
+	        NORMAL,
+	        HAS_ERROR_ITEM,
+	        IS_ERROR_STATE
+	    };    
+	
+	    typedef std::vector<RRConflict> RRConflictVector;
+	    typedef std::vector<SRConflict> SRConflictVector;
+	
+	    typedef std::vector<State *> StateVector;
+	    typedef std::vector<Item>    ItemVector;
+	
+	    typedef std::vector<Symbol const *>  NonKernelVector;
+	
+	    typedef std::map<Production const *, LookaheadSet> ReduceMap;
+	    typedef ReduceMap::value_type                      ReduceMapValue;
+	    typedef ReduceMap::iterator                        ReduceMapIterator;
+	
+	    static StateVector  s_state;
+	    static unsigned s_nShiftReduceConflicts;
+	    static unsigned s_nReduceReduceConflicts;
+	
+	    static char const *s_stateName[];   // ascii-text representations of
+	                                        // the state types
+	    static State *s_acceptState;
+	    static Production const *s_startProduction;
+	
+	    Type                d_type;
+	    unsigned            d_idx;
+	
+	    ItemVector          d_kernel;
+	    ReduceMap           d_reduce;
+	
+	    TransitionMap       d_transition;
+	    NonKernelVector     d_nonKernel;
+	    bool                d_construct;
+	    unsigned            d_nTransitions; 
+	
+	    SRConflictVector    d_srConflict;
+	    RRConflictVector    d_rrConflict;
+	
+	    Production const   *d_defaultReduction;
+	
     public:
-        typedef std::vector<Item>::const_iterator 
-                KernelConstIter;
-        typedef GoToSet::const_iterator
-                GoToSetConstIter;
+        typedef TransitionMap::const_iterator   TransitionMapConstIterator;
 
+        State(unsigned idx);
+
+        Production const *defaultReduction() const
+        {
+            return d_defaultReduction;
+        }
+        TransitionMap const &transitionMap() const
+        {
+            return d_transition;
+        }
+
+        static void define(Production const *start);   
+                                // define all the grammar-states and
+                                // lookaheads 
+
+        bool isAcceptState() const
+        {
+            return this == s_acceptState;
+        }
+
+        static void showAllStates();
+
+        static unsigned nStates()
+        {
+            return s_state.size();
+        }
+
+        static StateVector::const_iterator begin()
+        {
+            return s_state.begin();
+        }
+        static StateVector::const_iterator end()
+        {
+            return s_state.end();
+        }
         struct WSAContext                       // writeStateArrayContext
         {
             std::string const &baseclassScope;
             std::ostream &out;
         };
 
-        State();
-        State(Item const &item);
-
-        ActionConstIterators actionConstIterators() const
-        {
-            return ActionConstIterators
-                            (d_action.begin(), d_action.end());
-        }
-
-        static unsigned acceptingState()
-        {
-            return s_acceptingState;
-        }
-        bool acceptState() const
-        {
-            return d_idx == s_acceptingState;
-        }
-
-        bool beforeDot(Symbol const &symbol) const;
-        void closure(); 
-
-        unsigned gotoState(NonTerminal const *nonTerminal) const;
-        std::set<Symbol const *> const &gotoSet() const
-        {
-            return d_gotoSet;
-        }
-        void incDot(State *dest, Symbol const &symbol) const;
-        unsigned kernelSize() const
-        {
-            return d_kernel.size();
-        }
-        bool mergeLookaheads(State const &state, Symbol const &symbol);
-        bool onlyTrailingDotItems();
-        bool operator==(State const &other) const
-        {
-            return d_kernel == other.d_kernel;
-        }
-        void setErrorState()
-        {
-            d_type = IS_ERROR_STATE;
-        }
-        void setIdx(unsigned idx)
-        {
-            d_idx = idx;
-        }
-        void setGoto(NonTerminal const *nonTerminal, unsigned nextStateIdx)
-        {
-            d_goto.insert
-            (
-                GoToTable::value_type(nonTerminal, nextStateIdx)
-            );
-        }
-        void setShift(Terminal const *token, unsigned nextStateIdx);
-        void setShiftTerminal(Symbol const &inheritedTerminal)
-        {
-            d_inheritedTerminal = Terminal::downcast(&inheritedTerminal);
-        }
-        void setShiftTerminal(State const &state)
-        {
-            d_inheritedTerminal = state.d_inheritedTerminal;
-        }
-        void show() const;          // show the state
-
-        static void showStateConflicts(State const *pState);
-
-        static void showConflicts();
-
-        void showKernel() const;
-
-        static void showTables(State const *state);
-
-        Terminal const *inheritedTerminal() const
-        {
-            return d_inheritedTerminal;
-        }
-
-        Production const *defaultReduction() const
-        {
-            return d_defaultReduction;
-        }
-
         static void writeStateArray(State const *state, WSAContext &context);
-    private:
-        static void addIfSymbolAt0(Production const *production, 
-                            AISA0Context &context);
-        
-        void addImpliedNonterminals(NonTerminal const *nonterm, 
-                                    LookaheadSet const &firstSet);
 
-        bool addToNonKernelSet(LookaheadSet *lookahead, 
-                               NonTerminal const *nonterm);
-
-        static void inspectItem(Item const &item, IIContext &context);
-
-        static void inspectNonKernelProductions(
-                        NonKernelValue const &nonKernelIter,
-                        IIContext &context);
-
-        void inspectProduction(Production const &production, unsigned dot,
-                        LookaheadSet const &lookaheadSet);
-
-        void findFirst(LookaheadSet *firstSet, 
-                      Production::const_iterator begin,
-                      Production::const_iterator const &end, 
-                      LookaheadSet const &lookahead) const;
-
-        LookaheadSet const &lookaheadsTo(Item const &dest, 
-                                         Symbol const &symbol) const;
-
-        static void midDotOrReduce(Item &item, MDORContext &context);
-
-        void operator+=(Item const &item);
-        void reduce(Item const &item);
-        void reduce(Production const *production, 
-                    LookaheadSet const &lookaheadSet);
-
-        void setReduce(Terminal const *token, Production const *production);
-
-        struct StatusOrReduce
+        unsigned idx() const
         {
-            Reductions &reductions;
-            ShiftReduce::Status status;
+            return d_idx;
+        }
+        Symbol const *reductionLhs() const;
+
+    private:
+        void addKernelItem(Item const &item);
+
+        static void addKernelItem(Item const &item, State &state)
+        {
+            state.addKernelItem(item);
+        }
+
+        void construct();       // construct all states beyond this state
+                                // (without their LA-sets)
+
+                                // Inspect the LA set of a state 
+        void defineLookaheads(LookaheadSet const &la);
+
+                                // define actions, reductions and goto's
+                                // determine and solve conflicts
+        static void defineActions();
+
+        static State &newState();
+
+        static void writeTransition(TransitionMapValue const &transit, 
+                            WSAContext &context);
+        
+        static void writeReduction(ReduceMapValue const &reduction,
+                                   std::ostream &out);
+
+        struct WRContext                       // writeReductionContext
+        {
+            std::ostream &out;
+            int nr;
         };
-        static void setStatusOrReduce(ActionTable::value_type const &action,
-                                      StatusOrReduce &context);
+        static void writeReduceAt(Element const *symbol, WRContext &context);
 
-        void shiftReduceConflict(std::string const &tokenName, 
-                                unsigned nextStateIdx,
-                                Production const *production);
+        static void showState(State *state)
+        {
+            state->show();
+        }
 
-        void showAction(Terminal const *terminal, ShiftReduce const &action,
-                                                  bool block = false) const;
-        void showActions() const;
-        void showGoTo() const;
-        void showNonKernel() const;     
-        void showSuppressed() const;
 
-        static void showNonKernelItem(NonKernelValue const &nonKernel);
+        void show();                    // show the state
+        void showKernel();
+        static void showKernelLA(Item const &item, TransitionMap &transmap);
 
-        static void writeAcceptAndShiftTransition
-                (ActionTable::value_type const &action, WSAContext &context);
-        static void writeNonDefaultReduction
-                (Reductions::Pair const &reduction, WSAContext &context);
-        static void writeGoToTransition
-                (GoToTable::value_type const &goTo, std::ostream &out);
+        static void showNonKernelItem(Symbol const *nonKernel);
+        static void showTransition(TransitionMapValue const &transit) ;
+        static void showReduction(ReduceMapValue const &reduction);
+
+        void tuneAcceptState();
+        static void noShiftOnEOF(TransitionMap::value_type &transit)
+        {
+            transit.second->rmEOF();
+        }
+
+        static void defineStateActions(State *state);
+        void solveReduceReduceConflicts();
+        static void installLA(ReduceMapValue &reduction, 
+                              TransitionMap &transmap)
+        {
+            reduction.second = 
+                        transmap[reduction.first->lhs()]->lookaheadSet();
+        }
+
+        struct RRContext
+        {
+            bool headerDisplayed;
+            bool leftReductionDisplayed;
+
+            unsigned idx;
+            ReduceMapIterator reduceIter;
+        };
+
+        static void compareReductions(ReduceMapValue &first, 
+                               RRContext &rrc);
+
+        void solveShiftReduceConflicts();
+        struct SRContext
+        {
+            bool headerDisplayed;
+            State &state;
+        };
+        static void detectSR(TransitionMapValue &, SRContext &src);
+
+        static bool findTerminal(ReduceMapValue const &rmap, 
+                                 Symbol &terminal) 
+        {
+            return rmap.second.count(&terminal);
+        }
+
+        static bool solveSRbyPriority(TransitionMapValue &transition, 
+                              SRContext &src, ReduceMapIterator &reduceIter);
+        static bool solveSRbyAssociation(TransitionMapValue &transition,
+                              SRContext &src, ReduceMapIterator &reduceIter);
+
+        Transition *transitionOf(Symbol const *symbol);
+
+                                                // 1 line
+        static void handleKernelItem(Item const &item, State &state);
+        void handleNonKernelItem(Symbol const *symbol);
+        static void handleProduction(Production const *prod, State &state);
+        void handle(Item const &item);
+
+        static void constructDestination(TransitionMapValue &transit);
+        static void defineDestination(TransitionMapValue &transit, 
+                                      State &state);
+        static bool findState(unsigned *idx, std::vector<Item> const &kernel);
+        static bool searchStateWith(State &state, 
+                                    std::vector<Item> const &kernel);
+
+        static bool searchItemIn(Item const &item, State &state);
+
+        struct ItemContext
+        {
+            State &state;
+            LookaheadSet const &la;
+        };
+        static void inspectKernel(Item const &item, ItemContext &itemContext)
+        {
+            itemContext.state.expandLookaheads(item.lhs(), itemContext.la);
+        }
+
+        static void inspectKernelItem(Item &item, State &state);
+        
+        void expandLookaheads(Symbol const *lhs, LookaheadSet const &la);
+
+        struct DepSymContext
+        {
+            State &state;
+            LookaheadSet const &lhsLA;
+        };
+
+        static void inspectDepSym(Symbol const *depSym, State &state);
+
+        static void propagateLookaheads(TransitionMapValue &transit,
+                                TransitionMap &transitionMap);
+
+        // rename to inspectProduction:
+        static void inspectLA(Item &item, State &);
+
+        struct LookaheadContext 
+        {
+            TransitionMap &transitionMap;
+            LookaheadSet la;
+        };
+
+        static void addLookaheads(Item const &item, 
+                                    LookaheadContext &laContext)
+        {
+            laContext.la += 
+                laContext.transitionMap[item.lhs()]->lookaheadSet();
+        }
 };
 
 #endif
+
+
+
 

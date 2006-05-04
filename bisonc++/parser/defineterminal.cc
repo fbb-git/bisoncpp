@@ -9,8 +9,9 @@
 void Parser::defineTerminal(string const &name, 
                             Symbol::Type type,
                             Terminal::Association association, 
-                            string stype,
-                            Terminal::Status status)
+                            string stype)
+//,
+//                            Terminal::Status status)
 {
     string literal = d_scanner.text();
 
@@ -45,7 +46,8 @@ void Parser::defineTerminal(string const &name,
             name, 
             d_rules.insert
             (
-                new Terminal(name, type, status,
+                new Terminal(name, type, 
+//status,
                                 type == Symbol::CHAR_TERMINAL ?
                                     d_scanner.number()
                                 :

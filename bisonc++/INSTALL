@@ -4,7 +4,11 @@ the following steps:
     1. Inspect the values of the variables in the file INSTALL.cf
        Modify these when necessary.
 
-    2. Make sure the bobcat library has been installed.
+    2. Make sure the bobcat library has been installed. 
+
+       (If you compile the bobcat library yourself, note that bisonc++ does
+        not use the classes Milter and Xpointer; they may --as far as bisonc++
+        is concerned-- be left out of the library)
 
     3. Run `./make/program' to compile bisonc++
 

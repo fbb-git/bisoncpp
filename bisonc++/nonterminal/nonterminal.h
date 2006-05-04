@@ -91,7 +91,7 @@ class NonTerminal: public Symbol
             return d_production.size();
         }
 
-        unsigned nr() const
+        unsigned value() const
         {
             return d_nr;
         }

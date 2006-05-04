@@ -16,7 +16,6 @@ class Generator
 {
     Rules const &d_rules;
     Parser const &d_parser;
-    ItemSets const &d_itemSets;
 
     std::string d_baseclassScope;
     std::string const &d_nameSpace;
@@ -48,8 +47,7 @@ class Generator
     bool        d_debug;
     
     public:
-        Generator(Rules const &rules, Parser const &parser,
-                  ItemSets const &itemSets);
+        Generator(Rules const &rules, Parser const &parser);
 
         void baseclassHeader() const;
         void classHeader() const;

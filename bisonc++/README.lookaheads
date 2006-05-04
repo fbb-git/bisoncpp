@@ -1,0 +1,130 @@
+This file describes the lookahead-propagation procedure as used by Bisonc++
+
+Consider the following grammar (from AHO et al, p. 241, example 4.46)
+
+    1.  S*: S
+    2.  S:  L = R
+    3.  S:  R
+    4.  L:  * R
+    5.  L:  i
+    6.  R:  L
+
+After analyzing the grammar, the following states are found:
+
+    S0: 
+        1.  S*: . S
+    
+    S1:
+        1.  S*: S .
+    
+    S2: 
+        2.  S:  L . = R
+        6.  R:  L .
+    
+    S3:
+        3.  S:  R .
+    
+    S4:
+        4.  L:  * . R
+    
+    S5:
+        5.  L:  i .
+    
+    S6:
+        2.  S:  L = . R
+        
+    S7:
+        4.  L:  * R .
+    
+    S8: 
+        6.  R:  L .
+    
+    S9:
+        2.  S:  L = R .
+
+
+
+For state 0 the following transition table is available:
+
+    -------------------------------------------------------
+    Transit on  LA of   Next state  Next state  Dependent  
+    Symbol X    Symbol  on X        Kernel      N-symbol(s)
+    -------------------------------------------------------
+        S*                                          S,R 
+        S               1           S*: S .         L
+        L               2           S:  L . = R
+                                    R:  L .
+        R               3           S:  R .         L
+        *               4           L:  * . R
+        i               5           L:  i .
+    -------------------------------------------------------
+
+The `Dependent N-symbols' are the entries containing next-state kernel rules
+of the form A -> a X . b,   where X is a dependent symbol and A the X symbol
+of the line containing the dependent symbol. These dependent N symbols refer
+to those entries whose lookaheads must be reconsidered if the current line's
+LA set changes. So, if S* changes, the LA sets of the S and R sets must be
+re-inspected. 
+
+When inspecting a state, an LAset is provided. If the provided LAset is equal
+to the currently stored LAset then no further inspection is required. The
+currenly stored LAset is stored in the state itself as one of its data
+members. 
+
+
+At this point LA(S*) is set to $, so LA(S*) changes. Therefore, LA(S) and
+LA(R) must be inspected, in turn causing LA(L) to be inspected (the notation
+=$ means that both = and $ is the LA-set). This continues until no more
+changes were made. 
+    Initially, set      LA(S*) to $ 
+    Changed. So set     LA(S) to $
+        Changed. So set:    LA(L) to = (using rule S:  L . = R, having LHS = S)
+
+    Next set            LA(R) to $
+        Changed. So set:    LA(L) to =$ (using rule S:  R .)
+
+
+    --------------------------------------------------------
+    Transit on  LA of   Next state  Next state  Dependent  
+    Symbol X    Symbol  on X        Kernel      N-symbol(s) 
+    --------------------------------------------------------
+        S*      $                                   S,R     
+        S       $       1           S*: S .         L       
+        L       =$      2           S:  L . = R             
+                                    R:  L .
+        R       $       3           S:  R .         L       
+        *               4           L:  * . R
+        i               5           L:  i .
+    --------------------------------------------------------
+
+Next, all entries are inspected: if an entry has a next state, then the LA-set
+for the next state is collected from its production rules. E.g., when going to
+state 2, use LA = LA(S) + LA(R) = $. When going to state 4 use LA(L) = =$.
+
+
+The inspect(la) algorithm:
+
+    foreach kernel item:            e.g., S* -> . S
+        inspect(item.lhs, la)           inspect(S*, $)
+
+    foreach destination state s:
+        foreach production rule p 
+            la += transition[p.lhs].la)
+        s.inspect(la)
+
+
+
+The function inspect(lhs, la) operates as follows:   (e.g., inspect(S*, $))
+    kla = transition[lhs].la                        kla = {}
+    if kla < la)
+        kla += la                                   kla = $
+
+        foreach dependent symbol                    S, R
+        foreach production rule                     e.g., S*: S .
+            laDot = computeLA(rule from dot, kla)   laDot = cpt(., $) = $
+            inspect(symbolbeforedot, laDot)         inspect(S, $)
+        
+
+
+
+

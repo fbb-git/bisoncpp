@@ -1,0 +1,15 @@
+%token IF EXPR ELSE
+
+%%
+
+stmnt:
+    EXPR  stmnt
+|
+    EXPR stmnt ELSE stmnt
+|
+    EXPR ';'
+;
+
+noused:
+    IF
+;

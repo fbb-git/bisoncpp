@@ -1,0 +1,7 @@
+#include "stateinfo.h"
+
+#include <bobcat/wrap1c>
+
+using namespace std;
+using namespace FBB;
+

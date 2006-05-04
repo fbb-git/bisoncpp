@@ -1,8 +1,6 @@
 #include "state.ih"
 
-unsigned State::s_acceptingState;
-unsigned State::s_nShiftReduceConflicts;
-unsigned State::s_nReduceReduceConflicts;
+// unsigned State::s_acceptingState;
 char const *State::s_stateName[] = 
     {
         "NORMAL",
@@ -10,3 +8,9 @@ char const *State::s_stateName[] =
         "IS_ERROR_STATE",
     };
 
+unsigned State::s_nShiftReduceConflicts;
+unsigned State::s_nReduceReduceConflicts;
+vector<State *> State::s_state;
+
+State *State::s_acceptState;
+Production const *State::s_startProduction;

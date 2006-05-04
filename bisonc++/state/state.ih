@@ -8,8 +8,10 @@
 #include <bobcat/wrap1c>
 
 #include "../rules/rules.h"
-#include "../lookaheadset/lookaheadset.h"
+//#include "../lookaheadset/lookaheadset.h"
 #include "../nonterminal/nonterminal.h"
+#include "../production/production.h"
+#include <bobcat/indent>
 
 using namespace std;
 using namespace FBB;

@@ -1,36 +1,8 @@
 #include "state.ih"
 
-//        struct StatusOrReduce
-//        {
-//            Reductions &reductions;
-//            ShiftReduce::Status status;
-//        };
-
 void State::writeStateArray(State const *sp, WSAContext &context)
 {
     State const &state = *sp;
-
-    Reductions reductions;
-                            // when a state uses shifts/accept, then its last
-                            // index value is stored as a positive value. This
-                            // is used by the parser to see whether another
-                            // token should be retrieved from the lexical
-                            // scanner.
-    StatusOrReduce sor = {reductions, ShiftReduce::REDUCE};
-
-    msg() << "\n"
-            "Inspecting reductions of state " << state.d_idx << info;
-
-        // visit the elements in the action table d_action: register if the
-        // state is the ACCEPT state and/or uses shifts. All reductions are
-        // handled by the Reductions object, receiving a pointer to a token
-        // and a pointer to a production
-
-     for_each(state.d_action.begin(), state.d_action.end(),
-             Wrap1c<ActionTable::value_type, StatusOrReduce>
-                   (&setStatusOrReduce, sor));
- 
-     reductions.setDefault();
     
             // Write the table header
     context.out << "\n" 
@@ -40,52 +12,42 @@ void State::writeStateArray(State const *sp, WSAContext &context)
                     "{" << 
                         s_stateName[state.d_type] << 
                     "}, "
-                    "{" <<
-                    (
-                        sor.status & 
-                        (ShiftReduce::ACCEPT | ShiftReduce::SHIFT) ? 
-                            "" 
-                        : 
-                            "-"
-                    ) <<   
-                    (
-                        state.d_action.size() - reductions.count() + 
-                        reductions.used() + state.d_goto.size() + 1
-                    ) <<
+                    "{" << 
+                        state.d_nTransitions + state.d_reduce.size() +
+                        (sp == s_acceptState) + 1 <<
                     "}"
-                "}, // " <<
-                        state.d_action.size()   << ", " <<  // temporarily
-                        reductions.used()       << " (" << 
-                        reductions.count()      << "), " << 
-                        state.d_goto.size()     << " "  <<
+
+                "} // " <<
                 (
-                        sor.status & ShiftReduce::ACCEPT ?
+                        sp == s_acceptState ?
                             "ACCEPTS" 
                     :
-                        sor.status & ShiftReduce::SHIFT ?
-                            "SHIFTS"
-                    :
+                        state.d_reduce.size() || state.d_defaultReduction ?
                             "REDUCES"
+                    :
+                            "SHIFTS"
                 ) << "\n";
 
-       // write the accept and shift transitions
-    for_each(state.d_action.begin(), state.d_action.end(),
-            Wrap1c<ActionTable::value_type, WSAContext>
-                  (&writeAcceptAndShiftTransition, context));
+       // write the transitions
+    for_each(state.d_transition.begin(), state.d_transition.end(),
+        Wrap1c<TransitionMapValue, WSAContext>(writeTransition, context));
 
-        // write the goto transitions
-    for_each(state.d_goto.begin(), state.d_goto.end(), 
-        Wrap1c<GoToTable::value_type, ostream>
-              (&writeGoToTransition, context.out));
+    if (sp == s_acceptState)
+        context.out << "    {{" << Rules::eofTerminal()->display() << 
+                                                "}, { PARSE_ACCEPT }},\n";
 
-     if (!reductions.hasDefaultReduction())
+        // write the reductions (if any)
+    for_each(state.d_reduce.begin(), state.d_reduce.end(),
+        Wrap1c<ReduceMapValue, ostream>(writeReduction, context.out));
+
+     if (!state.d_defaultReduction)
          context.out << "    {{0}, {0}}\n";
      else
          context.out << 
              "    {"
                      "{0}, "
                      "{" << 
-                        -reductions.defaultReduction() <<
+                        -static_cast<int>(state.d_defaultReduction->nr()) <<
                      "}"
                   "} // DEFAULT_REDUCTION\n";
 

@@ -1,6 +1,8 @@
 #ifndef _INCLUDED_SYMBOL_
 #define _INCLUDED_SYMBOL_
 
+#include <ostream>
+
 #include "../element/element.h"
 #include "../firstset/firstset.h"
 
@@ -86,6 +88,7 @@ class Symbol: public Element
             return d_name;
         }
         virtual FirstSet const &firstSet() const = 0;
+
         virtual std::string const &display() const
         {
             return name();
@@ -94,5 +97,4 @@ class Symbol: public Element
         static void displaySymbol(Symbol const *sp);
 };
 
-        
 #endif

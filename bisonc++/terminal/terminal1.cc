@@ -2,12 +2,11 @@
 
 #include <iostream>
 
-Terminal::Terminal(string const &name, Type type, Status status, 
+Terminal::Terminal(string const &name, Type type, 
                    unsigned value, Association association, 
                    std::string const &stype)
 :
     Symbol(name, type, stype),
-    d_status(status),
     d_value(value == DEFAULT ? s_value++ : value),
     d_association(association),
     d_priority(s_priority),
@@ -15,9 +14,6 @@ Terminal::Terminal(string const &name, Type type, Status status,
     d_readableLiteral(name),
     d_firstSet(this)
 {
-    if (status == ACTIVE)
-        ++s_nActive;
-
     if (name.find("'\\x") == 0)
     {
         char charRepresentation;
@@ -33,9 +29,6 @@ Terminal::Terminal(string const &name, Type type, Status status,
        
     lineMsg() << "Defining terminal " << d_readableLiteral << ": pri = " << 
                                                         d_priority << spool;
-    if (status == ACTIVE)
-        msg() << " (active: " << s_nActive << ")" << spool;
-
     msg() << info;
 
     if (d_value > s_maxValue)

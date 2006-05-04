@@ -2,6 +2,8 @@
 
 void Rules::addRule(NonTerminal *np)
 {
+    msg() << info;
+
     lineMsg() << "Adding production rule for `" << np->name() << "'" << info;
 
     if (!d_startRule.length())

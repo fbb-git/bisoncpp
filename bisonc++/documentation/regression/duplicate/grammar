@@ -1,0 +1,9 @@
+%token NR
+
+%%
+
+start:
+    NR
+|
+    NR
+;

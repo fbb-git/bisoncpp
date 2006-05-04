@@ -1,5 +1,0 @@
-#include "itemsets.ih"
-
-ItemSets::() const
-{
-}

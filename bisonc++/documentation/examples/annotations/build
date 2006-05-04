@@ -1,12 +1,18 @@
 #!/bin/sh
 
+SKEL=../../../share/bisonc++
+
+BISON=bisonc++
+BISON="bisonc++ -B ${SKEL}base.h -C ${SKEL}.h -I ${SKEL}.ih -P ${SKEL}.cc"
+
+
 case $1 in
     (clean)
         rm -rf scanner/yylex.cc demo parser/{parse.*,parserbase.h}
     ;;
     (demo)
         cd parser
-        bisonc++ -V -l grammar
+        $BISON -V -l grammar
         cd ..
         cd scanner
         flex lexer

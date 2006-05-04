@@ -1,5 +1,0 @@
-#include "reductions.ih"
-
-Reductions::() const
-{
-}

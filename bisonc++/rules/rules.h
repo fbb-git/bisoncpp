@@ -22,7 +22,8 @@ class Rules
     static unsigned s_acceptProductionNr;
     static unsigned s_nExpectedConflicts;
     static Terminal s_errorTerminal;
-    static Terminal s_defaultTerminal;
+//    static Terminal s_defaultTerminal;
+//    static Terminal s_laTerminal;
     static Terminal s_eofTerminal;
     static Symbol *s_startSymbol;
 
@@ -52,10 +53,10 @@ class Rules
         {
             s_nExpectedConflicts = value;
         }
-        static Terminal const *defaultTerminal()
-        {
-            return &s_defaultTerminal;
-        }
+//        static Terminal const *defaultTerminal()
+//        {
+//            return &s_defaultTerminal;
+//        }
         static Terminal const *eofTerminal()
         {
             return &s_eofTerminal;
@@ -64,6 +65,10 @@ class Rules
         {
             return &s_errorTerminal;
         }
+//        static Terminal const *laTerminal()
+//        {
+//            return &s_laTerminal;
+//        }
         static unsigned acceptProductionNr()
         {
             return s_acceptProductionNr;

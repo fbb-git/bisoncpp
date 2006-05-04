@@ -7,6 +7,7 @@
 
 #include <bobcat/msg>
 #include "../firstset/firstset.h"
+#include <bobcat/indent>
 
 using namespace std;
 using namespace FBB;

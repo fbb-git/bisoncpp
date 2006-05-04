@@ -1,7 +1,6 @@
 #include "state.ih"
 
-void State::showNonKernelItem(NonKernelValue const &nonKernel)
+void State::showNonKernelItem(Symbol const *nonKernel)
 {
-    msg() << "    " << nonKernel.first->name() << 
-                "'s rules, using LA = " << nonKernel.second << info;
+    msg() << indent << nonKernel->display() << "'s production rules" << info;
 }

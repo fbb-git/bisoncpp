@@ -1,0 +1,2 @@
+This grammar was produced by several of my students during my 2005-2006 C++
+course. Bisonc++ V 0.98 did not properly recognize its two RR conflicts.

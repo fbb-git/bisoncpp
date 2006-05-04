@@ -2,7 +2,7 @@
 
 void Item::showKernel(Item const &item)
 {
-    msg() << "    " << item.d_production->lhs()->name() << " -> " << spool;
+    msg() << indent << item.d_production->lhs()->name() << " -> " << spool;
 
     for_each(item.d_production->begin(), 
              item.d_production->begin() + item.d_dot, 
@@ -14,7 +14,6 @@ void Item::showKernel(Item const &item)
              item.d_production->end(), 
              &Symbol::displaySymbol);
 
-    msg() << "  (rule " << item.d_production->nr() << ")\n" <<
-            setw(14) << " " << "Lookahead set " << item.d_lookahead << "\n" << 
-            info;
+    msg() << "  Rule " << item.d_production->nr() << ", dot " <<
+                item.d_dot << spool;
 }

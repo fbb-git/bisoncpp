@@ -19,7 +19,7 @@ void Generator::productionInfo(ostream &out) const
     )
     {
         NonTerminal const *np = NonTerminal::downcast((*prodIter)->lhs());
-        out << "     {" << np->nr() << ", " << 
+        out << "     {" << np->value() << ", " << 
             (*prodIter)->size() << "}, // " << *prodIter << "\n";
     }
 

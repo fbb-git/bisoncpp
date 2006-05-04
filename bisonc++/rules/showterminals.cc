@@ -7,4 +7,6 @@ void Rules::showTerminals() const
             info;
 
     for_each(d_terminal.begin(), d_terminal.end(), &Terminal::showSymbolic);
+
+    msg() << info;
 }

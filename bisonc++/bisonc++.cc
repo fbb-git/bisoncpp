@@ -77,23 +77,23 @@ try
     rules.determineFollow();
     rules.showFollow();
 
-    ItemSets itemSets;
-    itemSets.define(rules.startProduction());
+    State::define(rules.startProduction());
+
+    State::showAllStates();
 
     rules.assignNonTerminalNumbers();
 
     rules.setVerbose(parser.verboseSource());
-
-    State::showConflicts();
-
-    itemSets.showConflicts();
 
     rules.showUnusedTerminals();
     rules.showUnusedNonTerminals();
 
     rules.showRules();
 
-    Generator generator(rules, parser, itemSets);
+    Grammar grammar;
+    grammar.deriveSentence();
+
+    Generator generator(rules, parser);
 
     generator.baseclassHeader();
     generator.classHeader();
@@ -101,20 +101,7 @@ try
 
     generator.parseFunction();
 
-    itemSets.showParsingTables();   // Note that the generator may change a
-                                    // state, which will then affect the shown
-                                    // parsing tables. This is done in
-                                    // Generator::srtables, calling
-                                    // State::writeStateArray(). This latter
-                                    // function may set a State's
-                                    // d_defaultReduction field. Consider
-                                    // removing this modification from
-                                    // writeStateArray(), moving it to a
-                                    // separate State member, so that
-                                    // Generator merely produces the generated
-                                    // parser.
-
-    itemSets.deriveSentence();
+    State::showAllStates();
 
     return 0;
 }

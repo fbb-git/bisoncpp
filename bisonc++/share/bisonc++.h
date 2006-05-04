@@ -32,8 +32,8 @@ $insert 8 lex
 
         void executeAction(int d_production);
         unsigned errorRecovery();
-        int lookup(int token);
-        int nextToken();
+        int lookup();
+        void nextToken();
 };
 
 $insert namespace-close
