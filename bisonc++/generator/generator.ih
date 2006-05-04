@@ -14,7 +14,6 @@
 #include "../nonterminal/nonterminal.h"
 #include "../production/production.h"
 #include "../state/state.h"
-#include "../itemsets/itemsets.h"
 
 using namespace std;
 using namespace FBB;

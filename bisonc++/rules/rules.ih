@@ -6,7 +6,6 @@
 #include <algorithm>
 
 #include <bobcat/msg>
-#include "../shiftreduce/shiftreduce.h"
 
 using namespace std;
 using namespace FBB;
