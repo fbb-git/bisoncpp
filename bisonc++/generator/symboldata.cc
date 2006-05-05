@@ -3,14 +3,15 @@
 void Generator::symbolData(ostream &out) const
 {
     out <<  
-        "    typedef std::map<int, char const *> SMap;\n"
-        "    typedef SMap::value_type SMapVal;\n"
+        "typedef std::map<int, char const *> SMap;\n"
+        "typedef SMap::value_type SMapVal;\n"
         "\n"
         "SMapVal s_symArr[] =\n"
         "{\n"
-        "    SMapVal(-2, \"_UNDETERMINED_\"),\n"
+        "    SMapVal(-2, \"_UNDETERMINED_\"),  // predefined symbols\n"
         "    SMapVal(-1, \"_EOF_\"),\n"
-        "    SMapVal(256, \"_error_\"),\n";
+        "    SMapVal(256, \"_error_\"),\n"
+        "\n";
 
 
     TContext context = {out};

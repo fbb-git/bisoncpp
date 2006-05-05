@@ -2,10 +2,13 @@
 
 #include <iostream>
 
+// reserved terminals are defined by default in the share/bisonc++ skeleton,
+// and therefore do not need assigned values.
+
 Terminal::Terminal(string const &name, string const &literal, Type type)
 :
     Symbol(name, type, ""),
-    d_value(s_value++),
+    d_value(0),
     d_association(UNDEFINED),
     d_priority(s_priority),
     d_literal(literal),
@@ -13,8 +16,6 @@ Terminal::Terminal(string const &name, string const &literal, Type type)
     d_firstSet(this)
 {
     setReserved();
-    if (d_value > s_maxValue)
-        s_maxValue = d_value;
 }
 
 

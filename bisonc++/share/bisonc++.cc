@@ -43,7 +43,10 @@ namespace // anonymous
             unsigned d_errorState;  // used with Error states
         };
         // The FIRST element of SR arrays uses `d_type', defining the state's
-        // type, and `d_lastIdx' containing the last element's index. 
+        // type, and `d_lastIdx' containing the last element's index. If
+        // d_lastIdx is negative then the state needs a token: if in this
+        // state d_token is _UNDETERMINED_, nextToken() will be called 
+    
         // The LAST element of SR arrays uses `d_token' containing the last
         // retrieved token (or _UNDETERMINED_ immediately following a SHIFT)
         // to speed up the (linear) seach. 
@@ -95,8 +98,14 @@ $insert namespace-open
     d_stackIdx(-1),
 $insert 4 debuginit
     d_nErrors(0),
-    d_token(_UNDETERMINED_)
+    d_token(_UNDETERMINED_),
+    d_nextToken(_UNDETERMINED_)
 {}
+
+void @Base::clearin()
+{
+    d_token = d_nextToken = _UNDETERMINED_;
+}
 
 void @Base::ABORT() const throw(Return) 
 {
@@ -220,7 +229,7 @@ $insert 4 debug "State " << d_state << " lookup token " << symbol(d_token)
 $insert 8 debug "Default reduction to rule " << -elementPtr->d_action
             return elementPtr->d_action;                
         }
-$insert 8 debug "Nno action for " << symbol(d_token) << ", error recovery."
+$insert 8 debug "No action for " << symbol(d_token) << ", error recovery."
         // No default reduction, so token not found, so error.
         throw UNEXPECTED_TOKEN;
     }
@@ -253,7 +262,7 @@ $insert 4 debug symbol(d_token)
     // If EOF is encountered without being appropriate for the current state,
     // then the error recovery will fall back to the default recovery mode.
     // (i.e., parsing terminates)
-unsigned @::errorRecovery()
+void @::errorRecovery()
 try
 {
     ++d_nErrors;
@@ -269,8 +278,8 @@ $insert 4 debug d_nErrors << " error(s) so far"
 
     while (true)
     {
-            // if on entry here token is already EOF then we've been here 
-            // probably before: _error_ accepts EOF, but the state using
+            // if on entry here token is already EOF then we've probably been 
+            // here before: _error_ accepts EOF, but the state using
             // error nevertheless doesn't. In that case parsing terminates 
         if (d_token == _EOF_)
         {
@@ -279,21 +288,20 @@ $insert 12 debug "End of input unexpectedly reached"
         }
         try
         {
-            nextToken();
-            lookup();
-$insert 12 debug "Successful error recovery"
-            return d_token;
+            push(lookup());
+$insert 12 debug "Error recovery successful"
+            return;
         }
         catch (...)
         {
+            clearin();
         }
     }
 }
 catch (ErrorRecovery)       // This means: DEFAULT_RECOVERY_MODE
 {
     ABORT();
-    return 0;               // not reached. Inserted to prevent complaints
-}                           // from the compiler
+}
 
     // The parsing algorithm:
     // Initially, state 0 is pushed on the stack, and d_token is initialized 
@@ -351,7 +359,7 @@ $insert 16 debug symbol(d_token)
         }
         catch (ErrorRecovery)
         {
-            d_token = errorRecovery();
+            errorRecovery();
         }
     }
 }

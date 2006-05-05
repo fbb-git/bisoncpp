@@ -51,6 +51,7 @@ $insert debugdecl
         void ABORT() const throw(Return);
         void ACCEPT() const throw(Return);
         void ERROR() const throw(ErrorRecovery);
+        void clearin();
 
         bool debug() const
         {

@@ -19,6 +19,10 @@ members inherited from the parser's base class.
         extension and improvement of the macro bf(YYACCEPT) defined by
         bf(bison++) in that bf(YYACCEPT) could not be called from outside of
         the parsing member function.
+    it() bf(void Base::clearin+nop()()):nl()
+       This member replaces bf(bison)(++)'s macro bf(yyclearin) and causes
+        bf(bisonc++) to request another token from its tt(lex+nop()()) member,
+        even if the current token has not yet been processed.
     it() bf(bool Base::debug() const):nl()
        This member returns the current value of the debug variable. See
         bf(setDebug()) below.
@@ -46,10 +50,7 @@ members inherited from the parser's base class.
     it() bf(int lookup+nop()()):nl()
        Used internally by the parsing function. Not to be called otherwise.
     it() bf(void nextToken+nop()()):nl()
-       This member replaces bf(bison)(++)'s macro bf(yyclearin). It retrieves
-        the next token from the lexical scanner, even if the current token
-        hasn't been processed yet. The previously defined function tt(clearin)
-        has been removed from the parser's interface. 
+       Used internally by the parsing function. Not to be called otherwise.
     it() bf(void Base::pop+nop()()):nl()
        Used internally by the parsing function. Not to be called otherwise.
     it() bf(void print())):nl()
