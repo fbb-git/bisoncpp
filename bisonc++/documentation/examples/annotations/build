@@ -1,10 +1,9 @@
 #!/bin/sh
 
-SKEL=../../../share/bisonc++
+SKEL=../../../../share/bisonc++
 
 BISON=bisonc++
-BISON="bisonc++ -B ${SKEL}base.h -C ${SKEL}.h -I ${SKEL}.ih -P ${SKEL}.cc"
-
+BISON="../../../../tmp/bin/bisonc++ -B ${SKEL}base.h -C ${SKEL}.h -I ${SKEL}.ih -P ${SKEL}.cc"
 
 case $1 in
     (clean)
@@ -12,7 +11,7 @@ case $1 in
     ;;
     (demo)
         cd parser
-        $BISON -V -l grammar
+        $BISON -V --show-filenames  grammar
         cd ..
         cd scanner
         flex lexer

@@ -19,7 +19,7 @@ void State::compareReductions(ReduceMapValue &first,
     {
         rrc.headerDisplayed = true;
         msg() << "\n"
-                "State " << rrc.idx << ": R/R conflicts" << info;
+                "State " << rrc.idx << ": R/R conflict" << info;
     }
 
     if (!rrc.leftReductionDisplayed)

@@ -9,6 +9,7 @@ To create a new debian package:
 
        THEN (upgrade the version for each new distribution):
 
+            setenv DEBEMAIL f.b.brokken@rug.nl
             cd bisonc++/debian
             dch -v [version just set in version.cc]
             cd ../..

@@ -55,7 +55,7 @@ void State::handle(Item const &item)
     }
 
     msg() << indent << "to a state with kernel item:" << info;
-    Indent::inc();
+    msg() << incindent << spool;
                                         // kernel item when shifting `symbol'
     transition->addShow(item.incDot());
 
@@ -63,7 +63,7 @@ void State::handle(Item const &item)
     {
                                 // transition[symbol] depends on item.lhs() 
         msg() << indent << "LA(" << item.lhs()->display() << 
-                ") influences the LA used with an `" <<
+                ") influences the LA used with the `" <<
              symbol->display() << "' transition" << info;
 
         transitionOf(item.lhs())->influences(symbol);

@@ -5,8 +5,7 @@ void State::show()
     Indent::clear();
     Indent::inc();
 
-    msg() << nlindent << "State " << d_idx << info;
-    Indent::inc();
+    msg() << "\nState " << d_idx << ":\n" << info;
     showKernel();
 
     for_each(d_nonKernel.begin(), d_nonKernel.end(),
@@ -34,14 +33,18 @@ void State::show()
     if (n_RR)
     {
         msg() << nlindent << n_RR << " Reduce/Reduce conflict" << 
-                                        (n_RR == 1 ? "" : "s") << info;
+                                        (n_RR == 1 ? ":" : "s:") << info;
+        Indent::inc();
         for_each(d_rrConflict.begin(), d_rrConflict.end(), RRConflict::show);
+        Indent::dec();
     }
     if (n_SR)
     {
         msg() << nlindent << n_SR << " Shift/Reduce conflict" << 
-                                        (n_SR == 1 ? "" : "s") << info;
+                                        (n_SR == 1 ? ":" : "s:") << info;
+        Indent::inc();
         for_each(d_srConflict.begin(), d_srConflict.end(), SRConflict::show);
+        Indent::dec();
     }
 }
 

@@ -17,7 +17,7 @@ void State::writeStateArray(State const *sp, WSAContext &context)
                         (sp == s_acceptState) + 1 <<
                     "}"
 
-                "} // " <<
+                "}, // " <<
                 (
                         sp == s_acceptState ?
                             "ACCEPTS" 

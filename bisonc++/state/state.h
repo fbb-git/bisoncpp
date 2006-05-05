@@ -17,54 +17,54 @@ class State
 {
     public:
         typedef std::map<Symbol const *, Transition *> TransitionMap;
-	    typedef TransitionMap::value_type              TransitionMapValue;
-	    typedef TransitionMap::iterator                TransitionMapIterator;
-	
+        typedef TransitionMap::value_type              TransitionMapValue;
+        typedef TransitionMap::iterator                TransitionMapIterator;
+    
     private:
-	    enum Type           // modify data.cc when this enum changes
-	    {
-	        NORMAL,
-	        HAS_ERROR_ITEM,
-	        IS_ERROR_STATE
-	    };    
-	
-	    typedef std::vector<RRConflict> RRConflictVector;
-	    typedef std::vector<SRConflict> SRConflictVector;
-	
-	    typedef std::vector<State *> StateVector;
-	    typedef std::vector<Item>    ItemVector;
-	
-	    typedef std::vector<Symbol const *>  NonKernelVector;
-	
-	    typedef std::map<Production const *, LookaheadSet> ReduceMap;
-	    typedef ReduceMap::value_type                      ReduceMapValue;
-	    typedef ReduceMap::iterator                        ReduceMapIterator;
-	
-	    static StateVector  s_state;
-	    static unsigned s_nShiftReduceConflicts;
-	    static unsigned s_nReduceReduceConflicts;
-	
-	    static char const *s_stateName[];   // ascii-text representations of
-	                                        // the state types
-	    static State *s_acceptState;
-	    static Production const *s_startProduction;
-	
-	    Type                d_type;
-	    unsigned            d_idx;
-	
-	    ItemVector          d_kernel;
-	    ReduceMap           d_reduce;
-	
-	    TransitionMap       d_transition;
-	    NonKernelVector     d_nonKernel;
-	    bool                d_construct;
-	    unsigned            d_nTransitions; 
-	
-	    SRConflictVector    d_srConflict;
-	    RRConflictVector    d_rrConflict;
-	
-	    Production const   *d_defaultReduction;
-	
+        enum Type           // modify data.cc when this enum changes
+        {
+            NORMAL,
+            HAS_ERROR_ITEM,
+            IS_ERROR_STATE
+        };    
+    
+        typedef std::vector<RRConflict> RRConflictVector;
+        typedef std::vector<SRConflict> SRConflictVector;
+    
+        typedef std::vector<State *> StateVector;
+        typedef std::vector<Item>    ItemVector;
+    
+        typedef std::vector<Symbol const *>  NonKernelVector;
+    
+        typedef std::map<Production const *, LookaheadSet> ReduceMap;
+        typedef ReduceMap::value_type                      ReduceMapValue;
+        typedef ReduceMap::iterator                        ReduceMapIterator;
+    
+        static StateVector  s_state;
+        static unsigned s_nShiftReduceConflicts;
+        static unsigned s_nReduceReduceConflicts;
+    
+        static char const *s_stateName[];   // ascii-text representations of
+                                            // the state types
+        static State *s_acceptState;
+        static Production const *s_startProduction;
+    
+        Type                d_type;
+        unsigned            d_idx;
+    
+        ItemVector          d_kernel;
+        ReduceMap           d_reduce;
+    
+        TransitionMap       d_transition;
+        NonKernelVector     d_nonKernel;
+        bool                d_construct;
+        unsigned            d_nTransitions; 
+    
+        SRConflictVector    d_srConflict;
+        RRConflictVector    d_rrConflict;
+    
+        Production const   *d_defaultReduction;
+    
     public:
         typedef TransitionMap::const_iterator   TransitionMapConstIterator;
 
@@ -152,11 +152,7 @@ class State
         };
         static void writeReduceAt(Element const *symbol, WRContext &context);
 
-        static void showState(State *state)
-        {
-            state->show();
-        }
-
+        static void showState(State *state);
 
         void show();                    // show the state
         void showKernel();
@@ -175,11 +171,7 @@ class State
         static void defineStateActions(State *state);
         void solveReduceReduceConflicts();
         static void installLA(ReduceMapValue &reduction, 
-                              TransitionMap &transmap)
-        {
-            reduction.second = 
-                        transmap[reduction.first->lhs()]->lookaheadSet();
-        }
+                              TransitionMap &transmap);
 
         struct RRContext
         {

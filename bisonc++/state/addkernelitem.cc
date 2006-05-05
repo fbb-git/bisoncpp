@@ -8,7 +8,7 @@ void State::addKernelItem(Item const &item)
                                         // or use an existing one
 
     msg() << indent << "Kernel item:" << info;
-    Indent::inc();
+    msg() << incindent << spool;
     d_kernel.back().show();
     msg() << info;
     Indent::dec();

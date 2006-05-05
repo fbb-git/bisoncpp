@@ -11,7 +11,7 @@ namespace // anonymous
        _EOF_            = -1,
        _error_          = 256,
     };
-    enum StateType       // modify data.cc when this enum changes
+    enum StateType       // modify state/data.cc when this enum changes
     {
         NORMAL,
         HAS_ERROR_ITEM,
@@ -31,7 +31,6 @@ namespace // anonymous
             int _field_1_;      // initializer, allowing initializations 
                                 // of the SR s_[] arrays
             StateType   d_type;
-            unsigned    d_symbol;  
             int         d_token;
         };
         union
@@ -40,31 +39,45 @@ namespace // anonymous
 
             int d_lastIdx;          // if negative, the state uses SHIFT
             int d_action;           // may be negative (reduce), 
-                                    // postive (shift) or 0 (accept)
+                                    // postive (shift), or 0 (accept)
             unsigned d_errorState;  // used with Error states
         };
-        // identification number (value) of a terminal
-        // (action table) or non-terminal (goto table). In
-        // SR arrays d_symbol of the first SR element defines the state's
-        // type, while d_action holds the last element's index. The field
-        // d_symbol of the last element of an SR array will contain the
-        // last retrieved token and is used to speed up the seach. If the
-        // last element's d_action field is non-negative, it is the state
-        // to go to when an error is encountered. In that case, the stack
-        // is reduced to this state (so, to 0 at the stacktop with with
-        // s_0, etc.) and the indicated state is pushed on the stack,
-        // representing shifting `error'. Then, the error routine will
-        // continue to retrieve tokens from the input until the next
-        // transition is possible from that state, and thus error recovery
-        // has been performed
+        // The FIRST element of SR arrays uses `d_type', defining the state's
+        // type, and `d_lastIdx' containing the last element's index. 
+        // The LAST element of SR arrays uses `d_token' containing the last
+        // retrieved token (or _UNDETERMINED_ immediately following a SHIFT)
+        // to speed up the (linear) seach. 
+        // Except for the first element of SR arrays, the field `d_action' is
+        // used to determine what to do next. If positive, it represents the
+        // next state (used with SHIFT); if zero, it indicates `ACCEPT', if
+        // negative, -d_action represents the number of the rule to reduce to.
+        //
+        // `lookup()' tries to find d_token in the current SR array. This may
+        // succeed, even with token _UNDETERMINED_, if the current state
+        // features a default reduce. If it fails, `nextToken()' is called
+        // once to obtain the next token. If that token isn't found,
+        // UNEXPECTED_TOKEN is thrown, which is then caught by the
+        // error-recovery function. 
+        //
+        // The error-recovery function will pop elements off the stack until a
+        // state having type HAS_ERROR_ITEM is found. In these states, input
+        // can be SHIFT-ed repeatedly until a token is retrieved which is
+        // found in the error state's SR table. In that case error recovery is
+        // successful and the token is returned to the `parse()'
+        // function. Since the stack has now been reduced to a state having an 
+        // `error . TOKEN' item, TOKEN will be found in the current state, and
+        // thus parsing may continue.
         // So:
         //      s_x[] = 
         //      {
-        //          {state-type,        idx of last element},
-        //          {symbol,            < 0: reduce, >= 0: next state},
-        //          ...
-        //          {set to last retrieved token, 
-        //                              next state if >= 0 on error},
+        //                  [_field_1_]         [_field_2_]
+        //
+        // First element:   {state-type,        idx of last element},
+        // Other elements:  {required token,    action to perform},
+        //                                      ( < 0: reduce, 
+        //                                          0: ACCEPT,
+        //                                        > 0: next state)
+        // Last element:    {set to d_token,    action to perform}
         //      }
     };
 
@@ -192,22 +205,22 @@ int @::lookup()
 
     SR *lastElementPtr = sr + lastIdx;
 
-$insert 4 debug "In state " << d_state << " token = " << symbol(token)
-
     bool retry = false;
     while (true)
     {
+$insert 4 debug "In state " << d_state << " token = " << symbol(d_token)
+
         lastElementPtr->d_token = d_token;  // set search-token
         
         SR *elementPtr = sr + 1;
-        while (elementPtr->d_token != token)
+        while (elementPtr->d_token != d_token)
             ++elementPtr;
     
         if 
         (
             elementPtr != lastElementPtr    // found the token
             ||                      
-            lastElementPtr->d_action        // or a reduction (because it's
+            lastElementPtr->d_action < 0    // or a (default) reduction at
         )                                   // the last element)
         {
 $insert 4 debug "lookup() returns " << elementPtr->d_action
@@ -216,7 +229,7 @@ $insert 4 debug "lookup() returns " << elementPtr->d_action
 
         if (!retry)
         {
-$insert 8 debug " token " symbol(d_token) << " not found. Trying next token"
+$insert 8 debug " No token " << symbol(d_token) << ". Trying next token"
             nextToken();
             retry = true;
             continue;
@@ -230,16 +243,8 @@ $insert 8 debug  symbol(d_token) << " unexpected. Retry exhausted."
 }
 
     // When an error has occurred, pop elements off the stack until the top
-    // state has an error-transition. If none is found, the default recovery
+    // state has an error-item. If none is found, the default recovery
     // mode (which is to abort) is activated. 
-    //
-    // If an error state is found, then that state's last SR element holds at
-    // its d_errorState field the state to go to on `error'.  That state is
-    // pushed on the state-stack, to become the next state. 
-    //
-    // In that state, the token (causing the error) is skipped and subsequent
-    // tokens (retrieved from the input) are looked up. If a match is found,
-    // then from this point parsing continues. 
     //
     // If EOF is encountered without being appropriate for the current state,
     // then the error recovery will fall back to the default recovery mode.
@@ -255,7 +260,8 @@ $insert 4 debug d_nErrors << " error(s) so far"
     while (s_state[top()][0].d_type != HAS_ERROR_ITEM)
         pop();
 
-    push(lookup(_error_));                  // push the error state
+    d_token = _error_;                      // specify _error_ as next token
+    push(lookup());                         // push the error state
 
     while (true)
     {
@@ -270,7 +276,7 @@ $insert 16 debug "End of input unexpectedly reached"
         try
         {
             nextToken();
-            lookup(d_token);
+            lookup();
 $insert 12 debug "Successful error recovery"
             return d_token;
         }
@@ -286,20 +292,30 @@ catch (ErrorRecovery)       // This means: DEFAULT_RECOVERY_MODE
 }                           // from the compiler
 
     // The parsing algorithm:
-    // Initially, state 0 is pushed on the stack, and the first token is
-    // obtained. The stack's top element is used to access the current state's
-    // SR_ array.
+    // Initially, state 0 is pushed on the stack, and d_token is defined as
+    // _UNDETERMINED_. 
+    // The stack's top element is always used to access the current state's
+    // SR_ array. 
     // Then, in an eternal loop:
     //  1.  The current token is stored in the final element's d_token
     //      field of the state's SR_ array.
     //  2.  The current token is located in the state's SR_ array
-    //  3a. At `shift': the next token is retrieved, and the next state is
-    //      pushed on the stack
-    //  3b. At `reduce': 
+    //  3. If the token is found at the last element (so, the token wasn't
+    //     really found since we've put it there intially) and the last
+    //     element's action field is negative, a default reduce is
+    //     performed. Otherwise, nextToken() is called ONCE to obtain the next
+    //     token. If that token isn't found either, error-recovery starts.
+    //  4. In general, if d_token was found:
+    //  4a. Positive d_action values indicate `SHIFT': the next state is
+    //     returned as d_action. It is pushed on the stack and d_token is set
+    //     to _UNDETERMINED_ again.
+    //  4b. Negative d_action values indicate `REDUCE': -d_action indicates
+    //     the rule to reduce to, and:
     //          1. the rule's action is executed
     //          2. #-elements of the rule to reduce to are popped off
-    //             the stack, the rule's lhs becomes the current token
-    //  3c. At `PARSE_ACCEPT': parse() returns `ACCEPT'
+    //             the stack, the rule's LHS becomes the current token
+    //  4c. Zero d_action values indicate `PARSE_ACCEPT': parse() returns 
+    //      `ACCEPT', indicating successful parsing.
     //
 int @::parse()
 try 
@@ -312,7 +328,7 @@ $insert 4 debug "Parsing starts"
     {
         try
         {
-            int action = lookup(d_token);   // lookup token in d_state
+            int action = lookup();          // lookup token in d_state
 
             if (action > 0)                 // push a new state
             {
@@ -342,3 +358,6 @@ $insert 4 debug "parse() returns " << retValue
 }
 
 $insert namespace-close
+
+
+

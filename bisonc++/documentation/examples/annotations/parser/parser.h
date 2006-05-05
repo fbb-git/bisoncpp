@@ -71,8 +71,8 @@ class Parser: public ParserBase
 
         void executeAction(int d_production);
         unsigned errorRecovery();
-        int lookup(int token);
-        int nextToken();
+        int lookup();
+        void nextToken();
 };
 
 

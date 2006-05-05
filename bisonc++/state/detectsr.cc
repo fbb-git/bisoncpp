@@ -22,7 +22,7 @@ void State::detectSR(TransitionMap::value_type &transition, SRContext &src)
     {
         src.headerDisplayed = true;
         msg() << "\n"
-                "State " << src.state.d_idx << ": S/R conflicts" << info;
+                "State " << src.state.d_idx << ": S/R conflict" << info;
 
     }
 

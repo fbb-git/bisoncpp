@@ -32,7 +32,8 @@ void State::defineLookaheads(LookaheadSet const &la)
         Wrap1c<TransitionMapValue, TransitionMap>
                 (propagateLookaheads, d_transition));
 
-    msg() << decindent << 
+    Indent::dec();
+    msg() << nlindent << 
         "State " << d_idx << ": LA inspection completed" << info;
 }
 

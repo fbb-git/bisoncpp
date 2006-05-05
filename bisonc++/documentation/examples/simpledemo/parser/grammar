@@ -1,4 +1,5 @@
 %scanner ../scanner/scanner.h
+%baseclass-skeleton opa.h
 
 %token NUMBER
 

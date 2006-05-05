@@ -1,11 +1,16 @@
 #!/bin/sh
 
+SKEL=../../../../share/bisonc++
+
+BISON=bisonc++
+BISON="../../../../tmp/bin/bisonc++ -B ${SKEL}base.h -C ${SKEL}.h -I ${SKEL}.ih -P ${SKEL}.cc"
+
 case $1 in
     (clean)
         rm -rf Pa* p*
     ;;
     (demo)
-        bisonc++ -V conflict
+        $BISON -V conflict
     ;;
     (*)
         echo "$0 [clean|demo] to clean or generate files"

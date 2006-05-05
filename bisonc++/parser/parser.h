@@ -286,6 +286,7 @@ class Parser
         {
             definePathname(&d_implementationHeader);
         }
+        void setIncludeQuotes(std::string *target);
         void setLeft()
         {
             parseAssociations(Terminal::LEFT);

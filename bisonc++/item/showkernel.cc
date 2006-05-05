@@ -2,7 +2,7 @@
 
 void Item::showKernel(Item const &item)
 {
-    msg() << indent << item.d_production->lhs()->name() << " -> " << spool;
+    msg() << item.d_production->lhs()->name() << " -> " << spool;
 
     for_each(item.d_production->begin(), 
              item.d_production->begin() + item.d_dot, 

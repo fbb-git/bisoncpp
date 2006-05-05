@@ -5,11 +5,11 @@ void State::solveReduceReduceConflicts()
     for_each(d_reduce.begin(), d_reduce.end(),
             Wrap1c<ReduceMapValue, TransitionMap> (installLA, d_transition));
 
-    RRContext rrc = {false, d_idx};
-
     if (d_reduce.size() <= 1)
         return;
-    
+
+    RRContext rrc = {false, false, d_idx};
+
     Indent::inc();
     
     for 
@@ -20,9 +20,9 @@ void State::solveReduceReduceConflicts()
                 // increment in the compound
     )
     {
-        if (begin->second.empty())
+        if (begin->second.empty())      // empty lookaheadset
         {
-            ++begin;
+            ++begin;                    // then try the next reduction
             continue;
         }
 
