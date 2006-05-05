@@ -39,6 +39,7 @@ $insert LTYPEstack
         bool        d_debug;
         unsigned    d_nErrors;
         int         d_token;
+        int         d_nextToken;
         unsigned    d_state;
         STYPE      *d_vsp;
         STYPE       d_val;
@@ -50,7 +51,6 @@ $insert debugdecl
         void ABORT() const throw(Return);
         void ACCEPT() const throw(Return);
         void ERROR() const throw(ErrorRecovery);
-        void clearin();
 
         bool debug() const
         {

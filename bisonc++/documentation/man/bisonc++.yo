@@ -1,5 +1,5 @@
 NOUSERMACRO(yyparse parse lex yylex error setDebug ParserBase throw ACCEPT
-        ABORT errok clearin RECOVERING print done prompt Parse 
+        ABORT errok RECOVERING print done prompt Parse 
         debug setSval setLoc)
 
 includefile(../../release.yo)
@@ -586,10 +586,6 @@ members inherited from the parser's base class.
         extension and improvement of the macro bf(YYACCEPT) defined by
         bf(bison++) in that bf(YYACCEPT) could not be called from outside of
         the parsing member function.
-    it() bf(void Base::clearin()):nl()
-       This member replaces bf(bison)(++)'s macro bf(yyclearin), and sets the
-        current token to bf(_UNDETERMINED_), causing the parser the retrieve
-        the next token from the lexical scanner.
     it() bf(bool Base::debug() const):nl()
        This member returns the current value of the debug variable. See
         bf(setDebug()) below.
@@ -616,10 +612,13 @@ members inherited from the parser's base class.
         plain character or as one of the symbolic tokens defined in the
         bf(Parser::Tokens) enumeration. Zero or negative token values are
         interpreted as `end of input'.
-    it() bf(void lookup+nop()()):nl()
-       Used internally by the parsing function. Not to be called otherwise.
+    it() bf(int lookup+nop()()):nl()
+       Used internally by the parsing function. Not to be called
+       otherwise. See also below, section bf(BUGS).
     it() bf(void nextToken+nop()()):nl()
-       Used internally by the parsing function. Not to be called otherwise.
+       This member replaces bf(bison)(++)'s macro bf(yyclearin). It retrieves
+        the next token from the lexical scanner, even if the current token
+        hasn't been processed yet. See also below, section bf(BUGS).
     it() bf(void Base::pop+nop()()):nl()
        Used internally by the parsing function. Not to be called otherwise.
     it() bf(void print())):nl()
@@ -877,6 +876,19 @@ manpagebugs()
 not implemented in bf(bisonc++)(1). According to bf(bison++)(1) the semantic
 parser was not available in bf(bison++) either, while the pure parser was
 deemed `not very useful'.
+
+    The previously (< 1.00) defined function bf(clearin) is removed from the
+private interface. Instead, bf(void nextToken) should be used. Note that this
+member now has a bf(void) return type. When regenerating parsers created by
+early versions of bf(bisonc++) (versions before version 1.00), bf(nextToken)'s
+prototype should be corrected by hand, since bf(bisonc++) will not by itself
+rewrite the parser class's header file.
+
+    The member function tt(void lookup) (< 1.00) was replaced by tt(int
+lookup). When regenerating parsers created by early versions of bf(bisonc++)
+(versions before version 1.00), bf(lookup)'s prototype should be corrected by
+hand, since bf(bisonc++) will not by itself rewrite the parser class's header
+file.
 
 manpagesection(ABOUT bisonc++)
 

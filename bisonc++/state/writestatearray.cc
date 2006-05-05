@@ -3,7 +3,9 @@
 void State::writeStateArray(State const *sp, WSAContext &context)
 {
     State const &state = *sp;
-    
+
+    bool tokenNeeded = state.d_nTerminalTransitions || sp == s_acceptState;
+
             // Write the table header
     context.out << "\n" 
             "SR s_" << state.d_idx << "[] =\n"
@@ -12,7 +14,7 @@ void State::writeStateArray(State const *sp, WSAContext &context)
                     "{" << 
                         s_stateName[state.d_type] << 
                     "}, "
-                    "{" << 
+                    "{" << (tokenNeeded ? "" : "-") <<
                         state.d_nTransitions + state.d_reduce.size() +
                         (sp == s_acceptState) + 1 <<
                     "}"
@@ -22,10 +24,10 @@ void State::writeStateArray(State const *sp, WSAContext &context)
                         sp == s_acceptState ?
                             "ACCEPTS" 
                     :
-                        state.d_reduce.size() || state.d_defaultReduction ?
-                            "REDUCES"
-                    :
+                        tokenNeeded ? 
                             "SHIFTS"
+                    :
+                            "REDUCES"
                 ) << "\n";
 
        // write the transitions

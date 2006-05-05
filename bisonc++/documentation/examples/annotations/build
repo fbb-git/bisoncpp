@@ -1,5 +1,8 @@
 #!/bin/sh
 
+DEBUG=--debug
+# CONSTRUCTION=--construction
+
 SKEL=../../../../share/bisonc++
 
 BISON=bisonc++
@@ -11,10 +14,10 @@ case $1 in
     ;;
     (demo)
         cd parser
-        $BISON -V --show-filenames  grammar
+        $BISON -V $DEBUG $CONSTRUCTION -l grammar
         cd ..
         cd scanner
-        flex lexer
+        flex -I lexer
         cd ..
         g++ -Wall -o demo *.cc */*.cc
     ;;

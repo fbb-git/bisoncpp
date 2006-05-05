@@ -21,6 +21,7 @@ bool State::solveSRbyPriority(TransitionMapValue &transition,
 
             transition.second->shutOff();   // shut off the shift info
             --src.state.d_nTransitions;
+            --src.state.d_nTerminalTransitions;
         break;
 
         case Terminal::LARGER:

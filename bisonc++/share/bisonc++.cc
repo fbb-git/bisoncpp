@@ -52,12 +52,9 @@ namespace // anonymous
         // next state (used with SHIFT); if zero, it indicates `ACCEPT', if
         // negative, -d_action represents the number of the rule to reduce to.
         //
-        // `lookup()' tries to find d_token in the current SR array. This may
-        // succeed, even with token _UNDETERMINED_, if the current state
-        // features a default reduce. If it fails, `nextToken()' is called
-        // once to obtain the next token. If that token isn't found,
-        // UNEXPECTED_TOKEN is thrown, which is then caught by the
-        // error-recovery function. 
+        // `lookup()' tries to find d_token in the current SR array. If it
+        // fails, and there is no default reduction UNEXPECTED_TOKEN is
+        // thrown, which is then caught by the error-recovery function. 
         //
         // The error-recovery function will pop elements off the stack until a
         // state having type HAS_ERROR_ITEM is found. In these states, input
@@ -119,11 +116,6 @@ $insert 4 debug "Forced error condition"
     throw UNEXPECTED_TOKEN;
 }
 
-void @Base::clearin()
-{
-    d_token = _UNDETERMINED_;
-}
-
 $insert debugfunctions
 
 void @Base::push(unsigned state)
@@ -148,8 +140,8 @@ void @Base::pop(unsigned count)
     d_state = d_stateStack[d_stackIdx];
     d_vsp = &d_valueStack[d_stackIdx];
 $insert 4 LTYPEpop
-$insert 4 debug  "Popped " << count << " elements off the state stack." +
-$insert 4 debug  " Next state: " << d_state
+$insert 4 debug  "Popped " << count << " elements off the state stack."
+$insert 4 debug  "Next state: " << d_state
 }
 
 unsigned @Base::top() const
@@ -186,13 +178,16 @@ $insert 8 actioncases
 
 void @::nextToken()
 {
-    d_token = lex();
+    if (d_nextToken == _UNDETERMINED_)
+    {
+        d_nextToken = lex();
+$insert 8 debug "Retrieved next token " << symbol(d_nextToken)
+    }
     print();
-$insert 4 debug "Retrieved token value " << d_token
-    if (d_token <= 0)
-        d_token = _EOF_;
-
-$insert 4 debug "Next token: " << symbol(d_token)
+    if (d_nextToken <= 0)
+        d_nextToken = _EOF_;
+    d_token = d_nextToken;
+$insert 4 debug "Using next token: " << symbol(d_token)
 }
 
 // if the final transition is negative, then we should reduce by the rule
@@ -203,43 +198,52 @@ int @::lookup()
 
     int lastIdx = sr->d_lastIdx;        // sentinel-index in the SR_ array
 
+    if (lastIdx < 0)                    // only (maybe) obtain next token
+        lastIdx = -lastIdx;             // if the state uses a terminal-token
+    else if (d_token == _UNDETERMINED_) // shift and no token is available
+        nextToken();
+
     SR *lastElementPtr = sr + lastIdx;
 
-    bool retry = false;
-    while (true)
-    {
-$insert 4 debug "In state " << d_state << " token = " << symbol(d_token)
+$insert 4 debug "State " << d_state << " lookup token " << symbol(d_token)
 
-        lastElementPtr->d_token = d_token;  // set search-token
-        
-        SR *elementPtr = sr + 1;
-        while (elementPtr->d_token != d_token)
-            ++elementPtr;
+    lastElementPtr->d_token = d_token;  // set search-token
     
-        if 
-        (
-            elementPtr != lastElementPtr    // found the token
-            ||                      
-            lastElementPtr->d_action < 0    // or a (default) reduction at
-        )                                   // the last element)
-        {
-$insert 4 debug "lookup() returns " << elementPtr->d_action
-            return elementPtr->d_action;    // then return the required action
-        }
+    SR *elementPtr = sr + 1;
+    while (elementPtr->d_token != d_token)
+        ++elementPtr;
 
-        if (!retry)
+    if (elementPtr == lastElementPtr)   // reached the last element
+    {
+        if (elementPtr->d_action < 0)   // default reduction
         {
-$insert 8 debug " No token " << symbol(d_token) << ". Trying next token"
-            nextToken();
-            retry = true;
-            continue;
+$insert 8 debug "Default reduction to rule " << -elementPtr->d_action
+            return elementPtr->d_action;                
         }
-
-        // In this case, the state did not have a a default reduce
-$insert 8 debug "In state " << d_state << " token " +
-$insert 8 debug  symbol(d_token) << " unexpected. Retry exhausted."
+$insert 8 debug "Nno action for " << symbol(d_token) << ", error recovery."
+        // No default reduction, so token not found, so error.
         throw UNEXPECTED_TOKEN;
     }
+
+    // not at the last element, if non-negative and if 
+    // d_token == d_nextToken token has been processed, and nextToken()
+    // can be called. 
+
+    if (elementPtr->d_action <= 0)       // a reduction or ACCEPT is found
+    {
+$insert 8 debug "Reduction to rule " << -elementPtr->d_action
+        return elementPtr->d_action;
+    }
+
+    if (d_token == d_nextToken)         // token was processed
+    {
+$insert 8 debug "Processed " << symbol(d_token)
+        d_nextToken = _UNDETERMINED_;
+    }
+    d_token = d_nextToken;
+$insert 4 debug "Next state " << elementPtr->d_action << ", token " +
+$insert 4 debug symbol(d_token)
+    return elementPtr->d_action;
 }
 
     // When an error has occurred, pop elements off the stack until the top
@@ -270,7 +274,7 @@ $insert 4 debug d_nErrors << " error(s) so far"
             // error nevertheless doesn't. In that case parsing terminates 
         if (d_token == _EOF_)
         {
-$insert 16 debug "End of input unexpectedly reached"
+$insert 12 debug "End of input unexpectedly reached"
             throw DEFAULT_RECOVERY_MODE;
         }
         try
@@ -292,55 +296,55 @@ catch (ErrorRecovery)       // This means: DEFAULT_RECOVERY_MODE
 }                           // from the compiler
 
     // The parsing algorithm:
-    // Initially, state 0 is pushed on the stack, and d_token is defined as
-    // _UNDETERMINED_. 
+    // Initially, state 0 is pushed on the stack, and d_token is initialized 
+    // the first token on the input.
     // The stack's top element is always used to access the current state's
     // SR_ array. 
     // Then, in an eternal loop:
-    //  1.  The current token is stored in the final element's d_token
+    //  1.  d_token is stored in the final element's d_token
     //      field of the state's SR_ array.
-    //  2.  The current token is located in the state's SR_ array
+    //  2.  The current token is looked up in the state's SR_ array
     //  3. If the token is found at the last element (so, the token wasn't
     //     really found since we've put it there intially) and the last
     //     element's action field is negative, a default reduce is
-    //     performed. Otherwise, nextToken() is called ONCE to obtain the next
-    //     token. If that token isn't found either, error-recovery starts.
-    //  4. In general, if d_token was found:
-    //  4a. Positive d_action values indicate `SHIFT': the next state is
-    //     returned as d_action. It is pushed on the stack and d_token is set
-    //     to _UNDETERMINED_ again.
-    //  4b. Negative d_action values indicate `REDUCE': -d_action indicates
-    //     the rule to reduce to, and:
-    //          1. the rule's action is executed
-    //          2. #-elements of the rule to reduce to are popped off
-    //             the stack, the rule's LHS becomes the current token
-    //  4c. Zero d_action values indicate `PARSE_ACCEPT': parse() returns 
-    //      `ACCEPT', indicating successful parsing.
-    //
+    //     performed, and the returned action is the rule to reduce to. This
+    //     results in d_token receiving the token value of the rule's LHS
+    //     token.
+    //  4. If the token is found at an earlier element, the result may also be
+    //     a reduce, which is handled as described in 3.
+    //  5. If the action is 0, the input is accepted, and parsing stops.
+    //  6. If the action is positive, a SHIFT is required. However, d_token
+    //     must be reassigned first. If the d_token is equal to d_nextToken,
+    //     d_nextToken has been processed, and another token can be
+    //     retrieved. Otherwise, d_nextToken is reassigned to d_token.
+    //  7. An error occurs if d_token is not found, and the state has no
+    //     default reduction
 int @::parse()
 try 
 {
 $insert 4 debug "Parsing starts"
     push(0);                                // initial state
-    d_token = _UNDETERMINED_;               // initial token: unknown
-
+    d_nextToken = _UNDETERMINED_;           // First token may not yet be 
+                                            // required
     while (true)
     {
         try
         {
-            int action = lookup();          // lookup token in d_state
+            int action = lookup();          // lookup d_token in d_state
 
             if (action > 0)                 // push a new state
             {
-$insert 16 debug "SHIFT action"
                 push(action);
-                d_token = _UNDETERMINED_;   // and reset the token
+                d_token = _UNDETERMINED_;   // try to process the next token
+$insert 16 debug "push state " << action << ", token now " << symbol(d_token)
             }
             else if (action < 0)
             {
-$insert 16 debug "REDUCE action"
                 executeAction(-action);
+                                            // next token is the rule's LHS
                 d_token = reduce(s_productionInfo[-action]); 
+$insert 16 debug "reduce by rule " << -action << ", token = " +
+$insert 16 debug symbol(d_token)
             }
             else 
                 ACCEPT();
@@ -358,6 +362,3 @@ $insert 4 debug "parse() returns " << retValue
 }
 
 $insert namespace-close
-
-
-

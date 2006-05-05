@@ -59,6 +59,7 @@ class State
         NonKernelVector     d_nonKernel;
         bool                d_construct;
         unsigned            d_nTransitions; 
+        unsigned            d_nTerminalTransitions;
     
         SRConflictVector    d_srConflict;
         RRConflictVector    d_rrConflict;

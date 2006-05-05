@@ -24,6 +24,8 @@ void State::defineDestination(TransitionMapValue &transit,
 
     if (symbol == Rules::errorTerminal())
         s_state[idx]->d_type = IS_ERROR_STATE;
+    else
+        state.d_nTerminalTransitions += symbol->isTerminal();
 
     Transition &transition = *transit.second;
     transition.setNext(idx);

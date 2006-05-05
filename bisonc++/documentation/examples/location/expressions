@@ -9,7 +9,7 @@
 lines:
     lines line  // 1
 |
-    line        // 2
+                // 2
 ;
 
 line:
