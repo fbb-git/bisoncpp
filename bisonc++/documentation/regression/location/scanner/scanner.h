@@ -22,7 +22,7 @@
     };                                            
 */
 
-#include "../Parserbase.h"
+#include "../parser/Parserbase.h"
     
 class Scanner: public yyFlexLexer
 {

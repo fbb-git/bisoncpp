@@ -38,6 +38,7 @@ example()
     echo --------------------------------
     cat doc
     echo
+    echo --------------------------------
     
     cd parser
     $BISONCPP -V $CONS $DEB grammar > bisonc++.construction
@@ -60,11 +61,10 @@ example()
     cd $cwd
     find ./ -type f -not -regex '.*/CVS/.*' \
                 -not -name doc -not -name demo.cc \
-                -not -name grammar \
+                -not -name grammar -not -name parser.h \
                 -not -name lexer -not -name scanner.h -not -name scanner.ih \
                 -exec rm '{}' ';'
 
-    echo --------------------------------
     cd ..
 }
 
@@ -96,17 +96,21 @@ visible, so no action can be associated with its reduction anyway.
 "
 
 EXAMPLE=1
-PRE="Press Enter c, d  combi to run, else example"
+PRE="To run: [cd] + Enter, else skip example"
+
+echo $PRE $EXAMPLE: using the location stack
+read RUN
+example location $RUN
 
 echo $PRE $EXAMPLE: AHO Example 4.42, p. 231
 read RUN
 example aho4.42 $RUN
 
-echo $PRE $EXAMPLE: $EXAMPLE  plain R/R conflict
+echo $PRE $EXAMPLE: a plain R/R conflict
 read RUN
 example rr1 $RUN
 
-echo $PRE $EXAMPLE: a grammar having 2 R/R conflicts
+echo $PRE $EXAMPLE: two R/R conflicts
 read RUN
 example rr2 $RUN
 
@@ -114,21 +118,19 @@ echo $PRE $EXAMPLE: the dangling-else conflict
 read RUN
 example danglingelse $RUN
 
-echo $PRE $EXAMPLE: a grammar not deriving a sentence
+echo $PRE $EXAMPLE: not derivable sentence
 read RUN
 example nosentence $RUN
 
-echo $PRE $EXAMPLE: a grammar having an error-production
+echo $PRE $EXAMPLE: using an error-production
 read RUN
 example error $RUN
 
-echo $PRE $EXAMPLE: a grammar adding two integral values
+echo $PRE $EXAMPLE: adding two integral values
 read RUN
 example simplecalc $RUN
 
+echo $PRE $EXAMPLE: using the location stack
+read RUN
+example location $RUN
 
-
-
-
-
-    

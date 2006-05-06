@@ -1,6 +1,5 @@
-
+%scanner ../scanner/scanner.h
 %lsp-needed
-%scanner scanner/scanner.h
 
 %token NR
 
@@ -16,7 +15,7 @@ line:
     content     // 3
     '\n'
     {
-        cout << "Line token newline at " << @2.first_line << endl;
+        std::cout << "Line token newline at " << @2.first_line << "\n";
     }
 ;
 
@@ -31,7 +30,7 @@ content:
 expr:
     NR              // 7
     {
-        cout << "NR returns value " << $1 << endl;
+        std::cout << "NR returns value " << $1 << "\n";
     }
 ;
 
