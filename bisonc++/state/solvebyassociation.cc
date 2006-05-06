@@ -4,7 +4,6 @@ bool State::solveSRbyAssociation(TransitionMapValue &transition,
                               SRContext &src, ReduceMapIterator &reduceIter)
 {
     Terminal const *terminal = Terminal::downcast(transition.first);
-//    Production const *production = reduceIter->first;
 
     switch (terminal->association())
     {
