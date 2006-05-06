@@ -3,8 +3,12 @@
 bool State::solveSRbyPriority(TransitionMapValue &transition, 
                               SRContext &src, ReduceMapIterator &reduceIter)
 {
-    Terminal const *terminal = Terminal::downcast(transition.first);
     Production const *production = reduceIter->first;
+    Terminal const *terminal = production->precedence();
+    unsigned productionPriority = terminal ? terminal->priority() : 0;
+
+    terminal = Terminal::downcast(transition.first);
+    unsigned terminalPriority = terminal->priority();
 
     switch (Terminal::comparePriorities(terminal, production->precedence()))
     {
@@ -14,9 +18,12 @@ bool State::solveSRbyPriority(TransitionMapValue &transition,
         case Terminal::SMALLER:
             msg() << indent << "Solved as REDUCE: Pri(rule " << 
                 production->nr() << 
-                " (= " << production->precedence()->priority() << ")) "
+                " (= " << productionPriority
+                            /*production->precedence()->priority()*/
+                 << ")) "
                 "> Pri(`" << terminal->display() <<
-                "' (= " << terminal->priority() << "))" 
+                "' (= " << terminalPriority
+                << "))" 
                 << info;
 
             transition.second->shutOff();   // shut off the shift info
@@ -27,9 +34,12 @@ bool State::solveSRbyPriority(TransitionMapValue &transition,
         case Terminal::LARGER:
             msg() << indent << "Solved as SHIFT: Pri(rule #" << 
                 production->nr() << 
-                " (= " << production->precedence()->priority() << ")) "
+                " (= " <<  productionPriority
+                            /*production->precedence()->priority()*/
+                << ")) "
                 "< Pri(`" << terminal->display() <<
-                "' (= " << terminal->priority() << "))" 
+                "' (= " <<  terminalPriority 
+                << "))" 
                 << info;
                                                 // don't reduce on terminal
             reduceIter->second -= terminal;

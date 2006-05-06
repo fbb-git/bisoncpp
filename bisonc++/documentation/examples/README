@@ -6,6 +6,8 @@ have a standard BISONC definition, calling bisonc++ from its standard
 location. Bij commenting out the BISONC definition calling tmp/bin/bisonc++
 the standard bisonc++ can be called.
 
+Most examples available before version 1.00 are now in the ../regression
+directory, where they are most easily used by runnning the `run' script.
 
 bison++Example.NEW: The original example provided by Alain Coetmeur.
 
@@ -44,22 +46,11 @@ input:   a simple parser reading numbers or names following a prompt. Enter
 
         Run `build clean' to cleanup, `build demo' to create the program.
 
-location: demonstrates the use of passing d_loc and d_val to the scanner to
-        allow the scanner to assign semantic values to tokens.
+error:      moved to `regression'
 
-        Enter lines (to see the first_line field of the LTYPE struct being
-        used, enter a number to see the effect of assignments to d_val.
+location:   moved to `regression'
 
-        Run `build clean' to cleanup, `build demo' to create the program.
-
-simpledemo: Very simple demo program. 
-
-        Run `build clean' to cleanup, `build demo' to create the program.
-
-        It expects lines like 4 + 5 =
-        To stop, enter 'q'
-
-
+simpledemo: moved to `regression' as the example `simplecalc'
 
 
 

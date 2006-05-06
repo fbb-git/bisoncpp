@@ -4,7 +4,7 @@ bool State::solveSRbyAssociation(TransitionMapValue &transition,
                               SRContext &src, ReduceMapIterator &reduceIter)
 {
     Terminal const *terminal = Terminal::downcast(transition.first);
-    Production const *production = reduceIter->first;
+//    Production const *production = reduceIter->first;
 
     switch (terminal->association())
     {
@@ -14,7 +14,7 @@ bool State::solveSRbyAssociation(TransitionMapValue &transition,
         case Terminal::NONASSOC:
         case Terminal::LEFT:
             msg() << indent << "Solved as REDUCE using rule #" << 
-                            production->nr() << ". `" << 
+                            reduceIter->first->nr() << ". `" << 
                             terminal->display() <<
                             "' is left- or non-associative" <<  info;
 

@@ -98,9 +98,11 @@ visible, so no action can be associated with its reduction anyway.
 EXAMPLE=1
 PRE="To run: [cd] + Enter, else skip example"
 
-echo $PRE $EXAMPLE: using the location stack
+echo $PRE $EXAMPLE: a basic calculator
 read RUN
-example location $RUN
+example calcgen $RUN
+
+# ------------------------------
 
 echo $PRE $EXAMPLE: AHO Example 4.42, p. 231
 read RUN
@@ -133,4 +135,8 @@ example simplecalc $RUN
 echo $PRE $EXAMPLE: using the location stack
 read RUN
 example location $RUN
+
+echo $PRE $EXAMPLE: a basic calculator
+read RUN
+example calcgen $RUN
 
