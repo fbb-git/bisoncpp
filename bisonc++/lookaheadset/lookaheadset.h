@@ -44,7 +44,11 @@ class LookaheadSet: public FirstSet
         {
             return !d_EOF && FirstSet::empty();
         }
-    private:
+
+        unsigned fullSize() const
+        {
+            return size() + d_EOF;
+        }
 };
                                 // remove when insert() is virtual
 std::ostream &operator<<(std::ostream &out, LookaheadSet const &LookaheadSet);

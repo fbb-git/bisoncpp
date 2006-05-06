@@ -30,7 +30,8 @@ void State::detectSR(TransitionMap::value_type &transition, SRContext &src)
                     transition.first->display() << ":\n" << 
                     incindent << "to state " << 
                                         transition.second->next() << "\n" <<
-                    indentdec << "or reduce, using " << reduceIter->first << info;
+                    indentdec << "or reduce, using " << reduceIter->first << 
+                                                                        info;
 
     // SR conflicts are solved as follows:
     //  1. The larger priority is selected over a smaller priority

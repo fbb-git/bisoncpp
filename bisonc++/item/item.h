@@ -81,7 +81,8 @@ class Item
 
         void show() const;      // show the rule and dotpos
 
-        static void showKernel(Item const &item); // show a kernel item
+        static void showKernel(Item const &item,
+                                char const *end = ")"); // show a kernel item
 };
 
 #endif

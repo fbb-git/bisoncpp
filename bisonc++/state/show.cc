@@ -27,13 +27,12 @@ void State::show()
         msg() << indent << "By default reduce, using rule " << 
                     d_defaultReduction << info;
 
-    unsigned n_RR = d_rrConflict.size();
     unsigned n_SR = d_srConflict.size();
 
-    if (n_RR)
+    if (d_nRRConflicts)
     {
-        msg() << nlindent << n_RR << " Reduce/Reduce conflict" << 
-                                        (n_RR == 1 ? ":" : "s:") << info;
+        msg() << nlindent << d_nRRConflicts << " Reduce/Reduce conflict" << 
+                                   (d_nRRConflicts == 1 ? ":" : "s:") << info;
         Indent::inc();
         for_each(d_rrConflict.begin(), d_rrConflict.end(), RRConflict::show);
         Indent::dec();

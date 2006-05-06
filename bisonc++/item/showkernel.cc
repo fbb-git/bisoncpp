@@ -1,6 +1,6 @@
 #include "item.ih"
 
-void Item::showKernel(Item const &item)
+void Item::showKernel(Item const &item, char const *end)
 {
     msg() << item.d_production->lhs()->name() << " -> " << spool;
 
@@ -14,6 +14,9 @@ void Item::showKernel(Item const &item)
              item.d_production->end(), 
              &Symbol::displaySymbol);
 
-    msg() << "  Rule " << item.d_production->nr() << ", dot " <<
-                item.d_dot << spool;
+    msg() << info;
+
+    msg() << incindent << "(rule " << item.d_production->nr() << ", dot " <<
+                item.d_dot << end << spool;
+    Indent::dec();
 }

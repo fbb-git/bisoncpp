@@ -1,27 +1,55 @@
 #!/bin/sh
 
-export BISONCPP=../../../tmp/bin/bisonc++
+COMMAND=/bin/sh
+COMMAND="/usr/bin/tcsh -f"
+
+SKEL=../../../share/bisonc++
+BISONCPP="../../../tmp/bin/bisonc++ -B ${SKEL}base.h -C ${SKEL}.h -I ${SKEL}.ih -P ${SKEL}.cc"
 
 example()
 {
-    cd $*
+    let EXAMPLE=$EXAMPLE+1
+    case $2 in
+        ("")
+            CONS=
+            DEB=
+        ;;
+        (c)
+            CONS=--construction
+            DEB=
+        ;;
+        (d)
+            CONS=
+            DEB=--debug
+        ;;
+        (cd|dc)
+            CONS=--construction
+            DEB=--debug
+        ;;
+        (*)
+            return 0
+        ;;
+    esac
+        
+    cd $1
     echo --------------------------------
     cat doc
     echo
     
     bison -v grammar
-    $BISONCPP -V --construction grammar > bisonc++.output
+    $BISONCPP -V $CONS $DEB grammar > bisonc++.construction
 
-        
-    find ./ -type f -not -name grammar -not -name doc \
-                    -not -name grammar.output -not -name bisonc++.output \
+    echo "Entering a shell to inspect the results, use \`exit' to continue"
+    $COMMAND
+            
+    find ./ -type f -not -regex '.*/CVS/.*' -not -name grammar \
+                    -not -name doc \
                     -exec rm '{}' ';'
 
-    echo "bisonc++: `grep Determined bisonc++.output`
---------------------------------
-"
+    echo --------------------------------
     cd ..
 }
+
 
 echo "
     This script feeds several grammars to both bison and bisonc++
@@ -31,10 +59,14 @@ subdirectory, so you could also run one particular example.
 
     From the various test directories, bisonc++ should be accessible as
 
-                $BISONCPP
+$BISONCPP
 
     If that's not true for you, consider changing the BISONCPP variable in
 this script.
+
+    With each example, hitting a plain Enter runs the program, entering c runs
+the example using bisonc++'s --construction option, and d uses
+--debug. Combinations are ok too.
 
     Note that bison always defines one additional state compared with
 bisonc++. Bison accepts its input in a separate state, whereas bisonc++
@@ -45,17 +77,33 @@ visible, so no action can be associated with its reduction anyway.
 
 "
 
-echo Press Enter, else skip to run example 1, AHO Example 4.42, p. 231
-read RUN
-[ "$RUN" == "" ] && example aho4.42
+EXAMPLE=1
+PRE="Press Enter c, d  combi to run, else example $EXAMPLE"
 
-echo Press Enter, else skip, to run example 2, a grammar having 2 R/R conflicts
-read RUN
-[ "$RUN" == "" ] && example rr2
+# echo $PRE: AHO Example 4.42, p. 231
+# read RUN
+# example aho4.42 $RUN
+# 
+# echo #PRE: a plain R/R conflict
+# read RUN
+# example rr1 $RUN
+#
+# echo $PRE: a grammar having 2 R/R conflicts
+# read RUN
+# example rr2 $RUN
+# 
+# echo $PRE: the dangling-else conflict
+# read RUN
+# example danglingelse $RUN
+# 
+# echo $PRE: a grammar not deriving a sentence
+# read RUN
+# example nosentence $RUN
 
-echo Press Enter, else skip, to run example 3, the dangling-else problem
+echo $PRE: a grammar having an error-production
 read RUN
-[ "$RUN" == "" ] && example danglingelse
+example error $RUN
+
 
 
 

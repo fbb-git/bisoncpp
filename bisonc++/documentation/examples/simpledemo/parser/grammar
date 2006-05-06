@@ -1,5 +1,6 @@
+%class-name Parser
+%filenames parser
 %scanner ../scanner/scanner.h
-%baseclass-skeleton opa.h
 
 %token NUMBER
 
@@ -15,9 +16,6 @@
 
 %type<i>
     number
-
-%class-name Parser
-%filenames parser
 
 %%
 
@@ -57,8 +55,3 @@ number:
         $$ = atoi(d_scanner.YYText());
     }
 ;
-
-
-
-
-

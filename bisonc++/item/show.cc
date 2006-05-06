@@ -2,5 +2,5 @@
 
 void Item::show() const
 {
-    showKernel(*this);
+    showKernel(*this, ")");
 }

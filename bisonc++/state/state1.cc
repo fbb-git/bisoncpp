@@ -7,5 +7,6 @@ State::State(unsigned idx)
     d_construct(true),
     d_nTransitions(0),
     d_nTerminalTransitions(0),
+    d_nRRConflicts(0),
     d_defaultReduction(0)
 {}

@@ -15,11 +15,14 @@ void State::compareReductions(ReduceMapValue &first,
     if (intersection.empty())             // no overlap
         return;
 
+    unsigned n = intersection.fullSize();
+
     if (!rrc.headerDisplayed)
     {
         rrc.headerDisplayed = true;
         msg() << "\n"
-                "State " << rrc.idx << ": R/R conflict" << info;
+                "State " << rrc.idx << ": R/R conflict" <<
+                (n == 1 ? "" :"s") << info;
     }
 
     if (!rrc.leftReductionDisplayed)
@@ -74,10 +77,12 @@ void State::compareReductions(ReduceMapValue &first,
         first.second -= intersection;
 
     Indent::dec();
-    msg() << nlindent << "Counted " << conflicts.size() << 
-                " reduce/reduce conflicts" << info;
+    msg() << nlindent << "Found " << n << " reduce/reduce conflict" <<
+                                                (n == 1 ? "" : "s") << info;
 
-    ++s_nReduceReduceConflicts;
+
+    s_state[rrc.idx]->d_nRRConflicts += n;
+    s_nReduceReduceConflicts += n; 
 }
 
 

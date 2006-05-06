@@ -63,6 +63,7 @@ class State
     
         SRConflictVector    d_srConflict;
         RRConflictVector    d_rrConflict;
+        unsigned            d_nRRConflicts;
     
         Production const   *d_defaultReduction;
     
