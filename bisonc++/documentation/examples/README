@@ -27,12 +27,6 @@ annotations: The parser evaluating int and double and mixed type expressions,
 
         Run `build clean' to cleanup, `build demo' to create the program.
 
-calcgen:  A simple calculator. Enter expressions using +, -, *, /, () on a
-        line, and then press Enter. Errors are recovered by skipping to the
-        next newline. Empty lines are ok. Terminate by entering  q
-
-        Run `build clean' to cleanup, `build demo' to create the program.
-
 calculator: the example described in the man-page has moved to
         `man/calculator' 
 
@@ -51,6 +45,14 @@ error:      moved to `regression'
 location:   moved to `regression'
 
 simpledemo: moved to `regression' as the example `simplecalc'
+
+calcgen:  A simple calculator. Enter expressions using +, -, *, /, () on a
+        line, and then press Enter. Errors are recovered by skipping to the
+        next newline. Empty lines are ok. Terminate by entering  q
+
+        Run `build clean' to cleanup, `build demo' to create the program.
+
+
 
 
 
