@@ -1,4 +1,4 @@
-%token IF EXPR ELSE
+%token EXPR ELSE
 
 %%
 
@@ -8,8 +8,4 @@ stmnt:
     EXPR stmnt ELSE stmnt
 |
     EXPR ';'
-;
-
-noused:
-    IF
 ;

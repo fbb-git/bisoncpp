@@ -3,12 +3,13 @@
 COMMAND=/bin/sh
 COMMAND="/usr/bin/tcsh -f"
 
-SKEL=../../../share/bisonc++
-BISONCPP="../../../tmp/bin/bisonc++ -B ${SKEL}base.h -C ${SKEL}.h -I ${SKEL}.ih -P ${SKEL}.cc"
+SKEL=../../../../share/bisonc++
+BISONCPP="../../../../tmp/bin/bisonc++ -B ${SKEL}base.h -C ${SKEL}.h -I ${SKEL}.ih -P ${SKEL}.cc"
 
 example()
 {
-    let EXAMPLE=$EXAMPLE+1
+    let EXAMPLE=${EXAMPLE}+1
+
     case $2 in
         ("")
             CONS=
@@ -30,21 +31,38 @@ example()
             return 0
         ;;
     esac
-        
+
     cd $1
+    cwd=`pwd`
+
     echo --------------------------------
     cat doc
     echo
     
-    bison -v grammar
+    cd parser
     $BISONCPP -V $CONS $DEB grammar > bisonc++.construction
 
-    echo "Entering a shell to inspect the results, use \`exit' to continue"
-    $COMMAND
-            
-    find ./ -type f -not -regex '.*/CVS/.*' -not -name grammar \
-                    -not -name doc \
-                    -exec rm '{}' ';'
+    if [ -s ../demo.cc ] 
+    then
+        cd ../scanner
+        flex -I lexer
+        cd ..
+        g++ -Wall -o demo *.cc */*.cc
+        echo "Entering a shell: \`demo' runs the program, \`exit' returns"
+        echo "Bisonc++'s output is in the \`parser' subdirectory"
+        $COMMAND
+    else        
+        bison -v grammar
+        echo "Entering a shell: inspect the results, use \`exit' to continue"
+        $COMMAND
+    fi
+
+    cd $cwd
+    find ./ -type f -not -regex '.*/CVS/.*' \
+                -not -name doc -not -name demo.cc \
+                -not -name grammar \
+                -not -name lexer -not -name scanner.h -not -name scanner.ih \
+                -exec rm '{}' ';'
 
     echo --------------------------------
     cd ..
@@ -52,21 +70,21 @@ example()
 
 
 echo "
-    This script feeds several grammars to both bison and bisonc++
-With each grammar a summary of its results are shown, and you can select
-whether or not to run the example. Each example is available in a separate
-subdirectory, so you could also run one particular example. 
+    This script feeds several grammars to bisonc++. Some grammars allow you to
+execute a little demo-program. Some examples do not have demo programs. The
+grammars without accompanying demo-program are also fed to bison (the grammars
+used for demo-programs use bisonc++ specific directives, so they're not
+offered to bison to chew upon.
 
-    From the various test directories, bisonc++ should be accessible as
+    From the various test/parser directories, bisonc++ should be accessible as
 
 $BISONCPP
 
     If that's not true for you, consider changing the BISONCPP variable in
 this script.
 
-    With each example, hitting a plain Enter runs the program, entering c runs
-the example using bisonc++'s --construction option, and d uses
---debug. Combinations are ok too.
+    With each example, hitting a plain Enter creates the parser and optionally
+builds the demo-program
 
     Note that bison always defines one additional state compared with
 bisonc++. Bison accepts its input in a separate state, whereas bisonc++
@@ -78,31 +96,35 @@ visible, so no action can be associated with its reduction anyway.
 "
 
 EXAMPLE=1
-PRE="Press Enter c, d  combi to run, else example $EXAMPLE"
+PRE="Press Enter c, d  combi to run, else example"
 
-# echo $PRE: AHO Example 4.42, p. 231
-# read RUN
-# example aho4.42 $RUN
-# 
-# echo #PRE: a plain R/R conflict
-# read RUN
-# example rr1 $RUN
-#
-# echo $PRE: a grammar having 2 R/R conflicts
-# read RUN
-# example rr2 $RUN
-# 
-# echo $PRE: the dangling-else conflict
-# read RUN
-# example danglingelse $RUN
-# 
-# echo $PRE: a grammar not deriving a sentence
-# read RUN
-# example nosentence $RUN
+echo $PRE $EXAMPLE: AHO Example 4.42, p. 231
+read RUN
+example aho4.42 $RUN
 
-echo $PRE: a grammar having an error-production
+echo $PRE $EXAMPLE: $EXAMPLE  plain R/R conflict
+read RUN
+example rr1 $RUN
+
+echo $PRE $EXAMPLE: a grammar having 2 R/R conflicts
+read RUN
+example rr2 $RUN
+
+echo $PRE $EXAMPLE: the dangling-else conflict
+read RUN
+example danglingelse $RUN
+
+echo $PRE $EXAMPLE: a grammar not deriving a sentence
+read RUN
+example nosentence $RUN
+
+echo $PRE $EXAMPLE: a grammar having an error-production
 read RUN
 example error $RUN
+
+echo $PRE $EXAMPLE: a grammar adding two integral values
+read RUN
+example simplecalc $RUN
 
 
 

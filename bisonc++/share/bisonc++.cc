@@ -145,6 +145,14 @@ $insert 4 debug  "Pushed state " << state
 
 void @Base::pop(unsigned count)
 {
+$insert 4 debug "Pop " << count << " elements from stack containing " +
+$insert 4 debug (d_stackIdx + 1)
+    if (d_stackIdx < static_cast<int>(count))
+    {
+$insert 8 debug "Stack underflow, aborting"
+        ABORT();
+    }
+
     d_stackIdx -= count;
     d_state = d_stateStack[d_stackIdx];
     d_vsp = &d_valueStack[d_stackIdx];
@@ -268,13 +276,21 @@ try
     ++d_nErrors;
 
     error("Syntax error");
-$insert 4 debug d_nErrors << " error(s) so far"
+$insert 4 debug d_nErrors << " error(s) so far. State = " << top()
 
     while (s_state[top()][0].d_type != HAS_ERROR_ITEM)
+    {
+$insert 8 debug "pop state " << top()
         pop();
+    }
 
     d_token = _error_;                      // specify _error_ as next token
     push(lookup());                         // push the error state
+
+    // In the error state, lookup a token with which we can proceed.
+    // It may be a reduce, but normally a shift is indicated
+    // If a token is seen which doesn't fit, the catch below will catch the
+    // execption thrown by lookup()
 
     while (true)
     {
@@ -288,13 +304,28 @@ $insert 12 debug "End of input unexpectedly reached"
         }
         try
         {
-            push(lookup());
+            clearin();
+            int action = lookup();
+
+            if (action > 0)                 // push a new state
+            {
+$insert 16 debug "Recovery: push state " << action << ", token cleared "
+                push(action);
+            }
+            else if (action < 0)
+            {
+                executeAction(-action);     // the error's action
+
+                                            // next token is the rule's LHS
+                d_token = reduce(s_productionInfo[-action]); 
+$insert 16 debug "Recovery: reduce by rule " << -action << ", token = " +
+$insert 16 debug symbol(d_token)
+            }
 $insert 12 debug "Error recovery successful"
             return;
         }
         catch (...)
         {
-            clearin();
         }
     }
 }

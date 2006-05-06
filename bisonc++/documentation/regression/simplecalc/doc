@@ -1,0 +1,9 @@
+This simple calculator adds two integral values. Each expression must be
+terminated by =, for example:
+
+    3 + 5 =
+
+To end the program, enter q
+
+Error recovery is available. When making a syntax error the parser allows you
+to enter another expression

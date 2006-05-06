@@ -1,3 +1,4 @@
+%scanner ../scanner/scanner.h
 %token NR
 
 %%
