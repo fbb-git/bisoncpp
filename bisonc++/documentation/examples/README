@@ -21,15 +21,6 @@ bison++Example.ORG/ The original (unmodified) example provided by Alain
 
         Included as a collector's item only. Doesn't work as-is.
 
-annotations: The parser evaluating int and double and mixed type expressions,
-        as described in the `Concrete Examples' chapter of the C++
-        Annotations. It converts expressions to RPN.
-
-        Run `build clean' to cleanup, `build demo' to create the program.
-
-calculator: the example described in the man-page has moved to
-        `man/calculator' 
-
 conflict: Not a running program, but a grammar showing various conflicts and
         the way bisonc++ resolves them. 
 
@@ -40,19 +31,15 @@ input:   a simple parser reading numbers or names following a prompt. Enter
 
         Run `build clean' to cleanup, `build demo' to create the program.
 
-error:      moved to `regression'
 
-location:   moved to `regression'
-
-simpledemo: moved to `regression' as the example `simplecalc'
-
-calcgen:  A simple calculator. Enter expressions using +, -, *, /, () on a
-        line, and then press Enter. Errors are recovered by skipping to the
-        next newline. Empty lines are ok. Terminate by entering  q
-
-        Run `build clean' to cleanup, `build demo' to create the program.
-
-
-
-
-
+annotations:    moved to `regression'
+                
+calculator:     moved to `regression', also available in `man/calculator'
+                
+error:          moved to `regression'
+                
+location:       moved to `regression'
+                
+simpledemo:     moved to `regression' as the example `simplecalc'
+                
+calcgen:        moved to `regression'
