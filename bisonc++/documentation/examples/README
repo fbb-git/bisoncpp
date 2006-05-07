@@ -15,12 +15,13 @@ bison++Example.ORG/ The original (unmodified) example provided by Alain
 
         Included as a collector's item only. Doesn't work as-is.
 
-input:  removed. The example serves no additional purpose.
+input:      removed. The example serves no additional purpose.
+calcgen:    removed. The example serves no additional purpose.
 
 annotations:    moved to `regression'
-calcgen:        moved to `regression'
 calculator:     moved to `regression', also available in `man/calculator'
 conflict:       moved to `regression'
 error:          moved to `regression'
 location:       moved to `regression'
 simpledemo:     moved to `regression' as the example `simplecalc'
+

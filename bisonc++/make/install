@@ -45,7 +45,7 @@ echo "  installing examples"
 req mkdir -p $1$DOC/examples
 req cp -r documentation/examples $1$DOC
 req cp -r documentation/man/calculator $1$DOC/examples
-req cp -r documentation/regression $1$DOC/examples
+req cp -r documentation/regression $1$DOC
 
 echo "  installing manual"
 req cp -r tmp/manual $1$DOC
