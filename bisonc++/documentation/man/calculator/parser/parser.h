@@ -1,17 +1,17 @@
-#ifndef Calculator_h_included
-#define Calculator_h_included
+#ifndef Parser_h_included
+#define Parser_h_included
 
 // for error()'s inline implementation
 #include <iostream>
 
-// $insert baseclass
-#include "calculatorbase.h"
 // $insert scanner.h
 #include "../scanner/scanner.h"
 
+// $insert baseclass
+#include "parserbase.h"
+#undef Parser
 
-#undef Calculator
-class Calculator: public CalculatorBase
+class Parser: public ParserBase
 {
     // $insert scannerobject
     Scanner d_scanner;
@@ -42,15 +42,14 @@ class Calculator: public CalculatorBase
             return d_scanner.yylex();
         }
 
-        void print()    // d_token, d_lloc (?)
+        void print()    // d_token, d_loc 
         {}
 
     // support functions for parse():
-
-        void executeAction(int d_production);
-        unsigned errorRecovery();
-        int lookup(int token);
-        int nextToken();
+        void executeAction(int ruleNr);
+        void errorRecovery();
+        int lookup();
+        void nextToken();
 };
 
 

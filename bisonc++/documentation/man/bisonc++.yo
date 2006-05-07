@@ -815,8 +815,8 @@ following files from its skeletons:
     itemization(
     it() The parser's base class, which is not modified by the programmer at
 all: 
-        verbinclude(calculator/parser/calculatorbase.h)
-    it() The parser class tt(calculator.h) itself. In the grammar
+        verbinclude(calculator/parser/parserbase.h)
+    it() The parser class tt(parser.h) itself. In the grammar
 specification various member functions are used (e.g., bf(done())) and
 bf(prompt()). These functions are so small that they can very well be
 implemented inline. Note that bf(done()) calls bf(ACCEPT()) to terminate
@@ -825,19 +825,19 @@ called from any member called by bf(parse()). As a consequence, action blocks
 could contain mere function calls, rather than several statements, thus
 minimizing the need to rerun bic() when an action is modified.
 
-    Once bic() had created bf(calculator.h) it was augmented with the required
+    Once bic() had created bf(parser.h) it was augmented with the required
 additional members, resulting in the following final version:
-        verbinclude(calculator/parser/calculator.h)
+        verbinclude(calculator/parser/parser.h)
     it() To complete the example, the following lexical scanner specification
 was used:
         verbinclude(calculator/scanner/lexer)
     it() Since no member functions other than bf(parse()) were defined in
-separate source files, only bf(parse()) includes bf(calculator.ih). Since
+separate source files, only bf(parse()) includes bf(parser.ih). Since
 bf(cerr) and bf(endl) are used in the grammar's actions, a tt(using namespace
 std) or comparable statement is required. This was effectuated from
-bf(calculator.ih) Here is the implementation header declaring the standard
+bf(parser.ih) Here is the implementation header declaring the standard
 namespace:
-        verbinclude(calculator/parser/calculator.ih)
+        verbinclude(calculator/parser/parser.ih)
     The implementation of the parsing member function bf(parse()) is basically
 irrelevant, since it should not be modified by the programmer. It was written
 on the file tt(parse.cc).
@@ -847,8 +847,8 @@ on the file tt(parse.cc).
 
 manpagesection(USING PARSER-CLASS SYMBOLS IN LEXICAL SCANNERS)
 
-        Note here that although the file bf(calculatorbase.h), defining the
-parser class' base-class, rather than the header file bf(calculator.h)
+        Note here that although the file bf(parserbase.h), defining the
+parser class' base-class, rather than the header file bf(parser.h)
 defining the parser class is included, the lexical scanner may simply return
 tokens of the class bf(Calculator) (e.g., bf(Calculator::NUMBER) rather than
 bf(CalculatorBase::NUMBER)). In fact, using a simple bf(#define - #undef)

@@ -1,5 +1,6 @@
 #!/bin/sh
 
+
 if [ "$1" == "clean" ] ; then
     rm -f parse.cc MyParserbase.h a.out
 else

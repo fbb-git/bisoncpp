@@ -1,3 +1,14 @@
+Upgrade to 1.00
+New tail of generated parser.h files:
+
+    // support functions for parse():
+        void executeAction(int ruleNr);
+        void errorRecovery();
+        int lookup();
+        void nextToken();
+
+
+Reconsider and rewrite:
 
 THESE CHANGES HAVE NOT YET BEEN INCORPORATED IN A NEW DEBIAN VERSION
 

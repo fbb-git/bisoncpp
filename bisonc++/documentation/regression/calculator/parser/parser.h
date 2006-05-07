@@ -1,25 +1,36 @@
-#ifndef MyParser_h_included
-#define MyParser_h_included
+#ifndef Parser_h_included
+#define Parser_h_included
 
 // for error()'s inline implementation
 #include <iostream>
 
-// $insert baseclass
-#include "MyParserbase.h"
 // $insert scanner.h
-#include "MyScanner.h"
+#include "../scanner/scanner.h"
 
+// $insert baseclass
+#include "parserbase.h"
+#undef Parser
 
-#undef MyParser
-class MyParser: public MyParserBase
+class Parser: public ParserBase
 {
     // $insert scannerobject
-    MyScanner d_scanner;
+    Scanner d_scanner;
         
     public:
         int parse();
 
     private:
+        void prompt()
+        {
+            std::cout << "? " << std::flush;
+        }
+
+        void done()
+        {
+            std::cout << "Done\n";
+            ACCEPT();
+        }
+
         void error(char const *msg)
         {
             std::cerr << msg << std::endl;
@@ -31,7 +42,7 @@ class MyParser: public MyParserBase
             return d_scanner.yylex();
         }
 
-        void print()    // d_token, d_loc
+        void print()    // d_token, d_loc 
         {}
 
     // support functions for parse():

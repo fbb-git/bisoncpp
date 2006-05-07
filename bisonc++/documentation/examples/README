@@ -1,18 +1,12 @@
-Examples, how to use them and what they do:
-
-Some examples call bisonc++ from the tmp/bin directory. Thus they can be run
-after executing make/program. The `build' scripts in which this happens also
-have a standard BISONC definition, calling bisonc++ from its standard
-location. Bij commenting out the BISONC definition calling tmp/bin/bisonc++
-the standard bisonc++ can be called.
-
 Most examples available before version 1.00 are now in the ../regression
 directory, where they are most easily used by runnning the `run' script.
+
+This directory is kept for historical reasons only.
 
 bison++Example.NEW: The original example provided by Alain Coetmeur.
 
         compile by running `make'
-        The program can be run by having it read test1.txt or test2.txt from
+        The program can be run by having it read test.txt or test2.txt from
         its stdin.
         It has no other purpose (as far as I can see).
 
@@ -21,22 +15,12 @@ bison++Example.ORG/ The original (unmodified) example provided by Alain
 
         Included as a collector's item only. Doesn't work as-is.
 
-input:   a simple parser reading numbers or names following a prompt. Enter
-        ^D (or a syntactical error) to stop the program.
-
-        Run `build clean' to cleanup, `build demo' to create the program.
-
+input:  removed. The example serves no additional purpose.
 
 annotations:    moved to `regression'
-                
-conflict:       moved to `regression'
-                
-calculator:     moved to `regression', also available in `man/calculator'
-                
-error:          moved to `regression'
-                
-location:       moved to `regression'
-                
-simpledemo:     moved to `regression' as the example `simplecalc'
-                
 calcgen:        moved to `regression'
+calculator:     moved to `regression', also available in `man/calculator'
+conflict:       moved to `regression'
+error:          moved to `regression'
+location:       moved to `regression'
+simpledemo:     moved to `regression' as the example `simplecalc'

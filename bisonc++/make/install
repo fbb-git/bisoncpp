@@ -45,6 +45,7 @@ req cp -r documentation/{html,bison.ps.org} $1$DOC/bison-docs
 req mkdir -p $1$DOC/examples
 req cp -r documentation/examples $1$DOC
 req cp -r documentation/man/calculator $1$DOC/examples
+req cp -r documentation/regression $1$DOC/examples
 
     # manual
 req cp -r tmp/manual $1$DOC

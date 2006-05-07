@@ -29,7 +29,7 @@ $insert 8 lex
         {}
 
     // support functions for parse():
-        void executeAction(int d_production);
+        void executeAction(int ruleNr);
         void errorRecovery();
         int lookup();
         void nextToken();

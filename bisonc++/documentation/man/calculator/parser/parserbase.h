@@ -1,5 +1,5 @@
-#ifndef CalculatorBase_h_included
-#define CalculatorBase_h_included
+#ifndef ParserBase_h_included
+#define ParserBase_h_included
 
 #include <vector>
 
@@ -10,7 +10,7 @@ namespace // anonymous
 }
 
 
-class CalculatorBase
+class ParserBase
 {
     public:
 // $insert tokens
@@ -18,7 +18,7 @@ class CalculatorBase
     // Symbolic tokens:
     enum Tokens
     {
-        NUMBER = 260,
+        NUMBER = 257,
         EOLN,
         UNARY,
     };
@@ -45,11 +45,12 @@ class CalculatorBase
         bool        d_debug;
         unsigned    d_nErrors;
         int         d_token;
+        int         d_nextToken;
         unsigned    d_state;
         STYPE      *d_vsp;
         STYPE       d_val;
 
-        CalculatorBase();
+        ParserBase();
 
         void ABORT() const throw(Return);
         void ACCEPT() const throw(Return);
@@ -69,13 +70,13 @@ class CalculatorBase
         }
         unsigned top() const;
 
-// class CalculatorBase ends
+// class ParserBase ends
 };
 
 
 // As a convenience, when including ParserBase.h its symbols are available as
 // symbols in the class Parser, too.
-#define Calculator CalculatorBase
+#define Parser ParserBase
 
 
 #endif

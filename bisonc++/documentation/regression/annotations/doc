@@ -1,0 +1,19 @@
+This example is found in the C++ Annotations, available from
+
+                      http://www.icce.rug.nl/documents/
+
+The example defines a calculator accepting mixed-expressions (int and double
+operands). It focuses on the mixed-type operands, and converts the expressions
+to Reversed Polish Notation (HP-calculator type) expressions. Only the +, the
+*, the unary - and nested expressions are implemented. 
+
+Expression values are printed as cut-off integral values. Internally,
+double-arithmetic is used.
+
+Enter one expression per line. 
+
+Error recovery is provided by skipping all information on one line when a
+syntax error is encountered.
+
+Enter an empty line to terminate the program.
+

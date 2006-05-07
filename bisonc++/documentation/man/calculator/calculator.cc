@@ -1,7 +1,7 @@
-#include "parser/calculator.h"
+#include "parser/parser.h"
 
 int main()
 {
-    Calculator calculator;
+    Parser calculator;
     return calculator.parse();
 }
