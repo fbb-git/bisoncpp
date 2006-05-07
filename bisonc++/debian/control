@@ -7,7 +7,7 @@ Standards-Version: 3.6.1
 
 Package: bisonc++
 Architecture: any
-Depends: ${shlibs:Depends}, bobcat (>= 1.6.0)
+Depends: ${shlibs:Depends}, bobcat (>= 1.7.0)
 Suggests: bison
 Description: Bison-style parser generator for C++ 
  Bisonc++ was designed after `bison++' by Alain Coetmeur. Bisonc++ adds to 
