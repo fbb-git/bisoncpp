@@ -23,11 +23,14 @@ void State::define(Production const *startProduction)
     Indent::clear();
                                                 // define the Lookaheads of
                                                 // all states
+    msg() << "\nDEFINING LOOK-AHEAD SETS" << info;
+
     startState.defineLookaheads(LookaheadSet(true));
 
                                                 // define actions, reductions
                                                 // and gotos
     State::defineActions();
 }
+
 
 

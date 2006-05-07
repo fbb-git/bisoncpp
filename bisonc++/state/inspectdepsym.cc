@@ -5,7 +5,8 @@
     //
 void State::inspectDepSym(Symbol const *depSym, State &state)
 {
-    msg() << indent << "Transitions on " << depSym->display() << info;
+    msg() << nlindent << "Transitions on " << depSym->display() << ":" << 
+                                                                    info;
 
     for_each
     (

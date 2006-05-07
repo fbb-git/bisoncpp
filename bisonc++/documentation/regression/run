@@ -45,6 +45,7 @@ example()
     cwd=`pwd`
 
     echo --------------------------------
+    echo
     cat doc
     echo
     echo --------------------------------
@@ -68,7 +69,9 @@ example()
     fi
 
     cd $cwd
-    find ./ -type f -not -regex '.*/CVS/.*' \
+
+        # the doc-test is a safequard agains accidentally removing files
+    [ -s doc ] && find ./ -type f -not -regex '.*/CVS/.*' \
                 -not -regex '.*/_.*' \
                 -not -name doc -not -name demo.cc \
                 -not -name grammar -not -name parser.h -not -name parser.ih \
@@ -108,7 +111,6 @@ visible, so no action can be associated with its reduction anyway.
 EXAMPLE=1
 PRE="To run: [cd] + Enter, else skip example"
 
-
 echo $PRE $EXAMPLE: AHO Example 4.42, p. 231
 read RUN
 example aho4.42 $RUN
@@ -144,10 +146,6 @@ example simplecalc $RUN
 echo $PRE $EXAMPLE: using the location stack
 read RUN
 example location $RUN
-
-echo $PRE $EXAMPLE: a basic calculator
-read RUN
-example calcgen $RUN
 
 echo $PRE $EXAMPLE: the man-page calculator
 read RUN

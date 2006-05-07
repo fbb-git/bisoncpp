@@ -12,14 +12,21 @@ void State::expandLookaheads(Symbol const *lhs, LookaheadSet const &la)
     LookaheadSet &lhsLA = transition.lookaheadSet();
 
     if (lhsLA >= la)    // no new items in lhs.la
+    {
+        msg() << "LA-set not altered" << info;
         return;
+    }
 
     d_construct = true;
 
-    msg() << indent << "Expanding LA(" << lhs->display() << ") from " <<
-                    lhsLA << " to " << spool;
+    msg() << info;
+    msg() << incindent << "expanding LA(" << 
+                    lhs->display() << ") from\n" <<
+                    incindent << lhsLA << "\n" << decindent << " to " << spool;
+
     lhsLA += la;            // define LA(lhs)
     msg() << lhsLA << info;
+    Indent::dec();
 
     if (transition.influenceSize())
     {
@@ -29,12 +36,9 @@ void State::expandLookaheads(Symbol const *lhs, LookaheadSet const &la)
         // Determine the LAs of all its dependent symbols (e.g., S, R)
         // 
 
-        Indent::inc();    
-
         for_each(transition.influenceBegin(), transition.influenceEnd(),
             Wrap1c<Symbol, State>(inspectDepSym, *this));
 
-        Indent::dec();
-        msg() << info;
+        msg() << "\n" << info;
     }
 }

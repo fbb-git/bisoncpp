@@ -41,6 +41,7 @@ namespace
         Arg::LongOption("no-lines"),
         Arg::LongOption("scanner", 's'),
         Arg::LongOption("show-filenames"),
+        Arg::LongOption("usage", 'h'),
         Arg::LongOption("version", 'v'),
         Arg::LongOption("verbose", 'V'),
     };

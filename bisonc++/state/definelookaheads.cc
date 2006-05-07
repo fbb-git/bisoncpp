@@ -5,8 +5,8 @@
 void State::defineLookaheads(LookaheadSet const &la) 
 {
     msg() << nlindent <<
-            "State " << d_idx << ": inspecting kernel items. LA: " << 
-            la << info;
+            "Inspecting kernel items of state " << d_idx << ".\n"
+            "Current LA-set: " << la << info;
 
         // current state and provided LA
         //

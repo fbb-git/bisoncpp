@@ -14,7 +14,7 @@ cd bisonc++
 mkdir -p flex
 cp /usr/include/FlexLexer.h flex
 
-make/clean
+make/distclean
 
 ../usage > documentation/manual/invoking/usage
 

@@ -16,7 +16,8 @@ then
     exit 0
 fi
 
-req rm -rf parser/SKEL tmp/{bin,o} o */o libbisonc++.a release.yo
+req rm -rf parser/SKEL tmp/{bin,o} o */o release.yo
+req rm -rf libbisonc++.a
 req cd documentation
 req rm -rf man/*.{1,html} 
 req rm -rf manual/manual-stamp manual/*.html manual/invoking/usage bisonc++

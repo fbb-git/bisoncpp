@@ -352,6 +352,9 @@ arguments if their associated long options require arguments as well.
     it() loption(show-filenames)nl() 
            Write the names of the files that are generated to the 
             standard error stream.
+    it() loption(usage)nl()
+            Write basic usage information to the standard output stream and
+            terminate. 
     it() loption(verbose) (soption(V))nl() 
            Write a file containing verbose descriptions of
             the parser states and what is done for each type of look-ahead

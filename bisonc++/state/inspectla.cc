@@ -5,12 +5,13 @@
 
 void State::inspectLA(Item &item, State &state)
 {
-    Indent::inc();
     LookaheadSet laDot = 
         item.lookaheadFromDot(state.d_transition[item.lhs()]->lookaheadSet());
 
-    msg() << indent << "Inspecting productions of `" << 
-                    item.symbolBeforeDot()->display() << "'" << info;
+    msg() << nlindent << "Transition to " << spool;
+    item.show();
+    msg() << nlindent << "Inspecting productions of `" << 
+                    item.symbolBeforeDot()->display() << "': " << spool;
+
     state.expandLookaheads(item.symbolBeforeDot(), laDot);
-    Indent::dec();
 }
