@@ -40,7 +40,11 @@ bisonc++ (1.00) unstable; urgency=low
             int lookup();
             void nextToken();
     
-    Please note that this version depends on bobcat 1.7.0 or beyond.
+    Please note that this version depends on bobcat 1.7.0 or beyond. If you
+    compile bobcat yourself, then you may want to know that bobcat's Milter
+    and Xpointer classes are not used by bisonc++, so they could optionally be
+    left out of bobcat's compilation.
+
 
  -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun,  7 May 2006 15:10:05 +0200
 
