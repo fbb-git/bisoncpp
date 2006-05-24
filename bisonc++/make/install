@@ -27,15 +27,15 @@ req cp share/* $1$SKEL
 
 echo "  installing the manual page bisonc++.1"
 req mkdir -p $1$MAN
-reqeval "gzip < tmp/man/bisonc++.1 > $1$MAN/bisonc++.1.gz"
+reqeval "gzip -9 < tmp/man/bisonc++.1 > $1$MAN/bisonc++.1.gz"
 
 echo "  installing the manual page bisonc++man.html"
 req mkdir -p $1$DOC/man
 req cp tmp/manhtml/bisonc++man.html $1$DOC/man
 
 echo "  installing the information directly in and under $DOC"
-    # COPYING
-reqeval "gzip < COPYING > $1$DOC/COPYING.gz"
+#     # COPYING
+# reqeval "gzip -9 < COPYING > $1$DOC/COPYING.gz"
 
 echo "  installing bison's docs"
 req mkdir -p $1$DOC/bison-docs
