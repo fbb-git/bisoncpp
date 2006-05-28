@@ -18,7 +18,7 @@ bisonc++ (1.00) unstable; urgency=low
     
     At the cosmetic level, the information produced with the --construction
     option was modified, aiming at better legibility of the construction
-    process.
+    process. Also, the debian distribution builds linda- and lintian-clean. 
     
     The `examples' directory was reduced in size, moving most examples to a
     new directory `regression', which now contains a script `run' that can be
@@ -40,7 +40,7 @@ bisonc++ (1.00) unstable; urgency=low
             int lookup();
             void nextToken();
     
-    Please note that this version depends on bobcat 1.7.0 or beyond. If you
+    Please note that this version depends on bobcat 1.7.1 or beyond. If you
     compile bobcat yourself, then you may want to know that bobcat's Milter
     and Xpointer classes are not used by bisonc++, so they could optionally be
     left out of bobcat's compilation.
