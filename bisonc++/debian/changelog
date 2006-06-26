@@ -1,3 +1,13 @@
+bisonc++ (1.01) unstable; urgency=low
+
+  * Synchronized the version back to numbers-only, adapted the debian
+    standards and the required bobcat library in the debian/control file.
+    No implementation changes as compared to the previous version, but I felt 
+    the need to join various sub-sub-versions back to just one standard
+    version. 
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 26 Jun 2006 12:11:15 +0200
+
 bisonc++ (1.00a) unstable; urgency=low
 
   * Debian's Linda and lintian errors, warnings and notes processed. No
