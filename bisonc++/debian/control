@@ -2,9 +2,9 @@ Source: bisonc++
 Section: devel
 Priority: optional
 Maintainer: Frank B. Brokken <f.b.brokken@rug.nl>
-Build-Depends: debhelper (>= 4.0.0), libbobcat1-dev (>= 1.7.0), 
+Build-Depends: debhelper (>= 4.0.0), libbobcat1-dev (>= 1.8.0), 
                g++-4.0 (>= 4.0.3)
-Standards-Version: 3.6.1
+Standards-Version: 3.7.2
 
 Package: bisonc++
 Architecture: i386
