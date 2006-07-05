@@ -181,18 +181,21 @@ class Rules
 
         std::vector<NonTerminal const *> const &nonTerminals() const
         {
+            void const *vp = &d_nonTerminal;
             return *reinterpret_cast<std::vector<NonTerminal const *> const *>
-                   (&d_nonTerminal);
+                   (vp);
         }
         std::vector<Terminal const *> const &terminals() const
         {
-            return *reinterpret_cast<std::vector<Terminal const *> const *>
-                   (&d_terminal);
+            void const *vp = &d_terminal;
+            return 
+                *reinterpret_cast<std::vector<Terminal const *> const *>(vp);
         }
         std::vector<Production const *> const &productions() const
         {
+            void const *vp = &d_production;
             return *reinterpret_cast<std::vector<Production const *> const *>
-                   (&d_production);
+                   (vp);
         }
         void setNonTerminalTypes();
 

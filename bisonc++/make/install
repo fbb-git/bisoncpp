@@ -2,7 +2,6 @@
 
 # Argument 1: optional prefix path to installation paths, e.g., debian/debian
 
-. INSTALL.cf
 . make/parameters
 
 req()

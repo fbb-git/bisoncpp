@@ -75,7 +75,7 @@ class Terminal: public Symbol
             s_priority = 0;
         }
 
-        static bool Terminal::setUnique(unsigned value);    // true if unique
+        static bool setUnique(unsigned value);    // true if unique
         static void unused(Terminal const *terminal);
         static unsigned maxValue()
         {

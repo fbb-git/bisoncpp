@@ -1,6 +1,5 @@
 #!/bin/sh
 
-. INSTALL.cf
 . make/parameters
 
 req()
