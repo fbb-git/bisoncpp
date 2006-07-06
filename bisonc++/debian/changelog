@@ -1,3 +1,19 @@
+bisonc++ (1.02) unstable; urgency=low
+
+  * Following suggestions made by George Danchev, this version was compiled by
+    the unstable's g++ compiler (version >= 4.1), which unveiled several flaws
+    in the library's class header files. These flaws were removed (i.e.,
+    repaired).
+
+    In order to facilitate compiler selection, the compiler to use is defined
+    in the INSTALL.cf file.
+
+    The debian control-files (i.e., all files under the debian subdirectory)
+    were removed from the source distribution, which is now also named in
+    accordance with the Debian policy. A diff.gz file was added.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Thu,  6 Jul 2006 12:41:43 +0200
+
 bisonc++ (1.01) unstable; urgency=low
 
   * Synchronized the version back to numbers-only, adapted the debian
