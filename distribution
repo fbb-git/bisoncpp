@@ -5,7 +5,7 @@ PROJECT=bisoncpp
 # and rerun `distribution'
 # REPAIR=YES
 
-[ -d ${PROJECT} ] || exit 1             # the $PROJECT dir must exist
+[ -d bisonc++ ] || exit 1             # the $PROJECT dir must exist
 
 cvsremove
 
@@ -15,10 +15,8 @@ then
     g++ -o usage usage.cc bisonc++/usage.cc
 fi
 
-cd  ${PROJECT}
+cd  bisonc++
 [ -s VERSION ] || exit 1                # VERSION must exist in $PROJECT
-
-
 
 if [ "$REPAIR" == "" ] 
 then
@@ -39,29 +37,33 @@ fi
 
 
 export BISONCPP=minimal 
-. VERSION                               # load it
-DISTRIBUTION=${PROJECT}-${VERSION}      # define the distribution's dir name
+                                           # load the version
+VERSION=`grep VERSION VERSION | sed 's,#define VERSION \"\([^"]\+\)\",\1,'`
+echo $VERSION
+
+
+DISTRIBUTION=bisonc++-${VERSION}      # define the distribution's dir name
 
 cd ..                                   # change the CVS dir name to the
-mv ${PROJECT} ${DISTRIBUTION}           # distribution's dir name
+mv bisonc++ ${DISTRIBUTION}           # distribution's dir name
 
 
 if [ "$REPAIR" == "" ] 
 then
                                         # create the .orig source tar
-    tar czvf ${PROJECT}_${VERSION}.orig.tar.gz --exclude=debian ${DISTRIBUTION}
+    tar czvf bisonc++_${VERSION}.orig.tar.gz --exclude=debian ${DISTRIBUTION}
 fi
 
 cd ${DISTRIBUTION}                      # now build the distribution
 dpkg-buildpackage -mf.b.brokken@rug.nl  -rfakeroot 2>&1 | tee /tmp/$PROJECT 
 
 cd ..                                   # change the distribution's dir name
-mv ${DISTRIBUTION} ${PROJECT}           # back to the cvs's dir name
+mv ${DISTRIBUTION} bisonc++           # back to the cvs's dir name
 
 cvsrestore
 
 echo LINTIAN ...
-lintian -i ${PROJECT}_${VERSION}_*.changes 
+lintian -i bisonc++_${VERSION}_*.changes 
 
 echo LINDA ...
-linda   -i ${PROJECT}_${VERSION}_*.changes
+linda   -i bisonc++_${VERSION}_*.changes
