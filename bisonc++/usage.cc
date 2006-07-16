@@ -82,7 +82,7 @@ void usage(string const &program_name)
     "   --version (-v):\n"
     "           display " << program_name << "'s version and terminate\n"
 
-    "   --verbose:\n"
+    "   --verbose (-V):\n"
     "           generate verbose description of the analyzed grammar\n" <<
     endl;
 }

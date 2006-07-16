@@ -33,8 +33,6 @@ req mkdir -p $1$DOC/man
 req cp tmp/manhtml/bisonc++man.html $1$DOC/man
 
 echo "  installing the information directly in and under $DOC"
-#     # COPYING
-# reqeval "gzip -9 < COPYING > $1$DOC/COPYING.gz"
 
 echo "  installing bison's docs"
 req mkdir -p $1$DOC/bison-docs

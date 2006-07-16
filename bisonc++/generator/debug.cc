@@ -6,6 +6,10 @@ void Generator::debug(ostream &out) const
         return;
 
     key(out);
+
+    out << "if (d_debug)\n" <<
+        setw(d_indent + 4) << "" << flush;
+
     if (*d_line.rbegin() != '+')
         out <<  "s_out << " << d_line << " << \"\\n\" << dflush;" << endl;
     else
