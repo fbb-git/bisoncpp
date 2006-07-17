@@ -592,7 +592,12 @@ members inherited from the parser's base class.
     it() bf(void Base::clearin+nop()()):nl()
        This member replaces bf(bison)(++)'s macro bf(yyclearin) and causes
         bf(bisonc++) to request another token from its tt(lex+nop()()) member,
-        even if the current token has not yet been processed.
+        even if the current token has not yet been processed. It is a useful
+        member when the parser should be reset to its initial state, e.g.,
+        between successive calls of tt(parse()). In this situation the scanner
+        will probably be reloaded with new information too (in the context of
+        a tt(flex)-generated scanner by, e.g., calling the scanner's
+        tt(yyrestart()) member.
     it() bf(bool Base::debug() const):nl()
        This member returns the current value of the debug variable. See
         bf(setDebug()) below.
