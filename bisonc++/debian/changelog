@@ -10,7 +10,11 @@ bisonc++ (1.03) unstable; urgency=low
     The usage info now correctly shows the -V flag as a synonym for the 
     --verbose option.
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 16 Jul 2006 15:48:39 +0200
+    From now on this file will only reflect Debian-specific changes. See the
+    newly added file Changelog for `upstream' changes. At this point, 
+    Changelog will be a mere copy of debian's changelog file.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Wed, 19 Jul 2006 13:12:39 +0200
 
 bisonc++ (1.02) unstable; urgency=low
 
