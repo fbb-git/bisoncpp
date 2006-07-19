@@ -11,8 +11,8 @@ bisonc++ (1.03-1) unstable; urgency=low
     --verbose option.
 
     From now on this file will only reflect Debian-specific changes. See the
-    newly added file Changelog for `upstream' changes. At this point, 
-    Changelog will be a mere copy of debian's changelog file.
+    newly added file changelog for `upstream' changes. At this point, 
+    changelog will be a copy of debian's changelog file.
 
  -- Frank B. Brokken <f.b.brokken@rug.nl>  Wed, 19 Jul 2006 13:12:39 +0200
 
