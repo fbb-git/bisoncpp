@@ -63,7 +63,7 @@ mv ${DISTRIBUTION} bisonc++           # back to the cvs's dir name
 cvsrestore
 
 echo LINTIAN ...
-lintian -i bisonc++_${VERSION}_*.changes 
+lintian -i bisonc++_${VERSION}*.changes 
 
 echo LINDA ...
-linda   -i bisonc++_${VERSION}_*.changes
+linda   -i bisonc++_${VERSION}*.changes
