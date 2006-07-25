@@ -1,7 +1,7 @@
 To create a new debian package:
 
     0. Do
-        setenv DEBEMAIL f.b.brokken@rug.nl
+        setenv DEBEMAIL "Frank B. Brokken <f.b.brokken@rug.nl>"
 
     1. Keep the bisonc++/ name
     

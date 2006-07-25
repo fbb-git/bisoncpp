@@ -1,3 +1,9 @@
+bisonc++ (1.4.0-1) unstable; urgency=low
+
+  * See changelog.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri, 21 Jul 2006 16:48:57 +0200
+
 bisonc++ (1.03-1) unstable; urgency=low
 
   * License changed to the GNU GENERAL PUBLIC LICENSE. See the file

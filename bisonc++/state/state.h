@@ -4,6 +4,8 @@
 #include <vector>
 #include <map>
 
+#include <bobcat/msg>
+
 #include "../item/item.h"
 #include "../lookaheadset/lookaheadset.h"
 
@@ -198,6 +200,10 @@ class State
         static bool findTerminal(ReduceMapValue const &rmap, 
                                  Symbol &terminal) 
         {
+            // tmp included bobcat/msg
+            FBB::msg() << "Comparing " << terminal.display() << " to " << 
+                    rmap.first << FBB::info;
+
             return rmap.second.count(&terminal);
         }
 

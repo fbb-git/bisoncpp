@@ -19,6 +19,8 @@ example()
 {
     let EXAMPLE=${EXAMPLE}+1
 
+    orgdir=`pwd`
+
     case $2 in
         ("")
             CONS=
@@ -78,7 +80,7 @@ example()
                 -not -name lexer -not -name scanner.h -not -name scanner.ih \
                 -exec rm '{}' ';'
 
-    cd ..
+    cd $orgdir
 }
 
 
@@ -114,10 +116,6 @@ PRE="To run: [cd] + Enter, else skip example"
 echo $PRE $EXAMPLE: AHO Example 4.42, p. 231
 read RUN
 example aho4.42 $RUN
-
-echo $PRE $EXAMPLE: a plain R/R conflict
-read RUN
-example rr1 $RUN
 
 echo $PRE $EXAMPLE: two R/R conflicts
 read RUN

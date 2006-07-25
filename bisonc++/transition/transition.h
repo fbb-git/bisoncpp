@@ -27,7 +27,6 @@ class Transition
     typedef std::set<Symbol const *>::const_iterator InfluenceConstIterator;
 
     public:
-    
         Transition()
         :
             d_next(UINT_MAX),

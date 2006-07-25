@@ -1,3 +1,22 @@
+bisonc++ (1.4.0)
+
+  * It turned out that in the previous versions, S/R conflicts were also
+    produced for empty default reductions. Now detectSR() checks whether there
+    is one empty reduction. If so, no S/R conflicts are possible in that
+    state. Instead a SHIFT (which is already the default solution of a S/R
+    conflict) is performed in these situations. So, now for all
+    tokens for which a known continuation state exist the known continuation
+    state is selected; for all other tokens the default reduction (reducing to
+    its associated state) is selected. See state/detectsr.cc for details.
+    
+    Since the above change also represents a change of algorithm, the
+    subversion was incremented. I added a sub-subversion to have a separate
+    level of version-numbers for minor modifications.
+
+    The documentatino/regression/run script did not properly return to its
+    initial working directory, and it called a test that no longer
+    existed. Both errors have been repaired.
+
 bisonc++ (1.03-1) unstable; urgency=low
 
   * License changed to the GNU GENERAL PUBLIC LICENSE. See the file

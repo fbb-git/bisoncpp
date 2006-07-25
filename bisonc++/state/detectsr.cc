@@ -5,9 +5,33 @@ void State::detectSR(TransitionMap::value_type &transition, SRContext &src)
     if (transition.first->isNonTerminal())
         return;                             // no SR conflict with N symbols
 
+    // At this point, a possible default reduction has not yet been
+    // determined. If existing, it is determined in `defineStateActions()'  
+    // Therefore, a possible default reduction is determined here by simply
+    // inspecting the size and contents of d_reduce. If it has but one
+    // reduction and if that reduction is empty, it will become the default
+    // reduction, and no shift-reduce conflict will result from it.
+
+    // In defineStateActions() the d_reduce array may be erased when
+    // d_defaultReduce is determined. Maybe this part of the algorithm can be
+    // put before determineShiftReduceConflicts(), so we can test
+    // d_defaultReduction here directly?
+
+
+    if (src.state.d_reduce.size() == 1 && 
+            src.state.d_reduce.begin()->first->empty())
+    {
+        msg() << "\nNo S/R conflict because of single (empty) reduction:\n" <<
+                src.state.d_reduce.begin()->first << info;
+        return;
+    }
+        
         // RR conflicts have already been solved, so any T symbol is used at
-        // most once in a reductions. Consequently, a single find can be used
-        // to detect a S/R conflict for a given T-symbol
+        // most once in a reduction. Consequently, a single find can be used
+        // to detect a S/R conflict for a given T-symbol. 
+        // 
+        // A S/R conflict occurs if the rule's continuation T also appears in
+        // the LA set of a rule that can be reduced.
         //
     ReduceMapIterator reduceIter =
         find_if(src.state.d_reduce.begin(), src.state.d_reduce.end(), 
