@@ -1,0 +1,46 @@
+string BASE;
+
+    // BASE=is the directory below which ALL bisonc++ files will be stored.
+
+    // For an operational non-Debian installation, you probably must be
+    // `root', and BASE "/usr" or BASE "/usr/local" is suggested (see
+    // below). `BASE' itself is not used outside of this file, so feel free to
+    // define BIN, SKEL, MAN and DOC (below) in any which way you like.
+
+string BIN;
+    // the directory in which bisonc++ will be stored
+
+string SKEL;
+    // SKEL is the directory below BASE in which the skeleton files will be
+    // stored
+
+string MAN;
+    // MAN is the directory in which the manual page will be stored
+
+string DOC;
+    // DOC is the directory in which all other documentation will be stored
+
+string COMPILER;
+    // COMPILER specifies the compiler to use. Bisonc++ is coined as
+    // belonging to the Debian `unstable' distribution, which may use a
+    // different version of the compiler you currently have in your
+    // system. E.g., in july 2006 the Debian `testing' version of the compiler
+    // was 4.0.4, but the `unstable' version's compiler was 4.1.2. By defining
+    // COMPILER as COMPILER=g++-4.1 (i.e., keeping the next definition of
+    // `COMPILER') the 4.1.x version of the compiler is used (of course,
+    // it must have been installed in your system as well). If you want to use
+    // your `standard' C++ compiler, simply use "g++" (see below)
+
+void setLocations()
+{
+    BASE  = "/usr";
+
+    BIN  = BASE + "/bin";
+    SKEL = BASE + "/share/bisonc++";
+    MAN  = BASE + "/share/man/man1";    
+    DOC  = BASE + "/share/doc/bisonc++";
+
+    // COMPILER = "g++";
+    COMPILER = "g++-4.1";
+}
+
