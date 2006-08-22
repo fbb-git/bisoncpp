@@ -23,14 +23,17 @@ class Item
 
             // see State::beforeDot() to read why this function is only called
             // when d_dot > 0
-        bool beforeDot(Symbol const &symbol) const
-        {
-            return d_production->at(d_dot - 1) == &symbol;
+        Symbol const *dotSymbol() const         // symbol at the dot (must 
+        {                                       // exist!)
+            return &(*d_production)[d_dot];
         }
 
-        Symbol const *dotSymbol() const      // symbol at the dot
-        {
-            return &(*d_production)[d_dot];
+        Symbol const *dotSymbolOr0() const      // symbol at the dot or 0
+        {                                       // if dot at end of production
+            return d_dot == d_production->size() ?
+                        0
+                    :
+                        dotSymbol();
         }
 
         Symbol const *symbolBeforeDot() const      // symbol before the dot
@@ -42,10 +45,7 @@ class Item
         {
             return d_dot;
         }
-        static bool ifBeforeDot(Item const &item, Symbol const &symbol) 
-        {
-            return item.beforeDot(symbol);
-        }
+
         Item incDot() const
         {
             return Item(this, d_dot + 1);

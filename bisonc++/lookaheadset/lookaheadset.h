@@ -23,6 +23,12 @@ class LookaheadSet: public FirstSet
                         // true if *this contains other, 
                         // i.e., true if other has no new elements
         bool operator>=(LookaheadSet const &other) const;
+
+                        //  true if `symbol' is found in *this
+        bool operator>=(Symbol const *symbol) const
+        {
+            return find(symbol) != end();
+        }
         bool operator<(LookaheadSet const &other) const
         {
             return not (*this >= other);

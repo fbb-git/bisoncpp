@@ -1,7 +1,9 @@
 #include "state.ih"
 
+// bool State::solveSRbyAssociation(TransitionMapValue &transition, 
+//                               SRContext &src, ReduceMapIterator &reduceIter)
 bool State::solveSRbyAssociation(TransitionMapValue &transition, 
-                              SRContext &src, ReduceMapIterator &reduceIter)
+                              SRContext2 &src)
 {
     Terminal const *terminal = Terminal::downcast(transition.first);
 
@@ -13,7 +15,10 @@ bool State::solveSRbyAssociation(TransitionMapValue &transition,
         case Terminal::NONASSOC:
         case Terminal::LEFT:
             msg() << indent << "Solved as REDUCE using rule #" << 
-                            reduceIter->first->nr() << ". `" << 
+
+//                            reduceIter->first->nr() << ". `" << 
+                            src.reduction->first->nr() << ". `" << 
+
                             terminal->display() <<
                             "' is left- or non-associative" <<  info;
 
@@ -28,7 +33,8 @@ bool State::solveSRbyAssociation(TransitionMapValue &transition,
                 "' is right-associative" << info;
 
                                                 // don't reduce on terminal
-            reduceIter->second -= terminal;
+            src.reduction->second -= terminal;
+//            reduceIter->second -= terminal;
         break;
     }
     return true;

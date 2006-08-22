@@ -1,5 +1,5 @@
 NOUSERMACRO(yyparse parse lex yylex error setDebug ParserBase throw ACCEPT
-        ABORT errok RECOVERING print done prompt Parse 
+        ABORT errok RECOVERING print done prompt Parse yyrestart
         debug setSval setLoc)
 
 includefile(../../release.yo)

@@ -1,0 +1,45 @@
+#!/usr/bin/icmake -qt/tmp/bisonc++
+
+#include "INSTALL.im"
+
+#include "icmake/run"
+#include "icmake/md"
+#include "icmake/getenv"
+#include "icmake/clean"
+#include "icmake/program"
+#include "icmake/install"
+
+void main(int argc, list argv, list envp)
+{
+    string option;
+
+    g_env = envp;
+
+    setLocations();     // from INSTALL.im
+
+    getenv("DRYRUN");
+    g_dryrun = g_envvar;
+
+    option = element(1, argv);
+
+    if (option == "clean")
+        clean();
+
+    if (option == "program")
+        program();
+
+    if (option == "install")
+        install(element(2, argv));
+
+    printf("Usage: build what\n"
+        "Where `what' is one of:\n"
+        "   clean           - clean up remnants of previous compilations\n"
+        "   program         - build bisonc++\n"
+        "   install <base>  - to install the software in the locations\n"
+        "                     defined in the INSTALL.cf file, optionally\n"
+        "                     below <base>\n"
+        "If the environment variable DRYRUN is defined, no commands are\n"
+        "actually executed\n"
+    );
+    exit(1);
+}

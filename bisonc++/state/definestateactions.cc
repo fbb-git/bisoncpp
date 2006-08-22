@@ -3,7 +3,7 @@
     // Initally, the state holding S* -> S . was set to the accepting state.
     //
     // Next, multiple reductions are inspected for R/R conflicts. For
-    // overlapping characters in their LAsets de conflict is solved:
+    // overlapping characters in their LAsets the conflict is solved:
     // Reduction to rule A is preferred over reduction to rule B if
     //  1. priority(A) > priority(B)        (explicitly defined priorities)
     //  2. rule A was defined earlier in the grammar. This is the default
@@ -12,8 +12,14 @@
     // reduction. 
     // 
     // Then, all terminal characters for which transitions are defined are
-    // searched in the reduction LA-sets. If found:
-    //  reduce is preferred over reduce if:
+    // searched in the reduction LA-sets. 
+
+// Note: this is not as it should be. It should be: all terminal characters
+// which are at the dot-positions of the state's production rules are searched
+// in the reduction's LA-sets. 
+
+    // If such characters are found:
+    //  reduce is preferred over shift if:
     //      the pri. of the reduction exceeds the priority of the shift
     //      the priorities are equal, but the association is left
     // In the opposite situation, shift is preferred (pri(R) < pri(S), or

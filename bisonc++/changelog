@@ -13,9 +13,18 @@ bisonc++ (1.4.0)
     subversion was incremented. I added a sub-subversion to have a separate
     level of version-numbers for minor modifications.
 
-    The documentatino/regression/run script did not properly return to its
+    The documentation/regression/run script did not properly return to its
     initial working directory, and it called a test that no longer
     existed. Both errors have been repaired.
+
+    Some leftover references to the Academic Free License were replaced by
+    references to the GPL.
+
+    The scripts below make/ should be considered obsolete: I reverted back to
+    using icmake, which is available on a great many architectures. See the
+    file INSTALL (and INSTALL.im, rather than INSTALL.cf) for further details.
+    For the time being the make/ directory and its files will be
+    kept. However, they may be removed in a future release.
 
 bisonc++ (1.03-1) unstable; urgency=low
 

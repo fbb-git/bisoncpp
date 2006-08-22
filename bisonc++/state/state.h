@@ -4,8 +4,6 @@
 #include <vector>
 #include <map>
 
-#include <bobcat/msg>
-
 #include "../item/item.h"
 #include "../lookaheadset/lookaheadset.h"
 
@@ -18,6 +16,7 @@ class Production;
 class State
 {
     public:
+        // On `Symbol', transit to the state stored in the Transition
         typedef std::map<Symbol const *, Transition *> TransitionMap;
         typedef TransitionMap::value_type              TransitionMapValue;
         typedef TransitionMap::iterator                TransitionMapIterator;
@@ -190,27 +189,27 @@ class State
                                RRContext &rrc);
 
         void solveShiftReduceConflicts();
-        struct SRContext
+
+        struct SRContext2
         {
             bool headerDisplayed;
             State &state;
+            ReduceMap::value_type *reduction;
         };
-        static void detectSR(TransitionMapValue &, SRContext &src);
+
+        static void detectSR(ReduceMap::value_type &, SRContext2 &src);
+        static void checkSRConflict(Item &, SRContext2 &src);
 
         static bool findTerminal(ReduceMapValue const &rmap, 
                                  Symbol &terminal) 
         {
-            // tmp included bobcat/msg
-            FBB::msg() << "Comparing " << terminal.display() << " to " << 
-                    rmap.first << FBB::info;
-
             return rmap.second.count(&terminal);
         }
 
         static bool solveSRbyPriority(TransitionMapValue &transition, 
-                              SRContext &src, ReduceMapIterator &reduceIter);
+                          SRContext2 &src);
         static bool solveSRbyAssociation(TransitionMapValue &transition,
-                              SRContext &src, ReduceMapIterator &reduceIter);
+                          SRContext2 &src);
 
         Transition *transitionOf(Symbol const *symbol);
 

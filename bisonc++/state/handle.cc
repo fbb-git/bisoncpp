@@ -30,7 +30,6 @@ void State::handle(Item const &item)
     Transition *transition = transitionOf(symbol);
 
                                 // NonTerminal: add next item
-                                //              
     if (symbol->isNonTerminal())
     {
         msg() << indent << 

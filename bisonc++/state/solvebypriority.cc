@@ -1,9 +1,11 @@
 #include "state.ih"
 
+// bool State::solveSRbyPriority(TransitionMapValue &transition, 
+//                              SRContext &src, ReduceMapIterator &reduceIter)
 bool State::solveSRbyPriority(TransitionMapValue &transition, 
-                              SRContext &src, ReduceMapIterator &reduceIter)
+                              SRContext2 &src)
 {
-    Production const *production = reduceIter->first;
+    Production const *production = src.reduction->first; //reduceIter->first;
     Terminal const *terminal = production->precedence();
     unsigned productionPriority = terminal ? terminal->priority() : 0;
 
@@ -42,7 +44,8 @@ bool State::solveSRbyPriority(TransitionMapValue &transition,
                 << "))" 
                 << info;
                                                 // don't reduce on terminal
-            reduceIter->second -= terminal;
+            src.reduction->second -= terminal;
+//            reduceIter->second -= terminal;
         break;
     }
     return true;

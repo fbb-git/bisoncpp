@@ -20,27 +20,26 @@ cd  bisonc++
 
 if [ "$REPAIR" == "" ] 
 then
-    mkdir -p flex
-    cp /usr/include/FlexLexer.h flex
+    # For the benefit of those who don't have flex: well, let them have flex.
+    #   mkdir -p flex
+    #   cp /usr/include/FlexLexer.h flex
+    #	cd scanner 
+    #	[ -e yylex.cc ] || req flex lexer
+    #	cd ..
+    
     
     make/distclean
     
     ../usage > documentation/manual/invoking/usage
     
-    cd scanner 
-    [ -e yylex.cc ] || req flex lexer
-    cd ..
-    
     make/man
     make/manual
 fi
-
 
 export BISONCPP=minimal 
                                            # load the version
 VERSION=`grep VERSION VERSION | sed 's,#define VERSION \"\([^"]\+\)\",\1,'`
 echo $VERSION
-
 
 DISTRIBUTION=bisonc++-${VERSION}      # define the distribution's dir name
 
@@ -50,6 +49,8 @@ mv bisonc++ ${DISTRIBUTION}           # distribution's dir name
 
 if [ "$REPAIR" == "" ] 
 then
+    rm -f bisonc++_${VERSION}*          # remove old files
+
                                         # create the .orig source tar
     tar czvf bisonc++_${VERSION}.orig.tar.gz --exclude=debian ${DISTRIBUTION}
 fi
