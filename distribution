@@ -39,7 +39,6 @@ fi
 export BISONCPP=minimal 
                                            # load the version
 VERSION=`grep VERSION VERSION | sed 's,#define VERSION \"\([^"]\+\)\",\1,'`
-echo $VERSION
 
 DISTRIBUTION=bisonc++-${VERSION}      # define the distribution's dir name
 
