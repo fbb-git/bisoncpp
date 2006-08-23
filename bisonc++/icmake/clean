@@ -5,7 +5,8 @@ string remove3;
 void setRemovals()
 {
     // always:
-        remove1 = "debian/bisonc++ build-stamp configure-stamp";
+        remove1 = 
+            "debian/*substvars* debian/bisonc++ build-stamp configure-stamp";
 
     // unless `minimal':
         remove2 = "parser/SKEL tmp/{bin,o} o */o release.yo libbisonc++.a";
