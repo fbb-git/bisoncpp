@@ -21,7 +21,7 @@ void install(string where)
 
     printf("  installing bison's docs\n");
     md(where + DOC + "/bison-docs");
-    run("cp -r documentation/{html,bison.ps.org} " + 
+    run("cp -r documentation/html documentation/bison.ps.org " + 
                                             where + DOC + "/bison-docs");
 
     printf("  installing examples\n");

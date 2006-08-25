@@ -9,10 +9,10 @@ void setRemovals()
             "debian/*substvars* debian/bisonc++ build-stamp configure-stamp";
 
     // unless `minimal':
-        remove2 = "parser/SKEL tmp/{bin,o} o */o release.yo libbisonc++.a";
+        remove2 = "parser/SKEL tmp/bin tmp/o o */o release.yo libbisonc++.a";
 
     // in ./documentation:
-        remove3 = "man/*.{1,html} manual/manual-stamp manual/*.html "
+        remove3 = "man/*.1 man/*.html manual/manual-stamp manual/*.html "
                   "manual/invoking/usage bisonc++ usage/usage";
 }
 
