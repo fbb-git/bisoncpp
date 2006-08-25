@@ -27,6 +27,8 @@ bisonc++ (1.4.0)
     file INSTALL (and INSTALL.im, replacing the previously used INSTALL.cf)
     for further details.
 
+    All plain `unsigned' variables were changed to `size_t'
+
 bisonc++ (1.03-1) unstable; urgency=low
 
   * License changed to the GNU GENERAL PUBLIC LICENSE. See the file
