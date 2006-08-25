@@ -19,9 +19,9 @@ namespace // anonymous
     };    
     struct PI   // Production Info
     {
-        unsigned d_nonTerm; // identification number of this production's
+        size_t/*unsigned*/ d_nonTerm; // identification number of this production's
                             // non-terminal 
-        unsigned d_size;    // number of elements in this production 
+        size_t/*unsigned*/ d_size;    // number of elements in this production 
     };
 
     struct SR   // Shift Reduce info
@@ -31,7 +31,7 @@ namespace // anonymous
             int _field_1_;      // initializer, allowing initializations 
                                 // of the SR s_[] arrays
             StateType   d_type;
-            unsigned    d_symbol;  
+            size_t/*unsigned*/    d_symbol;  
             int         d_token;
         };
         union
@@ -40,10 +40,10 @@ namespace // anonymous
 
             int d_lastIdx;          // if negative, the state uses SHIFT
             int d_negProductionNr;  // if positive, use d_nextState
-            unsigned d_nextState;   
+            size_t/*unsigned*/ d_nextState;   
                             // negative: negative rule number to reduce to
                             // otherwise: next state
-            unsigned d_errorState;  // used with Error states
+            size_t/*unsigned*/ d_errorState;  // used with Error states
         };
         // identification number (value) of a terminal
         // (action table) or non-terminal (goto table). In
@@ -169,11 +169,11 @@ void ParserBase::clearin()
 }
 
 
-void ParserBase::push(unsigned state)
+void ParserBase::push(size_t/*unsigned*/ state)
 {
-    if (static_cast<unsigned>(d_stackIdx + 1) == d_stateStack.size())
+    if (static_cast<size_t/*unsigned*/>(d_stackIdx + 1) == d_stateStack.size())
     {
-        unsigned newSize = d_stackIdx + 5;
+        size_t/*unsigned*/ newSize = d_stackIdx + 5;
         d_stateStack.resize(newSize);
         d_valueStack.resize(newSize);
     }
@@ -182,14 +182,14 @@ void ParserBase::push(unsigned state)
     *(d_vsp = &d_valueStack[d_stackIdx]) = d_val;
 }
 
-void ParserBase::pop(unsigned count)
+void ParserBase::pop(size_t/*unsigned*/ count)
 {
     d_stackIdx -= count;
     d_state = d_stateStack[d_stackIdx];
     d_vsp = &d_valueStack[d_stackIdx];
 }
 
-unsigned ParserBase::top() const
+size_t/*unsigned*/ ParserBase::top() const
 {
     if (d_stackIdx < 0)
     {
@@ -199,7 +199,7 @@ unsigned ParserBase::top() const
     return d_stateStack[d_stackIdx];
 }
 
-unsigned ParserBase::reduce(PI const &pi)
+size_t/*unsigned*/ ParserBase::reduce(PI const &pi)
 {
 
     pop(pi.d_size);
@@ -293,7 +293,7 @@ int Parser::lookup(int token)
     // If EOF is encountered without being appropriate for the current state,
     // then the error recovery will fall back to the default recovery mode.
     // (i.e., parsing terminates)
-unsigned Parser::errorRecovery()
+size_t/*unsigned*/ Parser::errorRecovery()
 try
 {
     ++d_nErrors;

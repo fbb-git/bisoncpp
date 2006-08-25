@@ -12,7 +12,7 @@ class Symbol;
 class Transition
 {
     LookaheadSet d_la;                  // this key or state's LA set
-    unsigned d_next;                    // state to go to when the
+    size_t/*unsigned*/ d_next;                    // state to go to when the
                                         // transitionmap's key was
                                         // observed 
     bool d_productionsEntered;          // All production rules of a
@@ -62,11 +62,11 @@ class Transition
         {
             d_next = UINT_MAX;
         }        
-        unsigned next() const
+        size_t/*unsigned*/ next() const
         {
             return d_next;
         }
-        void setNext(unsigned next)
+        void setNext(size_t/*unsigned*/ next)
         {
             d_next = next;
         }
@@ -92,7 +92,7 @@ class Transition
         {
             d_depSym.insert(symbol);
         }        
-        unsigned influenceSize() const
+        size_t/*unsigned*/ influenceSize() const
         {
             return d_depSym.size();
         }        

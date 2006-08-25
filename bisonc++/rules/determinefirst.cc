@@ -2,7 +2,7 @@
 
 void Rules::determineFirst()
 {
-    unsigned lastCount = 0;     // counts the number of first-elements.
+    size_t/*unsigned*/ lastCount = 0;     // counts the number of first-elements.
 
     while (true)
     {

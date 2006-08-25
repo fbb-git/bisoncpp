@@ -192,21 +192,13 @@ void program()
     
     md("tmp/bin tmp/o");
 
-    if ("INSTALL.im" newer "parser/SKEL")
-        run("echo \"#define _Skel_  \\\"" + SKEL + "\\\"\" > parser/SKEL");
-
-    if (! exists("release.yo") || "VERSION" newer "release.yo") 
-        run("gcc -E VERSION.h | grep -v '#' | sed 's/\\\"//g' > release.yo");
+    special();
 
     cpp_make
     (
         "bisonc++.cc",      // program source
         "bisonc++"          // static program library base name
     );
-
-    chdir("documentation/manual/invoking/");
-    if (! exists("usage"))
-        runP(P_NOCHECK, "../../../tmp/bin/bisonc++ -h > usage");
 
     exit(0);
 }

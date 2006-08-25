@@ -1,7 +1,7 @@
  bf(%ltype typename) nl()    
            Specifies a user-defined token location type. 
            If bf(%ltype) is used, tt(typename) should be the name of an
-            alternate (predefined) type (e.g., bf(unsigned)). It should not be
+            alternate (predefined) type (e.g., bf(size_t/*unsigned*/)). It should not be
             used if a bf(%locationstruct) specification is used (see
             below). Within the parser class, this type may be used as
             bf(LTYPE). 

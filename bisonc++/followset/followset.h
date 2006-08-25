@@ -15,7 +15,7 @@ class FollowSet: public std::set<Terminal const *>
         :
             d_EOF(false)
         {}
-        unsigned setSize() const
+        size_t/*unsigned*/ setSize() const
         {
             return size() + d_EOF;
         }

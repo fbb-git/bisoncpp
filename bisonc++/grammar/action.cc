@@ -7,7 +7,7 @@ Grammar::Action Grammar::action(StateInfo &state)
 
     if (d_token)                // token obtained at reduce()
     {
-        unsigned nextState = state.transit(d_token);
+        size_t/*unsigned*/ nextState = state.transit(d_token);
         if (nextState == d_state)
             return RETRY;
 
@@ -23,7 +23,7 @@ Grammar::Action Grammar::action(StateInfo &state)
     if (!d_token)                       // no more
         return NO_TRANSITIONS;
 
-    unsigned nextState = state.transit(d_token);
+    size_t/*unsigned*/ nextState = state.transit(d_token);
 
     if (nextState == d_state)
         return RETRY;

@@ -19,9 +19,9 @@ namespace // anonymous
     };    
     struct PI   // Production Info
     {
-        unsigned d_nonTerm; // identification number of this production's
+        size_t/*unsigned*/ d_nonTerm; // identification number of this production's
                             // non-terminal 
-        unsigned d_size;    // number of elements in this production 
+        size_t/*unsigned*/ d_size;    // number of elements in this production 
     };
 
     struct SR   // Shift Reduce info
@@ -40,7 +40,7 @@ namespace // anonymous
             int d_lastIdx;          // if negative, the state uses SHIFT
             int d_action;           // may be negative (reduce), 
                                     // postive (shift), or 0 (accept)
-            unsigned d_errorState;  // used with Error states
+            size_t/*unsigned*/ d_errorState;  // used with Error states
         };
         // The FIRST element of SR arrays uses `d_type', defining the state's
         // type, and `d_lastIdx' containing the last element's index. If
@@ -411,11 +411,11 @@ void ParserBase::ERROR() const throw(ErrorRecovery)
 }
 
 
-void ParserBase::push(unsigned state)
+void ParserBase::push(size_t/*unsigned*/ state)
 {
-    if (static_cast<unsigned>(d_stackIdx + 1) == d_stateStack.size())
+    if (static_cast<size_t/*unsigned*/>(d_stackIdx + 1) == d_stateStack.size())
     {
-        unsigned newSize = d_stackIdx + 5;
+        size_t/*unsigned*/ newSize = d_stackIdx + 5;
         d_stateStack.resize(newSize);
         d_valueStack.resize(newSize);
     }
@@ -424,7 +424,7 @@ void ParserBase::push(unsigned state)
     *(d_vsp = &d_valueStack[d_stackIdx]) = d_val;
 }
 
-void ParserBase::pop(unsigned count)
+void ParserBase::pop(size_t/*unsigned*/ count)
 {
     if (d_stackIdx < static_cast<int>(count))
     {
@@ -436,7 +436,7 @@ void ParserBase::pop(unsigned count)
     d_vsp = &d_valueStack[d_stackIdx];
 }
 
-unsigned ParserBase::top() const
+size_t/*unsigned*/ ParserBase::top() const
 {
     if (d_stackIdx < 0)
     {
@@ -446,7 +446,7 @@ unsigned ParserBase::top() const
     return d_stateStack[d_stackIdx];
 }
 
-unsigned ParserBase::reduce(PI const &pi)
+size_t/*unsigned*/ ParserBase::reduce(PI const &pi)
 {
 
     pop(pi.d_size);

@@ -26,7 +26,7 @@ void Generator::tokens(ostream &out) const
             "    enum Tokens\n"
             "    {\n";
 
-    unsigned lastValue = 0;
+    size_t/*unsigned*/ lastValue = 0;
     for 
     (
         vector<Terminal const *>::const_iterator termIter = 

@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-int Parser::elementNr(unsigned *idx, string const &text) 
+int Parser::elementNr(size_t/*unsigned*/ *idx, string const &text) 
 {
     istringstream istr(text.c_str() + *idx);
     int nr;

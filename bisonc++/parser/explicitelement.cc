@@ -2,10 +2,10 @@
 
 // pos points to $ in what must be $<type>i
 
-bool Parser::explicitElement(unsigned pos, unsigned nElements) 
+bool Parser::explicitElement(size_t/*unsigned*/ pos, size_t/*unsigned*/ nElements) 
 {
     string explicitType;        // extract the explicit type
-    unsigned length = 1 + extractType(&explicitType, pos + 1);
+    size_t/*unsigned*/ length = 1 + extractType(&explicitType, pos + 1);
 
     int idx;                // extract the index, determine its length
     length  += extractIndex(&idx, pos + length);

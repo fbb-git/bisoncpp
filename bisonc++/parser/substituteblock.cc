@@ -4,7 +4,7 @@
 // it is d_elements.size(). It indicates where to find $0 with respect to the 
 // top of the (?) stack. 
 
-void Parser::substituteBlock(unsigned nElements)
+void Parser::substituteBlock(size_t/*unsigned*/ nElements)
 try
 {
         // Look repeatedly for special characters. Do this from the end of the
@@ -15,8 +15,8 @@ try
     d_skipRbegin = d_block.skipRbegin();
     d_skipRend = d_block.skipRend();
 
-    unsigned end = string::npos;
-    unsigned begin;
+    size_t/*unsigned*/ end = string::npos;
+    size_t/*unsigned*/ begin;
 
     bool explicitReturn = false;            // block return type as yet
                                             // unknown

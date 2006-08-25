@@ -21,7 +21,7 @@ class Generator
     std::string const &d_nameSpace;
 
     mutable std::string d_key;          // extracted at $insert statements
-    mutable unsigned d_indent;
+    mutable size_t/*unsigned*/ d_indent;
 
     typedef std::map<std::string, void (Generator::*)(std::ostream &) const>
             MapInsert;

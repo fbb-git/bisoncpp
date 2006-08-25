@@ -30,7 +30,7 @@ class Parser: public ParserBase
     // support functions for parse():
 
         void executeAction(int d_production);
-        unsigned errorRecovery();
+        size_t/*unsigned*/ errorRecovery();
         int lookup(int token);
         int nextToken();
 };

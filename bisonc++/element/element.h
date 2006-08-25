@@ -32,7 +32,7 @@ class Element
         {
             return display();
         }
-        virtual unsigned value() const = 0;
+        virtual size_t/*unsigned*/ value() const = 0;
 };
 
 std::ostream &operator<<(std::ostream &out, Element const *el);

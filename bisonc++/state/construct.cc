@@ -23,7 +23,7 @@ void State::construct()
     if (d_nonKernel.size())
     {
         msg() << nlindent << "Handling NON-KERNEL items" << info;
-        for (unsigned idx = 0; idx < d_nonKernel.size(); ++idx)
+        for (size_t/*unsigned*/ idx = 0; idx < d_nonKernel.size(); ++idx)
             handleNonKernelItem(d_nonKernel[idx]);
     }        
 

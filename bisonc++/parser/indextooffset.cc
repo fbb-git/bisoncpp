@@ -29,7 +29,7 @@
     // positive counterparts, counted as pure negative values. So, with hidden
     // numbers, the block-processor will add 1 to negative indices.
 
-int Parser::indexToOffset(int idx, unsigned nElements) const
+int Parser::indexToOffset(int idx, size_t/*unsigned*/ nElements) const
 {
     if (idx < 0)
         ++idx;

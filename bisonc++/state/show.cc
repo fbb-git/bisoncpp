@@ -27,7 +27,7 @@ void State::show()
         msg() << indent << "By default reduce, using rule " << 
                     d_defaultReduction << info;
 
-    unsigned n_SR = d_srConflict.size();
+    size_t/*unsigned*/ n_SR = d_srConflict.size();
 
     if (d_nRRConflicts)
     {

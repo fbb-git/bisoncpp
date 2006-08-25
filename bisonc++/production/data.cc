@@ -1,3 +1,3 @@
 #include "production.ih"
 
-unsigned Production::s_nr;
+size_t/*unsigned*/ Production::s_nr;

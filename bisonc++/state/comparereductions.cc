@@ -15,7 +15,7 @@ void State::compareReductions(ReduceMapValue &first,
     if (intersection.empty())             // no overlap
         return;
 
-    unsigned n = intersection.fullSize();
+    size_t/*unsigned*/ n = intersection.fullSize();
 
     if (!rrc.headerDisplayed)
     {

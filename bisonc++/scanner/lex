@@ -84,7 +84,7 @@ bucket *unlexed_symval;  /* by the next call to lex */
 //    Element("type", TYPE),
 //    Element("union", UNION),
 //};
-//unsigned const nDefineSymbols = sizeof(defineSymbols) / sizeof(Element);
+//size_t/*unsigned*/ const nDefineSymbols = sizeof(defineSymbols) / sizeof(Element);
 //
 //char *grow_token_buffer(char* p)
 //{

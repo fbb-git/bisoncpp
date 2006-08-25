@@ -3,7 +3,7 @@
 string Parser::verbose() const
 {
     string ret = d_parsefunSource;
-    unsigned pos = ret.find_last_of(".");
+    size_t/*unsigned*/ pos = ret.find_last_of(".");
     if (pos == string::npos)
         pos = ret.length();
 

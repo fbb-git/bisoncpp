@@ -32,16 +32,16 @@ class Terminal: public Symbol
         };
 
     private:
-        static std::set<unsigned> s_valueSet;   // all terminal token values
-        static unsigned s_priority;
+        static std::set<size_t/*unsigned*/> s_valueSet;   // all terminal token values
+        static size_t/*unsigned*/ s_priority;
         static char const *s_association[];
-        static unsigned s_value;        // value assigned, unless explictly
+        static size_t/*unsigned*/ s_value;        // value assigned, unless explictly
                                         // requested
-        static unsigned s_maxValue;     // maximum assigned terminal value
+        static size_t/*unsigned*/ s_maxValue;     // maximum assigned terminal value
 
-        unsigned d_value;
+        size_t/*unsigned*/ d_value;
         Association d_association;
-        unsigned d_priority;
+        size_t/*unsigned*/ d_priority;
 
         std::string d_literal;
         std::string d_readableLiteral;
@@ -75,16 +75,16 @@ class Terminal: public Symbol
             s_priority = 0;
         }
 
-        static bool setUnique(unsigned value);    // true if unique
+        static bool setUnique(size_t/*unsigned*/ value);    // true if unique
         static void unused(Terminal const *terminal);
-        static unsigned maxValue()
+        static size_t/*unsigned*/ maxValue()
         {
             return s_maxValue;
         }
 
         Terminal(std::string const &name, 
                     Type type,
-                    unsigned value = DEFAULT, 
+                    size_t/*unsigned*/ value = DEFAULT, 
                     Association association = UNDEFINED, 
                     std::string const &stype = ""); // stype: type assigned by 
                                     // explicit symbol type association, 
@@ -112,11 +112,11 @@ class Terminal: public Symbol
                 d_priority < other->d_priority ? SMALLER :
                                                  EQUAL;
         }            
-        unsigned priority() const
+        size_t/*unsigned*/ priority() const
         {
             return d_priority;
         }
-        unsigned value() const
+        size_t/*unsigned*/ value() const
         {
             return d_value;
         }
@@ -130,8 +130,8 @@ class Terminal: public Symbol
         {
             d_literal = literal;
         }
-        void setValue(unsigned value);  // reassign a token value
-        void setPriority(unsigned value)
+        void setValue(size_t/*unsigned*/ value);  // reassign a token value
+        void setPriority(size_t/*unsigned*/ value)
         {
             d_priority = value;
         }

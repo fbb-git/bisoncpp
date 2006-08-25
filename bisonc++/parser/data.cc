@@ -42,7 +42,7 @@ Parser::ActionMap Parser::s_action
     s_info + sizeof(s_info) / sizeof(Value)
 );
 
-unsigned Parser::s_nHidden;
+size_t/*unsigned*/ Parser::s_nHidden;
 
 ostringstream Parser::s_hiddenName;
 

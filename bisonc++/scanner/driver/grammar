@@ -2,7 +2,7 @@
 {
     int
         i;
-    unsigned
+    size_t/*unsigned*/
         u;
     std::string
         *s;

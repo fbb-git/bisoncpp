@@ -9,16 +9,16 @@ class Item
 {
     Production const *d_production;
 
-    unsigned                d_dot;
+    size_t/*unsigned*/                d_dot;
 
     public:
         Item(Production const *start);      // initial item, starts at the 
                                             // start-production. Dot = 0, 
                                             // Lookahead = EOF
 
-        Item(Item const *item, unsigned dot);
+        Item(Item const *item, size_t/*unsigned*/ dot);
 
-        Item(Production const *prod, unsigned dot);
+        Item(Production const *prod, size_t/*unsigned*/ dot);
                                         //, LookaheadSet const &laSet);
 
             // see State::beforeDot() to read why this function is only called
@@ -41,7 +41,7 @@ class Item
             return &(*d_production)[d_dot - 1];
         }
 
-        unsigned dot() const
+        size_t/*unsigned*/ dot() const
         {
             return d_dot;
         }
@@ -72,7 +72,7 @@ class Item
             return productionSize() == 0;
         }
 
-        unsigned productionSize() const
+        size_t/*unsigned*/ productionSize() const
         {
             return d_production->size();
         }

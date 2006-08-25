@@ -26,10 +26,9 @@ string COMPILER;
     // different version of the compiler you currently have in your
     // system. E.g., in july 2006 the Debian `testing' version of the compiler
     // was 4.0.4, but the `unstable' version's compiler was 4.1.2. By defining
-    // COMPILER as COMPILER=g++-4.1 (i.e., keeping the next definition of
-    // `COMPILER') the 4.1.x version of the compiler is used (of course,
-    // it must have been installed in your system as well). If you want to use
-    // your `standard' C++ compiler, simply use "g++" (see below)
+    // COMPILER with a specific version (e.g., COMPILER=g++-4.1) that
+    // particular version can be used. The distributed definition uses the
+    // `default' compiler version.
 
 void setLocations()
 {
@@ -40,7 +39,6 @@ void setLocations()
     MAN  = BASE + "/share/man/man1";    
     DOC  = BASE + "/share/doc/bisonc++";
 
-    // COMPILER = "g++";
-    COMPILER = "g++-4.1";
+    COMPILER = "g++";
 }
 

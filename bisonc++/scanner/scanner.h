@@ -67,15 +67,15 @@ class Scanner: public yyFlexLexer
 
     private:
         std::ifstream       d_in;
-        unsigned            d_retWS;
-        unsigned            d_number;   // only valid after tokens NUMBER and
+        size_t/*unsigned*/            d_retWS;
+        size_t/*unsigned*/            d_number;   // only valid after tokens NUMBER and
                                         // after escape(), octal() and 
                                         // hexadecimal() 
         std::string         d_ungotText;
-        unsigned            d_ungotToken;    
-        unsigned            d_ungotNumber;
+        size_t/*unsigned*/            d_ungotToken;    
+        size_t/*unsigned*/            d_ungotNumber;
         std::string         d_text;
-        unsigned            d_token;
+        size_t/*unsigned*/            d_token;
         int                 d_commentChar;  // set to ' ' in `lexer' when C
                                             // comment without \n is matched,
                                             // otherwise set to \n. See
@@ -100,7 +100,7 @@ class Scanner: public yyFlexLexer
         {
             return d_token;
         }
-        unsigned number() const             // only after token NUMBER
+        size_t/*unsigned*/ number() const             // only after token NUMBER
         {
             return d_number;
         }

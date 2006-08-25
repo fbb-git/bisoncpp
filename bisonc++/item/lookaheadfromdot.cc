@@ -6,7 +6,7 @@ LookaheadSet Item::lookaheadFromDot(LookaheadSet const &current) const
 
     for 
     (
-        unsigned dot = d_dot, size = productionSize();
+        size_t/*unsigned*/ dot = d_dot, size = productionSize();
             dot < size;
                 ++dot
     )

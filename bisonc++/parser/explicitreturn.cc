@@ -2,9 +2,9 @@
 
 // pos points at the 2nd $ in '$<type>$'
 
-bool Parser::explicitReturn(unsigned pos) 
+bool Parser::explicitReturn(size_t/*unsigned*/ pos) 
 {
-    unsigned dollar1 = d_block.find_last_of("$", pos - 1);
+    size_t/*unsigned*/ dollar1 = d_block.find_last_of("$", pos - 1);
 
                                 // no first $ or no $<
     if (dollar1 == string::npos || d_block[dollar1 + 1] != '<')

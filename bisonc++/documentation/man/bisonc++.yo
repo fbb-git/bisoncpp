@@ -445,7 +445,7 @@ specification file.
     it() bf(%ltype typename) nl()    
            Specifies a user-defined token location type. 
            If bf(%ltype) is used, tt(typename) should be the name of an
-            alternate (predefined) type (e.g., bf(unsigned)). It should not be
+            alternate (predefined) type (e.g., bf(size_t/*unsigned*/)). It should not be
             used if a bf(%locationstruct) specification is defined (see
             below). Within the parser class, this type will be available as
             the type `bf(LTYPE)'.  All text on the line following bf(%ltype)
@@ -485,7 +485,7 @@ specification file.
     it() bf(%stype typename) nl()    
            The type of the semantic value of tokens.  The specification
             tt(typename) should be the name of an unstructured type (e.g.,
-            bf(unsigned)). By default it is bf(int). See bf(YYSTYPE) in
+            bf(size_t/*unsigned*/)). By default it is bf(int). See bf(YYSTYPE) in
             bf(bison).  It should not be used if a bf(%union) specification is
             defined.  Within the parser class, this type will be available as
             the type `bf(STYPE)'. All text on the line following bf(%stype) is
@@ -706,7 +706,7 @@ members inherited from the parser's base class.
     it() bf(LTYPE d_vsp):nl()
        The semantic value stack pointer. Used internally by the parser. Not to
         be used otherwise.
-    it() bf(unsigned d_nErrors):nl()
+    it() bf(size_t/*unsigned*/ d_nErrors):nl()
        The number of errors counted by bf(parse()). It is initialized by the
         parser's base class initializer, and is updated while bf(parse())
         executes. When bf(parse()) has returned it contains the total number

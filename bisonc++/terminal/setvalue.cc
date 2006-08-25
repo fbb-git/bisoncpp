@@ -1,6 +1,6 @@
 #include "terminal.ih"
 
-void Terminal::setValue(unsigned value)
+void Terminal::setValue(size_t/*unsigned*/ value)
 {
     if (!setUnique(value))                
         msg() << "Value " << value << " of token " << name() << 

@@ -1,6 +1,6 @@
 #include "state.ih"
 
-State::State(unsigned idx)
+State::State(size_t/*unsigned*/ idx)
 :
     d_type(NORMAL),
     d_idx(idx),

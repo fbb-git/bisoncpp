@@ -7,10 +7,10 @@ bool State::solveSRbyPriority(TransitionMapValue &transition,
 {
     Production const *production = src.reduction->first; //reduceIter->first;
     Terminal const *terminal = production->precedence();
-    unsigned productionPriority = terminal ? terminal->priority() : 0;
+    size_t/*unsigned*/ productionPriority = terminal ? terminal->priority() : 0;
 
     terminal = Terminal::downcast(transition.first);
-    unsigned terminalPriority = terminal->priority();
+    size_t/*unsigned*/ terminalPriority = terminal->priority();
 
     switch (Terminal::comparePriorities(terminal, production->precedence()))
     {

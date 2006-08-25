@@ -2,7 +2,7 @@
 
 void RRConflict::show(RRConflict const &conflict)
 {
-    unsigned n = conflict.d_laSet.fullSize();
+    size_t/*unsigned*/ n = conflict.d_laSet.fullSize();
 
     msg() << nlindent << "On " << conflict.d_laSet << "\n" <<
             incindent << "reduce to `" << conflict.first << 

@@ -2,7 +2,7 @@
 
     // expect <typename> or not, if not at a  `<' character
 
-unsigned Parser::extractType(string *type, unsigned pos)
+size_t/*unsigned*/ Parser::extractType(string *type, size_t/*unsigned*/ pos)
 {
     if (pos >= d_block.length())    // block ends prematurely.
         throw 1;
@@ -11,10 +11,10 @@ unsigned Parser::extractType(string *type, unsigned pos)
     if (d_block[pos] != '<')        // no explicit type
         return 0;
 
-    unsigned begin = pos + 1;       // first char of the type
+    size_t/*unsigned*/ begin = pos + 1;       // first char of the type
 
                                     // saw the opening bracket, find the `>'
-    unsigned end = d_block.find('>', begin);
+    size_t/*unsigned*/ end = d_block.find('>', begin);
 
     if (end == string::npos)        // no `>' found
         throw 1;                    // caught as incomplete $ specification

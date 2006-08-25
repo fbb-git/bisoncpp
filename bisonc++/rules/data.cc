@@ -1,7 +1,7 @@
 #include "rules.ih"
 
-unsigned Rules::s_nExpectedConflicts;
-unsigned Rules::s_acceptProductionNr;
+size_t/*unsigned*/ Rules::s_nExpectedConflicts;
+size_t/*unsigned*/ Rules::s_acceptProductionNr;
 
 Symbol *Rules::s_startSymbol;
     

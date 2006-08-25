@@ -42,8 +42,8 @@ class State
         typedef ReduceMap::iterator                        ReduceMapIterator;
     
         static StateVector  s_state;
-        static unsigned s_nShiftReduceConflicts;
-        static unsigned s_nReduceReduceConflicts;
+        static size_t/*unsigned*/ s_nShiftReduceConflicts;
+        static size_t/*unsigned*/ s_nReduceReduceConflicts;
     
         static char const *s_stateName[];   // ascii-text representations of
                                             // the state types
@@ -51,7 +51,7 @@ class State
         static Production const *s_startProduction;
     
         Type                d_type;
-        unsigned            d_idx;
+        size_t/*unsigned*/            d_idx;
     
         ItemVector          d_kernel;
         ReduceMap           d_reduce;
@@ -59,19 +59,19 @@ class State
         TransitionMap       d_transition;
         NonKernelVector     d_nonKernel;
         bool                d_construct;
-        unsigned            d_nTransitions; 
-        unsigned            d_nTerminalTransitions;
+        size_t/*unsigned*/            d_nTransitions; 
+        size_t/*unsigned*/            d_nTerminalTransitions;
     
         SRConflictVector    d_srConflict;
         RRConflictVector    d_rrConflict;
-        unsigned            d_nRRConflicts;
+        size_t/*unsigned*/            d_nRRConflicts;
     
         Production const   *d_defaultReduction;
     
     public:
         typedef TransitionMap::const_iterator   TransitionMapConstIterator;
 
-        State(unsigned idx);
+        State(size_t/*unsigned*/ idx);
 
         Production const *defaultReduction() const
         {
@@ -95,7 +95,7 @@ class State
 
         static void showAllStates();
 
-        static unsigned nStates()
+        static size_t/*unsigned*/ nStates()
         {
             return s_state.size();
         }
@@ -116,7 +116,7 @@ class State
 
         static void writeStateArray(State const *state, WSAContext &context);
 
-        unsigned idx() const
+        size_t/*unsigned*/ idx() const
         {
             return d_idx;
         }
@@ -181,7 +181,7 @@ class State
             bool headerDisplayed;
             bool leftReductionDisplayed;
 
-            unsigned idx;
+            size_t/*unsigned*/ idx;
             ReduceMapIterator reduceIter;
         };
 
@@ -222,7 +222,7 @@ class State
         static void constructDestination(TransitionMapValue &transit);
         static void defineDestination(TransitionMapValue &transit, 
                                       State &state);
-        static bool findState(unsigned *idx, std::vector<Item> const &kernel);
+        static bool findState(size_t/*unsigned*/ *idx, std::vector<Item> const &kernel);
         static bool searchStateWith(State &state, 
                                     std::vector<Item> const &kernel);
 

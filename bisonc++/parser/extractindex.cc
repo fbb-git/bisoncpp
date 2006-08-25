@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-unsigned Parser::extractIndex(int *idx, unsigned pos) const
+size_t/*unsigned*/ Parser::extractIndex(int *idx, size_t/*unsigned*/ pos) const
 {
     istringstream is(d_block.substr(pos));
 

@@ -12,7 +12,7 @@ void Parser::parseDeclarations()
     {
         while (true)
         {
-            unsigned token = d_scanner.lex();
+            size_t/*unsigned*/ token = d_scanner.lex();
             Iterator it = s_action.find(token);
 
             if (it != s_action.end())

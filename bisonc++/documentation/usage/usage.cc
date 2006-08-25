@@ -3,12 +3,11 @@
 
 using namespace std;
 
-#include "bisonc++/VERSION"
+#include "../../VERSION"
+#include "../../usage.cc"
 
 char version[] = VERSION;
 char year[] = YEARS;
-
-void usage(string const &program_name);
 
 int main()
 {

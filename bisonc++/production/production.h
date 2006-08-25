@@ -15,12 +15,12 @@ class Production: public std::vector<Symbol *>
 {
     friend std::ostream &operator<<(std::ostream &out, 
                                                Production const *production);
-    static unsigned s_nr;
+    static size_t/*unsigned*/ s_nr;
 
     Terminal const *d_precedence;
     Block           d_action;
     Symbol const *d_nonTerminal;
-    unsigned d_nr;                              // production order number
+    size_t/*unsigned*/ d_nr;                              // production order number
                                                 // over all productions,
                                                 // starts at 1
 
@@ -30,7 +30,7 @@ class Production: public std::vector<Symbol *>
             std::ostream &out;
             char const *infile;
             bool lineDirectives;
-            unsigned indent;
+            size_t/*unsigned*/ indent;
         };
 
         static void insertAction(Production const *prod, IAContext &context);
@@ -39,7 +39,7 @@ class Production: public std::vector<Symbol *>
 
         Production(Symbol const *nonTerminal);
 
-        Symbol const *atIdx(unsigned idx) const
+        Symbol const *atIdx(size_t/*unsigned*/ idx) const
         {
             return vectorIdx(idx);
         }
@@ -49,7 +49,7 @@ class Production: public std::vector<Symbol *>
             return d_nonTerminal;
         }
 
-        unsigned nr() const
+        size_t/*unsigned*/ nr() const
         {
             return d_nr;
         }
@@ -71,7 +71,7 @@ class Production: public std::vector<Symbol *>
         {
             return d_precedence;
         }
-        Symbol const &operator[](unsigned idx) const
+        Symbol const &operator[](size_t/*unsigned*/ idx) const
         {
             return *vectorIdx(idx);
         }
@@ -83,7 +83,7 @@ class Production: public std::vector<Symbol *>
         void setPrecedence(Terminal const *terminal);
         
     private:
-        Symbol *vectorIdx(unsigned idx) const;
+        Symbol *vectorIdx(size_t/*unsigned*/ idx) const;
 };
 
     // only the rule.

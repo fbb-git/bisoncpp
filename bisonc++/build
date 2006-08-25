@@ -5,7 +5,10 @@
 #include "icmake/run"
 #include "icmake/md"
 #include "icmake/getenv"
+#include "icmake/special"
 #include "icmake/clean"
+#include "icmake/manpage"
+#include "icmake/manual"
 #include "icmake/program"
 #include "icmake/install"
 
@@ -23,17 +26,29 @@ void main(int argc, list argv, list envp)
     option = element(1, argv);
 
     if (option == "clean")
-        clean();
+        clean(0);
 
-    if (option == "program")
-        program();
+    if (option == "distclean")
+        clean(1);
 
     if (option == "install")
         install(element(2, argv));
 
+    if (option == "man")
+        manpage();
+
+    if (option == "manual")
+        manual();
+
+    if (option == "program")
+        program();
+
     printf("Usage: build what\n"
         "Where `what' is one of:\n"
         "   clean           - clean up remnants of previous compilations\n"
+        "   distclean       - clean + fully remove tmp/\n"
+        "   man             - build the man-page (requires Yodl)\n"
+        "   manual          - build the manual (requires Yodl)\n"
         "   program         - build bisonc++\n"
         "   install <base>  - to install the software in the locations\n"
         "                     defined in the INSTALL.cf file, optionally\n"

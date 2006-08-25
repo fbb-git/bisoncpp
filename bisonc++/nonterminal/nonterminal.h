@@ -25,13 +25,13 @@ class NonTerminal: public Symbol
         FirstSet    d_first;
         FollowSet   d_follow;
 
-        unsigned d_nr;          // the NonTerminal's number
+        size_t/*unsigned*/ d_nr;          // the NonTerminal's number
 
-        static unsigned s_counter;
-        static unsigned s_number;   // incremented at each call of setNr()
+        static size_t/*unsigned*/ s_counter;
+        static size_t/*unsigned*/ s_number;   // incremented at each call of setNr()
         
     public:
-        static void setFirstNr(unsigned nr)
+        static void setFirstNr(size_t/*unsigned*/ nr)
         {
             s_number = nr;
         }
@@ -39,7 +39,7 @@ class NonTerminal: public Symbol
         {
             np->d_nr = s_number++;
         }
-        static unsigned counter() 
+        static size_t/*unsigned*/ counter() 
         {
             return s_counter;
         }
@@ -66,7 +66,7 @@ class NonTerminal: public Symbol
         ~NonTerminal();
 
         
-        unsigned firstSize() const
+        size_t/*unsigned*/ firstSize() const
         {
             return d_first.setSize();
         }
@@ -86,12 +86,12 @@ class NonTerminal: public Symbol
             d_production.push_back(next);
         }
 
-        unsigned nProductions() const
+        size_t/*unsigned*/ nProductions() const
         {
             return d_production.size();
         }
 
-        unsigned value() const
+        size_t/*unsigned*/ value() const
         {
             return d_nr;
         }

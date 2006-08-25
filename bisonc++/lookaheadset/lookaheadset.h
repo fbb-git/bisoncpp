@@ -51,7 +51,7 @@ class LookaheadSet: public FirstSet
             return !d_EOF && FirstSet::empty();
         }
 
-        unsigned fullSize() const
+        size_t/*unsigned*/ fullSize() const
         {
             return size() + d_EOF;
         }

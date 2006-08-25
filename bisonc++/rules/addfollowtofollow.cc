@@ -10,7 +10,7 @@
 
 void Rules::addFollowToFollow()
 {
-    unsigned lastCount = 0;
+    size_t/*unsigned*/ lastCount = 0;
     while (true)
     {
         for_each(d_production.begin(), d_production.end(), &expandFollow);

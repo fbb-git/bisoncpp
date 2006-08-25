@@ -9,31 +9,12 @@ PROJECT=bisoncpp
 
 cvsremove
 
-if [ ! -e usage ] 
-then
-    echo g++ -o usage usage.cc bisonc++/usage.cc
-    g++ -o usage usage.cc bisonc++/usage.cc
-fi
-
 cd  bisonc++
 [ -s VERSION ] || exit 1                # VERSION must exist in $PROJECT
 
 if [ "$REPAIR" == "" ] 
 then
-    # For the benefit of those who don't have flex: well, let them have flex.
-    #   mkdir -p flex
-    #   cp /usr/include/FlexLexer.h flex
-    #	cd scanner 
-    #	[ -e yylex.cc ] || req flex lexer
-    #	cd ..
-    
-    
-    make/distclean
-    
-    ../usage > documentation/manual/invoking/usage
-    
-    make/man
-    make/manual
+    ./build distclean
 fi
 
 export BISONCPP=minimal 

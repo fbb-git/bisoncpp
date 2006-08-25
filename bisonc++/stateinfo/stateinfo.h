@@ -19,7 +19,7 @@ class StateInfo
         {
             return d_state->isAcceptState();
         }        
-        unsigned reductionSize() const
+        size_t/*unsigned*/ reductionSize() const
         {
               return d_state->defaultReduction()->size();
         }
@@ -32,7 +32,7 @@ class StateInfo
             return d_state->reductionLhs();
         }
         Symbol const *nextToken();
-        unsigned transit(Symbol const *token) const
+        size_t/*unsigned*/ transit(Symbol const *token) const
         {
             return d_state->transitionMap().find(token)->second->next();
         }

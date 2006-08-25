@@ -19,8 +19,8 @@
     // iterators into the symbol table
 class Rules
 {
-    static unsigned s_acceptProductionNr;
-    static unsigned s_nExpectedConflicts;
+    static size_t/*unsigned*/ s_acceptProductionNr;
+    static size_t/*unsigned*/ s_nExpectedConflicts;
     static Terminal s_errorTerminal;
     static Terminal s_eofTerminal;
     static Symbol *s_startSymbol;
@@ -47,7 +47,7 @@ class Rules
     public:
         std::streambuf *infoToVerbose() const;
 
-        static void setExpectedConflicts(unsigned value)
+        static void setExpectedConflicts(size_t/*unsigned*/ value)
         {
             s_nExpectedConflicts = value;
         }
@@ -59,11 +59,11 @@ class Rules
         {
             return &s_errorTerminal;
         }
-        static unsigned acceptProductionNr()
+        static size_t/*unsigned*/ acceptProductionNr()
         {
             return s_acceptProductionNr;
         }
-        static unsigned expectedConflicts()
+        static size_t/*unsigned*/ expectedConflicts()
         {
             return s_nExpectedConflicts;
         }
@@ -109,16 +109,16 @@ class Rules
             return d_currentRule->sType(); 
         }
 
-        std::string const &sType(unsigned idx) const; // return the value type
+        std::string const &sType(size_t/*unsigned*/ idx) const; // return the value type
                                         // associated with element idx of
                                         // the currently defined production
 
-        unsigned nProductions() const
+        size_t/*unsigned*/ nProductions() const
         {
             return d_currentRule->nProductions();
         }
 
-        unsigned nElements() const
+        size_t/*unsigned*/ nElements() const
         {
             return d_currentProduction->size();
         }
@@ -135,12 +135,12 @@ class Rules
 
         void setHiddenAction(Block const &block);
 
-        void setLastTerminalValue(unsigned value)
+        void setLastTerminalValue(size_t/*unsigned*/ value)
         {
             d_terminal.back()->setValue(value);
         }
 
-        void setLastPriority(unsigned value)
+        void setLastPriority(size_t/*unsigned*/ value)
         {
             d_terminal.back()->setPriority(value);
         }

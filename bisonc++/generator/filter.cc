@@ -12,7 +12,7 @@ void Generator::filter(istream &in, ostream &out) const
 
         while (true)
         {
-            unsigned pos = d_line.find_last_of("@");
+            size_t/*unsigned*/ pos = d_line.find_last_of("@");
             if (pos == string::npos)
                 break;
             d_line.replace(pos, 1, d_parser.className());

@@ -7,8 +7,8 @@ char const *State::s_stateName[] =
         "IS_ERROR_STATE",
     };
 
-unsigned State::s_nShiftReduceConflicts;
-unsigned State::s_nReduceReduceConflicts;
+size_t/*unsigned*/ State::s_nShiftReduceConflicts;
+size_t/*unsigned*/ State::s_nReduceReduceConflicts;
 vector<State *> State::s_state;
 
 State *State::s_acceptState;

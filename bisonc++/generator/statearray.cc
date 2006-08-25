@@ -2,14 +2,14 @@
 
 void Generator::stateArray(ostream &out) const
 {
-    unsigned const n = 10;
+    size_t/*unsigned*/ const n = 10;
 
     out << "\n"
             "// State array:\n" 
             "SR *s_state[] =\n"
             "{\n";
 
-    for (unsigned idx = 0; idx < State::nStates(); ++idx)
+    for (size_t/*unsigned*/ idx = 0; idx < State::nStates(); ++idx)
         out << "  s_" << idx << "," << ((idx + 1) % n == 0 ? "\n" : "");
 
     

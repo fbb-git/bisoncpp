@@ -20,7 +20,7 @@
 //    rule element (and done)
 
 
-bool Parser::handleDollar(unsigned pos, unsigned nElements) 
+bool Parser::handleDollar(size_t/*unsigned*/ pos, size_t/*unsigned*/ nElements) 
 {
     if (pos)                    // there is a character before the $
     {

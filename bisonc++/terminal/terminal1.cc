@@ -3,7 +3,7 @@
 #include <iostream>
 
 Terminal::Terminal(string const &name, Type type, 
-                   unsigned value, Association association, 
+                   size_t/*unsigned*/ value, Association association, 
                    std::string const &stype)
 :
     Symbol(name, type, stype),

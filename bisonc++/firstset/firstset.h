@@ -20,7 +20,7 @@ class FirstSet: public std::set<Element const *>
             d_epsilon(false)
         {}
 
-        unsigned setSize() const
+        size_t/*unsigned*/ setSize() const
         {
             return size() + d_epsilon;
         }

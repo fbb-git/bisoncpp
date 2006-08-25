@@ -6,10 +6,10 @@
 
 class Block: public std::string
 {
-    unsigned d_line;
+    size_t/*unsigned*/ d_line;
     
     public:
-        typedef std::pair<unsigned, unsigned> Range;
+        typedef std::pair<size_t/*unsigned*/, size_t/*unsigned*/> Range;
 
     private:
         std::vector<Range>  d_skip;     // skip these ranges when processing
@@ -34,11 +34,11 @@ class Block: public std::string
         {
             return d_skip.rend();
         }
-        unsigned line() const
+        size_t/*unsigned*/ line() const
         {
             return d_line;
         }
-        void setLine(unsigned line)
+        void setLine(size_t/*unsigned*/ line)
         {
             d_line = line;
         }

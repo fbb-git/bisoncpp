@@ -14,7 +14,7 @@
 //          pos                 increment rbegin if possible and redo the loop
 //                              or return pos as the next element to inspect.
 
-unsigned Parser::skipIgnore(unsigned pos) 
+size_t/*unsigned*/ Parser::skipIgnore(size_t/*unsigned*/ pos) 
 {
     while (d_skipRbegin != d_skipRend)
     {

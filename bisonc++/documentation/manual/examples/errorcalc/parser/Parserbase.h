@@ -28,7 +28,7 @@ typedef double STYPE;
 
     private:
         int d_stackIdx;
-        std::vector<unsigned>   d_stateStack;
+        std::vector<size_t/*unsigned*/>   d_stateStack;
         std::vector<STYPE>      d_valueStack;
 
     protected:
@@ -43,9 +43,9 @@ typedef double STYPE;
             UNEXPECTED_TOKEN,
         };
         bool        d_debug;
-        unsigned    d_nErrors;
+        size_t/*unsigned*/    d_nErrors;
         int         d_token;
-        unsigned    d_state;
+        size_t/*unsigned*/    d_state;
         STYPE      *d_vsp;
         STYPE       d_val;
 
@@ -60,14 +60,14 @@ typedef double STYPE;
         {
             return d_debug;
         }
-        void pop(unsigned count = 1);
-        void push(unsigned nextState);
-        unsigned reduce(PI const &productionInfo);
+        void pop(size_t/*unsigned*/ count = 1);
+        void push(size_t/*unsigned*/ nextState);
+        size_t/*unsigned*/ reduce(PI const &productionInfo);
         void setDebug(bool mode)
         {
             d_debug = mode;
         }
-        unsigned top() const;
+        size_t/*unsigned*/ top() const;
 
 // class ParserBase ends
 };

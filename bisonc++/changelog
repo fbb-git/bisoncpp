@@ -20,11 +20,12 @@ bisonc++ (1.4.0)
     Some leftover references to the Academic Free License were replaced by
     references to the GPL.
 
-    The scripts below make/ should be considered obsolete: I reverted back to
-    using icmake, which is available on a great many architectures. See the
-    file INSTALL (and INSTALL.im, rather than INSTALL.cf) for further details.
-    For the time being the make/ directory and its files will be
-    kept. However, they may be removed in a future release.
+    The previously used scripts below make/ are obsolete and were removed from
+    this and future distributions. Icmake should be used instead, for which a
+    top-level script (build) and support scripts in the ./icmake/ directory
+    are available. Icmake is available on a great many architectures. See the
+    file INSTALL (and INSTALL.im, replacing the previously used INSTALL.cf)
+    for further details.
 
 bisonc++ (1.03-1) unstable; urgency=low
 

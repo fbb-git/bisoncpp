@@ -20,9 +20,9 @@ class Grammar
     };
 
     std::vector<StateInfo> d_stateInfo;
-    std::vector<unsigned> d_stack;
+    std::vector<size_t/*unsigned*/> d_stack;
     Symbol const *d_token;
-    unsigned d_state;
+    size_t/*unsigned*/ d_state;
 
     public:
         void deriveSentence();

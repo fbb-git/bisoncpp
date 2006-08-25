@@ -14,7 +14,7 @@ void State::defineDestination(TransitionMapValue &transit,
 
     ++state.d_nTransitions;
 
-    unsigned idx;                           // find a destination state
+    size_t/*unsigned*/ idx;                           // find a destination state
     bool newState = findState(&idx, transit.second->kernel());
 
     Symbol const *symbol = transit.first;
