@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 PROJECT=bisoncpp
 
 # When recreating to repair lintian/linda messages, define REPAIR

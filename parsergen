@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 SKEL=../../../../share/bisonc++
 BISONCPP="../../../../tmp/bin/bisonc++ -B ${SKEL}base.h -C ${SKEL}.h -I ${SKEL}.ih -P ${SKEL}.cc"
