@@ -1,5 +1,7 @@
 tagged as version r1-4-0c
 
+remove contrib/ contrib/verbinsert.cc
+
 --none so far--
 
 

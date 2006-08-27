@@ -55,10 +55,10 @@ DEFINEMACRO(lshift)(0)(\
 )
 
 DEFINEMACRO(verbinsert)(2)(\
-    PIPETHROUGH(verbinsert //ARG1 ARG2)()\
+    PIPETHROUGH(yodlverbinsert //ARG1 ARG2)()\
 )
 DEFINEMACRO(verbCinsert)(2)(\
-    PIPETHROUGH(verbinsert /*ARG1*/ ARG2)()\
+    PIPETHROUGH(yodlverbinsert /*ARG1*/ ARG2)()\
 )
 DEFINEMACRO(rshift)(0)(\
     IFDEF(latex)(\
