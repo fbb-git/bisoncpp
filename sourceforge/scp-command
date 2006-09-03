@@ -1,6 +1,6 @@
 #!/bin/bash
 
-yodl2html index.yo
+yodl2html index.yo | exit 1
 
 scp ../bisonc++/tmp/man*/*.html index.html \
     fbb@shell.sourceforge.net:/home/groups/b/bi/bisoncpp/htdocs/
