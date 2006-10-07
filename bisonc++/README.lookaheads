@@ -521,6 +521,11 @@ S2: 2.  S: C . C    {$}
             3.  C: . c C    {$}
             4.  C: . d      {$}
 
+    Transitions on:
+        C -> S5
+        c -> S3
+        d -> S4
+
     Transition on C, inheriting LA:
         S5: 2.  S: C C .    {$}
 
@@ -533,18 +538,68 @@ S2: 2.  S: C . C    {$}
         Add $ to LA set of S4
 
 S3: 3.  C: c . C    {c d $}
-    Add production rules from C, using LA FIRST($} = {$}
-        3.  C: . c C    {$}
-        4.  C: . d      {$}
 
+    Add production rules from C, using LA FIRST($} = {c d $}
+        3.  C: . c C    {c d $}
+        4.  C: . d      {c d $}
+
+    Resulting in:
+        S3: 3.  C: c . C    {c d $}
+            3.  C: . c C    {c d $}
+            4.  C: . d      {c d $}
+
+    Transitions on:
+        C -> S6
+        c -> S3
+        d -> S4
+
+    Transition on C, inheriting LA:
+        S6: 3.  C: c C .    {c d $}
+
+    Transition on c, inheriting LA:
+        S3: 3.  C: c . C    {c d $}     Already defined in this configuration
+
+    Transition on d, inheriting LA:
+        S4: 3.  C: d .      {c d $}     Already defined in this configuration
 
 S4: 4.  C: d .      {c d $}
+    
+    Reduce: according to rule 4 (by default)
+    
 S5: 2.  S: C C .    {$}
 
+    Reduce: according to rule 2 (by default)
 
+S6: 3.  C: c C .    {c d $}
 
+    Reduce: according to rule 3 (by default)
 
+=============================================================================
 
+From the above examples the following algorithm is derived:
+(I'm working on this, George ;-)
 
+    Provide S0 with LA {$}
 
-
+    updateLA(state i, LA 
+    
+    for_each state:
+    {
+        do  // until no more changes
+        {
+            for each rule (kernel and nonkernel)
+            {
+                if the dot is before a NonTerminal N
+                {
+                    determine LA_N = LA{rule beyond dot, current LA}
+                    
+                    for_each nonkernel item which is a production of N:
+                    {
+                        if its LA set doesn't contain LA_N:
+                            change: enlarge the nonkernel item's LA by LA_N
+                    }
+                }
+            }
+        }
+        while (changes)
+    }
