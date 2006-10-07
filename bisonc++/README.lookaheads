@@ -577,29 +577,40 @@ S6: 3.  C: c C .    {c d $}
 =============================================================================
 
 From the above examples the following algorithm is derived:
-(I'm working on this, George ;-)
 
-    Provide S0 with LA {$}
-
-    updateLA(state i, LA 
-    
-    for_each state:
+    propagateLA(state i, item j, LA-set LA)
     {
-        do  // until no more changes
+        Add LA to i.j.la();             // update the LA set of this rule
+        i.j.enlarged = true;            // this LA set is enlarged
+
+        if (the dot is before a NonTerminal N)
         {
-            for each rule (kernel and nonkernel)
-            {
-                if the dot is before a NonTerminal N
-                {
-                    determine LA_N = LA{rule beyond dot, current LA}
+            determine LA_N = LA{rule beyond dot, i.j.la()}
                     
-                    for_each nonkernel item which is a production of N:
-                    {
-                        if its LA set doesn't contain LA_N:
-                            change: enlarge the nonkernel item's LA by LA_N
-                    }
-                }
-            }
+            for_each non-kernel item k which is a production of N:
+                propagateLA(i, k, LA_N);
         }
-        while (changes)
     }
+
+    determineLA(state i, item j, LA-set LA)
+    {
+        if (i.j.la() contains LA)       // no changes in the LA of item j
+            return;                     // then done.
+
+        propagateLA(i, j, LA);          // propagate the LA over all items
+                                        // of this state
+
+        for_each enlarged item k
+        {
+            clear the `enlarged' flag
+            if (dot is not at the rule's end)
+                determineLA(transition state, 
+                        item k (with increased dot position), k.la());
+        }
+    }
+
+    The LA's are determined by the call:
+
+    determineLA(0, item 0, {$});
+
+=============================================================================
