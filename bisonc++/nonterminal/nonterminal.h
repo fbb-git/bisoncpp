@@ -1,9 +1,12 @@
 #ifndef _INCLUDED_NONTERMINAL_
 #define _INCLUDED_NONTERMINAL_
 
+#include <iomanip>
+
 #include <vector>
 #include <string>
 
+#include "../om/om.h"
 #include "../symbol/symbol.h"
 #include "../production/production.h"
 #include "../firstset/firstset.h"
@@ -12,134 +15,202 @@
 class NonTerminal: public Symbol
 {
     public:
-        typedef std::vector<Production *>
-                ProdVect;
-        typedef ProdVect::const_iterator 
-                ProdConstIter;
-        typedef ProdVect::iterator 
-                ProdIter;
+        typedef std::vector<NonTerminal *> Vector;
 
     private:
-        ProdVect d_production;  // production rules in a vector
+        Production::Vector d_production;  // production rules in a vector
                                 // of ptrs to Production objects
         FirstSet    d_first;
         FollowSet   d_follow;
 
-        size_t/*unsigned*/ d_nr;          // the NonTerminal's number
+        size_t d_nr;          // the NonTerminal's number
 
-        static size_t/*unsigned*/ s_counter;
-        static size_t/*unsigned*/ s_number;   // incremented at each call of setNr()
+        static size_t s_counter;
+        static size_t s_number;   // incremented at each call of setNr()
+        static bool s_unused;
+        static bool s_undefined;
         
+        static std::ostream &(NonTerminal::*s_insert[])(std::ostream &out) 
+                                                                        const;
     public:
-        static void setFirstNr(size_t/*unsigned*/ nr)
-        {
-            s_number = nr;
-        }
-        static void setNr(NonTerminal *np)
-        {
-            np->d_nr = s_number++;
-        }
-        static size_t/*unsigned*/ counter() 
-        {
-            return s_counter;
-        }
-        static void countFollow(NonTerminal *nonTerminal)
-        {
-            s_counter += nonTerminal->d_follow.setSize();
-        }
-        static void resetCounter()
-        {
-            s_counter = 0;
-        }
-        static void setFirst(NonTerminal *nonTerminal);
-        static void showFollow(NonTerminal const *nonTerminal);
-        static void showFirst(NonTerminal const *nonTerminal);
-        static void setNonTerminal(NonTerminal *nonTerminal)
-        {
-            nonTerminal->setType(NON_TERMINAL);
-        }
-        static void undefined(NonTerminal const *nonTerminal);
-        static void unused(NonTerminal const *nonTerminal);
-
         NonTerminal(std::string const &name, std::string const &stype = "",
                                 Type type = NON_TERMINAL);
         ~NonTerminal();
 
-        
-        size_t/*unsigned*/ firstSize() const
-        {
-            return d_first.setSize();
-        }
+        Production::Vector &productions();
+        Production::Vector const &productions() const;
+        size_t firstSize() const;
+        size_t nProductions() const;
+        size_t value() const;
+        std::set<Element const *> const &firstTerminals() const;
+        virtual FirstSet const &firstSet() const;
+        void addEpsilon() ;
+        void addProduction(Production *next);
+        void addToFollow(FirstSet const &firstSet);
+        void addToFollow(NonTerminal const *nonTerminal);
+        void setEOFinFollow();
 
-        std::set<Element const *> const &firstTerminals() const
-        {
-            return d_first;
-        }
+        static NonTerminal *downcast(Symbol *sp);
+        static NonTerminal const *downcast(Symbol const *sp);
+        static size_t counter();
+        static void countFollow(NonTerminal *nonTerminal);
+        static void resetCounter();
+        static void setFirst(NonTerminal *nonTerminal);
+        static void setFirstNr(size_t nr);
+        static void setNonTerminal(NonTerminal *nonTerminal);
+        static void setNr(NonTerminal *np);
+        static void undefined(NonTerminal const *nonTerminal);
+        static void unused(NonTerminal const *nonTerminal);
+        static bool notUsed();
+        static bool notDefined();
 
-        virtual FirstSet const &firstSet() const
-        {
-            return d_first;
-        }
+    protected:
+        virtual std::ostream &insert(std::ostream &out) const;
 
-        void addProduction(Production *next)
-        {
-            d_production.push_back(next);
-        }
-
-        size_t/*unsigned*/ nProductions() const
-        {
-            return d_production.size();
-        }
-
-        size_t/*unsigned*/ value() const
-        {
-            return d_nr;
-        }
-
-        void addEpsilon() 
-        {
-            d_first.addEpsilon();
-        }
-
-        void setEOFinFollow()
-        {
-            d_follow.setEOF();
-        }
-
-        ProdVect &productions()
-        {
-            return d_production;
-        }
-        
-        ProdVect const &productions() const
-        {
-            return d_production;
-        }
-        
-        static NonTerminal *downcast(Symbol *sp)
-        {
-            return dynamic_cast<NonTerminal *>(sp);
-        }
-
-        static NonTerminal const *downcast(Symbol const *sp)
-        {
-            return dynamic_cast<NonTerminal const *>(sp);
-        }
-
-        void addToFollow(FirstSet const &firstSet)
-        {
-            d_follow += firstSet;
-        }
-
-        void addToFollow(NonTerminal const *nonTerminal)
-        {
-            d_follow += nonTerminal->d_follow;
-        }
+        std::ostream &standard(std::ostream &out) const;
+        std::ostream &withFirst(std::ostream &out) const;
+        std::ostream &withFollow(std::ostream &out) const;
+        std::ostream &srTable(std::ostream &out) const;
 
     private:
-        static void showName(std::string const &name);
+        std::ostream &insName(std::ostream &out) const;
 };
 
-        
+inline bool NonTerminal::notUsed()
+{
+    return s_unused;
+}
+
+inline bool NonTerminal::notDefined()
+{
+    return s_undefined;
+}
+
+inline std::ostream &NonTerminal::standard(std::ostream &out) const
+{
+    return out << name();
+}
+
+inline std::ostream &NonTerminal::srTable(std::ostream &out) const
+{
+    return out << std::setw(3) << value();
+}
+
+inline std::ostream &NonTerminal::withFirst(std::ostream &out) const
+{
+    return insName(out) << d_first;
+}
+
+inline std::ostream &NonTerminal::withFollow(std::ostream &out) const
+{
+    return insName(out) << d_follow;
+}
+
+inline void NonTerminal::setFirstNr(size_t nr)
+{
+    s_number = nr;
+}
+
+inline void NonTerminal::setNr(NonTerminal *np)
+{
+    np->d_nr = s_number++;
+}
+
+inline size_t NonTerminal::counter() 
+{
+    return s_counter;
+}
+
+inline void NonTerminal::countFollow(NonTerminal *nonTerminal)
+{
+    s_counter += nonTerminal->d_follow.setSize();
+}
+
+inline void NonTerminal::resetCounter()
+{
+    s_counter = 0;
+}
+
+inline void NonTerminal::setNonTerminal(NonTerminal *nonTerminal)
+{
+    nonTerminal->setType(NON_TERMINAL);
+}
+
+inline size_t NonTerminal::firstSize() const
+{
+    return d_first.setSize();
+}
+
+inline std::set<Element const *> const &NonTerminal::firstTerminals() const
+{
+    return d_first;
+}
+
+inline FirstSet const &NonTerminal::firstSet() const
+{
+    return d_first;
+}
+
+inline void NonTerminal::addProduction(Production *next)
+{
+    d_production.push_back(next);
+}
+
+inline size_t NonTerminal::nProductions() const
+{
+    return d_production.size();
+}
+
+inline size_t NonTerminal::value() const
+{
+    return d_nr;
+}
+
+inline void NonTerminal::addEpsilon() 
+{
+    d_first.addEpsilon();
+}
+
+inline void NonTerminal::setEOFinFollow()
+{
+    d_follow.setEOF();
+}
+
+inline Production::Vector &NonTerminal::productions()
+{
+    return d_production;
+}
+
+inline Production::Vector const &NonTerminal::productions() const
+{
+    return d_production;
+}
+
+inline NonTerminal *NonTerminal::downcast(Symbol *sp)
+{
+    return dynamic_cast<NonTerminal *>(sp);
+}
+
+inline NonTerminal const *NonTerminal::downcast(Symbol const *sp)
+{
+    return dynamic_cast<NonTerminal const *>(sp);
+}
+
+inline void NonTerminal::addToFollow(FirstSet const &firstSet)
+{
+    d_follow += firstSet;
+}
+
+inline void NonTerminal::addToFollow(NonTerminal const *nonTerminal)
+{
+    d_follow += nonTerminal->d_follow;
+}
+
+inline std::ostream &NonTerminal::insert(std::ostream &out) const
+{
+    return (this->*NonTerminal::s_insert[OM::type()])(out);
+}
+// operator<< is already available through Element
+
 #endif
 

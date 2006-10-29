@@ -6,14 +6,19 @@
 #include <string>
 #include <iosfwd>
 
+#include "../writer/writer.h"
+
 class Terminal;
-class NonTerminal;
 class Parser;
 class Rules;
-class ItemSets;
 
 class Generator
 {
+    typedef void (Generator::*Inserter)(std::ostream &) const;
+    typedef std::map<std::string, Inserter>     Map;
+    typedef Map::value_type                     MapValue;
+    typedef Map::const_iterator                 MapConstIter;
+
     Rules const &d_rules;
     Parser const &d_parser;
 
@@ -21,31 +26,16 @@ class Generator
     std::string const &d_nameSpace;
 
     mutable std::string d_key;          // extracted at $insert statements
-    mutable size_t/*unsigned*/ d_indent;
-
-    typedef std::map<std::string, void (Generator::*)(std::ostream &) const>
-            MapInsert;
-    typedef MapInsert::value_type
-            MapInsertValue;
-    typedef MapInsert::const_iterator
-            MapInsertConstIter;
-
-    struct SSContext                        // selectSymbolicContext
-    {
-        std::vector<Terminal const *> *symbolicTokens;
-    };
-
-    struct TContext                         // terminalContext
-    {
-        std::ostream &out;
-    };
-
-    static MapInsertValue s_mapValues[];
-    static MapInsert s_insert;
+    mutable size_t d_indent;
 
     mutable std::string d_line;
     bool        d_debug;
-    
+
+    mutable Writer d_writer;                // maintains its own const-ness
+
+    static MapValue s_mapValues[];
+    static Map s_insert;
+
     public:
         Generator(Rules const &rules, Parser const &parser);
 
@@ -53,7 +43,6 @@ class Generator
         void classHeader() const;
         void implementationHeader() const;
         void parseFunction() const;
-        void parsingTable() const;
 
     private:
         void filter(std::istream &in, std::ostream &out) const;
@@ -86,20 +75,9 @@ class Generator
         void stype(std::ostream &out) const;
         void tokens(std::ostream &out) const;
 
-        void productionInfo(std::ostream &out) const;
-        void srTables(std::ostream &out) const;
-        void stateArray(std::ostream &out) const;
-        void symbolData(std::ostream &out) const;
-
         static void selectSymbolic(Terminal const *terminal, 
-                            SSContext &context);
-
-        static void nonTerminal(NonTerminal const *nonTerminal, 
-                                TContext &context);
-
-        static void terminal(Terminal const *terminal, 
-                             TContext &context);
+                                   Terminal::ConstVector *symbolicTokens);
+                                   
 };
 
-        
 #endif

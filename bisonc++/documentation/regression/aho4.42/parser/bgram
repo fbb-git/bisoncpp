@@ -1,0 +1,15 @@
+/* AHO et al, example 4.42 */
+
+%token c d
+
+%%     
+
+S: 
+    C C
+;
+
+C:
+    c C
+|
+    d
+;

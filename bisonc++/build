@@ -9,6 +9,7 @@
 #include "icmake/clean"
 #include "icmake/manpage"
 #include "icmake/manual"
+#include "icmake/library"
 #include "icmake/program"
 #include "icmake/install"
 
@@ -20,7 +21,7 @@ void main(int argc, list argv, list envp)
 
     setLocations();     // from INSTALL.im
 
-    getenv("DRYRUN");
+    my_getenv("DRYRUN");
     g_dryrun = g_envvar;
 
     option = element(1, argv);
@@ -40,6 +41,9 @@ void main(int argc, list argv, list envp)
     if (option == "manual")
         manual();
 
+    if (option == "library")
+        library(1);
+
     if (option == "program")
         program();
 
@@ -47,6 +51,7 @@ void main(int argc, list argv, list envp)
         "Where `what' is one of:\n"
         "   clean           - clean up remnants of previous compilations\n"
         "   distclean       - clean + fully remove tmp/\n"
+        "   library         - build bisonc++'s library\n"
         "   man             - build the man-page (requires Yodl)\n"
         "   manual          - build the manual (requires Yodl)\n"
         "   program         - build bisonc++\n"

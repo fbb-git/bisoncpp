@@ -1,277 +1,255 @@
 #ifndef _INCLUDED_STATE_H_
 #define _INCLUDED_STATE_H_
 
+#include <iosfwd>
 #include <vector>
-#include <map>
 
 #include "../item/item.h"
 #include "../lookaheadset/lookaheadset.h"
 
+#include "../statetype/statetype.h"
+
+#include "../stateitem/stateitem.h"
+#include "../next/next.h"
+
 #include "../srconflict/srconflict.h"
 #include "../rrconflict/rrconflict.h"
-#include "../transition/transition.h"
 
 class Production;
 
-class State
+class State: public StateType
 {
+    friend std::ostream &operator<<(std::ostream &out, State const *state);
+
+    typedef std::vector<State *>                Vector;
+
+    StateItem::Vector   d_itemVector;
+    size_t              d_nKernelItems;
+    std::vector<size_t> d_reducible;    // d_itemVector offsets containing
+                                        // reducible items
+
+    size_t              d_nTransitions;     // elements in d_nextVector minus
+                                            // removed elements because of
+                                            // conflicts
+
+    size_t              d_nReductions;      // elements in d_reducible minus
+                                            // reductions having empty LA-sets
+
+    size_t              d_defaultReducible; // the d_reducible  index of the 
+                                            // reduction to use as default
+                                            // (or npos)
+
+    size_t              d_maxLAsize;    // the default reduction becomes the
+                                        // one having the largest LAset size
+
+    size_t              d_summedLAsize; // sum of all lookaheadsets of all
+                                        // non-default reductions. 
+
+    Next::Vector        d_nextVector;
+
+    size_t              d_idx;
+
+    size_t              d_nTerminalTransitions;
+
+    SRConflict          d_srConflict;
+    RRConflict          d_rrConflict;
+    
+    static Vector       s_state;
+    static State       *s_acceptState;
+
+    static std::ostream &(State::*s_insert)(std::ostream &out) const;
+
     public:
-        // On `Symbol', transit to the state stored in the Transition
-        typedef std::map<Symbol const *, Transition *> TransitionMap;
-        typedef TransitionMap::value_type              TransitionMapValue;
-        typedef TransitionMap::iterator                TransitionMapIterator;
-    
-    private:
-        enum Type           // modify data.cc when this enum changes
-        {
-            NORMAL,
-            HAS_ERROR_ITEM,
-            IS_ERROR_STATE
-        };    
-    
-        typedef std::vector<RRConflict> RRConflictVector;
-        typedef std::vector<SRConflict> SRConflictVector;
-    
-        typedef std::vector<State *> StateVector;
-        typedef std::vector<Item>    ItemVector;
-    
-        typedef std::vector<Symbol const *>  NonKernelVector;
-    
-        typedef std::map<Production const *, LookaheadSet> ReduceMap;
-        typedef ReduceMap::value_type                      ReduceMapValue;
-        typedef ReduceMap::iterator                        ReduceMapIterator;
-    
-        static StateVector  s_state;
-        static size_t/*unsigned*/ s_nShiftReduceConflicts;
-        static size_t/*unsigned*/ s_nReduceReduceConflicts;
-    
-        static char const *s_stateName[];   // ascii-text representations of
-                                            // the state types
-        static State *s_acceptState;
-        static Production const *s_startProduction;
-    
-        Type                d_type;
-        size_t/*unsigned*/            d_idx;
-    
-        ItemVector          d_kernel;
-        ReduceMap           d_reduce;
-    
-        TransitionMap       d_transition;
-        NonKernelVector     d_nonKernel;
-        bool                d_construct;
-        size_t/*unsigned*/            d_nTransitions; 
-        size_t/*unsigned*/            d_nTerminalTransitions;
-    
-        SRConflictVector    d_srConflict;
-        RRConflictVector    d_rrConflict;
-        size_t/*unsigned*/            d_nRRConflicts;
-    
-        Production const   *d_defaultReduction;
-    
-    public:
-        typedef TransitionMap::const_iterator   TransitionMapConstIterator;
+        typedef Vector::const_iterator  ConstIter;
 
-        State(size_t/*unsigned*/ idx);
+        bool isAcceptState() const;
+        bool nextContains(Next::ConstIter *iter, 
+                          Symbol const *symbol) const;
 
-        Production const *defaultReduction() const
-        {
-            return d_defaultReduction;
-        }
-        TransitionMap const &transitionMap() const
-        {
-            return d_transition;
-        }
+        size_t idx() const;
+        size_t nextOn(Symbol const *token) const;        
 
-        static void showConflicts();
+            // All reduction members operate with indices in d_reducible,
+            // so *not* with d_stateItem indices
 
-        static void define(Production const *start);   
-                                // define all the grammar-states and
+        size_t defaultReduction() const;    // def. reduction idx or npos
+        StateItem const *reduction(size_t idx) const; // 0 or reduction item
+
+        size_t reductions() const;          // number of reductions
+        size_t reductionsLAsize() const;    // summed LA set sizes of all
+                                            // non-default reductions
+
+        Symbol const *nextTerminal(size_t *idx) const; 
+                                            // Next terminal at 
+                                            // d_next[*idx], 0 if none
+
+        size_t terminalTransitions() const;
+        size_t transitions() const;
+        Next::Vector const &next() const;
+
+        static size_t nStates();
+
+        static void allStates();
+
+        static void define();   // define all the grammar-states and
                                 // lookaheads 
 
-        bool isAcceptState() const
-        {
-            return this == s_acceptState;
-        }
-
-        static void showAllStates();
-
-        static size_t/*unsigned*/ nStates()
-        {
-            return s_state.size();
-        }
-
-        static StateVector::const_iterator begin()
-        {
-            return s_state.begin();
-        }
-        static StateVector::const_iterator end()
-        {
-            return s_state.end();
-        }
-        struct WSAContext                       // writeStateArrayContext
-        {
-            std::string const &baseclassScope;
-            std::ostream &out;
-        };
-
-        static void writeStateArray(State const *state, WSAContext &context);
-
-        size_t/*unsigned*/ idx() const
-        {
-            return d_idx;
-        }
-        Symbol const *reductionLhs() const;
+        static ConstIter begin();       // iterator to the first State *
+        static ConstIter end();         // and beyond the last
 
     private:
-        void addKernelItem(Item const &item);
+        State(size_t idx, Type type);
 
-        static void addKernelItem(Item const &item, State &state)
-        {
-            state.addKernelItem(item);
-        }
+        void addKernelItem(StateItem const &stateItem);
 
-        void construct();       // construct all states beyond this state
-                                // (without their LA-sets)
+        void addState(Item::Vector const &kernel, Type type);
 
-                                // Inspect the LA set of a state 
-        void defineLookaheads(LookaheadSet const &la);
+        void construct();   // construct a state, and by recursion all other
+                            // states as well
 
-                                // define actions, reductions and goto's
-                                // determine and solve conflicts
-        static void defineActions();
+        size_t findKernel(Item::Vector const &kernel) const;
 
-        static State &newState();
+        void setItems();    // fill d_itemVector with this state's items 
 
-        static void writeTransition(TransitionMapValue const &transit, 
-                            WSAContext &context);
-        
-        static void writeReduction(ReduceMapValue const &reduction,
-                                   std::ostream &out);
+                            // add the productions of `symbol' to d_itemVector,
+                            // make them depend on d_itemVector[idx]
+        void addProductions(Symbol const *symbol, size_t idx);
 
-        struct WRContext                       // writeReductionContext
-        {
-            std::ostream &out;
-            int nr;
-        };
-        static void writeReduceAt(Element const *symbol, WRContext &context);
+        Next::ConstIter nextFind(Symbol const *symbol) const;
 
-        static void showState(State *state);
+        std::ostream &insertStd(std::ostream &out) const;
+        std::ostream &insertExt(std::ostream &out) const;
+        std::ostream &skipInsertion(std::ostream &out) const;
 
-        void show();                    // show the state
-        void showKernel();
-        static void showKernelLA(Item const &item, TransitionMap &transmap);
+        static void initialState();
+        static State &newState(Type type);
+        static void nextState(Next &next, State &state);
+        static bool hasKernel(State const *state, Item::Vector const &kernel);
 
-        static void showNonKernelItem(Symbol const *nonKernel);
-        static void showTransition(TransitionMapValue const &transit) ;
-        static void showReduction(ReduceMapValue const &reduction);
+        static void staticAddKernelItem(Item const &item, State &state);
 
-        void tuneAcceptState();
-        static void noShiftOnEOF(TransitionMap::value_type &transit)
-        {
-            transit.second->rmEOF();
-        }
+        static void staticCheckConflicts(State *state);   // calls inline:
+        void checkConflicts();
 
-        static void defineStateActions(State *state);
-        void solveReduceReduceConflicts();
-        static void installLA(ReduceMapValue &reduction, 
-                              TransitionMap &transmap);
-
-        struct RRContext
-        {
-            bool headerDisplayed;
-            bool leftReductionDisplayed;
-
-            size_t/*unsigned*/ idx;
-            ReduceMapIterator reduceIter;
-        };
-
-        static void compareReductions(ReduceMapValue &first, 
-                               RRContext &rrc);
-
-        void solveShiftReduceConflicts();
-
-        struct SRContext2
-        {
-            bool headerDisplayed;
-            State &state;
-            ReduceMap::value_type *reduction;
-        };
-
-        static void detectSR(ReduceMap::value_type &, SRContext2 &src);
-        static void checkSRConflict(Item &, SRContext2 &src);
-
-        static bool findTerminal(ReduceMapValue const &rmap, 
-                                 Symbol &terminal) 
-        {
-            return rmap.second.count(&terminal);
-        }
-
-        static bool solveSRbyPriority(TransitionMapValue &transition, 
-                          SRContext2 &src);
-        static bool solveSRbyAssociation(TransitionMapValue &transition,
-                          SRContext2 &src);
-
-        Transition *transitionOf(Symbol const *symbol);
-
-                                                // 1 line
-        static void handleKernelItem(Item const &item, State &state);
-        void handleNonKernelItem(Symbol const *symbol);
-        static void handleProduction(Production const *prod, State &state);
-        void handle(Item const &item);
-
-        static void constructDestination(TransitionMapValue &transit);
-        static void defineDestination(TransitionMapValue &transit, 
-                                      State &state);
-        static bool findState(size_t/*unsigned*/ *idx, std::vector<Item> const &kernel);
-        static bool searchStateWith(State &state, 
-                                    std::vector<Item> const &kernel);
-
-        static bool searchItemIn(Item const &item, State &state);
-
-        struct ItemContext
-        {
-            State &state;
-            LookaheadSet const &la;
-        };
-        static void inspectKernel(Item const &item, ItemContext &itemContext)
-        {
-            itemContext.state.expandLookaheads(item.lhs(), itemContext.la);
-        }
-
-        static void inspectKernelItem(Item &item, State &state);
-        
-        void expandLookaheads(Symbol const *lhs, LookaheadSet const &la);
-
-        struct DepSymContext
-        {
-            State &state;
-            LookaheadSet const &lhsLA;
-        };
-
-        static void inspectDepSym(Symbol const *depSym, State &state);
-
-        static void propagateLookaheads(TransitionMapValue &transit,
-                                TransitionMap &transitionMap);
-
-        // rename to inspectProduction:
-        static void inspectLA(Item &item, State &);
+        static void staticSummarizeActions(State *state);  // calls inline:
+        void summarizeActions();
 
         struct LookaheadContext 
         {
-            TransitionMap &transitionMap;
-            LookaheadSet la;
-        };
+            std::vector<State *> child;
 
-        static void addLookaheads(Item const &item, 
-                                    LookaheadContext &laContext)
-        {
-            laContext.la += 
-                laContext.transitionMap[item.lhs()]->lookaheadSet();
-        }
+            StateItem::Vector &parentItem;
+            bool visitChildState;
+            StateItem::Vector::iterator childKernel;
+        };
+        static void distributeLA(Next &next, LookaheadContext &context);
+
+        static void updateLA(size_t const &itemIdx, 
+                             LookaheadContext &context);
+
+        void propagateLA(); // propagate the LA's over the State's items.
+        static void staticPropagateLA(State *state);  
+                                                // called from the non-static
+                                                // function
 };
 
+inline size_t State::idx() const
+{
+    return d_idx;
+}
+
+inline size_t State::nStates() 
+{
+    return s_state.size();
+}
+
+inline size_t State::terminalTransitions() const
+{
+    return d_nTerminalTransitions;
+}
+
+inline size_t State::transitions() const
+{
+    return d_nTransitions;
+}
+
+inline StateItem const *State::reduction(size_t idx) const
+{
+    return idx >= d_reducible.size() ? 
+                0
+            :
+                &d_itemVector[d_reducible[idx]];
+}
+
+inline size_t State::defaultReduction() const
+{
+    return d_defaultReducible;
+}
+
+inline size_t State::reductions() const
+{
+    return d_nReductions;
+}
+
+inline size_t State::reductionsLAsize() const
+{
+    return d_summedLAsize;
+}
+
+inline void State::staticPropagateLA(State *state)
+{
+    state->propagateLA();
+}
+
+inline void State::staticAddKernelItem(Item const &item, State &state)
+{
+    state.addKernelItem(StateItem(item));
+}
+
+inline State::ConstIter State::begin()
+{
+    return s_state.begin();
+}
+
+inline State::ConstIter State::end()
+{
+    return s_state.end();
+}
+
+inline Next::Vector const &State::next() const
+{
+    return d_nextVector;
+}
+
+inline bool State::isAcceptState() const
+{
+    return this == s_acceptState;
+}
+
+inline bool State::nextContains(Next::ConstIter *iter, 
+                                Symbol const *symbol) const
+{
+    return (*iter = nextFind(symbol)) != d_nextVector.end();
+}
+
+inline void State::staticSummarizeActions(State *state)
+{
+    state->summarizeActions();
+}
+
+inline void State::staticCheckConflicts(State *state)
+{
+    state->checkConflicts();
+}
+
+inline std::ostream &State::skipInsertion(std::ostream &out) const
+{
+    return out;
+}
+
+inline std::ostream &operator<<(std::ostream &out, State const *state)
+{
+    return (state->*State::s_insert)(out);
+}
+
 #endif
-
-
-
-

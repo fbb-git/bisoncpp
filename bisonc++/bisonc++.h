@@ -8,6 +8,9 @@
 
 #include "rules/rules.h"
 #include "parser/parser.h"
+#include "state/state.h"
+#include "srconflict/srconflict.h"
+#include "rrconflict/rrconflict.h"
 #include "grammar/grammar.h"
 #include "generator/generator.h"
 

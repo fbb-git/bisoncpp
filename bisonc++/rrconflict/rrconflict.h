@@ -1,31 +1,52 @@
 #ifndef _INCLUDED_RRCONFLICT_
 #define _INCLUDED_RRCONFLICT_
 
-#include <ostream>
-#include <utility>
+#include <iosfwd>
 
+#include "../stateitem/stateitem.h"
 #include "../lookaheadset/lookaheadset.h"
+#include "../rrdata/rrdata.h"
 
-class Production;
-
-class RRConflict;
-
-class RRConflict: private std::pair<Production const *, Production const *>
+class RRConflict
 {
-    LookaheadSet d_laSet;
+    friend std::ostream &operator<<(std::ostream &out, 
+                                    RRConflict const &conflict);
+
+    StateItem::Vector const &d_itemVector;
+    std::vector<size_t> const &d_reducible;
+
+    size_t d_firstIdx;
+    LookaheadSet const *d_firstLA;
+    
+    RRData::Vector d_rmReduction;
+
+    static size_t  s_nConflicts;
 
     public:
-        RRConflict()
-        {}
-        RRConflict(LookaheadSet const &laSet, 
-                    Production const *one, Production const *other);
-        LookaheadSet const &lookaheadSet() const
-        {
-            return d_laSet;
-        }
-        static void show(RRConflict const &conflict);
+        RRConflict(StateItem::Vector const &stateItem, 
+                   std::vector<size_t> const &reducible);
+
+        void inspect();
+        void removeConflicts(StateItem::Vector &itemVector);
+
+        static size_t nConflicts();
+
     private:
+        std::ostream &insert(std::ostream &out) const;
+
+        void visitReduction(size_t first);
+        void compareReductions(size_t second);
 };
 
+inline size_t RRConflict::nConflicts()
+{
+    return s_nConflicts;
+}
 
+inline std::ostream &operator<<(std::ostream &out, RRConflict const &conflict)
+{
+    return conflict.insert(out);
+}
+
+        
 #endif

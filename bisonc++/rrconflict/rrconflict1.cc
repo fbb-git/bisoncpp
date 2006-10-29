@@ -1,12 +1,9 @@
 #include "rrconflict.ih"
 
-RRConflict::RRConflict(LookaheadSet const &laSet, 
-                       Production const *one, Production const *other)
+RRConflict::RRConflict(StateItem::Vector const &stateItem, 
+                       vector<size_t> const &reducible)
 :
-    d_laSet(laSet)
+    d_itemVector(stateItem),
+    d_reducible(reducible)
 {
-    if (one->nr() > other->nr())
-        swap(one, other);
-    first = one;
-    second = other;
 }

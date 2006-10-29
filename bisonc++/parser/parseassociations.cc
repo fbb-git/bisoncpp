@@ -5,7 +5,7 @@
 
 void Parser:: parseAssociations(Terminal::Association association)
 {
-    Terminal::incrementPriority();
+    Terminal::incrementPrecedence();
 
     string stype;
 

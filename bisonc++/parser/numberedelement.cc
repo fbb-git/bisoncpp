@@ -2,10 +2,10 @@
 
 // pos points to $ in what must be $i
 
-bool Parser::numberedElement(size_t/*unsigned*/ pos, size_t/*unsigned*/ nElements) 
+bool Parser::numberedElement(size_t pos, size_t nElements) 
 {
     int idx;                // extract the index, determine its length
-    size_t/*unsigned*/ length  = 1 + extractIndex(&idx, pos + 1);
+    size_t length  = 1 + extractIndex(&idx, pos + 1);
 
     string const &idxType = d_rules.sType(idx);
 

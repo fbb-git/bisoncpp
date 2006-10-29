@@ -1,10 +1,6 @@
 #include "srconflict.h"
 
-#include <bobcat/msg>
-
-#include <bobcat/indent>
-#include "../symbol/symbol.h"
-#include "../production/production.h"
+#include <bobcat/wrap1c>
 
 using namespace std;
 using namespace FBB;

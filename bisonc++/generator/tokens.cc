@@ -2,49 +2,30 @@
 
 void Generator::tokens(ostream &out) const
 {
-    vector<Terminal const *> symbolicTokens;
-
-    SSContext context = {&symbolicTokens};
-
+    Terminal::ConstVector tokens;
+ 
     for_each(d_rules.terminals().begin(), d_rules.terminals().end(), 
-        Wrap1c<Terminal, SSContext>
-                  (&Generator::selectSymbolic, context));
-
+        Wrap1c<Terminal, Terminal::ConstVector>(selectSymbolic, &tokens)
+    );
+ 
     key(out);
-
-    if (!symbolicTokens.size())
+ 
+    if (!tokens.size())
     {
         out << "// No symbolic tokens were defined\n";
         return;
     }
-
-    sort(symbolicTokens.begin(), symbolicTokens.end(), 
-        &Terminal::compareValues);
-
-    out << "\n"
-            "    // Symbolic tokens:\n"
-            "    enum Tokens\n"
-            "    {\n";
-
-    size_t/*unsigned*/ lastValue = 0;
-    for 
-    (
-        vector<Terminal const *>::const_iterator termIter = 
-                                                        symbolicTokens.begin();
-            termIter != symbolicTokens.end();
-                ++termIter
-    )
-    {
-        ++lastValue;
-        Terminal const &term = **termIter;
-        out <<  "        " << term.name();
-        if (term.value() != lastValue)
-        {
-            lastValue = term.value();
-            out << " = " << lastValue;
-        }
-        out << ",\n";
-    }
-    out <<  "    };\n"
-           "\n";
+ 
+    sort(tokens.begin(), tokens.end(), Terminal::compareValues);
+ 
+    d_writer.useStream(out);
+    d_writer.insert(tokens);
 }
+
+
+
+
+
+
+
+

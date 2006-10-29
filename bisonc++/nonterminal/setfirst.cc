@@ -8,7 +8,7 @@
 void NonTerminal::setFirst(NonTerminal *nonTerminal)
 {
     FirstSet &firstSet = nonTerminal->d_first;
-    ProdVect &prodVect = nonTerminal->d_production;
+    Production::Vector &prodVect = nonTerminal->d_production;
 
     if (!prodVect.size())               // empty production
         firstSet.addEpsilon();          // add epsilon to FirstSet
@@ -18,7 +18,7 @@ void NonTerminal::setFirst(NonTerminal *nonTerminal)
 
         for                             // visit all elements of a production
         (
-            ProdVect::const_iterator it = prodVect.begin(); 
+            Production::Vector::const_iterator it = prodVect.begin(); 
                 it != prodVect.end(); 
                     ++it
         )    

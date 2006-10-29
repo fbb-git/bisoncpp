@@ -1,9 +1,9 @@
 #include "terminal.ih"
 
-void Terminal::setValue(size_t/*unsigned*/ value)
+void Terminal::setValue(size_t value)
 {
     if (!setUnique(value))                
-        msg() << "Value " << value << " of token " << name() << 
+        msg() << "Value " << value << " of token " << this << 
                      " multiply assigned " << err;
     
     s_valueSet.erase(d_value);

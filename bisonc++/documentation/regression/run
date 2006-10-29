@@ -12,8 +12,8 @@ BISONCPP=bisonc++
     # UNCOMMENT the following variables if you want to run the examples from
     # the source distribution's documentation/regression directory rather than
     # from bisonc++ documentation's `regression' subdirectory.
-# SKEL=../../../../share/bisonc++
-# BISONCPP="../../../../tmp/bin/bisonc++ -B ${SKEL}base.h -C ${SKEL}.h -I ${SKEL}.ih -P ${SKEL}.cc"
+SKEL=../../../../share/bisonc++
+BISONCPP="../../../../tmp/bin/bisonc++ -B ${SKEL}base.h -C ${SKEL}.h -I ${SKEL}.ih -P ${SKEL}.cc"
 
 example()
 {
@@ -21,21 +21,13 @@ example()
 
     orgdir=`pwd`
 
+    tput clear
+
     case $2 in
         ("")
-            CONS=
             DEB=
         ;;
-        (c)
-            CONS=--construction
-            DEB=
-        ;;
-        (d)
-            CONS=
-            DEB=--debug
-        ;;
-        (cd|dc)
-            CONS=--construction
+        (debug)
             DEB=--debug
         ;;
         (*)
@@ -53,8 +45,9 @@ example()
     echo --------------------------------
     
     cd parser
-    $BISONCPP -V $CONS $DEB grammar > bisonc++.construction
-
+    $BISONCPP --construction $DEB grammar
+    [ -e /usr/bin/bison ] && bison -v bgram
+    
     if [ -s ../demo.cc ] 
     then
         cd ../scanner
@@ -62,20 +55,22 @@ example()
         cd ..
         g++ -Wall -o demo *.cc */*.cc
         echo "Entering a shell: \`demo' runs the program, \`exit' returns"
-        echo "Bisonc++'s output is in the \`parser' subdirectory"
-        $COMMAND
+        echo "The grammar analysis is in the \`parser' subdirectory:"
     else        
-        bison -v grammar
-        echo "Entering a shell: inspect the results, use \`exit' to continue"
-        $COMMAND
+        echo "Entering a shell: Inspect the results, use \`exit' to continue"
     fi
+
+    echo "bison's output is in \`bgram.output', bisonc++'s output in \`parse.output'"
+    echo
+    $COMMAND
 
     cd $cwd
 
         # the doc-test is a safequard agains accidentally removing files
-    [ -s doc ] && find ./ -type f -not -regex '.*/CVS/.*' \
+    [ -s doc ] && find ./ -type f -not -regex '.*/\.svn/.*' \
                 -not -regex '.*/_.*' \
                 -not -name doc -not -name demo.cc \
+                -not -name bgram \
                 -not -name grammar -not -name parser.h -not -name parser.ih \
                 -not -name lexer -not -name scanner.h -not -name scanner.ih \
                 -exec rm '{}' ';'
@@ -83,13 +78,13 @@ example()
     cd $orgdir
 }
 
+tput clear
 
 echo "
     This script feeds several grammars to bisonc++. Some grammars allow you to
-execute a little demo-program. Some examples do not have demo programs. The
-grammars without accompanying demo-program are also fed to bison (the grammars
-used for demo-programs use bisonc++ specific directives, so they're not
-offered to bison to chew upon.
+execute a little demo-program. Some examples do not have demo programs. All
+grammars are also fed to bison \(if existing\), producing their output on a file
+\`bgram.output' Bisonc++'s output is provided in the file \`parse.output'
 
     From the various test/parser directories, bisonc++ should be accessible as
 
@@ -111,47 +106,69 @@ visible, so no action can be associated with its reduction anyway.
 "
 
 EXAMPLE=1
-PRE="To run: [cd] + Enter, else skip example"
+PRE="To run: [debug] + Enter, enter other input to skip an example"
 
-echo $PRE $EXAMPLE: AHO Example 4.42, p. 231
+echo $EXAMPLE: AHO Example 4.42, p. 231
+echo $PRE
 read RUN
 example aho4.42 $RUN
 
-echo $PRE $EXAMPLE: two R/R conflicts
+echo $EXAMPLE: two R/R conflicts
+echo $PRE
 read RUN
 example rr2 $RUN
 
-echo $PRE $EXAMPLE: the dangling-else conflict
+echo $EXAMPLE: the dangling-else conflict
+echo $PRE
 read RUN
 example danglingelse $RUN
 
-echo $PRE $EXAMPLE: S/R and R/R conflicts
+echo $EXAMPLE: S/R and R/R conflicts
+echo $PRE
 read RUN
 example conflicts $RUN
 
-echo $PRE $EXAMPLE: not derivable sentence
+echo $EXAMPLE: not derivable sentence
+echo $PRE
 read RUN
 example nosentence $RUN
 
-echo $PRE $EXAMPLE: using an error-production
+echo $EXAMPLE: using an error-production
+echo $PRE
 read RUN
 example error $RUN
 
-echo $PRE $EXAMPLE: adding two integral values
+echo $EXAMPLE: adding two integral values
+echo $PRE
 read RUN
 example simplecalc $RUN
 
-echo $PRE $EXAMPLE: using the location stack
+echo $EXAMPLE: using the location stack
+echo $PRE
 read RUN
 example location $RUN
 
-echo $PRE $EXAMPLE: the man-page calculator
+echo $EXAMPLE: the man-page calculator
+echo $PRE
 read RUN
 example calculator $RUN
 
-echo $PRE $EXAMPLE: a calculator from the C++ Annotations
+echo $EXAMPLE: a calculator from the C++ Annotations
+echo $PRE
 read RUN
 example annotations $RUN
+
+echo $EXAMPLE: a reduced icmake V 7.00 grammar
+echo $PRE
+read RUN
+example icmake1 $RUN
+
+echo $EXAMPLE: the full icmake V 7.00 grammar
+echo $PRE
+read RUN
+example icmake2 $RUN
+
+tput clear
 
 echo "
     END OF SCRIPT

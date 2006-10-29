@@ -3,6 +3,9 @@
 void NonTerminal::undefined(NonTerminal const *nonTerminal) 
 {
     if (nonTerminal->isUsed() && !nonTerminal->nProductions())
-        msg() << "No definition for non-terminal `" <<
+    {
+        s_undefined = true;
+        msg() << "No production rules for non-terminal `" <<
                  nonTerminal->name() << "'" << err;
+    }
 }

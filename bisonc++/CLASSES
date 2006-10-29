@@ -1,3 +1,4 @@
+om
 element
 firstset
 symbol
@@ -11,11 +12,15 @@ rules
 lookaheadset
 scanner
 parser
-srconflict
-rrconflict
-transition
 item
+rmreduction
+rrdata
+stateitem
+rrconflict
+statetype
+next
+srconflict
 state
-stateinfo
 grammar
+writer
 generator

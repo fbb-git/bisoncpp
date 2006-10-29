@@ -5,7 +5,7 @@ void Parser::showFilenames() const
     if (!d_arg.option(0, "show-filenames"))
         return;
 
-    cerr << 
+    cout << 
         "\n"
         "SKELETONS AND FILENAMES:\n"
         "  Base class skeleton:\n"
@@ -21,5 +21,9 @@ void Parser::showFilenames() const
         "  Class header:          `" << d_classHeader << "'\n"
         "  Implementation header: `" << d_implementationHeader << "'\n"
         "  Parser Implementation: `" << d_parsefunSource << "'\n"
-        "  Grammar description:   `" << verbose() << "'\n" << endl;
+        "  Grammar description:   `" << d_verboseName << "'\n" << endl;
 }
+
+
+
+

@@ -13,7 +13,7 @@ bool Scanner::block(Block *block)
 
     block->clear();
 
-    size_t/*unsigned*/ begin = 0;
+    size_t begin = 0;
     int count = 0;
 
     while (true)

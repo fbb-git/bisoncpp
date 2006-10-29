@@ -7,6 +7,8 @@
 #include <bobcat/arg>
 #include <bobcat/msg>
 
+#include "../om/om.h"
+
 using namespace std;
 using namespace FBB;
 

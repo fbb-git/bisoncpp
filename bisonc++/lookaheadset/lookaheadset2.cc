@@ -3,5 +3,5 @@
 LookaheadSet::LookaheadSet(FirstSet const &firstSet)
 :
     FirstSet(firstSet),
-    d_EOF(false)
+    d_EOF(e_withoutEOF)
 {}

@@ -12,7 +12,7 @@ void Parser::parseDeclarations()
     {
         while (true)
         {
-            size_t/*unsigned*/ token = d_scanner.lex();
+            size_t token = d_scanner.lex();
             Iterator it = s_action.find(token);
 
             if (it != s_action.end())
@@ -24,7 +24,7 @@ void Parser::parseDeclarations()
     catch (int ok)
     {}
 
-    Terminal::resetPriority();      // Incremented terminal priority must be
+    Terminal::resetPrecedence();      // Incremented terminal priority must be
                                     // reset to 0: any terminal char-tokens 
                                     // seen below in the rules must again
                                     // receive the initial (0) priority

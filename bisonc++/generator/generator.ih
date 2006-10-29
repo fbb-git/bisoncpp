@@ -11,9 +11,7 @@
 #include "../rules/rules.h"
 #include "../parser/parser.h"
 #include "../terminal/terminal.h"
-#include "../nonterminal/nonterminal.h"
 #include "../production/production.h"
-#include "../state/state.h"
 
 using namespace std;
 using namespace FBB;

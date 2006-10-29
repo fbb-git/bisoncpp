@@ -2,10 +2,19 @@
 
 void Rules::showFollow() const
 {
-    msg() << "\n"
-            "FOLLOW sets:\n" << 
-            info;
+    if (!Arg::instance().option(0, "construction"))
+        return;
 
-    for_each(d_nonTerminal.begin(), d_nonTerminal.end(),
-                                    &NonTerminal::showFollow);
+    msg() << info;
+
+    msgstream() << "FOLLOW sets:\n";
+
+    OM::setType(OM::EXTENDED);
+
+    copy(d_nonTerminal.begin(), d_nonTerminal.end(), 
+                ostream_iterator<NonTerminal const *>(msgstream(), "\n"));
+
+    OM::setType(OM::STD);
+
+    msgstream() << info;
 }

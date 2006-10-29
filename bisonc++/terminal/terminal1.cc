@@ -3,13 +3,13 @@
 #include <iostream>
 
 Terminal::Terminal(string const &name, Type type, 
-                   size_t/*unsigned*/ value, Association association, 
+                   size_t value, Association association, 
                    std::string const &stype)
 :
     Symbol(name, type, stype),
     d_value(value == DEFAULT ? s_value++ : value),
     d_association(association),
-    d_priority(s_priority),
+    d_precedence(s_precedence),
     d_literal(name),
     d_readableLiteral(name),
     d_firstSet(this)
@@ -28,7 +28,7 @@ Terminal::Terminal(string const &name, Type type,
     }
        
     lineMsg() << "Defining terminal " << d_readableLiteral << ": pri = " << 
-                                                        d_priority << spool;
+                                                        d_precedence << spool;
     msg() << info;
 
     if (d_value > s_maxValue)

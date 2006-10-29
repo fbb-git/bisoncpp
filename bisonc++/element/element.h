@@ -4,6 +4,8 @@
 #include <ostream>
 #include <string>
 
+#include "../om/om.h"
+
     // Placeholder in FirstSet for Symbols, to prevent circular class 
     // dependencies
     //
@@ -21,20 +23,23 @@
     //  ------------------------------------------------------------------
     // original
     // Terminal::insert inserts the symbol followed by (= value)
-    //
+
+
 class Element
 {
+    friend std::ostream &operator<<(std::ostream &out, Element const *el);
+
     public:
         virtual ~Element();
+        virtual size_t value() const = 0;
 
-        virtual std::string const &display() const = 0;
-        virtual std::string const &literal() const
-        {
-            return display();
-        }
-        virtual size_t/*unsigned*/ value() const = 0;
+    protected:
+        virtual std::ostream &insert(std::ostream &out) const = 0;
 };
 
-std::ostream &operator<<(std::ostream &out, Element const *el);
+inline std::ostream &operator<<(std::ostream &out, Element const *element)
+{
+    return element->insert(out) << OM::reset;
+}
         
 #endif

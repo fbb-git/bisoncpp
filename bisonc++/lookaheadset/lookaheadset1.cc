@@ -1,6 +1,6 @@
 #include "lookaheadset.ih"
 
-LookaheadSet::LookaheadSet(bool eof)
+LookaheadSet::LookaheadSet(EndStatus eof)
 :
     d_EOF(eof)
 {}

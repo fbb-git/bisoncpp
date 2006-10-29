@@ -1,9 +1,9 @@
 #include "terminal.ih"
 
-size_t/*unsigned*/        Terminal::s_priority;
-set<size_t/*unsigned*/>   Terminal::s_valueSet;
-size_t/*unsigned*/        Terminal::s_value = Terminal::INITIAL_SYMBOLIC_VALUE;
-size_t/*unsigned*/        Terminal::s_maxValue;
+size_t        Terminal::s_precedence;
+set<size_t>   Terminal::s_valueSet;
+size_t        Terminal::s_value = Terminal::INITIAL_SYMBOLIC_VALUE;
+size_t        Terminal::s_maxValue;
 
 char const *Terminal::s_association[] = 
 {
@@ -11,4 +11,14 @@ char const *Terminal::s_association[] =
     "non-associative",    // NONASSOC,
     "left associative",   // LEFT,
     "right associative",  // RIGHT
+};
+
+
+ostream &(Terminal::*Terminal::s_insert[])(ostream &out) const =
+{
+    &Terminal::literal,
+    &Terminal::standard,
+    &Terminal::standard,
+    &Terminal::special,
+    &Terminal::srTable,  
 };

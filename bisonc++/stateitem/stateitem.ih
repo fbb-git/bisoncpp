@@ -1,0 +1,11 @@
+#include "stateitem.h"
+
+#include <ostream>
+#include <iterator>
+#include <algorithm>
+
+#include <bobcat/wrap1c>
+
+using namespace std;
+using namespace FBB;
+

@@ -6,7 +6,6 @@
 #include <map>
 #include <string>
 #include <algorithm>
-#include <fstream>
 
 #include "../block/block.h"
 #include "../terminal/terminal.h"
@@ -19,22 +18,16 @@
     // iterators into the symbol table
 class Rules
 {
-    static size_t/*unsigned*/ s_acceptProductionNr;
-    static size_t/*unsigned*/ s_nExpectedConflicts;
-    static Terminal s_errorTerminal;
-    static Terminal s_eofTerminal;
-    static Symbol *s_startSymbol;
-
-    std::vector<Terminal *> d_terminal;  // the vector holding information 
+    Terminal::Vector d_terminal;        // the vector holding information 
                                         // about defined terminal symbols
 
-    std::vector<NonTerminal *> d_nonTerminal; 
+    NonTerminal::Vector d_nonTerminal; 
                                             // the vector holding information 
     NonTerminal *d_currentRule;             // about defined nonterminals
 
     std::string d_startRule;                // name of the startrule
 
-    std::vector<Production *> d_production; // the vector holding information
+    Production::Vector d_production;        // the vector holding information
     Production *d_currentProduction;        // about all productions
                                             // productions hold Symbol
                                             // elements, they contain
@@ -42,31 +35,18 @@ class Rules
                                             // index of their elements in the 
                                             // (non)terminal vectors
 
-    std::ofstream d_verbose;
+    static size_t s_acceptProductionNr;
+    static size_t s_nExpectedConflicts;
+    static Terminal s_errorTerminal;
+    static Terminal s_eofTerminal;
+    static Symbol *s_startSymbol;
 
     public:
-        std::streambuf *infoToVerbose() const;
-
-        static void setExpectedConflicts(size_t/*unsigned*/ value)
-        {
-            s_nExpectedConflicts = value;
-        }
-        static Terminal const *eofTerminal()
-        {
-            return &s_eofTerminal;
-        }
-        static Terminal const *errorTerminal()
-        {
-            return &s_errorTerminal;
-        }
-        static size_t/*unsigned*/ acceptProductionNr()
-        {
-            return s_acceptProductionNr;
-        }
-        static size_t/*unsigned*/ expectedConflicts()
-        {
-            return s_nExpectedConflicts;
-        }
+        static void setExpectedConflicts(size_t value);
+        static Terminal const *eofTerminal();
+        static Terminal const *errorTerminal();
+        static size_t acceptProductionNr();
+        static size_t expectedConflicts();
 
 
         Terminal *insert(Terminal *terminal, std::string const &literal);
@@ -91,59 +71,35 @@ class Rules
         void assignNonTerminalNumbers();
         void augmentGrammar(Symbol *start);
 
-        Production const &lastProduction() const
-        {
-            return *d_currentProduction;
-        }
+        Production const &lastProduction() const;
 
-        std::string const &name() const  // return the name of the 
-        {                                           // currently defined rule
-            return d_currentRule->name();
-        }
+        std::string const &name() const;    // return the name of the 
+                                            // currently defined rule
 
-        std::streambuf *setVerbose(std::string const &filename);
+        std::string const &sType() const;   // return the value type
+                                            // associated with the 
+                                            // currently defined rule.
 
-        std::string const &sType() const  // return the value type
-        {                                           // associated with the 
-                                                    // currently defined rule.
-            return d_currentRule->sType(); 
-        }
-
-        std::string const &sType(size_t/*unsigned*/ idx) const; // return the value type
+        std::string const &sType(size_t idx) const; // return the value type
                                         // associated with element idx of
                                         // the currently defined production
 
-        size_t/*unsigned*/ nProductions() const
-        {
-            return d_currentRule->nProductions();
-        }
+        size_t nProductions() const;
 
-        size_t/*unsigned*/ nElements() const
-        {
-            return d_currentProduction->size();
-        }
+        size_t nElements() const;
 
         void determineFirst();
         void determineFollow();
 
                 // associate an action with the currently defined rule
                 // production 
-        void setAction(Block const &block)
-        {
-            d_currentProduction->setAction(block);
-        }
+        void setAction(Block const &block);
 
         void setHiddenAction(Block const &block);
 
-        void setLastTerminalValue(size_t/*unsigned*/ value)
-        {
-            d_terminal.back()->setValue(value);
-        }
+        void setLastTerminalValue(size_t value);
 
-        void setLastPriority(size_t/*unsigned*/ value)
-        {
-            d_terminal.back()->setPriority(value);
-        }
+        void setLastPrecedence(size_t value);
 
         void setPrecedence(Terminal const *terminal);
                 // Set the explicit precedence of the currently defined
@@ -159,44 +115,18 @@ class Rules
 
         void showUnusedTerminals() const;
         void showUnusedNonTerminals() const;
+        void showUnusedRules() const;
 
-        void setStartRule(std::string const &start)
-        {
-            d_startRule = start;
-        }
-        std::string const &startRule() const
-        {
-            return d_startRule;
-        }
+        void setStartRule(std::string const &start);
+        std::string const &startRule() const;
 
-        Production *startProduction()
-        {
-            return d_currentProduction;
-        }
+        Production const *startProduction();
 
-        static Symbol const *startSymbol() 
-        {
-            return s_startSymbol;
-        }
+        static Symbol const *startSymbol() ;
 
-        std::vector<NonTerminal const *> const &nonTerminals() const
-        {
-            void const *vp = &d_nonTerminal;
-            return *reinterpret_cast<std::vector<NonTerminal const *> const *>
-                   (vp);
-        }
-        std::vector<Terminal const *> const &terminals() const
-        {
-            void const *vp = &d_terminal;
-            return 
-                *reinterpret_cast<std::vector<Terminal const *> const *>(vp);
-        }
-        std::vector<Production const *> const &productions() const
-        {
-            void const *vp = &d_production;
-            return *reinterpret_cast<std::vector<Production const *> const *>
-                   (vp);
-        }
+        std::vector<NonTerminal const *> const &nonTerminals() const;
+        std::vector<Terminal const *> const &terminals() const;
+        std::vector<Production const *> const &productions() const;
         void setNonTerminalTypes();
 
     private:
@@ -204,16 +134,126 @@ class Rules
         
             // called by determineFollow() to process each NonTerminal
             // It will in turn process each of the nonterminal's productions
-        static void addFirstToFollow(NonTerminal *nonTerminal)
-        {
-            for_each(nonTerminal->productions().begin(), 
-                     nonTerminal->productions().end(), 
-                    &addFollowFromFirst);
-        }
+        static void addFirstToFollow(NonTerminal *nonTerminal);
 
         void addFollowToFollow();
         static void expandFollow(Production *production);
 };
+
+
+inline void Rules::setExpectedConflicts(size_t value)
+{
+    s_nExpectedConflicts = value;
+}
+
+inline Terminal const *Rules::eofTerminal()
+{
+    return &s_eofTerminal;
+}
+
+inline Terminal const *Rules::errorTerminal()
+{
+    return &s_errorTerminal;
+}
+
+inline size_t Rules::acceptProductionNr()
+{
+    return s_acceptProductionNr;
+}
+
+inline size_t Rules::expectedConflicts()
+{
+    return s_nExpectedConflicts;
+}
+
+inline Production const &Rules::lastProduction() const
+{
+    return *d_currentProduction;
+}
+
+inline std::string const &Rules::name() const
+{
+    return d_currentRule->name();
+}
+
+inline std::string const &Rules::sType() const  
+{                                 
+                                  
+    return d_currentRule->sType(); 
+}
+
+inline size_t Rules::nProductions() const
+{
+    return d_currentRule->nProductions();
+}
+
+inline size_t Rules::nElements() const
+{
+    return d_currentProduction->size();
+}
+
+inline void Rules::setAction(Block const &block)
+{
+    d_currentProduction->setAction(block);
+}
+
+inline void Rules::setLastTerminalValue(size_t value)
+{
+    d_terminal.back()->setValue(value);
+}
+
+inline void Rules::setLastPrecedence(size_t value)
+{
+    d_terminal.back()->setPrecedence(value);
+}
+
+inline void Rules::setStartRule(std::string const &start)
+{
+    d_startRule = start;
+}
+
+inline std::string const &Rules::startRule() const
+{
+    return d_startRule;
+}
+
+inline Production const *Rules::startProduction()
+{
+    return d_currentProduction;
+}
+
+inline Symbol const *Rules::startSymbol() 
+{
+    return s_startSymbol;
+}
+
+inline std::vector<NonTerminal const *> const &Rules::nonTerminals() const
+{
+    void const *vp = &d_nonTerminal;
+    return *reinterpret_cast<std::vector<NonTerminal const *> const *>
+           (vp);
+}
+
+inline std::vector<Terminal const *> const &Rules::terminals() const
+{
+    void const *vp = &d_terminal;
+    return 
+        *reinterpret_cast<std::vector<Terminal const *> const *>(vp);
+}
+
+inline std::vector<Production const *> const &Rules::productions() const
+{
+    void const *vp = &d_production;
+    return *reinterpret_cast<std::vector<Production const *> const *>
+           (vp);
+}
+
+inline void Rules::addFirstToFollow(NonTerminal *nonTerminal)
+{
+    for_each(nonTerminal->productions().begin(), 
+             nonTerminal->productions().end(), 
+            &addFollowFromFirst);
+}
         
 #endif
 

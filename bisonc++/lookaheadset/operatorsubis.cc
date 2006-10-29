@@ -8,7 +8,9 @@ LookaheadSet &LookaheadSet::operator-=(LookaheadSet const &other)
                     inserter(difference, difference.begin()));
 
     *reinterpret_cast<std::set<Element const *> *>(this) = difference;
-    d_EOF &= !other.d_EOF;
+
+    if (other.d_EOF == e_withEOF)
+        d_EOF = e_withoutEOF;
 
     return *this;
 }

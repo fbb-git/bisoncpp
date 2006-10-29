@@ -3,6 +3,9 @@
 LookaheadSet &LookaheadSet::operator+=(LookaheadSet const &other)
 {
     *reinterpret_cast<FirstSet *>(this) += other;
-    d_EOF |= other.d_EOF;
+
+    if (other.d_EOF == e_withEOF)
+        d_EOF = e_withEOF;
+
     return *this;
 }

@@ -42,7 +42,7 @@ Parser::ActionMap Parser::s_action
     s_info + sizeof(s_info) / sizeof(Value)
 );
 
-size_t/*unsigned*/ Parser::s_nHidden;
+size_t Parser::s_nHidden;
 
 ostringstream Parser::s_hiddenName;
 
@@ -57,3 +57,4 @@ char Parser::s_locationValueStack[] = "d_lsp";
                                     // name of the location value stack
                                     // used by the generated parser
 
+ofstream Parser::s_verbose;         // stream to contain verbose output
