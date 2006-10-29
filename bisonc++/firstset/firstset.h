@@ -8,48 +8,74 @@
 
 class FirstSet: public std::set<Element const *>
 {
+    friend std::ostream &operator<<(std::ostream &out, FirstSet const &fset);
+
     bool d_epsilon;             // true if epsilon in {First}
 
     protected:
         typedef std::set<Element const *> Baseclass;
+        FirstSet(Element const **begin, Element const **end);
 
     public:
+        FirstSet();
         FirstSet(Element const *terminal);
-        FirstSet()
-        :
-            d_epsilon(false)
-        {}
 
-        size_t/*unsigned*/ setSize() const
-        {
-            return size() + d_epsilon;
-        }
-        void rmEpsilon()
-        {
-            d_epsilon = false;
-        }
-        void addEpsilon()
-        {
-            d_epsilon = true;
-        }
-        bool hasEpsilon() const
-        {
-            return d_epsilon;
-        }
         FirstSet &operator+=(FirstSet const &other);
         FirstSet &operator+=(std::set<Element const *> const &terminalSet);
 
+        bool empty() const;
+        bool hasEpsilon() const;
         bool operator==(FirstSet const &other) const;
 
-                                                // should be virtual.
-        std::ostream &insert(std::ostream &out) const;
-        bool empty() const
-        {
-            return !d_epsilon && Baseclass::empty();
-        }
+        size_t setSize() const;
+
+        void addEpsilon();
+        void rmEpsilon();
+    
     private:
+        std::ostream &insert(std::ostream &out) const;
+
 };
 
-std::ostream &operator<<(std::ostream &out, FirstSet const &firstSet);
+inline FirstSet::FirstSet(Element const **begin, Element const **end)
+:
+    Baseclass(begin, end),
+    d_epsilon(false)
+{}
+
+inline FirstSet::FirstSet()
+:
+    d_epsilon(false)
+{}
+
+inline size_t FirstSet::setSize() const
+{
+    return size() + d_epsilon;
+}
+
+inline void FirstSet::rmEpsilon()
+{
+    d_epsilon = false;
+}
+
+inline void FirstSet::addEpsilon()
+{
+    d_epsilon = true;
+}
+
+inline bool FirstSet::hasEpsilon() const
+{
+    return d_epsilon;
+}
+
+inline bool FirstSet::empty() const
+{
+    return !d_epsilon && Baseclass::empty();
+}
+
+inline std::ostream &operator<<(std::ostream &out, FirstSet const &firstSet)
+{
+    return firstSet.insert(out);
+}
 
 #endif

@@ -4,9 +4,9 @@ namespace {
     string const ret;
 }
 
-string const &Rules::sType(size_t/*unsigned*/ idx) const
+string const &Rules::sType(size_t idx) const
 {
-    size_t/*unsigned*/ size = d_currentProduction->size();
+    size_t size = d_currentProduction->size();
     
     return
         (idx && idx <= size) ?

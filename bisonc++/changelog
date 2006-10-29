@@ -1,3 +1,25 @@
+bisonc++ (1.5.0)
+
+  * The algorithms for lookahead propagation and detection of grammars not
+    deriving sentences have been redesigned and rewritten. The previously used
+    algorithm propagating lookaheads suffered from spurious reduce/reduce
+    conflicts for some grammars (e.g., see the one in
+    documentation/regression/icmake1). Also, 1.4.0 choked on a (fairly)
+    complex grammar like the one used by icmake V 7.00. These problems are now
+    solved, and comparable problems should no longer occur.
+    
+    The layout and organization of the output has been changed as well. Now
+    there are basically three forms of verbose output: No verbose output, in
+    which the file *.output is not written, standard verbose output, in which
+    an overview of the essential parts of the grammar is written to the file
+    *.output, and --construction, in which case all lookaheadsets, as well as
+    the first and follow sets are written to *.output.
+
+    Multiple new classes were added, and some previously existing classes were
+    removed. See the file README.class-setup and the file CLASSES for details.
+
+    The man-page and manual were adapted on minor points.
+
 bisonc++ (1.4.0)
 
   * It turned out that in the previous versions, S/R conflicts were also

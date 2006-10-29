@@ -2,18 +2,16 @@
 
 void NonTerminal::unused(NonTerminal const *nonTerminal) 
 {
-    static bool header = false;
-
     if (!nonTerminal->isUsed())
     {
-        if (!header)
+        if (!s_unused)
         {
             msg() << 
                 "Non-terminal symbol(s) not used in productions:" << warning;
 
             Msg::setWarning("");
-            header = true;
+            s_unused = true;
         }
-        msg() << "  " << nonTerminal->display() << warning;
+        msg() << "  " << nonTerminal << warning;
     }
 }

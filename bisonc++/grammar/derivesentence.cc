@@ -1,13 +1,12 @@
 #include "grammar.ih"
 
+// Sentences are derived from the states following the Shift-Reduce algorithm
+// trying all alternative routes until the final state is somehow reached.
+
 void Grammar::deriveSentence()
 {
-                                    // set up the stateInfo. the stack is
-                                    //  still empty.
-    prepareDerivation();            // preparation of the derivation
-    
-    if (!derive())
+    if (!derivable(Rules::startSymbol()))
         msg() << 
-            "Grammar's start symbol `" << Rules::startSymbol()->display() <<
+            "Grammar's start symbol `" << Rules::startSymbol() <<
             "' does not derive any sentence" << fatal;
 }

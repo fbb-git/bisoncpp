@@ -25,6 +25,10 @@ namespace
         Arg::LongOption("filenames", 'f'),
 
         Arg::LongOption("construction"),
+                // implies verbose, but also shows FIRST and FOLLOW sets as
+                // well as the full set of states, including the non-kernel
+                // items
+
         Arg::LongOption("debug"),
 
         Arg::LongOption("force-implementation-header"),
@@ -40,10 +44,15 @@ namespace
         Arg::LongOption("lines", 'l'),
         Arg::LongOption("no-lines"),
         Arg::LongOption("scanner", 's'),
+
         Arg::LongOption("show-filenames"),
+                // writes the names of the files to the standard output
+
         Arg::LongOption("usage", 'h'),
         Arg::LongOption("version", 'v'),
         Arg::LongOption("verbose", 'V'),
+                // shows rules, tkoens, final states and kernel items, 
+                // and describes conflicts when found
     };
 
     Arg::LongOption const *const longEnd = longOptions + 
@@ -58,10 +67,6 @@ try
 
     arg.versionHelp(usage, version, 1);
 
-    bool construction = arg.option(0, "construction");
-    if (construction)
-        Msg::setDisplay(true);
-
     Rules rules;
 
     Parser parser(rules);   // parses the input, fills the data in the Rules
@@ -69,8 +74,13 @@ try
     parser.parse();         // read the grammar file, build required data
                             // structures. 
 
-    parser.showFilenames();
+    parser.setVerbosity();  // prepare Msg for verbose output
+                            // (--verbose, --construction) 
 
+    parser.showFilenames(); // shows the verbosity-filename, otherwise 
+                            // independent of the verbosity setting
+
+    rules.showRules();
     rules.showTerminals();
 
     rules.determineFirst();
@@ -79,23 +89,24 @@ try
     rules.determineFollow();
     rules.showFollow();
 
-    State::define(rules.startProduction());
+                            // define the startproduction
+    Production::setStart(rules.startProduction());
 
-    State::showAllStates();
+    State::define();        // define all states
 
     rules.assignNonTerminalNumbers();
 
-    rules.setVerbose(parser.verboseSource());
-
     rules.showUnusedTerminals();
     rules.showUnusedNonTerminals();
+    rules.showUnusedRules();
 
-    rules.showRules();
-
-    State::showConflicts();
+    State::allStates();
 
     Grammar grammar;
     grammar.deriveSentence();
+
+    if (Msg::errors())
+        return 1;
 
     Generator generator(rules, parser);
 
@@ -104,8 +115,6 @@ try
     generator.implementationHeader();
 
     generator.parseFunction();
-
-    State::showAllStates();
 
     return 0;
 }

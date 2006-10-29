@@ -1,0 +1,5 @@
+#include "om.ih"
+
+OM::() const
+{
+}

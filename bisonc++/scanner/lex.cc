@@ -40,7 +40,7 @@ namespace {
         "RULE",
     };
 
-//    void showToken(size_t/*unsigned*/ token)
+//    void showToken(size_t token)
 //    {
 //
 //        cout << "lex() returns ";

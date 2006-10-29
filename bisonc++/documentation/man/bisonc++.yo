@@ -413,6 +413,13 @@ specification file.
             (to do)
             if defined the parser stack is dumped when an error is detected
             by the bf(parse()) member function.
+    it() bf(%expect) tt(number) nl()    
+            If defined the parser will not report encountered shift/reduce and
+            reduce/reduce conflicts if all detected conflicts are equal to the
+            number following bf(%expect). Conflicts are mentioned in the
+            tt(.output) file and the number of encountered conflicts is shown
+            on the standard output if the actual number of conflicts deviates
+            from tt(number).
     it() bf(%filenames) tt(header) nl()
            Defines the generic name of all generated files, unless overridden
             by specific names. This directive is overridden by the
@@ -499,6 +506,62 @@ specification file.
             below). The location struct is named bf(LTYPE). If neither
             bf(locationstruct) nor bf(LTYPE) is specified, the aforementioned
             default struct is used. 
+    it() bf(%left) tt(terminal ...) nl()    
+            Defines the names of symbolic terminal tokens that should be
+            treated as left-associative. I.e., in case of a shift/reduce
+            conflict, a reduction will be preferred over a shift.
+            Sequences of bf(%left, %nonassoc, %right) and bf(%token)
+            directives may be used to define the precedence of operators. In
+            expressions, the first used directive will have the lowest
+            precedence, the last used the highest.
+    it() bf(%nonassoc) tt(terminal ...) nl()    
+            Defines the names of symbolic terminal tokens that should be
+            treated as non-associative. I.e., in case of a shift/reduce
+            conflict, a reduction will be preferred over a shift.
+            Sequences of bf(%left, %nonassoc, %right) and bf(%token)
+            directives may be used to define the precedence of operators. In
+            expressions, the first used directive will have the lowest
+            precedence, the last used the highest.
+    it() bf(%prec) tt(token) nl()    
+            Overrules the defined precendence of an operator for a particular
+            grammatical rule. Well known is the construction
+                verb(
+    expression:
+        '-' expression %prec UMINUS
+        {
+            ...
+        }
+                )
+            Here, the default priority and precedence of the `tt(-)' token as
+            the subtraction operator is overruled by the precedence and
+            priority of the tt(UMINUS) token, which is commonly defined as 
+                verb(
+    %right UMINUS
+                )
+            (see below) following, e.g., the tt('*') and tt('/') operators.
+    it() bf(%right) tt(terminal ...) nl()    
+            Defines the names of symbolic terminal tokens that should be
+            treated as right-associative. I.e., in case of a shift/reduce
+            conflict, a shift will be preferred over a reduction.
+            Sequences of bf(%left, %nonassoc, %right) and bf(%token)
+            directives may be used to define the precedence of operators. In
+            expressions, the first used directive will have the lowest
+            precedence, the last used the highest.
+    it() bf(%start) tt(non-terminal) nl()    
+            The non-terminal tt(non-terminal) should be used as the grammar's 
+            start-symbol. If omitted, the first grammatical rule will be used
+            as the grammar's starting rule. All syntactically correct
+            sentences must be derivable from this starting rule.
+    it() bf(%token) tt(terminal ...) nl()    
+            Defines the names of symbolic terminal tokens.
+            Sequences of bf(%left, %nonassoc, %right) and bf(%token)
+            directives may be used to define the precedence of operators. In
+            expressions, the first used directive will have the lowest
+            precedence, the last used the highest.
+    it() bf(%type) tt(<type> non-terminal ...) nl()    
+            In combination with bf(%union): associate the semantical value of
+            a non-terminal symbol with a union field defined by the bf(%union)
+            directive.
     it() bf(%union) tt(union-definition) nl()    
             Acts identically to the bf(bison) and bf(bison++) declaration. 
             as with bison generate a union for semantic type. 

@@ -14,7 +14,7 @@ void Generator::insert(ostream &out) const
 
     getline(istr, d_line);      // and store the remainder of the line
 
-    MapInsertConstIter iter = s_insert.find(d_key);
+    MapConstIter iter = s_insert.find(d_key);
 
     if (iter != s_insert.end())
         (this->*iter->second)(out);
@@ -22,3 +22,8 @@ void Generator::insert(ostream &out) const
         cerr << "Ignoring unsupported `$insert " << d_key << 
                 " ...' in skeleton file\n";
 }
+
+
+
+
+

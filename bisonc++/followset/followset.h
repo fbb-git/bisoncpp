@@ -8,6 +8,8 @@
 
 class FollowSet: public std::set<Terminal const *>
 {
+    friend std::ostream &operator<<(std::ostream &out, FollowSet const &fSet);
+
     bool d_EOF;             // true if {Follow} contains EOF
 
     public:
@@ -15,7 +17,7 @@ class FollowSet: public std::set<Terminal const *>
         :
             d_EOF(false)
         {}
-        size_t/*unsigned*/ setSize() const
+        size_t setSize() const
         {
             return size() + d_EOF;
         }
@@ -30,12 +32,15 @@ class FollowSet: public std::set<Terminal const *>
         FollowSet &operator+=(FollowSet const &other);
         FollowSet &operator+=(FirstSet const &firstSet);
 
-        std::ostream &ostrInsert(std::ostream &out) const;
-
     private:
+        std::ostream &oInsert(std::ostream &out) const;
 };
 
-std::ostream &operator<<(std::ostream &out, FollowSet const &followSet);
+inline std::ostream &operator<<(std::ostream &out, FollowSet const &followSet)
+{
+    return followSet.oInsert(out);
+}
+
 
         
 #endif

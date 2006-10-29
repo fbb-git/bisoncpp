@@ -1,6 +1,7 @@
 #include "generator.ih"
 
-void Generator::selectSymbolic(Terminal const *terminal, SSContext &context)
+void Generator::selectSymbolic(Terminal const *terminal,
+                               Terminal::ConstVector *symbolicTokens)
 {
     if 
     (
@@ -8,5 +9,5 @@ void Generator::selectSymbolic(Terminal const *terminal, SSContext &context)
         && 
         terminal->value() > Rules::eofTerminal()->value()
     )
-        context.symbolicTokens->push_back(terminal);
+        symbolicTokens->push_back(terminal);
 }

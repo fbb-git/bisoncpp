@@ -3,6 +3,7 @@
 
 #include <map>
 #include <sstream>
+#include <fstream>
 
 #include <bobcat/msg>
 
@@ -20,7 +21,7 @@ namespace FBB
 class Parser
 {
             // actions to taken given tokens returned by the lexical scanner
-    typedef std::map<size_t/*unsigned*/, void (Parser::*)()> 
+    typedef std::map<size_t, void (Parser::*)()> 
             ActionMap;
     typedef ActionMap::iterator 
             Iterator;
@@ -37,7 +38,11 @@ class Parser
     static char s_defaultParsefunSkeleton[];
     static char s_defaultParsefunSource[];
 
-    static size_t/*unsigned*/ s_nHidden;          // number of hidden nonterminals
+    static std::ofstream s_verbose;
+
+
+
+    static size_t s_nHidden;          // number of hidden nonterminals
     static std::ostringstream s_hiddenName;
 
     static char s_semanticValue[];  // name of the semantic value variable
@@ -80,6 +85,7 @@ class Parser
     std::string d_preInclude;
     std::string d_scannerInclude;
     std::string d_stackDecl;
+    std::string d_verboseName;
 
                                 // used in processBlock() and sipIgnore()
     std::vector<Block::Range>::const_reverse_iterator d_skipRbegin;
@@ -157,13 +163,14 @@ class Parser
         {
             return d_stackDecl;
         }
-        std::string verboseSource() const;
+
+        void setVerbosity();            // Prepare Msg for verbose output
 
     private:
         void checkBlocktype();
 
                                         // called from handleDollar
-        bool defaultReturn(size_t/*unsigned*/ pos);
+        bool defaultReturn(size_t pos);
 
         void definePathname(std::string *sp);
 
@@ -175,16 +182,16 @@ class Parser
                             Terminal::Association association, 
                             std::string stype);
 
-        int elementNr(size_t/*unsigned*/ *idx, std::string const &text);
+        int elementNr(size_t *idx, std::string const &text);
 
                                         // called from handleDollar
-        bool explicitElement(size_t/*unsigned*/ pos, size_t/*unsigned*/ nElements);
-        bool explicitReturn(size_t/*unsigned*/ pos);
+        bool explicitElement(size_t pos, size_t nElements);
+        bool explicitReturn(size_t pos);
 
-        size_t/*unsigned*/ extractType(std::string *type, size_t/*unsigned*/ pos);
-        size_t/*unsigned*/ extractIndex(int *idx, size_t/*unsigned*/ pos) const;
+        size_t extractType(std::string *type, size_t pos);
+        size_t extractIndex(int *idx, size_t pos) const;
 
-        void handleAtSign(size_t/*unsigned*/ idx, size_t/*unsigned*/ nElements);
+        void handleAtSign(size_t idx, size_t nElements);
                                         // handle a location-value stack
                                         // reference (@) in a received action 
                                         // block
@@ -192,7 +199,7 @@ class Parser
         void handleBlock();             // process a `{ block }', 
                                         // part of a rule-production
 
-        bool handleDollar(size_t/*unsigned*/ idx, size_t/*unsigned*/ nElements);
+        bool handleDollar(size_t idx, size_t nElements);
                                         // handle a semantic-value stack
                                         // reference ($) in a received action 
                                         // block
@@ -200,7 +207,7 @@ class Parser
                                         // rule-production
         void handleQuote();             // add char-token to a 
                                         // rule-production
-        int indexToOffset(int idx, size_t/*unsigned*/ nElements) const;
+        int indexToOffset(int idx, size_t nElements) const;
         void multiplyDefined(Symbol const *sp, std::string const &name) const;
         void nestedBlock();
         void newProduction();
@@ -209,7 +216,7 @@ class Parser
         void noDefaultTypeWarning() const;
 
                                         // called from handleDollar
-        bool numberedElement(size_t/*unsigned*/ pos, size_t/*unsigned*/ nElements);
+        bool numberedElement(size_t pos, size_t nElements);
 
 
         void parseAssociations(Terminal::Association association);
@@ -221,7 +228,7 @@ class Parser
         void predefine(Terminal const *terminal);   // Used by Parser() to 
                                                     // pre-enter into d_symtab
 
-        void substituteBlock(size_t/*unsigned*/ nElements);  
+        void substituteBlock(size_t nElements);  
                                         // replace @ and $ in blocks by 
                                         // variables, knowing that we've seen
                                         // `nElements' elements in the current
@@ -235,7 +242,7 @@ class Parser
         }        
         void setPrecedence();               // called by parseProduction()
         void showEmpty() const;
-        size_t/*unsigned*/ skipIgnore(size_t/*unsigned*/ pos);  // used by processBlock()
+        size_t skipIgnore(size_t pos);  // used by processBlock()
 
                                         // in setType():
         void tryNonTerminal(std::string const &name, 

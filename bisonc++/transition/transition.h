@@ -19,12 +19,12 @@ class Transition
                                         // symbol were entered
 
     std::vector<Item> d_kernel;         // next's kernel items
-    typedef std::vector<Item>::const_iterator KernelConstIterator;
+    typedef std::vector<Item>::const_iterator KernelConstIter;
 
     std::set<Symbol const *> d_depSym;  // Inspect these Transition 
                                         // entries if this symbol's 
                                         // LAset changes.
-    typedef std::set<Symbol const *>::const_iterator InfluenceConstIterator;
+    typedef std::set<Symbol const *>::const_iterator InfluenceConstIter;
 
     public:
         Transition()
@@ -33,11 +33,11 @@ class Transition
             d_productionsEntered(false)
         {}
 
-        KernelConstIterator kernelBegin()
+        KernelConstIter kernelBegin()
         {
             return d_kernel.begin();
         }
-        KernelConstIterator kernelEnd()
+        KernelConstIter kernelEnd()
         {
             return d_kernel.end();
         }
@@ -96,11 +96,11 @@ class Transition
         {
             return d_depSym.size();
         }        
-        InfluenceConstIterator influenceBegin() const
+        InfluenceConstIter influenceBegin() const
         {
             return d_depSym.begin();
         }
-        InfluenceConstIterator influenceEnd() const
+        InfluenceConstIter influenceEnd() const
         {
             return d_depSym.end();
         }

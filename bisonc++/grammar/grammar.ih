@@ -1,10 +1,11 @@
 #include "grammar.h"
 
+#include <algorithm>
+
 #include <bobcat/wrap1c>
 #include <bobcat/msg>
 
 #include "../rules/rules.h"
-#include <bobcat/indent>
 
 using namespace std;
 using namespace FBB;

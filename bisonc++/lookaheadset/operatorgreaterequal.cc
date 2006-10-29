@@ -8,5 +8,5 @@ bool LookaheadSet::operator>=(LookaheadSet const &other) const
             && 
             (hasEpsilon() || !other.hasEpsilon())
             &&
-            (d_EOF || !other.d_EOF);
+            (d_EOF == e_withEOF || other.d_EOF == e_withoutEOF);
 }

@@ -2,12 +2,21 @@
 
 void Rules::showFirst() const
 {
-    msg() << "\n"
-            "FIRST sets:\n" << 
-            info;
+    if (!Arg::instance().option(0, "construction"))
+        return;
 
-    for_each(d_nonTerminal.begin(), d_nonTerminal.end(),
-                                    &NonTerminal::showFirst);
+    msg() << info;
+
+    msgstream() << "FIRST sets:\n";
+
+    OM::setType(OM::EXTENDED);
+
+    copy(d_nonTerminal.begin(), d_nonTerminal.end(), 
+                ostream_iterator<NonTerminal const *>(msgstream(), "\n"));
+
+    OM::setType(OM::STD);
+
+    msgstream() << info;
 }
 
 

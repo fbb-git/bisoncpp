@@ -2,7 +2,7 @@
 
 // pos is the position of the second $ in '$$'
 
-bool Parser::defaultReturn(size_t/*unsigned*/ pos) 
+bool Parser::defaultReturn(size_t pos) 
 {
     string const &defaultType = d_rules.sType();    // get the rule's default
                                                     // type

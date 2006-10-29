@@ -1,5 +1,5 @@
 #include "nonterminal.ih"
 
-NonTerminal::() const
+NonTerminal::
 {
 }

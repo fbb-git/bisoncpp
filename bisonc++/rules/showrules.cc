@@ -2,15 +2,16 @@
 
 void Rules::showRules() const
 {
-    msg() << "Production Rules:" << info;
-
-    for 
-    (
-        vector<Production *>::const_iterator prod = d_production.begin();
-            prod !=  d_production.end();
-                ++prod
-    )
-        msg() << *prod << info;
+    if (!Msg::display())
+        return;
 
     msg() << info;
+
+    msgstream() << "Production Rules:\n";
+
+    copy(d_production.begin(), d_production.end(), 
+         ostream_iterator<Production const *>(msgstream(), "\n"));
+
+    msgstream() << info;
+
 }

@@ -4,6 +4,7 @@
 #include <vector>
 
 $insert preincludes
+$insert debugincludes
 
 namespace // anonymous
 {
@@ -21,8 +22,8 @@ $insert STYPE
 
     private:
         int d_stackIdx;
-        std::vector<size_t/*unsigned*/>   d_stateStack;
-        std::vector<STYPE>      d_valueStack;
+        std::vector<size_t>   d_stateStack;
+        std::vector<STYPE>    d_valueStack;
 $insert LTYPEstack
 
     protected:
@@ -37,10 +38,10 @@ $insert LTYPEstack
             UNEXPECTED_TOKEN,
         };
         bool        d_debug;
-        size_t/*unsigned*/    d_nErrors;
+        size_t    d_nErrors;
         int         d_token;
         int         d_nextToken;
-        size_t/*unsigned*/    d_state;
+        size_t    d_state;
         STYPE      *d_vsp;
         STYPE       d_val;
 $insert LTYPEdata
@@ -52,23 +53,23 @@ $insert debugdecl
         void ACCEPT() const throw(Return);
         void ERROR() const throw(ErrorRecovery);
         void clearin();
+        bool debug() const;
+        void pop(size_t count = 1);
+        void push(size_t nextState);
+        size_t reduce(PI const &productionInfo);
+        void setDebug(bool mode);
+        size_t top() const;
+}; 
 
-        bool debug() const
-        {
-            return d_debug;
-        }
-        void pop(size_t/*unsigned*/ count = 1);
-        void push(size_t/*unsigned*/ nextState);
-        size_t/*unsigned*/ reduce(PI const &productionInfo);
-        void setDebug(bool mode)
-        {
-            d_debug = mode;
-        }
-        size_t/*unsigned*/ top() const;
+inline bool @Base::debug() const
+{
+    return d_debug;
+}
 
-// class @Base ends
-};
-
+inline void @Base::setDebug(bool mode)
+{
+    d_debug = mode;
+}
 
 // As a convenience, when including ParserBase.h its symbols are available as
 // symbols in the class Parser, too.

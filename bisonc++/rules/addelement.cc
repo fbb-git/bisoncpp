@@ -1,10 +1,9 @@
 #include "rules.ih"
 
-void Rules::addElement(Symbol *symbolPtr)
+void Rules::addElement(Symbol *symbol)
 {
-    d_currentProduction->push_back(symbolPtr);
+    d_currentProduction->push_back(symbol);
 
-    lineMsg() << "      " << Symbol::showType(symbolPtr) << " `" << 
-            symbolPtr->name() << "' ( = $" << d_currentProduction->size() <<
-            ")" << info;
+    lineMsg() << "      $"  << d_currentProduction->size() << ": " <<
+                        symbol << info;
 }

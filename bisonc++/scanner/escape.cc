@@ -2,28 +2,28 @@
 
 namespace
 {
-    pair<size_t/*unsigned*/, size_t/*unsigned*/> escapeChars[] = 
+    pair<size_t, size_t> escapeChars[] = 
     {
-        pair<char, size_t/*unsigned*/>('a', '\a'),
-        pair<char, size_t/*unsigned*/>('b', '\b'),
-        pair<char, size_t/*unsigned*/>('f', '\f'),
-        pair<char, size_t/*unsigned*/>('n', '\n'),
-        pair<char, size_t/*unsigned*/>('r', '\r'),
-        pair<char, size_t/*unsigned*/>('t', '\t'),
-        pair<char, size_t/*unsigned*/>('v', '\v'),
+        pair<char, size_t>('a', '\a'),
+        pair<char, size_t>('b', '\b'),
+        pair<char, size_t>('f', '\f'),
+        pair<char, size_t>('n', '\n'),
+        pair<char, size_t>('r', '\r'),
+        pair<char, size_t>('t', '\t'),
+        pair<char, size_t>('v', '\v'),
     };
-    static size_t/*unsigned*/ const n = sizeof(escapeChars) / 
-                              sizeof(pair<char, size_t/*unsigned*/>);
+    static size_t const n = sizeof(escapeChars) / 
+                              sizeof(pair<char, size_t>);
 
     class Find
     {
-        size_t/*unsigned*/ d_key;
+        size_t d_key;
         public:
-            Find(size_t/*unsigned*/ key)
+            Find(size_t key)
             :
                 d_key(key)
             {}
-            bool operator()(pair<size_t/*unsigned*/, size_t/*unsigned*/> const &element) const
+            bool operator()(pair<size_t, size_t> const &element) const
             {
                 return element.first == d_key;
             }

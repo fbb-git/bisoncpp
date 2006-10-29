@@ -6,8 +6,9 @@
 #include <iomanip>
 
 #include <bobcat/msg>
+
+#include "../om/om.h"
 #include "../firstset/firstset.h"
-#include <bobcat/indent>
 
 using namespace std;
 using namespace FBB;

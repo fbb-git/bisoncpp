@@ -39,6 +39,9 @@ includefile(directives/intro.yo)
     lsubsect(PRECEDENCE)(%left, %right, %nonassoc: Operator Precedence)
     includefile(directives/precedence.yo)
 
+    subsect(%prec: Overruling default precedences)
+    includefile(directives/prec.yo)
+
     lsubsect(NONTERMS)(%type: Nonterminal Symbols)
     includefile(directives/nonterms.yo)
 
@@ -96,7 +99,7 @@ includefile(directives/intro.yo)
         includefile(directives/parse.yo)
 
         lsubsubsect(FILES)
-            (%files: the generic filename)
+            (%filenames: the generic filenames)
         includefile(directives/filenames.yo)
 
     subsect(%baseclass-preinclude: header included by the baseclass)

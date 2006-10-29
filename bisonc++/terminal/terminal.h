@@ -5,11 +5,16 @@
 #include <vector>
 #include <set>
 
+#include "../om/om.h"
 #include "../symbol/symbol.h"
 
 class Terminal: public Symbol
 {
     public:
+        typedef std::vector<Terminal *>         Vector;
+        typedef std::vector<Terminal const *>   ConstVector;
+        typedef ConstVector::const_iterator     ConstIter;
+
         enum
         {
             INITIAL_SYMBOLIC_VALUE = 257,   // See rules/data.cc for Terminals
@@ -24,7 +29,7 @@ class Terminal: public Symbol
             LEFT,
             RIGHT,
         };
-        enum PriorityComparison
+        enum Precedence
         {
             SMALLER = -1,
             EQUAL   = 0,
@@ -32,61 +37,32 @@ class Terminal: public Symbol
         };
 
     private:
-        static std::set<size_t/*unsigned*/> s_valueSet;   // all terminal token values
-        static size_t/*unsigned*/ s_priority;
-        static char const *s_association[];
-        static size_t/*unsigned*/ s_value;        // value assigned, unless explictly
-                                        // requested
-        static size_t/*unsigned*/ s_maxValue;     // maximum assigned terminal value
-
-        size_t/*unsigned*/ d_value;
+        size_t d_value;
         Association d_association;
-        size_t/*unsigned*/ d_priority;
+        size_t d_precedence;
 
         std::string d_literal;
         std::string d_readableLiteral;
 
         FirstSet d_firstSet;
+
+        static std::set<size_t> s_valueSet;   // all terminal token values
+        static size_t s_precedence;
+        static char const *s_association[];
+        static size_t s_value;        // value assigned, unless explictly
+                                        // requested
+        static size_t s_maxValue;     // maximum assigned terminal value
+
+
+        static std::ostream &(Terminal::*s_insert[])(std::ostream &out) const;
+
     public:
-        static Terminal *downcast(Symbol *sp)
-        {
-            return dynamic_cast<Terminal *>(sp);
-        }
-
-        static Terminal const *downcast(Element const *sp)
-        {
-            return dynamic_cast<Terminal const *>(sp);
-        }
-
-        static bool compareValues(Terminal const *left, Terminal const *right)
-        {
-            return left->d_value < right->d_value;
-        }
-
-        static PriorityComparison comparePriorities(Terminal const *first,
-                                                    Terminal const *second);
-
-        static void incrementPriority()
-        {
-            ++s_priority;
-        }
-        static void resetPriority()     // see Parser::parseDeclarations()
-        {
-            s_priority = 0;
-        }
-
-        static bool setUnique(size_t/*unsigned*/ value);    // true if unique
-        static void unused(Terminal const *terminal);
-        static size_t/*unsigned*/ maxValue()
-        {
-            return s_maxValue;
-        }
-
         Terminal(std::string const &name, 
                     Type type,
-                    size_t/*unsigned*/ value = DEFAULT, 
+                    size_t value = DEFAULT, 
                     Association association = UNDEFINED, 
-                    std::string const &stype = ""); // stype: type assigned by 
+                    std::string const &stype = ""); 
+                                    // stype: type assigned by 
                                     // explicit symbol type association, 
                                     // e.g. %type <int> symbol
 
@@ -94,54 +70,128 @@ class Terminal: public Symbol
                 std::string const &literal,
                     Type type);
 
-
         virtual ~Terminal();
 
-        std::string const &literal() const
-        {
-            return d_literal;
-        }
-        Association association() const
-        {
-            return d_association;
-        }
-        PriorityComparison comparePriority(Terminal const *other) const
-        {
-            return 
-                d_priority > other->d_priority ? LARGER  :
-                d_priority < other->d_priority ? SMALLER :
-                                                 EQUAL;
-        }            
-        size_t/*unsigned*/ priority() const
-        {
-            return d_priority;
-        }
-        size_t/*unsigned*/ value() const
-        {
-            return d_value;
-        }
+        Association association() const;
 
-        virtual FirstSet const &firstSet() const
-        {
-            return d_firstSet;
-        }        
+        Precedence comparePrecedence(Terminal const *other) const;
+        size_t precedence() const;
+        size_t value() const;
+        virtual FirstSet const &firstSet() const;
+        void setLiteral(std::string const &literal);
+        void setValue(size_t value);  // reassign a token value
+        void setPrecedence(size_t value);
 
-        void setLiteral(std::string const &literal)
-        {
-            d_literal = literal;
-        }
-        void setValue(size_t/*unsigned*/ value);  // reassign a token value
-        void setPriority(size_t/*unsigned*/ value)
-        {
-            d_priority = value;
-        }
-        static void showSymbolic(Terminal const *term);
+        static Terminal *downcast(Symbol *sp);
+        static Terminal const *downcast(Element const *sp);
+                                            // used with Element by Writer
 
-        virtual std::string const &display() const
-        {
-            return d_readableLiteral;
-        }
+        static bool compareValues(Terminal const *left, Terminal const *right);
+        static Precedence comparePrecedence(Symbol const *first,
+                                                      Symbol const *second);
+
+        static void incrementPrecedence();
+        static void resetPrecedence();     // see Parser::parseDeclarations()
+
+        static bool setUnique(size_t value);    // true if unique
+        static void unused(Terminal const *terminal);
+        static size_t maxValue();
+
+    protected:
+        virtual std::ostream &insert(std::ostream &out) const;
+
+        std::ostream &literal(std::ostream &out) const;
+        std::ostream &special(std::ostream &out) const;
+        std::ostream &standard(std::ostream &out) const;
+        std::ostream &srTable(std::ostream &out) const;
+        
 };
+
+inline std::ostream &Terminal::literal(std::ostream &out) const
+{
+    return out << name();
+}
+
+inline std::ostream &Terminal::standard(std::ostream &out) const
+{
+    return out << d_readableLiteral;
+}
+
+inline Terminal *Terminal::downcast(Symbol *sp)
+{
+    return dynamic_cast<Terminal *>(sp);
+}
+
+inline Terminal const *Terminal::downcast(Element const *sp)
+{
+    return dynamic_cast<Terminal const *>(sp);
+}
+
+inline void Terminal::incrementPrecedence()
+{
+    ++s_precedence;
+}
+
+inline void Terminal::resetPrecedence()     // see Parser::parseDeclarations()
+{
+    s_precedence = 0;
+}
+
+inline size_t Terminal::maxValue()
+{
+    return s_maxValue;
+}
+
+inline Terminal::Association Terminal::association() const
+{
+    return d_association;
+}
+
+inline Terminal::Precedence Terminal::comparePrecedence(
+                                                Terminal const *other) const
+{
+    return 
+        d_precedence > other->d_precedence ? LARGER  :
+        d_precedence < other->d_precedence ? SMALLER :
+                                         EQUAL;
+}            
+
+inline size_t Terminal::precedence() const
+{
+    return d_precedence;
+}
+
+inline size_t Terminal::value() const
+{
+    return d_value;
+}
+
+inline FirstSet const &Terminal::firstSet() const
+{
+    return d_firstSet;
+}        
+
+inline void Terminal::setLiteral(std::string const &literal)
+{
+    d_literal = literal;
+}
+
+inline void Terminal::setPrecedence(size_t value)
+{
+    d_precedence = value;
+}
+
+inline bool Terminal::compareValues(Terminal const *left, 
+                                    Terminal const *right)
+{
+    return left->d_value < right->d_value;
+}
+
+inline std::ostream &Terminal::insert(std::ostream &out) const
+{
+    return (this->*Terminal::s_insert[OM::type()])(out);
+}
+// operator<< is already available through Element
 
 #endif
 

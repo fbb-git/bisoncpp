@@ -18,15 +18,10 @@ $insert 4 scannerobject
         int parse();
 
     private:
-        void error(char const *msg)
-        {
-            std::cerr << msg << std::endl;
-        }
-
-$insert 8 lex
-
-        void print()    // d_token, d_loc
-        {}
+        void error(char const *msg);    // called on (syntax) errors
+        int lex();                      // returns the next token from the
+                                        // lexical scanner. 
+        void print();                   // use, e.g., d_token, d_loc
 
     // support functions for parse():
         void executeAction(int ruleNr);
@@ -34,6 +29,16 @@ $insert 8 lex
         int lookup();
         void nextToken();
 };
+
+inline void @::error(char const *msg)
+{
+    std::cerr << msg << std::endl;
+}
+
+$insert lex
+
+inline void @::print()      // use d_token, d_loc
+{}
 
 $insert namespace-close
 

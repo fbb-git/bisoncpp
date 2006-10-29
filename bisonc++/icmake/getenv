@@ -1,7 +1,7 @@
 list g_env;         // set to env in main()
 int g_envvar;    // set to the env var if defined
 
-string getenv(string var)
+string my_getenv(string var)
 {
     int idx;
 
