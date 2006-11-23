@@ -5,12 +5,11 @@ using namespace std;
 
 #include "../../VERSION"
 
-#define _INCLUDED_BISONCPP_H_
-
-#include "../../usage.cc"
-
 char version[] = VERSION;
 char year[] = YEARS;
+
+#define _INCLUDED_BISONCPP_H_
+#include "../../usage.cc"
 
 int main()
 {

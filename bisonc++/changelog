@@ -1,9 +1,10 @@
 bisonc++ (1.5.1)
 
-  * Building the usage support program failed because of implied 
-    dependencies on the bobcat library. This is solved by not including
-    bisonc++.h when the usage program is constructed and by explicitly 
-    adding some prototypes to the usage.cc file.
+  * Building the usage support program failed because of implied dependencies
+    on the bobcat library, resulting from superfluously including bobcat.h in
+    the documentation/usage/usage.cc program source.  This is solved by
+    setting bisonc++.h's include guard identifier just before inserting
+    ../../usage.cc in the documentation/usage/usage.cc program source.
 
 bisonc++ (1.5.0)
 
