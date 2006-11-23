@@ -1,5 +1,10 @@
 #include "bisonc++.h"
 
+extern char version[];
+extern char year[];
+
+using namespace std;
+
 void usage(string const &program_name)
 {
     cout << 

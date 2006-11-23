@@ -1,3 +1,10 @@
+bisonc++ (1.5.1)
+
+  * Building the usage support program failed because of implied 
+    dependencies on the bobcat library. This is solved by not including
+    bisonc++.h when the usage program is constructed and by explicitly 
+    adding some prototypes to the usage.cc file.
+
 bisonc++ (1.5.0)
 
   * The algorithms for lookahead propagation and detection of grammars not
