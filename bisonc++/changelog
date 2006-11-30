@@ -1,3 +1,14 @@
+bisonc++ (1.5.2)
+
+  * It turns out that the modification in 1.5.1. is not necessary. The
+    compilation problems mentioned there were the result of a presumed small
+    g++ compiler bug. A workaround is implemented in Bobcat 1.12.1, preventing
+    the bug from occurring. In fact, this release has the same contents as
+    release 1.5.0. Release 1.5.1. can be considered obsolete. It is available
+    from the svn repository only.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Thu, 30 Nov 2006 17:05:09 +0100
+
 bisonc++ (1.5.1)
 
   * Building the usage support program failed because of implied dependencies
