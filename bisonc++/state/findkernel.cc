@@ -5,7 +5,11 @@
 
 size_t State::findKernel(Item::Vector const &searchKernel) const
 {
-    return find_if(s_state.begin(), s_state.end(),
-                Wrap1c<State, Item::Vector, bool>(hasKernel, searchKernel))
-           - s_state.begin();
+    return  find_if
+            (
+                s_state.begin(), s_state.end(),
+                FnWrap1c<State const *, Item::Vector const &, bool>
+                (hasKernel, searchKernel)
+            )
+            - s_state.begin();
 }

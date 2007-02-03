@@ -10,7 +10,7 @@ void Writer::insert(Terminal::ConstVector const &tokens) const
     TokenContext context = {0, *d_out};
 
     for_each(tokens.begin(), tokens.end(),
-        Wrap1c<Terminal, TokenContext>(insert, context));
+        FnWrap1c<Terminal const *, TokenContext &>(insert, context));
 
     *d_out <<  "    };\n"
            "\n";

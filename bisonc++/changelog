@@ -1,3 +1,9 @@
+bisonc++ (1.5.3)
+
+  * Using Bobcat's FnWrap* classes instead of Bobcat's Wrap* classes
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 03 Feb 2007 15:11:31 +0100
+
 bisonc++ (1.5.2)
 
   * It turns out that the modification in 1.5.1. is not necessary. The

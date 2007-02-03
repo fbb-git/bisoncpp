@@ -28,7 +28,7 @@ bool StateItem::propagateLA(StateItem &stateItem, Vector &vector)
         context.proposedLA += stateItem.d_LA;
 
     for_each(stateItem.d_child.begin(), stateItem.d_child.end(), 
-        Wrap1c<size_t, PropContext>(propagate, context));
+        FnWrap1c<size_t, PropContext &>(propagate, context));
 
     return true;
 }

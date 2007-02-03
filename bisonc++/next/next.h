@@ -46,7 +46,7 @@ class Next: public StateType, public SRSolution
         static bool hasSymbol(Next const &next, Symbol const *symbol);
         static bool inLAset(Next const &next, LookaheadSet const &laSet);
 
-        static void removeShift(size_t const &idx, Vector &nextVector);
+        static void removeShift(size_t idx, Vector &nextVector);
 
     private:
         std::ostream &insertStd(std::ostream &out) const;
@@ -83,7 +83,7 @@ inline bool Next::inLAset(Next const &next, LookaheadSet const &laSet)
     return laSet >= next.d_symbol;
 }
 
-inline void Next::removeShift(size_t const &idx, Vector &nextVector)
+inline void Next::removeShift(size_t idx, Vector &nextVector)
 {
     nextVector[idx].d_symbol = 0;
 }

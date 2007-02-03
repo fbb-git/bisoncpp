@@ -1,6 +1,6 @@
 #include "srconflict.ih"
 
-void SRConflict::visitReduction(size_t const &idx, SRConflict &context)
+void SRConflict::visitReduction(size_t idx, SRConflict &context)
 {
     Next::ConstIter nextIter = context.d_nextVector.begin();
     
@@ -9,7 +9,7 @@ void SRConflict::visitReduction(size_t const &idx, SRConflict &context)
         nextIter = 
             find_if(
                 nextIter, context.d_nextVector.end(), 
-                Wrap1c<Next, LookaheadSet, bool>(
+                FnWrap1c<Next const &, LookaheadSet const &, bool>(
                     Next::inLAset, context.d_itemVector[idx].lookaheadSet())
             );
 

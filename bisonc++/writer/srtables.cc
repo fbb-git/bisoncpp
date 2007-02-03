@@ -9,7 +9,7 @@ void Writer::srTables() const
     SRContext context = {d_baseclass, *d_out};
 
     for_each(State::begin(), State::end(),
-             Wrap1c<State, SRContext>(srTable, context));
+             FnWrap1c<State const *, SRContext &>(srTable, context));
 
     *d_out << endl;
 }

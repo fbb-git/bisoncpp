@@ -4,8 +4,11 @@ void Generator::tokens(ostream &out) const
 {
     Terminal::ConstVector tokens;
  
-    for_each(d_rules.terminals().begin(), d_rules.terminals().end(), 
-        Wrap1c<Terminal, Terminal::ConstVector>(selectSymbolic, &tokens)
+    for_each
+    (
+        d_rules.terminals().begin(), d_rules.terminals().end(), 
+        FnWrap1c<Terminal const *, Terminal::ConstVector *>(selectSymbolic, 
+                                                          &tokens)
     );
  
     key(out);

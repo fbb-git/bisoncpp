@@ -8,6 +8,6 @@ bool Grammar::becomesDerivable(Production const *prod, Grammar &object)
         
     return 
         find_if(prod->begin(), prod->end(),
-            Wrap1c<Symbol, Grammar, bool>(notDerivable, object))
+            FnWrap1c<Symbol const *, Grammar &, bool>(notDerivable, object))
         == prod->end();
 }

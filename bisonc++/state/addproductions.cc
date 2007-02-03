@@ -24,7 +24,7 @@ void State::addProductions(Symbol const *symbol, size_t idx)
     };
 
     for_each(productions.begin(), productions.end(),
-            Wrap1c<Production, StateItem::APContext>(
+            FnWrap1c<Production const *, StateItem::APContext &>(
                 StateItem::addProduction, context));
 }
 

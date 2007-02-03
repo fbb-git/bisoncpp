@@ -11,9 +11,12 @@ void Generator::actionCases(ostream &out) const
 
     Production::IAContext context = {out, arg[0], d_parser.lines(), d_indent};
 
-    for_each(productions.begin(), productions.end(), 
-            Wrap1c<Production, Production::IAContext>
-                      (&Production::insertAction, context));
+    for_each
+    (
+        productions.begin(), productions.end(), 
+        FnWrap1c<Production const *, Production::IAContext &>
+              (&Production::insertAction, context)
+    );
 }
 
 

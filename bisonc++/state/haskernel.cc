@@ -14,8 +14,16 @@ bool State::hasKernel(State const *state, Item::Vector const &searchKernel)
             &&
            searchKernel.size() ==
            static_cast<size_t>(
-                count_if(searchKernel.begin(), searchKernel.end(), 
-                    Wrap1c<Item, StateItem::KernelContext, bool>(
-                        StateItem::containsKernelItem, context))
+                count_if
+                (
+                    searchKernel.begin(), searchKernel.end(), 
+                    FnWrap1c
+                    <
+                        Item const &, 
+                        StateItem::KernelContext const &, 
+                        bool
+                    >
+                    (StateItem::containsKernelItem, context)
+                )
            );
 }

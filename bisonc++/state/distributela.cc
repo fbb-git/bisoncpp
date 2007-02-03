@@ -9,7 +9,7 @@ void State::distributeLA(Next &next, LookaheadContext &context)
 
         // visit all kernel items of the child state
     for_each (next.kernel().begin(), next.kernel().end(),
-        Wrap1c<size_t, LookaheadContext>(updateLA, context));
+        FnWrap1c<size_t, LookaheadContext &>(updateLA, context));
 
         // if the child's state has its LA changed, make sure it's visited
     if (context.visitChildState)

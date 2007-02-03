@@ -1,6 +1,6 @@
 #include "srconflict.h"
 
-#include <bobcat/wrap1c>
+#include <bobcat/fnwrap1c>
 
 using namespace std;
 using namespace FBB;

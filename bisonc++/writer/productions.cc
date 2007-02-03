@@ -11,7 +11,7 @@ void Writer::productions() const
             "     {0, 0}, // not used: reduction values are negative\n";
 
     for_each(prods.begin(), prods.end(),
-        Wrap1c<Production, ostream>(productionInfo, *d_out));
+        FnWrap1c<Production const *, ostream &>(productionInfo, *d_out));
 
     *d_out << "};\n";
 }

@@ -41,7 +41,7 @@ class SRConflict: public SRSolution
         void processShiftReduceConflict(Next::ConstIter const &next, 
                                         size_t itemIdx);
 
-        static void visitReduction(size_t const &idx, SRConflict &context);
+        static void visitReduction(size_t idx, SRConflict &context);
 };
 
 inline size_t SRConflict::nConflicts()

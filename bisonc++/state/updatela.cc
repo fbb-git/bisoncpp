@@ -3,7 +3,7 @@
 // the `parent' is the state from where a transition is performed,
 // the `child' is the next state, following a transition.
 
-void State::updateLA(size_t const &parentItemIdx, LookaheadContext &context)
+void State::updateLA(size_t parentItemIdx, LookaheadContext &context)
 {
     StateItem &parentItem = context.parentItem[parentItemIdx];
 

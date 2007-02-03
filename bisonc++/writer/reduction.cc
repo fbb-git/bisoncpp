@@ -6,7 +6,7 @@ void Writer::reduction(ostream &out, StateItem const &stateItem)
 
     for_each(
         stateItem.lookaheadSet().begin(), stateItem.lookaheadSet().end(),
-        Wrap1c<Element, ReductionContext>(reduction, context));
+        FnWrap1c<Element const *, ReductionContext &>(reduction, context));
 
     if (stateItem.lookaheadSet().hasEOF())
         reduction(Rules::eofTerminal(), context);

@@ -15,7 +15,7 @@ void State::propagateLA()
     (
         find_if(
             d_itemVector.begin(), d_itemVector.end(), 
-            Wrap1c<StateItem, StateItem::Vector, bool>(
+            FnWrap1c<StateItem &, StateItem::Vector &, bool>(
                 StateItem::propagateLA, d_itemVector
             )
         ) != d_itemVector.end()
@@ -33,7 +33,7 @@ void State::propagateLA()
     };
 
     for_each(d_nextVector.begin(), d_nextVector.end(),
-        Wrap1c<Next, LookaheadContext>(distributeLA, context));
+        FnWrap1c<Next &, LookaheadContext &>(distributeLA, context));
 
     for_each(context.child.begin(), context.child.end(), staticPropagateLA);
 }

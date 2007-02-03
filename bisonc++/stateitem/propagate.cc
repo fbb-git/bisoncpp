@@ -6,7 +6,7 @@
 // If the proposed (proposedLA) LA set contains additional elements, set the
 // d_LA_enlarged flag, and add the new elements to the current item's LA set.
 
-void StateItem::propagate(size_t &idx, PropContext &context)
+void StateItem::propagate(size_t idx, PropContext &context)
 {
     StateItem &itemIdx = context.vector[idx];
 

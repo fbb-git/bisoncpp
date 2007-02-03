@@ -4,7 +4,7 @@
 #include <iterator>
 #include <algorithm>
 
-#include <bobcat/wrap1c>
+#include <bobcat/fnwrap1c>
 
 using namespace std;
 using namespace FBB;

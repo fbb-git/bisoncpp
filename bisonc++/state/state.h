@@ -144,7 +144,7 @@ class State: public StateType
         };
         static void distributeLA(Next &next, LookaheadContext &context);
 
-        static void updateLA(size_t const &itemIdx, 
+        static void updateLA(size_t itemIdx, 
                              LookaheadContext &context);
 
         void propagateLA(); // propagate the LA's over the State's items.

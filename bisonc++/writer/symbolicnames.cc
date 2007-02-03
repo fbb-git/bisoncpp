@@ -14,10 +14,10 @@ void Writer::symbolicNames() const
         "\n";
 
     for_each(d_rules.terminals().begin(), d_rules.terminals().end(),
-            Wrap1c<Terminal, ostream>(terminalSymbol, *d_out));
+            FnWrap1c<Terminal const *, ostream &>(terminalSymbol, *d_out));
 
     for_each(d_rules.nonTerminals().begin(), d_rules.nonTerminals().end(),
-            Wrap1c<NonTerminal, ostream> (nonTerminalSymbol, *d_out));
+            FnWrap1c<NonTerminal const *, ostream &>(nonTerminalSymbol, *d_out));
 
     *d_out <<  "};\n"
             "\n"

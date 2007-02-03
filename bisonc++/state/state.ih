@@ -8,7 +8,7 @@
 
 #include <bobcat/msg>
 #include <bobcat/arg>
-#include <bobcat/wrap1c>
+#include <bobcat/fnwrap1c>
 #include <bobcat/indent>
 
 #include "../om/om.h"

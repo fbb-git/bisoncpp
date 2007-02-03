@@ -89,7 +89,7 @@ class StateItem
             Vector       &vector;
             LookaheadSet proposedLA;
         };
-        static void propagate(size_t &idx, PropContext &context);
+        static void propagate(size_t idx, PropContext &context);
 };
 
 inline bool StateItem::nextEnlarged() const

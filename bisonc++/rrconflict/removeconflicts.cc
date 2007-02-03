@@ -5,7 +5,7 @@ void RRConflict::removeConflicts(StateItem::Vector &itemVector)
     for_each
     (
         d_rmReduction.begin(), d_rmReduction.end(),
-        Wrap1c<RRData, StateItem::Vector>(
+        FnWrap1c<RRData const &, StateItem::Vector &>(
                                     StateItem::removeRRConflict, itemVector)
     );
 }
