@@ -30,6 +30,10 @@ string COMPILER;
     // particular version can be used. The distributed definition uses the
     // `default' compiler version.
 
+//#define PROFILE "-pg"
+    // Uncomment the above #define to construct a binary program that can be
+    // used with the gprof profiler
+
 void setLocations()
 {
     BASE  = "/usr";

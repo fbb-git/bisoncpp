@@ -47,7 +47,7 @@ void main(int argc, list argv, list envp)
     if (option == "program")
         program();
 
-    printf("Usage: build what\n"
+    printf("Usage: build [-p] what\n"
         "Where `what' is one of:\n"
         "   clean           - clean up remnants of previous compilations\n"
         "   distclean       - clean + fully remove tmp/\n"

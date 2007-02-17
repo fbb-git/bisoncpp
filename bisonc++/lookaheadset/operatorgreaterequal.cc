@@ -4,9 +4,9 @@
 
 bool LookaheadSet::operator>=(LookaheadSet const &other) const
 {
-    return includes(begin(), end(), other.begin(), other.end())
-            && 
-            (hasEpsilon() || !other.hasEpsilon())
+    return  (hasEpsilon() || !other.hasEpsilon())
             &&
-            (d_EOF == e_withEOF || other.d_EOF == e_withoutEOF);
+            (d_EOF == e_withEOF || other.d_EOF == e_withoutEOF)
+            &&
+            includes(begin(), end(), other.begin(), other.end());
 }
