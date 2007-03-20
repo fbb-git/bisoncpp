@@ -15,8 +15,8 @@ void Parser::parse()
 
     parseGrammar();
 
-    if (!d_rules.nProductions())
-        msg() << "No production rules found" << fatal;
+    if (!d_rules.hasRules() || !d_rules.nProductions())
+        msg() << "No production rules" << fatal;
 
     setAccessorVariables();
 

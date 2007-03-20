@@ -42,6 +42,8 @@ class Rules
     static Symbol *s_startSymbol;
 
     public:
+        Rules();
+
         static void setExpectedConflicts(size_t value);
         static Terminal const *eofTerminal();
         static Terminal const *errorTerminal();
@@ -90,6 +92,8 @@ class Rules
 
         void determineFirst();
         void determineFollow();
+
+        bool hasRules() const;
 
                 // associate an action with the currently defined rule
                 // production 
@@ -141,6 +145,12 @@ class Rules
 };
 
 
+inline Rules::Rules()
+:
+    d_currentRule(0),
+    d_currentProduction(0)
+{}
+
 inline void Rules::setExpectedConflicts(size_t value)
 {
     s_nExpectedConflicts = value;
@@ -184,7 +194,13 @@ inline std::string const &Rules::sType() const
 
 inline size_t Rules::nProductions() const
 {
+    std::cerr << "currentrule: " << d_currentRule << "\n";
     return d_currentRule->nProductions();
+}
+
+inline bool Rules::hasRules() const
+{
+    return d_currentRule;
 }
 
 inline size_t Rules::nElements() const

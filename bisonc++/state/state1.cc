@@ -3,7 +3,6 @@
 State::State(size_t idx, Type type)
 :
     StateType(type),
-    d_itemVector(0),
     d_nKernelItems(0),
     d_nTransitions(0),
     d_nReductions(0),

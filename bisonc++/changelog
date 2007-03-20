@@ -1,6 +1,20 @@
-bisonc++ (1.5.3)
+bisonc++ (1.5.4)
 
   * (To be uploaded)
+
+  * The function state/state1.cc contained the intialized d_itemVector(0), 
+    causing segfaults in some situations. The line has been removed.
+
+  * The class Rules lacked facilities to detect properly whether a grammar
+    file without rules was specified. Solved by defining a Rules constructor
+    and an additional member indicating whether there weree any rules at all.
+
+  * The `build' script was given an additional command (installprog) to 
+    install the program and the skeletons only.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 20 Mar 2007 17:11:11 +0100
+
+bisonc++ (1.5.3)
 
   * Using Bobcat's FnWrap* classes instead of Bobcat's Wrap* classes
 
@@ -8,6 +22,8 @@ bisonc++ (1.5.3)
     #define PROFILE. By activating this define, bisonc++ is compiled with
     support for the gprof profiler. This define should not be activated for
     production versions of bisonc++
+
+  * Not released.
 
  -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 17 Feb 2007 20:44:19 +0100
 

@@ -33,7 +33,10 @@ void main(int argc, list argv, list envp)
         clean(1);
 
     if (option == "install")
-        install(element(2, argv));
+        install(element(2, argv), 1);
+
+    if (option == "installprog")
+        install(element(2, argv), 0);
 
     if (option == "man")
         manpage();
@@ -49,17 +52,22 @@ void main(int argc, list argv, list envp)
 
     printf("Usage: build [-p] what\n"
         "Where `what' is one of:\n"
-        "   clean           - clean up remnants of previous compilations\n"
-        "   distclean       - clean + fully remove tmp/\n"
-        "   library         - build bisonc++'s library\n"
-        "   man             - build the man-page (requires Yodl)\n"
-        "   manual          - build the manual (requires Yodl)\n"
-        "   program         - build bisonc++\n"
-        "   install <base>  - to install the software in the locations\n"
-        "                     defined in the INSTALL.cf file, optionally\n"
-        "                     below <base>\n"
+        "   clean              - clean up remnants of previous compilations\n"
+        "   distclean          - clean + fully remove tmp/\n"
+        "   library            - build bisonc++'s library\n"
+        "   man                - build the man-page (requires Yodl)\n"
+        "   manual             - build the manual (requires Yodl)\n"
+        "   program            - build bisonc++\n"
+        "   install <base>     - install the software in the locations "
+                                                            "defined\n"
+                                                               
+        "                        in the INSTALL.cf file, optionally "
+                                                            "below <base>\n"
+        "   installprog <base> - only install the program and skeleton files\n"
+        "\n"
         "If the environment variable DRYRUN is defined, no commands are\n"
         "actually executed\n"
+        "\n"
     );
     exit(1);
 }

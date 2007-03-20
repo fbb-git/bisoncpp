@@ -1,4 +1,4 @@
-void install(string where)
+void install(string where, int all)
 {
     printf("  installing the executable\n");
     md(where + BIN);
@@ -8,30 +8,36 @@ void install(string where)
     md(where + SKEL);
     run("cp share/* " + where + SKEL);
 
-    printf("  installing the manual page bisonc++.1\n");
-    md(where + MAN);
-    run("gzip -9 < tmp/man/bisonc++.1 > " + where + MAN + "/bisonc++.1.gz");
+    if (all)
+    {
+        printf("  installing the manual page bisonc++.1\n");
+        md(where + MAN);
+        run("gzip -9 < tmp/man/bisonc++.1 > " + 
+                                        where + MAN + "/bisonc++.1.gz");
 
-    printf("  installing the manual page bisonc++man.html\n");
-    md(where + DOC + "/man");
-    run("cp tmp/manhtml/bisonc++man.html " + where + DOC + "/man");
+        printf("  installing the manual page bisonc++man.html\n");
+        md(where + DOC + "/man");
+        run("cp tmp/manhtml/bisonc++man.html " + where + DOC + "/man");
+    
+        printf("  installing the information directly in and under $DOC\n");
+        run("gzip -9 < changelog > " + where + DOC + "/changelog.gz");
+    
+        printf("  installing bison's docs\n");
+        md(where + DOC + "/bison-docs");
+        run("cp -r documentation/html documentation/bison.ps.org " + 
+                                        where + DOC + "/bison-docs");
+    
+        printf("  installing examples\n");
+        md(where + DOC + "/examples");
+        run("cp -r documentation/examples " + where + DOC);
+        run("cp -r documentation/man/calculator " + 
+                                        where + DOC + "/examples");
 
-    printf("  installing the information directly in and under $DOC\n");
-    run("gzip -9 < changelog > " + where + DOC + "/changelog.gz");
-
-    printf("  installing bison's docs\n");
-    md(where + DOC + "/bison-docs");
-    run("cp -r documentation/html documentation/bison.ps.org " + 
-                                            where + DOC + "/bison-docs");
-
-    printf("  installing examples\n");
-    md(where + DOC + "/examples");
-    run("cp -r documentation/examples " + where + DOC);
-    run("cp -r documentation/man/calculator " + where + DOC + "/examples");
-    run("cp -r documentation/regression " + where + DOC);
-
-    printf("  installing manual\n");
-    run("cp -r tmp/manual " + where + DOC);
+        run("cp -r documentation/regression " + where + DOC);
+    
+        printf("  installing manual\n");
+        run("cp -r tmp/manual " + where + DOC);
+    }
 
     printf("  Installation completed\n");
 
