@@ -24,7 +24,9 @@ class State: public StateType
     typedef std::vector<State *>                Vector;
 
     StateItem::Vector   d_itemVector;
+
     size_t              d_nKernelItems;
+
     std::vector<size_t> d_reducible;    // d_itemVector offsets containing
                                         // reducible items
 
@@ -100,7 +102,17 @@ class State: public StateType
     private:
         State(size_t idx, Type type);
 
+        void addDependents(Next const &next, Symbol const *symbol, 
+                           size_t itemIdx);
+                            // from notreducible from setitems: determine all 
+                            // dependent state items and X-link d_itemVector 
+                            // and d_nextVector
+
         void addKernelItem(StateItem const &stateItem);
+
+        void addNext(Symbol const *symbol, size_t idx);
+                            // from notreducible from setitems: 
+                            // add a new Next element to d_nextVector
 
         void addState(Item::Vector const &kernel, Type type);
 
@@ -108,6 +120,10 @@ class State: public StateType
                             // states as well
 
         size_t findKernel(Item::Vector const &kernel) const;
+
+        void notReducible(size_t idx);    
+                            // handle items in setItems() that aren't 
+                            // reducible
 
         void setItems();    // fill d_itemVector with this state's items 
 

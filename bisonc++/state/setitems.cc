@@ -1,43 +1,59 @@
 #include "state.ih"
 
-//        Walk over all state items. 
+//  Walk over all state items. See the tables below for an explanation
 //
-//        An N-symbol at the dot-position will have its production rules
-//        added 
+//  An N-symbol at the dot-position (e.g., S, L, R) will have its production
+//  rules added to d_itemVector.
 //
-//        and d_nextVector will receive the N-symbol, as well as the
-//        d_itemVector offsets containing the production rules, unless they're
-//        already there. If they are already there, then d_nextVector will contain
-//        its production rules, and so those production rules also depend on
-//        the current d_itemVector[idx].  Terminal symbols will simply be
-//        added to d_nextVector, together with their d_itemVector offsets (as they
-//        don't have production rules)
+//  Each of these N symbols will be added to the state's d_nextVector (unless
+//  it's already there).
 //
-//        StateItem:
-//        -------------------------------------------
-//        item            LA-enlarged LA-set  dependent 
-//                                        stateitems
-//        -------------------------------------------
-//        S* -> . S,      false,      EOF,    (1, 2)
-//        S  -> . L = R                       (3,  )
-//        S  -> . R
-//        L  -> . * R
-//        ... (etc)
-//        -------------------------------------------
+//  If the symbol N is already in d_nextVector (addDependent()): 
+//      1. the index of the item containing N (e.g., 0 for S, 1 for L) is
+//          added to d_nextVector
+//      2 the index of the N symbol in d_nextVector (e.g., 0 for S) is stored
+//          in the itemVector's element containing the production rule of the N
+//          symbol (for S: offset in d_next in d_itemVector[0] is 0).
+//      3. the indices of all stateitems starting at N are stored in d_child:
+//          these items depend on the item having N at dot (e.g., for S: 1, 2)
 //
-//    Moreover, the Next vector will be adapted:
+//  If the symbol is a new symbol (addNext()):
+//      1. The N symbol's d_itemVector element's d_next offset is given the
+//          size of d_nextVector (e.g., for S: 0, since there's no d_next
+//          yet. In general: d_nextVector's size is the index of the next
+//          element to be added to d_nextVector.
+//      2. a new element is added to d_nextVector, containing the symbol, the
+//          items's stateType, and the item's index in d_itemVector (e.g., for
+//          S: Next(S, 0, type)
 //
-//        Next:
-//        -------------------------------
-//        On          next    next kernel
-//        Symbol      state   from items
-//        -------------------------------
-//        S           ?       (0, 1)
-//        L
-//        R
-//        *
-//        ...
-//        -------------------------------
+//  Terminal symbols will simply be added to d_nextVector, together with their
+//  d_itemVector offsets (as they don't have production rules)
+//
+//  StateItems (in d_itemVector):
+//  ------------------------------------------------------------
+//  item            LA-enlarged LA-set  dependent   offet in 
+//                                      stateitems  d_next
+//  ------------------------------------------------------------
+//  S* -> . S,      false,      EOF,    (1, 2)      0
+//  S  -> . L = R                       (3,  )      1
+//  S  -> . R
+//  L  -> . * R
+//  ... (etc)
+//  ------------------------------------------------------------
+//
+//  Moreover, the Next vector will be adapted:
+//
+//  Next (in d_nextVector)
+//  -------------------------------
+//  On          next    next kernel
+//  Symbol      state   from items
+//  -------------------------------
+//  S           ?       (0, 1)
+//  L
+//  R
+//  *
+//  ...
+//  -------------------------------
 
 
 void State::setItems()
@@ -49,51 +65,13 @@ void State::setItems()
         if (d_itemVector[idx].isReducible())
             d_reducible.push_back(idx);
         else
-        {
-            Symbol const *symbol = d_itemVector[idx].symbolAtDot();
+            notReducible(idx);
 
-            symbol->used();     // For the showused bookkeeping
-
-            bool nonTerminal = symbol->isNonTerminal();      
-
-            if (symbol == Rules::errorTerminal())
-                setType(HAS_ERROR_ITEM);
-                        
-            Next::ConstIter next;
-            if (nextContains(&next, symbol)) // the symbol is in d_nextVector
-            {
-                size_t nextIdx = Next::addToKernel(d_nextVector, symbol, idx);
-                d_itemVector[idx].setNext(nextIdx);
-                                
-                if (type() == HAS_ERROR_ITEM)
-                    d_nextVector[idx].setType(IS_ERROR_STATE);
-                                        
-                if (nonTerminal)            // set dependent elements
-                    d_itemVector[idx].setChildren(
-                        d_itemVector[next->kernel().front()].child());
-
-                        // T-symbols don't have dependent elements, as only
-                        // N-symbols add new elements to d_itemVector
-            }
-            else                            // symbol not yet in d_nextVector
-            {
-                d_itemVector[idx].setNext(d_nextVector.size());
-                                
-                                // then add symbol to d_nextVector
-                d_nextVector.push_back(Next(symbol, idx, 
-                    type() == HAS_ERROR_ITEM ? IS_ERROR_STATE : type()));
-
-                                // add all production rules of `symbol' to
-                                // d_itemVector.
-                if (nonTerminal)                // set dependent elements
-                    addProductions(symbol, idx);
-                else
-                    ++d_nTerminalTransitions;
-            }
-        }
         ++idx;              // inspect the next element
     }   
 }
+
+
 
 
 

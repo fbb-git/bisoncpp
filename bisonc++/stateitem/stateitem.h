@@ -23,7 +23,8 @@ class StateItem
     std::vector<size_t> d_child;    // offsets of its children (items added
                                     // because the current item is a N-symbol
     size_t  d_next;                 // offset in a Next array defining the 
-                                    // next state
+                                    // next state (initialized to npos by
+                                    // default)
     bool    d_nextEnlarged;         // true if its d_next item's LA set is 
                                     // enlarged.
 

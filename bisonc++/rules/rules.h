@@ -194,7 +194,6 @@ inline std::string const &Rules::sType() const
 
 inline size_t Rules::nProductions() const
 {
-    std::cerr << "currentrule: " << d_currentRule << "\n";
     return d_currentRule->nProductions();
 }
 
