@@ -2,8 +2,17 @@ bisonc++ (1.5.4)
 
   * (To be uploaded)
 
+  * Segfaults were caused by some grammars due to an erroneous index in
+    (formerly state/setitems.cc) state/adddependents.cc, where idx,
+    representing an index in d_itemVector was used to index an element in
+    d_nextVector (for which the index variable `nextIdx' should have been
+    used. Repaired.
+
+  * The description of the setItems() algorithm in state/setItems was
+    improved. 
+
   * The function state/state1.cc contained the intialized d_itemVector(0), 
-    causing segfaults in some situations. The line has been removed.
+    The line has been removed.
 
   * The class Rules lacked facilities to detect properly whether a grammar
     file without rules was specified. Solved by defining a Rules constructor
