@@ -2,6 +2,21 @@ bisonc++ (1.5.4)
 
   * (To be uploaded)
 
+  * For some unknown reason, priority and association rules were not
+    implemented in earlier versions of bisonc++. Consequently priority and
+    association values of rules were left at their default values. It was
+    repaired by defining the function Rules::updatePrecedences(), which
+    defines priorities of productions as either their values assigned by a
+    %prec specification or as the priority of their first terminal token.
+
+  * Accepting States no longer have default reductions. They don't need them
+    since _EOF_ in those states will terminate the parser. Accepting States
+    now have search sentinels, allowing the parser to do proper error
+    recovery. 
+
+  * The share/bisonc++.cc parser function skeleton's initial comment is
+    improved.
+
   * Segfaults were caused by some grammars due to an erroneous index in
     (formerly state/setitems.cc) state/adddependents.cc, where idx,
     representing an index in d_itemVector was used to index an element in

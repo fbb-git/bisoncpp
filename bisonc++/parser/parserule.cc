@@ -65,5 +65,3 @@ void Parser::parseRule()
         }
     }            
 }
-
-

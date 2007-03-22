@@ -4,7 +4,7 @@
 
 // To check for SR conflict, pass each reducible item index together with the
 // context consisting of the state's d_itemVector vector and d_nextVector
-// vector to // Next's checkShiftReduceConflict member which will solve all
+// vector to Next's checkShiftReduceConflict member which will solve all
 // observed shift-reduce conflicts.
 
 void State::checkConflicts() 

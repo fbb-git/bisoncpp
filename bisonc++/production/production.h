@@ -66,6 +66,7 @@ class Production: public std::vector<Symbol *>
         static void setStart(Production const *production);
         static void unused(Production const *production);
         static bool notUsed();
+        static bool isTerminal();
 
     private:
         Symbol *vectorIdx(size_t idx) const;
@@ -142,6 +143,10 @@ inline std::ostream &operator<<(std::ostream &out, Production const *prod)
     return prod->standard(out);
 }
 
+inline bool isTerminal(Symbol const *symbol)
+{
+    return symbol->isTerminal();
+}
 
 #endif
 

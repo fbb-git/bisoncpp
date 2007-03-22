@@ -105,6 +105,10 @@ class Rules
 
         void setLastPrecedence(size_t value);
 
+        void updatePrecedences();       // try to assign a precedence to 
+                                        // productions that don't yet have a
+                                        // precedence associated to them
+
         void setPrecedence(Terminal const *terminal);
                 // Set the explicit precedence of the currently defined
                 // production to the precedence of the given terminal.
@@ -142,6 +146,8 @@ class Rules
 
         void addFollowToFollow();
         static void expandFollow(Production *production);
+        static void updatePrecedence(Production *production, 
+                                     Terminal::Vector const &tv);
 };
 
 

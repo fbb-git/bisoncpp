@@ -2,7 +2,7 @@ $insert class.ih
 
 // The FIRST element of SR arrays shown below uses `d_type', defining the
 // state's type, and `d_lastIdx' containing the last element's index. If
-// d_lastIdx is negative then the state needs a token: if in this state
+// d_lastIdx is positive then the state needs a token: if in this state
 // d_token is _UNDETERMINED_, nextToken() will be called
 
 // The LAST element of SR arrays uses `d_token' containing the last retrieved
@@ -23,6 +23,15 @@ $insert class.ih
 // returned to the `parse()' function. Since the stack has now been reduced to
 // a state having an `error . TOKEN' item, TOKEN will be found in the current
 // state, and thus parsing may continue.
+
+// States indicated as ERROR_STATES are states which are directly or
+// indirectly reached from _error_ transitions. This is for informational
+// purposes only.
+
+// The ACCEPT STATE never shows a default reduction. During the grammar
+// analysis phase a default reduction may have been defined, but it is
+// overruled by the parsing function generator. The ACCEPT state will only
+// terminate at _EOF_
 
 // So:
 //      s_x[] = 
@@ -52,7 +61,7 @@ namespace // anonymous
     {
         NORMAL,
         HAS_ERROR_ITEM,
-        IS_ERROR_STATE,
+        ERROR_STATE,
     };    
     struct PI   // Production Info
     {

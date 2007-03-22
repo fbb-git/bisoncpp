@@ -80,6 +80,8 @@ try
     parser.showFilenames(); // shows the verbosity-filename, otherwise 
                             // independent of the verbosity setting
 
+    rules.updatePrecedences();  // update production rule precedences
+
     rules.showRules();
     rules.showTerminals();
 

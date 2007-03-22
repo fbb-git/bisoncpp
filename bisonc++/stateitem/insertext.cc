@@ -1,5 +1,8 @@
 #include "stateitem.ih"
 
+// Produces:
+//  item - LA - LA-enlarged - next-enlarged - children - next-index
+
 ostream &StateItem::insertExt(ostream &out) const
 {
     out << d_item << "  "  << d_LA << "  " << 

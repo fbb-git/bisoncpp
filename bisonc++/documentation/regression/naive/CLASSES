@@ -1,0 +1,12 @@
+# This file contains the names of all subdirectories containing sources to
+# compile. Each directory should be specified on a line of its own. Initial
+# blanks are ok. Compilation is 1-level deep. 
+
+# If a parser or scanner is used, (see icmconfig's USE_PARSER and USE_SCANNER
+# defines) then those directories are automatically included (although they
+# could be included here as well) 
+
+# Lines starting with # or with // are ignored, as are empty lines.
+
+# sources in the current (i.e., this) directory are also compiled.
+

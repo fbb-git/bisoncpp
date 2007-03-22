@@ -70,11 +70,3 @@ void State::setItems()
         ++idx;              // inspect the next element
     }   
 }
-
-
-
-
-
-
-
-

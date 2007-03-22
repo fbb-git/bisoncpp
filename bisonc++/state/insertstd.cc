@@ -11,7 +11,7 @@ ostream &State::insertStd(ostream &out) const
         out << d_nextVector[idx] << endl;
 
     for (size_t idx = 0; idx < d_reducible.size(); ++idx)
-        out << "  Reduce to " << d_itemVector[d_reducible[idx]] << endl;
+        out << "  Reduce by " << d_itemVector[d_reducible[idx]] << endl;
 
     return out << d_srConflict << d_rrConflict << "\n";
 }

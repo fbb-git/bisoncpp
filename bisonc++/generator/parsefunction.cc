@@ -8,7 +8,7 @@
 // grammar. Providing the --no-parse-member option should not be
 // necessary, as it contains the essential information about the
 // grammar. Calling bisonc++ with the --no-parse-member basically renders the
-// calll useless.
+// call useless.
 
 void Generator::parseFunction() const
 {

@@ -4,7 +4,7 @@ void SRConflict::processShiftReduceConflict(Next::ConstIter const &next,
                                             size_t itemIdx)
 {
     Solution solution =
-        next->solveByPrecedence(d_itemVector[itemIdx].precedence());
+            next->solveByPrecedence(d_itemVector[itemIdx].precedence());
 
     if (solution == UNDECIDED)
         solution = next->solveByAssociation();
@@ -23,7 +23,8 @@ void SRConflict::processShiftReduceConflict(Next::ConstIter const &next,
         
         default:    // case SHIFT:
         break;
-    }        
+    }
+    
     d_rmReduction.push_back(RmReduction(itemIdx, next->next(), 
                                         next->symbol(), forced));
 }
