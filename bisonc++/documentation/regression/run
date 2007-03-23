@@ -12,8 +12,8 @@ BISONCPP=bisonc++
     # UNCOMMENT the following variables if you want to run the examples from
     # the source distribution's documentation/regression directory rather than
     # from bisonc++ documentation's `regression' subdirectory.
-SKEL=../../../../share/bisonc++
-BISONCPP="../../../../tmp/bin/bisonc++ -B ${SKEL}base.h -C ${SKEL}.h -I ${SKEL}.ih -P ${SKEL}.cc"
+#SKEL=../../../../share/bisonc++
+#BISONCPP="../../../../tmp/bin/bisonc++ -B ${SKEL}base.h -C ${SKEL}.h -I ${SKEL}.ih -P ${SKEL}.cc"
 
 example()
 {

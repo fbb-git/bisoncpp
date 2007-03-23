@@ -8,7 +8,8 @@ class StateType
         {
             NORMAL,
             HAS_ERROR_ITEM,
-            IS_ERROR_STATE
+            IS_ERROR_STATE,
+            NEEDS_LOOKAHEAD,
         };    
 
     private:

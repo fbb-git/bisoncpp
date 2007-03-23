@@ -55,13 +55,14 @@ namespace // anonymous
        PARSE_ACCEPT     = 0,   // `ACCEPT' TRANSITION
        _UNDETERMINED_   = -2,
        _EOF_            = -1,
-       _error_          = 256,
+       _error_          = 256
     };
     enum StateType       // modify state/data.cc when this enum changes
     {
         NORMAL,
         HAS_ERROR_ITEM,
         ERROR_STATE,
+        NEEDS_LOOKAHEAD
     };    
     struct PI   // Production Info
     {
@@ -376,6 +377,13 @@ $insert 4 debug "Parsing starts"
     {
         try
         {
+            if (s_state[d_state]->d_type == NEEDS_LOOKAHEAD)
+            {
+                nextToken();    
+$insert 16 debug "State " << d_state << " NEEDS_LOOKAHEAD. LA is " +
+$insert 16 debug symbol(d_token)
+            }
+
             int action = lookup();          // lookup d_token in d_state
 
             if (action > 0)                 // push a new state

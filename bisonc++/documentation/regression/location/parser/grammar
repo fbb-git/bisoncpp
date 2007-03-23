@@ -8,7 +8,7 @@
 lines:
     lines line  // 1
 |
-                // 2
+    line        // 2
 ;
 
 line:
