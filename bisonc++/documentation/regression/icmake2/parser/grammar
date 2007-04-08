@@ -718,11 +718,11 @@ if_stat:
     ;
 
 initassign:
-    '='
-    {
-        initialization = 1;
-    }
-
+        '='
+        {
+            initialization = 1;
+        }
+    ;
                                             /* J */
                                             /* K */
                                             /* L */

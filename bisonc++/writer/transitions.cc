@@ -1,7 +1,7 @@
 #include "writer.ih"
 
-void Writer::transitions(Next::Vector const &next, ostream &out)
+void Writer::transitions(Table &table, Next::Vector const &next)
 {
     for_each(next.begin(), next.end(), 
-             FnWrap1c<Next const &, ostream &>(transition, out));
+             FnWrap1c<Next const &, Table &>(transition, table));
 }

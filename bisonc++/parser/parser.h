@@ -86,6 +86,7 @@ class Parser
     std::string d_scannerInclude;
     std::string d_stackDecl;
     std::string d_verboseName;
+    std::string d_lastRule;
 
                                 // used in processBlock() and sipIgnore()
     std::vector<Block::Range>::const_reverse_iterator d_skipRbegin;
@@ -168,6 +169,8 @@ class Parser
 
     private:
         void checkBlocktype();
+
+        void checkEndOfRule() const;
 
                                         // called from handleDollar
         bool defaultReturn(size_t pos);

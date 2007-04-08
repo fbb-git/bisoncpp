@@ -3,3 +3,5 @@
 - make error recovery configurable in the sense that a series of tokens must
   have been successfully processed before error messages are generated again
   (see documentation/manual/error/intro.yo)
+- Use FBB::Table in writer/transitions.cc (requires official bobcat 1.13.2
+  release)

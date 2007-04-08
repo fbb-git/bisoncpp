@@ -15,6 +15,6 @@ void Generator::debug(ostream &out) const
     else
     {
         d_line.resize(d_line.length() - 1);
-        out <<  "s_out << " << d_line << " << dflush;" << endl;
+        out <<  "s_out << " << d_line << ";" << endl;
     }
 }

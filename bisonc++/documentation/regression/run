@@ -25,10 +25,6 @@ example()
 
     case $2 in
         ("")
-            DEB=
-        ;;
-        (debug)
-            DEB=--debug
         ;;
         (*)
             return 0
@@ -45,7 +41,7 @@ example()
     echo --------------------------------
     
     cd parser
-    $BISONCPP --construction $DEB grammar
+    $BISONCPP --construction --debug grammar
     [ -e /usr/bin/bison ] && bison -v bgram
     
     if [ -s ../demo.cc ] 
@@ -60,7 +56,7 @@ example()
         echo "Entering a shell: Inspect the results, use \`exit' to continue"
     fi
 
-    echo "bison's output is in \`bgram.output', bisonc++'s output in \`parse.output'"
+    echo "bison's output is in \`bgram.output', bisonc++'s output in \`grammar.output'"
     echo
     $COMMAND
 
@@ -84,7 +80,7 @@ echo "
     This script feeds several grammars to bisonc++. Some grammars allow you to
 execute a little demo-program. Some examples do not have demo programs. All
 grammars are also fed to bison \(if existing\), producing their output on a file
-\`bgram.output' Bisonc++'s output is provided in the file \`parse.output'
+\`bgram.output' Bisonc++'s output is provided in the file \`grammar.output'
 
     From the various test/parser directories, bisonc++ should be accessible as
 
@@ -106,7 +102,7 @@ visible, so no action can be associated with its reduction anyway.
 "
 
 EXAMPLE=1
-PRE="To run: [debug] + Enter, enter other input to skip an example"
+PRE="To run: press Enter, enter other input to skip an example"
 
 echo $EXAMPLE: AHO Example 4.42, p. 231
 echo $PRE
@@ -133,10 +129,25 @@ echo $PRE
 read RUN
 example nosentence $RUN
 
+echo $EXAMPLE: a reduced icmake V 7.00 grammar
+echo $PRE
+read RUN
+example icmake1 $RUN
+
+echo $EXAMPLE: the full icmake V 7.00 grammar
+echo $PRE
+read RUN
+example icmake2 $RUN
+
 echo $EXAMPLE: using an error-production
 echo $PRE
 read RUN
 example error $RUN
+
+echo "$EXAMPLE: Simple ;-separated list of numbers and error recovery"
+echo $PRE
+read RUN
+example naive $RUN
 
 echo $EXAMPLE: adding two integral values
 echo $PRE
@@ -158,15 +169,10 @@ echo $PRE
 read RUN
 example annotations $RUN
 
-echo $EXAMPLE: a reduced icmake V 7.00 grammar
+echo $EXAMPLE: an extensive calculator supporting functions
 echo $PRE
 read RUN
-example icmake1 $RUN
-
-echo $EXAMPLE: the full icmake V 7.00 grammar
-echo $PRE
-read RUN
-example icmake2 $RUN
+example fun $RUN
 
 tput clear
 

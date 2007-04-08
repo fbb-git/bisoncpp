@@ -68,9 +68,11 @@ class Scanner: public yyFlexLexer
     private:
         std::ifstream       d_in;
         size_t            d_retWS;
-        size_t            d_number;   // only valid after tokens NUMBER and
-                                        // after escape(), octal() and 
-                                        // hexadecimal() 
+        size_t            d_number; // only valid after tokens NUMBER and
+                                    // after escape(), octal() and 
+                                    // hexadecimal(). Illegal (long)
+                                    // character constants (> 1 char) have bit
+                                    // 8 set.
         std::string         d_ungotText;
         size_t            d_ungotToken;    
         size_t            d_ungotNumber;

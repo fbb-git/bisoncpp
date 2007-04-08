@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <set>
+#include <climits>
 
 #include "../om/om.h"
 #include "../symbol/symbol.h"

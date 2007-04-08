@@ -17,11 +17,11 @@ lines:
 expr:
     NR
     {
-        cout << d_scanner.YYText() << endl;
+        std::cout << d_scanner.YYText() << std::endl;
     }
 |
     error
     {
-        cout << "oops...\n";
+        std::cout << "oops...\n";
     }
 ;

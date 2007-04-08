@@ -53,7 +53,9 @@ the classes used by Rules; RmReduction does not depend on any other class).
        Parser           |              |           |                   
          |              +--------------+-----------+    
          |                             |                     
-         |                           State
+         |                           State      Support
+         |                             |           |
+         |                             +-----------+
          |                             |
          |                           Writer
          |                             |

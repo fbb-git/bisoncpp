@@ -11,6 +11,10 @@ void Parser::parseRule()
     if (!np)
         return;
 
+    checkEndOfRule();
+
+    d_lastRule = np->name();
+
     d_rules.addRule(np);
     newProduction();
 
@@ -57,6 +61,7 @@ void Parser::parseRule()
             continue;
 
             case ';':
+                d_lastRule.clear();
                 installAction();            // installs the last block as the
                                             // last production rule's action
             default:

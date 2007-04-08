@@ -11,6 +11,12 @@ lines:
 
 line:
     NR '\n'
+    {
+        std::cout << "   ok\n";
+    }
 |
     error '\n'
+    {
+        std::cout << "  ERROR\n";
+    }
 ;

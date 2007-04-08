@@ -9,7 +9,8 @@ the following steps:
         previously used INSTALL.cf) for further details.
 
     1. Inspect the values of the variables in the file INSTALL.im Modify these
-       when necessary.
+       when necessary. The default skeleton filenames are compiled into
+       bisonc++ through the definitions in parser/dataskel.cc
 
     2. Make sure the bobcat library has been installed. 
 

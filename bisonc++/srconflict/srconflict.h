@@ -28,7 +28,6 @@ class SRConflict: public SRSolution
                    std::vector<size_t> const &reducible);
 
         void inspect();
-
                             // returns # of shifts that were removed
         size_t removeShifts(Next::Vector &nextVector);
 

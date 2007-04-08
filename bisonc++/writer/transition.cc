@@ -2,15 +2,20 @@
 
 // Writes an SR element:
 //
-//   { { symbol }, {nextstate} },
+//   { { symbol }, {nextstate} }, // comment
 
-void Writer::transition(Next const &next, ostream &out)
+void Writer::transition(Next const &next, Table &table)
 {
     if (Symbol const *symbol = next.symbol())
-        out << "    { {" <<
-            OM::sr << symbol << "}, { " <<          // shift on this symbol
-            setw(3) << next.next() <<               // to this state
-            "} }, // " << symbol << "\n";           // show the symbol
+    {
+        ostringstream out;
+        
+        out << OM::sr << symbol;
+        table << out.str() << next.next();
+        out.str("");
+        out << "// " << symbol;
+        table << out.str();
+    }
 }
 
 

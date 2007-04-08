@@ -162,9 +162,9 @@ arguments if their associated long options require arguments as well.
             detected in the grammar, both those resolved by operator
             precedence and those that remain unresolved.  By default it will
             not be created, but if requested it will receive the filename
-            tt(<parse>.output), where tt(<parse>) is the filename (without the
-            tt(.cc) extension) of the file containing bf(parse())'s
-            implementation.
+            tt(<grammar>.output), where tt(<grammar>)
+            is the name of the file containing the grammar definition (i.e,
+            the file passed as argument to b()()).
     it() loption(version) (soption(v))nl()
             Display b()()'s version number and terminate.
     )

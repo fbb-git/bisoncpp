@@ -7,19 +7,34 @@ void State::allStates()
 
     msg() << info;
 
-    msg() << "Grammar States: " << OM::type() << info;
+    msg() << "Grammar States: " << info;
 
     if (s_insert == &State::insertExt)
         msg() << 
-            "State Items show:\n"
-            "   1. production number and dot-position\n"
-            "   2. the item (lhs -> recognized elements . "
-                                                    "elements to recognize)\n"
-            "   3. the item's lookaheadset\n"
-            "   4. whether (1) or not (0) it is enlarged, same for next "
-                                                    "state's LA-set\n"
-            "   5. ( item number(s) of its `child' items )\n"
-            "   6. the next state number (-1 for reducible items)" << info;
+    "\n"
+    "For each state information like the following is shown for its items:\n"
+    "   0: [P1 1] S -> C  . C   { <EOF> }  0, 0, (1 2 ) 0\n"
+    "which should be read as follows:\n"
+    "   0:          The item's index\n"
+    "   [P1 1]:     The rule (production) number and current dot-position\n"
+    "   S -> C . C: The item (lhs -> Recognized-symbols . "
+                                                  "symbols-to-recognize)\n"
+    "   { <EOF> }   The item's lookahead (LA) set\n"
+    "   0,          LA set not enlarged (1: LA set enlarged)\n"
+    "   0,          The next state's LA set is not enlarged (1: "
+                                                        "it is enlarged)\n"
+    "   (1 2)       Item indices of items whose LA sets depend on this item\n"
+    "   0           The next-element (shown below the items) describing the\n"
+    "               action associated with this item (-1 for reducible "
+                                                            "items)\n"
+    "\n"
+    "The Next tables show entries like:\n"
+    "   0: On C to state 5 with (0 )\n"
+    "meaning:\n"
+    "   0:               The Next table's index\n"
+    "   On C to state 5: When C was recognized, continue at state 5\n"
+    "   with (0 )        The item(s) whose dot is shifted at the next state\n"
+    "Also, reduction item(s) may be listed\n" << info;
 
     msg() << info;
 

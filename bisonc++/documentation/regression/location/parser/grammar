@@ -15,7 +15,7 @@ line:
     content     // 3
     '\n'
     {
-        std::cout << "Line token newline at " << @2.first_line << "\n";
+        std::cout << "      Line token newline at " << @2.first_line << "\n";
     }
 ;
 
@@ -30,7 +30,7 @@ content:
 expr:
     NR              // 7
     {
-        std::cout << "NR returns value " << $1 << "\n";
+        std::cout << "      NR returns value " << $1 << "\n";
     }
 ;
 

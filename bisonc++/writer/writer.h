@@ -4,6 +4,9 @@
 #include <iosfwd>
 #include <string>
 
+#include <bobcat/table>
+
+#include "../support/support.h"
 #include "../next/next.h"
 
 class Terminal;
@@ -46,32 +49,26 @@ class Writer
         struct SRContext
         {
             std::string const &baseclassScope;
+            FBB::Table &table;
             std::ostream &out;
         };
 
         static void productionInfo(Production const *production, 
                                    std::ostream &out);
         static void srTable(State const *state, SRContext &sac);
-        static void transitions(Next::Vector const &next, std::ostream &out);
-        static void transition(Next const &next, std::ostream &out);
+        static void transitions(FBB::Table &table, Next::Vector const &next);
+        static void transition(Next const &next, FBB::Table &table);
 
-        static void reductions(std::ostream &out, State const &state);
-        static void reduction(std::ostream &out, StateItem const &stateItem);
+        static void reductions(FBB::Table &, State const &state);
+        static void reduction(FBB::Table &, StateItem const &stateItem);
 
         struct ReductionContext
         {
             size_t ruleNr;
-            std::ostream &out;
+            FBB::Table &table;
         };
         static void reduction(Element const *sym, ReductionContext &context);
 };
-
-inline Writer::Writer(std::string const &baseclass, Rules const &rules)
-:
-    d_out(0),
-    d_baseclass(baseclass),
-    d_rules(rules)
-{}
 
 inline void Writer::useStream(std::ostream &out)
 {

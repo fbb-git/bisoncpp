@@ -6,45 +6,47 @@ class StateType
     public:
         enum Type           // modify data.cc when this enum changes
         {
-            NORMAL,
-            HAS_ERROR_ITEM,
-            IS_ERROR_STATE,
-            NEEDS_LOOKAHEAD,
-        };    
+            NORMAL      = 0,
+            ERR_ITEM    = 1,
+            REQ_TOKEN   = 2,        // terminal shifts and multiple reductions
+            DEF_RED     = 4         // state has default reduction
+        };                          // Combinations may occur.
 
     private:
-        Type                d_type;
+        static int const s_mask = 7;        // mask for all legal Type values
+
+        int d_type;
 
         static char const  *s_stateName[];
 
     protected:
-        StateType(Type type);
+        StateType(int type);
 
     public:
-        Type type() const;
-        char const *typeName() const;
+        int type() const;
         void setType(Type type);
 
+        static char const *typeName(int type);
 };
 
-inline StateType::Type StateType::type() const
+inline StateType::StateType(int type)
+:
+    d_type(type)
+{}
+
+inline int StateType::type() const
 {
     return d_type;
 }
 
 inline void StateType::setType(Type type)
 {
-    d_type = type;
+    d_type |= type;
 }
 
-inline StateType::StateType(Type type)
-:
-    d_type(type)
-{}
-
-inline char const *StateType::typeName() const
+inline char const *StateType::typeName(int type)
 {
-    return s_stateName[d_type];
+    return s_stateName[type & s_mask];
 }
 
         

@@ -1,6 +1,0 @@
-#include <iostream>
-#include <string>
-
-#include "parser/parser.h"
-
-using namespace std;

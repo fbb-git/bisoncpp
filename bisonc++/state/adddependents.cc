@@ -6,9 +6,6 @@ void State::addDependents(Next const &next, Symbol const *symbol, size_t idx)
 
     d_itemVector[idx].setNext(nextIdx);
                     
-    if (type() == HAS_ERROR_ITEM)           // nextIdx was idx in the next line
-        d_nextVector[nextIdx].setType(IS_ERROR_STATE);
-                            
     if (symbol->isNonTerminal())    // set dependent elements
         d_itemVector[idx].setChildren(
             d_itemVector[next.kernel().front()].child()

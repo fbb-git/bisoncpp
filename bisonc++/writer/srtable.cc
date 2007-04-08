@@ -3,60 +3,51 @@
 void Writer::srTable(State const *sp, SRContext &context)
 {
     bool acceptState = sp->isAcceptState();
-    bool tokenNeeded = sp->terminalTransitions() || acceptState;
-
-    string stateType;
-    string endText;
-
-    if (acceptState)
-    {
-        stateType = "ACCEPTING";
-        endText   = "ACCEPTING STATE SENTINEL";
-    }
-    else if (tokenNeeded)
-    {
-        stateType = "SHIFTING";
-        endText   = "SEARCH SENTINEL";
-    }
-    else
-    {
-        stateType = "REDUCING";
-        endText   = "DEFAULT REDUCTION";
-    }
-    
-    context.out << "\n"                     // Write the table header
-        "SR s_" << sp->idx() << "[] =\n"
-        "{\n" <<
-        "    {"
-                "{" << 
-                    sp->typeName() << 
-                "}, "
-                "{" << 
-                    (tokenNeeded ? "" : "-") <<
-                    sp->transitions() + sp->reductionsLAsize() + 
-                    acceptState + 1 <<
-                "}"
-            "}, // " << stateType << " STATE\n";
-
-    transitions(sp->next(), context.out);   // Write all transitions.
-
-    if (acceptState)
-        context.out << "    { {" << Rules::eofTerminal() << 
-                                                "}, { PARSE_ACCEPT }},\n";
-    reductions(context.out, *sp);        
 
     StateItem const *defaultReduction = 
                          sp->reduction(sp->defaultReduction());
 
-    if (defaultReduction && not acceptState)
-         context.out << "    { {  0}, {" << 
-                setw(4) << -static_cast<int>(defaultReduction->nr()) << "} }";
-    else
-         context.out << "    { {  0}, {   0} }";
+        // A token is needed if there are terminaltransitions or multiple
+        // reductions (or for the accept state, set at state/define.cc)
+    bool tokenNeeded = sp->terminalTransitions() || sp->reductions() > 1;
 
-    context.out << "  // " << endText << "\n" 
+    int stateType = sp->type();
+
+    if (tokenNeeded)
+        stateType |= State::REQ_TOKEN;
+
+    if (defaultReduction)
+        stateType |= State::DEF_RED;
+
+
+    context.out << "\n"                     // Write the table header
+        "SR s_" << sp->idx() << "[] =\n"
+        "{\n";
+
+    context.table.clear();
+
+    context.table << State::typeName(stateType) << 
+            sp->transitions() + sp->reductionsLAsize() + acceptState + 1 <<
+            def;
+
+    transitions(context.table, sp->next());
+
+    if (acceptState)
+        context.table << Rules::eofTerminal() << "PARSE_ACCEPT" << def;
+
+    reductions(context.table, *sp);        
+
+    context.table << 0 << 
+        (defaultReduction ? -static_cast<int>(defaultReduction->nr()) : 0) <<
+        def;
+
+    context.out << context.table << "\n"
                    "};\n";
 }
+
+
+
+
 
 
 

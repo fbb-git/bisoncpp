@@ -121,6 +121,36 @@ void State::define()
 
     s_state[0]->propagateLA();      // propagate the LA set
 
+    // Set the accept-state:
+    //
+    // The accept state is found as the state to transit to on the symbol
+    // of the first item of the first (0-th) state. 
+    // E.g., from S* -> . S it is the state to go to on S.
+    // It is found from state[0]'s itemVector's zeroth element. Its next()
+    // member returns the index in state[0]'s nextVector holding the
+    // transition information of (e.g.) symbol S. So, that nextVector's
+    // element's member next() tells us the accept state index.
+
+    s_acceptState = 
+        s_state[
+            s_state[0]->d_nextVector[               
+                s_state[0]->d_itemVector[0].next()  // Next from 1st item
+            ].next()                                // next state from there
+        ];                                          // state pointer itself
+
+    // The rule start_$ -> start . is a spurious reduction. In fact no such
+    // reduction may occur, since at that point EOF is obtained and parsing
+    // should stop. Therefore, this reduction is removed.
+
+    s_acceptState->d_reducible.erase(s_acceptState->d_reducible.begin());
+
+    // REQ_TOKEN is the state's type because it terminates at EOF, and 
+    // the EOF transition isn't interpreted as a terminal transition.
+    // Other (terminal) transitions are possible too, so in this case 
+    // a token is required anyway. Alternatively, keep NORMAL, and when
+    // reaching this state and its type is NORMAL: ACCEPT. Pondering...
+    s_acceptState->setType(REQ_TOKEN);
+
     for_each(s_state.begin(), s_state.end(), staticCheckConflicts);
 
     if 
@@ -140,21 +170,9 @@ void State::define()
     }
 
     for_each(s_state.begin(), s_state.end(), staticSummarizeActions);
-
-    // Set the accept-state:
-    //
-    // The accept state is found as the state to transit to on the symbol
-    // symbol of the first item of the first (0-th) state. 
-    // E.g., from S* -> . S it is the state to go to on S.
-    // It is found from state[0]'s itemVector's zeroth element. Its next()
-    // member returns the index in state[0]'s nextVector holding the
-    // transition information of (e.g.) symbol S. So, that nextVector's
-    // element's member next() tells us the accept state index.
-
-    s_acceptState = 
-        s_state[
-            s_state[0]->d_nextVector[               
-                s_state[0]->d_itemVector[0].next()  // Next from 1st item
-            ].next()                                // next state from there
-        ];                                          // state pointer itself
 }
+
+
+
+
+

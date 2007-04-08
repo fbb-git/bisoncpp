@@ -29,7 +29,7 @@ class Next: public StateType, public SRSolution
         typedef Vector::const_iterator  ConstIter;
 
         Next();
-        Next(Symbol const *symbol, size_t stateItemOffset, Type type);
+        Next(Symbol const *symbol, size_t stateItemOffset);
 
         Solution solveByAssociation() const;
         Solution solveByPrecedence(Symbol const *productionSymbol) const;

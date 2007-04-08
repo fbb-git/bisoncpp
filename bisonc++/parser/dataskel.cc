@@ -1,3 +1,6 @@
+
+// Recompile this file if the skeleton locations in INSTALL.im change
+
 #include "parser.ih"
 #include "SKEL"
 

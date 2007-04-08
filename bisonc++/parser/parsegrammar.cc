@@ -15,6 +15,7 @@ void Parser::parseGrammar()
         {
             case Scanner::TWO_PERCENTS:
             case Scanner::ENDFILE:
+                checkEndOfRule();
             return;
 
             case Scanner::RULE:

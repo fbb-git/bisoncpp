@@ -9,16 +9,19 @@
 
 using namespace std;
 
-int main(int argc, char **argv, char **envp)
+int main(int argc)
 {
-    cout << "Enter lines, each containing one integral value. Use ^C to "
-                                            "end the program\n"
-            "other line content should result in a `syntax error'\n"
-            "blanks and tabs are ignored (and thus OK)" << endl;
+    cout << "Enter lines, each containing one integral value.\n"
+            "Other lines (also empty lines) should result in a "
+                                                        "`syntax error'\n"
+            "Blanks and tabs are ignored. Use ^c or ^d to end the program\n"
+            "Use any program argument to view parser debug output\n";
 
     Parser parser;
 
+    parser.setDebug(argc > 1);
     parser.parse();
 
     return 0;
 }
+

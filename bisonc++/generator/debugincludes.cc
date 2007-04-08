@@ -8,6 +8,7 @@ void Generator::debugIncludes(ostream &out) const
     key(out);
 
     out <<  "#include <iostream>\n"
+            "#include <iomanip>\n"
             "#include <sstream>\n"
             "#include <string>\n"
             "#include <map>\n";

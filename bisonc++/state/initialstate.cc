@@ -5,9 +5,7 @@ void State::initialState()
         // construct the initial state. Start with S' -> . S
         // The start rule is obtained from Production::start()
 
-    State &state = newState(NORMAL);
-
-//    state.d_itemVector.resize(1);
+    State &state = newState();
 
         // Add the start production to the StateItem::Vector
 

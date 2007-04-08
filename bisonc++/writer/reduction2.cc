@@ -3,11 +3,12 @@
 void Writer::reduction(Element const *symb, ReductionContext &context)
 {
     Symbol const *symbol = dynamic_cast<Symbol const *>(symb);
+    ostringstream out;
 
-    context.out << 
-        "    { "                                    
-             "{" << OM::sr << symbol << "}, "       // reduce on this symbol
-                                                    // reduce by this rule nr
-             "{" << setw(4) << -static_cast<int>(context.ruleNr) << "} "
-        "}, // " << symbol << "\n";                 // show the N's name
+    out << OM::sr << symbol;
+    context.table << out.str() << -static_cast<int>(context.ruleNr);
+
+    out.str("");
+    out << "// " << symbol;
+    context.table << out.str();
 }

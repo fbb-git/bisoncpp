@@ -37,7 +37,6 @@ string COMPILER;
 void setLocations()
 {
     BASE  = "/usr";
-
     BIN  = BASE + "/bin";
     SKEL = BASE + "/share/bisonc++";
     MAN  = BASE + "/share/man/man1";    

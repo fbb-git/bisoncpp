@@ -2,6 +2,7 @@
 #define @Base_h_included
 
 #include <vector>
+#include <iostream>
 
 $insert preincludes
 $insert debugincludes
@@ -56,9 +57,11 @@ $insert debugdecl
         bool debug() const;
         void pop(size_t count = 1);
         void push(size_t nextState);
-        size_t reduce(PI const &productionInfo);
-        void setDebug(bool mode);
+        void reduce(PI const &productionInfo);
         size_t top() const;
+
+    public:
+        void setDebug(bool mode);
 }; 
 
 inline bool @Base::debug() const

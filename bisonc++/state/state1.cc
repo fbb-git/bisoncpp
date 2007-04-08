@@ -1,8 +1,8 @@
 #include "state.ih"
 
-State::State(size_t idx, Type type)
+State::State(size_t idx)
 :
-    StateType(type),
+    StateType(NORMAL),
     d_nKernelItems(0),
     d_nTransitions(0),
     d_nReductions(0),

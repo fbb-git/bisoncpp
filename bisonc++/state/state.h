@@ -100,7 +100,7 @@ class State: public StateType
         static ConstIter end();         // and beyond the last
 
     private:
-        State(size_t idx, Type type);
+        State(size_t idx);
 
         void addDependents(Next const &next, Symbol const *symbol, 
                            size_t itemIdx);
@@ -114,7 +114,7 @@ class State: public StateType
                             // from notreducible from setitems: 
                             // add a new Next element to d_nextVector
 
-        void addState(Item::Vector const &kernel, Type type);
+        void addState(Item::Vector const &kernel);
 
         void construct();   // construct a state, and by recursion all other
                             // states as well
@@ -138,7 +138,7 @@ class State: public StateType
         std::ostream &skipInsertion(std::ostream &out) const;
 
         static void initialState();
-        static State &newState(Type type);
+        static State &newState();
         static void nextState(Next &next, State &state);
         static bool hasKernel(State const *state, Item::Vector const &kernel);
 

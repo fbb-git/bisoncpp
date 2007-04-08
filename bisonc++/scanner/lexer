@@ -127,6 +127,15 @@ IDENT   {ID1}{ID2}*
                                 d_number = yytext[1];
                                 return QUOTE;
                             }
+
+<quote>[^']+"'"             {
+                                    // & (1 << *) indicates illegal character
+                                    // in parser/handlequote.cc
+                                d_number = yytext[1] + (1 << 8);
+                                BEGIN INITIAL;
+                                return QUOTE;
+                            }
+
                             
 "<"[ \t]*{IDENT}[ \t]*">"       return TYPENAME;
 

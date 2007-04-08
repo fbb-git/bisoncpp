@@ -48,7 +48,7 @@ class Parser: public ParserBase
     // support functions for parse():
         void executeAction(int ruleNr);
         void errorRecovery();
-        int lookup();
+        int lookup(bool);
         void nextToken();
 };
 

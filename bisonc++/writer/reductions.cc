@@ -1,6 +1,6 @@
 #include "writer.ih"
 
-void Writer::reductions(ostream &out, State const &state)
+void Writer::reductions(Table &table, State const &state)
 {
     for 
     (
@@ -12,6 +12,6 @@ void Writer::reductions(ostream &out, State const &state)
     )
     {
         if (idx != defaultReduction)
-            reduction(out, *state.reduction(idx));
+            reduction(table, *state.reduction(idx));
     }
 }

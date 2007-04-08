@@ -1,8 +1,8 @@
 #include "writer.ih"
 
-void Writer::reduction(ostream &out, StateItem const &stateItem)
+void Writer::reduction(Table &table, StateItem const &stateItem)
 {
-    ReductionContext context = {stateItem.nr(), out};
+    ReductionContext context = {stateItem.nr(), table};
 
     for_each(
         stateItem.lookaheadSet().begin(), stateItem.lookaheadSet().end(),

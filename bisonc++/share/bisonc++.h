@@ -1,9 +1,6 @@
 #ifndef @_h_included
 #define @_h_included
 
-// for error()'s inline implementation
-#include <iostream>
-
 $insert baseclass
 $insert scanner.h
 
@@ -26,7 +23,7 @@ $insert 4 scannerobject
     // support functions for parse():
         void executeAction(int ruleNr);
         void errorRecovery();
-        int lookup();
+        int lookup(bool recovery);
         void nextToken();
 };
 
