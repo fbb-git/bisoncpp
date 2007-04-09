@@ -1,6 +1,9 @@
 bisonc++ (1.6.0)
 
-  * (To be uploaded)
+  * NOTE: THE PROTOTYPE OF THE PARSER'S lookup() FUNCTION CHANGED. IT IS NOW:
+    int lookup(bool recovery); 
+    OLD parser.h HEADER FILES CAN BE REUSED AFTER ADDING THE PARAMETER 
+    bool recovery
 
   * Segfaults were caused by some grammars due to an erroneous index in
     (formerly state/setitems.cc) state/adddependents.cc, where idx,
@@ -25,11 +28,6 @@ bisonc++ (1.6.0)
     state-requirements (e.g., requiring a token, having a default reduction,
     having an `error' continuation, etc.). Also, the functions nextToken() and
     lookup() were reimplemented.
-
-  * NOTE: THE PROTOTYPE OF THE PARSER'S lookup() FUNCTION CHANGED. IT IS NOW:
-    int lookup(bool recovery); 
-    OLD parser.h HEADER FILES CAN BE REUSED AFTER ADDING THE PARAMETER 
-    bool recovery
 
   * The share/bisonc++.cc parser function skeleton's initial comment was
     improved.
@@ -65,7 +63,7 @@ bisonc++ (1.6.0)
 
   * Added several missing headers fixing gcc/g++ 4.3 problems
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Thu, 29 Mar 2007 20:49:15 +0200
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 09 Apr 2007 14:54:46 +0200
 
 bisonc++ (1.5.3)
 
