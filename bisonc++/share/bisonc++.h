@@ -1,13 +1,13 @@
-#ifndef @_h_included
-#define @_h_included
+#ifndef \@_h_included
+#define \@_h_included
 
 $insert baseclass
 $insert scanner.h
 
 $insert namespace-open
 
-#undef @
-class @: public @Base
+#undef \@
+class \@: public \@Base
 {
 $insert 4 scannerobject
         
@@ -27,14 +27,14 @@ $insert 4 scannerobject
         void nextToken();
 };
 
-inline void @::error(char const *msg)
+inline void \@::error(char const *msg)
 {
     std::cerr << msg << std::endl;
 }
 
 $insert lex
 
-inline void @::print()      // use d_token, d_loc
+inline void \@::print()      // use d_token, d_loc
 {}
 
 $insert namespace-close

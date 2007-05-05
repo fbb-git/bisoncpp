@@ -1,3 +1,19 @@
+bisonc++ (1.6.1)
+
+  * Changed the error recovery procedure so that unrecoverable input errors
+    don't result in stack underflows anymore
+
+  * Added protected parser base class member checkEOF(), terminating the
+    parse() member's activities (man-page adapted accordingly)
+
+  * Changed small support member functions in the share/bisonc++.cc skeleton
+    file into inline members, some were moved to share/bisonc++base.h
+
+  * The skeleton files now use `\@' as baseclass-flag rather than `@'. The
+    baseclass-flag is now defined as a static data member in Generator. This
+    change prevents the `@' in e-mail addresses from being changed into the
+    parser's class name.
+
 bisonc++ (1.6.0)
 
   * NOTE: THE PROTOTYPE OF THE PARSER'S lookup() FUNCTION CHANGED. IT IS NOW:

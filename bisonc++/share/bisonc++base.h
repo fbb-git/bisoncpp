@@ -1,5 +1,5 @@
-#ifndef @Base_h_included
-#define @Base_h_included
+#ifndef \@Base_h_included
+#define \@Base_h_included
 
 #include <vector>
 #include <iostream>
@@ -14,7 +14,7 @@ namespace // anonymous
 
 $insert namespace-open
 
-class @Base
+class \@Base
 {
     public:
 $insert tokens
@@ -47,12 +47,13 @@ $insert LTYPEstack
         STYPE       d_val;
 $insert LTYPEdata
 
-        @Base();
+        \@Base();
 
 $insert debugdecl
         void ABORT() const throw(Return);
         void ACCEPT() const throw(Return);
         void ERROR() const throw(ErrorRecovery);
+        void checkEOF() const;
         void clearin();
         bool debug() const;
         void pop(size_t count = 1);
@@ -64,19 +65,38 @@ $insert debugdecl
         void setDebug(bool mode);
 }; 
 
-inline bool @Base::debug() const
+inline bool \@Base::debug() const
 {
     return d_debug;
 }
 
-inline void @Base::setDebug(bool mode)
+inline void \@Base::setDebug(bool mode)
 {
     d_debug = mode;
 }
 
+inline void \@Base::ABORT() const throw(Return) 
+{
+$insert 4 debug "ABORT(): Parsing unsuccessful"
+    throw PARSE_ABORT;
+}
+
+inline void \@Base::ACCEPT() const throw(Return)
+{
+$insert 4 debug "ACCEPT(): Parsing successful"
+    throw PARSE_ACCEPT;
+}
+
+inline void \@Base::ERROR() const throw(ErrorRecovery)
+{
+$insert 4 debug "ERROR(): Forced error condition"
+    throw UNEXPECTED_TOKEN;
+}
+
+
 // As a convenience, when including ParserBase.h its symbols are available as
 // symbols in the class Parser, too.
-#define @ @Base
+#define \@ \@Base
 
 $insert namespace-close
 

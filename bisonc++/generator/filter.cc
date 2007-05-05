@@ -12,10 +12,10 @@ void Generator::filter(istream &in, ostream &out) const
 
         while (true)
         {
-            size_t pos = d_line.find_last_of("@");
+            size_t pos = d_line.rfind(s_baseFlag);
             if (pos == string::npos)
                 break;
-            d_line.replace(pos, 1, d_parser.className());
+            d_line.replace(pos, s_baseFlagSize, d_parser.className());
         }
 
         out << d_line << endl;

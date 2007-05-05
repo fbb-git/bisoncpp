@@ -1,9 +1,9 @@
-    // Include this file in the sources of the class @.
+    // Include this file in the sources of the class \@.
 
 $insert class.h
 
     // Add below here any includes etc. that are only 
-    // required for the compilation of @'s sources.
+    // required for the compilation of \@'s sources.
 
 
 $insert namespace-use

@@ -106,7 +106,7 @@ $insert namespace-open
 // ACCEPT and ABORT from anywhere, even from within members called by actions,
 // simply throwing the appropriate exceptions.
 
-@Base::@Base()
+\@Base::\@Base()
 :
     d_stackIdx(-1),
 $insert 4 debuginit
@@ -115,32 +115,14 @@ $insert 4 debuginit
     d_nextToken(_UNDETERMINED_)
 {}
 
-void @Base::clearin()
+$insert debugfunctions
+
+void \@Base::clearin()
 {
     d_token = d_nextToken = _UNDETERMINED_;
 }
 
-void @Base::ABORT() const throw(Return) 
-{
-$insert 4 debug "ABORT(): Parsing unsuccessful"
-    throw PARSE_ABORT;
-}
-
-void @Base::ACCEPT() const throw(Return)
-{
-$insert 4 debug "ACCEPT(): Parsing successful"
-    throw PARSE_ACCEPT;
-}
-
-void @Base::ERROR() const throw(ErrorRecovery)
-{
-$insert 4 debug "ERROR(): Forced error condition"
-    throw UNEXPECTED_TOKEN;
-}
-
-$insert debugfunctions
-
-void @Base::push(size_t state)
+void \@Base::push(size_t state)
 {
     if (static_cast<size_t>(d_stackIdx + 1) == d_stateStack.size())
     {
@@ -156,16 +138,14 @@ $insert 4 LTYPEpush
 $insert 4 debug  "push(state " << state << ")"
 }
 
-void @Base::pop(size_t count)
+void \@Base::pop(size_t count)
 {
 $insert 4 debug "pop(" << count << ") from stack having size " << (d_stackIdx + 1)
     if (d_stackIdx < static_cast<int>(count))
     {
         std::cerr << "\n"
-            "INTERNAL ERROR AT pop(): STACK UNDERFLOW.\n"
-            "PLEASE SUBMIT THE USED GRAMMAR AND INPUT TO " << author << "\n"
-            "\n";
-
+            "Terminating parse(): unrecoverable input error at token " << 
+            symbol(d_token) << "\n";
         ABORT();
     }
 
@@ -176,12 +156,21 @@ $insert 4 LTYPEpop
 $insert 4 debug "pop(): next state: " << d_state << ", token: " << symbol(d_token)
 }
 
-size_t @Base::top() const
+inline size_t \@Base::top() const
 {
     return d_stateStack[d_stackIdx];
 }
 
-void @Base::reduce(PI const &pi)
+inline void \@Base::checkEOF() const
+{
+    if (d_token == _EOF_)
+    {
+$insert 8 debug "errorRecovery(): unexpected End of input"
+        throw DEFAULT_RECOVERY_MODE;
+    }
+}
+
+inline void \@Base::reduce(PI const &pi)
 {
     d_token = pi.d_nonTerm;
 
@@ -191,7 +180,7 @@ $insert 4 debug " to N-terminal " << symbol(d_token)
     pop(pi.d_size);
 }
 
-void @::executeAction(int production)
+void \@::executeAction(int production)
 {
 $insert 4 debug "executeAction(): of rule " << production << " ..."
     switch (production)
@@ -203,7 +192,7 @@ $insert 4 debug "... action of rule " << production << " completed"
 
 // If d_token is _UNDETERMINED_ then if d_nextToken is _UNDETERMINED_ another
 // token is obtained from lex(). Then d_nextToken is assigned to d_token.
-void @::nextToken()
+void \@::nextToken()
 {
     if (d_token != _UNDETERMINED_)          // no need for a token: got one
         return;                             // already
@@ -223,7 +212,7 @@ $insert 4 debug "nextToken(): using token " << symbol(d_token)
 
 // if the final transition is negative, then we should reduce by the rule
 // given by its positive value
-int @::lookup(bool recovery)
+int \@::lookup(bool recovery)
 {
     SR *sr = s_state[d_state];
 
@@ -283,7 +272,7 @@ $insert 8 debug "): Shift " << action << " (" << symbol(d_token) << " processed)
     // If EOF is encountered without being appropriate for the current state,
     // then the error recovery will fall back to the default recovery mode.
     // (i.e., parsing terminates)
-void @::errorRecovery()
+void \@::errorRecovery()
 try
 {
     ++d_nErrors;
@@ -300,11 +289,7 @@ $insert 8 debug "errorRecovery(): pop state " << top()
         // if on entry here token is already EOF then we've probably been 
         // here before: _error_ accepts EOF, but the state using
         // error nevertheless doesn't. In that case parsing terminates 
-    if (d_token == _EOF_)
-    {
-$insert 8 debug "errorRecovery(): unexpected End of input"
-        throw DEFAULT_RECOVERY_MODE;
-    }
+    checkEOF();
 
     d_token = _error_;                      // specify _error_ as next token
     push(lookup(true));                     // push the error state
@@ -319,11 +304,7 @@ $insert 8 debug "errorRecovery(): unexpected End of input"
             // if on entry here token is already EOF then we've probably been 
             // here before: _error_ accepts EOF, but the state using
             // error nevertheless doesn't. In that case parsing terminates 
-        if (d_token == _EOF_)
-        {
-$insert 12 debug "errorRecovery(): unexpected End of input"
-            throw DEFAULT_RECOVERY_MODE;
-        }
+        checkEOF();
         try
         {
             d_token = _UNDETERMINED_;
@@ -390,7 +371,7 @@ catch (ErrorRecovery)       // This is: DEFAULT_RECOVERY_MODE
     //     default reduction. Error handling was described at the top of this
     //     file.
 
-int @::parse()
+int \@::parse()
 try 
 {
 $insert 4 debug "parse(): Parsing starts"

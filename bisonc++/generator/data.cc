@@ -31,3 +31,7 @@ Generator::MapValue Generator::s_mapValues[] =
 
 Generator::Map Generator::s_insert(s_mapValues,
                 s_mapValues + sizeof(s_mapValues) / sizeof(MapValue));
+
+char const *Generator::s_baseFlag = "\\@";
+size_t const Generator::s_baseFlagSize = 2; // backslash and @
+

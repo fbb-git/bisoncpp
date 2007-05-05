@@ -35,6 +35,9 @@ class Generator
 
     static MapValue s_mapValues[];
     static Map s_insert;
+    static char const *s_baseFlag;          // text to change to the class 
+                                            // name
+    static size_t const s_baseFlagSize;     // # of characters in s_baseFlag
 
     public:
         Generator(Rules const &rules, Parser const &parser);
