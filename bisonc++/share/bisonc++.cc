@@ -143,9 +143,7 @@ void \@Base::pop(size_t count)
 $insert 4 debug "pop(" << count << ") from stack having size " << (d_stackIdx + 1)
     if (d_stackIdx < static_cast<int>(count))
     {
-        std::cerr << "\n"
-            "Terminating parse(): unrecoverable input error at token " << 
-            symbol(d_token) << "\n";
+$insert 8 debug "Terminating parse(): unrecoverable input error at token " << symbol(d_token)
         ABORT();
     }
 

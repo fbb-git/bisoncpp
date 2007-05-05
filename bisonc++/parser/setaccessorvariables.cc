@@ -22,10 +22,39 @@ void Parser::setAccessorVariables()
     if (!d_arg.option(&d_parsefunSkeleton, 'P'))
         d_parsefunSkeleton = s_defaultParsefunSkeleton;
 
-    if (d_parsefunSource.empty())
+    if 
+    (
+        !d_arg.option(&d_parsefunSource, 'p')
+        &&
+        d_parsefunSource.empty()
+    )
         d_parsefunSource = s_defaultParsefunSource;
 
-    setName(&d_baseclassHeader, "base.h");
-    setName(&d_classHeader, ".h");
-    setName(&d_implementationHeader, ".ih");
+    if 
+    (
+        !d_arg.option(&d_baseclassHeader, 'b')
+        &&
+        d_baseclassHeader.empty()
+    )
+        setName(&d_baseclassHeader, "base.h");
+
+    if 
+    (
+        !d_arg.option(&d_classHeader, 'c')
+        &&
+        d_classHeader.empty()
+    )
+        setName(&d_classHeader, ".h");
+
+    if 
+    (
+        !d_arg.option(&d_implementationHeader, 'i')
+        &&
+        d_implementationHeader.empty()
+    )
+        setName(&d_implementationHeader, ".ih");
 }
+
+
+
+
