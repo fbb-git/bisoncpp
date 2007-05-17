@@ -6,7 +6,7 @@ void Writer::srTables() const
         "// State info and SR transitions for each state.\n"
         "\n";
 
-    Support support;
+    TableSupport support;
 
     support <<  "    { { "  
             <<  "}, { "  

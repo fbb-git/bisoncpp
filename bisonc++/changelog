@@ -14,6 +14,9 @@ bisonc++ (1.6.1)
     change prevents the `@' in e-mail addresses from being changed into the
     parser's class name.
 
+  * Removed the class Support since it is now covered by Bobcat's (1.15.0) 
+    default implementation of FBB::TableSupport
+
 bisonc++ (1.6.0)
 
   * NOTE: THE PROTOTYPE OF THE PARSER'S lookup() FUNCTION CHANGED. IT IS NOW:

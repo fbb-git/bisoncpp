@@ -6,7 +6,6 @@
 
 #include <bobcat/table>
 
-#include "../support/support.h"
 #include "../next/next.h"
 
 class Terminal;
