@@ -1,10 +1,10 @@
 bisonc++ (1.6.1)
 
-  * Changed the error recovery procedure so that unrecoverable input errors
-    don't result in stack underflows anymore
+  * Changed the error recovery procedure preventing stack underflows with
+    unrecoverable input errors.
 
   * Added protected parser base class member checkEOF(), terminating the
-    parse() member's activities (man-page adapted accordingly)
+    parse() member's activities (man-page adapted accordingly).
 
   * Changed small support member functions in the share/bisonc++.cc skeleton
     file into inline members, some were moved to share/bisonc++base.h
