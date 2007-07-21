@@ -1,3 +1,11 @@
+bisonc++ (1.7.0) (TO DO)
+
+  * Implemented the option --thread-safe. If specified, Bisonc++ will generate
+    code that is thread-safe. I.e., no static data will be modified by the
+    parse() function. As a consequence, all static data in the file containing
+    the parse() function are defined as const. Manpage and manual adapted
+    accordingly.
+
 bisonc++ (1.6.1)
 
   * Changed the error recovery procedure preventing stack underflows with

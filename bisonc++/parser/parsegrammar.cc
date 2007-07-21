@@ -8,7 +8,6 @@ void Parser::parseGrammar()
 
     d_block.clear();            // maybe leftover from %union or %loc.struct
 
-
     while (true)
     {
         switch (d_scanner.lex())

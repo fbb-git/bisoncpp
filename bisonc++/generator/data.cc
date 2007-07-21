@@ -18,6 +18,7 @@ Generator::MapValue Generator::s_mapValues[] =
     MapValue("namespace-close",   &Generator::namespaceClose),
     MapValue("namespace-use",     &Generator::namespaceUse),
     MapValue("preincludes",       &Generator::preIncludes),
+    MapValue("threading",         &Generator::threading),
     MapValue("tokens",            &Generator::tokens),
     MapValue("LTYPE",             &Generator::ltype),
     MapValue("LTYPEdata",         &Generator::ltypeData),

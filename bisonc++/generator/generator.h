@@ -50,8 +50,9 @@ class Generator
     private:
         void filter(std::istream &in, std::ostream &out) const;
         void insert(std::ostream &out) const;
-        void key(std::ostream &out) const;
-
+        void key(std::ostream &out) const;          // show which $insert is
+                                                    // called, just before the
+                                                    // generated code 
         void actionCases(std::ostream &out) const;
         void baseClass(std::ostream &out) const;
         void classH(std::ostream &out) const;
@@ -76,6 +77,7 @@ class Generator
         void scannerObject(std::ostream &out) const;
         void staticData(std::ostream &out) const;
         void stype(std::ostream &out) const;
+        void threading(std::ostream &out) const;
         void tokens(std::ostream &out) const;
 
         static void selectSymbolic(Terminal const *terminal, 

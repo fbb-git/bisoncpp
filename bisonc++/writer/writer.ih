@@ -5,6 +5,7 @@
 #include <bobcat/fnwrap1c>
 #include <bobcat/align>
 #include <bobcat/tablesupport>
+#include <bobcat/arg>
 
 #include "../om/om.h"
 #include "../symbol/symbol.h"

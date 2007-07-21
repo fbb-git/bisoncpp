@@ -152,6 +152,8 @@ arguments if their associated long options require arguments as well.
     it() loption(show-filenames)nl() 
            Write the names of the files that are generated to the 
             standard error stream.
+    it() loption(thread-safe)nl() 
+            No static data are modified, making bisonc++ thread-safe.
     it() loption(usage)nl()
             Write basic usage information to the standard output stream and
             terminate. 

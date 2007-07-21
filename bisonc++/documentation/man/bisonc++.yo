@@ -352,6 +352,8 @@ arguments if their associated long options require arguments as well.
     it() loption(show-filenames)nl() 
            Write the names of the files that are generated to the 
             standard error stream.
+    it() loption(thread-safe)nl() 
+           No static data are modified, making bic() thread-safe.
     it() loption(usage)nl()
             Write basic usage information to the standard output stream and
             terminate. 
@@ -428,6 +430,13 @@ specification file.
            Defines the pathname of the file containing the implementation
             header.  This directive is overridden by the
             bf(--implementation-header) or bf(-i) command-line options.
+    it() bf(%include) tt(path) nl() 
+            This directive may be used to read part of the grammar
+            specification file from the file specified at tt(path). Unless
+            tt(path) is an absolute file-path, tt(path) is searched relative
+            to the location of bic()'s grammar specification file. This
+            directive can be used to split long grammar specification files in
+            shorter, meaningful units. 
     it() bf(%lines) nl() 
            Put bf(#line) preprocessor directives in the file containing the
             parser's bf(parse()) function. It acts identically to the bf(-l)
@@ -452,7 +461,7 @@ specification file.
     it() bf(%ltype typename) nl()    
            Specifies a user-defined token location type. 
            If bf(%ltype) is used, tt(typename) should be the name of an
-            alternate (predefined) type (e.g., bf(size_t/*unsigned*/)). It should not be
+            alternate (predefined) type (e.g., bf(size_t)). It should not be
             used if a bf(%locationstruct) specification is defined (see
             below). Within the parser class, this type will be available as
             the type `bf(LTYPE)'.  All text on the line following bf(%ltype)
@@ -492,7 +501,7 @@ specification file.
     it() bf(%stype typename) nl()    
            The type of the semantic value of tokens.  The specification
             tt(typename) should be the name of an unstructured type (e.g.,
-            bf(size_t/*unsigned*/)). By default it is bf(int). See bf(YYSTYPE) in
+            bf(size_t)). By default it is bf(int). See bf(YYSTYPE) in
             bf(bison).  It should not be used if a bf(%union) specification is
             defined.  Within the parser class, this type will be available as
             the type `bf(STYPE)'. All text on the line following bf(%stype) is
@@ -513,7 +522,7 @@ specification file.
             Sequences of bf(%left, %nonassoc, %right) and bf(%token)
             directives may be used to define the precedence of operators. In
             expressions, the first used directive will have the lowest
-            precedence, the last used the highest.
+            precedence, the last used the highest. See also bf(%token) below.
     it() bf(%nonassoc) tt(terminal ...) nl()    
             Defines the names of symbolic terminal tokens that should be
             treated as non-associative. I.e., in case of a shift/reduce
@@ -521,7 +530,7 @@ specification file.
             Sequences of bf(%left, %nonassoc, %right) and bf(%token)
             directives may be used to define the precedence of operators. In
             expressions, the first used directive will have the lowest
-            precedence, the last used the highest.
+            precedence, the last used the highest. See also bf(%token) below.
     it() bf(%prec) tt(token) nl()    
             Overrules the defined precendence of an operator for a particular
             grammatical rule. Well known is the construction
@@ -546,7 +555,7 @@ specification file.
             Sequences of bf(%left, %nonassoc, %right) and bf(%token)
             directives may be used to define the precedence of operators. In
             expressions, the first used directive will have the lowest
-            precedence, the last used the highest.
+            precedence, the last used the highest. See also bf(%token) below.
     it() bf(%start) tt(non-terminal) nl()    
             The non-terminal tt(non-terminal) should be used as the grammar's 
             start-symbol. If omitted, the first grammatical rule will be used
@@ -557,7 +566,13 @@ specification file.
             Sequences of bf(%left, %nonassoc, %right) and bf(%token)
             directives may be used to define the precedence of operators. In
             expressions, the first used directive will have the lowest
-            precedence, the last used the highest.
+            precedence, the last used the highest.nl()
+            bf(NOTE:) Symbolic tokens are defined as tt(enum)-values in the
+            parser's base class. The names of symbolic tokens may not be equal
+            to the names of the members and types defined by bic()
+            itself (see the next sections). This requirement is em(not)
+            currently enforced by bic(), but unexpected compilation errors may
+            result if this requirement is violated.
     it() bf(%type) tt(<type> non-terminal ...) nl()    
             In combination with bf(%union): associate the semantical value of
             a non-terminal symbol with a union field defined by the bf(%union)
@@ -770,7 +785,7 @@ members inherited from the parser's base class.
     it() bf(LTYPE d_vsp):nl()
        The semantic value stack pointer. Used internally by the parser. Not to
         be used otherwise.
-    it() bf(size_t/*unsigned*/ d_nErrors):nl()
+    it() bf(size_t d_nErrors):nl()
        The number of errors counted by bf(parse()). It is initialized by the
         parser's base class initializer, and is updated while bf(parse())
         executes. When bf(parse()) has returned it contains the total number

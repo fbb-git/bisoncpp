@@ -77,6 +77,9 @@ void usage(string const &program_name)
     "   --show-filenames:\n"
     "          show the names of the used/generated files on standard error\n"
 
+    "   --thread-safe:\n"
+    "          no static data are modified, making bisonc++ thread-safe\n"
+
     "   --usage: produce this information (and terminate)\n"
 
     "   --version (-v):\n"

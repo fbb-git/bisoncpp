@@ -47,7 +47,7 @@ members inherited from the parser's base class.
     it() bf(LTYPE d_vsp):nl()
        The semantic value stack pointer. Used internally by the parser. Not to
         be used otherwise.
-    it() bf(size_t/*unsigned*/ d_nErrors):nl()
+    it() bf(size_t d_nErrors):nl()
        The number of errors counted by bf(parse()). It is initialized by the
         parser's base class initializer, and is updated while bf(parse())
         executes. When bf(parse()) has returned it contains the total number

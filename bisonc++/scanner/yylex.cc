@@ -700,12 +700,12 @@ static yyconst flex_int32_t yy_rule_can_match_eol[54] =
 
 static yyconst flex_int16_t yy_rule_linenum[53] =
     {   0,
-       32,   41,   51,   56,   61,   65,   70,   71,   74,   83,
-       88,   90,   92,  103,  109,  115,  120,  125,  131,  138,
-      141,  145,  149,  153,  154,  155,  156,  160,  164,  165,
-      166,  167,  168,  169,  170,  171,  172,  176,  177,  178,
-      179,  183,  184,  189,  194,  195,  196,  197,  199,  201,
-      203,  205
+       32,   40,   50,   55,   60,   64,   69,   70,   73,   82,
+       87,   89,   91,  102,  108,  114,  119,  124,  130,  139,
+      142,  146,  150,  154,  155,  156,  157,  161,  165,  166,
+      167,  168,  169,  170,  171,  172,  173,  177,  178,  179,
+      180,  184,  185,  190,  195,  196,  197,  198,  200,  202,
+      204,  206
     } ;
 
 /* The intent behind this definition is that it'll catch
@@ -1030,7 +1030,6 @@ YY_RULE_SETUP
                                 if (d_retWS)
                                 {
                                     d_retWS = false;
-                                    //strcpy(yytext, " ");
                                     return WS;
                                 }
                             }
@@ -1038,7 +1037,7 @@ YY_RULE_SETUP
 case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
-#line 41 "lexer"
+#line 40 "lexer"
 {
                                 if (d_retWS)
                                 {
@@ -1051,7 +1050,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 51 "lexer"
+#line 50 "lexer"
 {
                                 BEGIN quote;
                                 yymore();
@@ -1059,7 +1058,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 56 "lexer"
+#line 55 "lexer"
 {
                                 BEGIN string;
                                 yymore();
@@ -1068,7 +1067,7 @@ YY_RULE_SETUP
 case 5:
 /* rule 5 can match eol */
 YY_RULE_SETUP
-#line 61 "lexer"
+#line 60 "lexer"
 {
                                 multiLineString();
                                 yymore();
@@ -1076,22 +1075,22 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 65 "lexer"
+#line 64 "lexer"
 {
                                 BEGIN INITIAL;
                                 return STRING;
                             }
 	YY_BREAK
 case 7:
-#line 71 "lexer"
+#line 70 "lexer"
 case 8:
 YY_RULE_SETUP
-#line 71 "lexer"
+#line 70 "lexer"
 yymore();
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 74 "lexer"
+#line 73 "lexer"
 {
                                 if (d_retWS)
                                 {
@@ -1103,7 +1102,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 83 "lexer"
+#line 82 "lexer"
 {
                                 d_commentChar = ' ';
                                 BEGIN comment;
@@ -1111,18 +1110,18 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 88 "lexer"
+#line 87 "lexer"
 
 	YY_BREAK
 case 12:
 /* rule 12 can match eol */
 YY_RULE_SETUP
-#line 90 "lexer"
+#line 89 "lexer"
 d_commentChar = '\n';
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 92 "lexer"
+#line 91 "lexer"
 {
                                 BEGIN INITIAL;
                                 if (d_retWS)
@@ -1136,7 +1135,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 103 "lexer"
+#line 102 "lexer"
 {
                                 BEGIN INITIAL;  
                                 octal();        // quoted octal constant
@@ -1145,7 +1144,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 109 "lexer"
+#line 108 "lexer"
 {
                                 BEGIN INITIAL;
                                 hexadecimal(); // quoted hex constant
@@ -1154,7 +1153,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 115 "lexer"
+#line 114 "lexer"
 {
                                 BEGIN INITIAL;
                                 escape();       // quoted escape char
@@ -1163,7 +1162,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 120 "lexer"
+#line 119 "lexer"
 {
                                 BEGIN INITIAL;  // other quoted escaped char
                                 d_number = yytext[2];
@@ -1172,7 +1171,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 125 "lexer"
+#line 124 "lexer"
 {
                                 BEGIN INITIAL;  // simple quoted constant
                                 d_number = yytext[1];
@@ -1182,21 +1181,23 @@ YY_RULE_SETUP
 case 19:
 /* rule 19 can match eol */
 YY_RULE_SETUP
-#line 131 "lexer"
+#line 130 "lexer"
 {
-                                BEGIN INITIAL;
+                                    // & (1 << *) indicates illegal character
+                                    // in parser/handlequote.cc
                                 d_number = yytext[1] + (1 << 8);
+                                BEGIN INITIAL;
                                 return QUOTE;
                             }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 138 "lexer"
+#line 139 "lexer"
 return TYPENAME;
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 141 "lexer"
+#line 142 "lexer"
 {
                                     d_retWS = true;
                                     return BASECLASS_HEADER;
@@ -1204,7 +1205,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 145 "lexer"
+#line 146 "lexer"
 {
                                     d_retWS = true;
                                     return BASECLASS_PREINCLUDE;
@@ -1212,7 +1213,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 149 "lexer"
+#line 150 "lexer"
 {
                                     d_retWS = true;
                                     return CLASS_HEADER;
@@ -1220,22 +1221,22 @@ YY_RULE_SETUP
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 153 "lexer"
+#line 154 "lexer"
 return DEBUGFLAG;
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 154 "lexer"
+#line 155 "lexer"
 return ERROR_VERBOSE;
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 155 "lexer"
+#line 156 "lexer"
 return EXPECT;
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 156 "lexer"
+#line 157 "lexer"
 {
                                     d_retWS = true;
                                     return FILENAMES;
@@ -1243,7 +1244,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 160 "lexer"
+#line 161 "lexer"
 {
                                     d_retWS = true;
                                     return IMPLEMENTATION_HEADER;
@@ -1251,47 +1252,47 @@ YY_RULE_SETUP
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 164 "lexer"
+#line 165 "lexer"
 return LEFT;
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 165 "lexer"
+#line 166 "lexer"
 return LINES;
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 166 "lexer"
+#line 167 "lexer"
 return LOCATIONSTRUCT;
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 167 "lexer"
+#line 168 "lexer"
 return LSP_NEEDED;
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 168 "lexer"
+#line 169 "lexer"
 return LTYPE;
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 169 "lexer"
+#line 170 "lexer"
 return NAMESPACE;
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 170 "lexer"
+#line 171 "lexer"
 return NEG_DOLLAR;
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 171 "lexer"
+#line 172 "lexer"
 return NONASSOC;
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 172 "lexer"
+#line 173 "lexer"
 {
                                     d_retWS = true;
                                     return PARSEFUN_SOURCE;
@@ -1299,22 +1300,22 @@ YY_RULE_SETUP
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 176 "lexer"
+#line 177 "lexer"
 return CLASS_NAME;
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 177 "lexer"
+#line 178 "lexer"
 return PREC;
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 178 "lexer"
+#line 179 "lexer"
 return RIGHT;
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 179 "lexer"
+#line 180 "lexer"
 {
                                     d_retWS = true;
                                     return SCANNER_INCLUDE;
@@ -1322,12 +1323,12 @@ YY_RULE_SETUP
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 183 "lexer"
+#line 184 "lexer"
 return START;
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 184 "lexer"
+#line 185 "lexer"
 {
                                     BEGIN stype;
                                     return STYPE;
@@ -1335,7 +1336,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 189 "lexer"
+#line 190 "lexer"
 {
                                     BEGIN INITIAL;
                                     return IDENTIFIER;
@@ -1343,51 +1344,51 @@ YY_RULE_SETUP
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 194 "lexer"
+#line 195 "lexer"
 return TOKEN;
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 195 "lexer"
+#line 196 "lexer"
 return TYPE;
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 196 "lexer"
+#line 197 "lexer"
 return UNION;
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 197 "lexer"
+#line 198 "lexer"
 return TWO_PERCENTS;
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 199 "lexer"
+#line 200 "lexer"
 return IDENTIFIER;
 	YY_BREAK
 case 50:
 /* rule 50 can match eol */
 YY_RULE_SETUP
-#line 201 "lexer"
+#line 202 "lexer"
 return RULE;
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 203 "lexer"
+#line 204 "lexer"
 return setNumber();
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 205 "lexer"
+#line 206 "lexer"
 return yytext[0];
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 207 "lexer"
+#line 208 "lexer"
 ECHO;
 	YY_BREAK
-#line 1391 "yylex.cc"
+#line 1392 "yylex.cc"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(string):
 case YY_STATE_EOF(comment):
@@ -2448,7 +2449,7 @@ void yyfree (void * ptr )
 
 /* %ok-for-header */
 
-#line 207 "lexer"
+#line 208 "lexer"
 
 
 

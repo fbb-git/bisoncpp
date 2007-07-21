@@ -213,10 +213,10 @@ union yyalloc
 #define YYMAXUTOK   258
 
 #define YYTRANSLATE(X) \
-  ((size_t/*unsigned*/)(X) <= YYMAXUTOK ? yytranslate[X] : YYUNDEFTOK)
+  ((size_t)(X) <= YYMAXUTOK ? yytranslate[X] : YYUNDEFTOK)
 
 /* YYTRANSLATE[YYLEX] -- Bison symbol number corresponding to YYLEX.  */
-static const size_t/*unsigned*/ char yytranslate[] =
+static const size_t char yytranslate[] =
 {
        0,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -249,7 +249,7 @@ static const size_t/*unsigned*/ char yytranslate[] =
 #if YYDEBUG
 /* YYPRHS[YYN] -- Index of the first RHS symbol of rule number YYN in
    YYRHS.  */
-static const size_t/*unsigned*/ char yyprhs[] =
+static const size_t char yyprhs[] =
 {
        0,     0,     3,     4,     6,     9,    10
 };
@@ -262,7 +262,7 @@ static const yysigned_char yyrhs[] =
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
-static const size_t/*unsigned*/ char yyrline[] =
+static const size_t char yyrline[] =
 {
        0,     9,     9,    14,    16,    23,    28
 };
@@ -280,20 +280,20 @@ static const char *const yytname[] =
 # ifdef YYPRINT
 /* YYTOKNUM[YYLEX-NUM] -- Internal token number corresponding to
    token YYLEX-NUM.  */
-static const size_t/*unsigned*/ short yytoknum[] =
+static const size_t short yytoknum[] =
 {
        0,   256,   257,   258
 };
 # endif
 
 /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
-static const size_t/*unsigned*/ char yyr1[] =
+static const size_t char yyr1[] =
 {
        0,     4,     5,     5,     5,     6,     6
 };
 
 /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
-static const size_t/*unsigned*/ char yyr2[] =
+static const size_t char yyr2[] =
 {
        0,     2,     0,     1,     2,     0,     1
 };
@@ -301,7 +301,7 @@ static const size_t/*unsigned*/ char yyr2[] =
 /* YYDEFACT[STATE-NAME] -- Default rule to reduce with in state
    STATE-NUM when YYTABLE doesn't specify something else to do.  Zero
    means the default is an error.  */
-static const size_t/*unsigned*/ char yydefact[] =
+static const size_t char yydefact[] =
 {
        2,     6,     0,     3,     1,     4
 };
@@ -331,7 +331,7 @@ static const yysigned_char yypgoto[] =
    number is the opposite.  If zero, do what YYDEFACT says.
    If YYTABLE_NINF, parse error.  */
 #define YYTABLE_NINF -1
-static const size_t/*unsigned*/ char yytable[] =
+static const size_t char yytable[] =
 {
        4,     1,     0,     5
 };
@@ -343,7 +343,7 @@ static const yysigned_char yycheck[] =
 
 /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
    symbol of state STATE-NUM.  */
-static const size_t/*unsigned*/ char yystos[] =
+static const size_t char yystos[] =
 {
        0,     3,     5,     6,     0,     3
 };
@@ -361,7 +361,7 @@ static const size_t/*unsigned*/ char yystos[] =
 # endif
 #endif
 #if ! defined (YYSIZE_T)
-# define YYSIZE_T size_t/*unsigned*/ int
+# define YYSIZE_T size_t int
 #endif
 
 #define yyerrok		(yyerrstatus = 0)
@@ -755,7 +755,7 @@ yyparse (YYPARSE_PARAM_ARG)
 
 
       YYDPRINTF ((stderr, "Stack size increased to %lu\n",
-		  (size_t/*unsigned*/ long int) yystacksize));
+		  (size_t long int) yystacksize));
 
       if (yyssp >= yyss + yystacksize - 1)
 	YYABORT;

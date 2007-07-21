@@ -48,6 +48,9 @@ namespace
         Arg::LongOption("show-filenames"),
                 // writes the names of the files to the standard output
 
+        Arg::LongOption("thread-safe"),
+                // no static data are modified, making bisonc++ thread-safe
+
         Arg::LongOption("usage", 'h'),
         Arg::LongOption("version", 'v'),
         Arg::LongOption("verbose", 'V'),

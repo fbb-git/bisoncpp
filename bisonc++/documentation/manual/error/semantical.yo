@@ -29,7 +29,7 @@ actually defined or declared when it is used in an expression. If not, a
 em(semantical) error should be reported
     )
     A parser that should be able to detect semantic errors will normally use a
-counter counting the number of semantic errors, e.g., tt(size_t/*unsigned*/
+counter counting the number of semantic errors, e.g., tt(size_t
 d_nSemanticErrors). It may be possible to test this counter's value once the
 input has been parsed, calling bf(ABORT()) (see section ref(PRIVMEM)) if the
 counter isn't zero anymore. When the grammar's start symbol itself has

@@ -6,7 +6,7 @@ void Writer::statesArray() const
 
     *d_out << "\n"
             "// State array:\n" 
-            "SR *s_state[] =\n"
+            "SR " << s_threadConst << "*s_state[] =\n"
             "{\n";
 
     for (size_t idx = 0; idx < State::nStates(); ++idx)

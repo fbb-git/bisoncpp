@@ -8,7 +8,9 @@ void Parser::setUnionDecl()
     if (d_stackDecl.size())
         lineMsg() << "%union or %stype multiply declared" << err;
 
-    d_stackDecl = "struct STYPE\n";
+    d_stackDecl = "union STYPE\n";  // USED TO BE struct, BUT union IS
+                                    // INTENDED
+
     d_unionDeclared = true;         // if a %union is used, then the rules
                                     // MUST have an associated return type if
                                     // a plain $$ is used. Also, a union must

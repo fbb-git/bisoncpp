@@ -4,8 +4,5 @@
   have been successfully processed before error messages are generated again
   (see documentation/manual/error/intro.yo)
 
-- Special character @ in skeletons must be changed into something
-  else. Suggestion: % or \@
-    Problem with @ is that it's used in e-mail addresses (e.g., in my e-mail
-    address which is used in share/bisonc++.cc
-- Repair occurrence of stack underflow 
+- describe --scanner-debug option
+- describe `(not requested)' as default for d_verboseName instead of `-'

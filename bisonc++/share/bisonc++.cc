@@ -45,18 +45,28 @@ $insert class.ih
 // Last element:    {set to d_token,    action to perform}
 //      }
 
+// When the --thread-safe option is specified, all static data are defined as
+// const. If --thread-safe is not provided, the state-tables are not defined
+// as const, since the lookup() function below will modify them
+
 $insert debugincludes
 
 namespace // anonymous
 {
-    char author[] = "Frank B. Brokken (f.b.brokken@rug.nl)";
+    char const author[] = "Frank B. Brokken (f.b.brokken@rug.nl)";
+
+    enum 
+    {
+        STACK_EXPANSION = 5     // size to expand the state-stack with when
+                                // full
+    };
 
     enum ReservedTokens
     {
-       PARSE_ACCEPT     = 0,   // `ACCEPT' TRANSITION
-       _UNDETERMINED_   = -2,
-       _EOF_            = -1,
-       _error_          = 256
+        PARSE_ACCEPT     = 0,   // `ACCEPT' TRANSITION
+        _UNDETERMINED_   = -2,
+        _EOF_            = -1,
+        _error_          = 256
     };
     enum StateType       // modify statetype/data.cc when this enum changes
     {
@@ -126,7 +136,7 @@ void \@Base::push(size_t state)
 {
     if (static_cast<size_t>(d_stackIdx + 1) == d_stateStack.size())
     {
-        size_t newSize = d_stackIdx + 5;
+        size_t newSize = d_stackIdx + STACK_EXPANSION;
         d_stateStack.resize(newSize);
         d_valueStack.resize(newSize);
 $insert 8 LTYPEresize
@@ -212,18 +222,7 @@ $insert 4 debug "nextToken(): using token " << symbol(d_token)
 // given by its positive value
 int \@::lookup(bool recovery)
 {
-    SR *sr = s_state[d_state];
-
-    int lastIdx = sr->d_lastIdx;        // sentinel-index in the SR_ array
-
-    SR *lastElementPtr = sr + lastIdx;
-
-    lastElementPtr->d_token = d_token;  // set search-token
-    
-    SR *elementPtr = sr + 1;            // start the search at s_xx[1]
-    while (elementPtr->d_token != d_token)
-        ++elementPtr;
-
+$insert 4 threading
 $insert 8 debug ""
 
     if (elementPtr == lastElementPtr)   // reached the last element

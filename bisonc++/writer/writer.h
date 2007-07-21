@@ -21,6 +21,8 @@ class Writer
     std::string const &d_baseclass;
     Rules const &d_rules;
 
+    static char const *s_threadConst;
+
     public:
         Writer(std::string const &baseclass, Rules const &rules);
         void useStream(std::ostream &out);
