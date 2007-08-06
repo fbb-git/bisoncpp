@@ -129,22 +129,22 @@ PI__ const s_productionInfo[] =
      {317, 1}, // 15: start_t ->  START
      {318, 1}, // 16: stype_t ->  STYPE
      {319, 0}, // 17: symbol_m ->  <empty>
-     {320, 0}, // 18: tokenMsg ->  <empty>
-     {321, 1}, // 19: type_t ->  TYPE
-     {322, 1}, // 20: union_t ->  UNION
-     {323, 0}, // 21: typesymbol ->  <empty>
-     {324, 2}, // 22: left_p ->  LEFT typesymbol
-     {325, 2}, // 23: nonassoc_p ->  NONASSOC typesymbol
-     {326, 2}, // 24: right_p ->  RIGHT typesymbol
-     {327, 2}, // 25: token_p ->  TOKEN typesymbol
+     {320, 0}, // 18: token_m ->  <empty>
+     {321, 0}, // 19: typesymbol_m ->  <empty>
+     {322, 1}, // 20: type_t ->  TYPE
+     {323, 1}, // 21: union_t ->  UNION
+     {324, 2}, // 22: left_p ->  LEFT typesymbol_m
+     {325, 2}, // 23: nonassoc_p ->  NONASSOC typesymbol_m
+     {326, 2}, // 24: right_p ->  RIGHT typesymbol_m
+     {327, 2}, // 25: token_p ->  TOKEN typesymbol_m
      {328, 1}, // 26: optComma ->  ','
      {328, 0}, // 27: optComma ->  <empty>
      {329, 1}, // 28: optNumber ->  NUMBER
      {329, 0}, // 29: optNumber ->  <empty>
      {330, 1}, // 30: optSemiCol ->  ';'
      {330, 0}, // 31: optSemiCol ->  <empty>
-     {331, 2}, // 32: optTypename ->  typename tokenMsg
-     {331, 1}, // 33: optTypename ->  tokenMsg
+     {331, 2}, // 32: optTypename ->  typename token_m
+     {331, 1}, // 33: optTypename ->  token_m
      {303, 1}, // 34: optTwo_percents ->  TWO_PERCENTS
      {303, 0}, // 35: optTwo_percents ->  <empty>
      {333, 1}, // 36: d_pxstring ->  PSTRING
@@ -261,8 +261,8 @@ SR__ s_2[] =
     { {     317}, { 28} }, // start_t                
     { {     318}, { 29} }, // stype_t                
     { {     327}, { 30} }, // token_p                
-    { {     321}, { 31} }, // type_t                 
-    { {     322}, { 32} }, // union_t                
+    { {     322}, { 31} }, // type_t                 
+    { {     323}, { 32} }, // union_t                
     { { _error_}, { 33} }, // _error_                
     { {     257}, { 34} }, // BASECLASS_HEADER       
     { {     258}, { 35} }, // BASECLASS_PREINCLUDE   
@@ -523,7 +523,7 @@ SR__ s_30[] =
     { { REQ_DEF}, {   5} },               
     { {     331}, {  77} }, // optTypename
     { {     332}, {  78} }, // typename   
-    { {     320}, {  79} }, // tokenMsg   
+    { {     320}, {  79} }, // token_m    
     { {      60}, {  80} }, // '<'        
     { {       0}, { -18} },               
 
@@ -604,9 +604,9 @@ SR__ s_40[] =
 
 SR__ s_41[] =
 {
-    { { DEF_RED}, {   2} },              
-    { {     323}, {  83} }, // typesymbol
-    { {       0}, { -21} },              
+    { { DEF_RED}, {   2} },                
+    { {     321}, {  83} }, // typesymbol_m
+    { {       0}, { -19} },                
 
 };
 
@@ -633,9 +633,9 @@ SR__ s_44[] =
 
 SR__ s_45[] =
 {
-    { { DEF_RED}, {   2} },              
-    { {     323}, {  84} }, // typesymbol
-    { {       0}, { -21} },              
+    { { DEF_RED}, {   2} },                
+    { {     321}, {  84} }, // typesymbol_m
+    { {       0}, { -19} },                
 
 };
 
@@ -655,9 +655,9 @@ SR__ s_47[] =
 
 SR__ s_48[] =
 {
-    { { DEF_RED}, {   2} },              
-    { {     323}, {  85} }, // typesymbol
-    { {       0}, { -21} },              
+    { { DEF_RED}, {   2} },                
+    { {     321}, {  85} }, // typesymbol_m
+    { {       0}, { -19} },                
 
 };
 
@@ -684,23 +684,23 @@ SR__ s_51[] =
 
 SR__ s_52[] =
 {
-    { { DEF_RED}, {   2} },              
-    { {     323}, {  86} }, // typesymbol
-    { {       0}, { -21} },              
+    { { DEF_RED}, {   2} },                
+    { {     321}, {  86} }, // typesymbol_m
+    { {       0}, { -19} },                
 
 };
 
 SR__ s_53[] =
 {
     { { DEF_RED}, {   1} }, 
-    { {       0}, { -19} }, 
+    { {       0}, { -20} }, 
 
 };
 
 SR__ s_54[] =
 {
     { { DEF_RED}, {   1} }, 
-    { {       0}, { -20} }, 
+    { {       0}, { -21} }, 
 
 };
 
@@ -792,7 +792,7 @@ SR__ s_66[] =
     { { REQ_DEF}, {   5} },               
     { {     331}, {  93} }, // optTypename
     { {     332}, {  78} }, // typename   
-    { {     320}, {  79} }, // tokenMsg   
+    { {     320}, {  79} }, // token_m    
     { {      60}, {  80} }, // '<'        
     { {       0}, { -18} },               
 
@@ -826,7 +826,7 @@ SR__ s_70[] =
     { { REQ_DEF}, {   5} },               
     { {     331}, {  96} }, // optTypename
     { {     332}, {  78} }, // typename   
-    { {     320}, {  79} }, // tokenMsg   
+    { {     320}, {  79} }, // token_m    
     { {      60}, {  80} }, // '<'        
     { {       0}, { -18} },               
 
@@ -851,7 +851,7 @@ SR__ s_73[] =
     { { REQ_DEF}, {   5} },               
     { {     331}, {  97} }, // optTypename
     { {     332}, {  78} }, // typename   
-    { {     320}, {  79} }, // tokenMsg   
+    { {     320}, {  79} }, // token_m    
     { {      60}, {  80} }, // '<'        
     { {       0}, { -18} },               
 
@@ -888,9 +888,9 @@ SR__ s_77[] =
 
 SR__ s_78[] =
 {
-    { { DEF_RED}, {   2} },            
-    { {     320}, {  99} }, // tokenMsg
-    { {       0}, { -18} },            
+    { { DEF_RED}, {   2} },           
+    { {     320}, {  99} }, // token_m
+    { {       0}, { -18} },           
 
 };
 
@@ -1594,20 +1594,20 @@ void Parser::executeAction(int production)
 
         case 19:
         {
-         d_msg = "type-name";
-         d_typeDirective = true;
+         d_msg = "opt. <type> identifier(s) or char constant(s)";
          }
         break;
 
         case 20:
         {
-         d_msg = "Semantic value union definition";
+         d_msg = "type-name";
+         d_typeDirective = true;
          }
         break;
 
         case 21:
         {
-         d_msg = "opt. <type> identifier(s) or char constant(s)";
+         d_msg = "Semantic value union definition";
          }
         break;
 

@@ -7,6 +7,10 @@ PTag *Parser::handleProductionElements(PTag *first, PTag *second)
     if (!second)        // the second PTag was a %prec specification:
         return first;   // postpone handling of first
 
+    if (!d_rules.hasRules())    // may happen if the first rule could not be
+        return (first);         // defined because of token/rulename clash
+
+
     switch (first->tag)
     {
         case PTag::TERMINAL:

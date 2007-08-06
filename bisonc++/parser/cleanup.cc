@@ -7,6 +7,9 @@ void Parser::cleanup()
     if (!d_rules.hasRules() || !d_rules.nProductions())
         msg() << "No production rules" << fatal;
 
+    if (Msg::errors())      // Terminate if parsing produced errors. 
+        throw 1;
+
     setAccessorVariables();
 
     d_rules.augmentGrammar(d_symtab.lookup(d_rules.startRule()));

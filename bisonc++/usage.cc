@@ -17,8 +17,8 @@ void usage(string const &program_name)
     "              parentheses. Short options require arguments if their\n"
     "              long option variants do too):\n"
 
-    "   --analyze-only: only analyze the grammar; except for possibly the\n"
-    "           verbose grammar description file no files are written.\n"
+    "   --analyze-only (-A): only analyze the grammar; except for possibly\n"
+    "           the verbose grammar description file no files are written.\n"
 
     "   --baseclass-preinclude=<header> (-H):\n"
     "           preinclude header in the base-class header file.\n"

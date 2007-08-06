@@ -23,9 +23,9 @@ optSemiCol:
 
 optTypename:
     typename
-    tokenMsg
+    token_m
 |
-    tokenMsg
+    token_m
     {
         d_field.clear();
     }

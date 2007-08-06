@@ -2,6 +2,9 @@
 
 void Parser::handleProductionElement(PTag *last)
 {
+    if (!d_rules.hasRules())    // may happen if the first rule could not be
+        return;                 // defined because of token/rulename clash
+
     if (!last)         // the last PTag was a %prec specification
     {
         checkFirstType();

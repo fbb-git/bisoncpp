@@ -3,6 +3,8 @@ This file contains a short description about the way states and look-aheads
 it follows the construction of the states of the grammar given in example 4.42
 in Aho et al. 
 
+A more extensive description is found in documentation/manual/algorithm.yo
+
 The grammar has the following production rules (numbered 1-3):
 
 1   S'  ->  S

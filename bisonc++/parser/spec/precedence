@@ -1,12 +1,6 @@
-typesymbol:
-    {
-        d_msg = "opt. <type> identifier(s) or char constant(s)";
-    }
-;
-
 left_p:
     LEFT
-    typesymbol
+    typesymbol_m
     {
         d_association = Terminal::LEFT;
     }
@@ -14,7 +8,7 @@ left_p:
 
 nonassoc_p:
     NONASSOC
-    typesymbol
+    typesymbol_m
     {
         d_association = Terminal::NONASSOC;
     }
@@ -22,7 +16,7 @@ nonassoc_p:
 
 right_p:
     RIGHT
-    typesymbol
+    typesymbol_m
     {
         d_association = Terminal::RIGHT;
     }
@@ -30,7 +24,7 @@ right_p:
 
 token_p:
     TOKEN
-    typesymbol
+    typesymbol_m
     {
         d_association = Terminal::UNDEFINED;
     }

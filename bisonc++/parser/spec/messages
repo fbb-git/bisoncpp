@@ -109,11 +109,18 @@ symbol_m:
     }
 ;
 
-tokenMsg:
+token_m:
     {
         d_msg = "token name";
     }
 ;
+
+typesymbol_m:
+    {
+        d_msg = "opt. <type> identifier(s) or char constant(s)";
+    }
+;
+
 
 type_t:
     TYPE

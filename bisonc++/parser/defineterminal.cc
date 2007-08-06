@@ -15,26 +15,6 @@
 // 
 // This function is called by the `symbol' rule
 
-
-//        if (not d_field.empty())
-//        {
-//            if (sp->sType() != d_field)         
-//            {
-//                if (sp->sType().empty)
-//                    sp->setStype(d_field);
-//                else
-//                    lineMsg() << "symbol `' << name << "'" already has "
-//                                "type <" << sp->sType() << ">" << err;
-//            }
-//            return;
-//        }
-//
-//        {
-//            stype = sp->sType();
-//            d_symtab.erase(d_symtab.find(name));
-//            d_rules.remove(NonTerminal::downcast(sp));
-//        }
-
 //  Unknown symbol:
 //
 //  Define the terminal as UNDETERMINED with %type, otherwise as `type'
@@ -58,8 +38,6 @@
 
 void Parser::defineTerminal(string const &name, Symbol::Type type)
 {
-    string stype = d_field;
-
     if (Symbol *sp = d_symtab.lookup(name))     // known symbol?
     {
             // known symbol: upper left alternative
@@ -68,7 +46,6 @@ void Parser::defineTerminal(string const &name, Symbol::Type type)
             multiplyDefined(sp);
             return;
         }
-
 
         if (sp->sType().empty())
             sp->setStype(d_field);
@@ -99,7 +76,7 @@ void Parser::defineTerminal(string const &name, Symbol::Type type)
                                         d_scanner.number()
                                     :
                                         Terminal::DEFAULT, 
-                                    d_association, stype),
+                                    d_association, d_field),
                     d_scanner.YYText()
                 )
             )

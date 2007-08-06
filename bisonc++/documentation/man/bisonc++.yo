@@ -205,10 +205,12 @@ manpageoptions()
 following their associated long-option variants. Single letter options require
 arguments if their associated long options require arguments as well.
     itemization(
-    it() loption(analyze-only)nl()
+    it() loption(analyze-only) (soption(A))nl()
            Only analyze the grammar. No files are (re)written. This option can
             be used to test the grammatical correctness of modification `in
-            situ', without overwriting previously generated files.
+            situ', without overwriting previously generated files. If the
+            grammar contains syntactic errors only syntax analysis is 
+            performed.
     it() lsoption(baseclass-preinclude)(H)(header)nl()
            Use tt(header) as the pathname to the file preincluded in the
             parser's base-class header. This option is useful in situations

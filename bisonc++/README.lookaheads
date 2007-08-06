@@ -1,5 +1,5 @@
 This file describes the lookahead-propagation procedure as used by Bisonc++
-
+A more extensive description is found in documentation/manual/algorithm.yo
 
 Start with the following simple grammar:
 

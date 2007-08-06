@@ -25,6 +25,7 @@ class Rules
         // rather than as alternatives. There's nothing inherently wrong with
         // that, but it may also be a typo causing unexpected conflicts
         typedef std::pair<std::string, size_t> FileInfo;
+
     private:
         typedef std::map<NonTerminal const *, FileInfo> NFileInfoMap;
     
@@ -179,8 +180,8 @@ inline Rules::Rules()
 :
     d_currentRule(0),
     d_currentProduction(0)
-{}
-
+{}                        
+                          
 inline void Rules::clearLocations()
 {
     d_location.clear();
