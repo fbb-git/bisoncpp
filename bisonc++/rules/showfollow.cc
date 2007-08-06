@@ -9,7 +9,7 @@ void Rules::showFollow() const
 
     msgstream() << "FOLLOW sets:\n";
 
-    OM::setType(OM::EXTENDED);
+    OM::setType(OM::SPECIAL);
 
     copy(d_nonTerminal.begin(), d_nonTerminal.end(), 
                 ostream_iterator<NonTerminal const *>(msgstream(), "\n"));

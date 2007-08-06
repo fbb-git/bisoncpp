@@ -1,6 +1,6 @@
 B() is a general-purpose parser generator that converts a
-grammar description for an LALR(1) context-free grammar into a C
-program to parse that grammar.  Once you are proficient with b(),
+grammar description for an LALR(1) context-free grammar into a bf(C++)
+class to parse that grammar.  Once you are proficient with b(),
 you may use it to develop a wide range of language parsers, from those
 used in simple desk calculators to complex programming languages.
 
@@ -12,11 +12,11 @@ trouble.  You need to be fluent in using the bf(C++) programming in order to
 use b() or to understand this manual.
 
 This manual closely resembles bf(bison)(1)'s userguide. In fact, many sections
-of that manual were copied straight into this manual. With B() distributions
+of that manual were copied straight into this manual. With b() distributions
 (both the full source distribution and the binary tt(.deb) distributions)
 bf(bison)'s orginal manual is included in both em(PostScript) and (converted
 from the tt(texi) format) tt(HTML) format. Where necessary sections of the
-orginical manual were adapted to B()'s characteristics. Some sections were
+orginical manual were adapted to b()'s characteristics. Some sections were
 removed, some new sections were added to the current manual. Expect upgrades
 of the manual to appear without further notice. Upgrades will be announced in
 the manual's title.

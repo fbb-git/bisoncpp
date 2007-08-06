@@ -11,6 +11,7 @@
 #include "icmake/manual"
 #include "icmake/library"
 #include "icmake/program"
+#include "icmake/rebuild"
 #include "icmake/install"
 
 void main(int argc, list argv, list envp)
@@ -50,6 +51,9 @@ void main(int argc, list argv, list envp)
     if (option == "program")
         program();
 
+    if (option == "rebuild")
+        rebuild();
+
     printf("Usage: build [-p] what\n"
         "Where `what' is one of:\n"
         "   clean              - clean up remnants of previous compilations\n"
@@ -58,6 +62,8 @@ void main(int argc, list argv, list envp)
         "   man                - build the man-page (requires Yodl)\n"
         "   manual             - build the manual (requires Yodl)\n"
         "   program            - build bisonc++\n"
+        "   rebuild            - recreate the parser using bisonc++ created\n"
+        "                        by `build program'\n"
         "   install <base>     - install the software in the locations "
                                                             "defined\n"
                                                                

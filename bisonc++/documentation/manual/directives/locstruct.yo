@@ -1,7 +1,7 @@
- bf(%locationstruct) tt(struct-definition) nl() 
+Syntax: bf(%locationstruct) tt(struct-definition) nl() 
            Defines the organization of the location-struct data type
-            bf(LTYPE). This struct should be specified analogously to the way
-            the parser's stacktype is defined using bf(%union) (see
-            below). The location struct is named bf(LTYPE). If neither
-            bf(locationstruct) nor bf(LTYPE) is specified, the aforementioned
-            default struct is used. 
+            bf(LTYPE__). This struct should be specified analogously to the
+            way the parser's stacktype is defined using bf(%union) (see
+            below). The location struct type is named bf(LTYPE__). If neither
+            bf(locationstruct) nor bf(LTYPE__) is specified, the
+            default link(LTYPE__)(LSPNEEDED) struct is used.

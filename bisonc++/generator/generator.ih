@@ -5,8 +5,8 @@
 #include <ostream>
 #include <iomanip>
 
+#include <bobcat/msg>
 #include <bobcat/fnwrap1c>
-#include <bobcat/arg>
 
 #include "../rules/rules.h"
 #include "../parser/parser.h"

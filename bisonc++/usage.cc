@@ -17,76 +17,103 @@ void usage(string const &program_name)
     "              parentheses. Short options require arguments if their\n"
     "              long option variants do too):\n"
 
+    "   --analyze-only: only analyze the grammar; except for possibly the\n"
+    "           verbose grammar description file no files are written.\n"
+
     "   --baseclass-preinclude=<header> (-H):\n"
     "           preinclude header in the base-class header file.\n"
     "           Use [header] to include <header>, otherwise \"header\"\n"
     "           will be included.\n"
 
-    "   --baseclass-skeleton=<skeleton> (-B):\n"
-    "           location of the baseclass header skeleton\n"
-
     "   --baseclass-header=<header> (-b):\n"
     "           filename holding the base class definition.\n"
 
-    "   --class-skeleton=<skeleton> (-C):\n"
-    "           location of the class header skeleton\n"
+    "   --baseclass-skeleton=<skeleton> (-B):\n"
+    "           location of the baseclass header skeleton.\n"
 
     "   --class-header=<header> (-c):\n"
     "           filename holding the parser class definition.\n"
 
+    "   --class-skeleton=<skeleton> (-C):\n"
+    "           location of the class header skeleton\n"
+
     "   --construction:\n"
     "           write details about the grammar analysis to stdout.\n"
 
-    "   --debug: generates #define DEBUG 1 in the parse function's source\n"
+    "   --debug: generates #define DEBUG 1 in the parse function's source.\n"
+
+    "   --error-verbose: the parse function will dump the parser's state\n"
+    "           stack to stdout when a syntactic error is reported\n"
 
     "   --filenames=<filename> (-f):\n"
-    "           filename of output files (overruling the default filename)\n"
+    "           filename of output files (overruling the default filename).\n"
 
-    "   --force-class-header: overwrite an existing class header file\n"
+    "   --force-class-header: overwrite an existing class header file.\n"
 
     "   --force-implementation-header: overwrite an existing implementation\n"
-    "           header file\n"
+    "           header file.\n"
 
-    "   --help (-h): produce this information (and terminate)\n"
-
-    "   --implementation-skeleton=<skeleton> (-I):\n"
-    "           location of the implementation header skeleton\n"
+    "   --help (-h): produce this information (and terminate).\n"
 
     "   --implementation-header=<header> (-i):\n"
     "           filename holding the implementation header.\n"
 
-    "   --lines (-l): put #line directives in generated output\n"
+    "   --implementation-skeleton=<skeleton> (-I):\n"
+    "           location of the implementation header skeleton.\n"
 
-    "   --namespace <namespace>, (-n):\n"
-    "            define the parser in the mentioned namespace\n"
+    "   --include-only:\n"
+    "           catenate all grammar files in their order of processing to\n"
+    "           the standard output stream and terminate.\n"
 
-    "   --no-baseclass-header: don't create the parser's base class header\n"
+    "   --lines (-l): put #line directives in generated output.\n"
 
-    "   --no-parse-member: don't create the member parse()\n"
+    "   --max-inclusion-depth=<value>:\n"
+    "            sets the maximum number of nested grammar files (default: "
+                                                                    "10).\n"
+    "   --namespace=<namespace>, (-n):\n"
+    "            define the parser in the mentioned namespace.\n"
+
+    "   --no-baseclass-header: don't create the parser's base class header.\n"
+
+    "   --no-lines: don't put #line directives in generated output,\n"
+    "            overruling the %lines directive.\n"
+
+    "   --no-parse-member: don't create the member parse().\n"
 
     "   --parser-skeleton=<parserskel> (-P):\n"
-    "           location of the parse function's skeleton\n"
+    "           location of the parse function's skeleton.\n"
 
-    "   --parser-source=<source> (-p):\n"
+    "   --parsefun-source=<source> (-p):\n"
     "          filename holding the parse function's source.\n"
+
+    "   --required-tokens=<value>:\n"
+    "          minimum number of successfully processed tokens between\n"
+    "          errors (default: 0).\n"
 
     "   --scanner=<header-file> (-s):\n"
     "          include `header-file' declaring the class Scanner, and call\n"
-    "          d_scanner.yylex() in lex()\n"
+    "          d_scanner.yylex() in lex().\n"
+
+    "   --scanner-debug: show de scanner's matched rules and returned "
+                                                                "tokens.\n"
 
     "   --show-filenames:\n"
-    "          show the names of the used/generated files on standard error\n"
+    "          show the names of the used/generated files on standard error.\n"
+
+    "   --skeleton-directory=<skeleton-directory> (-S):\n"
+    "           location of the skeleton directory.\n"
 
     "   --thread-safe:\n"
-    "          no static data are modified, making bisonc++ thread-safe\n"
+    "          no static data are modified, making bisonc++ thread-safe.\n"
 
-    "   --usage: produce this information (and terminate)\n"
-
-    "   --version (-v):\n"
-    "           display " << program_name << "'s version and terminate\n"
+    "   --usage: produce this information (and terminate).\n"
 
     "   --verbose (-V):\n"
-    "           generate verbose description of the analyzed grammar\n" <<
-    endl;
+    "           generate verbose description of the analyzed grammar.\n" 
+
+    "   --version (-v):\n"
+    "           display " << program_name << "'s version and terminate.\n"
+
+                                                                    << endl;
 }
 

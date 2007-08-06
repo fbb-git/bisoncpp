@@ -1,4 +1,4 @@
-Before running B() to produce a parser class, we need to decide how to
+Before running b() to produce a parser class, we need to decide how to
 arrange all the source code in one or more source files. Even though the
 example is fairly simple, all user-defined functions should be defined in
 source files of their own. For tt(rpn) this means that a source file
@@ -12,7 +12,7 @@ parsing member function from this file after issuing the following command:
         verb(
     b() grammar
         )
-    From this, B() produced the following files:
+    From this, b() produced the following files:
     itemization(
     itt(Parser.h), the parser class definition;
     itt(Parserbase.h), the parser's em(base) class definition, defining, among
@@ -23,7 +23,7 @@ implementations of the parser class' members;
     itt(parse.cc), the parsing member function.
     )
     By default, tt(Parserbase.h) and tt(parse.cc) will be em(re-created) each
-time B() is re-run. tt(Parser.h) and tt(Parser.ih) may safely be modified
+time b() is re-run. tt(Parser.h) and tt(Parser.ih) may safely be modified
 by the programmer, e.g., to add new members to to the parser class. These two
-files will not be overwritten by B(), unless explicitly instructed to do
+files will not be overwritten by b(), unless explicitly instructed to do
 so. 

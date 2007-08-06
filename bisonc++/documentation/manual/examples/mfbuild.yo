@@ -5,7 +5,7 @@ In order to construct tt(mfcalc), the following steps are suggested:
         each other.
     it() Construct the parser in a subdirectory tt(parser):
         itemization(
-        it() First, construct B()'s input file as indicated above. Name
+        it() First, construct b()'s input file as indicated above. Name
             this file tt(grammar);
         it() Run tt(bisonc++ grammar) to produce the files tt(Parser.h),
             tt(Parserbase.h), tt(Parser.ih) and tt(parse.cc);

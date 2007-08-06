@@ -1,4 +1,5 @@
 //DECL
+%baseclass-preinclude cmath
 
 %token NUM
 %stype double

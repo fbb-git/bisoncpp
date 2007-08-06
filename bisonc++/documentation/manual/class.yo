@@ -3,20 +3,20 @@ includefile(class/intro.yo)
 sect(Public Members and Types)
 includefile(class/public.yo)
 
-sect(Private Enumerations and Types)
+sect(Protected Enumerations and Types)
 includefile(class/privenum.yo)
 
-lsect(PRIVMEM)(Private Member Functions)
+lsect(PRIVMEM)(Non-public Member Functions)
 includefile(class/privmembers.yo)
 
-    lsubsect(LEX)(`lex()': the Lexical Analyzer interface)
+    lsubsect(LEX)(`lex()': Interfacing the Lexical Analyzer)
     includefile(class/lex.yo)
 
-sect(Private Data Members)
+sect(Protected Data Members)
 includefile(class/privdata.yo)
 
 sect(Types and Variables in the Anonymous Namespace)
 includefile(class/anonymous.yo)
 
-    lsubsect(SPECIAL)(Special Features for Actions)
-    includefile(class/features.yo)
+lsect(SPECIAL)(Summary of Special Constructions for Actions)
+includefile(class/features.yo)

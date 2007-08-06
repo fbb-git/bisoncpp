@@ -9,6 +9,7 @@ the classes used by Rules; RmReduction does not depend on any other class).
                           |
          +----------------+------------+
          |                             |
+         |                             |
          |               OM            |
          |                |            |
          |             Element         |
@@ -64,4 +65,5 @@ the classes used by Rules; RmReduction does not depend on any other class).
                        +----------------+-------------------+
                                         |
                                      bisonc++
+
 

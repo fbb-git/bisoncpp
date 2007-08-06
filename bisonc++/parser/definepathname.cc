@@ -1,11 +1,11 @@
 #include "parser.ih"
 
-void Parser::definePathname(string *sp)
+void Parser::definePathname(string *target, int type)
 {
-                                // retrieve the next string from the
-                                // specification file 
-    string path = d_scanner.nextString();
-
-    if (!sp->size())            // assign only if not yet assigned
-        *sp = path;
+    if (!target->size())            // assign only if not yet assigned
+    {
+        if (type != 0)
+            d_scanner.undelimit(type == PSTRING);
+        *target = String::unescape(d_scanner.YYText());
+    }
 }

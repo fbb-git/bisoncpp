@@ -12,7 +12,7 @@
 
 void Generator::parseFunction() const
 {
-    if (Arg::instance().option(0, "no-parse-member"))
+    if (d_arg.option(0, "no-parse-member"))
         return;
 
     ofstream out;

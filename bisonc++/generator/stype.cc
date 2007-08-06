@@ -7,6 +7,5 @@ void Generator::stype(ostream &out) const
     if (!d_parser.stype().empty())
         out << d_parser.stype() << endl;
     else
-        out <<  
-            "    typedef int STYPE;\n";
+        out << "typedef int STYPE__;\n";
 }

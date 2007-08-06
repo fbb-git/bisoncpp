@@ -6,6 +6,8 @@
 #include <string>
 #include <iosfwd>
 
+#include <bobcat/arg>
+
 #include "../writer/writer.h"
 
 class Terminal;
@@ -19,6 +21,7 @@ class Generator
     typedef Map::value_type                     MapValue;
     typedef Map::const_iterator                 MapConstIter;
 
+    FBB::Arg &d_arg;
     Rules const &d_rules;
     Parser const &d_parser;
 
@@ -29,7 +32,7 @@ class Generator
     mutable size_t d_indent;
 
     mutable std::string d_line;
-    bool        d_debug;
+    bool d_debug;
 
     mutable Writer d_writer;                // maintains its own const-ness
 
@@ -62,6 +65,8 @@ class Generator
         void debugFunctions(std::ostream &out) const;
         void debugInit(std::ostream &out) const;
         void debugDecl(std::ostream &out) const;
+        void debugLookup(std::ostream &out) const;
+        void errorVerbose(std::ostream &out) const;
         void lex(std::ostream &out) const;
         void ltype(std::ostream &out) const;
         void ltypeData(std::ostream &out) const;
@@ -73,6 +78,7 @@ class Generator
         void namespaceOpen(std::ostream &out) const;
         void namespaceUse(std::ostream &out) const;
         void preIncludes(std::ostream &out) const;
+        void requiredTokens(std::ostream &out) const;
         void scannerH(std::ostream &out) const;
         void scannerObject(std::ostream &out) const;
         void staticData(std::ostream &out) const;

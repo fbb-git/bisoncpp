@@ -1,0 +1,198 @@
+d_pxstring:
+    PSTRING
+    {
+        $$ = PSTRING;
+    }
+|
+    STRING
+    {
+        $$ = STRING;
+    }
+|
+    XSTRING
+    {
+        $$ = XSTRING;
+    }
+;
+    
+d_incrementPrecedence:
+    {
+        Terminal::incrementPrecedence();
+    }
+;
+
+d_pushPrecedence:
+    {
+        $$ = Terminal::sPrecedence();
+        Terminal::resetPrecedence();
+    }
+;
+
+
+directives:
+    directives directive
+|
+    // empty
+;
+
+directive:
+    directiveAlt
+    {
+        d_msg.erase();
+        d_typeDirective = false;
+    }
+;
+
+directiveAlt:
+    baseclass_header_t
+    d_pxstring
+    {
+        setBaseclassHeader($2);
+    }
+|
+    baseclass_preinclude_t
+    d_pxstring
+    {
+        setPreInclude();
+    }
+|
+    class_header_t
+    d_pxstring
+    {
+        setClassHeader($2);
+    }
+|
+    class_name_t
+    IDENTIFIER
+    {
+        setClassName();
+    }
+|
+    DEBUGFLAG
+    {
+        setDebugFlag();
+    }
+|
+    ERROR_VERBOSE
+    {
+        setErrorVerbose();
+    }
+|
+    expect_t
+    NUMBER
+    {
+        setExpectedConflicts();
+    }
+|
+    filenames_t
+    d_pxstring
+    {
+        setGenericFilename($2);
+    }
+|
+    implementation_header_t
+    d_pxstring
+    {
+        setImplementationHeader($2);
+    }
+|
+    left_p
+    d_incrementPrecedence
+    optTypename
+    symbols
+|
+    LINES
+    {
+        setLines();
+    }
+|
+    locationstruct_t
+    BLOCK
+    optSemiCol
+    {
+        setLocationDecl();
+    }
+|
+    LSP_NEEDED
+    {
+        setLspNeeded();
+    }
+|
+    ltype_t
+    XSTRING
+    {
+        setLtype();
+    }
+|
+    namespace_t
+    IDENTIFIER
+    {
+        setNameSpace();
+    }
+|
+    NEG_DOLLAR
+    {
+        setNegativeDollar();
+    }
+|
+    nonassoc_p
+    d_incrementPrecedence
+    optTypename
+    symbols
+|
+    parsefun_source_t
+    d_pxstring
+    {
+        setParsefunSource($2);
+    }
+|
+    required_t
+    NUMBER
+    {
+        setRequiredTokens();
+    }
+|
+    right_p
+    d_incrementPrecedence
+    optTypename
+    symbols
+|
+    scanner_include_t
+    d_pxstring
+    {
+        setScannerInclude();
+    }
+|
+    start_t
+    IDENTIFIER
+    {
+        setStart();
+    }
+|
+    stype_t
+    XSTRING
+    {
+        setStype();
+    }
+|
+    token_p
+    optTypename
+    d_pushPrecedence        // make sure %token precedences are zero
+    symbols
+    {
+        Terminal::set_sPrecedence($3);
+    }
+|
+    type_t
+    typename
+    symbols
+|
+    union_t
+    BLOCK
+    optSemiCol
+    {
+        setUnionDecl();
+    }
+|
+    error
+;

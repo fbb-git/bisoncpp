@@ -39,10 +39,10 @@ look-ahead: when a param_spec is being read, an tt(ID) is a tt(name) if a
 comma or colon follows, or a tt(type) if another tt(ID) follows. In other
 words, this grammar is LR(1).
 
-However, B(), like most parser generators, cannot actually handle all LR(1)
+However, b(), like most parser generators, cannot actually handle all LR(1)
 grammars. In this grammar, two contexts, that after an tt(ID) at the beginning
 of a tt(param_spec) and likewise at the beginning of a tt(return_spec), are
-similar enough that B() assumes they are the same. They appear similar
+similar enough that b() assumes they are the same. They appear similar
 because the same set of rules would be active--the rule for reducing to a name
 and that for reducing to a type. B() is unable to determine at that stage of
 processing that the rules would require different look-ahead tokens in the two
@@ -53,7 +53,7 @@ that the grammar is not LALR(1).
 In general, it is better to fix deficiencies than to document them. But this
 particular deficiency is intrinsically hard to fix; parser generators that can
 handle LR(1) grammars are hard to write and tend to produce parsers that are
-very large. In practice, B() is more useful as it is now.
+very large. In practice, b() is more useful as it is now.
 
 When the problem arises, you can often fix it by identifying the two parser
 states that are being confused, and adding something to make them look

@@ -1,0 +1,43 @@
+optComma:
+    ','
+|
+    // empty
+;
+
+optNumber:
+    NUMBER
+    {
+        $$ = true;
+    }
+|
+    {
+        $$ = false;
+    }
+;
+
+optSemiCol:
+    ';'
+|
+    // empty
+;
+
+optTypename:
+    typename
+    tokenMsg
+|
+    tokenMsg
+    {
+        d_field.clear();
+    }
+;
+
+optTwo_percents:
+    TWO_PERCENTS
+    {
+        lineMsg() << 
+            "Ignoring all input beyond the second %% token" << warning;
+        ACCEPT();
+    }
+|
+    // empty
+;

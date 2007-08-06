@@ -1,4 +1,4 @@
-    bf(%baseclass-header) tt(header) nl()
+    Syntax: bf(%baseclass-header) tt(header) nl()
            Defines the pathname of the file containing the parser's base
             class. This directive is overridden by the
-            bf(--baseclass-header) or bf(-b) command-line options.
+            bf(--baseclass-header) (bf(-b)) command-line option.

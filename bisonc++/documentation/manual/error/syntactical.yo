@@ -1,16 +1,16 @@
     In a simple interactive command parser where each input is one line, it
-may be sufficient to allow bf(parse()) to return tt(PARSE_ABORT) on error and
+may be sufficient to allow tt(parse()) to return tt(PARSE_ABORT) on error and
 have the caller ignore the rest of the input line when that happens (and then
-call bf(parse()) again). But this is inadequate for a compiler, because it
-forgets all the syntactic context leading up to the error. A syntactical error
+call tt(parse()) again). But this is inadequate for a compiler, because it
+forgets all the syntactic context leading up to the error. A syntactic error
 deep within a function in the compiler input should not cause the compiler to
 treat the following line like the beginning of a source file.
 
-    It is possible to specify how to recover from a syntactical error by
+    It is possible to specify how to recover from a syntactic error by
 writing rules recognizing the special token tt(error). This is a terminal
 symbol that is always defined (it must em(not) be declared) and is reserved
-for error handling. The B() parser generates an tt(error) token whenever a
-syntactical error is detected; if a rule was provided recognizing this token
+for error handling. The b() parser generates an tt(error) token whenever a
+syntactic error is detected; if a rule was provided recognizing this token
 in the current context, the parse can continue. For example:
         verb(        
     statements:  
@@ -25,7 +25,7 @@ in the current context, the parse can continue. For example:
     The fourth rule in this example says that an error followed by a newline
 makes a valid addition to any tt(statements).
 
-    What happens if a syntactical error occurs in the middle of an
+    What happens if a syntactic error occurs in the middle of an
 tt(expression)?  The error recovery rule, interpreted strictly, applies to the
 precise sequence of a tt(statements), an error and a newline. If an error
 occurs in the middle of an tt(expression), there will probably be some
@@ -33,8 +33,8 @@ additional tokens and subexpressions on the parser's stack after the last
 tt(statements), and there will be tokens waiting to be read before the next
 newline. So the rule is not applicable in the ordinary way.
 
-    B(), however, can force the situation to fit the rule, by em(discarding)
-part of the semantic context and part of the input. When a (syntactical) error
+    b(), however, can force the situation to fit the rule, by em(discarding)
+part of the semantic context and part of the input. When a (syntactic) error
 occurs the parsing algorithm will try to recover from the error in the
 following way: First it discards states from the stack until it encounters a
 state in which the tt(error) token is acceptable (meaning that the
@@ -43,7 +43,7 @@ tt(statements)). At this point the error token is shifted. Then, if the
 available look-ahead token is not acceptable to be shifted next, the parser
 continues to read tokens and to discard them until it finds a token which
 em(is) acceptable. I.e., a token which em(can) follow an tt(error) token in
-the current state. In this example, B() reads and discards input until the
+the current state. In this example, b() reads and discards input until the
 next newline was read so that the fourth rule can apply.
 
     The choice of error rules in the grammar is a choice of strategies for
@@ -67,29 +67,29 @@ generating another, spurious error message:
     ;
         )
     Error recovery strategies are necessarily guesses. When they guess wrong,
-one syntactical error often leads to another. In the above example, the error
+one syntactic error often leads to another. In the above example, the error
 recovery rule guesses that an error is caused by bad input within one
 statement. Suppose that instead a spurious semicolon is inserted in the middle
 of a valid statement. After the error recovery rule recovers from the first
-error, another syntactical error will be found straightaway, since the text
+error, another syntactic error will be found straightaway, since the text
 following the spurious semicolon is also an invalid statement.
 
     To prevent an outpouring of error messages, the parser may be configured
-in such a way that no error message will be generated for another syntactical
+in such a way that no error message will be generated for another syntactic
 error that happens shortly after the first. E.g., only after three consecutive
 input tokens have been successfully shifted error messages will be generated
-again. This configuration is currently not available in B()'s parsers.
+again. This configuration is currently not available in b()'s parsers.
 
     Note that rules using the tt(error) token may have actions, just as any
 other rules can.
 
     The token causing an error is re-analyzed immediately when an error
-occurs. If this is unacceptable, then the member function bf(clearin) may be
+occurs. If this is unacceptable, then the member function tt(clearin()) may be
 called to skip this token. The function can be called by any member function
 of the Parser class. For example, suppose that on a parse error, an error
 handling routine is called that advances the input stream to some point where
 parsing should once again commence. The next symbol returned by the lexical
 scanner is probably correct. The previous token ought to be discarded using
-bf(clearin).
+tt(clearin()).
 
 

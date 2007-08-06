@@ -25,7 +25,7 @@ class Parser: public ParserBase
     public:
         Parser()
         :
-            d_scanner(&d_loc, &d_val)
+            d_scanner(&d_loc__, &d_val__)
         {}
         
         int parse();

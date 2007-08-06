@@ -1,4 +1,4 @@
-In order for B() to parse a language, it must be described by a
+In order for b() to parse a language, it must be described by a
 em(context-free grammar). This means that you specify one or more em(syntactic
 groupings) and give rules for constructing them from their parts. For example,
 in the C language, one kind of grouping is called an `expression'. One rule
@@ -10,9 +10,9 @@ least one rule which leads out of the recursion.
 The most common formal system for presenting such rules for humans to read is
 em(Backus-Naur Form) or `BNF', which was developed in order to specify the
 language Algol 60. Any grammar expressed in BNF is a context-free grammar. The
-input to B() is essentially machine-readable BNF.
+input to b() is essentially machine-readable BNF.
 
-Not all context-free languages can be handled by B(), only those that are
+Not all context-free languages can be handled by b(), only those that are
 LALR(1). In brief, this means that it must be possible to tell how to parse
 any portion of an input string with just a single token of
 look-ahead. Strictly speaking, that is a description of an LR(1) grammar, and
@@ -80,7 +80,7 @@ program--but it is not valid as an em(entire) bf(C++) program. In the
 context-free grammar of bf(C++), this follows from the fact that `expression'
 is not the start symbol.
 
-The B() parser reads a sequence of tokens as its input, and groups the
+The b() parser reads a sequence of tokens as its input, and groups the
 tokens using the grammar rules. If the input is valid, the end result is that
 the entire token sequence reduces to a single grouping whose symbol is the
 grammar's start symbol. If we use a grammar for bf(C++), the entire input must

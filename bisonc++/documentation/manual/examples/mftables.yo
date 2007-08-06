@@ -1,6 +1,6 @@
 The multi-function calculator requires a symbol table to keep track of the
 names and meanings of variables and functions. This doesn't affect the grammar
-rules (except for the actions) or the B() directives, but it requires
+rules (except for the actions) or the b() directives, but it requires
 some additional bf(C++) types for support as well as several additional data
 members for the parser class.
 

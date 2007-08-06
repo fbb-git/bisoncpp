@@ -11,7 +11,7 @@ void Generator::ltype(ostream &out) const
         out << d_parser.ltype() << endl;
     else
         out <<  
-            "    struct LTYPE\n"
+            "    struct LTYPE__\n"
             "    {\n"
             "        int timestamp;\n"
             "        int first_line;\n"

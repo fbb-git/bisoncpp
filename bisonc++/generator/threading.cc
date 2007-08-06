@@ -4,10 +4,10 @@ void Generator::threading(ostream &out) const
 {
     key(out);
 
-    if (Arg::instance().option(0, "thread-safe"))
+    if (d_arg.option(0, "thread-safe"))
         out << 
-            "SR const *sr = s_state[d_state]; "
-                            "   // get the appropriate state-table\n" <<
+            "SR__ const *sr = s_state[d_state__]; "
+                            " // get the appropriate state-table\n" <<
 
             setw(d_indent) << "" << 
             "int lastIdx = sr->d_lastIdx; "
@@ -15,42 +15,42 @@ void Generator::threading(ostream &out) const
             "\n" <<
 
             setw(d_indent) << "" << 
-            "SR const *lastElementPtr = sr + lastIdx;\n" <<
+            "SR__ const *lastElementPtr = sr + lastIdx;\n" <<
 
             setw(d_indent) << "" << 
-            "SR const *elementPtr = sr + 1; "
+            "SR__ const *elementPtr = sr + 1; "
                             "     // start the search at s_xx[1]\n"
             "\n" <<
 
             setw(d_indent) << "" << 
             "while (elementPtr != lastElementPtr && "
-                                        "elementPtr->d_token != d_token)\n" <<
+                                    "elementPtr->d_token != d_token__)\n" <<
 
             setw(d_indent) << "" << 
             "    ++elementPtr;\n";
     else
         out <<  
-            "SR *sr = s_state[d_state];       "
+            "SR__ *sr = s_state[d_state__];     "
                             "   // get the appropriate state-table\n" <<
 
             setw(d_indent) << "" << 
             "int lastIdx = sr->d_lastIdx; "
-                            "       // sentinel-index in the SR_ array\n"
+                            "       // sentinel-index in the SR__ array\n"
             "\n" <<
 
             setw(d_indent) << "" << 
-            "SR *lastElementPtr = sr + lastIdx;\n" <<
+            "SR__ *lastElementPtr = sr + lastIdx;\n" <<
 
             setw(d_indent) << "" << 
-            "SR *elementPtr = sr + 1; "
+            "SR__ *elementPtr = sr + 1; "
                             "           // start the search at s_xx[1]\n"
             "\n" << 
             setw(d_indent) << "" << 
-            "lastElementPtr->d_token = d_token;  // set search-token\n"
+            "lastElementPtr->d_token = d_token__;// set search-token\n"
             "\n" <<
 
             setw(d_indent) << "" << 
-            "while (elementPtr->d_token != d_token)\n" <<
+            "while (elementPtr->d_token != d_token__)\n" <<
 
             setw(d_indent) << "" << 
             "    ++elementPtr;\n";

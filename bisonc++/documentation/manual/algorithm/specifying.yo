@@ -5,7 +5,7 @@ declared. The tt(%left) directive makes all those operators left-associative
 and the tt(%right) directive makes them right-associative. A third alternative
 is tt(%nonassoc), which declares that it is a syntax error to find the same
 operator twice `in a row'. Actually, tt(%nonassoc) is not currently (0.98.004)
-punished that way by B(). Instead, tt(%nonassoc) and tt(%left) are
+punished that way by b(). Instead, tt(%nonassoc) and tt(%left) are
 handled identically.
 
 The relative precedence of different operators is controlled by the order in

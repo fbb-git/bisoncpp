@@ -36,7 +36,7 @@ that it becomes the semantic value of the addition-expression just recognized
 by the rule. If there were a useful semantic value associated with the `+'
 token, it could be referred to as tt($2).
 
-    If you don't specify an action for a rule, B() supplies a default:
+    If you don't specify an action for a rule, b() supplies a default:
 tt($$ = $1). Thus, the value of the first symbol in the rule becomes the value
 of the whole rule. Of course, the default rule is valid only if the two data
 types match. There is no meaningful default action for an empty rule; every

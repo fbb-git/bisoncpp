@@ -3,7 +3,7 @@
 void Writer::srTables() const
 {
     *d_out << "\n"
-        "// State info and SR transitions for each state.\n"
+        "// State info and SR__ transitions for each state.\n"
         "\n";
 
     TableSupport support;

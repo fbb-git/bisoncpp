@@ -4,21 +4,19 @@ void Parser::setLtype()
 {
     if (d_locationDecl.size())
         lineMsg() << "%location-struct or %ltype multiply declared" << err;
-    
-    d_locationDecl = "typedef ";
-
-    if (d_scanner.lex() == Scanner::IDENTIFIER)
+    else
     {
-        string const &type = d_scanner.trimmedText();
-        if (type.length())
-        {
-            (d_locationDecl += type) += " LTYPE;\n";
+        char const *txt = d_scanner.YYText();
+
+        if (strchr(txt, ';'))
+            lineMsg() << "`;' in %ltype type-definition `" << txt << "'" << 
+                                                                        err;
+        else
+        { 
+            ((d_locationDecl = "typedef ") += txt) += " LTYPE__;\n";
             d_lspNeeded = true;
-            return;
         }
     }
-
-   lineMsg() << "`%ltype type-definition' expected" << err;
 }
 
 

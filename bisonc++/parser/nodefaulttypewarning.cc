@@ -1,8 +1,10 @@
 #include "parser.ih"
 
-void Parser::noDefaultTypeWarning() const
+void Parser::noDefaultTypeWarning()
 {
     if (d_unionDeclared)
-        lineMsg() << "$$ of `" << d_rules.name() << 
-                 "' has no default type-association" << warning;
+        lineMsg() << "In production rule \n"<< 
+                            "\t`" << &d_rules.lastProduction() << " '\n"
+                            "\t`" << d_rules.name() << "' has no default "
+                                        "($$) type-association" << warning;
 }

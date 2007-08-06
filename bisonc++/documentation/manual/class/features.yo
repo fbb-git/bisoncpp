@@ -1,4 +1,4 @@
-Here is an overview of special syntactical constructions that may be used
+Here is an overview of special syntactic constructions that may be used
 inside action blocks:
     itemization(
     itt($$): This acts like a variable that contains the semantic value for
@@ -15,7 +15,7 @@ ref(SEMANTICTYPES) and ref(MORETYPES).
 line numbers and column numbers of the nth component of the current rule. The
 default structure is defined like this (see section ref(LSPNEEDED)):
            verb(
-    struct LTYPE
+    struct LTYPE__
     {
         int timestamp;
         int first_line;

@@ -1,6 +1,7 @@
 #include "parser.ih"
 
-void Parser::multiplyDefined(Symbol const *sp, string const &name) const
+void Parser::multiplyDefined(Symbol const *sp)
 {
-    lineMsg() << OM::ext  << sp << " multiply defined" << err;
+    lineMsg() << (sp->isTerminal() ? "Terminal " : "Nonterminal ") << 
+                    OM::std << sp  << " multiply defined" << err;
 }

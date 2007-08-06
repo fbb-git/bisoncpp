@@ -35,7 +35,7 @@ class RuleValue
             double (*unary() const)(double); 
             double (*binary() const)(double, double);
             double value() const;
-
+            Type type() const;
         };
 
     private:
@@ -160,6 +160,11 @@ inline size_t RuleValue::size() const
 inline size_t RuleValue::Function::arity() const
 {
     return d_arity;
+}
+
+inline RuleValue::Function::Type RuleValue::Function::type() const
+{
+    return d_type;
 }
 
 inline double (*RuleValue::Function::unary() const)(double)

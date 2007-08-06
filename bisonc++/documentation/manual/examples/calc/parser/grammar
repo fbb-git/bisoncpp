@@ -1,3 +1,4 @@
+%baseclass-preinclude   cmath
 %stype double
 
 %token NUM

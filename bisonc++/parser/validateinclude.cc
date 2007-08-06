@@ -2,7 +2,7 @@
 
 void Parser::validateInclude(string *target) 
 {
-    definePathname(target);
-    setIncludeQuotes(target);
+    definePathname(target, 0);
+    addIncludeQuotes(target);
 }
 

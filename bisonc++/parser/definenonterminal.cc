@@ -4,7 +4,7 @@ Symbol *Parser::defineNonTerminal(string const &name, string const &stype)
 {
     if (Symbol *sp = d_symtab.lookup(name))
     {
-        multiplyDefined(sp, name);
+        multiplyDefined(sp);
         return 0;
     }
 

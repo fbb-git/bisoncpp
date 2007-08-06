@@ -143,6 +143,12 @@ def(hix)(1)(\
     )\
 )
 
+def(fst)(1)(tt(FIRST(ARG1)))
+def(flw)(1)(tt(FOLLOW(ARG1)))
+def(fstrow)(3)(row(cell(ARG1)cell(ARG2)cell( )cell(ARG3)))
+def(ttrow)(4)(row(cell(tt(ARG1))cell()cell(tt(ARG2))cell()cell(tt(ARG3))
+              cell()cell(ARG4)))
+
 def(hi)(1)(hix(ARG1))
 def(i)(1)(hix(ARG1)ARG1)
 def(ti)(1)(hix(ARG1)tt(ARG1))
@@ -154,6 +160,9 @@ def(itht)(2)(it()hix(ARG1)tt(ARG2))
 def(ittq)(2)(it()ti(ARG1):quote(ARG2))
 def(ithtq)(3)(it()hix(ARG1)tt(ARG2):quote(ARG3))
 
+DEFINEMACRO(laoption)(2)(\
+    bf(--ARG1)=tt(ARG2)\
+)
 DEFINEMACRO(lsoption)(3)(\
     bf(--ARG1)=tt(ARG3) (bf(-ARG2))\
 )
@@ -163,3 +172,6 @@ DEFINEMACRO(loption)(1)(\
 DEFINEMACRO(soption)(1)(\
     bf(-ARG1)\
 )
+
+DEFINEMACRO(bic)(0)(bf(bisonc++))
+DEFINEMACRO(Bic)(0)(bf(Bisonc++))

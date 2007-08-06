@@ -7,21 +7,36 @@
 
 void Parser::setAccessorVariables() 
 {
+    string skeletonDir;
+
+     d_arg.option(&skeletonDir, 'S');
+
     if (d_className.empty())
         d_className = s_defaultClassName;
 
     if (!d_arg.option(&d_baseclassSkeleton, 'B'))
-        d_baseclassSkeleton = s_defaultBaseclassSkeleton;
+        d_baseclassSkeleton =   skeletonDir.empty() ?
+                                    s_defaultBaseclassSkeleton
+                                :
+                                    skeletonDir + BISONCPPBASE_H;
 
     if (!d_arg.option(&d_classSkeleton, 'C'))
-        d_classSkeleton = s_defaultClassSkeleton;
+        d_classSkeleton =   skeletonDir.empty() ?
+                                s_defaultClassSkeleton
+                            :    
+                                skeletonDir + BISONCPP_H;
 
     if (!d_arg.option(&d_implementationSkeleton, 'I'))
-        d_implementationSkeleton = s_defaultImplementationSkeleton;
+        d_implementationSkeleton =  skeletonDir.empty() ? 
+                                        s_defaultImplementationSkeleton
+                                    :    
+                                        skeletonDir + BISONCPP_IH;
 
     if (!d_arg.option(&d_parsefunSkeleton, 'P'))
-        d_parsefunSkeleton = s_defaultParsefunSkeleton;
-
+        d_parsefunSkeleton =    skeletonDir.empty() ?
+                                    s_defaultParsefunSkeleton
+                                :    
+                                    skeletonDir + BISONCPP_CC;
     if 
     (
         !d_arg.option(&d_parsefunSource, 'p')

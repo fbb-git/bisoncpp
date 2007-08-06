@@ -1,12 +1,13 @@
  bf(%scanner) tt(header)nl()
-           Use tt(header) as the pathname to the file pre-included in the
-            parser's class header. See the description of the bf(--scanner)
-            option for details about this option.  Similar to the convention
-            adopted for this argument, tt(header) will (by default) be
-            surrounded by double quotes.  However, when the argument is
-            surrounded by pointed brackets tt(#include <header>) will be
-            included. Note that using this directive implies the definition
-            of a composed tt(Scanner d_scanner) data member into the generated
-            parser, as well as a predefined bf(int lex()) member, returning
-            tt(d_scanner.yylex()). If this is inappropriate, a user defined
-            implementation of bf(int lex()) must be provided.
+    Use tt(header) as the pathname of a file to include in the parser's class
+header. See the description of the link(--scanner)(SCANOPT) option for details
+about this option.  This directive also implies the automatic definition of a
+composed tt(Scanner d_scanner) data member into the generated parser, as well
+as a predefined bf(int lex()) member, returning tt(d_scanner.yylex()). If this
+is inappropriate, a user defined implementation of tt(int lex()) must be
+provided.
+
+    The specfied tt(header) file will be surrounded by double quotes if no
+delimiters were provided. If pointed brackets (tt(<...>)) are used, they are
+kept. 
+

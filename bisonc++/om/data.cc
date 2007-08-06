@@ -10,4 +10,5 @@ ostream &(*OM::s_manipulator[])(ostream &out) =
     &ext,
     &spec,
     &std,
+    &symtype
 };

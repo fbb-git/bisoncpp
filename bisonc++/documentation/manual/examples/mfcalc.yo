@@ -1,4 +1,4 @@
-Now that the basics of B() have been discussed, it is time to move on to
+Now that the basics of b() have been discussed, it is time to move on to
 a more advanced problem. The above calculators provided only five functions,
 `tt(+)', `tt(-)', `tt(*)', `tt(/)' and `tt(^)'. It would be nice to have a
 calculator that provides other mathematical functions such as tt(sin),

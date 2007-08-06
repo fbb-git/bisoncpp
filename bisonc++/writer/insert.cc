@@ -4,7 +4,7 @@ void Writer::insert(Terminal::ConstVector const &tokens) const
 {
     *d_out << "\n"
             "    // Symbolic tokens:\n"
-            "    enum Tokens\n"
+            "    enum Tokens__\n"
             "    {\n";
  
     TokenContext context = {0, *d_out};

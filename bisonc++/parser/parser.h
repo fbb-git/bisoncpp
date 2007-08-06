@@ -1,24 +1,17 @@
-#ifndef _INCLUDED_PARSER_
-#define _INCLUDED_PARSER_
+#ifndef Parser_h_included
+#define Parser_h_included
 
-#include <map>
-#include <sstream>
-#include <fstream>
-
-#include <bobcat/msg>
-
-#include "../symtab/symtab.h"
-#include "../block/block.h"
+// $insert baseclass
+#include "parserbase.h"
+// $insert scanner.h
 #include "../scanner/scanner.h"
-#include "../terminal/terminal.h"
-#include "../rules/rules.h"
 
-namespace FBB
-{
-    class Arg;
-}
+class NonTerminal;
+class Terminal;
+class Symbol;
 
-class Parser
+#undef Parser
+class Parser: public ParserBase
 {
             // actions to taken given tokens returned by the lexical scanner
     typedef std::map<size_t, void (Parser::*)()> 
@@ -28,8 +21,48 @@ class Parser
     typedef ActionMap::value_type 
             Value;
 
-    static ActionMap::value_type s_info[];
-    static ActionMap s_action;
+    FBB::Arg &d_arg;
+
+    // $insert scannerobject
+    Scanner d_scanner;
+    Rules      &d_rules;
+    Symtab      d_symtab;
+
+    bool        d_debugFlag;
+    bool        d_errorVerbose;
+    bool        d_generateBaseclass;
+    bool        d_lines;
+    bool        d_lspNeeded;
+    bool        d_negativeDollarIndices;
+    bool        d_typeDirective;            // true following %type
+    bool        d_unionDeclared;            // see setuniondecl.cc
+
+    size_t      d_requiredTokens;
+
+    std::string d_baseclassHeader;
+    std::string d_baseclassSkeleton;
+    std::string d_classHeader;
+    std::string d_className;
+    std::string d_classSkeleton;
+    std::string d_field;                    // %union field in <type> specs.
+    std::string d_genericFilename;
+    std::string d_implementationHeader;
+    std::string d_implementationSkeleton;
+    std::string d_locationDecl;
+    std::string d_msg;
+    std::string d_nameSpace;
+    std::string d_parsefunSkeleton;
+    std::string d_parsefunSource;
+    std::string d_preInclude;
+    std::string d_scannerInclude;
+    std::string d_stackDecl;
+    std::string d_verboseName;
+
+    Terminal::Association d_association;
+
+                                // used in processBlock() and sipIgnore()
+    std::vector<Block::Range>::const_reverse_iterator d_skipRbegin;
+    std::vector<Block::Range>::const_reverse_iterator d_skipRend;
 
     static char s_defaultBaseclassSkeleton[];
     static char s_defaultClassName[];
@@ -53,294 +86,304 @@ class Parser
     static char s_locationValueStack[];  
                                     // name of the location value stack
                                     // used by the generated parser
-
-    FBB::Arg &d_arg;
-
-    Block       d_block;        // last processed block. Must be handled
-                                // before d_scanner.block() is called
-
-    Rules      &d_rules;
-    Scanner     d_scanner;
-    Symtab      d_symtab;
-
-    bool        d_debugFlag;
-    bool        d_errorVerbose;
-    bool        d_generateBaseclass;
-    bool        d_lines;
-    bool        d_lspNeeded;
-    bool        d_negativeDollarIndices;
-    bool        d_unionDeclared;            // see setuniondecl.cc
-    std::string d_baseclassHeader;
-    std::string d_baseclassSkeleton;
-    std::string d_classHeader;
-    std::string d_className;
-    std::string d_classSkeleton;
-    std::string d_genericFilename;
-    std::string d_implementationHeader;
-    std::string d_implementationSkeleton;
-    std::string d_locationDecl;
-    std::string d_nameSpace;
-    std::string d_parsefunSkeleton;
-    std::string d_parsefunSource;
-    std::string d_preInclude;
-    std::string d_scannerInclude;
-    std::string d_stackDecl;
-    std::string d_verboseName;
-    std::string d_lastRule;
-
-                                // used in processBlock() and sipIgnore()
-    std::vector<Block::Range>::const_reverse_iterator d_skipRbegin;
-    std::vector<Block::Range>::const_reverse_iterator d_skipRend;
-
     public:
         Parser(Rules &rules);
-        void parse();
-
-        // public accessors
-
-        std::string const &baseclassHeader() const
-        {
-            return d_baseclassHeader;
-        }
-        std::string const &baseclassSkeleton() const
-        {
-            return d_baseclassSkeleton;
-        }
-        std::string const &classHeader() const
-        {
-            return d_classHeader;
-        }
-        std::string const &className() const
-        {
-            return d_className;
-        }
-        std::string const &classSkeleton() const
-        {
-            return d_classSkeleton;
-        }
-        bool debugFlag() const
-        {
-            return d_debugFlag;
-        }
-        std::string const &implementationHeader() const
-        {
-            return d_implementationHeader;
-        }
-        std::string const &implementationSkeleton() const
-        {
-            return d_implementationSkeleton;
-        }
+        int parse();
+        void cleanup();             // do cleanup following parse();
+        std::string const &baseclassHeader() const;
+        std::string const &baseclassSkeleton() const;
+        std::string const &classHeader() const;
+        std::string const &className() const;
+        std::string const &classSkeleton() const;
+        bool errorVerbose() const;
+        bool debugFlag() const;
+        std::string const &implementationHeader() const;
+        std::string const &implementationSkeleton() const;
         bool lines() const;
-        bool lspNeeded() const
-        {
-            return d_lspNeeded;
-        }
-        std::string const &ltype() const
-        {
-            return d_locationDecl;
-        }
-        std::string const &nameSpace() const
-        {
-            return d_nameSpace;
-        }
-        std::string const &parseSkeleton() const
-        {
-            return d_parsefunSkeleton;
-        }
-        std::string const &parseSource() const
-        {
-            return d_parsefunSource;
-        }
-        std::string const &preInclude() const
-        {
-            return d_preInclude;
-        }
-        std::string const &scanner() const
-        {
-            return d_scannerInclude;
-        }
-        void showFilenames() const;
-        std::string const &stype() const
-        {
-            return d_stackDecl;
-        }
-
-        void setVerbosity();            // Prepare Msg for verbose output
+        bool lspNeeded() const;
+        std::string const &ltype() const;
+        std::string const &nameSpace() const;
+        std::string const &parseSkeleton() const;
+        std::string const &parseSource() const;
+        std::string const &preInclude() const;
+        size_t requiredTokens() const;
+        std::string const &scanner() const;
+        std::string const &stype() const;
 
     private:
-        void checkBlocktype();
+        void addIncludeQuotes(std::string *target); // ensure ".." or <..> 
+                                                    // around target name
+        void checkEmptyBlocktype();
+        void checkFirstType();
 
-        void checkEndOfRule() const;
-
-                                        // called from handleDollar
-        bool defaultReturn(size_t pos);
-
-        void definePathname(std::string *sp);
-
+        std::ostream &lineMsg();
+                                        
+        bool defaultReturn(size_t pos, Block &block);
         Symbol *defineNonTerminal(std::string const &name, 
                                   std::string const &stype);
+        void definePathname(std::string *target, int type); // 0: no undelimit
+        void defineTerminal(std::string const &name, Symbol::Type type);
+        void defineTokenName(std::string *name, bool hasValue);
+        void expectRules();
 
-        void defineTerminal(std::string const &name, 
-                            Symbol::Type type,
-                            Terminal::Association association, 
-                            std::string stype);
+        bool explicitElement(size_t pos, size_t nElements, Block &block);
+        bool explicitReturn(size_t pos, Block &block);
+        size_t extractIndex(int *idx, size_t pos);
+        size_t extractType(std::string *type, size_t pos, Block &block);
 
-        int elementNr(size_t *idx, std::string const &text);
-
-                                        // called from handleDollar
-        bool explicitElement(size_t pos, size_t nElements);
-        bool explicitReturn(size_t pos);
-
-        size_t extractType(std::string *type, size_t pos);
-        size_t extractIndex(int *idx, size_t pos) const;
-
-        void handleAtSign(size_t idx, size_t nElements);
+        void handleAtSign(size_t idx, size_t nElements, Block &block);
                                         // handle a location-value stack
                                         // reference (@) in a received action 
                                         // block
-
-        void handleBlock();             // process a `{ block }', 
-                                        // part of a rule-production
-
-        bool handleDollar(size_t idx, size_t nElements);
+        bool handleDollar(size_t idx, size_t nElements, Block &block);
                                         // handle a semantic-value stack
                                         // reference ($) in a received action 
                                         // block
-        void handleIdent();             // add symbolic token to a 
-                                        // rule-production
-        void handleQuote();             // add char-token to a 
-                                        // rule-production
+
+        FBB::PTag *handleProductionElements(FBB::PTag *first, 
+                                            FBB::PTag *second);
+        void handleProductionElement(FBB::PTag *last);
+
+
+        void installAction(Block &block);
         int indexToOffset(int idx, size_t nElements) const;
-        void multiplyDefined(Symbol const *sp, std::string const &name) const;
-        void nestedBlock();
-        void newProduction();
+
+        void multiplyDefined(Symbol const *sp);
+
+        void nestedBlock(Block &block); // define inner block as pseudo N
+        std::string *newYYText() const; // make dynamic copy of YYText()
+
         std::string nextHiddenName();
+        void noDefaultTypeWarning();
 
-        void noDefaultTypeWarning() const;
+        bool numberedElement(size_t pos, size_t nElements, Block &block);
 
-                                        // called from handleDollar
-        bool numberedElement(size_t pos, size_t nElements);
-
-
-        void parseAssociations(Terminal::Association association);
-        void parseDeclarations();
-
-        void parseGrammar();            // the full grammar specification 
-        void parseRule();               // all productions of a rule
+        void openRule(std::string *ruleNamePtr);
 
         void predefine(Terminal const *terminal);   // Used by Parser() to 
                                                     // pre-enter into d_symtab
 
-        void substituteBlock(size_t nElements);  
-                                        // replace @ and $ in blocks by 
-                                        // variables, knowing that we've seen
-                                        // `nElements' elements in the current
-                                        // production rule
+        NonTerminal *requireNonTerminal(std::string const &name);
 
         void setAccessorVariables();
-        void setName(std::string *target, char const *extension);
-        void setNegativeDollar()
-        {
-            d_negativeDollarIndices = true;
-        }        
-        void setPrecedence();               // called by parseProduction()
-        void showEmpty() const;
-        size_t skipIgnore(size_t pos);  // used by processBlock()
-
-                                        // in setType():
-        void tryNonTerminal(std::string const &name, 
-                            std::string const &stype);
-
-                                        // remove '< ' and ' >' around types
-        void getType(std::string *sp) const;
-        NonTerminal *useNonTerminal();
-        Symbol *useSymbol();            // use a symbol, assume N-term if not
-                                        // existing
-        Terminal *useTerminal();
-
-                                        // install the action block for the
-                                        // currently defined production
-        void installAction();   
-
-        // SUPPORT FUNCTIONS (for s_actions[])
-
-        void done();
-        void junk();
-        void unexpectedEOF()
-        {
-            d_scanner.unexpectedEOF();
-        }
-        void setBaseclassHeader()
-        {
-            definePathname(&d_baseclassHeader);
-        }
-        void setClassHeader()
-        {
-            definePathname(&d_classHeader);
-        }
+        void setBaseclassHeader(int type);
+        void setClassHeader(int type);
         void setClassName();
-        void setDebugFlag()
-        {
-            d_debugFlag = true;
-        }
-        void setErrorVerbose()
-        {
-            d_errorVerbose = true;
-        }
+        void setPreInclude();
+        void setDebugFlag();
+        void setErrorVerbose();
         void setExpectedConflicts();
-        void setGenericFilename()
-        {
-            definePathname(&d_genericFilename);
-        }
-        void setImplementationHeader()
-        {
-            definePathname(&d_implementationHeader);
-        }
-        void setIncludeQuotes(std::string *target);
-        void setLeft()
-        {
-            parseAssociations(Terminal::LEFT);
-        }
-        void setLines()
-        {
-            d_lines = true;
-        }
-        void setLtype();
+        void setGenericFilename(int type);
+        void setImplementationHeader(int type);
+        void setLines();
         void setLocationDecl();
-        void setLspNeeded()
-        {
-            d_lspNeeded = true;
-        }
+        void setLspNeeded();
+        void setLtype();
+        void setName(std::string *target, char const *extension);
         void setNameSpace();
-        void setNonAssoc()
-        {
-            parseAssociations(Terminal::NONASSOC);
-        }
-        void setParsefunSource()
-        {
-            definePathname(&d_parsefunSource);
-        }
-        void setPreInclude()
-        {
-            validateInclude(&d_preInclude);
-        }
-        void setScannerInclude()
-        {
-            validateInclude(&d_scannerInclude);
-        }
-
-        void setRight()
-        {
-            parseAssociations(Terminal::RIGHT);
-        }
+        void setNegativeDollar();
+        void setParsefunSource(int type);
+        void setPrecedence(int type);
+        void setRequiredTokens();
+        void setScannerInclude();
         void setStart();
         void setStype();
-        void setType();
-        void setToken();
+
         void setUnionDecl();
+        void setVerbosity();            // Prepare Msg for verbose output
+
+        void showFilenames() const;
+
+        size_t skipIgnore(size_t pos);
+        bool substituteBlock(size_t nElements, Block &block);
+
+        Symbol *useSymbol();
+        Terminal *useTerminal();
 
         void validateInclude(std::string *target);
-        std::string verbose() const;
+
+        void error(char const *msg);    // called on (syntax) errors
+        int lex();                      // returns the next token from the
+                                        // lexical scanner. 
+        void print();                   // use, e.g., d_token, d_loc
+
+    // support functions for parse():
+        void executeAction(int ruleNr);
+        void errorRecovery();
+        int lookup(bool recovery);
+        void nextToken();
 };
-        
+
+// $insert lex
+inline int Parser::lex()
+{
+    return d_scanner.yylex();
+}
+
+inline std::string const &Parser::baseclassHeader() const
+{
+    return d_baseclassHeader;
+}
+
+inline std::string const &Parser::baseclassSkeleton() const
+{
+    return d_baseclassSkeleton;
+}
+
+inline std::string const &Parser::classHeader() const
+{
+    return d_classHeader;
+}
+
+inline std::string const &Parser::className() const
+{
+    return d_className;
+}
+
+inline std::string const &Parser::classSkeleton() const
+{
+    return d_classSkeleton;
+}
+
+inline bool Parser::debugFlag() const
+{
+    return d_debugFlag;
+}
+
+inline bool Parser::errorVerbose() const
+{
+    return d_errorVerbose;
+}
+
+inline std::string const &Parser::implementationHeader() const
+{
+    return d_implementationHeader;
+}
+
+inline std::string const &Parser::implementationSkeleton() const
+{
+    return d_implementationSkeleton;
+}
+
+inline std::ostream &Parser::lineMsg()
+{
+    return d_scanner.lineMsg();
+}
+
+inline bool Parser::lspNeeded() const
+{
+    return d_lspNeeded;
+}
+inline std::string const &Parser::ltype() const
+{
+    return d_locationDecl;
+}
+inline std::string const &Parser::nameSpace() const
+{
+    return d_nameSpace;
+}
+
+inline std::string const &Parser::parseSkeleton() const
+{
+    return d_parsefunSkeleton;
+}
+
+inline std::string const &Parser::parseSource() const
+{
+    return d_parsefunSource;
+}
+
+inline std::string const &Parser::preInclude() const
+{
+    return d_preInclude;
+}
+
+inline std::string const &Parser::scanner() const
+{
+    return d_scannerInclude;
+}
+
+inline void Parser::setBaseclassHeader(int type)
+{
+    definePathname(&d_baseclassHeader, type);
+}
+
+inline void Parser::setClassHeader(int type)
+{
+    definePathname(&d_classHeader, type);
+}
+
+inline void Parser::setPreInclude()
+{
+    validateInclude(&d_preInclude);
+}
+
+inline void Parser::setDebugFlag()
+{
+    d_debugFlag = true;
+}
+
+inline void Parser::setErrorVerbose()
+{
+    d_errorVerbose = true;
+}
+
+inline void Parser::setExpectedConflicts()
+{
+    Rules::setExpectedConflicts(d_scanner.number());
+}
+
+inline void Parser::setGenericFilename(int type)
+{
+    definePathname(&d_genericFilename, type);
+}
+
+inline void Parser::setImplementationHeader(int type)
+{
+    definePathname(&d_implementationHeader, type);
+}
+
+inline void Parser::setLines()
+{
+    d_lines = true;
+}
+
+inline void Parser::setLspNeeded()
+{
+    d_lspNeeded = true;
+}
+
+inline void Parser::setNegativeDollar()
+{
+    d_negativeDollarIndices = true;
+}        
+
+inline void Parser::setParsefunSource(int type)
+{
+    definePathname(&d_parsefunSource, type);
+}
+
+inline size_t Parser::requiredTokens() const
+{
+    return d_requiredTokens;
+}
+
+inline void Parser::setScannerInclude()
+{
+    validateInclude(&d_scannerInclude);
+}
+
+inline std::string const &Parser::stype() const
+{
+    return d_stackDecl;
+}
+
+inline std::string *Parser::newYYText() const
+{
+    return new std::string(d_scanner.YYText());
+}
+
+inline void Parser::print()      // use d_token, d_loc
+{}
+
 #endif

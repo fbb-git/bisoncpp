@@ -7,7 +7,7 @@ void Generator::debugDecl(std::ostream &out) const
 
     key(out);
     out << 
-        "        static std::ostringstream s_out;\n"
+        "        static std::ostringstream s_out__;\n"
         "\n"
         "        std::string symbol(int value) const;\n"
         "        static std::ostream &dflush(std::ostream &out);\n";

@@ -1,0 +1,75 @@
+p_precSpec:
+    IDENTIFIER
+    {
+        $$ = IDENTIFIER;
+    }
+|
+    QUOTE
+    {
+        $$ = QUOTE;
+    }
+;
+
+productionList:
+    productionList productionSeparator production
+|
+    production
+;
+
+productionSeparator:
+    '|'
+    {
+        d_rules.addProduction();
+    }
+;
+
+production:
+    productionElements
+    {
+        handleProductionElement($1);
+        // process the returned element: if it's a block, it becomes the
+        // production's action block
+    }
+|
+    {
+        // nothing to do for this empty production. But do check for a typed
+        // nonterminal. 
+        checkEmptyBlocktype();
+    }
+;
+
+productionElements:
+    productionElements productionElement
+    {
+        $$ = handleProductionElements($1, $2);
+            // process the first element, return the second
+            // if the 1st element is a block, handle it as a nested block
+    }
+|
+    productionElement
+;
+
+productionElement:
+    QUOTE
+    {
+        $$ = new PTag(useTerminal());
+    }
+|
+    IDENTIFIER
+    {
+        $$ = new PTag(useSymbol());
+    }
+|
+    BLOCK
+    {
+        $$ = new PTag(d_scanner.block());
+    }
+|
+    PREC
+    p_precSpec
+    {
+        setPrecedence($2);
+        $$ = 0;             // a 0 PTag * indicates a %prec has been handled
+    }
+;
+

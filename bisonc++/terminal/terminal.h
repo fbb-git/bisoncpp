@@ -93,6 +93,8 @@ class Terminal: public Symbol
 
         static void incrementPrecedence();
         static void resetPrecedence();     // see Parser::parseDeclarations()
+        static size_t sPrecedence();
+        static void set_sPrecedence(size_t prec);
 
         static bool setUnique(size_t value);    // true if unique
         static void unused(Terminal const *terminal);
@@ -180,6 +182,16 @@ inline void Terminal::setLiteral(std::string const &literal)
 inline void Terminal::setPrecedence(size_t value)
 {
     d_precedence = value;
+}
+
+inline size_t Terminal::sPrecedence()
+{
+    return s_precedence;
+}
+
+inline void Terminal::set_sPrecedence(size_t prec)
+{
+    s_precedence = prec;
 }
 
 inline bool Terminal::compareValues(Terminal const *left, 

@@ -15,7 +15,26 @@ RuleValue Parser::call(RuleValue const &function, RuleValue &argv)
         switch(argv.size())
         {
             case 1:
-                ret = (function.fun().unary())(rvalue(argv[0]).asDouble());
+            {
+                double value = rvalue(argv[0]).asDouble();
+                if 
+                (
+                    function.fun().type() ==
+                    RuleValue::Function::RAD_IN_DOUBLE_OUT
+                )
+                    value = radians(value);
+
+                value = (function.fun().unary())(value);
+
+                if 
+                (
+                    function.fun().type() ==
+                    RuleValue::Function::DOUBLE_IN_RAD_OUT
+                )
+                    value = angle(value);
+
+                ret = value;
+            }
             break;
     
             case 2:

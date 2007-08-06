@@ -1,5 +1,5 @@
 In order to be useful, a program must do more than parse input; it must also
-produce some output based on the input. In a B() grammar, a grammar rule
+produce some output based on the input. In a b() grammar, a grammar rule
 can have an action made up of bf(C++) statements. Each time the parser
 recognizes a match for that rule, the action is executed. See section 
 ref(ACTIONS). 

@@ -1,15 +1,3 @@
-#include "scanner.h"
-
-#include <iostream>
-#include <algorithm>
-#include <iomanip>
-
-#include <bobcat/msg>
-
-using namespace std;
-using namespace FBB;
-
-
 /*
                                  Declare here
                     what's only used in the Scanner class
@@ -17,6 +5,22 @@ using namespace FBB;
 */
 
 #include "scanner.h"
+
+#include <iostream>
+#include <algorithm>
+#include <iomanip>
+
+#include <bobcat/arg>
+#include <bobcat/msg>
+#include <bobcat/fnwrap1c>
+#include <bobcat/string>
+#include <bobcat/a2x>
+
+    // see also the file `lexer' in this directory
+#include "../parser/parserbase.h"   
+
+using namespace std;
+using namespace FBB;
 
 /*
     In the current Debian distribution of flex, YY_CURRENT_BUFFER and YY_START
@@ -26,11 +30,13 @@ using namespace FBB;
     superfluous in the near future):
 */
 // uncomment if you want to use YY_CURRENT_BUFFER in the scanner's members: 
+
 /*
 #define YY_CURRENT_BUFFER ( (yy_buffer_stack) \
                           ? (yy_buffer_stack)[(yy_buffer_stack_top)] \
                           : NULL)
 */
+
 // uncomment if you want to use YY_START in the scanner's members: 
 // #define YY_START (((yy_start) - 1) / 2)
 

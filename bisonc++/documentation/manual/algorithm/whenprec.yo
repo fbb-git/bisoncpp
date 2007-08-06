@@ -20,7 +20,7 @@ shifting is invalid because no single rule can reduce the token sequence `tt(-
 or `tt(<)', we have a choice: either shifting or reduction would allow the
 parse to complete, but with different results.
 
-    To decide which one B() should do, we must consider the results. If
+    To decide which one b() should do, we must consider the results. If
 the next operator token tt(op) is shifted, then it must be reduced first in
 order to permit another opportunity to reduce the sum. The result is (in
 effect) `tt(1 - (2 op 3))'. On the other hand, if the subtraction is reduced

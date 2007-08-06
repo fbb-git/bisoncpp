@@ -1,5 +1,5 @@
 The lexical analyzer's job is low-level parsing: converting characters or
-sequences of characters into tokens. The B() parser gets its tokens by
+sequences of characters into tokens. The b() parser gets its tokens by
 calling the lexical analyzer tt(lex()), which is a predeclared member of the
 parser class. See section ref(LEX).
 
@@ -10,12 +10,12 @@ token. Note that the token-code for such a single-character token is the
 character itself.
 
 The return value of the lexical analyzer function is a numeric code which
-represents a token type. The same text used in B() rules to stand for this
+represents a token type. The same text used in b() rules to stand for this
 token type is also a bf(C++) expression for the numeric code for the type. This
 works in two ways. If the token type is a character literal, then its numeric
 code is the tt(ASCII) code for that character; you can use the same character
 literal in the lexical analyzer to express the number. If the token type is an
-identifier, that identifier is defined by B() as a bf(C++) enumeration
+identifier, that identifier is defined by b() as a bf(C++) enumeration
 value. In this example, therefore, tt(NUM) becomes an enumeration value
 for tt(lex()) to return.
 

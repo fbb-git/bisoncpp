@@ -21,7 +21,7 @@ void Writer::srTable(State const *sp, SRContext &context)
 
 
     context.out << "\n"                     // Write the table header
-        "SR " << s_threadConst << "s_" << sp->idx() << "[] =\n"
+        "SR__ " << s_threadConst << "s_" << sp->idx() << "[] =\n"
         "{\n";
 
     context.table.clear();

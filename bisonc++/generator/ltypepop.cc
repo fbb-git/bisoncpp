@@ -7,6 +7,6 @@ void Generator::ltypePop(ostream &out) const
 
     key(out);
 
-    out << "d_lsp = &d_locationStack[d_stackIdx];\n";
+    out << "d_lsp__ = &d_locationStack__[d_stackIdx__];\n";
 }
 

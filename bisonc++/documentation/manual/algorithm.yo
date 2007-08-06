@@ -1,7 +1,32 @@
 includefile(algorithm/intro.yo)
 
-lsect(LOOKAHEAD)(Look-Ahead Tokens)
-includefile(algorithm/lookahead.yo)
+sect(Analyzing A Grammar)
+
+    subsect(The FIRST Sets)
+    includefile(algorithm/first.yo)
+
+    subsect(The FOLLOW Sets)
+    includefile(algorithm/follow.yo)
+
+    subsect(The States)
+    includefile(algorithm/states.yo)
+
+    lsubsect(LOOKAHEAD)(The Lookahead Sets)
+
+        subsubsect(Preamble)
+        includefile(algorithm/lookahead.yo)
+
+    includefile(algorithm/lookaheads.yo)
+
+    subsect(The Final Transition Tables)
+        subsubsect(Preamble)
+        includefile(algorithm/pstates.yo)
+
+        
+    includefile(algorithm/transition.yo)
+
+    lsubsect(PARSING)(Processing Input)
+    includefile(algorithm/input.yo)
 
 lsect(SHIFTREDUCE)(Shift/Reduce Conflicts)
 includefile(algorithm/conflicts.yo)
@@ -24,12 +49,16 @@ includefile(algorithm/precedence.yo)
 lsect(CONDEP)(Context-Dependent Precedence)
 includefile(algorithm/condep.yo)
 
-sect(Parser States)
-includefile(algorithm/states.yo)
 
 sect(Reduce/Reduce Conflicts)
 includefile(algorithm/reduce.yo)
 
 lsect(MYSTERIOUS)(Mysterious Reduce/Reduce Conflicts)
 includefile(algorithm/mysterious.yo)
+
+
+
+
+
+
 

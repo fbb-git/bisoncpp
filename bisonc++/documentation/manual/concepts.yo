@@ -15,7 +15,7 @@ includefile(concepts/actions)
 sect(Bisonc++ output: the Parser class)
 includefile(concepts/output)
 
-    subsect(Bisonc++: a NON-Reentrant Parser)
+    subsect(Bisonc++: an optionally reentrant Parser)
     includefile(concepts/reentrant.yo)
 
 sect(Stages in Using Bisonc++)

@@ -26,11 +26,11 @@
     
 class Scanner: public yyFlexLexer
 {
-    Parser::LTYPE *d_loc;
-    Parser::STYPE *d_val;
+    Parser::LTYPE__ *d_loc;
+    Parser::STYPE__ *d_val;
 
     public:
-        Scanner(Parser::LTYPE *loc, Parser::STYPE *val)
+        Scanner(Parser::LTYPE__ *loc, Parser::STYPE__ *val)
         :
             d_loc(loc),
             d_val(val)

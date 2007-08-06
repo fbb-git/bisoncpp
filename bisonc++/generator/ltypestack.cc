@@ -7,6 +7,6 @@ void Generator::ltypeStack(ostream &out) const
 
     key(out);
 
-    out << "        std::vector<LTYPE>      d_locationStack;\n";
+    out << "        std::vector<LTYPE__>      d_locationStack__;\n";
 }
 

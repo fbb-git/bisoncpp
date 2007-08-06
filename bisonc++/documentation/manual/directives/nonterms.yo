@@ -1,16 +1,18 @@
-When tt(%union) is used to specify multiple value types, the value type of
-each nonterminal symbol for which values are used must be specified. This is
-done with a tt(%type) declaration, like this:
-        verb(
-    %type <type> nonterminal...
-        )
-    Here tt(nonterminal) is the name of a nonterminal symbol, and type is the
-name given in the tt(%union) to the alternative that you want (see section
-ref(COLLECTION)). Any number of nonterminal symbols can be specified in
-the same tt(%type) declaration, if they have the same value type. Use spaces
-to separate the symbol names.
+Syntax: bf(%type) tt(<type> symbol(s))nl()
+    When tt(%union) is used to specify multiple value types, the value type of
+each rule returning a semantic value can be defined. For this the bf(%type)
+directive is used.
 
-    It is also possible to declare the value type of a terminal symbol. To do
-this, use the same <type> construction in a declaration for the terminal
-symbol. All kinds of token declarations allow <type>.
+    With this directive, tt(symbol(s)) represents of one or more blank or
+comma delimited grammatical symbols (i.e., terminal and/or nonterminal
+symbols); tt(type) is a field name defined in the tt(%union) specification
+that you want to associate with the specified nonterminal(s). The type itself
+must be a field of a tt(%union) specification (see section
+ref(COLLECTION)). The pointed arrows are part of the type specification.
+
+    When the semantic value type of a terminal symbol is defined the
+em(lexical scanner) rather than the parser's actions must assign the
+appropriate semantic value to link(d_val__)(DVAL) just prior to returning the
+token. To associate terminal symbols with semantic values, terminal symbols
+can also be specified in a tt(%type) directive.
 

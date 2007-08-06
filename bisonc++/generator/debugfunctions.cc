@@ -2,20 +2,23 @@
 
 void Generator::debugFunctions(std::ostream &out) const
 {
-    if (!d_debug)
+    bool verbose = d_arg.option(0, "error-verbose");
+
+    if (!d_debug && !verbose)
         return;
 
     key(out);
 
-    out << 
+    if (d_debug)
+        out << 
         "std::ostream &" << d_baseclassScope << "dflush(std::ostream &out)\n"
         "{\n"
-        "    std::ostringstream &s_out = "
+        "    std::ostringstream &s_out__ = "
                                 "dynamic_cast<std::ostringstream &>(out);\n"
         "\n"
-        "    std::cout << \"    \" << s_out.str() << std::flush;\n"
-        "    s_out.clear();\n"
-        "    s_out.str(\"\");\n"
+        "    std::cout << \"    \" << s_out__.str() << std::flush;\n"
+        "    s_out__.clear();\n"
+        "    s_out__.str(\"\");\n"
         "    return out;\n"
         "}\n"
         "\n"
@@ -33,5 +36,21 @@ void Generator::debugFunctions(std::ostream &out) const
         "        ostr << \"'\\\\x\" << setfill('0') << hex << setw(2) << "
                                                         "value << \"'\";\n"
         "    return ostr.str();\n"
+        "}\n";
+
+    if (verbose)
+        out <<
+        "void " << d_baseclassScope << "errorVerbose__()\n"
+        "{\n"
+        "    std::cout << \"Parser State stack containing \" << "
+                                "(d_stackIdx__ + 1) << \" \"\n" <<
+        setw(70) << "" << "\"elements:\\n\"\n" <<
+        "                 \"Each line shows a stack index followed by the "
+                                            "value of that stack \"\n" <<
+        setw(70) << "" << "\"element\\n\";\n" <<
+        "    for (size_t idx = d_stackIdx__ + 1; idx--; )\n" <<
+        "       std::cout << std::setw(2) << idx << \": \" << \n"
+        "                    std::setw(3) << d_stateStack__[idx] << "
+                                                                "\"\\n\";\n"
         "}\n";
 }

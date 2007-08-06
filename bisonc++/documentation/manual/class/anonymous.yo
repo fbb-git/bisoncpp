@@ -1,12 +1,15 @@
-    In the file defining the bf(parse()) function (see section
+    In the file defining the tt(parse()) function (see section
 ref(PARSESOURCE)) the following types and variables are defined in the
 anonymous namespace. These are mentioned here for the sake of completeness,
 and are not normally accessible to other parts of the parser.
     itemization(
+    it() bf(char const author[]):nl()
+       Defining the name and e-mail address of bic()'s author.
     it() bf(ReservedTokens):nl()
        This enumeration defines some token values used internally by the
         parsing functions. They are:
         verb(
+    PARSE_ACCEPT   =  0,
     _UNDETERMINED_ = -2,
     _EOF_          = -1,
     _error_        = 256,
@@ -14,12 +17,33 @@ and are not normally accessible to other parts of the parser.
        These tokens are used by the parser to determine whether another token
         should be requested from the lexical scanner, and to handle
         error-conditions. 
-    it() bf(SR) (Shift-Reduce Info):nl()
+    it() bf(StateType):nl()
+       This enumeration defines several moe token values used internally by
+        the parsing functions. They are:
+        verb(
+        NORMAL,
+        ERR_ITEM,
+        REQ_TOKEN,
+        ERR_REQ,    // ERR_ITEM | REQ_TOKEN
+        DEF_RED,    // state having default reduction
+        ERR_DEF,    // ERR_ITEM | DEF_RED
+        REQ_DEF,    // REQ_TOKEN | DEF_RED
+        ERR_REQ_DEF // ERR_ITEM | REQ_TOKEN | DEF_RED
+       )
+       These tokens are used by the parser to define the types of the various
+        states of the analyzed grammar.
+    it() bf(PI__) (Production Info):nl()
+       The type defines a struct containing information about the production
+        rules that were used by a grammar.nl()
+       Its first field contains the identification number of a production's
+        defining non-terminal;nl()
+       Its second field defines the number of elements of a production
+    it() bf(SR__) (Shift-Reduce Info):nl()
        This bf(struct) provides the shift/reduce information for the various
-        grammatical states. bf(SR) values are collected in arrays, one array
+        grammatical states. bf(SR__) values are collected in arrays, one array
         per grammatical state. These array, named bf(s_)tt(<nr>), 
         where tt<nr> is a state number are defined in the anonymous namespace
-        as well. The bf(SR) elements consist of two unions,
+        as well. The bf(SR__) elements consist of two unions,
         defining fields that are applicable to, respectively, the first,
         intermediate and the last array elements.nl()
        The first element of each array consists of (1st field) a bf(StateType)
@@ -34,22 +58,19 @@ and are not normally accessible to other parts of the parser.
         an erroneous token has been retrieved. If the 2nd field is zero, no
         error or default action has been defined for the state, and
         error-recovery is attepted.
-    it() bf(StateType):nl()
-       This enumeration defines the type of the various grammar-states. They
-        are: 
-        verb(
-    NORMAL,
-    HAS_ERROR_ITEM,
-    IS_ERROR_STATE,
-       )
-       bf(HAS_ERROR_ITEM) is used for a state having at least one
-        error-production. bf(IS_ERROR_STATE) is used for a state from which
-        error recovery is attempted. So, while in these states tokens are
-        retrieved until a token from where parsing may continue is seen by the
-        parser. All other states are bf(NORMAL) states.
-    it() bf(PI) (Production Info):nl()
+    it() bf(STACK_EXPANSION):nl()
+       An enumeration value specifying the number of additional elements that
+        are added to the state- and semantic value stacks when full.
+    it() bf(PI__) (Production Info):nl()
        This bf(struct) provides information about production rules. It has two
         fields: bf(d_nonTerm) is the identification number of the production's
         non-terminal, bf(d_size) represents the number of elements of the
         productin rule.
+    it() bf(static PI__ s_productionInfo):nl()
+       Used internally.
+    it() bf(static SR__ s_<nr>[]):nl()
+       Here, tt(<nr>) is a numerical value representing a state number.
+       Used internally.
+    it() bf(static SR__ *s_state[]):nl()
+       Used internally.
     )

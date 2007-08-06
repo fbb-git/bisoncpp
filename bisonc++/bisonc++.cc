@@ -11,18 +11,21 @@ namespace
 {
     Arg::LongOption longOptions[] = 
     {
+        Arg::LongOption("analyze-only"),
+
         Arg::LongOption("baseclass-preinclude", 'H'),
         Arg::LongOption("baseclass-skeleton", 'B'),
         Arg::LongOption("class-skeleton", 'C'),
         Arg::LongOption("implementation-skeleton", 'I'),
         Arg::LongOption("parsefun-skeleton", 'P'),
+        Arg::LongOption("skeleton-directory", 'S'),
 
         Arg::LongOption("baseclass-header", 'b'),
         Arg::LongOption("class-header", 'c'),
         Arg::LongOption("implementation-header", 'i'),
         Arg::LongOption("parsefun-source", 'p'),
 
-        Arg::LongOption("filenames", 'f'),
+        Arg::LongOption("class-name", Arg::Required),
 
         Arg::LongOption("construction"),
                 // implies verbose, but also shows FIRST and FOLLOW sets as
@@ -31,10 +34,16 @@ namespace
 
         Arg::LongOption("debug"),
 
+        Arg::LongOption("error-verbose"),
+
+        Arg::LongOption("filenames", 'f'),
+
         Arg::LongOption("force-implementation-header"),
         Arg::LongOption("force-class-header"),
 
         Arg::LongOption("help", 'h'),
+        Arg::LongOption("include-only"),
+        Arg::LongOption("max-inclusion-depth", Arg::Required),
 
         Arg::LongOption("namespace", 'n'),
 
@@ -43,7 +52,11 @@ namespace
 
         Arg::LongOption("lines", 'l'),
         Arg::LongOption("no-lines"),
+
+        Arg::LongOption("required-tokens", Arg::Required),
+
         Arg::LongOption("scanner", 's'),
+        Arg::LongOption("scanner-debug"),
 
         Arg::LongOption("show-filenames"),
                 // writes the names of the files to the standard output
@@ -65,25 +78,27 @@ namespace
 int main(int argc, char **argv)
 try
 {
-    Arg &arg = Arg::initialize("B:b:C:c:f:H:hI:i:ln:p:P:s:Vv", 
+    Arg &arg = Arg::initialize("B:b:C:c:f:H:hI:i:ln:p:P:s:S:Vv", 
                     longOptions, longEnd, argc, argv);
 
     arg.versionHelp(usage, version, 1);
 
     Rules rules;
 
-    Parser parser(rules);   // parses the input, fills the data in the Rules
+    Parser parser(rules);   // Prepare parsing. If `include-only' was
+                            // specified, processing stops here.
 
-    parser.parse();         // read the grammar file, build required data
+
+                            
+    parser.parse();         // parses the input, fills the data in the Rules
+                            // read the grammar file, build required data
                             // structures. 
 
-    parser.setVerbosity();  // prepare Msg for verbose output
-                            // (--verbose, --construction) 
+    parser.cleanup();       // do cleanup actions following parse() 
 
-    parser.showFilenames(); // shows the verbosity-filename, otherwise 
-                            // independent of the verbosity setting
 
     rules.updatePrecedences();  // update production rule precedences
+
 
     rules.showRules();
     rules.showTerminals();
@@ -93,6 +108,7 @@ try
 
     rules.determineFollow();
     rules.showFollow();
+
 
                             // define the startproduction
     Production::setStart(rules.startProduction());
@@ -112,6 +128,9 @@ try
 
     if (Msg::errors())
         return 1;
+
+    if (arg.option(0, "analyze-only"))
+        return 0;
 
     Generator generator(rules, parser);
 

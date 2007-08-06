@@ -15,7 +15,7 @@ void Generator::implementationHeader() const
     (
         access(d_parser.implementationHeader().c_str(), F_OK) == 0
         &&
-        not Arg::instance().option(0, "force-implementation-header")
+        not d_arg.option(0, "force-implementation-header")
     )
         return;
 

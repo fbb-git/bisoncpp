@@ -1,0 +1,25 @@
+symbols:
+    symbol_m
+    symbolList
+    optSemiCol
+;
+
+symbolList:
+    symbolList optComma symbol
+|
+    symbol
+;
+
+
+symbol:
+    QUOTE
+    {
+        defineTerminal(d_scanner.canonicalQuote(), Symbol::CHAR_TERMINAL);
+    }
+|
+    identifier
+    optNumber
+    {
+        defineTokenName($1, $2);    // try to define as symbolic terminal
+    }
+;

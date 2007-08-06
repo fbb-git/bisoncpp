@@ -2,10 +2,10 @@
 
 // pos points to $ in what must be $<type>i
 
-bool Parser::explicitElement(size_t pos, size_t nElements) 
+bool Parser::explicitElement(size_t pos, size_t nElements, Block &block) 
 {
     string explicitType;        // extract the explicit type
-    size_t length = 1 + extractType(&explicitType, pos + 1);
+    size_t length = 1 + extractType(&explicitType, pos + 1, block);
 
     int idx;                // extract the index, determine its length
     length  += extractIndex(&idx, pos + length);
@@ -55,7 +55,8 @@ bool Parser::explicitElement(size_t pos, size_t nElements)
     if (typeToUse.length())
         replacement += "." + typeToUse;
 
-    d_block.replace(pos, length, replacement);
+    block.replace(pos, length, replacement);
 
     return false;           // this is not a $$ variant.
 }
+

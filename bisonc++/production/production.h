@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <iosfwd>
+#include <algorithm>
 
 #include "../block/block.h"
 #include "../symbol/symbol.h"
@@ -38,14 +39,6 @@ class Production: public std::vector<Symbol *>
         typedef std::vector<Production const*>  ConstVector;
         typedef ConstVector::const_iterator     ConstIter;
 
-        struct IAContext                    // insertActionContext
-        {
-            std::ostream &out;
-            char const *infile;
-            bool lineDirectives;
-            size_t indent;
-        };
-
         Production(Symbol const *nonTerminal);
 
         Block const &action() const;
@@ -62,8 +55,26 @@ class Production: public std::vector<Symbol *>
         void setPrecedence(Terminal const *terminal);
 
         static Production const *start();
+
+        struct IAContext                    // insertActionContext
+        {
+            std::ostream &out;
+            char const *infile;
+            bool lineDirectives;
+            size_t indent;
+        };
         static void insertAction(Production const *prod, IAContext &context);
+
         static void setStart(Production const *production);
+
+        struct TermToNontermContext
+        {
+            Symbol *terminal;
+            Symbol *nonTerminal;
+        };
+        static void termToNonterm(Production *pPtr, 
+                                  TermToNontermContext &t2n);
+
         static void unused(Production const *production);
         static bool notUsed();
         static bool isTerminal();
@@ -146,6 +157,12 @@ inline std::ostream &operator<<(std::ostream &out, Production const *prod)
 inline bool isTerminal(Symbol const *symbol)
 {
     return symbol->isTerminal();
+}
+
+inline void Production::termToNonterm(Production *pPtr, 
+                                      TermToNontermContext &t2n)
+{
+    std::replace(pPtr->begin(), pPtr->end(), t2n.terminal, t2n.nonTerminal);
 }
 
 #endif

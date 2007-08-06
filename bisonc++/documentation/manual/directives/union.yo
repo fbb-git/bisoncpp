@@ -1,3 +1,4 @@
+    Syntax: bf(%union) tt(union-definition body)nl()
 The tt(%union) directive specifies the entire collection of possible data
 types for semantic values. The keyword tt(%union) is followed by a pair of
 braces containing the same thing that goes inside a union in bf(C++).
@@ -20,8 +21,8 @@ nonterminal symbol (see section ref(NONTERMS)).
         definitions. Consequently, they cannot be used in tt(%union)
         directives either. When a class type variant is required, a
         em(pointer) to a class object should be used. The responsibility for
-        the correct destruction of the pointed-to class objects lies with the
-        programmer. See also section ref(MORETYPES).
+        the correct construction and destruction of the pointed-to class 
+        objects lies with the programmer. See also section ref(MORETYPES).
     )
 
 

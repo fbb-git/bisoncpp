@@ -3,7 +3,7 @@ outlandish at first, but it is really very common. For example, a minus sign
 typically has a very high precedence as a unary operator, and a somewhat lower
 precedence (lower than multiplication) as a binary operator.
 
-The B() precedence directives, %left, %right and %nonassoc, can only be used once for a given token; so a token has only one precedence declared in this way. For context-dependent precedence, you need to use an additional mechanism: the %prec modifier for rules.
+The b() precedence directives, %left, %right and %nonassoc, can only be used once for a given token; so a token has only one precedence declared in this way. For context-dependent precedence, you need to use an additional mechanism: the %prec modifier for rules.
 
 The %prec modifier declares the precedence of a particular rule by specifying a terminal symbol whose precedence should be used for that rule. It's not necessary for that symbol to appear otherwise in the rule. The modifier's syntax is:
 

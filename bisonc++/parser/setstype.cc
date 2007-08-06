@@ -3,19 +3,15 @@
 void Parser::setStype()
 {
     if (d_stackDecl.size())
-        lineMsg() << "%union or %stype multiply declared" << err;
-    
-    d_stackDecl = "typedef ";
-
-    if (d_scanner.lex() == Scanner::IDENTIFIER)
+        lineMsg() << "%union or %stype multiply specified" << err;
+    else
     {
-        string const &type = d_scanner.trimmedText();
-        if (type.length())
-        {
-            (d_stackDecl += type) += " STYPE;\n";
-            return;
-        }
-    }
+        char const *txt = d_scanner.YYText();
 
-   lineMsg() << "`%stype type-definition' expected" << err;
+        if (strchr(txt, ';'))
+            lineMsg() << "`;' in %stype type-definition `" << txt << "'" << 
+                                                                        err;
+        else
+            ((d_stackDecl = "typedef ") += txt) += " STYPE__;\n";
+    }
 }

@@ -12,7 +12,7 @@ lines:
 line:
     NR '\n'
     {
-        std::cout << "   ok\n";
+        std::cout << "   OK\n";
     }
 |
     error '\n'

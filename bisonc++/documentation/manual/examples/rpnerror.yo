@@ -1,11 +1,11 @@
 When tt(parse()) detects a em(syntax error), it calls the error reporting
 member function tt(error()) to print an error message (usually but not always
 em(parse error)). It is up to the programmer to supply an implementation, but
-a very bland and simple in-line implementation is provided by B() in the class
+a very bland and simple in-line implementation is provided by b() in the class
 header file (see chapter ref(INTERFACE)). This default implementation is
 acceptable for tt(rpn).
 
-Once tt(error()) returns, the B() parser may recover from the error and
+Once tt(error()) returns, the b() parser may recover from the error and
 continue parsing if the grammar contains a suitable error rule (see chapter
 ref(RECOVERY)).  Otherwise, the parsing function tt(parse()) returns
 nonzero. Not any error rules were included in this example, so any invalid

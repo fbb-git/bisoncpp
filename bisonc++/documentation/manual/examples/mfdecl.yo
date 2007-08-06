@@ -1,5 +1,5 @@
 The grammar specification file for the tt(mfcalc) calculator allows us to
-introduce several new features. Here is the B() directive section for
+introduce several new features. Here is the b() directive section for
 the tt(mfcalc) multi-function calculator (line numbers were added for
 referential purposes, they are not part of the declaraction section as used in
 the actual grammar file):
@@ -36,7 +36,7 @@ have this tt(Parser::STYPE) type. As defined here the allowable types are now
         tt(mfcalc)'s symbol table, used with tt(VAR) tokens (see section
         ref(COLLECTION)).
     it() a em(pointer to a function) expecting a tt(double) argument and
-        returning a tt(double) value, used with tt(FNCT) tokens)
+        returning a tt(double) value, used with tt(FNCT) tokens.
     )
     Since values can now have various types, it is necessary to associate a
 type with each grammar symbol whose semantic value is used. These symbols are

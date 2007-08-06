@@ -6,7 +6,7 @@ grammatical then `tt(x + 1)' or `tt(x + 3989)' is equally grammatical.
 
 But the precise value is very important for what the input means once it is
 parsed. A compiler is useless if it fails to distinguish between 4, 1 and 3989
-as constants in the program! Therefore, each token in a B() grammar has both a
+as constants in the program! Therefore, each token in a b() grammar has both a
 token type and a em(semantic value). See section ref(DEFSEM) for details.
 
 The token type is a terminal symbol defined in the grammar, such as

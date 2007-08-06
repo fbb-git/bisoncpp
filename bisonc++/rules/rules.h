@@ -17,30 +17,43 @@
     // Its number, and a vector of Alternatives. an Alternative is a vector of
     // iterators into the symbol table
 class Rules
-{
-    Terminal::Vector d_terminal;        // the vector holding information 
-                                        // about defined terminal symbols
+{ 
+    public:
+        // For each rule, maintain a record of file/line combinations
+        // indicating where the rule was first seen. This allows me to
+        // generate warnings when a rule is defined as full rule definitions
+        // rather than as alternatives. There's nothing inherently wrong with
+        // that, but it may also be a typo causing unexpected conflicts
+        typedef std::pair<std::string, size_t> FileInfo;
+    private:
+        typedef std::map<NonTerminal const *, FileInfo> NFileInfoMap;
+    
+        Terminal::Vector d_terminal;        // the vector holding information 
+                                            // about defined terminal symbols
 
-    NonTerminal::Vector d_nonTerminal; 
-                                            // the vector holding information 
-    NonTerminal *d_currentRule;             // about defined nonterminals
-
-    std::string d_startRule;                // name of the startrule
-
-    Production::Vector d_production;        // the vector holding information
-    Production *d_currentProduction;        // about all productions
+        NonTerminal::Vector d_nonTerminal;  // the vector holding information  
+                                            // about defined nonterminals
+    
+        NFileInfoMap d_location;            // the map holding information
+                                            // about initial rule locations
+        NonTerminal *d_currentRule;       
+    
+        std::string d_startRule;            // name of the startrule
+    
+        Production::Vector d_production;    // the vector holding information
+        Production *d_currentProduction;    // about all productions
                                             // productions hold Symbol
                                             // elements, they contain
                                             // information about type and
                                             // index of their elements in the 
                                             // (non)terminal vectors
-
-    static size_t s_acceptProductionNr;
-    static size_t s_nExpectedConflicts;
-    static Terminal s_errorTerminal;
-    static Terminal s_eofTerminal;
-    static Symbol *s_startSymbol;
-
+    
+        static size_t s_acceptProductionNr;
+        static size_t s_nExpectedConflicts;
+        static Terminal s_errorTerminal;
+        static Terminal s_eofTerminal;
+        static Symbol *s_startSymbol;
+    
     public:
         Rules();
 
@@ -50,13 +63,10 @@ class Rules
         static size_t acceptProductionNr();
         static size_t expectedConflicts();
 
+        void clearLocations();                  // clear d_location
 
         Terminal *insert(Terminal *terminal, std::string const &literal);
         NonTerminal *insert(NonTerminal *nonTerminal);
-        void remove(NonTerminal *nonTerminal);  // nonTerminal MUST be 
-                                                // present (see, e.g.,
-                                                // parser/defineterminal.cc)
-
 
         void addElement(Symbol *symbol);
                 // add the symbol as the next element of the 
@@ -66,14 +76,21 @@ class Rules
                 // add a new production to the set of productions of the
                 // rule currently being defined
 
-        void addRule(NonTerminal *nonTerminal);
+        bool newRule(NonTerminal *nonTerminal, std::string const &source,
+                                                size_t lineNr);
                 // add a new rule. If startrule has not
                 // yet been set, define this rule as the startrule.
+                // return true if a really new rule was added, rather than
+                // expanding a rule defined earlier.
 
         void assignNonTerminalNumbers();
         void augmentGrammar(Symbol *start);
 
         Production const &lastProduction() const;
+
+        FileInfo const &fileInfo(NonTerminal const *nt) const;
+                                            // return the FileInfo of the
+                                            // first definition of rule `nt'
 
         std::string const &name() const;    // return the name of the 
                                             // currently defined rule
@@ -85,6 +102,12 @@ class Rules
         std::string const &sType(size_t idx) const; // return the value type
                                         // associated with element idx of
                                         // the currently defined production
+
+        inline Symbol const *symbol(size_t idx) const; 
+                                        // return the symbol
+                                        // associated with element idx of
+                                        // the currently defined production
+                                        // Note: symbol idx MUST exist
 
         size_t nProductions() const;
 
@@ -136,6 +159,7 @@ class Rules
         std::vector<Terminal const *> const &terminals() const;
         std::vector<Production const *> const &productions() const;
         void setNonTerminalTypes();
+        void termToNonterm(Symbol *term, Symbol *nonTerm);
 
     private:
         static void addFollowFromFirst(Production *production);
@@ -156,6 +180,11 @@ inline Rules::Rules()
     d_currentRule(0),
     d_currentProduction(0)
 {}
+
+inline void Rules::clearLocations()
+{
+    d_location.clear();
+}
 
 inline void Rules::setExpectedConflicts(size_t value)
 {
@@ -274,6 +303,16 @@ inline void Rules::addFirstToFollow(NonTerminal *nonTerminal)
     for_each(nonTerminal->productions().begin(), 
              nonTerminal->productions().end(), 
             &addFollowFromFirst);
+}
+
+inline Rules::FileInfo const &Rules::fileInfo(NonTerminal const *nt) const
+{
+    return d_location.find(nt)->second;
+}
+
+inline Symbol const *Rules::symbol(size_t idx) const
+{
+    return d_currentProduction->rhs(idx - 1);
 }
         
 #endif

@@ -2,7 +2,7 @@
 
 // pos is the position of the second $ in '$$'
 
-bool Parser::defaultReturn(size_t pos) 
+bool Parser::defaultReturn(size_t pos, Block &block) 
 {
     string const &defaultType = d_rules.sType();    // get the rule's default
                                                     // type
@@ -15,7 +15,8 @@ bool Parser::defaultReturn(size_t pos)
     if (defaultType.length())                       // augment with %union 
         replacement += "." + defaultType;           // type (if available)
 
-    d_block.replace(pos - 1, 2, replacement);       // replace $$ by semantic
+    block.replace(pos - 1, 2, replacement);
+                                                    // replace $$ by semantic
                                                     // value
 
     return true;                                    // this block uses $$

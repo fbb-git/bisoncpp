@@ -31,13 +31,13 @@ em(semantical) error should be reported
     A parser that should be able to detect semantic errors will normally use a
 counter counting the number of semantic errors, e.g., tt(size_t
 d_nSemanticErrors). It may be possible to test this counter's value once the
-input has been parsed, calling bf(ABORT()) (see section ref(PRIVMEM)) if the
+input has been parsed, calling tt(ABORT()) (see section ref(PRIVMEM)) if the
 counter isn't zero anymore. When the grammar's start symbol itself has
 multiple alternatives, it is probably easiest to augment the grammar with an
 additional rule, becoming the augmented grammar's start symbol which simply
 calls the former start symbol. For example, if tt(input) was the name of the
 original start-symbol, augment the grammar as follows to ensure a
-bf(PARSE_ABORT) return value of the bf(parse()) member when either syntactical
+bf(PARSE_ABORT) return value of the tt(parse()) member when either syntactic
 or semantical errors were detected:
         verb(
     semantic_input:                 // new start-symbol
@@ -47,6 +47,6 @@ or semantical errors were detected:
                 ABORT();            // on semantic errors too.
         }
         )
-    Returning from the parser's bf(parse()) member the number of syntactical
+    Returning from the parser's tt(parse()) member the number of syntactic
 and semantical errors could then be printed, whereupon the program might
 terminate. 

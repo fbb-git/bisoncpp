@@ -1,4 +1,4 @@
-A B() grammar rule has the following general form:
+A b() grammar rule has the following general form:
         verb( 
     result: 
         components
@@ -7,7 +7,10 @@ A B() grammar rule has the following general form:
         )
     where em(result) is the nonterminal symbol that this rule describes and
 em(components) are various terminal and nonterminal symbols that are put
-together by this rule (see section ref(SYMBOLS)). For example,
+together by this rule (see section ref(SYMBOLS)). With respect to the way
+rules are defined, note the following:
+    itemization(
+    it() The construction:
         verb(
     exp:    
         exp '+' exp
@@ -16,10 +19,10 @@ together by this rule (see section ref(SYMBOLS)). For example,
     means that two groupings of type tt(exp), with a `+' token in between, can
 be combined into a larger grouping of type tt(exp).
 
-    Whitespace in rules is significant only to separate symbols. You can add
-extra whitespace as you wish.
+    it() Whitespace in rules is significant only to separate symbols. You can
+add extra whitespace as you wish.
 
-    Scattered among the components can be em(actions) that determine the
+    it() Scattered among the components can be em(actions) that determine the
 semantics of the rule. An action looks like this:
         verb(
     {
@@ -29,8 +32,8 @@ semantics of the rule. An action looks like this:
     Usually there is only one action and it follows the components. See
 section ref(ACTIONS).
 
-    Multiple rules for the same result can be written separately or can be
-joined with the vertical-bar character `|' as follows:
+    it() Multiple rules for the same result can be written separately or can
+be joined with the vertical-bar character `|' as follows:
         verb(
     result: 
         rule1-components
@@ -42,21 +45,43 @@ joined with the vertical-bar character `|' as follows:
         )
     They are still considered distinct rules even when joined in this way.
 
-    If em(components) in a rule is em(empty), it means that em(result) can
-match the empty string. For example, here is how to define a comma-separated
-sequence of zero or more tt(exp) groupings:
+    it() Alternatively, multiple rules of the same nonterminal can be
+defined. E.g., the previous definition of tt(result:) could also have been
+defined as:
+        verb(
+    result: 
+        rule1-components
+        ...
+    ;
+
+    result:
+        rule2-components...
+        ...
+    ;
+        )
+    However, this is a potentially dangerous practice, since one of the two
+tt(result) rules could also have used a misspelled rule-name (e.g., the second
+tt(result)) should have been tt(results). Therefore, b() will generate a
+warning if the same nonterminal is used repeatedly when defining production
+rules. 
+
+    it() If em(components) in a rule is em(empty), it means that em(result)
+can match the empty string. Such a alternative is called an em(empty
+production rule). For example, here is how to define a
+comma-separated sequence of zero or more tt(exp) groupings:
         verb(
     expseq:   
-        // empty 
-    | 
         expseq1
+    | 
+        // empty 
     ;
 
     expseq1:  
-        exp
-    | 
         expseq1 ',' exp
+    | 
+        exp
     ;
         )
-    It is customary to write a comment `tt(// empty)' in each rule with no
-components.
+    Convention calls for a comment `tt(// empty)' in each empty production
+rule.
+    )

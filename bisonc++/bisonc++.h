@@ -3,8 +3,10 @@
 
 #include <iostream>
 #include <string>
-#include <bobcat/arg>
+
+#include <bobcat/msg>
 #include <bobcat/errno>
+#include <bobcat/arg>
 
 #include "rules/rules.h"
 #include "parser/parser.h"

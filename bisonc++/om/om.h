@@ -13,6 +13,7 @@ class OM
             EXTENDED,
             SPECIAL,
             SR,
+            SYMTYPE,
         };
 
     private:
@@ -27,6 +28,7 @@ class OM
         static std::ostream &ext(std::ostream &out);   
         static std::ostream &spec(std::ostream &out);   
         static std::ostream &sr(std::ostream &out);   
+        static std::ostream &symtype(std::ostream &out);   
         static std::ostream &reset(std::ostream &out);   
 
         static void setType(InsType type);
@@ -62,10 +64,18 @@ inline std::ostream &OM::sr(std::ostream &out)
     return out;
 }
 
+inline std::ostream &OM::symtype(std::ostream &out)
+{
+    s_type = SYMTYPE;
+    return out;
+}
+
+#include <iostream>
 
 inline std::ostream &OM::ext(std::ostream &out)
 {
     s_type = EXTENDED;
+std::cerr << "Set s_type to " << s_type << "\n";
     return out;
 }
 

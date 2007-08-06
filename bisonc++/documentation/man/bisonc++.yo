@@ -11,6 +11,9 @@ whenhtml(mailto(Frank B. Brokken: f.b.brokken@rug.nl))
 DEFINEMACRO(lsoption)(3)(\
     bf(--ARG1)=tt(ARG3) (bf(-ARG2))\
 )
+DEFINEMACRO(laoption)(2)(\
+    bf(--ARG1)=tt(ARG2)\
+)
 DEFINEMACRO(loption)(1)(\
     bf(--ARG1)\
 )
@@ -202,6 +205,10 @@ manpageoptions()
 following their associated long-option variants. Single letter options require
 arguments if their associated long options require arguments as well.
     itemization(
+    it() loption(analyze-only)nl()
+           Only analyze the grammar. No files are (re)written. This option can
+            be used to test the grammatical correctness of modification `in
+            situ', without overwriting previously generated files.
     it() lsoption(baseclass-preinclude)(H)(header)nl()
            Use tt(header) as the pathname to the file preincluded in the
             parser's base-class header. This option is useful in situations
@@ -252,6 +259,12 @@ arguments if their associated long options require arguments as well.
             anymore. By rerunning bic() without the bf(--debug) option an
             equivalent parser is generated not containing the debugging
             code. 
+    it() loption(error-verbose)nl()
+           When a syntactic error is reported, the generated parse function
+            will dump the parser's state stack to the standard output
+            stream. The stack dump shows on separate lines a stack index
+            followed by the state stored at the indicated stack element. The
+            first stack element is the stack's top element.
     it() lsoption(filenames)(f)(filename)nl()
            Specify a filename to use for all files produced by bic(). 
             Specific options overriding particular filenames are also
@@ -284,17 +297,18 @@ arguments if their associated long options require arguments as well.
            Use tt(skeleton) as the pathname of the file containing the
             skeleton of the implementation header. Its filename defaults to
             tt(bisonc++.ih).
+    it() loption(include-only)nl()
+           All grammar files will be concatenated to the standard output
+            stream in their order of processing. Following this, Bic()
+            terminates.
     it() loption(lines) (soption(l))nl() 
            Put bf(#line) preprocessor directives in the file containing the
             parser's bf(parse()) function. By including this option the
             compiler and debuggers will associate errors with lines in your
             grammar specification file, rather than with the source file
             containing the bf(parse()) function itself.
-    it() loption(no-lines)nl() 
-           Do not put bf(#line) preprocessor directives in the file containing
-            the parser's bf(parse()) function. This option is primarily useful
-            in combination with the bf(%lines) directive, to suppress that
-            directive. It also overrides option bf(--lines), though.
+    it() laoption(max-inclusion-depth)(value)nl()
+           Set the maximum number of nested grammar files. Defaults to 10.
     it() lsoption(namespace)(n)(namespace)nl()
            Define the parser base class, the paser class and the parser
             implentations in the namespace tt(namespace). By default
@@ -310,6 +324,11 @@ arguments if their associated long options require arguments as well.
             lexical scanner. By suppressing the construction of this file any
             modification in these terminal tokens will not be communicated to
             the lexical scanner.
+    it() loption(no-lines)nl() 
+           Do not put bf(#line) preprocessor directives in the file containing
+            the parser's bf(parse()) function. This option is primarily useful
+            in combination with the bf(%lines) directive, to suppress that
+            directive. It also overrides option bf(--lines), though.
     it() loption(no-parse-member)nl()
            Do not write the file containing the parser's predefined parser
             member functions, even if that file doesn't yet exist. By default
@@ -318,14 +337,18 @@ arguments if their associated long options require arguments as well.
             should normally be avoided, as this file contains parsing
             tables which are altered whenever the grammar definition is
             modified. 
-    it() lsoption(parsefun-source)(p)(source)nl()
-           Define tt(source) as the name of the source file containing the
-            parser member function bf(parse()). Defaults to tt(parse.cc).
     it() lsoption(parsefun-skeleton)(P)(skeleton)nl()
            Use tt(skeleton) as the pathname of the file containing the parsing
             member function's skeleton. Its filename defaults to
             tt(bisonc++.cc). The environment variable tt(BISON_SIMPLE) is not
             inspected anymore.
+    it() lsoption(parsefun-source)(p)(source)nl()
+           Define tt(source) as the name of the source file containing the
+            parser member function bf(parse()). Defaults to tt(parse.cc).
+    it() laoption(required-tokens)(number)nl()
+           Following a syntactic error, require at least tt(number)
+            successfully processed tokens before another syntactic error can
+            be reported. By default tt(number) is zero.
     it() lsoption(scanner)(s)(header)nl()
            Use tt(header) as the pathname to the file defining a class
             bf(Scanner), offering a member bf(int yylex()) producing the next
@@ -349,9 +372,15 @@ arguments if their associated long options require arguments as well.
             <header>) will be included. In the latter case, quotes might be
             required to escape interpretation by the shell (e.g., using tt(-s
             '<header>')).
+    it() loption(scanner-debug)nl() 
+           Show de scanner's matched rules and returned tokens.
     it() loption(show-filenames)nl() 
            Write the names of the files that are generated to the 
             standard error stream.
+    it() laoption(skeleton-directory)(directory)nl() 
+           Specifies the directory containing the skeleton files to use. This
+            option can be overridden by the specific skeleton-specifying
+            options (tt(-B -C, -H,) and tt(-I)).
     it() loption(thread-safe)nl() 
            No static data are modified, making bic() thread-safe.
     it() loption(usage)nl()
@@ -412,9 +441,11 @@ specification file.
             equivalent parser is generated not containing the debugging
             code. 
     it() bf(%error-verbose) nl()    
-            (to do)
-            if defined the parser stack is dumped when an error is detected
-            by the bf(parse()) member function.
+           When a syntactic error is reported, the generated parse function
+            will dump the parser's state stack to the standard output
+            stream. The stack dump shows on separate lines a stack index
+            followed by the state stored at the indicated stack element. The
+            first stack element is the stack's top element.
     it() bf(%expect) tt(number) nl()    
             If defined the parser will not report encountered shift/reduce and
             reduce/reduce conflicts if all detected conflicts are equal to the
@@ -437,18 +468,33 @@ specification file.
             to the location of bic()'s grammar specification file. This
             directive can be used to split long grammar specification files in
             shorter, meaningful units. 
+    it() bf(%left) tt(terminal ...) nl()    
+            Defines the names of symbolic terminal tokens that should be
+            treated as left-associative. I.e., in case of a shift/reduce
+            conflict, a reduction will be preferred over a shift.
+            Sequences of bf(%left, %nonassoc, %right) and bf(%token)
+            directives may be used to define the precedence of operators. In
+            expressions, the first used directive will have the lowest
+            precedence, the last used the highest. See also bf(%token) below.
     it() bf(%lines) nl() 
            Put bf(#line) preprocessor directives in the file containing the
             parser's bf(parse()) function. It acts identically to the bf(-l)
             command line option, and is suppressed by the bf(--no-lines)
             option.
+    it() bf(%locationstruct) tt(struct-definition) nl() 
+       Defines the organization of the location-struct data type
+        bf(LTYPE__). This struct should be specified analogously to the way
+        the parser's stacktype is defined using bf(%union) (see below). The
+        location struct is named bf(LTYPE__). If neither bf(locationstruct)
+        nor bf(LTYPE__) is specified, the aforementioned default struct is
+        used.
     it() bf(%lsp-needed) nl()    
            Defining this causes bic() to include code into the generated
             parser using the standard location stack.  The token-location type
             defaults to the following struct, defined in the parser's base
             class when this directive is specified: 
            verb(
-    struct LTYPE
+    struct LTYPE__
     {
         int timestamp;
         int first_line;
@@ -464,7 +510,7 @@ specification file.
             alternate (predefined) type (e.g., bf(size_t)). It should not be
             used if a bf(%locationstruct) specification is defined (see
             below). Within the parser class, this type will be available as
-            the type `bf(LTYPE)'.  All text on the line following bf(%ltype)
+            the type `bf(LTYPE__)'.  All text on the line following bf(%ltype)
             is used for the tt(typename) specification. It should therefore
             not contain comment or any other characters that are not part of
             the actual type definition.
@@ -482,47 +528,6 @@ specification file.
             attributes, and should normally be avoided. When used, they can be
             specified like tt($-1) or tt($<type>-1), where tt(type) is a
             tt(%union) field-name.
-    it() bf(%parsefun-source) tt(source) nl()
-           Defines the pathname of the file containing the parser member
-            bf(parse()). This directive is overridden by the 
-            bf(--parse-source) or bf(-p) command-line options.
-    it() bf(%scanner) tt(header)nl()
-           Use tt(header) as the pathname to the file pre-included in the
-            parser's class header. See the description of the bf(--scanner)
-            option for details about this option.  Similar to the convention
-            adopted for this argument, tt(header) will (by default) be
-            surrounded by double quotes.  However, when the argument is
-            surrounded by pointed brackets tt(#include <header>) will be
-            included. Note that using this directive implies the definition
-            of a composed tt(Scanner d_scanner) data member into the generated
-            parser, as well as a predefined bf(int lex()) member, returning
-            tt(d_scanner.yylex()). If this is inappropriate, a user defined
-            implementation of bf(int lex()) must be provided.
-    it() bf(%stype typename) nl()    
-           The type of the semantic value of tokens.  The specification
-            tt(typename) should be the name of an unstructured type (e.g.,
-            bf(size_t)). By default it is bf(int). See bf(YYSTYPE) in
-            bf(bison).  It should not be used if a bf(%union) specification is
-            defined.  Within the parser class, this type will be available as
-            the type `bf(STYPE)'. All text on the line following bf(%stype) is
-            used for the tt(typename) specification. It should therefore not
-            contain comment or any other characters that are not part of the
-            actual type definition.
-    it() bf(%locationstruct) tt(struct-definition) nl() 
-           Defines the organization of the location-struct data type
-            bf(LTYPE). This struct should be specified analogously to the way
-            the parser's stacktype is defined using bf(%union) (see
-            below). The location struct is named bf(LTYPE). If neither
-            bf(locationstruct) nor bf(LTYPE) is specified, the aforementioned
-            default struct is used. 
-    it() bf(%left) tt(terminal ...) nl()    
-            Defines the names of symbolic terminal tokens that should be
-            treated as left-associative. I.e., in case of a shift/reduce
-            conflict, a reduction will be preferred over a shift.
-            Sequences of bf(%left, %nonassoc, %right) and bf(%token)
-            directives may be used to define the precedence of operators. In
-            expressions, the first used directive will have the lowest
-            precedence, the last used the highest. See also bf(%token) below.
     it() bf(%nonassoc) tt(terminal ...) nl()    
             Defines the names of symbolic terminal tokens that should be
             treated as non-associative. I.e., in case of a shift/reduce
@@ -531,6 +536,10 @@ specification file.
             directives may be used to define the precedence of operators. In
             expressions, the first used directive will have the lowest
             precedence, the last used the highest. See also bf(%token) below.
+    it() bf(%parsefun-source) tt(source) nl()
+           Defines the pathname of the file containing the parser member
+            bf(parse()). This directive is overridden by the 
+            bf(--parse-source) or bf(-p) command-line options.
     it() bf(%prec) tt(token) nl()    
             Overrules the defined precendence of an operator for a particular
             grammatical rule. Well known is the construction
@@ -548,6 +557,10 @@ specification file.
     %right UMINUS
                 )
             (see below) following, e.g., the tt('*') and tt('/') operators.
+    it() bf((%required-tokens) tt(number)nl()
+           Following a syntactic error, require at least tt(number)
+            successfully processed tokens before another syntactic error can
+            be reported. By default tt(number) is zero.
     it() bf(%right) tt(terminal ...) nl()    
             Defines the names of symbolic terminal tokens that should be
             treated as right-associative. I.e., in case of a shift/reduce
@@ -556,11 +569,33 @@ specification file.
             directives may be used to define the precedence of operators. In
             expressions, the first used directive will have the lowest
             precedence, the last used the highest. See also bf(%token) below.
+    it() bf(%scanner) tt(header)nl()
+           Use tt(header) as the pathname to the file pre-included in the
+            parser's class header. See the description of the bf(--scanner)
+            option for details about this option.  Similar to the convention
+            adopted for this argument, tt(header) will (by default) be
+            surrounded by double quotes.  However, when the argument is
+            surrounded by pointed brackets tt(#include <header>) will be
+            included. Note that using this directive implies the definition
+            of a composed tt(Scanner d_scanner) data member into the generated
+            parser, as well as a predefined bf(int lex()) member, returning
+            tt(d_scanner.yylex()). If this is inappropriate, a user defined
+            implementation of bf(int lex()) must be provided.
     it() bf(%start) tt(non-terminal) nl()    
             The non-terminal tt(non-terminal) should be used as the grammar's 
             start-symbol. If omitted, the first grammatical rule will be used
             as the grammar's starting rule. All syntactically correct
             sentences must be derivable from this starting rule.
+    it() bf(%stype typename) nl() 
+       The type of the semantic value of tokens.  The specification
+        tt(typename) should be the name of an unstructured type (e.g.,
+        bf(size_t)). By default it is bf(int). See bf(YYSTYPE) in bf(bison).
+        It should not be used if a bf(%union) specification is defined.
+        Within the parser class, this type will be available as the type
+        `bf(STYPE__)'. All text on the line following bf(%stype) is used for
+        the tt(typename) specification. It should therefore not contain
+        comment or any other characters that are not part of the actual type
+        definition.
     it() bf(%token) tt(terminal ...) nl()    
             Defines the names of symbolic terminal tokens.
             Sequences of bf(%left, %nonassoc, %right) and bf(%token)
@@ -580,7 +615,7 @@ specification file.
     it() bf(%union) tt(union-definition) nl()    
             Acts identically to the bf(bison) and bf(bison++) declaration. 
             as with bison generate a union for semantic type. 
-            The union is named bf(STYPE). If no bf(%union) is
+            The union type is named bf(STYPE__). If no bf(%union) is
             declared, a simple stack-type may be defined using the bf(%stype)
             directive. If no bf(%stype) directive is used, the default
             stacktype (bf(int)) is used.
@@ -591,13 +626,13 @@ manpagesection(PUBLIC MEMBERS AND -TYPES)
     The following public members can be used by users of the parser classes
 generated by bic() (tt(`Parser Class'::) prefixes are silently implied):
     itemization(
-    it() bf(LTYPE):nl() 
+    it() bf(LTYPE__):nl() 
            The parser's location type (user-definable). Available only when
             either bf(%lsp-needed, %ltype) or bf(%locationstruct) has been
             declared. 
-    it() bf(STYPE):nl()
+    it() bf(STYPE__):nl()
             The parser's stack-type (user-definable), defaults to bf(int).
-    it() bf(Tokens):nl()
+    it() bf(Tokens__):nl()
            The enumeration type of all the symbolic tokens defined in the
             grammar file (i.e., bic()'s input file). The scanner should be
             prepared to return these symbolic tokens Note that, since the
@@ -612,6 +647,12 @@ generated by bic() (tt(`Parser Class'::) prefixes are silently implied):
             the input.
     it() bf(void setDebug(bool mode)):nl()
        This member can be used to activate or deactivate the debug-code
+        compiled into the parsing function. It is always available but is only
+        operational if the tt(%debug) directive or tt(--debug) option was
+        specified.When debugging code has been compiled into the parsing
+        function, it is em(not) active by default. To activate the debugging
+        code, use bf(setDebug(true)).
+       This member can be used to activate or deactivate the debug-code
         compiled into the parsing function. It is available but has no
         effect if no debug code has been compiled into the parsing
         function. When debugging code has been compiled into the parsing
@@ -619,20 +660,20 @@ generated by bic() (tt(`Parser Class'::) prefixes are silently implied):
         calling bf(setDebug(false)).
     )
     
-manpagesection(PRIVATE ENUMS AND -TYPES)
+manpagesection(PROTECTED ENUMS AND -TYPES)
 
     The following enumerations and types can be used by members of parser
-classes generated by bic(). When prefixed by bf(Base::) they are actually
-protected members inherited from the parser's base class.
+classes generated by bic(). They are actually protected members inherited from
+the parser's base class.
     itemization(
-    it() bf(Base::ErrorRecovery):nl()
+    it() bf(Base::ErrorRecovery__):nl()
         This enumeration defines two values:
         verb(
-    DEFAULT_RECOVERY_MODE,
-    UNEXPECTED_TOKEN
+    DEFAULT_RECOVERY_MODE__,
+    UNEXPECTED_TOKEN__
         )
-       bf(DEFAULT_RECOVERY_MODE) consists of terminating the parsing
-        process. bf(UNEXPECTED_TOKEN) activates the recovery procedure
+       bf(DEFAULT_RECOVERY_MODE__) consists of terminating the parsing
+        process. bf(UNEXPECTED_TOKEN__) activates the recovery procedure
         whenever an error is encountered. The recovery procedure consists of
         looking for the first state on the state-stack having an
         error-production, and then skipping subsequent tokens until (in that
@@ -641,7 +682,7 @@ protected members inherited from the parser's base class.
         (i.e., if no acceptable token is ever encountered) error recovery
         falls back to the default recovery mode, terminating the parsing
         process. 
-    it() bf(Base::Return):nl()
+    it() bf(Base::Return__):nl()
         This enumeration defines two values:
         verb(
     PARSE_ACCEPT = 0,
@@ -653,29 +694,29 @@ protected members inherited from the parser's base class.
 
 manpagesection(PRIVATE MEMBER FUNCTIONS)
 
-    The following private members can be used by members of parser classes
-generated by bic(). When prefixed by bf(Base::) they are actually protected
-members inherited from the parser's base class. 
+    The following members can be used by members of parser classes generated
+by bic(). When prefixed by bf(Base::) they are actually protected members
+inherited from the parser's base class.  Members for which the phrase ``Used
+internally'' is used should not be called by user-defined code.
     itemization(
     it() bf(Base::ParserBase()):nl()
-        The default base-class constructor. Can be ignored in practical
-            situations.
-    it() bf(void Base::ABORT() const throw(Return)):nl()
+        The default base-class constructor. Used internally.
+    it() bf(void Base::ABORT() const throw(Return__)):nl()
        This member can be called from any member function (called from any of
         the parser's action blocks) to indicate a failure while parsing thus
         terminating the parsing function with an error value 1. Note that this
         offers a marked extension and improvement of the macro bf(YYABORT)
         defined by bf(bison++) in that bf(YYABORT) could not be called from
         outside of the parsing member function.
-    it() bf(void Base::ACCEPT() const throw(Return)):nl()
+    it() bf(void Base::ACCEPT() const throw(Return__)):nl()
        This member can be called from any member function (called from any of
         the parser's action blocks) to indicate successful parsing and thus
         terminating the parsing function. Note that this offers a marked
         extension and improvement of the macro bf(YYACCEPT) defined by
         bf(bison++) in that bf(YYACCEPT) could not be called from outside of
         the parsing member function.
-    it() bf(void Base::checkEOF+nop()()):nl()
-       Used internally by the parsing function. Not to be called otherwise.
+    it() bf(void Base::checkEOF__+nop()()):nl()
+       Used internally.
     it() bf(void Base::clearin+nop()()):nl()
        This member replaces bf(bison)(++)'s macro bf(yyclearin) and causes
         bf(bisonc++) to request another token from its tt(lex+nop()()) member,
@@ -687,7 +728,7 @@ members inherited from the parser's base class.
         tt(yyrestart()) member.
     it() bf(bool Base::debug() const):nl()
        This member returns the current value of the debug variable.
-    it() bf(void Base::ERROR+nop()() const throw(ErrorRecovery)):nl()
+    it() bf(void Base::ERROR+nop()() const throw(ErrorRecovery__)):nl()
        This member can be called from any member function (called from any of
         the parser's action blocks) to generate an error, and thus initiate
         the parser's error recovery code. Note that this offers a marked
@@ -698,53 +739,64 @@ members inherited from the parser's base class.
        This member may be redefined in the parser class. Its default (inline)
         implementation is to write a simple message to the standard error
         stream. It is called when a syntactical error is encountered.
-    it() bf(void errorRecovery+nop()()):nl()
-       Used internally by the parsing function. Not to be called otherwise.
+    it() bf(void errorRecovery__+nop()()):nl()
+       Used internally.
+    it() bf(void Base::errorVerbose__+nop()()):nl()
+       Used internally.
     it() bf(void executeAction+nop()()):nl()
-       Used internally by the parsing function. Not to be called otherwise.
+       Used internally.
     it() bf(int lex()):nl()
        This member may be pre-implemented using the bf(scanner) option or
         directive (see above) or it em(must) be implemented by the
         programmer. It interfaces to the lexical scanner, and should
         return the next token produced by the lexical scanner, either as a
         plain character or as one of the symbolic tokens defined in the
-        bf(Parser::Tokens) enumeration. Zero or negative token values are
+        bf(Parser::Tokens__) enumeration. Zero or negative token values are
         interpreted as `end of input'.
     it() bf(int lookup+nop()()):nl()
-       Used internally by the parsing function. Not to be called
+       Used internally.
        otherwise. See also below, section bf(BUGS).
     it() bf(void nextToken+nop()()):nl()
-       Used internally by the parsing function. Not to be called
+       Used internally.
        otherwise. See also below, section bf(BUGS).
-    it() bf(void Base::pop+nop()()):nl()
-       Used internally by the parsing function. Not to be called otherwise.
+    it() bf(void Base::pop__+nop()()):nl()
+       Used internally.
+    it() bf(void Base::popToken__+nop()()):nl()
+       Used internally.
     it() bf(void print())):nl()
        This member can be redefined in the parser class to print information
         about the parser's state. It is called by the parser immediately after
         retrieving a token from bf(lex()). As it is a member function it has
         access to all the parser's members, in particular bf(d_token), the
-        current token value and bf(d_loc), the current token location
+        current token value and bf(d_loc__), the current token location
         information (if bf(%lsp-needed, %ltype) or bf(%locationstruct) has
         been specified).
-    it() bf(void Base::push+nop()()):nl()
-       Used internally by the parsing function. Not to be called otherwise.
-    it() bf(void Base::reduce+nop()()):nl()
-       Used internally by the parsing function. Not to be called otherwise.
-    it() bf(void Base::top+nop()()):nl()
-       Used internally by the parsing function. Not to be called otherwise.
+    it() bf(void Base::push__+nop()()):nl()
+       Used internally.
+    it() bf(void Base::pushToken__+nop()()):nl()
+       Used internally.
+    it() bf(void Base::reduce__+nop()()):nl()
+       Used internally.
+    it() bf(void Base::top__+nop()()):nl()
+       Used internally.
     )
 
-manpagesection(PRIVATE DATA MEMBERS)
+manpagesection(PROTECTED DATA MEMBERS)
 
     The following private members can be used by members of parser classes
 generated by bic(). All data members are actually protected
 members inherited from the parser's base class. 
     itemization(
-    it() bf(bool d_debug):nl()
+    it() bf(size_t d_acceptedTokens__):nl()
+       Counts the number of accepted tokens since the start of the tt(parse())
+        function or since the last detected syntactic error. It is initialized
+        to tt(d_requiredTokens__) to allow an early error to be detected as
+        well. 
+    it() bf(bool d_debug__):nl()
        When the bf(debug) option has been specified, this variable (bf(true)
         by default) determines whether debug information is actually
         displayed.
-    it() bf(LTYPE d_loc):nl()
+    it() bf(LTYPE__ d_loc__):nl()
        The location type value associated with a terminal token. It can be
         used by, e.g., lexical scanners to pass location information of a
         matched token to the parser in parallel with a returned token. It is
@@ -752,58 +804,58 @@ members inherited from the parser's base class.
         been defined. nl()
        Lexical scanners may be offered the facility to assign
         a value to this variable in parallel with a returned
-        token. In order to allow a scanner access to bf(d_loc), bf(d_loc)'s
+        token. In order to allow a scanner access to bf(d_loc__), bf(d_loc__)'s
         address should be passed to the scanner. This can be realized, for
-        example, by defining a member bf(void setLoc(STYPE *)) in the lexical
+        example, by defining a member bf(void setLoc(STYPE__ *)) in the lexical
         scanner, which is then called from the parser's constructor as
         follows:
        verb(
-            d_scanner.setSLoc(&d_loc);
+            d_scanner.setSLoc(&d_loc__);
        )
        Subsequently, the lexical scanner may assign a value to the parser's
-        bf(d_loc) variable through the pointer to bf(d_loc) stored inside the
-        lexical scanner. 
-    it() bf(LTYPE d_lsp):nl()
-       The location stack pointer. Used internally by the parser. Not to be
-        used otherwise.
-    it() bf(STYPE d_val):nl()
+        bf(d_loc__) variable through the pointer to bf(d_loc__) stored inside
+        the lexical scanner.
+    it() bf(LTYPE__ d_lsp__):nl()
+       The location stack pointer.
+        Do not modify.
+    it() bf(size_t d_nErrors__):nl()
+       The number of errors counted by bf(parse()). It is initialized by the
+        parser's base class initializer, and is updated while bf(parse())
+        executes. When bf(parse()) has returned it contains the total number
+        of errors counted by bf(parse()). Errors are not counted if suppressed
+        (i.e., if tt(d_acceptedTokens__) is less than tt(d_requiredTokens__)).
+    it() bf(size_t d_nextToken__):nl()
+       A pending token. 
+        Do not modify.
+    it() bf(size_t d_requiredTokens__):nl()
+       Defines the minimum number of accepted tokens that the tt(parse())
+        function must have processed before a syntactic error can be
+        generated. 
+    it() bf(int d_state__):nl()
+       The current parsing state. 
+        Do not modify.
+    it() bf(int d_token__):nl()
+       The current token.
+        Do not modify.
+    it() bf(STYPE__ d_val__):nl()
        The semantic value of a returned token or non-terminal symbol. With
         non-terminal tokens it is assigned a value through the action rule's
         symbol bf($$). Lexical scanners may be offered the facility to assign
         a semantic value to this variable in parallel with a returned
-        token. In order to allow a scanner access to bf(d_val), bf(d_val)'s
-        address should be passed to the scanner. This can be realized, for
-        example, by defining a member bf(void setSval(STYPE *)) in the lexical
-        scanner, which is then called from the parser's constructor as
-        follows:
+        token. In order to allow a scanner access to bf(d_val__),
+        bf(d_val__)'s address should be passed to the scanner. This can be
+        realized, for example, by defining a member bf(void setSval(STYPE__
+        *)) in the lexical scanner, which is then called from the parser's
+        constructor as follows:
        verb(
-            d_scanner.setSval(&d_val);
+            d_scanner.setSval(&d_val__);
        )
        Subsequently, the lexical scanner may assign a value to the parser's
-        bf(d_val) variable through the pointer to bf(d_val) stored inside the
-        lexical scanner. 
-    it() bf(LTYPE d_vsp):nl()
-       The semantic value stack pointer. Used internally by the parser. Not to
-        be used otherwise.
-    it() bf(size_t d_nErrors):nl()
-       The number of errors counted by bf(parse()). It is initialized by the
-        parser's base class initializer, and is updated while bf(parse())
-        executes. When bf(parse()) has returned it contains the total number
-        of errors counted by bf(parse()).
-    it() bf(int d_state):nl()
-       The current parsing state. Used internally by the parsing function. Not
-        to be used otherwise.
-    it() bf(int d_token):nl()
-       The current token used internally by the parser. The parser may modify
-        the token value retrieved via bf(lex()), so bf(d_token) may not be the
-        value of the last token actually retrieved by bf(lex()).
-    it() bf(static PI s_productionInfo):nl()
-       Used internally by the parsing function. Not to be used otherwise.
-    it() bf(static SR s_<nr>[]):nl()
-       Here, tt(<nr>) is a numerical value representing a state number.
-       Used internally by the parsing function. Not to be used otherwise.
-    it() bf(static SR *s_state[]):nl()
-       Used internally by the parsing function. Not to be used otherwise.
+        bf(d_val__) variable through the pointer to bf(d_val__) stored inside
+        the lexical scanner.
+    it() bf(LTYPE__ d_vsp__):nl()
+       The semantic value stack pointer. 
+        Do not modify.
     )
 
 manpagesection(TYPES AND VARIABLES IN THE ANONYMOUS NAMESPACE)
@@ -814,10 +866,13 @@ the sake of completeness, and are not normally accessible to other parts of
 the parser.
 
     itemization(
+    it() bf(char const author[]):nl()
+       Defining the name and e-mail address of Bic()'s author.
     it() bf(ReservedTokens):nl()
        This enumeration defines some token values used internally by the
         parsing functions. They are:
         verb(
+    PARSE_ACCEPT   =  0,
     _UNDETERMINED_ = -2,
     _EOF_          = -1,
     _error_        = 256,
@@ -825,12 +880,33 @@ the parser.
        These tokens are used by the parser to determine whether another token
         should be requested from the lexical scanner, and to handle
         error-conditions. 
-    it() bf(SR) (Shift-Reduce Info):nl()
+    it() bf(StateType):nl()
+       This enumeration defines several moe token values used internally by
+        the parsing functions. They are:
+        verb(
+        NORMAL,
+        ERR_ITEM,
+        REQ_TOKEN,
+        ERR_REQ,    // ERR_ITEM | REQ_TOKEN
+        DEF_RED,    // state having default reduction
+        ERR_DEF,    // ERR_ITEM | DEF_RED
+        REQ_DEF,    // REQ_TOKEN | DEF_RED
+        ERR_REQ_DEF // ERR_ITEM | REQ_TOKEN | DEF_RED
+       )
+       These tokens are used by the parser to define the types of the various
+        states of the analyzed grammar.
+    it() bf(PI__) (Production Info):nl()
+       The type defines a struct containing information about the production
+        rules that were used by a grammar.nl()
+       Its first field contains the identification number of a production's
+        defining non-terminal;nl()
+       Its second field defines the number of elements of a production
+    it() bf(SR__) (Shift-Reduce Info):nl()
        This bf(struct) provides the shift/reduce information for the various
-        grammatical states. bf(SR) values are collected in arrays, one array
+        grammatical states. bf(SR__) values are collected in arrays, one array
         per grammatical state. These array, named bf(s_)tt(<nr>), 
         where tt<nr> is a state number are defined in the anonymous namespace
-        as well. The bf(SR) elements consist of two unions,
+        as well. The bf(SR__) elements consist of two unions,
         defining fields that are applicable to, respectively, the first,
         intermediate and the last array elements.nl()
        The first element of each array consists of (1st field) a bf(StateType)
@@ -845,24 +921,31 @@ the parser.
         an erroneous token has been retrieved. If the 2nd field is zero, no
         error or default action has been defined for the state, and
         error-recovery is attepted.
-    it() bf(StateType):nl()
-       This enumeration defines the type of the various grammar-states. They
-        are: 
-        verb(
-    NORMAL,
-    HAS_ERROR_ITEM,
-    IS_ERROR_STATE,
-       )
-       bf(HAS_ERROR_ITEM) is used for a state having at least one
-        error-production. bf(IS_ERROR_STATE) is used for a state from which
-        error recovery is attempted. So, while in these states tokens are
-        retrieved until a token from where parsing may continue is seen by the
-        parser. All other states are bf(NORMAL) states.
-    it() bf(PI) (Production Info):nl()
+    it() bf(STACK_EXPANSION):nl()
+       An enumeration value specifying the number of additional elements that
+        are added to the state- and semantic value stacks when full.
+    it() bf(PI__) (Production Info):nl()
        This bf(struct) provides information about production rules. It has two
         fields: bf(d_nonTerm) is the identification number of the production's
         non-terminal, bf(d_size) represents the number of elements of the
         productin rule.
+    it() bf(static PI__ s_productionInfo):nl()
+       Used internally by the parsing function.
+    it() bf(static SR__ s_<nr>[]):nl()
+       Here, tt(<nr>) is a numerical value representing a state number.
+       Used internally by the parsing function.
+    it() bf(static SR__ *s_state[]):nl()
+       Used internally by the parsing function.
+    )
+
+manpagesection(RESTRICTIONS ON TOKEN NAMES)
+
+    To avoid collisions with names defined by the parser's (base) class, the
+following identifiers should not be used as token nams:
+    itemization(
+    it() Identifiers ending in two underscores;
+    it() Any of the following identifiers: tt(ABORT, ACCEPT, ERROR, clearin,
+        debug), or tt(setDebug).
     )
 
 manpagesection(OBSOLETE SYMBOLS)
@@ -962,16 +1045,34 @@ manpageseealso()
     Aho, A.V., Sethi, R., Ullman, J.D. (1986) bf(Compilers), Addison Wesley.
 
 manpagebugs()
-    The em(Semantic)- and em(Pure) parsers, mentioned in bf(bison++)(1) are
-not implemented in bf(bisonc++)(1). According to bf(bison++)(1) the semantic
-parser was not available in bf(bison++) either, while the pure parser was
-deemed `not very useful'.
+
+    To avoid collisions with names defined by the parser's (base) class, the
+following identifiers should not be used as token nams:
+    itemization(
+    it() Identifiers ending in two underscores;
+    it() Any of the following identifiers: tt(ABORT, ACCEPT, ERROR, clearin,
+        debug, error), or tt(setDebug).
+    )
+
+    When re-using files generated by bic() before version 2.0.0, minor
+hand-modification might be necessary. The identifiers in the following list
+(defined in the parser's base class) now have two underscores affixed to them:
+tt(LTYPE, STYPE) and tt(Tokens). When using classes derived from the generated
+parser class, the following identifiers are available in such derived classes:
+tt(DEFAULT_RECOVERY_MODE, ErrorRecovery, Return, UNEXPECTED_TOKEN, d_debug,
+d_loc, d_lsp, d_nErrors, d_nextToken, d_state, d_token, d_val), and tt(d_vsp).
+When used in derived classes, they too need two underscores affixed to them.
 
     The member function tt(void lookup) (< 1.00) was replaced by tt(int
 lookup). When regenerating parsers created by early versions of bf(bisonc++)
 (versions before version 1.00), bf(lookup)'s prototype should be corrected by
 hand, since bf(bisonc++) will not by itself rewrite the parser class's header
 file.
+
+    The em(Semantic) parser, mentioned in bf(bison++)(1) is not implemented in
+bf(bisonc++)(1). According to bf(bison++)(1) the semantic parser was not
+available in bf(bison++) either. It is possible that the em(Pure) parser is
+now available via the tt(--thread-safe) option.
 
 manpagesection(ABOUT bisonc++)
 

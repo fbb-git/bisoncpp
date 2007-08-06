@@ -2,8 +2,8 @@
 
 void Parser::setNameSpace()
 {
-    if (d_scanner.lex() != Scanner::IDENTIFIER)
-        lineMsg() << "`%namespace IDENTIFIER' expected" << err;
-    else if (!d_nameSpace.size())
-        d_nameSpace = d_scanner.text();
+    if (d_nameSpace.size())
+        lineMsg() << "%namespace multiply specified" << err;
+    else
+        d_nameSpace = d_scanner.YYText();
 }

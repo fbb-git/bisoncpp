@@ -1,0 +1,89 @@
+The tt(FOLLOW) set defines all terminal tokens that can be encountered when
+beginning to recognize a grammatical symbol. For each grammatical symbol
+(terminal and nonterminal) a tt(FOLLOW) set can be determined as follows
+(remember that tt(EOF) is indicated by tt($)):
+    itemization(
+    it() tt($) is put in the tt(FOLLOW) set of the start rule.
+    it() For each non-empty production rule, visit all its symbols from the
+        end of the production rule back to to its beginning. 
+        itemization(
+        it() Initialize `tt(firstSet)' to fst(lastSymbol), where
+            tt(lastSymbol) is the production rule's last element.
+        it() Otherwise, for elements tt(E) before the rule's last element:
+            itemization(
+            it() If tt(E) is a nonterminal, compute flw(E) tt(+= firstset)
+            it() If fst(E) contains tt(e), compute tt(firstset +=) fst(E)
+            it() If fst(E) does not contain tt(e), compute tt(firstset =)
+                 fst(E) 
+            )
+        )
+    it() Repeatedly iterate over all production rules until until no
+        tt(FOLLOW) set has changed. At each production rule:
+        itemization(
+        it() Determine the production rule's left hand side (tt(L)).
+        it() If the production rule is empty, stop processing it.
+        it() Otherwise visit all its elements from the last back to the first
+            element. At each element tt(E):
+            itemization(
+            it() Stop processing this production rule if tt(E) is a terminal;
+            it() If tt(E) is not equal to tt(L), compute flw(E) tt(+=) flw(L);
+            it() If fst(E) does not contain tt(e), stop processing this
+                production tule.
+            )
+        )
+    )
+
+Applying the above algorithm to the example grammar we get:
+
+itemization(
+    it() Part 1: flw(start_$) tt(= $).
+
+    it() Part 2:
+        itemization(
+        it() Rule: tt(start_$:    start)nl()
+            There is only one element, so nothing interesting is done here.
+        it() Rule: tt( start:      start expr)nl()
+            itemization(
+            itt(firstSet = FIRST(expr) = {NR})
+            it() fst(start) contains tt(e), so 
+                tt(FOLLOW(start) += firstSet); so tt(FOLLOW(start) = {NR})
+            )
+        it() Rule: tt( expr:      NR)nl()
+            There is only one element, so nothing interesting is done here.
+        it() Rule: tt( expr:   expr '+' expr)nl()
+            itemization(
+            itt(firstSet = FIRST(expr) = {NR})
+            it() fst('+') doesn not contain tt(e), so tt(firstSet = '+')
+            it() tt(FOLLOW(expr) += firstSet), so tt(FOLLOW(expr) = {'+'})
+            )
+        )
+    it() At this point we have:
+            verb(
+        FOLLOW(start_$) = { $ }
+        FOLLOW(start)   = { NR }
+        FOLLOW(expr)    = { '+' }
+            )
+
+    it() Part 3:
+        itemization(
+        it() Rule: tt(start_$: start)nl()
+            itemization(
+            it() tt(LHS: start_$)
+            it() flw(start) tt(+=) flw(start_$), so flw(start) tt(= { NR $ })
+            )
+        it() Rule: tt(start: start expr)nl()
+            itemization(
+            it() tt(LSH: start)
+            it() flw(expr) tt(+=) flw(start), so flw(expr) tt(= { '+' NR $ })
+            )
+        it() Remaining rules are ignored (as they are empty, only contain
+            terminal symbols or their own tt(LHS)).
+        it() At the next cycle, no further additions are made to any of the
+            tt(FOLLOW) sets, so the eventual sets become:
+                verb(
+            start_$:    { $ }
+            start:      { NR $ }
+            expr:       { '+' NR $ }
+                )
+        )
+    )

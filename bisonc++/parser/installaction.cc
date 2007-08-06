@@ -1,14 +1,14 @@
 #include "parser.ih"
 
-void Parser::installAction() 
+void Parser::installAction(Block &block) 
 {
-    if (!d_block.length())          // No block, no installation
-        return;
                                     // process the block for the last
                                     // production rule, having a given number
-                                    // of elements. 
-    substituteBlock(d_rules.nElements());
-    d_rules.setAction(d_block);
-    d_block.clear();
+                                    // of elements. Returns false if no
+                                    // explicit return was defined
+    if (!substituteBlock(d_rules.nElements(), block))
+        checkFirstType();
+        
+    d_rules.setAction(block);
 }
 

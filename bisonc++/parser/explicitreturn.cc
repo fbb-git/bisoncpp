@@ -2,16 +2,16 @@
 
 // pos points at the 2nd $ in '$<type>$'
 
-bool Parser::explicitReturn(size_t pos) 
+bool Parser::explicitReturn(size_t pos, Block &block) 
 {
-    size_t dollar1 = d_block.find_last_of("$", pos - 1);
+    size_t dollar1 = block.find_last_of("$", pos - 1);
 
                                 // no first $ or no $<
-    if (dollar1 == string::npos || d_block[dollar1 + 1] != '<')
+    if (dollar1 == string::npos || block[dollar1 + 1] != '<')
         throw 1;                // incomplete $-specification
 
     string typeSpec;        // get the explicit type
-    extractType(&typeSpec, dollar1 + 1);
+    extractType(&typeSpec, dollar1 + 1, block);
 
     string const &defaultType = d_rules.sType();    // get the default type
 
@@ -28,7 +28,7 @@ bool Parser::explicitReturn(size_t pos)
     if (type.length())      // use an explicit type if available
         replacement += "." + type;
 
-    d_block.replace(dollar1, pos - dollar1 + 1, replacement);
+    block.replace(dollar1, pos - dollar1 + 1, replacement);
 
     return true;            // this block uses $$
 }

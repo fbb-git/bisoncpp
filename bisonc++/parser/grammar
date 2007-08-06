@@ -1,0 +1,72 @@
+%filenames parser
+
+%scanner ../scanner/scanner.h
+
+%baseclass-preinclude preheaders.h
+
+%token  BASECLASS_HEADER BASECLASS_PREINCLUDE BLOCK CLASS_HEADER CLASS_NAME
+        DEBUGFLAG ERROR_VERBOSE EXPECT FILENAMES IDENTIFIER
+        IMPLEMENTATION_HEADER LEFT LINES LOCATIONSTRUCT LSP_NEEDED
+        LTYPE NAMESPACE NEG_DOLLAR NONASSOC NUMBER PARSEFUN_SOURCE PREC 
+        PSTRING QUOTE
+        REQUIRED RIGHT SCANNER_INCLUDE START STRING STYPE TOKEN
+        TWO_PERCENTS TYPE UNION XSTRING
+
+
+%union
+{
+    std::string                *sp;
+    FBB::PTag                  *tag;
+    int                         type;
+    bool                        logic;
+};
+
+%type <sp>      identifier
+%type <tag>     productionElement productionElements
+%type <type>    d_pxstring d_pushPrecedence p_precSpec 
+%type <logic>   optNumber
+
+%%
+
+input:
+    directives
+    two_percents
+    rules
+    optTwo_percents
+;
+
+%include spec/messages
+%include spec/precedence
+%include spec/optrules
+
+%include spec/directives
+%include spec/symbols
+
+%include spec/rules
+%include spec/productionlist
+
+identifier:             // in symbols and rules
+    IDENTIFIER
+    {
+        $$ = newYYText();
+    }
+;
+
+
+typename:               // in directives and optrules
+    '<'
+    identifier
+    '>'
+    {
+        d_field = *$2;
+        delete $2;
+    }
+;
+
+two_percents:
+    TWO_PERCENTS
+    {
+        expectRules();
+    }
+;
+

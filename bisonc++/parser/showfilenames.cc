@@ -17,11 +17,11 @@ void Parser::showFilenames() const
         "  Parser implementation skeleton:\n"
         "\t`" << d_parsefunSkeleton << "'\n"
         "\n"
-        "  Base class header:     `" << d_baseclassHeader << "'\n"
-        "  Class header:          `" << d_classHeader << "'\n"
-        "  Implementation header: `" << d_implementationHeader << "'\n"
-        "  Parser Implementation: `" << d_parsefunSource << "'\n"
-        "  Grammar description:   `" << d_verboseName << "'\n" << endl;
+        "  Base class header:           `" << d_baseclassHeader << "'\n"
+        "  Class header:                `" << d_classHeader << "'\n"
+        "  Implementation header:       `" << d_implementationHeader << "'\n"
+        "  Parser Implementation:       `" << d_parsefunSource << "'\n"
+        "  Verbose grammar description: `" << d_verboseName << "'\n" << endl;
 }
 
 

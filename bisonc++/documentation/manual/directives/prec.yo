@@ -1,5 +1,6 @@
-The construction bf(%prec) tt(token) may be used in production rules to
-overrule the defined precendence of an operator for a particular grammatical
+Syntax: bf(%prec) tt(token) nl()
+    The construction bf(%prec) tt(token) may be used in production rules to
+overrule the actual precendence of an operator in a particular production
 rule. Well known is the construction
                 verb(
     expression:
@@ -8,31 +9,29 @@ rule. Well known is the construction
             ...
         }
                 ) 
-Here, the default priority and precedence of the tt(`-') token as the
+    Here, the default priority and precedence of the tt(`-') token as the
 subtraction operator is overruled by the precedence and priority of the
-tt(UMINUS) token, which is commonly defined as
+tt(UMINUS) token, which is frequently defined as:
                 verb(
     %right UMINUS
                 )
-following, e.g., the tt('*') and tt('/') operators.
-
-In this case acommon list of operators consists of:
+    E.g., a list of arithmetic operators could consists of:
         verb(
     %left '+' '-'
     %left '*' '/' '%'
     %right UMINUS
         )
-giving tt('*' '/') and tt('%') a higher priority than tt('+') and tt('-'),
+    giving tt('*' '/') and tt('%') a higher priority than tt('+') and tt('-'),
 ensuring at the same time that tt(UMINUS) is given both the highest priority
 and a right-associativity.
 
-In the abovementioned production rule the operator-order would cause the
+In the above production rule the operator order would cause the
 construction 
         verb(
     '-' expression
         )
-to be evaluated from right to left, which a higher precedence than either the
-multiplication or the addition operators.
+    to be evaluated from right to left, having a higher precedence than either
+the multiplication or the addition operators.
 
 
 

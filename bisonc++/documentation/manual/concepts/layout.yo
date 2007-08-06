@@ -1,29 +1,35 @@
-The input file for the B() utility is a B() grammar file. Different
-from Bison++ and Bison grammar files, B() grammar file consist of only
-two sections. The general form of a B() grammar file is as follows:
+The input file for the b() utility is a b() grammar file. Different
+from Bison++ and Bison grammar files, b() grammar file consist of only
+two sections. The general form of a b() grammar file is as follows:
         verb(
-    B() directives
+    Bisonc++ directives
     %%
     Grammar rules
         )
     Readers familiar with Bison will note that there is no em(C declaration
-section) and no section to define em(Additional C code). With B() these
-sections are superfluous since, due to the fact that a B() parser is a 
+section) and no section to define em(Additional C code). With b() these
+sections are superfluous since, due to the fact that a b() parser is a 
 class, all additional code required for the parser's  implementation can be
 incorporated into the parser class itself. Also, bf(C++) classes
 normally only require declarations that can be defined in the classes' header
 files, so also the `additional C code' section could be omitted from the
-B() grammar file.
+b() grammar file.
 
-The `%%' is a punctuation that appears in every B() grammar file to
+The `%%' is a punctuation that appears in every b() grammar file to
 separate the two sections.
 
-The B() directives section is used to declare the names of the terminal
+The b() directives section is used to declare the names of the terminal
 and nonterminal symbols, and may also describe operator precedence and the
 data types of semantic values of various symbols. Furthermore, this section is
-also used to specify B() directives. These B() directives are used
+also used to specify b() directives. These b() directives are used
 to define, e.g., the name of the generated parser class and a namespace in
 which the parser class will be defined.
 
 The grammar rules define how to construct each nonterminal symbol from its
 parts.
+
+One special directive is availble that may be used in the directives
+section and in the grammar rules section. This directive is tt(%include),
+allowing you to split long grammar specification files into smaller, more
+comprehensible and accessible chunks. The tt(%include) directive is discussed
+in more detail in section ref(INCLUDE). 

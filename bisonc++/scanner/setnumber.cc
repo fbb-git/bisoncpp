@@ -2,6 +2,6 @@
 
 int Scanner::setNumber() 
 {
-    d_number = atoi(yytext);
-    return NUMBER;
+    d_number = A2x(yytext);
+    return Parser::NUMBER;
 }

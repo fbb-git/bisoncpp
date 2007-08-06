@@ -1,57 +1,107 @@
 #include "parser.ih"
 
-// If a symbol has already been defined as a undetermined nonterminal, then
-// remove the nonterminal, and change it into a terminal, having the same
-// stype as the (now deleted) nonterminal. 
-// This happens if a %type declaration preceded the corresponding %token/%left
-// declaration. 
+// Only with %type a symbol may already exist. 
+//
+// Symbols are defined by %token, %left etc. as terminals only.
+//
+// At a %type declaration, their types can be set, but only if their types
+// haven't been set yet. 
+// 
+// A %type can also define an undetermined nonterminal: eventually 
+// it must be defined as a nonterminal by a rule.
+//
+// If a %type is followed by a %token etc. then those latter directives may
+// change the kind to symbol into terminal, but not their type.
+// 
+// This function is called by the `symbol' rule
 
-void Parser::defineTerminal(string const &name, 
-                            Symbol::Type type,
-                            Terminal::Association association, 
-                            string stype)
+
+//        if (not d_field.empty())
+//        {
+//            if (sp->sType() != d_field)         
+//            {
+//                if (sp->sType().empty)
+//                    sp->setStype(d_field);
+//                else
+//                    lineMsg() << "symbol `' << name << "'" already has "
+//                                "type <" << sp->sType() << ">" << err;
+//            }
+//            return;
+//        }
+//
+//        {
+//            stype = sp->sType();
+//            d_symtab.erase(d_symtab.find(name));
+//            d_rules.remove(NonTerminal::downcast(sp));
+//        }
+
+//  Unknown symbol:
+//
+//  Define the terminal as UNDETERMINED with %type, otherwise as `type'
+//
+//  known symbol:
+//  ---------------------------------------------------------------------
+//                      Second: 
+//              ---------------------------------------------------------
+//              %token          %type (-> d_typeDirective)
+//  ---------------------------------------------------------------------
+//  First:
+//  (%type -> UNDETERMINED)
+//  ---------------------------------------------------------------------
+//      %token  mult.def'd      OK, unless token's %type is specified
+//                              and different from %type. If equal: warn
+//
+//      %type   OK, same as     OK, same as upper right
+//              upper right
+//  ---------------------------------------------------------------------
+
+
+void Parser::defineTerminal(string const &name, Symbol::Type type)
 {
-    string literal = d_scanner.text();
+    string stype = d_field;
 
-    if (Symbol *sp = d_symtab.lookup(name))
+    if (Symbol *sp = d_symtab.lookup(name))     // known symbol?
     {
-        if 
-        (
-            sp->isUndetermined()
-            &&
-            (
-                stype.empty()
-                ||
-                stype == sp->sType()
-            )
-        )
+            // known symbol: upper left alternative
+        if (not sp->isUndetermined() && not d_typeDirective)
         {
-            stype = sp->sType();
-            d_symtab.erase(d_symtab.find(name));
-            d_rules.remove(NonTerminal::downcast(sp));
-        }
-        else
-        {
-            multiplyDefined(sp, literal);
+            multiplyDefined(sp);
             return;
         }
+
+
+        if (sp->sType().empty())
+            sp->setStype(d_field);
+
+        else if (sp->sType() == d_field)
+            lineMsg() << "`" << name << "' type repeatedly specified as <" <<
+                         d_field << ">" << warning;
+
+        else    // type clash
+            lineMsg() << "can't redefine type <" << sp->sType() << "> of `" <<
+                         name << "' to <" << d_field << ">" << err;
     }
 
-    d_symtab.insert
-    (
-        Symtab::value_type
+    else // new symbol: insert it as (provisional or definitive) terminal
+        d_symtab.insert
         (
-            name, 
-            d_rules.insert
+            Symtab::value_type
             (
-                new Terminal(name, type, 
-                                type == Symbol::CHAR_TERMINAL ?
-                                    d_scanner.number()
-                                :
-                                    Terminal::DEFAULT, 
-                                association, stype),
-                literal
+                name, 
+                d_rules.insert
+                (
+                    new Terminal(name, 
+                                    d_typeDirective ? 
+                                        Symbol::UNDETERMINED 
+                                    :
+                                        type, 
+                                    type == Symbol::CHAR_TERMINAL ?
+                                        d_scanner.number()
+                                    :
+                                        Terminal::DEFAULT, 
+                                    d_association, stype),
+                    d_scanner.YYText()
+                )
             )
-        )
-    );
+        );
 }

@@ -20,21 +20,21 @@
 //    rule element (and done)
 
 
-bool Parser::handleDollar(size_t pos, size_t nElements) 
+bool Parser::handleDollar(size_t pos, size_t nElements, Block &block) 
 {
     if (pos)                    // there is a character before the $
     {
-        if (d_block[pos - 1] == '$')    // it is '$', so '$$' was specified
-            return defaultReturn(pos);
+        if (block[pos - 1] == '$')    // it is '$', so '$$' was specified
+            return defaultReturn(pos, block);
 
-        if (d_block[pos - 1] == '>')    // it is '>', so expect '$<type>$' 
-            return explicitReturn(pos);
+        if (block[pos - 1] == '>')    // it is '>', so expect '$<type>$' 
+            return explicitReturn(pos, block);
     }
 
     // not one of the above alternatives
 
-    if (d_block[pos + 1] == '<')        // it is '<', so expect $<type>i'
-        return explicitElement(pos, nElements);
+    if (block[pos + 1] == '<')        // it is '<', so expect $<type>i'
+        return explicitElement(pos, nElements, block);
     
-    return numberedElement(pos, nElements); // it must be $i
+    return numberedElement(pos, nElements, block); // it must be $i
 }

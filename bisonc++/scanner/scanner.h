@@ -1,10 +1,13 @@
-#ifndef _INCLUDED_SCANNER_
-#define _INCLUDED_SCANNER_
+#ifndef _SCANNER_H_
+#define _SCANNER_H_
+
+#include <iosfwd>
 
 #include <string>
 #include <fstream>
 #include <utility>
 #include <vector>
+#include <stack>
 
 #if ! defined(_SKIP_YYFLEXLEXER_) && ! defined(_SYSINC_FLEXLEXER_H_)
 #include <FlexLexer.h>
@@ -15,130 +18,96 @@
 
 class Scanner: public yyFlexLexer
 {
-    public:
+    typedef std::pair <std::string, size_t> FileInfo;
 
-        // *******************************************************
-        // When modifying this enum, also adapt nameOf[] in lex.cc
-        // Also, parser/data.cc must be recompiled
-        // The order of the enum-values is important: their order
-        // must be followed by the ordering used in lex.cc
-        // *******************************************************
-
-        enum Token
-        {
-            UNAVAILABLE             = 256,      // for d_lastToken  22
-            BASECLASS_HEADER,
-            BASECLASS_PREINCLUDE,
-            CLASS_HEADER,
-            CLASS_NAME,
-            DEBUGFLAG,
-            ENDFILE,
-            ERROR_VERBOSE,
-            EXPECT,
-            FILENAMES,
-            IDENTIFIER,
-            ILLEGAL,
-            IMPLEMENTATION_HEADER,
-            LEFT,
-            LINES,
-            LOCATIONSTRUCT,
-            LSP_NEEDED,
-            LTYPE,
-            NAMESPACE,
-            NEG_DOLLAR,
-            NONASSOC,
-            NUMBER,
-            PARSEFUN_SOURCE,
-            PREC,
-            QUOTE,
-            RIGHT,
-            RULE,
-            SCANNER_INCLUDE,
-            START,
-            STRING,
-            STYPE,
-            TOKEN,
-            TWO_PERCENTS,
-            TYPE,
-            TYPENAME,
-            UNION,
-            WS,
-        };
-
-    private:
-        std::ifstream       d_in;
-        size_t            d_retWS;
-        size_t            d_number; // only valid after tokens NUMBER and
+    std::ifstream   d_in;
+    size_t          d_retWS;
+    size_t          d_maxDepth;
+    size_t          d_number;       // only valid after tokens NUMBER and
                                     // after escape(), octal() and 
                                     // hexadecimal(). Illegal (long)
                                     // character constants (> 1 char) have bit
                                     // 8 set.
-        std::string         d_ungotText;
-        size_t            d_ungotToken;    
-        size_t            d_ungotNumber;
-        std::string         d_text;
-        size_t            d_token;
-        int                 d_commentChar;  // set to ' ' in `lexer' when C
-                                            // comment without \n is matched,
-                                            // otherwise set to \n. See
-                                            // `lexer' for details
+    bool            d_include;
+    bool            d_includeOnly;
+    char            d_commentChar[2];   // set to ' ' in `lexer' when C
+                                    // comment without \n is matched,
+                                    // otherwise set to \n. See
+                                    // `lexer' for details
+    std::string     d_nextSource;   // with the %include directive
 
-        std::string         d_canonicalQuote;   // canonical quoted ident.
+    std::stack<yy_buffer_state *>   d_state;
+    std::vector<FileInfo>           d_fileInfo;
 
+    Block           d_block;
+
+    std::string     d_canonicalQuote;   // canonical quoted ident.
+    
     public:
         Scanner(std::string const &fname);
-
-        void cutColon();
-    
-        std::string const &text() const     // same as YYText(), but now 
-        {                                   // a std::string
-            return d_text;
-        }
-        std::string const &trimmedText();   // same as text(), but surrounding
-                                            // ws removed.
-
+        int yylex();
+        Block &block();
         std::string const &canonicalQuote();
-        int token() const                   // return the current token    
-        {
-            return d_token;
-        }
-        size_t number() const             // only after token NUMBER
-        {
-            return d_number;
-        }
+        void clearBlock();
+        std::ostream &lineMsg();    // hides/modifies Msg's lineMsg()
+        size_t number() const;
+        std::string const &source() const;  // currently processed gramfile
+        bool hasBlock() const;
+        bool includeOnly() const;
+        void undelimit(bool warn);  // remove delimiters warn: about < >
 
-        int lex();
-        bool block(Block *block);           // returns true if a block was
-                                            // read
-
-        char const *nextString();           // series non-blank/comment chars
-        void ignoreUntilEndl();
-        void unexpectedEOF();
-        void unget();
-        int miniBrace(std::string *dest);   // returns '{' or '}'
     private:
-        int yylex();                        // generated by flex, used by 
-                                            // lex().
+        void checkZeroNumber();
+        void recursiveInclusion();
+        void pushSource(yy_buffer_state *current, size_t size);
+        bool popSource(yy_buffer_state *current);
 
+        void escape();
         void multiLineString();
         void octal();
         void hexadecimal();
-        void escape();
-
         int setNumber();
-        
+        int yytextChk(int *nKept, int minLength, int ret);
 
-
-        bool identChar(int c) const;
-        Token identifier(int c);
-        Token quotedText();
-        Token parsePercentToken();
-
-        int nextChar();                     // eat blanks and comment
-        void skipComment();
-        void skip_C_comment();
-        int stringChar();                   // next non-ws/comment/etc char
+        static bool checkFilename(FileInfo const &info, 
+                                    std::string const &nextSource);
 };
+
+inline Block &Scanner::block()
+{
+    return d_block;
+}
+
+inline void Scanner::clearBlock()
+{
+    d_block.clear();
+}
+
+inline size_t Scanner::number() const
+{
+    return d_number;
+}
+
+inline bool Scanner::checkFilename(FileInfo const &info, 
+                                    std::string const &nextSource)
+{
+    return info.first == nextSource;
+}
+
+inline std::string const &Scanner::source() const
+{
+    return d_fileInfo.back().first;
+}
+
+inline bool Scanner::hasBlock() const
+{
+    return not d_block.empty();
+}
+
+inline bool Scanner::includeOnly() const
+{
+    return d_includeOnly;
+}
 
 #endif
 

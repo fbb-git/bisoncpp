@@ -19,7 +19,7 @@ void Generator::staticData(ostream &out) const
 
     if (d_debug)
         out << "\n"
-            "std::ostringstream " << d_baseclassScope << "s_out;\n"
+            "std::ostringstream " << d_baseclassScope << "s_out__;\n"
             "\n";
 }
 

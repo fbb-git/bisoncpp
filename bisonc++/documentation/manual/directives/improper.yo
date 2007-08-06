@@ -1,0 +1,17 @@
+Several identifiers cannot be used as token names as their use would collide
+with identifiers that are defined in the parser's base class. 
+
+In particular, 
+    itemization(
+    it() no token should end in two underscores (tt(__)). 
+    it() some identifiers are reserved and cannot be used as tokens. They are:
+        verb(
+    ABORT, ACCEPT, ERROR, clearin, debug, error, setDebug
+        )
+    Except for tt(error), which is a predefined terminal token, these
+identifiers are the names of functions traditionally defined by b(). The
+restriction on the above identifers could be lifted, but then the resulting
+generated parser would no longer be backward compatible with versions before
+B() 2.0.0. It appears that imposing minimal restrictions on the names of
+tokens is a small penalty to pay for keeping backward compatibility.
+    )

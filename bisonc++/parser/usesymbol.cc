@@ -2,7 +2,7 @@
 
 Symbol *Parser::useSymbol() 
 {
-    string const &name = d_scanner.text();
+    string const &name = d_scanner.YYText();
 
     if (Symbol *sp = d_symtab.lookup(name))
         return sp;
