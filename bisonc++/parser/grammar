@@ -21,7 +21,7 @@
     bool                        logic;
 };
 
-%type <sp>      identifier
+%type <sp>      identifier_a
 %type <tag>     productionElement productionElements
 %type <type>    d_pxstring d_pushPrecedence p_precSpec 
 %type <logic>   optNumber
@@ -35,6 +35,13 @@ input:
     optTwo_percents
 ;
 
+two_percents:
+    TWO_PERCENTS
+    {
+        expectRules();
+    }
+;
+
 %include spec/messages
 %include spec/precedence
 %include spec/optrules
@@ -45,28 +52,5 @@ input:
 %include spec/rules
 %include spec/productionlist
 
-identifier:             // in symbols and rules
-    IDENTIFIER
-    {
-        $$ = newYYText();
-    }
-;
-
-
-typename:               // in directives and optrules
-    '<'
-    identifier
-    '>'
-    {
-        d_field = *$2;
-        delete $2;
-    }
-;
-
-two_percents:
-    TWO_PERCENTS
-    {
-        expectRules();
-    }
-;
+%include spec/aux
 

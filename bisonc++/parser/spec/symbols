@@ -17,7 +17,7 @@ symbol:
         defineTerminal(d_scanner.canonicalQuote(), Symbol::CHAR_TERMINAL);
     }
 |
-    identifier
+    identifier_a
     optNumber
     {
         defineTokenName($1, $2);    // try to define as symbolic terminal

@@ -184,7 +184,7 @@ directiveAlt:
     }
 |
     type_t
-    typename
+    typename_a
     symbols
 |
     union_t

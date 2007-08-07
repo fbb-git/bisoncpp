@@ -22,7 +22,7 @@ optSemiCol:
 ;
 
 optTypename:
-    typename
+    typename_a
     token_m
 |
     token_m

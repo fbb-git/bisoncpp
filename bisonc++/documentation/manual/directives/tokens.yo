@@ -14,7 +14,7 @@ specification; the type itself must be a field of a tt(%union) specification
 (see section ref(COLLECTION)).
 
         b() will convert the symbolic tokens (including those defined by the
-precedence directives (cf. section ref(PRECEDENCE)) into a tt(Parser::Tokens)
+precedence directives (cf. section ref(PRECEDENCE))) into a tt(Parser::Tokens)
 enumeration value (where `tt(Parser)' is the name of the generated parser
 class, see section ref(PARSERCLASS)). This allows the lexical scanner member
 function tt(lex()) to return these token values by name directly, and it
