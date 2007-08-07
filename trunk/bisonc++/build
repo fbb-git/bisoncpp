@@ -1,0 +1,79 @@
+#!/usr/bin/icmake -qt/tmp/bisonc++
+
+#include "INSTALL.im"
+
+#include "icmake/run"
+#include "icmake/md"
+#include "icmake/getenv"
+#include "icmake/special"
+#include "icmake/clean"
+#include "icmake/manpage"
+#include "icmake/manual"
+#include "icmake/library"
+#include "icmake/program"
+#include "icmake/rebuild"
+#include "icmake/install"
+
+void main(int argc, list argv, list envp)
+{
+    string option;
+
+    g_env = envp;
+
+    setLocations();     // from INSTALL.im
+
+    my_getenv("DRYRUN");
+    g_dryrun = g_envvar;
+
+    option = element(1, argv);
+
+    if (option == "clean")
+        clean(0);
+
+    if (option == "distclean")
+        clean(1);
+
+    if (option == "install")
+        install(element(2, argv), 1);
+
+    if (option == "installprog")
+        install(element(2, argv), 0);
+
+    if (option == "man")
+        manpage();
+
+    if (option == "manual")
+        manual();
+
+    if (option == "library")
+        library(1);
+
+    if (option == "program")
+        program();
+
+    if (option == "rebuild")
+        rebuild();
+
+    printf("Usage: build [-p] what\n"
+        "Where `what' is one of:\n"
+        "   clean              - clean up remnants of previous compilations\n"
+        "   distclean          - clean + fully remove tmp/\n"
+        "   library            - build bisonc++'s library\n"
+        "   man                - build the man-page (requires Yodl)\n"
+        "   manual             - build the manual (requires Yodl)\n"
+        "   program            - build bisonc++\n"
+        "   rebuild            - recreate the parser using bisonc++ created\n"
+        "                        by `build program'\n"
+        "   install <base>     - install the software in the locations "
+                                                            "defined\n"
+                                                               
+        "                        in the INSTALL.cf file, optionally "
+                                                            "below <base>\n"
+        "   installprog <base> - only install the program and skeleton files\n"
+        "\n"
+        "If the environment variable DRYRUN is defined, no commands are\n"
+        "actually executed\n"
+        "\n"
+    );
+    exit(1);
+}

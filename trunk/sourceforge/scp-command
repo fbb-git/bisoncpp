@@ -1,0 +1,17 @@
+#!/bin/bash
+
+WD=`pwd`
+
+cd ../bisonc++ 
+    build manual || exit 1
+    build man || exit 1
+cd $WD
+
+yodl2html index.yo || exit 1
+
+scp ../bisonc++/tmp/man*/*.html index.html \
+    fbb@shell.sourceforge.net:/home/groups/b/bi/bisoncpp/htdocs/
+
+#scp bison.jpg \
+#    fbb@shell.sourceforge.net:/home/groups/b/bi/bisoncpp/htdocs/bison.jpg
+

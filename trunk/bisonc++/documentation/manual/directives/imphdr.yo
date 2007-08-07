@@ -1,0 +1,4 @@
+Syntax:    bf(%implementation-header) tt(header) nl()
+           Defines the pathname of the file containing the implementation
+            header.  This directive is overridden by the
+            bf(--implementation-header) (bf(-i)) command-line option.

@@ -1,0 +1,16 @@
+This is the same example as given in ../bison++Example.ORG, but this time it's
+adapted to bisonc++
+
+In the original example there's a `FLEXFIX' allowing the lexer access to the
+semantic value defined in the parser. I don't think the scanner should be
+required to know about what the parser does. What if we really would like to
+let the scanner communicate its value to the parser ? 
+
+Then derive a class from yyFlexLexer, and let that object's constructor know
+about the Parser's lval datamember, by defining a constructor that is informed
+about that data member (e.g., by passing &d_lval in its constructor)
+
+In the example I've modified the lexical scanner's setup and I modified the
+grammar's actions slightly so that now the parser handles the lexer's text,
+rather than the lexer assuming that the parser will do something with its
+text. 

@@ -1,0 +1,138 @@
+baseclass_header_t:
+    BASECLASS_HEADER
+    {
+        d_msg = "baseclass header name";
+    }
+;
+
+baseclass_preinclude_t:
+    BASECLASS_PREINCLUDE
+    {
+        d_msg = "baseclass pre-include name";
+    }
+;
+
+class_header_t:
+    CLASS_HEADER
+    {
+        d_msg = "class header name";
+    }
+;
+
+class_name_t:
+    CLASS_NAME
+    {
+        d_msg = "class name";
+    }
+;
+
+expect_t:
+    EXPECT
+    {
+        d_msg = "number (of conflicts)";
+    }
+;
+
+filenames_t:
+    FILENAMES
+    {
+        d_msg = "generic name of files";
+    }
+;
+
+implementation_header_t:
+    IMPLEMENTATION_HEADER
+    {
+        d_msg = "implementation header name";
+    }
+;
+
+locationstruct_t:
+    LOCATIONSTRUCT
+    {
+        d_msg = "Location struct definition";
+    }
+;
+
+ltype_t:
+    LTYPE
+    {
+        d_msg = "Location type specification";
+    }
+;
+
+namespace_t:
+    NAMESPACE
+    {
+        d_msg = "Namespace identifier";
+    }
+;
+
+parsefun_source_t:
+    PARSEFUN_SOURCE
+    {
+        d_msg = "File name for the parse() member";
+    }
+;
+
+required_t:
+    REQUIRED
+    {
+        d_msg = "Required number of tokens between errors";
+    }
+;
+
+scanner_include_t:
+    SCANNER_INCLUDE
+    {
+        d_msg = "Path to the scanner header filename";
+    }
+;
+
+start_t:
+    START
+    {
+        d_msg = "Start rule" ;
+    }
+;
+
+stype_t:
+    STYPE
+    {
+        d_msg = "STYPE type name" ;
+    }
+;
+
+symbol_m:
+    {
+        d_msg = "identifier or character-constant";
+    }
+;
+
+token_m:
+    {
+        d_msg = "token name";
+    }
+;
+
+typesymbol_m:
+    {
+        d_msg = "opt. <type> identifier(s) or char constant(s)";
+    }
+;
+
+
+type_t:
+    TYPE
+    {
+        d_msg = "type-name";
+        d_typeDirective = true;
+    }
+;
+
+union_t:
+    UNION
+    {
+        d_msg = "Semantic value union definition";
+    }
+;

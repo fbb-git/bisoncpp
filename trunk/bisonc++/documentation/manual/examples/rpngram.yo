@@ -1,0 +1,18 @@
+Here are the grammar rules for the reverse polish notation calculator.
+        verbinsert(RULES)(examples/rpn/parser/grammar)
+    The groupings of the tt(rpn) `language' defined here are the expression
+(given the name tt(exp)), the line of input (tt(line)), and the complete input
+transcript (tt(input)). Each of these nonterminal symbols has several
+alternate rules, joined by the `tt(|)' punctuator which is read as the logical
+em(or). The following sections explain what these rules mean.
+
+The semantics of the language is determined by the actions taken when a
+grouping is recognized. The actions are the bf(C++) code that appears inside
+braces. See section ref(ACTIONS).
+
+You must specify these actions in bf(C++), but b() provides the means for
+passing semantic values between the rules. In each action, the pseudo-variable
+tt($$) represents the semantic value for the grouping that the rule is going
+to construct. Assigning a value to tt($$) is the main job of most actions. The
+semantic values of the components of the rule are referred to as tt($1) (the
+first component of a rule), tt($2) (the second component), and so on.

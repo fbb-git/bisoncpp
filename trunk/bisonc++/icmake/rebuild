@@ -1,0 +1,11 @@
+
+void rebuild()
+{
+    initialize();
+
+    chdir("parser");
+    exec("../" + g_binary, "--skeleton-directory", "../share", "grammar");
+    chdir("..");
+
+    program();      // terminates
+}

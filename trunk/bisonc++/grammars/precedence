@@ -1,0 +1,22 @@
+%token NR
+%left '+' '-'
+%left '*' '/'
+%right UMIN
+
+%%
+
+expr:
+    expr '+' expr
+|
+    expr '-' expr
+|
+    expr '*' expr
+|
+    expr '/' expr
+|
+    '(' expr ')'
+|
+    NR
+|
+    '-' expr %prec UMIN
+;

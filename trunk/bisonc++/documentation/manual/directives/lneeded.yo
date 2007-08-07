@@ -1,0 +1,19 @@
+Syntax:  bf(%lsp-needed) nl()    
+           Defining this causes b() to include code into the generated
+            parser using the standard location stack.  The token-location type
+            defaults to the following struct, defined in the parser's base
+            class when this directive is specified: 
+           verb(
+    struct LTYPE__
+    {
+        int timestamp;
+        int first_line;
+        int first_column;
+        int last_line;
+        int last_column;
+        char *text;
+    };
+           )
+    Note that defining this struct type does not imply that its field are also
+assigned. Some form of communication with the lexical scanner is probably
+required to initialize the fields of this struct properly. 

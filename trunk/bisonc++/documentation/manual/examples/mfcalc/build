@@ -1,0 +1,19 @@
+#!/bin/bash
+
+case $1 in
+    (clean)
+        rm -f parser/[pP]arse* mfcalc
+        cp parser/internalheader.ih parser/Parser.ih
+        cp parser/parser.header parser/Parser.h
+    ;;
+    (mfcalc)
+        cd parser
+        bisonc++ -V -l grammar
+
+        cd ..
+        g++ -Wall -o mfcalc *.cc */*.cc
+    ;;
+    (*)
+        echo "$0 [clean|mfcalc] to clean or build the mfcalc program"
+    ;;
+esac

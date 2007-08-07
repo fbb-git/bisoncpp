@@ -1,0 +1,2 @@
+This grammar, given by AHO et al as grammar 4.46 (p. 241), has 10 states, no
+shift-reduce or reduce-reduce conflict.

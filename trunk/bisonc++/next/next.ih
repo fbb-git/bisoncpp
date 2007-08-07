@@ -1,0 +1,11 @@
+#include "next.h"
+
+#include <ostream>
+#include <iterator>
+#include <algorithm>
+
+#include <bobcat/fnwrap1c>
+
+using namespace std;
+using namespace FBB;
+

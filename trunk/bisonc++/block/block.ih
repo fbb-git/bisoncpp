@@ -1,0 +1,6 @@
+#include "block.h"
+
+#include <ostream>
+
+using namespace std;
+

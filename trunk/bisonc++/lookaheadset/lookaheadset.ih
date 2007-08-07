@@ -1,0 +1,11 @@
+#include "lookaheadset.h"
+
+#include <algorithm>
+#include <iterator>
+
+#include <bobcat/fnwrap1c>
+#include "../rules/rules.h"
+
+using namespace std;
+using namespace FBB;
+

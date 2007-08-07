@@ -1,0 +1,57 @@
+NOUSERMACRO(LALR LR parse lex error main name setLoc setDebug clearin debug
+            throw print ParserBase ACCEPT ABORT setVal setSval yylex)
+
+DEFINEMACRO(b)(0)(bf(bisonc++))
+DEFINEMACRO(B)(0)(bf(Bisonc++))
+
+includefile(preamble)
+
+includefile(../../release.yo)
+
+htmlbodyopt(text)(#27408B)
+htmlbodyopt(bgcolor)(#FFFAF0)
+
+mailto(Frank B. Brokken: MYEMAIL)
+
+COMMENT(includefile(abstract))
+
+
+IFDEF(html)(
+    affiliation(center(AFFILIATION))
+    report(center(B() (Version _CurVers_) User Guide))
+        (center(Frank B. Brokken))
+        (center(_CurYrs_))
+)(
+    affiliation(AFFILIATION)
+    report(B() (Version _CurVers_) User Guide)
+           (Frank B. Brokken)
+           (_CurYrs_)
+)
+
+
+chapter(Introduction)
+includefile(introduction.yo)
+
+chapter(Conditions for Using Bisonc++)
+includefile(conditions.yo)
+
+chapter(Bisonc++ concepts)
+includefile(concepts.yo)
+
+chapter(Examples)
+includefile(examples.yo)
+
+lchapter(GRAMMARFILES)(Bisonc++ grammar files)
+includefile(grammar.yo)
+
+lchapter(INTERFACE)(The Generated Parser Class' Members)
+includefile(class.yo)
+
+lchapter(ALGORITHM)(The Bisonc++ Parser Algorithm)
+includefile(algorithm.yo)
+
+lchapter(RECOVERY)(Error Recovery)
+includefile(error.yo)
+
+lchapter(INVOKING)(Invoking Bisonc++)
+includefile(invoking.yo)

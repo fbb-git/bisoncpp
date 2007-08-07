@@ -1,0 +1,8 @@
+    This is the regression installation of the calculator also found in
+documentation/man. The program implements a simple calculator, accepting unary
+and binary + and -, binary * and /, and nested expressions, using integral
+operands. 
+
+    To end the program, enter:  q
+    
+    Errors are handled by skipping all information until the next end of line.

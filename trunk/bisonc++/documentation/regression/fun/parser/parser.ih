@@ -1,0 +1,19 @@
+// Include this file in the sources of the class Parser.
+
+#include <errno.h>
+#include <cmath>
+#include <bobcat/a2x>
+
+#include "parser.h"
+
+// Add here any includes etc. that are only needed 
+// for the compilation of Parser's sources.
+
+#include <cmath>
+
+// UN-comment the using-declaration if you don't want 
+// to prefix std:: to symbols from the namespace std:
+
+using namespace std;
+using namespace FBB;
+

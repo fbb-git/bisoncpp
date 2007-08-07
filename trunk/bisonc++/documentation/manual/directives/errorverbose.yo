@@ -1,0 +1,7 @@
+Syntax:     bf(%error-verbose) nl()    
+    The parser's state stack is dumped to the standard error stream when an
+error is detected by the tt(parse()) member function. Following a call of the
+tt(error()) function, the stack is dumped from the top of the stack (highest
+offset) down to its bottom (offset 0). Each stack element is prefixed by the
+stack element's index.
+

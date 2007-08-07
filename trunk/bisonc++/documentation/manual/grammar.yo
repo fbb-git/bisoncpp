@@ -1,0 +1,154 @@
+includefile(grammar/intro.yo)
+
+lsect(OUTLINE)(Outline of a Bisonc++ Grammar File)
+includefile(grammar/outline.yo)
+
+lsect(SYMBOLS)(Symbols, Terminal and Nonterminal Symbols)
+includefile(grammar/symbols.yo)
+
+lsect(RULES)(Syntax of Grammar Rules)
+includefile(grammar/syntax.yo)
+
+lsect(RECURSIVE)(Writing recursive rules)
+includefile(grammar/recursive.yo)
+
+lsect(DEFSEM)(Defining Language Semantics)
+includefile(grammar/semantics.yo)
+
+    lsubsect(SEMANTICTYPES)(Data Types of Semantic Values)
+    includefile(grammar/datatypes.yo)
+
+    lsubsect(MORETYPES)(More Than One Value Type)
+    includefile(grammar/union.yo)
+
+    lsubsect(ACTIONS)(Actions)
+    includefile(grammar/actions.yo)
+
+    subsect(Data Types of Values in Actions)
+    includefile(grammar/actiontypes.yo)
+
+    lsubsect(MIDACTIONS)(Actions in Mid-Rule)
+    includefile(grammar/midrule.yo)
+
+lsect(DIRECTIVES)(Bisonc++ Directives)
+includefile(directives/intro.yo)
+
+    subsect(%baseclass-preinclude: specifying a header included by the
+            baseclass)    
+    includefile(directives/preinclude.yo)
+
+    lsubsect(PARSERCLASS)
+            (%class-name: defining the name of the parser class)
+    includefile(directives/parserclass.yo)
+
+    subsect(%debug: adding debugging code to the `parse()' member)
+    includefile(directives/debug.yo)
+
+    subsect(%error-verbose: dumping the parser's state stack)
+    includefile(directives/errorverbose.yo)
+
+    lsubsect(EXPECT)(%expect: suppressing conflict warnings)
+    includefile(directives/expect.yo)
+
+    lsubsect(INCLUDE)(%include: splitting the input file)
+    includefile(directives/include.yo)
+
+    lsubsect(PRECEDENCE)(%left, %right, %nonassoc: defining operator
+        precedence)
+    includefile(directives/precedence.yo)
+
+    subsect(%lines: inserting `#line' directives)
+    includefile(directives/lines.yo)
+
+    lsubsect(LOCSTRUCT)
+            (%locationstruct: specifying a dedicated location struct)
+    includefile(directives/locstruct.yo)
+
+    lsubsect(LSPNEEDED)(%lsp-needed: using the default location type)
+    includefile(directives/lneeded.yo)
+
+    lsubsect(LTYPE)(%ltype: using an existing location type)
+    includefile(directives/ltype.yo)
+
+    subsect(%namespace: using a namespace)
+    includefile(directives/namespace.yo)
+
+    subsect(%negative-dollar-indices: using constructions like $-1)
+    includefile(directives/negative.yo)
+
+    subsect(%prec: overruling default precedences)
+    includefile(directives/prec.yo)
+
+    subsect(%required-tokens: defining the minimum number of tokens between
+        error reports) 
+    includefile(directives/required.yo)
+
+    lsubsect(SCANNER)(%scanner: using a standard scanner interface)
+    includefile(directives/scanner.yo)
+
+    subsect(%start: defining the start rule)
+    includefile(directives/start.yo)
+
+    subsect(%stype: specifying the semantic stack type)
+    includefile(directives/stype.yo)
+
+    lsubsect(TOKTYPENAMES)(%token: defining token names)
+    includefile(directives/tokens.yo)
+
+        lsubsubsect(IMPROPER)(Improper token names)
+        includefile(directives/improper.yo)
+
+    lsubsect(NONTERMS)(%type: associating semantic values to (non)terminals)
+    includefile(directives/nonterms.yo)
+
+    lsubsect(COLLECTION)(%union: using multiple semantic values) 
+    includefile(directives/union.yo)
+
+    subsect(Directives controlling the names of generated files)
+    includefile(directives/output.yo)
+
+        lsubsubsect(BCHEADER)
+            (%baseclass-header: defining the parser's base class header)
+        includefile(directives/baseclass.yo)
+
+        lsubsubsect(CHEADER)
+            (%class-header: defining the parser's class header)
+        includefile(directives/classhdr.yo)
+
+        lsubsubsect(FILES)
+            (%filenames: specifying a generic filename)
+        includefile(directives/filenames.yo)
+
+        lsubsubsect(IHEADER)
+            (%implementation-header: defining the implementation header)
+        includefile(directives/imphdr.yo)
+
+        lsubsubsect(PARSESOURCE)
+               (%parsefun-source: defining the parse() function's sourcefile)
+        includefile(directives/parse.yo)
+
+
+sect(Basic Grammatical Constructions)
+includefile(grammar/gramcons.yo)
+
+    subsect(Plain Alternatives)
+    includefile(grammar/alternatives.yo)
+
+    subsect(One Or More Alternatives, No Separators)
+    includefile(grammar/series.yo)
+
+    lsubsect(OPTSERIES)(Zero Or More Alternatives, No Separators)
+    includefile(grammar/optseries.yo)
+
+    subsect(One Or More Alternatives, Using Separators)
+    includefile(grammar/delimseries.yo)
+
+    subsect(Zero Or More Alternatives, Using Separators)
+    includefile(grammar/optdelim.yo)
+
+    subsect(Nested Blocks)
+    includefile(grammar/nested.yo)
+
+sect(Multiple Parsers in the Same Program)
+includefile(grammar/multiple.yo)
+

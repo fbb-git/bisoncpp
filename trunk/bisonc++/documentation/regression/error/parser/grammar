@@ -1,0 +1,22 @@
+%scanner ../scanner/scanner.h
+%token NR
+
+%%
+
+lines:
+    lines line
+|
+    line
+;
+
+line:
+    NR '\n'
+    {
+        std::cout << "   OK\n";
+    }
+|
+    error '\n'
+    {
+        std::cout << "  ERROR\n";
+    }
+;

@@ -1,0 +1,20 @@
+#include "state.h"
+
+#include <string>
+#include <ostream>
+#include <algorithm>
+#include <functional>
+#include <iomanip>
+
+#include <bobcat/msg>
+#include <bobcat/arg>
+#include <bobcat/fnwrap1c>
+#include <bobcat/indent>
+
+#include "../om/om.h"
+#include "../rules/rules.h"
+#include "../nonterminal/nonterminal.h"
+#include "../production/production.h"
+
+using namespace std;
+using namespace FBB;

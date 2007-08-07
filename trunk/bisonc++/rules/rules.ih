@@ -1,0 +1,16 @@
+#include "rules.h"
+
+#include <iostream>
+#include <sstream>
+#include <iterator>
+#include <algorithm>
+
+#include <bobcat/fnwrap1c>
+#include <bobcat/msg>
+#include <bobcat/arg>
+
+#include "../om/om.h"
+
+using namespace std;
+using namespace FBB;
+

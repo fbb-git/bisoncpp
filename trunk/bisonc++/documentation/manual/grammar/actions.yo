@@ -1,0 +1,72 @@
+An action accompanies a syntactic rule and contains bf(C++) code to be
+executed each time an instance of that rule is recognized. The task of most
+actions is to compute a semantic value for the grouping built by the rule from
+the semantic values associated with tokens or smaller groupings.
+
+An action consists of bf(C++) statements surrounded by braces, much like a
+compound statement in bf(C++). It can be placed at any position in the rule;
+it is executed at that position. Most rules have just one action at the end of
+the rule, following all the components. Actions in the middle of a rule are
+tricky and should be used only for special purposes (see section
+ref(MIDACTIONS)).
+
+The bf(C++) code in an action can refer to the semantic values of the
+components matched by the rule with the construct tt($n), which stands for the
+value of the nth component. The semantic value for the grouping being
+constructed is tt($$). (B() translates both of these constructs into
+array element references when it copies the actions into the parser file.)
+
+Here is a typical example:
+        verb(
+    exp:
+        ...
+    |
+        exp '+' exp
+        { 
+            $$ = $1 + $3; 
+        }
+    |
+        ...    
+        )
+    This rule constructs an tt(exp) from two smaller exp groupings connected
+by a plus-sign token. In the action, tt($1) and tt($3) refer to the semantic
+values of the two component exp groupings, which are the first and third
+symbols on the right hand side of the rule. The sum is stored into tt($$) so
+that it becomes the semantic value of the addition-expression just recognized
+by the rule. If there were a useful semantic value associated with the `+'
+token, it could be referred to as tt($2).
+
+    If you don't specify an action for a rule, b() supplies a default:
+tt($$ = $1). Thus, the value of the first symbol in the rule becomes the value
+of the whole rule. Of course, the default rule is valid only if the two data
+types match. There is no meaningful default action for an empty rule; every
+empty rule must have an explicit action unless the rule's value does not
+matter.
+
+    Using tt($n) with n equal to zero or a negative value is allowed for
+reference to tokens and groupings on the stack before those that match the
+current rule. This is a very em(risky) practice, and to use it reliably you
+must be certain of the context in which the rule is applied. Here is a case in
+which you can use this reliably:
+        verb(
+    foo:      
+        expr bar '+' expr  
+        { ... }
+    | 
+        expr bar '-' expr  
+        { ... }
+    ;
+
+    bar:
+        // empty
+    |
+        { 
+            previous_expr = $0; 
+        }
+    ;
+        )
+    As long as tt(bar) is used em(only) in the fashion shown here, tt($0)
+always refers to the tt(expr) which precedes bar in the definition of tt(foo).
+But as mentioned: it's a risky practice, which should be avoided if at all
+possible. See also section ref(SPECIAL).
+

@@ -1,0 +1,18 @@
+#include "generator.h"
+
+#include <algorithm>
+#include <sstream>
+#include <ostream>
+#include <iomanip>
+
+#include <bobcat/msg>
+#include <bobcat/fnwrap1c>
+
+#include "../rules/rules.h"
+#include "../parser/parser.h"
+#include "../terminal/terminal.h"
+#include "../production/production.h"
+
+using namespace std;
+using namespace FBB;
+

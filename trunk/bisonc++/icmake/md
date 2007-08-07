@@ -1,0 +1,21 @@
+// md: target should be a series of blank-delimited directories to be created
+//     If an element is a whildcard, the directory will always be created,
+//     using mkdir -p.
+//
+//     uses: run()
+
+void md(string target)
+{
+    int idx;
+    list paths;
+    string dir;
+
+    paths = strtok(target, " ");
+
+    for (idx = sizeof(paths); idx--; )
+    {
+        dir = element(idx, paths);
+        if (!exists(dir))
+            run("mkdir -p " + dir);
+    }
+}
