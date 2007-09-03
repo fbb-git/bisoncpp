@@ -32,7 +32,8 @@ string COMPILER;
 
 //#define PROFILE "-pg"
     // Uncomment the above #define to construct a binary program that can be
-    // used with the gprof profiler
+    // used with the gprof profiler. When specified, no stripping is performed
+    // at ./build program strip (see INSTALL)
 
 void setLocations()
 {

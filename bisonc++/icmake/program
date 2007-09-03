@@ -1,12 +1,12 @@
 
-void program()
+void program(string strip)
 {
     string lopt;
 
     #ifdef PROFILE
         lopt = PROFILE;
     #else
-        lopt = "-s";
+        lopt = strip;
     #endif
 
     library(0);

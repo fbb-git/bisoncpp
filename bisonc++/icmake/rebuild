@@ -1,5 +1,5 @@
 
-void rebuild()
+void rebuild(string strip)
 {
     initialize();
 
@@ -7,5 +7,5 @@ void rebuild()
     exec("../" + g_binary, "--skeleton-directory", "../share", "grammar");
     chdir("..");
 
-    program();      // terminates
+    program(strip);      // terminates
 }

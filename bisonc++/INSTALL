@@ -19,8 +19,9 @@ the following steps:
         is concerned-- be left out of the library)
 
     3. Run 
-            ./build program
-        to compile bisonc++
+            ./build program [strip]
+        to compile bisonc++. Optionally provide `strip' to strip the
+        executable (not with PROFILE, see INSTALL.im)
 
     4. Run (probably as root) 
             ./build install
