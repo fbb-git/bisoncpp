@@ -16,14 +16,4 @@ void Generator::staticData(ostream &out) const
 
     out << "} // anonymous namespace ends\n"
             "\n";
-
-    if (d_debug)
-        out << "\n"
-            "std::ostringstream " << d_baseclassScope << "s_out__;\n"
-            "\n";
 }
-
-
-
-
-

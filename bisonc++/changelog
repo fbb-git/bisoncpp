@@ -1,3 +1,12 @@
+bisonc++ (2.1.0)
+
+  * In the skeleton bisonc++.cc $insert 4 staticdata is followed by $insert
+    namespace-open. Since `staticdata' defined s_out if %debug is requested,
+    it could be defined outside of the user's namespace (defined by
+    %namespace). Repaired by defining s_out after (if applicable) opening the
+    namespace (in Generator::namespaceOpen(), called from $insert
+    namespace-open). 
+
 bisonc++ (2.0.0)
 
   * Rebuilt Bisonc++'s parser and scanner, creating Bisonc++'s parser from the
