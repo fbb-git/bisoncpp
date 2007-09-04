@@ -8,11 +8,6 @@ void Generator::namespaceOpen(std::ostream &out) const
         out <<  "namespace " << d_nameSpace << "\n"
                 "{\n";
     }
-
-    if (d_debug)
-        out << "\n"
-            "std::ostringstream " << d_baseclassScope << "s_out__;\n"
-            "\n";
 }
 
 

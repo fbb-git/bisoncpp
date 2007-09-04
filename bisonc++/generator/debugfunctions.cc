@@ -10,7 +10,9 @@ void Generator::debugFunctions(std::ostream &out) const
     key(out);
 
     if (d_debug)
-        out << 
+        out << "\n"
+        "std::ostringstream " << d_baseclassScope << "s_out__;\n"
+        "\n" 
         "std::ostream &" << d_baseclassScope << "dflush(std::ostream &out)\n"
         "{\n"
         "    std::ostringstream &s_out__ = "
