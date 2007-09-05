@@ -18,6 +18,9 @@ then
 else
     tar czvf ${PROJECT}_${VERSION}.tar.gz \
              --exclude-from=excluded  ${DISTRIBUTION}/*
+
+    scp ${PROJECT}_${VERSION}.tar.gz oosix:ftp/debian/tarballs/${PROJECT}
+    md5sum ${PROJECT}_${VERSION}.tar.gz
 fi
 
 rm ${DISTRIBUTION}                      # rm the link
