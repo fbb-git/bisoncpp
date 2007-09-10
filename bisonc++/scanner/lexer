@@ -46,8 +46,7 @@ IDENT   {ID1}{ID2}*
             if (d_includeOnly)
                 BEGIN includeOnly;
 
-
-"{"                         {
+<INITIAL,block>"{"          {
                                                     // open a block
                                 d_block.open(yylineno, source()); 
                                 BEGIN block;

@@ -53,4 +53,3 @@ two_percents:
 %include spec/productionlist
 
 %include spec/aux
-
