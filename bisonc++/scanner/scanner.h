@@ -51,7 +51,7 @@ class Scanner: public yyFlexLexer
         void clearBlock();
         std::ostream &lineMsg();    // hides/modifies Msg's lineMsg()
         size_t number() const;
-        std::string const &source() const;  // currently processed gramfile
+        std::string const &sourceName() const;  // gramfile currently processed
         bool hasBlock() const;
         bool includeOnly() const;
         void undelimit(bool warn);  // remove delimiters warn: about < >
@@ -94,7 +94,7 @@ inline bool Scanner::checkFilename(FileInfo const &info,
     return info.first == nextSource;
 }
 
-inline std::string const &Scanner::source() const
+inline std::string const &Scanner::sourceName() const
 {
     return d_fileInfo.back().first;
 }

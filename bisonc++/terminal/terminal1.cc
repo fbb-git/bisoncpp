@@ -16,13 +16,13 @@ Terminal::Terminal(string const &name, Type type,
 {
     if (name.find("'\\x") == 0)
     {
-        char charRepresentation;
+        int charRepresentation;
         istringstream convert(name.substr(3));
-        convert >> hex >> reinterpret_cast<int &>(charRepresentation);
+        convert >> hex >> charRepresentation;
         if (isprint(charRepresentation))
         {
             d_readableLiteral = "'";
-            d_readableLiteral.append(1, charRepresentation);
+            d_readableLiteral.append(1, static_cast<char>(charRepresentation));
             d_readableLiteral += "'";
         }
     }

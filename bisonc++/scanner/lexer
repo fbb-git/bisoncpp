@@ -47,8 +47,8 @@ IDENT   {ID1}{ID2}*
                 BEGIN includeOnly;
 
 <INITIAL,block>"{"          {
-                                                    // open a block
-                                d_block.open(yylineno, source()); 
+                                            // open or count a nested a block 
+                                d_block.open(yylineno, sourceName()); 
                                 BEGIN block;
                             }
 

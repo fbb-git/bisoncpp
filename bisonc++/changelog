@@ -1,3 +1,14 @@
+bisonc++ (2.2.0)
+
+  * Repaired a bug in parsing action blocks of rules appearing only in
+    versions 2.1.0 and 2.0.0. In these versions compound statements defined
+    within the action blocks result in bisonc++ erroneously reporting an error
+    caused by bisonc++'s scanner (scanner/lexer) interpreting the closing
+    curly brace as the end of the action block.
+
+  * Repaired a flaw in terminal/terminal1.cc causing a segfault when using
+    bisonc++ compiled with g++ 4.2.1
+
 bisonc++ (2.1.0)
 
   * In the skeleton bisonc++.cc $insert 4 staticdata is followed by $insert

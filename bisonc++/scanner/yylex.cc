@@ -1070,8 +1070,8 @@ case 1:
 YY_RULE_SETUP
 #line 49 "lexer"
 {
-                                                    // open a block
-                                d_block.open(yylineno, source()); 
+                                            // open or count a nested a block 
+                                d_block.open(yylineno, sourceName()); 
                                 BEGIN block;
                             }
 	YY_BREAK

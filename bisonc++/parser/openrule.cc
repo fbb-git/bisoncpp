@@ -9,7 +9,11 @@ void Parser::openRule(string *ruleNamePtr)
 
     if (nt)
     {                                           // quit if not
-        if (not d_rules.newRule(nt, d_scanner.source(), d_scanner.lineno()))
+        if 
+        (
+            not d_rules.newRule(nt, 
+                                d_scanner.sourceName(), d_scanner.lineno())
+        )
         {
             Rules::FileInfo const &fileInfo = d_rules.fileInfo(nt);
     
