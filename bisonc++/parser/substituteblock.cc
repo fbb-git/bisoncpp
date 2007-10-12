@@ -3,8 +3,10 @@
 // Stack_offset is the number of values in the current alternative so far, so
 // it is d_elements.size(). It indicates where to find $0 with respect to the 
 // top of the (?) stack. 
+// If nElements is negative then this is a mid-action block, resulting in
+// negative dollar indices
 
-bool Parser::substituteBlock(size_t nElements, Block &block)
+bool Parser::substituteBlock(int nElements, Block &block)
 try
 {
         // Look repeatedly for special characters. Do this from the end of the

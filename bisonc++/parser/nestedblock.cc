@@ -14,8 +14,10 @@ void Parser::nestedBlock(Block &block)
 
     d_rules.addElement(np);             // add the block as a hidden rule
 
-    substituteBlock(0, block);          // process the block for 0 production
-                                        // elements.
+                                        // process the block as a nested block
+                                        // preceded by nElements() -1 
+                                        // production elements.
+    substituteBlock(-d_rules.nElements(), block);
 
     d_rules.setHiddenAction(block);     // define the action in the hidden
                                         // terminal's production rule

@@ -126,16 +126,16 @@ class Parser: public ParserBase
         void defineTokenName(std::string *name, bool hasValue);
         void expectRules();
 
-        bool explicitElement(size_t pos, size_t nElements, Block &block);
+        bool explicitElement(size_t pos, int nElements, Block &block);
         bool explicitReturn(size_t pos, Block &block);
         size_t extractIndex(int *idx, size_t pos);
         size_t extractType(std::string *type, size_t pos, Block &block);
 
-        void handleAtSign(size_t idx, size_t nElements, Block &block);
+        void handleAtSign(size_t idx, int nElements, Block &block);
                                         // handle a location-value stack
                                         // reference (@) in a received action 
                                         // block
-        bool handleDollar(size_t idx, size_t nElements, Block &block);
+        bool handleDollar(size_t idx, int nElements, Block &block);
                                         // handle a semantic-value stack
                                         // reference ($) in a received action 
                                         // block
@@ -146,7 +146,7 @@ class Parser: public ParserBase
 
 
         void installAction(Block &block);
-        int indexToOffset(int idx, size_t nElements) const;
+        int indexToOffset(int idx, int nElements) const;
 
         void multiplyDefined(Symbol const *sp);
 
@@ -156,7 +156,7 @@ class Parser: public ParserBase
         std::string nextHiddenName();
         void noDefaultTypeWarning();
 
-        bool numberedElement(size_t pos, size_t nElements, Block &block);
+        bool numberedElement(size_t pos, int nElements, Block &block);
 
         void openRule(std::string *ruleNamePtr);
 
@@ -195,7 +195,7 @@ class Parser: public ParserBase
         void showFilenames() const;
 
         size_t skipIgnore(size_t pos);
-        bool substituteBlock(size_t nElements, Block &block);
+        bool substituteBlock(int nElements, Block &block);
 
         Symbol *useSymbol();
         Terminal *useTerminal();
@@ -212,6 +212,10 @@ class Parser: public ParserBase
         void errorRecovery();
         int lookup(bool recovery);
         void nextToken();
+                                        // used in, e.g., explicitElement()
+                                        // to obtain # elements for
+                                        // end- or mid-rule actions
+        static size_t nComponents(int nElements);
 };
 
 // $insert lex
@@ -385,5 +389,11 @@ inline std::string *Parser::newYYText() const
 
 inline void Parser::print()      // use d_token, d_loc
 {}
+
+inline size_t Parser::nComponents(int nElements)
+{
+    return nElements >= 0 ? nElements : -nElements - 1;
+}
+
 
 #endif

@@ -2,7 +2,7 @@
 
 // pos points to $ in what must be $<type>i
 
-bool Parser::explicitElement(size_t pos, size_t nElements, Block &block) 
+bool Parser::explicitElement(size_t pos, int nElements, Block &block) 
 {
     string explicitType;        // extract the explicit type
     size_t length = 1 + extractType(&explicitType, pos + 1, block);
@@ -12,6 +12,7 @@ bool Parser::explicitElement(size_t pos, size_t nElements, Block &block)
 
     string const &idxType = d_rules.sType(idx); // get the idx'th default type
 
+    size_t ruleElements = nComponents(nElements);
 
     if (!d_unionDeclared)               // no %union: no explicit types
         lineMsg() << "No %union declaration: can't resolve $<" << 
@@ -19,12 +20,11 @@ bool Parser::explicitElement(size_t pos, size_t nElements, Block &block)
             " in `" << d_rules.name()  << warning;
 
                                         // $i refers beyond this rule
-    else if (idx > static_cast<int>(nElements))      
+    else if (idx > static_cast<int>(ruleElements))
         lineMsg() << "In  " << d_rules.name() << 
-                    ": $<" << explicitType << ">" << idx << 
-                    " used, but the rule has only " << 
-                    nElements << " elements" << warning;
-
+                ": $<" << explicitType << ">" << idx << 
+                " used, but the rule has only " << 
+                ruleElements << " elements" << err;
     else if                                     
     (
         !idxType.length()               // idx'th element has no type
@@ -43,7 +43,6 @@ bool Parser::explicitElement(size_t pos, size_t nElements, Block &block)
                 " element $" << idx << " in `" << 
                 d_rules.name() << "'" << warning;
     }
-
 
     ostringstream os;
     os << s_semanticValueStack << "[" << indexToOffset(idx, nElements) << 
