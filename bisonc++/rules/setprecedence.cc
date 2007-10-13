@@ -8,7 +8,8 @@ void Rules::setPrecedence(Terminal const *terminal)
         terminal->used();
     }
     else
-        msg() << "%prec " << OM::RAW << terminal << 
-            ": precedence already set to `" << 
-            d_currentProduction->precedence() << "'" << err;
+        msg() << "%prec " << terminal << ": precedence already set to " <<
+                &Terminal::quotedName << 
+                d_currentProduction->precedence() << 
+                &Terminal::plainName << err;
 }

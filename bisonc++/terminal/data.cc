@@ -14,11 +14,5 @@ char const *Terminal::s_association[] =
 };
 
 
-ostream &(Terminal::*Terminal::s_insert[])(ostream &out) const =
-{
-    &Terminal::literal,
-    &Terminal::standard,
-    &Terminal::standard,
-    &Terminal::special,
-    &Terminal::srTable,  
-};
+ostream &(Terminal::*Terminal::s_insertPtr)(ostream &out) const =
+                                                &Terminal::plainName; 

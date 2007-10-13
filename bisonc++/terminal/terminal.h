@@ -6,7 +6,6 @@
 #include <set>
 #include <climits>
 
-#include "../om/om.h"
 #include "../symbol/symbol.h"
 
 class Terminal: public Symbol
@@ -54,9 +53,8 @@ class Terminal: public Symbol
                                         // requested
         static size_t s_maxValue;     // maximum assigned terminal value
 
-
-        static std::ostream &(Terminal::*s_insert[])(std::ostream &out) const;
-
+        static std::ostream &(Terminal::*s_insertPtr)(std::ostream &out) 
+                                                                        const;
     public:
         Terminal(std::string const &name, 
                     Type type,
@@ -100,22 +98,38 @@ class Terminal: public Symbol
         static void unused(Terminal const *terminal);
         static size_t maxValue();
 
+        static void inserter(std::ostream &(Terminal::*insertPtr)
+                                            (std::ostream &out) const);
+
+                                    // Symbolic as name, chars as 
+                                    // quoted chars
+        std::ostream &plainName(std::ostream &out) const;
+
+                                    // Symbolic as quoted names, 
+                                    // chars as char consts
+        std::ostream &quotedName(std::ostream &out) const;
+
+                                    // Value followed by quoted name
+        std::ostream &valueQuotedName(std::ostream &out) const;
+
+                                    // Values or names (of reserved tokens)
+        std::ostream &nameOrValue(std::ostream &out) const;
+
     protected:
         virtual std::ostream &insert(std::ostream &out) const;
-
-        std::ostream &literal(std::ostream &out) const;
-        std::ostream &special(std::ostream &out) const;
-        std::ostream &standard(std::ostream &out) const;
-        std::ostream &srTable(std::ostream &out) const;
-        
 };
 
-inline std::ostream &Terminal::literal(std::ostream &out) const
+namespace std
 {
-    return out << name();
-}
+    inline ostream &operator<<(ostream &out, 
+              ostream &(Terminal::*insertPtr)(ostream &out) const)
+    {
+        Terminal::inserter(insertPtr);
+        return out;
+    }
+}       
 
-inline std::ostream &Terminal::standard(std::ostream &out) const
+inline std::ostream &Terminal::plainName(std::ostream &out) const
 {
     return out << d_readableLiteral;
 }
@@ -202,8 +216,15 @@ inline bool Terminal::compareValues(Terminal const *left,
 
 inline std::ostream &Terminal::insert(std::ostream &out) const
 {
-    return (this->*Terminal::s_insert[OM::type()])(out);
+    return (this->*Terminal::s_insertPtr)(out);
 }
+
+inline void Terminal::inserter(std::ostream &(Terminal::*insertPtr)
+                                             (std::ostream &out) const)
+{
+    s_insertPtr = insertPtr;
+}
+
 // operator<< is already available through Element
 
 #endif

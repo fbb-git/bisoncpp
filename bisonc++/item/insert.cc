@@ -2,8 +2,8 @@
 
 ostream &Item::insert(ostream &out, Production const *prod) const
 {
-    OM::InsType type = OM::type();
-    OM::setType(OM::STD);
+    Terminal::inserter(&Terminal::plainName);
+    NonTerminal::inserter(&NonTerminal::plainName);
 
     out << prod->lhs()->name() << " -> ";
 
@@ -14,8 +14,6 @@ ostream &Item::insert(ostream &out, Production const *prod) const
 
     copy(prod->begin() + dot(), prod->end(),
          ostream_iterator<Symbol const *>(out, " "));
-
-    OM::setType(type);
 
     return out;
 }

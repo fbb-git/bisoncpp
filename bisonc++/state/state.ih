@@ -11,7 +11,6 @@
 #include <bobcat/fnwrap1c>
 #include <bobcat/indent>
 
-#include "../om/om.h"
 #include "../rules/rules.h"
 #include "../nonterminal/nonterminal.h"
 #include "../production/production.h"

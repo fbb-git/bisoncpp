@@ -106,7 +106,7 @@ void State::define()
 {
     Arg &arg = Arg::instance();
 
-    s_insert = arg.option(0, "construction") ?  &State::insertExt   :
+    s_insert = arg.option(0, "construction") ?  &State::insertExt    :
                arg.option('V')               ?  &State::insertStd    :
                                                 &State::skipInsertion;
 

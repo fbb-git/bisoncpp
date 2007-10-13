@@ -4,8 +4,6 @@
 #include <ostream>
 #include <string>
 
-#include "../om/om.h"
-
     // Placeholder in FirstSet for Symbols, to prevent circular class 
     // dependencies
     //
@@ -39,7 +37,7 @@ class Element
 
 inline std::ostream &operator<<(std::ostream &out, Element const *element)
 {
-    return element->insert(out) << OM::reset;
+    return element->insert(out);
 }
         
 #endif

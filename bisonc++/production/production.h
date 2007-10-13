@@ -32,8 +32,6 @@ class Production: public std::vector<Symbol *>
         static bool s_unused;
         static Production const *s_startProduction;
     
-        static std::ostream &(Production::*s_insert[])(
-                                                std::ostream &out) const;
     public:
         typedef std::vector<Production *>       Vector;
         typedef std::vector<Production const*>  ConstVector;

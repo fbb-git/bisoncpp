@@ -10,8 +10,6 @@ the classes used by Rules; RmReduction does not depend on any other class).
          +----------------+------------+
          |                             |
          |                             |
-         |               OM            |
-         |                |            |
          |             Element         |
          |                |            |
          |            FirstSet         |

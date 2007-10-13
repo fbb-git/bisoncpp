@@ -5,11 +5,11 @@ ostream &FollowSet::oInsert(ostream &out) const
 {
     out << "{ ";
 
-    OM::setType(OM::EXTENDED);
+    Terminal::inserter(&Terminal::plainName);
 
     copy(begin(), end(), ostream_iterator<Element const *>(out, " "));
 
-    OM::setType(OM::SPECIAL);
+    Terminal::inserter(&Terminal::valueQuotedName);
 
     if (d_EOF)
         out << "<EOF> ";

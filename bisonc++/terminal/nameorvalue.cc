@@ -1,6 +1,6 @@
 #include "terminal.ih"
 
-ostream &Terminal::srTable(ostream &out) const
+ostream &Terminal::nameOrValue(ostream &out) const
 {
     if (isReserved())
         return out << d_readableLiteral;

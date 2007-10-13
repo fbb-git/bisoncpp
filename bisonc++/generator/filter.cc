@@ -2,6 +2,8 @@
 
 void Generator::filter(istream &in, ostream &out) const
 {
+    Terminal::inserter(&Terminal::plainName);
+
     while (getline(in, d_line))
     {
         if (d_line.find("$insert") == 0)

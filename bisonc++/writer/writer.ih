@@ -7,7 +7,6 @@
 #include <bobcat/tablesupport>
 #include <bobcat/arg>
 
-#include "../om/om.h"
 #include "../symbol/symbol.h"
 #include "../terminal/terminal.h"
 #include "../nonterminal/nonterminal.h"

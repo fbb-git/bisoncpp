@@ -4,7 +4,6 @@
 #include <ostream>
 #include <vector>
 
-#include "../om/om.h"
 #include "../element/element.h"
 #include "../firstset/firstset.h"
 
@@ -22,12 +21,8 @@ class Symbol: public Element
     
         int d_type;
         mutable bool d_used;
-    
-        static std::ostream &(Symbol::*s_insert[])(std::ostream &out) const;
 
     public:
-        typedef std::vector<Symbol const *>  Vector;
-    
         enum Type
         {
             UNDETERMINED        = 0,
@@ -37,9 +32,9 @@ class Symbol: public Element
             RESERVED            = 8,
         };
 
+        typedef std::vector<Symbol const *>  Vector;
+    
         ~Symbol();
-
-        Symbol(std::string const &name, Type t, std::string const &type = "");
 
         bool isNonTerminal() const;
         bool isReserved() const;
@@ -59,26 +54,13 @@ class Symbol: public Element
         void used() const;       // d_used is mutable.;
 
     protected:
-        virtual std::ostream &insert(std::ostream &out) const;
 
-        std::ostream &raw(std::ostream &out) const;
-        std::ostream &standard(std::ostream &out) const;
-        std::ostream &withType(std::ostream &out) const;
+        Symbol(std::string const &name, Type t, std::string const &type = "");
 };
 
 inline std::string const &Symbol::name() const
 {
     return d_name;
-}
-
-inline std::ostream &Symbol::raw(std::ostream &out) const
-{
-    return out << d_name;
-}
-
-inline std::ostream &Symbol::standard(std::ostream &out) const
-{
-    return out << "`" << d_name << "'";
 }
 
 inline bool Symbol::isTerminal() const
@@ -136,10 +118,6 @@ inline std::string const &Symbol::sType() const
     return d_stype;
 }
 
-inline std::ostream &Symbol::insert(std::ostream &out) const
-{
-    return (this->*Symbol::s_insert[OM::type()])(out);
-}
 // operator<< is already available through Element
 
 

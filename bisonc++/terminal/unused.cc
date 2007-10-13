@@ -13,6 +13,7 @@ void Terminal::unused(Terminal const *terminal)
             Msg::setWarning("");
             header = true;
         }
-        msg() << OM::spec << terminal << warning;
+
+        msg() << terminal << warning;
     }
 }

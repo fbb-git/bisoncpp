@@ -26,7 +26,7 @@ Terminal::Terminal(string const &name, Type type,
             d_readableLiteral += "'";
         }
     }
-       
+
     lineMsg() << "Defining terminal " << d_readableLiteral << ": pri = " << 
                                                         d_precedence << spool;
     msg() << info;

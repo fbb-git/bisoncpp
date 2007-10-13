@@ -1,6 +1,6 @@
 #include "item.ih"
 
-std::ostream &Item::insertExt(std::ostream &out) const
+std::ostream &Item::pNrDotItem(std::ostream &out) const
 {
     Production const *prod = production();
 
@@ -10,5 +10,4 @@ std::ostream &Item::insertExt(std::ostream &out) const
     out << "[P" << prod->nr() << " " << dot() << "] ";
 
     return insert(out, prod);
-
 }

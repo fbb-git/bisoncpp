@@ -13,7 +13,7 @@ class Item
     Production const *d_production;
     size_t                d_dot;
 
-    static std::ostream &(Item::*s_insert[])(std::ostream &out) const;
+    static std::ostream &(Item::*s_insertPtr)(std::ostream &out) const;
     
     public:
         typedef std::vector<Item>                   Vector;
@@ -55,9 +55,13 @@ class Item
         size_t dot() const;
         size_t productionSize() const;
 
+        static void inserter(std::ostream &(Item::*insertPtr)
+                                            (std::ostream &out) const);
+        std::ostream &plainItem(std::ostream &out) const;
+        std::ostream &pNrDotItem(std::ostream &out) const;
+
+
     private:
-        std::ostream &insertStd(std::ostream &out) const;
-        std::ostream &insertExt(std::ostream &out) const;
         std::ostream &insert(std::ostream &out, Production const *prod) const;
 };
 
@@ -115,10 +119,15 @@ inline size_t Item::productionSize() const
     return d_production->size();
 }
 
-inline std::ostream &operator<<(std::ostream &out, Item const &item)
+inline void Item::inserter(std::ostream &(Item::*insertPtr)
+                                         (std::ostream &out) const)
 {
-    return (item.*Item::s_insert[OM::type()])(out);
+    s_insertPtr = insertPtr;
 }
 
+inline std::ostream &operator<<(std::ostream &out, Item const &item)
+{
+    return (item.*Item::s_insertPtr)(out);
+}
 
 #endif

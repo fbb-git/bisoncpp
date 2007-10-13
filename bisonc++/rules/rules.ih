@@ -9,8 +9,6 @@
 #include <bobcat/msg>
 #include <bobcat/arg>
 
-#include "../om/om.h"
-
 using namespace std;
 using namespace FBB;
 

@@ -4,8 +4,6 @@
 #include <iosfwd>
 #include <vector>
 
-#include "../om/om.h"
-
 #include "../srsolution/srsolution.h"
 #include "../statetype/statetype.h"
 #include "../symbol/symbol.h"
@@ -20,8 +18,7 @@ class Next: public StateType, public SRSolution
     size_t d_next;
     std::vector<size_t> d_kernel;
 
-    static std::ostream &(Next::*s_insert[])(std::ostream &out) const;
-
+    static std::ostream &(Next::*s_insertPtr)(std::ostream &out) const;
 
     public:
         typedef std::vector<Next>       Vector;
@@ -48,9 +45,10 @@ class Next: public StateType, public SRSolution
 
         static void removeShift(size_t idx, Vector &nextVector);
 
-    private:
-        std::ostream &insertStd(std::ostream &out) const;
-        std::ostream &insertExt(std::ostream &out) const;
+        static void inserter(std::ostream &(Next::*insertPtr)
+                                            (std::ostream &out) const);
+        std::ostream &transition(std::ostream &out) const;
+        std::ostream &transitionKernel(std::ostream &out) const;
 };
 
 inline bool Next::hasSymbol(Next const &next, Symbol const *symbol)
@@ -88,9 +86,16 @@ inline void Next::removeShift(size_t idx, Vector &nextVector)
     nextVector[idx].d_symbol = 0;
 }
 
+inline void Next::inserter(std::ostream &(Next::*insertPtr)
+                                         (std::ostream &out) const)
+{
+    s_insertPtr = insertPtr;
+}
+
+
 inline std::ostream &operator<<(std::ostream &out, Next const &next)
 {
-    return (next.*Next::s_insert[OM::type()])(out);
+    return (next.*Next::s_insertPtr)(out);
 }
 
 

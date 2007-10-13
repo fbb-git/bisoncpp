@@ -1,6 +1,6 @@
 #include "item.ih"
 
-ostream &Item::insertStd(ostream &out) const
+ostream &Item::plainItem(ostream &out) const
 {
     Production const *prod = production();
 

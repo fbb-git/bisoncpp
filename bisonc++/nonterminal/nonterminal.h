@@ -6,7 +6,6 @@
 #include <vector>
 #include <string>
 
-#include "../om/om.h"
 #include "../symbol/symbol.h"
 #include "../production/production.h"
 #include "../firstset/firstset.h"
@@ -30,8 +29,9 @@ class NonTerminal: public Symbol
         static bool s_unused;
         static bool s_undefined;
         
-        static std::ostream &(NonTerminal::*s_insert[])(std::ostream &out) 
+        static std::ostream &(NonTerminal::*s_insertPtr)(std::ostream &out)
                                                                         const;
+
     public:
         NonTerminal(std::string const &name, std::string const &stype = "",
                                 Type type = NON_TERMINAL);
@@ -64,13 +64,18 @@ class NonTerminal: public Symbol
         static bool notUsed();
         static bool notDefined();
 
+        static void inserter(std::ostream &(NonTerminal::*insertPtr)
+                                        (std::ostream &out) const);
+
+                                        // plain name
+        std::ostream &plainName(std::ostream &out) const;
+        std::ostream &nameAndFirstset(std::ostream &out) const;
+        std::ostream &nameAndFollowset(std::ostream &out) const;
+                                    // the N's value 
+        std::ostream &value(std::ostream &out) const;
+
     protected:
         virtual std::ostream &insert(std::ostream &out) const;
-
-        std::ostream &standard(std::ostream &out) const;
-        std::ostream &withFirst(std::ostream &out) const;
-        std::ostream &withFollow(std::ostream &out) const;
-        std::ostream &srTable(std::ostream &out) const;
 
     private:
         std::ostream &insName(std::ostream &out) const;
@@ -86,25 +91,26 @@ inline bool NonTerminal::notDefined()
     return s_undefined;
 }
 
-inline std::ostream &NonTerminal::standard(std::ostream &out) const
+inline std::ostream &NonTerminal::plainName(std::ostream &out) const
 {
     return out << name();
 }
 
-inline std::ostream &NonTerminal::srTable(std::ostream &out) const
-{
-    return out << std::setw(3) << value();
-}
-
-inline std::ostream &NonTerminal::withFirst(std::ostream &out) const
+inline std::ostream &NonTerminal::nameAndFirstset(std::ostream &out) const
 {
     return insName(out) << d_first;
 }
 
-inline std::ostream &NonTerminal::withFollow(std::ostream &out) const
+inline std::ostream &NonTerminal::nameAndFollowset(std::ostream &out) const
 {
     return insName(out) << d_follow;
 }
+
+inline std::ostream &NonTerminal::value(std::ostream &out) const
+{
+    return out << std::setw(3) << value();
+}
+
 
 inline void NonTerminal::setFirstNr(size_t nr)
 {
@@ -208,8 +214,16 @@ inline void NonTerminal::addToFollow(NonTerminal const *nonTerminal)
 
 inline std::ostream &NonTerminal::insert(std::ostream &out) const
 {
-    return (this->*NonTerminal::s_insert[OM::type()])(out);
+    return (this->*NonTerminal::s_insertPtr)(out);
 }
+
+inline void NonTerminal::inserter(std::ostream &(NonTerminal::*insertPtr)
+                                           (std::ostream &out) const)
+{
+    s_insertPtr = insertPtr;
+}
+
+
 // operator<< is already available through Element
 
 #endif

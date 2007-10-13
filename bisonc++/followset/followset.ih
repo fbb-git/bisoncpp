@@ -5,8 +5,6 @@
 
 #include <bobcat/fnwrap1c>
 
-#include "../om/om.h"
-
 using namespace std;
 using namespace FBB;
 

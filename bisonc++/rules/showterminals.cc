@@ -9,12 +9,10 @@ void Rules::showTerminals() const
            
     msgstream() << "Symbolic Terminal tokens:\n";
 
-    OM::setType(OM::SPECIAL);
+    Terminal::inserter(&Terminal::valueQuotedName);
 
     copy(d_terminal.begin(), d_terminal.end(), 
                 ostream_iterator<Terminal const *>(msgstream(), "\n"));
-
-    OM::setType(OM::STD);
 
     msgstream() << info;
 }

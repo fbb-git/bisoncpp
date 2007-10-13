@@ -2,6 +2,9 @@
 
 void Parser::multiplyDefined(Symbol const *sp)
 {
+    Terminal::inserter(&Terminal::plainName);
+    NonTerminal::inserter(&NonTerminal::plainName);
+
     lineMsg() << (sp->isTerminal() ? "Terminal " : "Nonterminal ") << 
-                    OM::std << sp  << " multiply defined" << err;
+                    sp  << " multiply defined" << err;
 }

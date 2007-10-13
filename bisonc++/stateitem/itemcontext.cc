@@ -3,7 +3,7 @@
 // Produces:
 //  item - LA - LA-enlarged - next-enlarged - children - next-index
 
-ostream &StateItem::insertExt(ostream &out) const
+ostream &StateItem::itemContext(ostream &out) const
 {
     out << d_item << "  "  << d_LA << "  " << d_nextEnlarged << ", (";
 

@@ -1,6 +1,6 @@
 #include "terminal.ih"
 
-std::ostream &Terminal::special(std::ostream &out) const
+std::ostream &Terminal::valueQuotedName(std::ostream &out) const
 {
     if (isReserved())
         return out << "       " << name();

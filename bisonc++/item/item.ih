@@ -7,8 +7,8 @@
 
 #include <bobcat/msg>
 
-#include "../om/om.h"
 #include "../firstset/firstset.h"
+#include "../nonterminal/nonterminal.h"
 
 using namespace std;
 using namespace FBB;

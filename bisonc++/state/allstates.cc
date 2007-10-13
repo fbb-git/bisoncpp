@@ -42,3 +42,4 @@ void State::allStates()
 
     msgstream() << info;
 }
+

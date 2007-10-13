@@ -1,4 +1,3 @@
-om
 element
 firstset
 symbol
@@ -18,9 +17,9 @@ rrdata
 stateitem
 rrconflict
 statetype
-next
 srconflict
 state
 grammar
 writer
 generator
+next

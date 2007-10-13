@@ -9,12 +9,11 @@ void Rules::showFirst() const
 
     msgstream() << "FIRST sets:\n";
 
-    OM::setType(OM::EXTENDED);
+    NonTerminal::inserter(&NonTerminal::nameAndFirstset);
+    Terminal::inserter(&Terminal::plainName);
 
     copy(d_nonTerminal.begin(), d_nonTerminal.end(), 
                 ostream_iterator<NonTerminal const *>(msgstream(), "\n"));
-
-    OM::setType(OM::STD);
 
     msgstream() << info;
 }

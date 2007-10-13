@@ -4,7 +4,6 @@
 #include <iosfwd>
 #include <vector>
 
-#include "../om/om.h"
 #include "../symbol/symbol.h"
 #include "../item/item.h"
 #include "../lookaheadset/lookaheadset.h"
@@ -28,7 +27,7 @@ class StateItem
     bool    d_nextEnlarged;         // true if its d_next item's LA set is 
                                     // enlarged.
 
-    static std::ostream &(StateItem::*s_insert[])(std::ostream &out) const;
+    static std::ostream &(StateItem::*s_insertPtr)(std::ostream &out) const;
 
     public:
         typedef std::vector<StateItem> Vector;
@@ -81,9 +80,13 @@ class StateItem
                                     Vector &itemVector);
         static void removeRRConflict(RRData const &rm, Vector &itemVector);
 
+
+        static void inserter(std::ostream &(StateItem::*insertPtr)
+                                         (std::ostream &out) const);
+        std::ostream &plainItem(std::ostream &out) const;
+        std::ostream &itemContext(std::ostream &out) const;
+
     private:
-        std::ostream &insertStd(std::ostream &out) const;
-        std::ostream &insertExt(std::ostream &out) const;
 
         struct PropContext
         {
@@ -176,9 +179,16 @@ inline bool StateItem::lookaheadContains(StateItem const &stateItem,
     return stateItem.d_LA >= symbol;
 }
 
+inline void StateItem::inserter(std::ostream &(StateItem::*insertPtr)
+                                         (std::ostream &out) const)
+{
+    s_insertPtr = insertPtr;
+}
+
+
 inline std::ostream &operator<<(std::ostream &out, StateItem const &stateItem)
 {
-    return (stateItem.*StateItem::s_insert[OM::type()])(out);
+    return (stateItem.*StateItem::s_insertPtr)(out);
 }
 
 
