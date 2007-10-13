@@ -147,7 +147,7 @@ $insert 8 LTYPEresize
     d_stateStack__[d_stackIdx__] = d_state__ = state;
     *(d_vsp__ = &d_valueStack__[d_stackIdx__]) = d_val__;
 $insert 4 LTYPEpush
-$insert 4 debug  "push(state " << state << stype__(", ", d_val__, ")")
+$insert 4 debug  "push(state " << state << stype__(", semantic TOS = ", d_val__, ")")
 }
 
 void \@Base::popToken__()
@@ -181,7 +181,7 @@ $insert 8 debug "Terminating parse(): unrecoverable input error at token " << sy
     d_vsp__ = &d_valueStack__[d_stackIdx__];
 $insert 4 LTYPEpop
 $insert 4 debug "pop(): next state: " << d_state__ << ", token: " << symbol(d_token__) +
-$insert 4 debug stype__("semantic: ", d_val__, ", ") << stype__("sem. value TOS: ", *d_vsp)
+$insert 4 debug stype__("semantic: ", d_val__)
 }
 
 inline size_t \@Base::top__() const
@@ -205,12 +205,14 @@ void \@::executeAction(int production)
 
 	d_val__ = *d_vsp__;             // save the current value TOS
 
-$insert 4 debug "executeAction(): of rule " << production << " ..."
+$insert 4 debug "executeAction(): of rule " << production +
+$insert 4 debug  stype__(", semantic [TOS]: ", d_val__) << " ..."
     switch (production)
     {
 $insert 8 actioncases
     }
-$insert 4 debug "... action of rule " << production << " completed"
+$insert 4 debug "... action of rule " << production << " completed" +
+$insert 4 debug  stype__(", semantic: ", d_val__)
 }
 
 inline void \@Base::reduce__(PI__ const &pi)
@@ -252,14 +254,13 @@ $insert 4 debug "nextToken(): using " << symbol(d_token__) << stype__(", semanti
 int \@::lookup(bool recovery)
 {
 $insert 4 threading
-$insert 8 debug ""
 
     if (elementPtr == lastElementPtr)   // reached the last element
     {
         if (elementPtr->d_action < 0)   // default reduction
         {
 $insert 8 debug "lookup(" << d_state__ << ", " << symbol(d_token__) +
-$insert 8 debug "): Default reduction by rule " << -elementPtr->d_action
+$insert 8 debug "): default reduction by rule " << -elementPtr->d_action
             return elementPtr->d_action;                
         }
 $insert 8 debug "lookup(" << d_state__ << ", " << symbol(d_token__) << "): Not " +
@@ -400,6 +401,7 @@ $insert 4 debug "parse(): Parsing starts"
 
     while (true)
     {
+$insert 8 debug "=="
         try
         {
             if (s_state[d_state__]->d_type & REQ_TOKEN)

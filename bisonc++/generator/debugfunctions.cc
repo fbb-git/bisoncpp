@@ -45,13 +45,15 @@ void Generator::debugFunctions(std::ostream &out) const
                                             "STYPE__ const &semVal, char const *post) const\n"
         "{\n";
 
-        if (d_arg.option("insert-stype"))
+        if (d_arg.option(0, "insert-stype"))
             out <<
             "    using namespace std;\n"
-            "    ostringstream ostr(pre);\n"
-            "    ostr << semval << post;\n"
+            "    ostringstream ostr;\n"
+            "    ostr << pre << semVal << post;\n"
             "    return ostr.str();\n";
-
+        else
+            out <<
+            "    return \"\";\n";
         out << 
         "}\n";
     }

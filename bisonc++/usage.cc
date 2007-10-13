@@ -35,12 +35,12 @@ void usage(string const &program_name)
     "           filename holding the parser class definition.\n"
 
     "   --class-skeleton=<skeleton> (-C):\n"
-    "           location of the class header skeleton\n"
+    "           location of the class header skeleton.\n"
 
-    "   --construction:\n"
-    "           write details about the grammar analysis to stdout.\n"
+    "   --construction: write details about the grammar analysis to stdout.\n"
 
-    "   --debug: generates #define DEBUG 1 in the parse function's source.\n"
+    "   --debug: generates debug output statements in the parse function's\n"
+    "           source.\n"
 
     "   --error-verbose: the parse function will dump the parser's state\n"
     "           stack to stdout when a syntactic error is reported\n"
@@ -61,22 +61,25 @@ void usage(string const &program_name)
     "   --implementation-skeleton=<skeleton> (-I):\n"
     "           location of the implementation header skeleton.\n"
 
-    "   --include-only:\n"
-    "           catenate all grammar files in their order of processing to\n"
-    "           the standard output stream and terminate.\n"
+    "   --include-only: catenate all grammar files in their order of\n"
+    "           processing to the standard output stream and terminate.\n"
+
+    "   --insert-stype: show selected semantic values in the output "
+                                                                "generated\n"
+    "           by --debug. Ignored unless --debug was specified.\n"
 
     "   --lines (-l): put #line directives in generated output.\n"
 
     "   --max-inclusion-depth=<value>:\n"
-    "            sets the maximum number of nested grammar files (default: "
+    "           sets the maximum number of nested grammar files (default: "
                                                                     "10).\n"
     "   --namespace=<namespace>, (-n):\n"
-    "            define the parser in the mentioned namespace.\n"
+    "           define the parser in the mentioned namespace.\n"
 
     "   --no-baseclass-header: don't create the parser's base class header.\n"
 
     "   --no-lines: don't put #line directives in generated output,\n"
-    "            overruling the %lines directive.\n"
+    "           overruling the %lines directive.\n"
 
     "   --no-parse-member: don't create the member parse().\n"
 
@@ -84,27 +87,27 @@ void usage(string const &program_name)
     "           location of the parse function's skeleton.\n"
 
     "   --parsefun-source=<source> (-p):\n"
-    "          filename holding the parse function's source.\n"
+    "           filename holding the parse function's source.\n"
 
     "   --required-tokens=<value>:\n"
-    "          minimum number of successfully processed tokens between\n"
-    "          errors (default: 0).\n"
+    "           minimum number of successfully processed tokens between\n"
+    "           errors (default: 0).\n"
 
     "   --scanner=<header-file> (-s):\n"
-    "          include `header-file' declaring the class Scanner, and call\n"
-    "          d_scanner.yylex() in lex().\n"
+    "           include `header-file' declaring the class Scanner, and call\n"
+    "           d_scanner.yylex() in lex().\n"
 
     "   --scanner-debug: show de scanner's matched rules and returned "
                                                                 "tokens.\n"
 
-    "   --show-filenames:\n"
-    "          show the names of the used/generated files on standard error.\n"
+    "   --show-filenames: show the names of the used/generated files on\n"
+    "           the standard error stream.\n"
 
     "   --skeleton-directory=<skeleton-directory> (-S):\n"
     "           location of the skeleton directory.\n"
 
-    "   --thread-safe:\n"
-    "          no static data are modified, making bisonc++ thread-safe.\n"
+    "   --thread-safe: no static data are modified, making bisonc++'s\n"
+    "           generated code thread-safe.\n"
 
     "   --usage: produce this information (and terminate).\n"
 
