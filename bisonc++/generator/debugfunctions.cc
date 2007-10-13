@@ -10,6 +10,7 @@ void Generator::debugFunctions(std::ostream &out) const
     key(out);
 
     if (d_debug)
+    {
         out << "\n"
         "std::ostringstream " << d_baseclassScope << "s_out__;\n"
         "\n" 
@@ -38,7 +39,22 @@ void Generator::debugFunctions(std::ostream &out) const
         "        ostr << \"'\\\\x\" << setfill('0') << hex << setw(2) << "
                                                         "value << \"'\";\n"
         "    return ostr.str();\n"
+        "}\n"
+        "\n"
+        "std::string " << d_baseclassScope << "stype__(char const *pre, "
+                                            "STYPE__ const &semVal, char const *post) const\n"
+        "{\n";
+
+        if (d_arg.option("insert-stype"))
+            out <<
+            "    using namespace std;\n"
+            "    ostringstream ostr(pre);\n"
+            "    ostr << semval << post;\n"
+            "    return ostr.str();\n";
+
+        out << 
         "}\n";
+    }
 
     if (verbose)
         out <<

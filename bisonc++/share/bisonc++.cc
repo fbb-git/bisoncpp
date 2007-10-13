@@ -147,18 +147,23 @@ $insert 8 LTYPEresize
     d_stateStack__[d_stackIdx__] = d_state__ = state;
     *(d_vsp__ = &d_valueStack__[d_stackIdx__]) = d_val__;
 $insert 4 LTYPEpush
-$insert 4 debug  "push(state " << state << ")"
+$insert 4 debug  "push(state " << state << stype__(", ", d_val__, ")")
 }
 
 void \@Base::popToken__()
 {
     d_token__ = d_nextToken__;
+
+    d_val__ = d_nextVal__;
+    d_nextVal__ = STYPE__();
+
     d_nextToken__ = _UNDETERMINED_;
 }
      
 void \@Base::pushToken__(int token)
 {
     d_nextToken__ = d_token__;
+    d_nextVal__ = d_val__;
     d_token__ = token;
 }
      
@@ -175,7 +180,8 @@ $insert 8 debug "Terminating parse(): unrecoverable input error at token " << sy
     d_state__ = d_stateStack__[d_stackIdx__];
     d_vsp__ = &d_valueStack__[d_stackIdx__];
 $insert 4 LTYPEpop
-$insert 4 debug "pop(): next state: " << d_state__ << ", token: " << symbol(d_token__)
+$insert 4 debug "pop(): next state: " << d_state__ << ", token: " << symbol(d_token__) +
+$insert 4 debug stype__("semantic: ", d_val__, ", ") << stype__("sem. value TOS: ", *d_vsp)
 }
 
 inline size_t \@Base::top__() const
@@ -192,23 +198,28 @@ $insert 8 debug "errorRecovery(): unexpected End of input"
     }
 }
 
-inline void \@Base::reduce__(PI__ const &pi)
-{
-    pushToken__(pi.d_nonTerm);
-    pop__(pi.d_size);
-
-$insert 4 debug "reduce(): by rule " << (&pi - s_productionInfo) +
-$insert 4 debug " to N-terminal " << symbol(d_token__)
-}
-
 void \@::executeAction(int production)
 {
+	if (d_token__ != _UNDETERMINED_)
+	    pushToken__(d_token__);     // save an already available token
+
+	d_val__ = *d_vsp__;             // save the current value TOS
+
 $insert 4 debug "executeAction(): of rule " << production << " ..."
     switch (production)
     {
 $insert 8 actioncases
     }
 $insert 4 debug "... action of rule " << production << " completed"
+}
+
+inline void \@Base::reduce__(PI__ const &pi)
+{
+    d_token__ = pi.d_nonTerm;
+    pop__(pi.d_size);
+
+$insert 4 debug "reduce(): by rule " << (&pi - s_productionInfo) +
+$insert 4 debug " to N-terminal " << symbol(d_token__) << stype__(", semantic = ", d_val__)
 }
 
 // If d_token__ is _UNDETERMINED_ then if d_nextToken__ is _UNDETERMINED_ another
@@ -221,7 +232,7 @@ void \@::nextToken()
     if (d_nextToken__ != _UNDETERMINED_)
     {
         popToken__();                       // consume pending token
-$insert 8 debug "nextToken(): popped token " << symbol(d_token__)
+$insert 8 debug "nextToken(): popped " << symbol(d_token__) << stype__(", semantic = ", d_val__)
     }
     else
     {
@@ -232,7 +243,7 @@ $insert 8 debug "nextToken(): popped token " << symbol(d_token__)
             d_token__ = _EOF_;
     }
     print();
-$insert 4 debug "nextToken(): using token " << symbol(d_token__)
+$insert 4 debug "nextToken(): using " << symbol(d_token__) << stype__(", semantic = ", d_val__)
 }
 
 // if the final transition is negative, then we should reduce by the rule

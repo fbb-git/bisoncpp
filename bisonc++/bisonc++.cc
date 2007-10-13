@@ -41,6 +41,8 @@ namespace
         Arg::LongOption("force-implementation-header"),
         Arg::LongOption("force-class-header"),
 
+        Arg::LongOption("insert-stype"),
+
         Arg::LongOption("help", 'h'),
         Arg::LongOption("include-only"),
         Arg::LongOption("max-inclusion-depth", Arg::Required),

@@ -1,3 +1,34 @@
+bisonc++ (2.3.0)    (WIP)
+
+  * Dallas A. Clement uncovered a bug in handling semantic values, due to
+    which semantic values of tokens returned by some grammars got lost. He
+    intended to use a polymorphic semantic value class to pass different kinds
+    of semantic values over from the scanner to the parser. This approach was
+    the foundation of another regression test example, now added to the set of
+    regression tests. It will also appear as an annotated example in the C++
+    Annotations. Thanks, Dallas, for uncovering and reporting that bug.
+
+  * Dallas also noted that mid-rule actions could not refer to semantic values
+    of rule components that had already been seen by Bisonc++. This has been
+    fixed in this release. Dallas, thanks again!
+
+  * Earlier versions of Bisonc++ used the class OM (Output Mode) to define the
+    way objects like (Non)Terminal tokens and (Non)Kernel Items were inserted
+    into ostreams. Using OM did not result in the clarity of design I
+    originally had in mind. OM is now removed, and instead relevant classes
+    support a function `inserter()' allowing sources to specify (passing
+    `inserter()' a pointer to a member function) what kind of
+    insertion they need. For the Terminal class there is also a manipulator
+    allowing sources to insert a insertion-member directly into the ostream.
+
+  * New option: --insert-stype
+    The generated parser will now also display semantic values when %debug is
+    specified if the new command-line option --insert-stype is provided. Of
+    course, in this case users should make sure that the semantic value is
+    actually insertable (e.g., by providing a 
+    std::ostream &std::operator<<(std::ostream &out, STYPE__ const &semVal) 
+    overloaded operator.
+
 bisonc++ (2.2.0)
 
   * Repaired a bug in parsing action blocks of rules appearing only in

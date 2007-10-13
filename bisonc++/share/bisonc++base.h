@@ -47,6 +47,7 @@ $insert LTYPEstack
         size_t      d_state__;
         STYPE__    *d_vsp__;
         STYPE__     d_val__;
+        STYPE__     d_nextVal__;
 $insert LTYPEdata
 
         \@Base();
