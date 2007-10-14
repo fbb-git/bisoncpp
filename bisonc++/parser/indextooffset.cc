@@ -29,10 +29,35 @@
     // positive counterparts, counted as pure negative values. So, with hidden
     // numbers, the block-processor will add 1 to negative indices.
 
+    // With mid-rule actions nElements is negative, counting the action block
+    // as an element. A construction like
+    //  rule:
+    //      TOK1 TOK2
+    //      {
+    //          cout << $1 << " " << $2;
+    //      }
+    //      TOK3
+    //
+    //  is translated using a hidden block into:
+    //
+    //  #0001
+    //      {
+    //          cout << $-1 << " " << $0;
+    //      }
+    //      TOK3
+    //
+    //  rule:
+    //      TOK1 TOK2 
+    //      #0001
+    //      TOK3
+    //
+    // Therefore, $1 becomes $-1, $2 becomes $0. The index can be computed
+    // as idx + nElements + 1
+
 int Parser::indexToOffset(int idx, int nElements) const
 {
-    if (idx < 0 && nElements >= 0)
+    if (idx < 0 || nElements < 0)
         ++idx;
 
-    return idx - nElements;
+    return nElements >= 0 ? idx - nElements : idx + nElements;
 }
