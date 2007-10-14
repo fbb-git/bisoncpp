@@ -1,0 +1,174 @@
+In this example the way Bisonc++ may use a polymorphic semantic value is
+illustrated. The approach discussed below is a direct result of an suggestion
+initially made by Dallas A. Clement in Sep/Oct 2007.
+
+One may wonder why a tt(union) is still used by Bisonc++ when bf(C++) offers
+inherently superior approaches to combine multiple types in one type. The
+bf(C++) way to so so is by defining a polymorphic base class and a series of
+derived classes implementing the various exclusive data types. 
+
+Below the polymorphic base class is called tt(Base). Since it's a polymorphic
+base class it must have the following characteristics:
+    itemization(
+    it() Its destructor must be virtual (of course, since it's a polymorphic
+        base class);
+    it() At some point we need to make copies of our class, so we need a
+        pure virtual tt(clone()) member to implement the em(virtual
+        constructor) Design Pattern;
+    it() As a utility function a pure virtual tt(insert()) member and
+        an overloaded tt(operator<<()) were added to allow derived objects to
+        be inserted into tt(ostream) objects.
+    )
+
+    The subdirectory base/ contains the base class's definition. Inline
+implementations were used since it keeps the example small.
+
+
+In my demo I derived two classes from Base:
+
+    `Enum' may contain an enumeration value (or int, or unsigned, if you
+implement some simple changes).
+
+    `Ident' contains the name of an identifier (eventually: a copy of the
+scanner's yytext data member).
+
+The directories enum/ and ident/ contain the definitions of these
+classes. Again, all's implemented inline.
+
+
+Now realize that Base can't be the parser's semantic value:
+    - a Base class object cannot contain derived class's data members. 
+    - it's not possible to define a Base reference as a semantic value, as
+        vectors and other containers cannot store references. 
+    - the semantic value should not be a pointer to a Base class. Although
+        this would allow me to use the polymorphic nature of the Base class,
+        but it would also require *me* to keep track of unnecessary memory,
+        and the purpose of the whole exercise is to have the system do that.
+
+So, a wrapper class SemVal (obviously for: Semantic Value) is required
+wrapping itself around a Base *.
+
+
+The directory semval contains the implementation of the class SemVal.
+
+SemVal is a slightly more `complete' class than Base and its derivatives,
+since it contains a pointer which must be handled appropriately. So it needs a
+copy constructor, overloaded assignment operator and destructor. Apart from
+that, it supports members to obtain a reference to the base class which is
+used in the overloaded operator<<() allowing me to insert objects of classes
+derived from Base directly into ostreams, and a small member template function
+allowing me to obtain the derived class object from the semantic value's Base
+class pointer.
+
+So, now for the lexical scanner and the parser. 
+
+First the parser. The parser's %stype is of course SemVal. The parser's
+grammar is a simple one expecting lines of input according to the following
+two rules:
+
+    rule:
+        ENUM CONST IDENTIFIER '(' IDENTIFIER ')' ';'
+    |
+        IDENTIFIER '=' ENUM ';'
+    ;
+
+The rule's actions simply echo the received enum values and identifiers to
+cout. Here is an example of an action block:
+
+        IDENTIFIER '=' ENUM ';'
+        {
+              cout << $1 << " " << $3 << endl;
+        }
+
+Alternative actions could be defined, e.g., using the downcast() function:
+
+        IDENTIFIER '=' ENUM ';'
+        {
+            Enum::Value value = $3.downcast<Enum>().value();
+        }
+
+So, in these cases Bisonc++'s parser stores ALL semantic values on the
+semantic values stack, even though multiple tokens were returned in a
+particular rule. At any time ALL semantic values associated with previously
+recognized tokens are available in the action block. If there is a problem
+here, then the semantic value's implementation has flaws.
+
+Now that I've covered the parser, it's time to have a look at the
+scanner. First, note that the scanner must have access to the Parser's
+variable designed to contain a token's semantic value. This variable is
+d_val__ which may be passed to the scanner when it's first constructed. E.g.,
+the Parser's constructor is now explicitly defined in parser.h:
+
+        inline Parser::Parser()
+        :
+            d_scanner(&d_val__)
+        {}
+
+The Scanner class defines a SemVal *d_val, which is initialized to the SemVal
+pointer that's received by the Scanner's constructor. In scanner/scanner.h:
+
+        inline Scanner::Scanner(SemVal *semval)
+        :
+            d_semval(semval)
+        {}
+
+Finally, scanner/lexer recognizes input patterns, returns Parser tokens (e.g.,
+Parser::ENUM) and, when appropriate, it returns a semantic value with
+it. E.g., when recognizing the enum value `two' the rule is:
+
+two         {
+                *d_semval = SemVal(new Enum(Enum::TWO));
+                return Parser::ENUM;
+            }
+
+Dissecting the semantic value's assignment, you'll see:
+
+                *d_semval = // assign Parser::d_val__ via the scanner's data 
+                            // member
+
+                    SemVal( // it must be a SemVal object, now constructed
+                            // but also see below
+
+                            // this constructor may assume that the object
+                            // passed via a pointer is then owned by the
+                            // semantic value, so no additional copying is
+                            // required. 
+                        new Enum(Enum::TWO)
+                    );
+
+As the SemVal constructor expects one argument, I can use automatic promotion
+from Base * to SemVal. So the rule actually may be written (and is written in
+scanner/lexer) as:
+
+two         {
+                *d_semval = new Enum(Enum::TWO);
+                return Parser::ENUM;
+            }
+
+Similarly, to define the IDENTIFIER's semantic value I used:
+
+[a-zA-Z_][a-zA-Z0-9_]*  {
+                *d_semval = new Ident(yytext);
+                return Parser::IDENTIFIER;
+            }
+
+
+That's it. The main() function simply defines a parser and calls its parse()
+member, reading its input from the std input stream. If the input is
+
+    one const ident(other);
+    name = zero;
+    
+then the program's output is:
+
+    1 ident other
+    name 0
+
+
+To compile and link the program, run `icmbuild' if you have icmake > V 7.00
+installed (creating a program `poly'), or run
+
+    g++ *.cc */*.cc
+
+That's it. The zip contains the complete set of sources.
+

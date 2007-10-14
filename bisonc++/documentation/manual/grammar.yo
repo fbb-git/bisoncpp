@@ -21,10 +21,13 @@ includefile(grammar/semantics.yo)
     lsubsect(MORETYPES)(More Than One Value Type)
     includefile(grammar/union.yo)
 
+    lsubsect(POLYMORPHIC)(More Than One Value Type: Using Polymorphism)
+    includefile(grammar/polymorphic.yo)
+
     lsubsect(ACTIONS)(Actions)
     includefile(grammar/actions.yo)
 
-    subsect(Data Types of Values in Actions)
+    lsubsect(ACTIONTYPES)(Data Types of Values in Actions)
     includefile(grammar/actiontypes.yo)
 
     lsubsect(MIDACTIONS)(Actions in Mid-Rule)

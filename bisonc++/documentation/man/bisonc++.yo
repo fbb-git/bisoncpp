@@ -303,6 +303,13 @@ arguments if their associated long options require arguments as well.
            All grammar files will be concatenated to the standard output
             stream in their order of processing. Following this, Bic()
             terminates.
+    it() loption(insert-stype)nl()
+           This option is only effective if the bf(debug) option (or
+            bf(%debug) directive has also been specified. When
+            bf(insert-stype) has been specified the parsing function's debug
+            output will also show selected semantic values. It should only be
+            specified if objects or variables of the semantic value type
+            bf(STYPE__) can be inserted into tt(ostreams).
     it() loption(lines) (soption(l))nl() 
            Put bf(#line) preprocessor directives in the file containing the
             parser's bf(parse()) function. By including this option the
