@@ -31,7 +31,11 @@ bool Parser::numberedElement(size_t pos, int nElements, Block &block)
                             "\t`" << &d_rules.lastProduction() << " '\n"
                             "\t$" << idx << " (" << d_rules.symbol(idx) << 
                             ") has no default type-association" << warning;
-    }        
+    }
+    else if (!d_negativeDollarIndices && idx <= 0)
+        lineMsg() << "In production rule \n"<< 
+                    "\t`" << &d_rules.lastProduction() << " '\n"
+                    "\tnon-positive $" << idx << " used" << warning;
 
     ostringstream os;
     os << s_semanticValueStack << "[" << indexToOffset(idx, nElements) << "]";
