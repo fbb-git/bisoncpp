@@ -36,6 +36,7 @@ void manual()
             run("yodl2html -l3 bisonc++.yo");
             run("touch " STAMP);
             run("mv *.html " HTMLDEST);
+            run("cp -r grammar/poly " HTMLDEST"/poly");
             break;
         }
     }

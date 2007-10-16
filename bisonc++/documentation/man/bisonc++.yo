@@ -853,15 +853,11 @@ members inherited from the parser's base class.
         a semantic value to this variable in parallel with a returned
         token. In order to allow a scanner access to bf(d_val__),
         bf(d_val__)'s address should be passed to the scanner. This can be
-        realized, for example, by defining a member bf(void setSval(STYPE__
-        *)) in the lexical scanner, which is then called from the parser's
-        constructor as follows:
-       verb(
-            d_scanner.setSval(&d_val__);
-       )
+        realized, for example, by passing bf(d_val__)'s address to the lexical
+        scanner's constructor.
        Subsequently, the lexical scanner may assign a value to the parser's
-        bf(d_val__) variable through the pointer to bf(d_val__) stored inside
-        the lexical scanner.
+        bf(d_val__) variable through the pointer to bf(d_val__) stored in a
+        data member of the lexical scanner.
     it() bf(LTYPE__ d_vsp__):nl()
        The semantic value stack pointer. 
         Do not modify.
