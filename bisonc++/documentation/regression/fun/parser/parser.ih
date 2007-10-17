@@ -2,7 +2,7 @@
 
 #include <errno.h>
 #include <cmath>
-#include <bobcat/a2x>
+#include "_a2x.h"
 
 #include "parser.h"
 
@@ -15,5 +15,5 @@
 // to prefix std:: to symbols from the namespace std:
 
 using namespace std;
-using namespace FBB;
+
 

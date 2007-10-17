@@ -24,7 +24,7 @@ example()
     tput clear
 
     case $2 in
-        ("")
+        ("go")
         ;;
         (*)
             return 0
@@ -38,11 +38,12 @@ example()
     echo
     cat doc
     echo
+    echo '(waiting for the compilation to complete ...)'
     echo --------------------------------
     
     cd parser
-    $BISONCPP --construction --debug grammar
-    [ -e /usr/bin/bison ] && bison -v bgram
+    $BISONCPP --construction --debug $3 grammar
+    [ -e /usr/bin/bison -a -e bgram ] && bison -v bgram
     
     if [ -s ../demo.cc ] 
     then
@@ -63,15 +64,31 @@ example()
     cd $cwd
 
         # the doc-test is a safequard agains accidentally removing files
-    [ -s doc ] && find ./ -type f -not -regex '.*/\.svn/.*' \
+    [ -s doc ] && \
+            find ./ -type f -not -regex '.*/\.svn/.*'           \
+                \( -name Parser\*h -or -name parserbase.h \)    \
+                -exec rm '{}' ';'   &&  \
+            find ./ -type f -not -regex '.*/\.svn/.*' \
                 -not -regex '.*/_.*' \
                 -not -name doc -not -name demo.cc \
                 -not -name bgram \
-                -not -name grammar -not -name parser.h -not -name parser.ih \
-                -not -name lexer -not -name scanner.h -not -name scanner.ih \
+                -not -name grammar -not -regex '.*/*h' \
+                -not -regex '.*/dallas.*' -not -name input \
+                -not -name lexer \
                 -exec rm '{}' ';'
 
     cd $orgdir
+}
+
+readRUN()
+{
+    read RUN
+    if [ "$RUN" == "" ] 
+    then 
+        RUN=go
+    else
+        RUN=skip
+    fi
 }
 
 tput clear
@@ -106,73 +123,79 @@ PRE="To run: press Enter, enter other input to skip an example"
 
 echo $EXAMPLE: AHO Example 4.42, p. 231
 echo $PRE
-read RUN
+readRUN
 example aho4.42 $RUN
 
 echo $EXAMPLE: two R/R conflicts
 echo $PRE
-read RUN
+readRUN
 example rr2 $RUN
 
 echo $EXAMPLE: the dangling-else conflict
 echo $PRE
-read RUN
+readRUN
 example danglingelse $RUN
 
 echo $EXAMPLE: S/R and R/R conflicts
 echo $PRE
-read RUN
+readRUN
 example conflicts $RUN
 
 echo $EXAMPLE: not derivable sentence
 echo $PRE
-read RUN
+readRUN
 example nosentence $RUN
 
 echo $EXAMPLE: a reduced icmake V 7.00 grammar
 echo $PRE
-read RUN
+readRUN
 example icmake1 $RUN
 
 echo $EXAMPLE: the full icmake V 7.00 grammar
 echo $PRE
-read RUN
+readRUN
 example icmake2 $RUN
 
 echo $EXAMPLE: using an error-production
 echo $PRE
-read RUN
+readRUN
 example error $RUN
 
 echo "$EXAMPLE: Simple ;-separated list of numbers and error recovery"
 echo $PRE
-read RUN
+readRUN
 example naive $RUN
 
 echo $EXAMPLE: adding two integral values
 echo $PRE
-read RUN
+readRUN
 example simplecalc $RUN
 
 echo $EXAMPLE: using the location stack
 echo $PRE
-read RUN
+readRUN
 example location $RUN
 
 echo $EXAMPLE: the man-page calculator
 echo $PRE
-read RUN
+readRUN
 example calculator $RUN
 
 echo $EXAMPLE: a calculator from the C++ Annotations
 echo $PRE
-read RUN
+readRUN
 example annotations $RUN
 
 echo $EXAMPLE: an extensive calculator supporting functions
 echo $PRE
-read RUN
+readRUN
 example fun $RUN
+
+echo $EXAMPLE: an example of polymorphic semantic values
+echo $PRE
+readRUN
+example polymorphic $RUN --insert-stype
+
 
 tput clear
 

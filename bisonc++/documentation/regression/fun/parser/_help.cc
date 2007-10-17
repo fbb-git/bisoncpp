@@ -17,6 +17,7 @@ void Parser::help()
         "                 sin, cos, tan asin, acos, atan\n"
         "Binary function: pow\n"
         "Data types: char, int, double\n"
+        "Variables are automatically defined when used, initialized to 0\n"
         "General usage: exit, quit, help, ?, list\n";
 }
 

@@ -58,3 +58,4 @@ Parser::DoubleMap
         doubleArray + sizeofDoubleArray
     );
 
+bool A2x::s_lastFail = false;

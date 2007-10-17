@@ -1,5 +1,7 @@
 #include "parser/parser.h"
 
+bool A2x::s_lastFail = false;
+
 using namespace std;
 
 int main(int argc)
