@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 
-#include "parser/parser.h"
+#include "parser/Parser.h"
 
 using namespace std;
 

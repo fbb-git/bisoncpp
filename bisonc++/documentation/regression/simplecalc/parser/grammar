@@ -1,5 +1,5 @@
 %class-name Parser
-%filenames parser
+
 %scanner ../scanner/scanner.h
 
 %token NUMBER

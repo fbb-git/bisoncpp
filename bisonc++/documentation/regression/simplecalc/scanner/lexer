@@ -2,24 +2,7 @@
     #define _SKIP_YYFLEXLEXER_
     #include "scanner.ih"
 
-    /* 
-        WARNING: 
-
-        DUE TO #define DIRECTIVES IN THE FLEX SKELETON/PROGRAM
-        DO NOT USE `REJECT' IN RULES/CODE. ALSO, THE PARSER CANNOT
-        DEFINE A `REJECT' CONSTANT, AS THIS `REJECT' IS ALSO EXPANDED
-        BY THE CPP PREPROCESSOR.
-    */
-
-
-    /*  
-        WHEN BISON'S PARSER IS USED, DO NOT FORGET TO PREFIX THE PARSER'S 
-        CLASS NAME TO THE RETURNED TOKENS. E.G., RETURN 
-                               `Parser::IDENT'
-
-        When bisonc++'s parser isn't used, don't include parser.h
-    */
-    #include "../parser/parser.h"
+    #include "../parser/Parser.h"
 %}
 
 %option yyclass="Scanner" outfile="yylex.cc"
