@@ -305,7 +305,7 @@ arguments if their associated long options require arguments as well.
             terminates.
     it() loption(insert-stype)nl()
            This option is only effective if the bf(debug) option (or
-            bf(%debug) directive has also been specified. When
+            bf(%debug) directive) has also been specified. When
             bf(insert-stype) has been specified the parsing function's debug
             output will also show selected semantic values. It should only be
             specified if objects or variables of the semantic value type
