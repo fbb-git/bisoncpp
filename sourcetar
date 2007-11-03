@@ -7,21 +7,41 @@ VERSION=`grep VERSION ${PROJECT}/VERSION |
 
 DISTRIBUTION=${PROJECT}-${VERSION}      # define the distribution's dir name
 
-ln -s ${PROJECT} ${DISTRIBUTION}        # distribution's dir name
+tgz()
+{
+    ln -s ${PROJECT} ${DISTRIBUTION}        # distribution's dir name
 
-if [ "$#" != "0" ]                      # any arg? make debian .orig file
-then
-                                        # create the .orig source tar
-    tar czvf \
-        ${HOME}/debian/bisonc++/tarballs/${PROJECT}_${VERSION}.orig.tar.gz \
-             --exclude-from=excluded  ${DISTRIBUTION}/*
-else
-    tar czvf ${PROJECT}_${VERSION}.tar.gz \
-             --exclude-from=excluded  ${DISTRIBUTION}/*
+    tar czvf $1 --exclude-from=excluded  ${DISTRIBUTION}/*
 
-    scp ${PROJECT}_${VERSION}.tar.gz oosix:ftp/debian/tarballs/${PROJECT}
-    md5sum ${PROJECT}_${VERSION}.tar.gz
-fi
+    rm ${DISTRIBUTION}                      # rm the link
+}
 
-rm ${DISTRIBUTION}                      # rm the link
+case "$1" in 
+    (o)
+        tgz ${HOME}/debian/bisonc++/tarballs/${PROJECT}_${VERSION}.orig.tar.gz
+    ;;
+
+    (t|u)
+        tgz ${PROJECT}_${VERSION}.tar.gz
+
+        if [ "$1" == "u" ]
+        then
+            scp ${PROJECT}_${VERSION}.tar.gz \
+                                        oosix:ftp/debian/tarballs/${PROJECT}
+            md5sum ${PROJECT}_${VERSION}.tar.gz
+        fi
+    ;;
+
+    (*)
+        echo "
+Provide arg:
+    o (orig.tar.gz) to create a local .orig.tar.gz archive in 
+                    ../debian/${PROJECT}/tarballs
+    t (tar.gz)      to create ${PROJECT}_${VERSION}.tar.gz in this directory
+    u (upload)      same as 't', but upload to oosix and show MD5 hash
+"
+    exit 1
+    ;;
+
+esac
 
