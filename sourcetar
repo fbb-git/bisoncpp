@@ -18,7 +18,7 @@ tgz()
 
 case "$1" in 
     (o)
-        tgz ${HOME}/debian/bisonc++/tarballs/${PROJECT}_${VERSION}.orig.tar.gz
+        tgz ${HOME}/debian/${PROJECT}/tarballs/${PROJECT}_${VERSION}.orig.tar.gz
     ;;
 
     (t|u)
