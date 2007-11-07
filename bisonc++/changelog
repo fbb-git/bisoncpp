@@ -1,3 +1,8 @@
+bisonc++ (2.3.1) // TO BE DISTRIBUTED
+
+  * Fixed character returned in escaped constants. E.g., at '\'' the \ was
+    returned instead of the ' character.
+
 bisonc++ (2.3.0)
 
   * Dallas A. Clement uncovered a bug in handling semantic values, due to

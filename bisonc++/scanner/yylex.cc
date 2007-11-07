@@ -1222,7 +1222,7 @@ YY_RULE_SETUP
                                 else           
                                 {
                                     BEGIN INITIAL;
-                                    d_number = yytext[1];
+                                    d_number = yytext[2];
                                     return Parser::QUOTE;
                                 }
                             }

@@ -161,7 +161,7 @@ IDENT   {ID1}{ID2}*
                                 else           
                                 {
                                     BEGIN INITIAL;
-                                    d_number = yytext[1];
+                                    d_number = yytext[2];
                                     return Parser::QUOTE;
                                 }
                             }
