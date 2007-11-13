@@ -27,7 +27,7 @@ case "$1" in
         if [ "$1" == "u" ]
         then
             scp ${PROJECT}_${VERSION}.tar.gz \
-                                        oosix:ftp/debian/tarballs/${PROJECT}
+                                        oosix:ftp/debian/${PROJECT}
             md5sum ${PROJECT}_${VERSION}.tar.gz
         fi
     ;;
