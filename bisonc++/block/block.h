@@ -28,6 +28,9 @@ class Block: public std::string
         void open(size_t lineno, std::string const &source);
         bool close();
 
+        void saveDollar1(int offset);   // save $1 in $$ at the beginning
+                                        // of a nested block
+
         void operator+=(char const *text);
   
         operator bool() const;          // return true if a block is active
@@ -48,7 +51,8 @@ inline Block::Block()
 
 inline void Block::operator+=(char const *text)
 {
-    this->std::string::append(text);
+//    this->std::string::append(text);
+    append(text);
 }
 
 inline Block::operator bool() const

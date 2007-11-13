@@ -2,5 +2,9 @@
 
 #include <ostream>
 
+#include <bobcat/x2a>
+
 using namespace std;
+using namespace FBB;
+
 

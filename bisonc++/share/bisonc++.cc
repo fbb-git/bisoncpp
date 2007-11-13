@@ -200,10 +200,12 @@ $insert 8 debug "errorRecovery(): unexpected End of input"
 
 void \@::executeAction(int production)
 {
-	if (d_token__ != _UNDETERMINED_)
-	    pushToken__(d_token__);     // save an already available token
+    if (d_token__ != _UNDETERMINED_)
+        pushToken__(d_token__);     // save an already available token
 
-	d_val__ = *d_vsp__;             // save the current value TOS
+                                    // save default non-nested block $$
+    if (int size = s_productionInfo[production].d_size)
+        d_val__ = d_vsp__[1 - size];
 
 $insert 4 debug "executeAction(): of rule " << production +
 $insert 4 debug  stype__(", semantic [TOS]: ", d_val__) << " ..."

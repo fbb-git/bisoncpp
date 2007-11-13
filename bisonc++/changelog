@@ -3,6 +3,17 @@ bisonc++ (2.3.1) // TO BE DISTRIBUTED
   * Fixed character returned in escaped constants. E.g., at '\'' the \ was
     returned instead of the ' character.
 
+  * Implemented the default assignment of $1 to $$ at the begin of action
+    rules. This required another Block member: saveDollar1(), called for
+    nested blocks. The function saveDollar1() prepends the code to save $$
+    from $1 of the rule in which the nested block was defined. In
+    share/bisonc++ the function executeAction() no longer saves the semantic
+    value's TOS value as d_val__ but the rule's $1 value.
+
+  * To allow extraction of the archive under Cygwin (Windows) the directory
+    parser/spec/aux was renamed to parser/spec/auxiliary (as Windows can't
+    handle files or directories named 'aux').
+
 bisonc++ (2.3.0)
 
   * Dallas A. Clement uncovered a bug in handling semantic values, due to

@@ -47,6 +47,12 @@ try
         end = begin;                        // next search starts at begin,
                                             // ($, @: now substituted)
     }
+
+                                            // save the default $1 value
+                                            // at the beginning of a mid-rule
+    if (nElements < 0)                      // action block
+        block.saveDollar1(indexToOffset(1, nElements));
+
     return explicitReturn;
 }
 catch (int)
@@ -56,3 +62,4 @@ catch (int)
     return true;                            // since an error occurred, forget
                                             // about return-warnings for now
 }
+

@@ -36,12 +36,29 @@ that it becomes the semantic value of the addition-expression just recognized
 by the rule. If there were a useful semantic value associated with the `+'
 token, it could be referred to as tt($2).
 
-    If you don't specify an action for a rule, b() supplies a default:
-tt($$ = $1). Thus, the value of the first symbol in the rule becomes the value
-of the whole rule. Of course, the default rule is valid only if the two data
-types match. There is no meaningful default action for an empty rule; every
-empty rule must have an explicit action unless the rule's value does not
-matter.
+    If you don't specify an action for a rule, b() supplies a default: tt($$ =
+$1). Thus, the value of the first symbol in the rule becomes the value of the
+whole rule. Of course, the default rule is valid only if the two data types
+match. There is no meaningful default action for an empty rule; every empty
+rule must have an explicit action unless the rule's value does not
+matter. Note that the default tt($$) value is assigned at the em(beginning) of
+an action block. Any changes to tt($1) will therefore em(not) automatically be
+propagated to tt($$). E.g., assuming that tt($1 == 3) at the beginning of the
+following action block, then tt($$) will still be equal to 3 after executing
+the statement in the action block:
+        verb(
+    {               // assume: $1 == 3
+        $1 += 12;   // $1 now is 15, $$ remains 3
+    }
+        )
+    If tt($$) should receive the value of the modified tt($1), then tt($$)
+must explicitly be assigned to tt($$). E.g.,
+        verb(
+    {               // assume: $1 == 3
+        $1 += 12;   // $1 now is 15, $$ remains 3
+        $$ = $1;    // now $$ == 15 as well.
+    }
+        )
 
     Using tt($n) with n equal to zero or a negative value is allowed for
 reference to tokens and groupings on the stack before those that match the
