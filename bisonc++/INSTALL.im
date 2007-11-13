@@ -1,3 +1,8 @@
+#define EXTENSION ""
+    // EXTENSION should be changed to ".exe" when compiling Bisonc++ for 
+    // Cygwin environments. Don't forget the initial dot (.)
+    // See also README.CYGWIN
+
 string BASE;
 
     // BASE=is the directory below which ALL bisonc++ files will be stored.

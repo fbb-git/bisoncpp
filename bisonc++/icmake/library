@@ -73,7 +73,7 @@ void initialize()
     echo(ECHO_REQUEST);
     g_sources = "*.cc";
 
-    g_binary = "tmp/bin/bisonc++";
+    g_binary = "tmp/bin/bisonc++" EXTENSION;
 
     g_cwd = chdir(".");
 
