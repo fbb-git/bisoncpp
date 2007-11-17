@@ -1,4 +1,4 @@
-bisonc++ (2.3.1) // TO BE DISTRIBUTED
+bisonc++ (2.3.1)
 
   * Fixed character returned in escaped constants. E.g., at '\'' the \ was
     returned instead of the ' character.
