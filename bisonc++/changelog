@@ -1,3 +1,43 @@
+bisonc++ (2.3.2) 
+
+  * Not yet distributed
+
+  * Fixed missing entry in multiple reduction state tables:
+
+    State tables of multiple reduction states (e.g., REQ_RED states) were
+    constructed incompletely. E.g., for the grammar:
+
+        expr:
+            name
+        |
+            ident '(' ')'
+        |
+            NR
+        ;
+        name:   
+            IDENT
+        ;
+        ident:
+            IDENT
+        ;
+
+    the state following IDENT is either a reduce to 'name' or 'ident': the
+    corresponding table was filled incompletely, using the number of the next
+    token where the next token for the reduction should have been be
+    mentioned, and an empty field in the table itself.
+
+    Note that in these situations d_val__ must be set by the scanner, since
+    the reduction requires another token, and only once that token is
+    available the reduction to, e.g., 'ident' can be performed, but at that
+    time YYText() has already gone in an action block like:
+
+        ident:
+            IDENT
+            {
+                $$ = d_scanner.YYText();
+            }
+        ;
+
 bisonc++ (2.3.1)
 
   * Fixed character returned in escaped constants. E.g., at '\'' the \ was

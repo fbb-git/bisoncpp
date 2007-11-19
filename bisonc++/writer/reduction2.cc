@@ -8,9 +8,14 @@ void Writer::reduction(Element const *symb, ReductionContext &context)
     Terminal::inserter(&Terminal::nameOrValue);
     NonTerminal::inserter(&NonTerminal::value);
 
+    out << symbol;
     context.table << out.str() << -static_cast<int>(context.ruleNr);
 
     out.str("");
+
+    Terminal::inserter(&Terminal::plainName);
+    NonTerminal::inserter(&NonTerminal::plainName);
+
     out << "// " << symbol;
     context.table << out.str();
 }
