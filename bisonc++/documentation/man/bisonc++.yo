@@ -858,6 +858,12 @@ members inherited from the parser's base class.
        Subsequently, the lexical scanner may assign a value to the parser's
         bf(d_val__) variable through the pointer to bf(d_val__) stored in a
         data member of the lexical scanner.
+       Note that in some cases this approach em(must) be used to make
+        available the correct semantic value to the parser. In particular,
+        when a grammar state defines multiple reductions, depending on the
+        next token, the reduction's action only takes place following the
+        retrieval of the next token, thus losing the initially matched token
+        text. 
     it() bf(LTYPE__ d_vsp__):nl()
        The semantic value stack pointer. 
         Do not modify.

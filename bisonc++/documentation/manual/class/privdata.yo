@@ -67,6 +67,38 @@ members inherited from the parser's base class.
        Subsequently, the lexical scanner may assign a value to the parser's
         bf(d_val__) variable through the pointer to bf(d_val__) stored inside
         the lexical scanner.
+
+       Note that in some cases this approach em(must) be used to make
+        available the correct semantic value to the parser. In particular,
+        when a grammar state defines multiple reductions, depending on the
+        next token, the reduction's action only takes place following the
+        retrieval of the next token, thus losing the initially matched token
+        text. As an example, consider the following little grammar:
+            verb(
+        expr:
+            name
+        |
+            ident '(' ')'
+        |
+            NR
+        ;
+
+        name:   
+            IDENT
+        ;
+
+        ident: IDENT ; 
+            ) 
+       Having recognized tt(IDENT) two reductions are possible: to tt(name)
+        and to tt(ident). The reduction to tt(ident) is appropriate when the
+        next token is tt(CHAR(40)), otherwise the reduction to tt(name) will
+        be performed. So, the parser asks for the next token, thereby
+        destroying the text matching tt(IDENT) before tt(ident) or tt(name)'s
+        actions are able to save the text themselves. To enure the
+        availability of the text matching tt(IDENT) is situations like these
+        the em(scanner) must assign the proper semantic value when it
+        recognizes a token. Consequently the parser's tt(d_val__) data member
+        must be made available to the scanner.
     it() bf(LTYPE__ d_vsp__):nl()
        The semantic value stack pointer. 
         Do not modify.
