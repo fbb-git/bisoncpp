@@ -7,8 +7,9 @@ void Generator::actionCases(ostream &out) const
 
     vector<Production const *> const &productions = d_rules.productions();
 
-    Production::IAContext context = {out, d_arg[0], d_parser.lines(), 
-                                                    d_indent};
+    cout << d_parser.lines() << endl;
+
+    Production::IAContext context = {out, d_parser.lines(), d_indent};
 
     for_each
     (

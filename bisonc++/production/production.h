@@ -57,7 +57,6 @@ class Production: public std::vector<Symbol *>
         struct IAContext                    // insertActionContext
         {
             std::ostream &out;
-            char const *infile;
             bool lineDirectives;
             size_t indent;
         };

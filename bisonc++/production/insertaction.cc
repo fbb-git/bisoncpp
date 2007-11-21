@@ -7,16 +7,16 @@ void Production::insertAction(Production const *prod, IAContext &context)
 
     context.out <<  setw(context.indent) << "" << 
                                     "case " << prod->nr() << ":\n";
-    size_t/*unsigned*/ begin = 0;
+    size_t begin = 0;
     Block const &block = prod->action();
 
     if (context.lineDirectives)
-        context.out << "#line " << block.line() << " \"" << context.infile <<
+        context.out << "#line " << block.line() << " \"" << block.source() <<
                        "\"\n";
 
     while (true)
     {
-        size_t/*unsigned*/ end = block.find_first_of('\n', begin);
+        size_t end = block.find_first_of('\n', begin);
         context.out <<  setw(context.indent) << "" <<  
                                     block.substr(begin, end - begin) << "\n";
         if (end == string::npos)
