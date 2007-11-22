@@ -20,7 +20,8 @@ void Scanner::pushSource(yy_buffer_state *current, size_t size)
 
     d_state.push(current);
 
-    yylineno = 0;
+    yylineno = 1;                   // start counting lines at 1
+
     yy_switch_to_buffer(yy_create_buffer(newStream, size));
 
     d_include = false;              // %include processed

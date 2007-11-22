@@ -51,7 +51,6 @@ inline Block::Block()
 
 inline void Block::operator+=(char const *text)
 {
-//    this->std::string::append(text);
     append(text);
 }
 
