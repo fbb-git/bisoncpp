@@ -41,7 +41,7 @@ void Writer::srTable(State const *sp, SRContext &context)
         (defaultReduction ? -static_cast<int>(defaultReduction->nr()) : 0) <<
         def;
 
-    context.out << context.table << "\n"
+    context.out << context.table << // context.table ends in a newline
                    "};\n";
 }
 
