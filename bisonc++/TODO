@@ -1,11 +1,6 @@
-    The next item was removed from changelog and is not implemented, as it may
-    result in perpetual error recovery. Needs repair. Relevant sections in
-    bisonc++ are commented out.
-
   * The bisonc++.cc skeleton's error recovery procedure now saves the
-    unexpected token, then matches the next _error_ state and reinserts the 
-    unexpected token, which should now be recognized. The matching semantic
-    value is also saved and reinstalled.
+    unexpected token, then matches the next _error_ state and reinserts the
+    unexpected token when appropriate. 
 
 - %nonassoc should probably produce an error when %nonassoc operators are used
   repeatedly. 

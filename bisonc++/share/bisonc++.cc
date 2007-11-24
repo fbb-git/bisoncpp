@@ -313,9 +313,10 @@ $insert 8 debug "errorRecovery(): pop state " << top__()
         // error nevertheless doesn't. In that case parsing terminates 
     checkEOF__();
 
-//    int waitingToken = d_token__;             // save the unexpected token
-//    STYPE__ waitingVal = d_val__;             // and semantic value for later
-//                                              // processing
+// Under construction...
+//  int waitingToken = d_token__;             // save the unexpected token
+//  STYPE__ waitingVal = d_val__;             // and semantic value for later
+                                              // processing
 
     pushToken__(_error_);                     // specify _error_ as next token
     push__(lookup(true));                     // push the error state
@@ -352,13 +353,15 @@ $insert 16 debug "errorRecovery() SUCCEEDED: push state " << action << ", token 
                 reduce__(s_productionInfo[-action]); 
 $insert 16 debug "errorRecovery() SUCCEEDED: reduce by rule " << -action << ", token = " +
 $insert 16 debug symbol(d_token__)
+
+// Under construction...
+//              pushToken__(waitingToken);  // restore the semantic value
+//                                          // and token having caused the
+//                                          // error: processing them should
+//              d_val__ = waitingVal;       // now be OK.
             }
             d_acceptedTokens__ = 0;         // reset accept count on error
 
-//            d_val__ = waitingVal;           // restore the semantic value
-//            pushToken__(waitingToken);      // and token having caused the
-//                                            // error: processing them should
-//                                            // now be OK.
             return;
         }
         catch (...)
