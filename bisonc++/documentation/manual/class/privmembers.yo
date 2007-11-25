@@ -21,8 +21,6 @@ listed here to present an exhaustive list.
         extension and improvement of the macro bf(YYACCEPT) defined by
         bf(bison++) in that bf(YYACCEPT) could not be called from outside of
         the parsing member function.
-    it() bf(void Base::checkEOF__+nop()()):nl()
-       Used internally.
     it() bf(void Base::clearin+nop()()):nl()
        This member replaces bf(bison)(++)'s macro bf(yyclearin) and causes
         bf(bisonc++) to request another token from its tt(lex+nop()()) member,

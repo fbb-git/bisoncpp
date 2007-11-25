@@ -3,23 +3,33 @@ function cannot find an action for the current token in the current state it
 throws an tt(UNEXPECTED_TOKEN__) exception. 
 
 This exception is caught by the parsing function, calling the
-tt(errorRecovery()) member function. This member function will then pop
-elements off the state stack until a state is encountered having the
-tt(ERR_ITEM) flag set. These states result from using the tt(error) token in
-grammar specifications. Such states repeatedly request tokens from
-tt(nextToken()) until a valid, non-error continuation is found. During the
-error recovery EOF may be encountered. If this is a valid continuation in an
-error state then it is processed, otherwise the parsing function will
-terminate with an error return value. 
+tt(errorRecovery()) member function. By default, this member function will
+terminates the parsing process. The non-default recovery procedure is
+available once an tt(error) token is used in a production rule. When the
+parsing process throws bf(UNEXPECTED_TOKEN__) the recovery procedure is
+started (i.e., it is started whenever a syntactical error is encountered or
+tt(ERROR()) is called).
 
-If the tt(error) token is not used, no tt(ERR_ITEM) is
-available. Consequently, no error recovery is possible and the parsing
-function terminates immediately after reporting the syntactic error. 
+The recovery procedure consists of 
+    itemization(
+    it() looking for the first state on the state-stack having an
+error-production, followed by:
+    it() handling all state transitions that are possible without retrieving a
+terminal token. 
+    it() then, in the state requiring a terminal token and starting
+with the initial unexpected token (3) all subsequent terminal tokens are
+ignored until a token is retrieved which is a continuation token in that
+state.
+    )
+
+If the error recovery procedure fails (i.e., if no acceptable token is
+ever encountered) error recovery falls back to the default recovery
+mode (i.e., the parsing process is terminated).
 
 Not all syntactic errors are always reported: the option
 link(--required-tokens)(REQUIRED) can be used to specify the minimum number of
 tokens that must have been successfully processed before another syntactic
-error will be reported (and counted). 
+error will be reported (and counted).
 
 The option link(--error-verbose)(ERRORVERBOSE) may be specified to obtain the
 contents of the state stack when a syntactic error is reported.

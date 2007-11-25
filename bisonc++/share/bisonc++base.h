@@ -56,7 +56,6 @@ $insert debugdecl
         void ABORT() const;
         void ACCEPT() const;
         void ERROR() const;
-        void checkEOF__() const;
         void clearin();
         bool debug() const;
         void pop__(size_t count = 1);

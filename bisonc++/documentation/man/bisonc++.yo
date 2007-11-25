@@ -566,7 +566,7 @@ specification file.
     %right UMINUS
                 )
             (see below) following, e.g., the tt('*') and tt('/') operators.
-    it() bf((%required-tokens) tt(number)nl()
+    it() bf(%required-tokens) tt(number)nl()
            Following a syntactic error, require at least tt(number)
             successfully processed tokens before another syntactic error can
             be reported. By default tt(number) is zero.
@@ -681,16 +681,25 @@ the parser's base class.
     DEFAULT_RECOVERY_MODE__,
     UNEXPECTED_TOKEN__
         )
-       bf(DEFAULT_RECOVERY_MODE__) consists of terminating the parsing
-        process. bf(UNEXPECTED_TOKEN__) activates the recovery procedure
-        whenever an error is encountered. The recovery procedure consists of
-        looking for the first state on the state-stack having an
-        error-production, and then skipping subsequent tokens until (in that
-        state) a token is retrieved which may follow the bf(error) terminal
-        token in that production rule. If this error recovery procedure fails
-        (i.e., if no acceptable token is ever encountered) error recovery
-        falls back to the default recovery mode, terminating the parsing
-        process. 
+       The bf(DEFAULT_RECOVERY_MODE__) terminates the parsing process. The
+        non-default recovery procedure is available once an tt(error) token is
+        used in a production rule. When the parsing process throws
+        bf(UNEXPECTED_TOKEN__) the recovery procedure is started (i.e., it is
+        started whenever a syntactical error is encountered or tt(ERROR()) is
+        called). 
+
+        The recovery procedure consists of (1) looking for the first state on
+        the state-stack having an error-production, followed by (2) handling
+        all state transitions that are possible without retrieving a terminal
+        token. Then, in the state requiring a terminal token and starting with
+        the initial unexpected token (3) all subsequent terminal tokens are
+        ignored until a token is retrieved which is a continuation token in
+        that state. 
+
+        If the error recovery procedure fails (i.e., if no acceptable token is
+        ever encountered) error recovery falls back to the default recovery
+        mode (i.e., the parsing process is terminated).
+
     it() bf(Base::Return__):nl()
         This enumeration defines two values:
         verb(
@@ -724,8 +733,6 @@ internally'' is used should not be called by user-defined code.
         extension and improvement of the macro bf(YYACCEPT) defined by
         bf(bison++) in that bf(YYACCEPT) could not be called from outside of
         the parsing member function.
-    it() bf(void Base::checkEOF__+nop()()):nl()
-       Used internally.
     it() bf(void Base::clearin+nop()()):nl()
        This member replaces bf(bison)(++)'s macro bf(yyclearin) and causes
         bf(bisonc++) to request another token from its tt(lex+nop()()) member,

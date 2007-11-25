@@ -23,6 +23,7 @@ $insert class.ih
 // proper continuation, new tokens are obtained by nextToken(). If such a
 // token is found, error recovery is successful and the token is
 // handled according to the error state's SR table and parsing continues.
+// During error recovery semantic actions are ignored.
 
 // A state flagged with the DEF_RED flag will perform a default
 // reduction if no other continuations are available for the current token.
@@ -189,15 +190,6 @@ inline size_t \@Base::top__() const
     return d_stateStack__[d_stackIdx__];
 }
 
-inline void \@Base::checkEOF__() const
-{
-    if (d_token__ == _EOF_)
-    {
-$insert 8 debug "errorRecovery(): unexpected End of input"
-        throw DEFAULT_RECOVERY_MODE__;
-    }
-}
-
 void \@::executeAction(int production)
 {
     if (d_token__ != _UNDETERMINED_)
@@ -302,74 +294,85 @@ $insert 8 errorverbose
 
 $insert 4 debug "errorRecovery(): " << d_nErrors__ << " error(s) so far. State = " << top__()
 
+    // get the error state
     while (not (s_state[top__()][0].d_type & ERR_ITEM))
     {
 $insert 8 debug "errorRecovery(): pop state " << top__()
         pop__();
     }
 
-        // if on entry here token is already EOF then we've probably been 
-        // here before: _error_ accepts EOF, but the state using
-        // error nevertheless doesn't. In that case parsing terminates 
-    checkEOF__();
+$insert 4 debug "errorRecovery(): state " << top__() << " is an ERROR state\n"
 
-// Under construction...
-//  int waitingToken = d_token__;             // save the unexpected token
-//  STYPE__ waitingVal = d_val__;             // and semantic value for later
-                                              // processing
+    // In the error state, lookup a token allowing us to proceed.
+    // Continuation may be possible following multiple reductions,
+    // but eventuall a shift will be used, requiring the retrieval of
+    // a terminal token. If a retrieved token doesn't match, the catch below 
+    // will ensure the next token is requested in the while(true) block
+    // implemented below:
 
-    pushToken__(_error_);                     // specify _error_ as next token
-    push__(lookup(true));                     // push the error state
+    int lastToken = d_token__;                  // give the unexpected token a
+                                                // chance to be processed
+                                                // again.
 
-    // In the error state, lookup a token with which we can proceed.
-    // It may be a reduce, but normally a shift is indicated
-    // If a token is seen which doesn't fit, the catch below will catch the
-    // exception thrown by lookup()
+    pushToken__(_error_);                       // specify _error_ as next token
+    push__(lookup(true));                       // push the error state
+
+    d_token__ = lastToken;                      // reactivate the unexpected
+                                                // token (we're now in an
+                                                // ERROR state).
+
+    bool gotToken = true;                       // the next token is a terminal
 
     while (true)
     {
-            // if on entry here token is already EOF then we've probably been 
-            // here before: _error_ accepts EOF, but the state using
-            // error nevertheless doesn't. In that case parsing terminates 
-        checkEOF__();
         try
         {
-            popToken__();
-            nextToken();
-
+            if (s_state[d_state__]->d_type & REQ_TOKEN)
+            {
+                gotToken = d_token__ == _UNDETERMINED_;
+                nextToken();                    // obtain next token
+            }
+            
             int action = lookup(true);
-            popToken__();                   // token processed
 
             if (action > 0)                 // push a new state
             {
-$insert 16 debug "errorRecovery() SUCCEEDED: push state " << action << ", token cleared "
                 push__(action);
+                popToken__();
+$insert 16 debug "errorRecovery() SHIFT state " << action +
+$insert 16 debug ", continue with " << symbol(d_token__) << "\n"
+
+                if (gotToken)
+                {
+$insert 20 debug "errorRecovery() COMPLETED: next state " +
+$insert 20 debug action << ", no token yet\n"
+
+                    d_acceptedTokens__ = 0;
+                    return;
+                }
             }
             else if (action < 0)
             {
-                executeAction(-action);     // the error's action
-
+                // no actions executed on recovery but save an already 
+                // available token:
+                if (d_token__ != _UNDETERMINED_)
+                    pushToken__(d_token__);
+ 
                                             // next token is the rule's LHS
                 reduce__(s_productionInfo[-action]); 
-$insert 16 debug "errorRecovery() SUCCEEDED: reduce by rule " << -action << ", token = " +
-$insert 16 debug symbol(d_token__)
-
-// Under construction...
-//              pushToken__(waitingToken);  // restore the semantic value
-//                                          // and token having caused the
-//                                          // error: processing them should
-//              d_val__ = waitingVal;       // now be OK.
+$insert 16 debug "errorRecovery() REDUCE by rule " << -action +
+$insert 16 debug ", token = " << symbol(d_token__)
             }
-            d_acceptedTokens__ = 0;         // reset accept count on error
-
-            return;
+            else
+                ABORT();                    // abort when accepting during
+                                            // error recovery
         }
         catch (...)
         {
             if (d_token__ == _EOF_)
-                continue;
+                ABORT();                    // saw inappropriate _EOF_
                       
-            popToken__();                   // token processed
+            popToken__();                   // failing token now skipped
         }
     }
 }
