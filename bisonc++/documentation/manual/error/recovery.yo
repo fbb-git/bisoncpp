@@ -91,110 +91,76 @@ was used:
 
 subsubsect(Error recovery --debug output)
 
-    verb(
-        parse(): Parsing starts
-        push(state 0)
-        
-        lookup(0, `_UNDETERMINED_'): Default reduction by rule 2
-        executeAction(): of rule 2 ...
-        ... action of rule 2 completed
-        pop(0) from stack having size 1
-        pop(): next state: 0, token: `start'
-        reduce(): by rule 2 to N-terminal `start'
-        
-        lookup(0, `start'): Shift 1 (`start' processed)
-        push(state 1)
-    a
-        nextToken(): using token `a' (97)
-        
-        lookup(1, `a' (97)): Not found. Start error recovery.
-    Syntax error
-        errorRecovery(): 1 error(s) so far. State = 1
-        
-        lookup(1, `_error_'): Shift 3 (`_error_' processed)
-        push(state 3)
-        
-        lookup(3, `a' (97)): Default reduction by rule 3
-        executeAction(): of rule 3 ...
-        ... action of rule 3 completed
-        pop(1) from stack having size 3
-        pop(): next state: 1, token: `expr'
-        reduce(): by rule 3 to N-terminal `expr'
-        errorRecovery() SUCCEEDED: reduce by rule 3, token = `expr'
-        
-        lookup(1, `expr'): Shift 2 (`expr' processed)
-        push(state 2)
-    3 + a
-        nextToken(): using token `NR'
-        
-        lookup(2, `NR'): Default reduction by rule 1
-        executeAction(): of rule 1 ...
-        ... action of rule 1 completed
-        pop(2) from stack having size 3
-        pop(): next state: 0, token: `start'
-        reduce(): by rule 1 to N-terminal `start'
-        
-        lookup(0, `start'): Shift 1 (`start' processed)
-        push(state 1)
-        
-        lookup(1, `NR'): Shift 4 (`NR' processed)
-        push(state 4)
-        
-        lookup(4, `_UNDETERMINED_'): Default reduction by rule 4
-        executeAction(): of rule 4 ...
-        ... action of rule 4 completed
-        pop(1) from stack having size 3
-        pop(): next state: 1, token: `expr'
-        reduce(): by rule 4 to N-terminal `expr'
-        
-        lookup(1, `expr'): Shift 2 (`expr' processed)
-        push(state 2)
-        nextToken(): using token `+' (43)
-        
-        lookup(2, `+' (43)): Shift 5 (`+' (43) processed)
-        push(state 5)
-        nextToken(): using token `a' (97)
-        
-        lookup(5, `a' (97)): Not found. Start error recovery.
-    Syntax error
-        errorRecovery(): 2 error(s) so far. State = 5
-        
-        lookup(5, `_error_'): Shift 3 (`_error_' processed)
-        push(state 3)
-        
-        lookup(3, `a' (97)): Default reduction by rule 3
-        executeAction(): of rule 3 ...
-        ... action of rule 3 completed
-        pop(1) from stack having size 5
-        pop(): next state: 5, token: `expr'
-        reduce(): by rule 3 to N-terminal `expr'
-        errorRecovery() SUCCEEDED: reduce by rule 3, token = `expr'
-        
-        lookup(5, `expr'): Shift 6 (`expr' processed)
-        push(state 6)
-        nextToken(): using token `_EOF_'
-        
-        lookup(6, `_EOF_'): Default reduction by rule 5
-        executeAction(): of rule 5 ...
-        ... action of rule 5 completed
-        pop(3) from stack having size 5
-        pop(): next state: 1, token: `expr'
-        reduce(): by rule 5 to N-terminal `expr'
-        
-        lookup(1, `expr'): Shift 2 (`expr' processed)
-        push(state 2)
-        
-        lookup(2, `_EOF_'): Default reduction by rule 1
-        executeAction(): of rule 1 ...
-        ... action of rule 1 completed
-        pop(2) from stack having size 3
-        pop(): next state: 0, token: `start'
-        reduce(): by rule 1 to N-terminal `start'
-        
-        lookup(0, `start'): Shift 1 (`start' processed)
-        push(state 1)
-        
-        lookup(1, `_EOF_'): ACCEPT
-        ACCEPT(): Parsing successful
-        parse(): returns 0
+        verb(
+    parse(): Parsing starts
+    push(state 0
+    ==
+    lookup(0, `_UNDETERMINED_'): default reduction by rule 2
+    executeAction(): of rule 2 ...
+    ... action of rule 2 completed
+    pop(0) from stack having size 1
+    pop(): next state: 0, token: `start'
+    reduce(): by rule 2 to N-terminal `start'
+    ==
+    lookup(0, `start'): shift 1 (`start' processed)
+    push(state 1
+    ==
+a
+Syntax error
+    nextToken(): using `a' (97)
+    lookup(1, `a' (97)): Not found. Start error recovery.
+    errorRecovery(): 1 error(s) so far. State = 1
+    errorRecovery(): state 1 is an ERROR state
+
+    lookup(1, `_error_'): shift 3 (`_error_' processed)
+    push(state 3
+    lookup(3, `a' (97)): default reduction by rule 3
+    pop(1) from stack having size 3
+    pop(): next state: 1, token: `expr'
+    reduce(): by rule 3 to N-terminal `expr'
+    errorRecovery() REDUCE by rule 3, token = `expr'
+    lookup(1, `expr'): shift 2 (`expr' processed)
+    push(state 2
+    errorRecovery() SHIFT state 2, continue with `a' (97)
+    lookup(2, `a' (97)): default reduction by rule 1
+    pop(2) from stack having size 3
+    pop(): next state: 0, token: `start'
+    reduce(): by rule 1 to N-terminal `start'
+    errorRecovery() REDUCE by rule 1, token = `start'
+    lookup(0, `start'): shift 1 (`start' processed)
+    push(state 1
+    errorRecovery() SHIFT state 1, continue with `a' (97)
+    lookup(1, `a' (97)): Not found. Continue error recovery.
+3+a
+    nextToken(): using `NR'
+    lookup(1, `NR'): shift 4 (`NR' processed)
+    push(state 4
+    errorRecovery() SHIFT state 4, continue with `_UNDETERMINED_'
+    errorRecovery() COMPLETED: next state 4, no token yet
+    ==
+    lookup(4, `_UNDETERMINED_'): default reduction by rule 4
+    executeAction(): of rule 4 ...
+    ... action of rule 4 completed
+    pop(1) from stack having size 3
+    pop(): next state: 1, token: `expr'
+    reduce(): by rule 4 to N-terminal `expr'
+    ==
+    lookup(1, `expr'): shift 2 (`expr' processed)
+    push(state 2
+    ==
+[input terminated here]
+    nextToken(): using `_EOF_'
+    lookup(2, `_EOF_'): default reduction by rule 1
+    executeAction(): of rule 1 ...
+    ... action of rule 1 completed
+    pop(2) from stack having size 3
+    pop(): next state: 0, token: `start'
+    reduce(): by rule 1 to N-terminal `start'
+    ==
+    lookup(0, `start'): shift 1 (`start' processed)
+    push(state 1
+    ==
+    lookup(1, `_EOF_'): ACCEPT
+    ACCEPT(): Parsing successful
+    parse(): returns 0
     )

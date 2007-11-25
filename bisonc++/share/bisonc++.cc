@@ -340,12 +340,12 @@ $insert 4 debug "errorRecovery(): state " << top__() << " is an ERROR state\n"
                 push__(action);
                 popToken__();
 $insert 16 debug "errorRecovery() SHIFT state " << action +
-$insert 16 debug ", continue with " << symbol(d_token__) << "\n"
+$insert 16 debug ", continue with " << symbol(d_token__)
 
                 if (gotToken)
                 {
 $insert 20 debug "errorRecovery() COMPLETED: next state " +
-$insert 20 debug action << ", no token yet\n"
+$insert 20 debug action << ", no token yet"
 
                     d_acceptedTokens__ = 0;
                     return;
