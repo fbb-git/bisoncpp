@@ -6,6 +6,6 @@ void Parser::error(bool ifTrue, char const *msg)
         return;
 
     d_error = true;
-    cout << msg << "\n";
+    cout << msg << '\n';
     ERROR();
 }

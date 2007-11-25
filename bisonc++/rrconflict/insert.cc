@@ -14,7 +14,7 @@ ostream &RRConflict::insert(ostream &out) const
                 reduced.nr() << ": removed " <<
                 iter->lookaheadSet() << " from the LA set of " <<
                     (reduced.lookaheadSetSize() == 0 ? "(removed) " : "") <<
-                "rule " << reduced.nr() << "\n";
+                "rule " << reduced.nr() << '\n';
         ++iter;
     }
     return out;

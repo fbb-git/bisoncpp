@@ -8,7 +8,7 @@ std::ostream &Production::standard(std::ostream &out) const
         return out <<  " <empty>";
 
     for (const_iterator sym = begin(); sym != end(); ++sym)
-        out << " " << *sym;
+        out << ' ' << *sym;
 
     return out;
 }

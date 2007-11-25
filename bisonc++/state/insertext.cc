@@ -25,7 +25,7 @@ ostream &State::insertExt(ostream &out) const
         out << endl;                    
     }
 
-    return out << d_srConflict << d_rrConflict << "\n";
+    return out << d_srConflict << d_rrConflict << '\n';
 }
 
 

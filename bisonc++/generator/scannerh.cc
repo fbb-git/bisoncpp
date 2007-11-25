@@ -6,5 +6,5 @@ void Generator::scannerH(ostream &out) const
         return;
 
     key(out);
-    out <<  "#include " << d_parser.scanner() << "\n";
+    out <<  "#include " << d_parser.scanner() << '\n';
 }
