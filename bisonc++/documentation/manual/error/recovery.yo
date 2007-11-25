@@ -93,7 +93,7 @@ subsubsect(Error recovery --debug output)
 
         verb(
     parse(): Parsing starts
-    push(state 0
+    push(state 0)
     ==
     lookup(0, `_UNDETERMINED_'): default reduction by rule 2
     executeAction(): of rule 2 ...
@@ -103,7 +103,7 @@ subsubsect(Error recovery --debug output)
     reduce(): by rule 2 to N-terminal `start'
     ==
     lookup(0, `start'): shift 1 (`start' processed)
-    push(state 1
+    push(state 1)
     ==
 a
 Syntax error
@@ -111,16 +111,15 @@ Syntax error
     lookup(1, `a' (97)): Not found. Start error recovery.
     errorRecovery(): 1 error(s) so far. State = 1
     errorRecovery(): state 1 is an ERROR state
-
     lookup(1, `_error_'): shift 3 (`_error_' processed)
-    push(state 3
+    push(state 3)
     lookup(3, `a' (97)): default reduction by rule 3
     pop(1) from stack having size 3
     pop(): next state: 1, token: `expr'
     reduce(): by rule 3 to N-terminal `expr'
     errorRecovery() REDUCE by rule 3, token = `expr'
     lookup(1, `expr'): shift 2 (`expr' processed)
-    push(state 2
+    push(state 2)
     errorRecovery() SHIFT state 2, continue with `a' (97)
     lookup(2, `a' (97)): default reduction by rule 1
     pop(2) from stack having size 3
@@ -128,13 +127,13 @@ Syntax error
     reduce(): by rule 1 to N-terminal `start'
     errorRecovery() REDUCE by rule 1, token = `start'
     lookup(0, `start'): shift 1 (`start' processed)
-    push(state 1
+    push(state 1)
     errorRecovery() SHIFT state 1, continue with `a' (97)
     lookup(1, `a' (97)): Not found. Continue error recovery.
 3+a
     nextToken(): using `NR'
     lookup(1, `NR'): shift 4 (`NR' processed)
-    push(state 4
+    push(state 4)
     errorRecovery() SHIFT state 4, continue with `_UNDETERMINED_'
     errorRecovery() COMPLETED: next state 4, no token yet
     ==
@@ -146,7 +145,7 @@ Syntax error
     reduce(): by rule 4 to N-terminal `expr'
     ==
     lookup(1, `expr'): shift 2 (`expr' processed)
-    push(state 2
+    push(state 2)
     ==
 [input terminated here]
     nextToken(): using `_EOF_'
@@ -158,7 +157,7 @@ Syntax error
     reduce(): by rule 1 to N-terminal `start'
     ==
     lookup(0, `start'): shift 1 (`start' processed)
-    push(state 1
+    push(state 1)
     ==
     lookup(1, `_EOF_'): ACCEPT
     ACCEPT(): Parsing successful

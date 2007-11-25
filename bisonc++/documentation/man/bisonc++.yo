@@ -685,8 +685,8 @@ the parser's base class.
         non-default recovery procedure is available once an tt(error) token is
         used in a production rule. When the parsing process throws
         bf(UNEXPECTED_TOKEN__) the recovery procedure is started (i.e., it is
-        started whenever a syntactical error is encountered or tt(ERROR()) is
-        called). 
+        started whenever a syntactical error is encountered or 
+        tt(ERROR)tt(()) is called). 
 
         The recovery procedure consists of (1) looking for the first state on
         the state-stack having an error-production, followed by (2) handling
@@ -707,7 +707,7 @@ the parser's base class.
     PARSE_ABORT = 1
         )
         (which are of course the bf(parse()) function's return values).
-     ))
+     )
 
 
 manpagesection(PRIVATE MEMBER FUNCTIONS)

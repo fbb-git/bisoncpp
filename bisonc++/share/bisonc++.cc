@@ -148,7 +148,7 @@ $insert 8 LTYPEresize
     d_stateStack__[d_stackIdx__] = d_state__ = state;
     *(d_vsp__ = &d_valueStack__[d_stackIdx__]) = d_val__;
 $insert 4 LTYPEpush
-$insert 4 debug  "push(state " << state << stype__(", semantic TOS = ", d_val__, ")")
+$insert 4 debug  "push(state " << state << stype__(", semantic TOS = ", d_val__, ")") << ')'
 }
 
 void \@Base::popToken__()
@@ -300,8 +300,7 @@ $insert 4 debug "errorRecovery(): " << d_nErrors__ << " error(s) so far. State =
 $insert 8 debug "errorRecovery(): pop state " << top__()
         pop__();
     }
-
-$insert 4 debug "errorRecovery(): state " << top__() << " is an ERROR state\n"
+$insert 4 debug "errorRecovery(): state " << top__() << " is an ERROR state"
 
     // In the error state, lookup a token allowing us to proceed.
     // Continuation may be possible following multiple reductions,
