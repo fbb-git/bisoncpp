@@ -20,11 +20,11 @@ int main(int argc)
                                                             " should be:\n"
         "        Mid-rule: s-type, j\n"
         "        s-type j scoped\n"
-        '\n';
+        "\n";
 
     int ret = parser.parse();
 
-    cout << '\n'
+    cout << "\n"
             "Parser returns " << ret << endl;
 
     return 0;
