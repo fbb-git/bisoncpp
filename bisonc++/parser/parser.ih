@@ -6,6 +6,7 @@
     // Add below here any includes etc. that are only 
     // required for the compilation of Parser's sources.
 
+#include <string.h>
 #include <iomanip>
 #include <sstream>
 #include <algorithm>

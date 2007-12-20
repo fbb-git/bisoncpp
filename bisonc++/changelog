@@ -1,3 +1,11 @@
+bisonc++ (2.4.1) 
+
+  * Implemented minor changes related to requirements imposed upon the code by
+    g++ 4.3.
+
+  * Generator/filter now uses the Datetime::rfc2822(), implmented since Bobcat
+    1.17.1 
+
 bisonc++ (2.4.0) 
 
   * Fixed missing entry in multiple reduction state tables:

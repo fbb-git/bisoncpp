@@ -36,8 +36,8 @@ inline bool Grammar::notRemovable(Symbol const *symbol, Grammar &object)
                             // currently testing 
         object.d_inspecting.find(symbol) != object.d_inspecting.end()
         ||                  // or a non-removable non-terminal
-        symbol->isNonTerminal() &&
-            object.d_derivable.find(symbol) == object.d_derivable.end()
+        (symbol->isNonTerminal() &&
+            object.d_derivable.find(symbol) == object.d_derivable.end())
         ;
 }
 
