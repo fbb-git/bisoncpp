@@ -2,6 +2,8 @@
 
 #include <errno.h>
 #include <cmath>
+#include <algorithm>
+
 #include "_a2x.h"
 
 #include "parser.h"

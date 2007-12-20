@@ -9,7 +9,7 @@
 
 using namespace std;
 
-int main(int argc)
+int main(int argc, char **argv)
 {
     cout << "Enter lines, each containing one integral value.\n"
             "Other lines (also empty lines) should result in a "

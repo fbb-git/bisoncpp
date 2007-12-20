@@ -4,7 +4,7 @@
 
 using namespace std;
 
-int main(int argc)
+int main(int argc, char **argv)
 {
     cout << "Enter (integral) expressions on separate lines, using "
                                                         "+ - * / ()\n"

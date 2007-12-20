@@ -4,11 +4,11 @@
 
 #include <iostream>
 
-#include "parser/Parser.h"
+#include "parser/parser.h"
 
 using namespace std;
 
-int main(int argc)
+int main(int argc, char **argv)
 {
     cout << "Enter lines containing  NR + NR =\n"
         "The numbers should be integral numbers.\n"

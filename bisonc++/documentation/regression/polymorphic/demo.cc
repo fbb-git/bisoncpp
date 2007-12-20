@@ -4,7 +4,7 @@
 
 #include "main.ih"
 
-int main(int argc)
+int main(int argc, char **argv)
 {
     if (isatty(STDIN_FILENO))
     {

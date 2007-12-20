@@ -8,7 +8,7 @@
 
 using namespace std;
 
-int main(int argc)
+int main(int argc, char **argv)
 {
     cout << "Enter integral numbers or empty lines.\n"
         "Other lines should result in a `syntax error'\n"

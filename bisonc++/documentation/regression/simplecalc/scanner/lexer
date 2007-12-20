@@ -2,7 +2,7 @@
     #define _SKIP_YYFLEXLEXER_
     #include "scanner.ih"
 
-    #include "../parser/Parser.h"
+    #include "../parser/parser.h"
 %}
 
 %option yyclass="Scanner" outfile="yylex.cc"

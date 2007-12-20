@@ -8,4 +8,6 @@
 // UN-comment if you don't want to prefix std:: 
 // for every symbol defined in the std. namespace:
 
+#include <cstdlib>
+
 using namespace std;
