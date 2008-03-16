@@ -95,7 +95,7 @@ void usage(string const &program_name)
 
     "   --scanner=<header-file> (-s):\n"
     "           include `header-file' declaring the class Scanner, and call\n"
-    "           d_scanner.yylex() in lex().\n"
+    "           d_scanner.yylex() from Parser::lex().\n"
 
     "   --scanner-debug: show de scanner's matched rules and returned "
                                                                 "tokens.\n"

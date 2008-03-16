@@ -1,3 +1,9 @@
+bisonc++ (2.4.2)
+
+  * scanner/yylex.cc removed from the distribution: flex will create a new
+    Scanner::yylex() member at each new distribution to prevent 
+    incompatibilities between earlier yylex.cc and later FlexLexer.h files.
+
 bisonc++ (2.4.1) 
 
   * Implemented minor changes related to requirements imposed upon the code by
