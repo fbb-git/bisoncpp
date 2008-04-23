@@ -1,3 +1,8 @@
+bisonc++ (2.4.3) (To be distributed)
+
+  * repaired segfault generated when the name of a non-existing file was
+    passed to bisonc++
+
 bisonc++ (2.4.2)
 
   * scanner/yylex.cc removed from the distribution: flex will create a new

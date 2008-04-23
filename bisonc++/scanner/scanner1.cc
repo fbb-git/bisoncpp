@@ -9,7 +9,7 @@ Scanner::Scanner(string const &fname)
     memset(d_commentChar, 0, 2);
 
     if (!d_in)
-        lineMsg() << "Can't read `" << fname << "'" << fatal;
+        FBB::lineMsg() << "Can't read `" << fname << "'" << fatal;
 
     d_fileInfo.push_back(FileInfo(fname, 0));   // for the first pushed
                                                 // element `second' is not
