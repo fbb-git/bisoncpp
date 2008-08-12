@@ -1,4 +1,4 @@
-bisonc++ (2.4.3) (To be distributed)
+bisonc++ (2.4.3)
 
   * repaired segfault generated when the name of a non-existing file was
     passed to bisonc++
