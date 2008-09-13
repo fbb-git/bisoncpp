@@ -5,7 +5,11 @@ void Generator::selectSymbolic(Terminal const *terminal,
 {
     if 
     (
-        terminal->isSymbolic()
+        (
+            terminal->isSymbolic()
+            ||
+            (terminal->isUsed() && terminal->isUndetermined())
+        )
         && 
         terminal->value() > Rules::eofTerminal()->value()
     )

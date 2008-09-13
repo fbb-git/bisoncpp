@@ -3,7 +3,7 @@
 void Generator::tokens(ostream &out) const
 {
     Terminal::ConstVector tokens;
- 
+
     for_each
     (
         d_rules.terminals().begin(), d_rules.terminals().end(), 

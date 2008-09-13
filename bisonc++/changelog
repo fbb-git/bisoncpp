@@ -1,3 +1,13 @@
+bisonc++ (2.4.4)
+
+  * typed terminal tokens (as used in, e.g., %type<fieldname>) were not
+    included in the parserbase's Tokens__ enum since their symbol type is left
+    at UNDETERMINED. tokens used in type lists can also be non-terminals, in
+    which case their symbol type is changed accordingly. In 2.4.4. a symbol is
+    selected for inclusion in the Tokens__ enum if it's a terminal token but
+    also if it's a symbol that has been used in the grammar although its 
+    symbol type is left at UNDETERMINED (in generator/selectsymbolic.cc)
+
 bisonc++ (2.4.3)
 
   * repaired segfault generated when the name of a non-existing file was
