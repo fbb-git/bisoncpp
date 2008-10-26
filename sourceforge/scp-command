@@ -10,8 +10,7 @@ cd $WD
 yodl2html index.yo || exit 1
 
 scp ../bisonc++/tmp/man*/*.html index.html \
-    fbb@shell.sourceforge.net:/home/groups/b/bi/bisoncpp/htdocs/
+    fbb,bisoncpp@web.sourceforge.net:htdocs/
 
-#scp bison.jpg \
-#    fbb@shell.sourceforge.net:/home/groups/b/bi/bisoncpp/htdocs/bison.jpg
+#scp bison.jpg fbb,bisoncpp@web.sourceforge.net:htdocs/bison.jpg
 
