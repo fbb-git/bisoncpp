@@ -1,3 +1,8 @@
+bisonc++ (2.4.5)
+
+  * DateTime (generator/filter.cc) adapted due to change of Bobcat's DateTime 
+    interface
+
 bisonc++ (2.4.4)
 
   * typed terminal tokens (as used in, e.g., %type<fieldname>) were not

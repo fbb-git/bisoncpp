@@ -2,7 +2,7 @@
 
 namespace
 {
-    DateTime dtime;
+    DateTime dtime(DateTime::LOCALTIME);
 }
 
 void Generator::filter(istream &in, ostream &out) const

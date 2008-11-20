@@ -16,7 +16,7 @@ tgz()
 }
 
 case "$1" in 
-    (o)
+    (d)
         tgz ${HOME}/debian/${PROJECT}/tarballs/${PROJECT}_${VERSION}.orig.tar.gz
     ;;
 
@@ -25,8 +25,7 @@ case "$1" in
 
         if [ "$1" == "u" ]
         then
-            scp ${PROJECT}_${VERSION}.tar.gz \
-                                        oosix:ftp/debian/${PROJECT}
+            scp ${PROJECT}_${VERSION}.tar.gz oosix:ftp/debian/${PROJECT}
             md5sum ${PROJECT}_${VERSION}.tar.gz
         fi
     ;;
@@ -34,10 +33,10 @@ case "$1" in
     (*)
         echo "
 Provide arg:
-    o (orig.tar.gz) to create a local .orig.tar.gz archive in 
-                    ../debian/${PROJECT}/tarballs
-    t (tar.gz)      to create ${PROJECT}_${VERSION}.tar.gz in this directory
-    u (upload)      same as 't', but upload to oosix and show MD5 hash
+    d (debian)  to create a local .orig.tar.gz archive in 
+                ../debian/${PROJECT}/tarballs
+    l (local)   to create ${PROJECT}_${VERSION}.tar.gz in this directory
+    u (upload)  same as 't', but upload to oosix and show MD5 hash
 "
     exit 1
     ;;
