@@ -1,7 +1,12 @@
 #!/bin/bash
 
-(cd ../bisonc++; build release)
+WD=`pwd`
 
-yodl2html index.yo
+cd ../bisonc++ 
+    build man || exit 1
+cd $WD
 
-scp index.html fbb@shell.sourceforge.net:/home/groups/b/bi/bisoncpp/htdocs/
+yodl2html index.yo || exit 1
+
+scp index.html fbb,bisoncpp@web.sourceforge.net:htdocs/
+
