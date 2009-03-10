@@ -12,5 +12,4 @@ yodl2html index.yo || exit 1
 scp ../bisonc++/tmp/man*/*.html index.html \
     fbb,bisoncpp@web.sourceforge.net:htdocs/
 
-#scp bison.jpg fbb,bisoncpp@web.sourceforge.net:htdocs/bison.jpg
 

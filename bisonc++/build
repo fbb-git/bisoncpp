@@ -57,6 +57,12 @@ void main(int argc, list argv, list envp)
     if (option == "rebuild")
         rebuild(strip);
 
+    if (option == "sourceforge")
+    {
+        special();
+        exit(0);
+    }
+
     printf("Usage: build [-p] what\n"
         "Where `what' is one of:\n"
         "   clean              - clean up remnants of previous compilations\n"
@@ -74,7 +80,9 @@ void main(int argc, list argv, list envp)
                                                                
         "                        in the INSTALL.cf file, optionally "
                                                             "below <base>\n"
-        "   installprog <base> - only install the program and skeleton files\n"
+        "   installprog <base> - only install the program and skeleton "
+                                                                    "files\n" 
+        "   sourceforge        - create files for sourceforge index update\n"
         "\n"
         "If the environment variable DRYRUN is defined, no commands are\n"
         "actually executed\n"
