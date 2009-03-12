@@ -20,7 +20,7 @@ case "$1" in
         tgz ${HOME}/debian/${PROJECT}/tarballs/${PROJECT}_${VERSION}.orig.tar.gz
     ;;
 
-    (t|u)
+    (l|u)
         tgz ${PROJECT}_${VERSION}.tar.gz
 
         if [ "$1" == "u" ]
