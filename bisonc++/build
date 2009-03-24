@@ -37,10 +37,7 @@ void main(int argc, list argv, list envp)
         clean(1);
 
     if (option == "install")
-        install(element(2, argv), 1);
-
-    if (option == "installprog")
-        install(element(2, argv), 0);
+        install(argv[2], argv[3]);
 
     if (option == "man")
         manpage();
@@ -75,13 +72,18 @@ void main(int argc, list argv, list envp)
         "   rebuild [strip]    - recreate the parser using bisonc++ created\n"
         "                        by `build program' (optionally strip the\n"
         "                        executable)\n"
-        "   install <base>     - install the software in the locations "
-                                                            "defined\n"
-                                                               
+        "   install program <base> - install the program in the locations "
+                                                        "defined\n"
         "                        in the INSTALL.cf file, optionally "
                                                             "below <base>\n"
-        "   installprog <base> - only install the program and skeleton "
-                                                                    "files\n" 
+        "   install man <base> - install the man pages in the location "
+                                                        "defined\n"
+        "                        in the INSTALL.cf file, optionally "
+                                                            "below <base>\n"
+        "   install manual <base> - install the manual in the location "
+                                                        "defined\n"
+        "                        in the INSTALL.cf file, optionally "
+                                                            "below <base>\n"
         "   sourceforge        - create files for sourceforge index update\n"
         "\n"
         "If the environment variable DRYRUN is defined, no commands are\n"

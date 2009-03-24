@@ -1,3 +1,10 @@
+bisonc++ (2.4.6)
+
+  * Changed the build script to allow finer control over construction and
+    installation of parts of the package
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 24 Mar 2009 19:16:10 +0100
+
 bisonc++ (2.4.5)
 
   * DateTime (generator/filter.cc) adapted due to change of Bobcat's DateTime 
