@@ -1,5 +1,9 @@
 #!/bin/bash
 PROJECT=bisonc++
+
+if [ -e /usr/share/common-licenses/GPL ] ; then
+    cp /usr/share/common-licenses/GPL ${PROJECT}/LICENSE
+fi
                                         # load the version
 VERSION=`grep VERSION ${PROJECT}/VERSION |
     sed 's/#define[[:space:]]\+VERSION[[:space:]]\+"\([^"]*\).*/\1/'`
@@ -9,10 +13,8 @@ DISTRIBUTION=${PROJECT}-${VERSION}      # define the distribution's dir name
 tgz()
 {
     ln -s ${PROJECT} ${DISTRIBUTION}        # distribution's dir name
-
     tar czvf $1 --exclude-from=excluded  ${DISTRIBUTION}/*
-
-    rm ${DISTRIBUTION}                      # rm the link
+    rm ${DISTRIBUTION} ${PROJECT}/LICENSE  # rm the link/LICENSE file
 }
 
 case "$1" in 
@@ -27,6 +29,7 @@ case "$1" in
         then
             scp ${PROJECT}_${VERSION}.tar.gz oosix:ftp/debian/${PROJECT}
             md5sum ${PROJECT}_${VERSION}.tar.gz
+            rm ${PROJECT}_${VERSION}.tar.gz
         fi
     ;;
 
