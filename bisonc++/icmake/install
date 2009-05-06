@@ -14,6 +14,7 @@ void install(string what, string where)
         run("cp share/* " + where + SKEL);
 
         printf("  installing the information directly in and under $DOC\n");
+        md(where + DOC);
         run("gzip -9 < changelog > " + where + DOC + "/changelog.gz");
     }
 

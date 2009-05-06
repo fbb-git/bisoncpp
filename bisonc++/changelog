@@ -1,3 +1,11 @@
+bisonc++ (2.4.7)
+
+  * Streams processed by an `#include' directive were not properly closed, 
+    resulting in a memory leak. The Scanner's code was modified to plug that
+    leak. 
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Wed, 06 May 2009 09:36:02 +0200
+
 bisonc++ (2.4.6)
 
   * Changed the build script to allow finer control over construction and

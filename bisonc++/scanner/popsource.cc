@@ -13,7 +13,8 @@ bool Scanner::popSource(yy_buffer_state *current)
     yy_switch_to_buffer(d_state.top());
     d_state.pop();
 
-    yylineno = d_fileInfo.back().second;
+    yylineno = d_fileInfo.back().d_lineno;
+    delete d_fileInfo.back().d_in;
     d_fileInfo.pop_back();
 
     return true;

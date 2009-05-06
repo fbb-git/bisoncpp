@@ -18,7 +18,19 @@
 
 class Scanner: public yyFlexLexer
 {
-    typedef std::pair <std::string, size_t> FileInfo;
+    struct FileInfo
+    {
+        std::string d_name;
+        size_t      d_lineno;
+        std::ifstream    *d_in;
+        
+        FileInfo(std::string name, size_t lineno)
+        :
+            d_name(name),
+            d_lineno(lineno),
+            d_in(new std::ifstream(name.c_str()))
+        {}
+    };
 
     std::ifstream   d_in;
     size_t          d_retWS;
@@ -91,12 +103,12 @@ inline size_t Scanner::number() const
 inline bool Scanner::checkFilename(FileInfo const &info, 
                                     std::string const &nextSource)
 {
-    return info.first == nextSource;
+    return info.d_name == nextSource;
 }
 
 inline std::string const &Scanner::sourceName() const
 {
-    return d_fileInfo.back().first;
+    return d_fileInfo.back().d_name;
 }
 
 inline bool Scanner::hasBlock() const

@@ -10,7 +10,7 @@ int Scanner::yytextChk(int *nKept, int minLength, int ret)
     while (idx-- && (yytext[idx] == ' ' || yytext[idx] == '\t'))
         ;
 
-    if (idx > 0 || yytext[0] != ' ' && yytext[0] != '\t')
+    if ((idx > 0 || yytext[0] != ' ') && yytext[0] != '\t')
         ++idx;
     
     *nKept = idx;
