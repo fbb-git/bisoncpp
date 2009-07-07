@@ -14,7 +14,7 @@ bool Scanner::popSource(yy_buffer_state *current)
     d_state.pop();
 
     yylineno = d_fileInfo.back().d_lineno;
-    delete d_fileInfo.back().d_in;
+    delete d_fileInfo.back().d_in;      // closes the stream as well
     d_fileInfo.pop_back();
 
     return true;
