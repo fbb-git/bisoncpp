@@ -1,5 +1,5 @@
 
-#define COPT               "-Wall -O3"
+#define COPT               "-Wall -O3 --std=c++0x"
 
 #define ECHO_REQUEST       1
 
