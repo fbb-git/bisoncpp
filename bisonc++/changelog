@@ -1,3 +1,10 @@
+bisonc++ (2.4.8)
+
+  * Recompilation using option --std=c++0x, required because of Bobcat's use
+    of C++0x syntax.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 05 Sep 2009 17:25:56 +0200
+
 bisonc++ (2.4.7)
 
   * Streams processed by an `#include' directive were not properly closed, 
