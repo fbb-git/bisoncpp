@@ -21,7 +21,8 @@ void Parser::showFilenames() const
         "  Class header:                `" << d_classHeader << "'\n"
         "  Implementation header:       `" << d_implementationHeader << "'\n"
         "  Parser Implementation:       `" << d_parsefunSource << "'\n"
-        "  Verbose grammar description: `" << d_verboseName << "'\n" << endl;
+        "  Verbose grammar description: `" << d_verboseName << "'\n"
+        "\n";
 }
 
 

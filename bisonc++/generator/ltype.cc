@@ -8,7 +8,7 @@ void Generator::ltype(ostream &out) const
     key(out);
 
     if (!d_parser.ltype().empty())
-        out << d_parser.ltype() << endl;
+        out << d_parser.ltype() << '\n';
     else
         out <<  
             "    struct LTYPE__\n"

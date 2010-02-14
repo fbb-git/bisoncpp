@@ -21,5 +21,5 @@ void Writer::srTables() const
     for_each(State::begin(), State::end(),
              FnWrap1c<State const *, SRContext &>(srTable, context));
 
-    *d_out << endl;
+    *d_out << '\n';
 }

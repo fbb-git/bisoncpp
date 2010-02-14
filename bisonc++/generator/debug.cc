@@ -11,10 +11,10 @@ void Generator::debug(ostream &out) const
         setw(d_indent + 4) << "" << flush;
 
     if (*d_line.rbegin() != '+')
-        out <<  "s_out__ << " << d_line << " << \"\\n\" << dflush;" << endl;
+        out <<  "s_out__ << " << d_line << " << \"\\n\" << dflush;\n";
     else
     {
         d_line.resize(d_line.length() - 1);
-        out <<  "s_out__ << " << d_line << ";" << endl;
+        out <<  "s_out__ << " << d_line << ";\n";
     }
 }

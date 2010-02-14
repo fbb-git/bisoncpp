@@ -11,18 +11,18 @@ ostream &State::insertExt(ostream &out) const
     Next::inserter(&Next::transitionKernel);
 
     for (size_t idx = 0; idx < d_itemVector.size(); ++idx)
-        out <<  idx << ": " << d_itemVector[idx] << endl;
+        out <<  idx << ": " << d_itemVector[idx] << '\n';
 
 
     for (size_t idx = 0; idx < d_nextVector.size(); ++idx)
-        out << "  " << idx << ": " << d_nextVector[idx] << endl;
+        out << "  " << idx << ": " << d_nextVector[idx] << '\n';
 
     if (d_reducible.size())
     {
         out << "  Reduce item(s): ";
         copy(d_reducible.begin(), d_reducible.end(), 
             ostream_iterator<size_t>(out, " "));
-        out << endl;                    
+        out << '\n';                    
     }
 
     return out << d_srConflict << d_rrConflict << '\n';

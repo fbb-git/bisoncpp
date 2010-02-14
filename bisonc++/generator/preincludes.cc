@@ -6,5 +6,5 @@ void Generator::preIncludes(std::ostream &out) const
         return;
 
     key(out);
-    out <<  "#include " << d_parser.preInclude() << endl;
+    out <<  "#include " << d_parser.preInclude() << '\n';
 }

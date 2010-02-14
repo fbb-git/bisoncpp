@@ -3,7 +3,7 @@
 void Generator::actionCases(ostream &out) const
 {
     key(out);
-    out << endl;
+    out << '\n';
 
     vector<Production const *> const &productions = d_rules.productions();
 
