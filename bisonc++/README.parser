@@ -15,7 +15,7 @@ subdirectory parser/spec contains the grammar specification subfiles:
     parser/spec/symbols
     parser/spec/rules
     parser/spec/productionlist
-    parser/spec/aux
+    parser/spec/auxiliary
 
 
     parser/grammar: 
@@ -51,6 +51,6 @@ subdirectory parser/spec contains the grammar specification subfiles:
         Defines the grammar recognizing the production rules recognized by
     Bisonc++. 
 
-    parser/spec/aux
+    parser/spec/auxiliary
         Defines rules that are used in at least two specification files. These
     rules all end in _a.

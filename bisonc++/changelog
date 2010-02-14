@@ -1,3 +1,8 @@
+bisonc++ (2.4.9)    (ISN)
+
+  * parser/spec/aux renamed to parser/spec/auxiliary to avoid file/device
+    confusion on some systems
+
 bisonc++ (2.4.8)
 
   * Recompilation using option --std=c++0x, required because of Bobcat's use

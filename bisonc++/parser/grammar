@@ -52,4 +52,4 @@ two_percents:
 %include spec/rules
 %include spec/productionlist
 
-%include spec/aux
+%include spec/auxiliary
