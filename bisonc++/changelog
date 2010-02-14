@@ -3,6 +3,20 @@ bisonc++ (2.4.9)    (ISN)
   * parser/spec/aux renamed to parser/spec/auxiliary to avoid file/device
     confusion on some systems
 
+  * rules/addproduction:
+    // currentRule could be a 0-pointer, in which case don't do anything...
+    // currentRule being a 0-pointer occurs in the erroneous grammar submitted
+    // by Justin Madru about which he rightfully remarked that even though
+    // erroneous bisonc++ shouldn't crash on it:  
+    // 
+    //    %token X declaration_list
+    //    %%
+    //    declaration_list:
+    //        declaration_list X
+    //    |
+    //        X
+    //    ;
+
 bisonc++ (2.4.8)
 
   * Recompilation using option --std=c++0x, required because of Bobcat's use

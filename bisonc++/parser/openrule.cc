@@ -25,6 +25,3 @@ void Parser::openRule(string *ruleNamePtr)
     }
     delete ruleNamePtr;
 }
-
-
-

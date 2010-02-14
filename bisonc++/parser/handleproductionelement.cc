@@ -2,6 +2,7 @@
 
 void Parser::handleProductionElement(PTag *last)
 {
+        // maybe also when currentRule == 0 ? See addProduction
     if (!d_rules.hasRules())    // may happen if the first rule could not be
         return;                 // defined because of token/rulename clash
 

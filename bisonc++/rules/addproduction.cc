@@ -2,6 +2,9 @@
 
 void Rules::addProduction()
 {
+    if (d_currentRule == 0)
+        return;
+
     d_currentProduction = new Production(d_currentRule);// create production
 
     d_production.push_back(d_currentProduction);        // put production in
