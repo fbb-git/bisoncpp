@@ -3,7 +3,7 @@
 size_t SRConflict::removeShifts(Next::Vector &nextVector)
 {
     for_each(d_rmShift.begin(), d_rmShift.end(),
-        FnWrap1c<size_t, Next::Vector &>(Next::removeShift, nextVector));
+        FnWrap::unary(Next::removeShift, nextVector));
 
     return d_rmShift.size();
 }

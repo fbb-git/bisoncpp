@@ -1,10 +1,10 @@
 #include "stateitem.ih"
 
 bool StateItem::containsKernelItem(Item const &searchItem, 
-                                   KernelContext const &context)
+                                   size_t nKernelItems, Vector const &vector)
 {
-    for (size_t idx = 0; idx < context.nKernelItems; ++idx)
-        if (searchItem == context.vector[idx].d_item)
+    for (size_t idx = 0; idx != nKernelItems; ++idx)
+        if (searchItem == vector[idx].d_item)
             return true;
 
     return false;

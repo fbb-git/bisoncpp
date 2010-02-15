@@ -1,29 +1,30 @@
 #include "production.ih"
 
-void Production::insertAction(Production const *prod, IAContext &context)
+void Production::insertAction(Production const *prod, std::ostream &out,
+            bool lineDirectives, size_t indent)
+
 {
     if (! prod->hasAction())
         return;
 
-    context.out <<  setw(context.indent) << "" << 
-                                    "case " << prod->nr() << ":\n";
+    out <<  setw(indent) << "" << "case " << prod->nr() << ":\n";
     size_t begin = 0;
     Block const &block = prod->action();
 
-    if (context.lineDirectives)
-        context.out << "#line " << block.line() << " \"" << block.source() <<
+    if (lineDirectives)
+        out << "#line " << block.line() << " \"" << block.source() <<
                        "\"\n";
 
     while (true)
     {
         size_t end = block.find_first_of('\n', begin);
-        context.out <<  setw(context.indent) << "" <<  
+        out <<  setw(indent) << "" <<  
                                     block.substr(begin, end - begin) << "\n";
         if (end == string::npos)
             break;
         begin = end + 1;
     }
-    context.out <<  setw(context.indent) << "" << "break;\n"
+    out <<  setw(indent) << "" << "break;\n"
            "\n";
 }
 

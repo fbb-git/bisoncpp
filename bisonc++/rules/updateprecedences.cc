@@ -8,7 +8,5 @@
 void Rules::updatePrecedences()
 {   
     for_each(d_production.begin(), d_production.end(),
-        FnWrap1c<Production *, Terminal::Vector const &>(
-                updatePrecedence, d_terminal)
-    );
+        FnWrap::unary(updatePrecedence, d_terminal));
 }

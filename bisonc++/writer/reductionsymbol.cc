@@ -1,6 +1,7 @@
 #include "writer.ih"
 
-void Writer::reduction(Element const *symb, ReductionContext &context)
+void Writer::reductionSymbol(Element const *symb, size_t ruleNr,
+                             FBB::Table &table)
 {
     Symbol const *symbol = dynamic_cast<Symbol const *>(symb);
     ostringstream out;
@@ -9,7 +10,7 @@ void Writer::reduction(Element const *symb, ReductionContext &context)
     NonTerminal::inserter(&NonTerminal::value);
 
     out << symbol;
-    context.table << out.str() << -static_cast<int>(context.ruleNr);
+    table << out.str() << -static_cast<int>(ruleNr);
 
     out.str("");
 
@@ -17,5 +18,5 @@ void Writer::reduction(Element const *symb, ReductionContext &context)
     NonTerminal::inserter(&NonTerminal::plainName);
 
     out << "// " << symbol;
-    context.table << out.str();
+    table << out.str();
 }

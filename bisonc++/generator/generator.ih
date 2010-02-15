@@ -6,7 +6,7 @@
 #include <iomanip>
 
 #include <bobcat/msg>
-#include <bobcat/fnwrap1c>
+#include <bobcat/fnwrap>
 #include <bobcat/datetime>
 
 #include "../rules/rules.h"

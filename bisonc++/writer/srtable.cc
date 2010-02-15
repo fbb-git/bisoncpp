@@ -1,6 +1,7 @@
 #include "writer.ih"
 
-void Writer::srTable(State const *sp, SRContext &context)
+void Writer::srTable(State const *sp,  std::string const &baseclassScope,
+                     FBB::Table &table, std::ostream &out)
 {
     bool acceptState = sp->isAcceptState();
 
@@ -20,29 +21,28 @@ void Writer::srTable(State const *sp, SRContext &context)
         stateType |= State::DEF_RED;
 
 
-    context.out << "\n"                     // Write the table header
+    out << "\n"                     // Write the table header
         "SR__ " << s_threadConst << "s_" << sp->idx() << "[] =\n"
         "{\n";
 
-    context.table.clear();
+    table.clear();
 
-    context.table << State::typeName(stateType) << 
+    table << State::typeName(stateType) << 
             sp->transitions() + sp->reductionsLAsize() + acceptState + 1 <<
             def;
 
-    transitions(context.table, sp->next());
+    transitions(table, sp->next());
 
     if (acceptState)
-        context.table << Rules::eofTerminal() << "PARSE_ACCEPT" << def;
+        table << Rules::eofTerminal() << "PARSE_ACCEPT" << def;
 
-    reductions(context.table, *sp);        
+    reductions(table, *sp);        
 
-    context.table << 0 << 
+    table << 0 << 
         (defaultReduction ? -static_cast<int>(defaultReduction->nr()) : 0) <<
         def;
 
-    context.out << context.table << // context.table ends in a newline
-                   "};\n";
+    out << table << "};\n";             // table ends in a newline
 }
 
 

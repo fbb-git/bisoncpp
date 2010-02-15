@@ -53,24 +53,12 @@ class Production: public std::vector<Symbol *>
         void setPrecedence(Terminal const *terminal);
 
         static Production const *start();
-
-        struct IAContext                    // insertActionContext
-        {
-            std::ostream &out;
-            bool lineDirectives;
-            size_t indent;
-        };
-        static void insertAction(Production const *prod, IAContext &context);
+        static void insertAction(Production const *prod, std::ostream &out,
+                                 bool lineDirectives, size_t indent);
 
         static void setStart(Production const *production);
-
-        struct TermToNontermContext
-        {
-            Symbol *terminal;
-            Symbol *nonTerminal;
-        };
-        static void termToNonterm(Production *pPtr, 
-                                  TermToNontermContext &t2n);
+        static void termToNonterm(Production *pPtr, Symbol *terminal, 
+                                                    Symbol *nonTerminal);
 
         static void unused(Production const *production);
         static bool notUsed();
@@ -157,9 +145,9 @@ inline bool isTerminal(Symbol const *symbol)
 }
 
 inline void Production::termToNonterm(Production *pPtr, 
-                                      TermToNontermContext &t2n)
+                                      Symbol *terminal, Symbol *nonTerminal)
 {
-    std::replace(pPtr->begin(), pPtr->end(), t2n.terminal, t2n.nonTerminal);
+    std::replace(pPtr->begin(), pPtr->end(), terminal, nonTerminal);
 }
 
 #endif

@@ -22,14 +22,11 @@ bool Grammar::derivable(Symbol const *symbol)
                                 // then `symbol' is derivable.
     bool ret = 
         find_if(productions.begin(), productions.end(),
-            FnWrap1c<Production const *, Grammar &, bool>(isDerivable, *this)
-        )
+            FnWrap::unary(isDerivable, *this))
             != productions.end()
         ||
         find_if(productions.begin(), productions.end(),
-            FnWrap1c<Production const *, Grammar &, bool>(becomesDerivable, 
-                                                        *this)
-        ) 
+            FnWrap::unary(becomesDerivable, *this)) 
             != productions.end();
 
     if (ret)

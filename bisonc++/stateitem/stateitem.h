@@ -56,22 +56,15 @@ class StateItem
         Symbol const *precedence() const;   // a Terminal
         size_t nr() const;                  // the item's production number
 
-        struct APContext
-        {
-            StateItem::Vector &stateItem;
-            size_t idx;
-        };
         static void addProduction(Production const *production, 
-                                  APContext &apContext);
+                                  StateItem::Vector &stateItem,
+                                  size_t idx);
+
         static bool propagateLA(StateItem &stateItem, Vector &vector);
 
-        struct KernelContext
-        {
-            size_t nKernelItems;
-            Vector const &vector;
-        };
         static bool containsKernelItem(Item const &item, 
-                                       KernelContext const &context);
+                                       size_t nKernelItems,
+                                       Vector const &vector);
 
         static bool lookaheadContains(StateItem const &stateItem,
                                       Symbol const *symbol);
@@ -87,13 +80,8 @@ class StateItem
         std::ostream &itemContext(std::ostream &out) const;
 
     private:
-
-        struct PropContext
-        {
-            Vector       &vector;
-            LookaheadSet proposedLA;
-        };
-        static void propagate(size_t idx, PropContext &context);
+        static void propagate(size_t idx, 
+                              Vector &vector, LookaheadSet const &proposedLA);
 };
 
 inline bool StateItem::nextEnlarged() const

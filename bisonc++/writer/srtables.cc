@@ -16,10 +16,8 @@ void Writer::srTables() const
 
     table << Align(2, std::left);
 
-    SRContext context = {d_baseclass, table, *d_out};
-
     for_each(State::begin(), State::end(),
-             FnWrap1c<State const *, SRContext &>(srTable, context));
+             FnWrap::unary(srTable, d_baseclass, table, *d_out));
 
     *d_out << '\n';
 }

@@ -35,14 +35,14 @@
 
 void SRConflict::visitReduction(size_t idx, SRConflict &context)
 {
-    Next::ConstIter nextIter = context.d_nextVector.begin();
+    auto nextIter = context.d_nextVector.begin();
 
     while (true)
     {
         nextIter =                  // check whether the a nextVector symbol
             find_if(                // is in the reduction item's LA set.
                 nextIter, context.d_nextVector.end(), 
-                FnWrap1c<Next const &, LookaheadSet const &, bool>(
+                FnWrap::unary(
                     Next::inLAset, context.d_itemVector[idx].lookaheadSet())
             );
 

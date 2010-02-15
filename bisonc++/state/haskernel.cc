@@ -4,12 +4,6 @@
 
 bool State::hasKernel(State const *state, Item::Vector const &searchKernel)
 {
-    StateItem::KernelContext context = 
-    {
-        state->d_nKernelItems,
-        state->d_itemVector
-    };
-
     return state->d_nKernelItems == searchKernel.size() 
             &&
            searchKernel.size() ==
@@ -17,13 +11,8 @@ bool State::hasKernel(State const *state, Item::Vector const &searchKernel)
                 count_if
                 (
                     searchKernel.begin(), searchKernel.end(), 
-                    FnWrap1c
-                    <
-                        Item const &, 
-                        StateItem::KernelContext const &, 
-                        bool
-                    >
-                    (StateItem::containsKernelItem, context)
+                    FnWrap::unary(StateItem::containsKernelItem, 
+                                 state->d_nKernelItems, state->d_itemVector)
                 )
            );
 }

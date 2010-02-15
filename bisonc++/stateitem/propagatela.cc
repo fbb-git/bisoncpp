@@ -17,18 +17,14 @@ bool StateItem::propagateLA(StateItem &stateItem, Vector &vector)
 
     stateItem.d_LA_enlarged = false;
     stateItem.d_nextEnlarged = true;
-    
-    PropContext context = 
-    {
-        vector,
-        LookaheadSet()
-    };
 
-    if (stateItem.d_item.firstBeyondDot(&context.proposedLA))
-        context.proposedLA += stateItem.d_LA;
+    LookaheadSet proposedLA;
+    
+    if (stateItem.d_item.firstBeyondDot(&proposedLA))
+        proposedLA += stateItem.d_LA;
 
     for_each(stateItem.d_child.begin(), stateItem.d_child.end(), 
-        FnWrap1c<size_t, PropContext &>(propagate, context));
+        FnWrap::unary(propagate, vector, proposedLA));
 
     return true;
 }

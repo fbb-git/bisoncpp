@@ -7,8 +7,7 @@ void Generator::tokens(ostream &out) const
     for_each
     (
         d_rules.terminals().begin(), d_rules.terminals().end(), 
-        FnWrap1c<Terminal const *, Terminal::ConstVector *>(selectSymbolic, 
-                                                          &tokens)
+        FnWrap::unary(selectSymbolic, &tokens)
     );
  
     key(out);

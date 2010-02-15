@@ -2,12 +2,12 @@
 
 void Writer::reduction(Table &table, StateItem const &stateItem)
 {
-    ReductionContext context = {stateItem.nr(), table};
+    size_t ruleNr = stateItem.nr();
 
     for_each(
         stateItem.lookaheadSet().begin(), stateItem.lookaheadSet().end(),
-        FnWrap1c<Element const *, ReductionContext &>(reduction, context));
+        FnWrap::unary(reductionSymbol, ruleNr, table));
 
     if (stateItem.lookaheadSet().hasEOF())
-        reduction(Rules::eofTerminal(), context);
+        reductionSymbol(Rules::eofTerminal(), ruleNr, table);
 }

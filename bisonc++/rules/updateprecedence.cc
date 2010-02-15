@@ -6,7 +6,7 @@ void Rules::updatePrecedence(Production *production,
     if (production->precedence())       // a precedence has already been set
         return;
 
-    Production::const_iterator symbolIter = 
+    auto symbolIter = 
         find_if(production->begin(), production->end(), isTerminal);
 
     if (symbolIter != production->end())

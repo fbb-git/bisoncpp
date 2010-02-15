@@ -8,7 +8,7 @@
 
 #include <bobcat/msg>
 #include <bobcat/arg>
-#include <bobcat/fnwrap1c>
+#include <bobcat/fnwrap>
 #include <bobcat/indent>
 
 #include "../rules/rules.h"

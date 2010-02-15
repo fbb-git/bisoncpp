@@ -17,15 +17,9 @@ void State::addProductions(Symbol const *symbol, size_t idx)
     Production::Vector const &productions = 
                         NonTerminal::downcast(symbol)->productions();
 
-    StateItem::APContext context = 
-    {
-        d_itemVector,
-        idx,
-    };
-
     for_each(productions.begin(), productions.end(),
-            FnWrap1c<Production const *, StateItem::APContext &>(
-                StateItem::addProduction, context));
+            FnWrap::unary(
+                StateItem::addProduction, d_itemVector, idx));
 }
 
 

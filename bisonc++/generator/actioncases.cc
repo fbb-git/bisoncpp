@@ -7,13 +7,11 @@ void Generator::actionCases(ostream &out) const
 
     vector<Production const *> const &productions = d_rules.productions();
 
-    Production::IAContext context = {out, d_parser.lines(), d_indent};
-
     for_each
     (
         productions.begin(), productions.end(), 
-        FnWrap1c<Production const *, Production::IAContext &>
-              (&Production::insertAction, context)
+        FnWrap::unary(Production::insertAction, out, d_parser.lines(), 
+                                                d_indent)
     );
 }
 

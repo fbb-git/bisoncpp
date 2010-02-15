@@ -1,9 +1,11 @@
-bisonc++ (2.4.9)    (ISN)
+bisonc++ (2.5.0)    (ISN)
 
   * Renamed parser/spec/aux to parser/spec/auxiliary to avoid file/device
     confusion on some systems
 
   * Removed inclusions of superfluous bobcat/fnwrap1c headers
+
+  * Replaced all FnWrap1c calls by FnWrap::unary
 
   * Added check for d_currentRule == 0 in rules/addproduction. d_currentRule
     could be a 0-pointer, in which case addproduction shouldn't do anything.

@@ -34,41 +34,23 @@ class Writer
         void insert(Terminal::ConstVector const &tokens) const;
 
     private:
-        struct TokenContext
-        {
-            size_t lastValue;
-            std::ostream &out;
-        };
-        static void insert(Terminal const *token, TokenContext &context);
-
+        static void insertToken(Terminal const *token, size_t lastValue,
+                                std::ostream &out); 
         static void terminalSymbol(Terminal const *terminal, 
                                     std::ostream &out);
         static void nonTerminalSymbol(NonTerminal const *nonTerminal, 
                                     std::ostream &out);
-        static void srTable();
-
-        struct SRContext
-        {
-            std::string const &baseclassScope;
-            FBB::Table &table;
-            std::ostream &out;
-        };
-
         static void productionInfo(Production const *production, 
                                    std::ostream &out);
-        static void srTable(State const *state, SRContext &sac);
+        static void srTable(State const *state, 
+                            std::string const &baseclassScope,
+                            FBB::Table &table, std::ostream &out);
         static void transitions(FBB::Table &table, Next::Vector const &next);
         static void transition(Next const &next, FBB::Table &table);
-
         static void reductions(FBB::Table &, State const &state);
         static void reduction(FBB::Table &, StateItem const &stateItem);
-
-        struct ReductionContext
-        {
-            size_t ruleNr;
-            FBB::Table &table;
-        };
-        static void reduction(Element const *sym, ReductionContext &context);
+        static void reductionSymbol(Element const *sym, size_t ruleNr, 
+                                    FBB::Table &table);
 };
 
 inline void Writer::useStream(std::ostream &out)
