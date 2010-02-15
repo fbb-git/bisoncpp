@@ -2,8 +2,12 @@
 
 void Rules::addProduction()
 {
-    if (d_currentRule == 0)
-        return;
+    if (d_currentRule == 0)                             // there may be no 
+        return;                                         // rule (cf. Justin
+                                                        // Madru's grammar in
+                                                        // the changelog. In
+                                                        // that case there's
+                                                        // also no production.
 
     d_currentProduction = new Production(d_currentRule);// create production
 

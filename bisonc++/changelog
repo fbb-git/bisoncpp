@@ -1,21 +1,23 @@
 bisonc++ (2.4.9)    (ISN)
 
-  * parser/spec/aux renamed to parser/spec/auxiliary to avoid file/device
+  * Renamed parser/spec/aux to parser/spec/auxiliary to avoid file/device
     confusion on some systems
 
-  * rules/addproduction:
-    // currentRule could be a 0-pointer, in which case don't do anything...
-    // currentRule being a 0-pointer occurs in the erroneous grammar submitted
-    // by Justin Madru about which he rightfully remarked that even though
-    // erroneous bisonc++ shouldn't crash on it:  
-    // 
-    //    %token X declaration_list
-    //    %%
-    //    declaration_list:
-    //        declaration_list X
-    //    |
-    //        X
-    //    ;
+  * Removed inclusions of superfluous bobcat/fnwrap1c headers
+
+  * Added check for d_currentRule == 0 in rules/addproduction. d_currentRule
+    could be a 0-pointer, in which case addproduction shouldn't do anything.
+    d_currentRule is a 0-pointer in, e.g. the erroneous grammar submitted
+    by Justin Madru about which he rightfully remarked that even though
+    erroneous bisonc++ shouldn't crash on it. This is his stripped-down
+    grammar: 
+        %token X x_list
+        %%
+        x_list:
+            x_list X
+        |
+            X
+        ;
 
 bisonc++ (2.4.8)
 
