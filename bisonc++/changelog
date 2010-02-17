@@ -1,4 +1,4 @@
-bisonc++ (2.5.0)    (ISN)
+bisonc++ (2.5.0)
 
   * Renamed parser/spec/aux to parser/spec/auxiliary to avoid file/device
     confusion on some systems
