@@ -87,7 +87,6 @@ class Generator
 
         static void selectSymbolic(Terminal const *terminal, 
                                    Terminal::ConstVector *symbolicTokens);
-                                   
 };
 
 #endif

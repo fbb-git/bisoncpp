@@ -140,8 +140,6 @@ try
     generator.implementationHeader();
 
     generator.parseFunction();
-
-    return 0;
 }
 catch(Errno const &err)
 {

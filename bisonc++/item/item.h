@@ -98,7 +98,6 @@ inline Production const *Item::production() const
     return d_production;
 }
 
-
 inline Symbol const *Item::lhs() const
 {
     return d_production->lhs();

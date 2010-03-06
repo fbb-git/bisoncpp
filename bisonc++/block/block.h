@@ -64,6 +64,7 @@ Block::skipRbegin() const
 {
     return d_skip.rbegin();
 }
+
 inline std::vector<Block::Range>::const_reverse_iterator 
 Block::skipRend() const
 {

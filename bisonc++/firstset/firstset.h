@@ -31,7 +31,7 @@ class FirstSet: public std::set<Element const *>
 
         void addEpsilon();
         void rmEpsilon();
-    
+
     private:
         std::ostream &insert(std::ostream &out) const;
 

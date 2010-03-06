@@ -13,28 +13,36 @@ class FollowSet: public std::set<Terminal const *>
     bool d_EOF;             // true if {Follow} contains EOF
 
     public:
-        FollowSet()
-        :
-            d_EOF(false)
-        {}
-        size_t setSize() const
-        {
-            return size() + d_EOF;
-        }
-        void setEOF()
-        {
-            d_EOF = true;
-        }
-        bool hasEOF() const
-        {
-            return d_EOF;
-        }
+        FollowSet();
+        size_t setSize() const;
+        void setEOF();
+        bool hasEOF() const;
         FollowSet &operator+=(FollowSet const &other);
         FollowSet &operator+=(FirstSet const &firstSet);
 
     private:
         std::ostream &oInsert(std::ostream &out) const;
 };
+
+inline FollowSet::FollowSet()
+:
+    d_EOF(false)
+{}
+
+inline size_t FollowSet::setSize() const
+{
+    return size() + d_EOF;
+}
+
+inline void FollowSet::setEOF()
+{
+    d_EOF = true;
+}
+
+inline bool FollowSet::hasEOF() const
+{
+    return d_EOF;
+}
 
 inline std::ostream &operator<<(std::ostream &out, FollowSet const &followSet)
 {
