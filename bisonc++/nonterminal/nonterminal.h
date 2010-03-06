@@ -41,7 +41,6 @@ class NonTerminal: public Symbol
         Production::Vector const &productions() const;
         size_t firstSize() const;
         size_t nProductions() const;
-        size_t value() const;
         std::set<Element const *> const &firstTerminals() const;
         virtual FirstSet const &firstSet() const;
         void addEpsilon() ;
@@ -73,11 +72,12 @@ class NonTerminal: public Symbol
         std::ostream &nameAndFollowset(std::ostream &out) const;
                                     // the N's value 
         std::ostream &value(std::ostream &out) const;
-
-    protected:
-        virtual std::ostream &insert(std::ostream &out) const;
+        using Symbol::value;
 
     private:
+        virtual std::ostream &insert(std::ostream &out) const;
+        virtual size_t v_value() const;
+
         std::ostream &insName(std::ostream &out) const;
 };
 
@@ -108,7 +108,7 @@ inline std::ostream &NonTerminal::nameAndFollowset(std::ostream &out) const
 
 inline std::ostream &NonTerminal::value(std::ostream &out) const
 {
-    return out << std::setw(3) << value();
+    return out << std::setw(3) << v_value();
 }
 
 
@@ -167,7 +167,7 @@ inline size_t NonTerminal::nProductions() const
     return d_production.size();
 }
 
-inline size_t NonTerminal::value() const
+inline size_t NonTerminal::v_value() const
 {
     return d_nr;
 }

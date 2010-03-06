@@ -36,7 +36,6 @@ class Generator
 
     mutable Writer d_writer;                // maintains its own const-ness
 
-    static MapValue s_mapValues[];
     static Map s_insert;
     static char const *s_baseFlag;          // text to change to the class 
                                             // name

@@ -75,7 +75,6 @@ class Terminal: public Symbol
 
         Precedence comparePrecedence(Terminal const *other) const;
         size_t precedence() const;
-        size_t value() const;
         virtual FirstSet const &firstSet() const;
         void setLiteral(std::string const &literal);
         void setValue(size_t value);  // reassign a token value
@@ -115,19 +114,17 @@ class Terminal: public Symbol
                                     // Values or names (of reserved tokens)
         std::ostream &nameOrValue(std::ostream &out) const;
 
-    protected:
+    private:
+        virtual size_t v_value() const;
         virtual std::ostream &insert(std::ostream &out) const;
 };
 
-namespace std
+inline std::ostream &operator<<(std::ostream &out, 
+          std::ostream &(Terminal::*insertPtr)(std::ostream &out) const)
 {
-    inline ostream &operator<<(ostream &out, 
-              ostream &(Terminal::*insertPtr)(ostream &out) const)
-    {
-        Terminal::inserter(insertPtr);
-        return out;
-    }
-}       
+    Terminal::inserter(insertPtr);
+    return out;
+}
 
 inline std::ostream &Terminal::plainName(std::ostream &out) const
 {
@@ -178,7 +175,7 @@ inline size_t Terminal::precedence() const
     return d_precedence;
 }
 
-inline size_t Terminal::value() const
+inline size_t Terminal::v_value() const
 {
     return d_value;
 }

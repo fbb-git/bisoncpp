@@ -29,11 +29,17 @@ class Element
 
     public:
         virtual ~Element();
-        virtual size_t value() const = 0;
+        size_t value() const;
 
-    protected:
+    private:
+        virtual size_t v_value() const = 0;
         virtual std::ostream &insert(std::ostream &out) const = 0;
 };
+
+inline size_t Element::value() const
+{
+    return v_value();
+}
 
 inline std::ostream &operator<<(std::ostream &out, Element const *element)
 {

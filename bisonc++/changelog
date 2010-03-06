@@ -1,3 +1,11 @@
+bisonc++ (2.5.1) (ISN)
+
+  * All virtual functions (except destructors) now private
+
+  * Removed Terminal's operator<< from the namespace std
+
+  * Now using initializer_lists to initialize static data
+
 bisonc++ (2.5.0)
 
   * Renamed parser/spec/aux to parser/spec/auxiliary to avoid file/device
