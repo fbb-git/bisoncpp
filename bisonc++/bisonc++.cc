@@ -11,19 +11,19 @@ namespace
 {
     Arg::LongOption longOptions[] = 
     {
-        Arg::LongOption("analyze-only", 'A'),
+        {"analyze-only", 'A'},
 
-        Arg::LongOption("baseclass-preinclude", 'H'),
-        Arg::LongOption("baseclass-skeleton", 'B'),
-        Arg::LongOption("class-skeleton", 'C'),
-        Arg::LongOption("implementation-skeleton", 'I'),
-        Arg::LongOption("parsefun-skeleton", 'P'),
-        Arg::LongOption("skeleton-directory", 'S'),
+        {"baseclass-preinclude", 'H'},
+        {"baseclass-skeleton", 'B'},
+        {"class-skeleton", 'C'},
+        {"implementation-skeleton", 'I'},
+        {"parsefun-skeleton", 'P'},
+        {"skeleton-directory", 'S'},
 
-        Arg::LongOption("baseclass-header", 'b'),
-        Arg::LongOption("class-header", 'c'),
-        Arg::LongOption("implementation-header", 'i'),
-        Arg::LongOption("parsefun-source", 'p'),
+        {"baseclass-header", 'b'},
+        {"class-header", 'c'},
+        {"implementation-header", 'i'},
+        {"parsefun-source", 'p'},
 
         Arg::LongOption("class-name", Arg::Required),
 
@@ -36,28 +36,28 @@ namespace
 
         Arg::LongOption("error-verbose"),
 
-        Arg::LongOption("filenames", 'f'),
+        {"filenames", 'f'},
 
         Arg::LongOption("force-implementation-header"),
         Arg::LongOption("force-class-header"),
 
         Arg::LongOption("insert-stype"),
 
-        Arg::LongOption("help", 'h'),
+        {"help", 'h'},
         Arg::LongOption("include-only"),
         Arg::LongOption("max-inclusion-depth", Arg::Required),
 
-        Arg::LongOption("namespace", 'n'),
+        {"namespace", 'n'},
 
         Arg::LongOption("no-baseclass-header"),
         Arg::LongOption("no-parse-member"),
 
-        Arg::LongOption("lines", 'l'),
+        {"lines", 'l'},
         Arg::LongOption("no-lines"),
 
         Arg::LongOption("required-tokens", Arg::Required),
 
-        Arg::LongOption("scanner", 's'),
+        {"scanner", 's'},
         Arg::LongOption("scanner-debug"),
 
         Arg::LongOption("show-filenames"),
@@ -66,15 +66,14 @@ namespace
         Arg::LongOption("thread-safe"),
                 // no static data are modified, making bisonc++ thread-safe
 
-        Arg::LongOption("usage", 'h'),
-        Arg::LongOption("version", 'v'),
-        Arg::LongOption("verbose", 'V'),
+        {"usage", 'h'},
+        {"version", 'v'},
+        {"verbose", 'V'},
                 // shows rules, tkoens, final states and kernel items, 
                 // and describes conflicts when found
     };
-
-    Arg::LongOption const *const longEnd = longOptions + 
-                                sizeof(longOptions) / sizeof(Arg::LongOption); 
+    auto longEnd = longOptions + 
+                               sizeof(longOptions) / sizeof(Arg::LongOption);  
 }
 
 int main(int argc, char **argv)
