@@ -15,12 +15,19 @@
     // I only need one symbol table. Since many classes require access to the
     // names of the symbols the symtab is made into a Singleton. 
 
-class Symtab: public std::map<std::string, Symbol *>
+class Symtab: private std::map<std::string, Symbol *>
 {
-    
+    typedef std::map<std::string, Symbol *> Base;
+
     public:
-            Symbol *lookup(std::string const &symbol);         
+        typedef Base::value_type value_type;
+
+        Symbol *lookup(std::string const &symbol);  // req'd for STL
+        using Base::insert;                         // only map-members used
+        using Base::find;
+        using Base::erase;
 };
 
         
 #endif
+

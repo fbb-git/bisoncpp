@@ -5,7 +5,8 @@
 #include <vector>
 #include <string>
 
-class Block: public std::string
+class Block: private std::string
+
 {
     size_t  d_line;
     std::string d_source;
@@ -42,6 +43,15 @@ class Block: public std::string
         std::vector<Range>::const_reverse_iterator skipRend() const;
         size_t line() const;
         std::string const &source() const;
+        std::string const &str() const;
+
+        using std::string::empty;
+        using std::string::find_last_of;
+        using std::string::replace;
+        using std::string::substr;
+        using std::string::find;
+        using std::string::length;
+        using std::string::operator[];
 };
 
 inline Block::Block()
@@ -77,6 +87,10 @@ inline size_t Block::line() const
 inline std::string const &Block::source() const
 {
     return d_source;
+}
+inline std::string const &Block::str() const
+{
+    return *this;
 }
 
 #endif

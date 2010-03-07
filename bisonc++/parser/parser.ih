@@ -14,6 +14,8 @@
 #include <bobcat/msg>
 #include <bobcat/a2x>
 
+#include "../block/block.h"
+
     // UN-comment the next using-declaration if you want to use
     // symbols from the namespace std without specifying std::
 using namespace std;

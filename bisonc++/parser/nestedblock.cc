@@ -23,5 +23,5 @@ void Parser::nestedBlock(Block &block)
                                         // terminal's production rule
 
     lineMsg() << "Adding hidden non-terminal " << name << 
-                " for the block\n" << block << info;
+                " for the block\n" << block.str() << info;
 }
