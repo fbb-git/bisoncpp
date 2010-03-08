@@ -7,7 +7,8 @@ bisonc++ (2.5.1)
 
   * Removed Terminal's operator<< from the namespace std
 
-  * Now using initializer_lists to initialize static data in generator/data.cc
+  * Now using initializer_lists to initialize static data (generator/data.cc
+    main.cc)
 
  -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 08 Mar 2010 20:51:22 +0100
 
