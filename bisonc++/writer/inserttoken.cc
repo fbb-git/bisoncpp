@@ -1,14 +1,14 @@
 #include "writer.ih"
 
-void Writer::insertToken(Terminal const *token, size_t lastValue, 
+void Writer::insertToken(Terminal const *token, size_t &lastTokenValue, 
                          std::ostream &out)
 {
     out <<  "        " << token;
 
-    if (token->value() != ++lastValue)
+    if (token->value() != ++lastTokenValue)
     {
-        lastValue = token->value();
-        out << " = " << lastValue;
+        lastTokenValue = token->value();
+        out << " = " << lastTokenValue;
     }
     out << ",\n";
 }

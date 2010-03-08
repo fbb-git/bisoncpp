@@ -1,10 +1,15 @@
-bisonc++ (2.5.1) (ISN)
+bisonc++ (2.5.1)
 
-  * All virtual functions (except destructors) now private
+  * Token values written to parserbase.h are (again) suppressed when their
+    values exceed the previous token's value by 1. All values were shown
+    because writer/insertToken erroneously didn't receive a size_t
+    &lastTokenValue anymore, but a size_t lastTokenValue.
 
   * Removed Terminal's operator<< from the namespace std
 
-  * Now using initializer_lists to initialize static data
+  * Now using initializer_lists to initialize static data in generator/data.cc
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 08 Mar 2010 20:51:22 +0100
 
 bisonc++ (2.5.0)
 

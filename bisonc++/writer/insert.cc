@@ -7,8 +7,10 @@ void Writer::insert(Terminal::ConstVector const &tokens) const
             "    enum Tokens__\n"
             "    {\n";
 
+    size_t lastTokenValue = 0;
+
     for_each(tokens.begin(), tokens.end(),
-        FnWrap::unary(insertToken, 0, *d_out));
+        FnWrap::unary(insertToken, lastTokenValue, *d_out));
 
     *d_out <<  "    };\n"
            "\n";

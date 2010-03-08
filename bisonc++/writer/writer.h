@@ -34,7 +34,7 @@ class Writer
         void insert(Terminal::ConstVector const &tokens) const;
 
     private:
-        static void insertToken(Terminal const *token, size_t lastValue,
+        static void insertToken(Terminal const *token, size_t &lastValue,
                                 std::ostream &out); 
         static void terminalSymbol(Terminal const *terminal, 
                                     std::ostream &out);

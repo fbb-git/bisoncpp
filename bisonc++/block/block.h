@@ -5,7 +5,7 @@
 #include <vector>
 #include <string>
 
-class Block: private std::string
+class Block: public std::string
 
 {
     size_t  d_line;
