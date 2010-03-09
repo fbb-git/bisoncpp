@@ -5,7 +5,7 @@
 #include <vector>
 #include <string>
 
-class Block: public std::string
+class Block: private std::string
 
 {
     size_t  d_line;
@@ -46,11 +46,13 @@ class Block: public std::string
         std::string const &str() const;
 
         using std::string::empty;
+        using std::string::find_first_of;
         using std::string::find_last_of;
-        using std::string::replace;
         using std::string::substr;
         using std::string::find;
         using std::string::length;
+
+        using std::string::replace;
         using std::string::operator[];
 };
 

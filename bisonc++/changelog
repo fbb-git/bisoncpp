@@ -1,3 +1,8 @@
+bisonc++ (2.6.0) (ISN)
+
+  * Reorganized Bisonc++'s classes: public inheritance changed to private
+    where possible, all virtual members now private.
+
 bisonc++ (2.5.1)
 
   * Token values written to parserbase.h are (again) suppressed when their
