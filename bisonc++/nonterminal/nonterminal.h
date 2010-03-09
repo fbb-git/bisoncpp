@@ -42,7 +42,6 @@ class NonTerminal: public Symbol
         size_t firstSize() const;
         size_t nProductions() const;
         std::set<Element const *> const &firstTerminals() const;
-        virtual FirstSet const &firstSet() const;
         void addEpsilon() ;
         void addProduction(Production *next);
         void addToFollow(FirstSet const &firstSet);
@@ -77,7 +76,7 @@ class NonTerminal: public Symbol
     private:
         virtual std::ostream &insert(std::ostream &out) const;
         virtual size_t v_value() const;
-
+        virtual FirstSet const &v_firstSet() const;
         std::ostream &insName(std::ostream &out) const;
 };
 
@@ -152,7 +151,7 @@ inline std::set<Element const *> const &NonTerminal::firstTerminals() const
     return d_first;
 }
 
-inline FirstSet const &NonTerminal::firstSet() const
+inline FirstSet const &NonTerminal::v_firstSet() const
 {
     return d_first;
 }

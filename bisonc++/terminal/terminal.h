@@ -75,7 +75,6 @@ class Terminal: public Symbol
 
         Precedence comparePrecedence(Terminal const *other) const;
         size_t precedence() const;
-        virtual FirstSet const &firstSet() const;
         void setLiteral(std::string const &literal);
         void setValue(size_t value);  // reassign a token value
         void setPrecedence(size_t value);
@@ -115,6 +114,7 @@ class Terminal: public Symbol
         std::ostream &nameOrValue(std::ostream &out) const;
 
     private:
+        virtual FirstSet const &v_firstSet() const;
         virtual size_t v_value() const;
         virtual std::ostream &insert(std::ostream &out) const;
 };
@@ -180,7 +180,7 @@ inline size_t Terminal::v_value() const
     return d_value;
 }
 
-inline FirstSet const &Terminal::firstSet() const
+inline FirstSet const &Terminal::v_firstSet() const
 {
     return d_firstSet;
 }        

@@ -46,7 +46,7 @@ class Symbol: public Element
         std::string const &sType() const;
         std::string const &name() const;
 
-        virtual FirstSet const &firstSet() const = 0;
+        FirstSet const &firstSet() const;
 
         void setReserved();
         void setStype(std::string const &stype);
@@ -54,8 +54,10 @@ class Symbol: public Element
         void used() const;       // d_used is mutable.;
 
     protected:
-
         Symbol(std::string const &name, Type t, std::string const &type = "");
+
+    private:
+        virtual FirstSet const &v_firstSet() const = 0;
 };
 
 inline std::string const &Symbol::name() const
@@ -116,6 +118,11 @@ inline void Symbol::setStype(std::string const &stype)
 inline std::string const &Symbol::sType() const
 {
     return d_stype;
+}
+
+inline FirstSet const &Symbol::firstSet() const
+{
+    return v_firstSet();
 }
 
 // operator<< is already available through Element
