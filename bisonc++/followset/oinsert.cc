@@ -7,7 +7,8 @@ ostream &FollowSet::oInsert(ostream &out) const
 
     Terminal::inserter(&Terminal::plainName);
 
-    copy(begin(), end(), ostream_iterator<Element const *>(out, " "));
+    copy(d_set.begin(), d_set.end(), 
+                            ostream_iterator<Element const *>(out, " "));
 
     Terminal::inserter(&Terminal::valueQuotedName);
 

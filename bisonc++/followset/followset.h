@@ -6,11 +6,12 @@
 #include "../firstset/firstset.h"
 #include "../terminal/terminal.h"
 
-class FollowSet: public std::set<Terminal const *>
+class FollowSet
 {
     friend std::ostream &operator<<(std::ostream &out, FollowSet const &fSet);
 
     bool d_EOF;             // true if {Follow} contains EOF
+    std::set<Terminal const *> d_set;
 
     public:
         FollowSet();
@@ -31,7 +32,7 @@ inline FollowSet::FollowSet()
 
 inline size_t FollowSet::setSize() const
 {
-    return size() + d_EOF;
+    return d_set.size() + d_EOF;
 }
 
 inline void FollowSet::setEOF()

@@ -2,7 +2,7 @@
 
 FollowSet &FollowSet::operator+=(FollowSet const &other) 
 {
-    insert(other.begin(), other.end());
+    d_set.insert(other.d_set.begin(), other.d_set.end());
     d_EOF |= other.d_EOF;
 
     return *this;
