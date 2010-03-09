@@ -4,13 +4,13 @@
 #include <iosfwd>
 #include <vector>
 
-#include "../srsolution/srsolution.h"
+#include "../enumsolution/enumsolution.h"
 #include "../statetype/statetype.h"
 #include "../symbol/symbol.h"
 #include "../item/item.h"
 #include "../stateitem/stateitem.h"
 
-class Next: public StateType, public SRSolution
+class Next: public StateType
 {
     friend std::ostream &operator<<(std::ostream &out, Next const &next);
 
@@ -21,6 +21,8 @@ class Next: public StateType, public SRSolution
     static std::ostream &(Next::*s_insertPtr)(std::ostream &out) const;
 
     public:
+        typedef Enum::Solution Solution;
+
         typedef std::vector<Next>       Vector;
         typedef Vector::iterator        Iterator;
         typedef Vector::const_iterator  ConstIter;

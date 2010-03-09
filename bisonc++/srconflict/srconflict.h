@@ -4,11 +4,10 @@
 #include <iosfwd>
 #include <vector>
 
-#include "../srsolution/srsolution.h"
 #include "../rmreduction/rmreduction.h"
 #include "../next/next.h"
 
-class SRConflict: public SRSolution
+class SRConflict
 {
     friend std::ostream &operator<<(std::ostream &out, 
                                     SRConflict const &conflict);
