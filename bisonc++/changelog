@@ -1,7 +1,17 @@
-bisonc++ (2.6.0) (ISN)
+bisonc++ (2.6.0)
 
   * Reorganized Bisonc++'s classes: public inheritance changed to private
-    where possible, all virtual members now private.
+    where possible, all virtual members now private. The parser->parserbase
+    inheritance remains as-is (public) because parserbase essentially is a
+    element of parser, defining types and the token-enum that must also be
+    available to the users of the generated parser class. The alternative,
+    defining types and tokens in the parser class would make it impossible to
+    adapt the tokens without rewriting the parser class. Another alternative,
+    defining the types and enum in a separate namespace imposes further
+    restrictions on the users of the parser class, which is also considered
+    undesirable. Public inheritance is now only used by NonTerminal, Terminal,
+    and Symbol as these classes override virtual functions either in Symbol or
+    in Element.
 
 bisonc++ (2.5.1)
 

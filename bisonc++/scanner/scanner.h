@@ -16,7 +16,7 @@
 
 #include "../block/block.h"
 
-class Scanner: public yyFlexLexer
+class Scanner: private yyFlexLexer
 {
     struct FileInfo
     {
@@ -56,6 +56,10 @@ class Scanner: public yyFlexLexer
     std::string     d_canonicalQuote;   // canonical quoted ident.
     
     public:
+        using yyFlexLexer::YYText;
+        using yyFlexLexer::set_debug;
+        using yyFlexLexer::lineno;
+
         Scanner(std::string const &fname);
         int yylex();
         Block &block();
