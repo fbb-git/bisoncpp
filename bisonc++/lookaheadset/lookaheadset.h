@@ -4,7 +4,7 @@
 #include "../firstset/firstset.h"
 #include "../terminal/terminal.h"
 
-class LookaheadSet: public FirstSet
+class LookaheadSet: private FirstSet
 {                   // Elements const ptrs are known to be Terminal const ptrs
     public:
         enum EndStatus
@@ -17,6 +17,10 @@ class LookaheadSet: public FirstSet
         EndStatus d_EOF;                // end-marker in the lookahead set
 
     public:
+        using FirstSet::begin;
+        using FirstSet::end;
+        FirstSet &firstSet();
+
         LookaheadSet(EndStatus eof = e_withoutEOF);
         LookaheadSet(FirstSet const &firstSet);
         LookaheadSet(LookaheadSet const &other);
@@ -45,6 +49,7 @@ class LookaheadSet: public FirstSet
         bool empty() const;
         size_t fullSize() const;
 
+
     private:
         LookaheadSet(Element const **begin, Element const **end);
 };
@@ -53,6 +58,11 @@ inline LookaheadSet::LookaheadSet(Element const **begin, Element const **end)
 :
     FirstSet(begin, end)
 {}
+
+inline FirstSet &LookaheadSet::firstSet()
+{
+    return *this;
+}
 
 inline bool LookaheadSet::operator>=(Symbol const *symbol) const
 {

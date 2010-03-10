@@ -20,7 +20,7 @@ bool StateItem::propagateLA(StateItem &stateItem, Vector &vector)
 
     LookaheadSet proposedLA;
     
-    if (stateItem.d_item.firstBeyondDot(&proposedLA))
+    if (stateItem.d_item.firstBeyondDot(&proposedLA.firstSet()))
         proposedLA += stateItem.d_LA;
 
     for_each(stateItem.d_child.begin(), stateItem.d_child.end(), 
