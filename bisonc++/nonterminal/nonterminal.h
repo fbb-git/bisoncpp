@@ -148,7 +148,7 @@ inline size_t NonTerminal::firstSize() const
 
 inline std::set<Element const *> const &NonTerminal::firstTerminals() const
 {
-    return d_first;
+    return d_first.set();
 }
 
 inline FirstSet const &NonTerminal::v_firstSet() const

@@ -6,8 +6,10 @@
 
 #include "../element/element.h"
 
-class FirstSet: public std::set<Element const *>
+class FirstSet: private std::set<Element const *>
 {
+    typedef std::set<Element const *> Inherit;
+
     friend std::ostream &operator<<(std::ostream &out, FirstSet const &fset);
 
     bool d_epsilon;             // true if epsilon in {First}
@@ -17,6 +19,11 @@ class FirstSet: public std::set<Element const *>
         FirstSet(Element const **begin, Element const **end);
 
     public:
+        using Inherit::find;
+        using Inherit::begin;
+        using Inherit::end;
+        using Inherit::size;
+
         FirstSet();
         FirstSet(Element const *terminal);
 
@@ -32,10 +39,16 @@ class FirstSet: public std::set<Element const *>
         void addEpsilon();
         void rmEpsilon();
 
+        std::set<Element const *> const &set() const;
+
     private:
         std::ostream &insert(std::ostream &out) const;
-
 };
+
+inline std::set<Element const *> const &FirstSet::set() const
+{
+    return *this;
+}
 
 inline FirstSet::FirstSet(Element const **begin, Element const **end)
 :

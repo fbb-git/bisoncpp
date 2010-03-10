@@ -10,8 +10,6 @@
 #include "../symbol/symbol.h"
 #include "../terminal/terminal.h"
 
-// #include <iostream>
-
 // NOTE: To obtain all productions of a certain Non-Terminal, use
 //       NonTerminal's `productions()' member
 
