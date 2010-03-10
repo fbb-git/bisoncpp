@@ -10,13 +10,15 @@
 #include "../item/item.h"
 #include "../stateitem/stateitem.h"
 
-class Next: public StateType
+class Next
 {
     friend std::ostream &operator<<(std::ostream &out, Next const &next);
 
     Symbol const *d_symbol;
     size_t d_next;
     std::vector<size_t> d_kernel;
+
+    StateType d_stateType;
 
     static std::ostream &(Next::*s_insertPtr)(std::ostream &out) const;
 

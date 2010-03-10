@@ -19,10 +19,8 @@ class StateType
 
         static char const  *s_stateName[];
 
-    protected:
-        StateType(int type);
-
     public:
+        StateType(int type);
         int type() const;
         void setType(Type type);
 

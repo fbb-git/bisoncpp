@@ -149,7 +149,7 @@ void State::define()
     // Other (terminal) transitions are possible too, so in this case 
     // a token is required anyway. Alternatively, keep NORMAL, and when
     // reaching this state and its type is NORMAL: ACCEPT. Pondering...
-    s_acceptState->setType(REQ_TOKEN);
+    s_acceptState->d_stateType.setType(StateType::REQ_TOKEN);
 
     for_each(s_state.begin(), s_state.end(), staticCheckConflicts);
 

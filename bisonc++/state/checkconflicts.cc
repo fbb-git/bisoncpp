@@ -28,5 +28,5 @@ void State::checkConflicts()
     d_rrConflict.removeConflicts(d_itemVector);
 
     if (d_reducible.size() > 1)             // more than 1 reduction
-        setType(REQ_TOKEN);
+        d_stateType.setType(StateType::REQ_TOKEN);
 }

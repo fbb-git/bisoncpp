@@ -15,10 +15,10 @@ void Writer::srTable(State const *sp,  std::string const &baseclassScope,
     int stateType = sp->type();
 
     if (tokenNeeded)
-        stateType |= State::REQ_TOKEN;
+        stateType |= StateType::REQ_TOKEN;
 
     if (defaultReduction)
-        stateType |= State::DEF_RED;
+        stateType |= StateType::DEF_RED;
 
 
     out << "\n"                     // Write the table header
@@ -27,7 +27,7 @@ void Writer::srTable(State const *sp,  std::string const &baseclassScope,
 
     table.clear();
 
-    table << State::typeName(stateType) << 
+    table << StateType::typeName(stateType) << 
             sp->transitions() + sp->reductionsLAsize() + acceptState + 1 <<
             def;
 

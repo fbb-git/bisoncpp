@@ -17,7 +17,7 @@
 
 class Production;
 
-class State: public StateType
+class State
 {
     friend std::ostream &operator<<(std::ostream &out, State const *state);
 
@@ -56,6 +56,8 @@ class State: public StateType
     SRConflict          d_srConflict;
     RRConflict          d_rrConflict;
     
+    StateType           d_stateType;
+
     static Vector       s_state;
     static State       *s_acceptState;
 
@@ -98,6 +100,8 @@ class State: public StateType
 
         static ConstIter begin();       // iterator to the first State *
         static ConstIter end();         // and beyond the last
+
+        int type() const;               // StateType accessor
 
     private:
         State(size_t idx);
@@ -168,6 +172,11 @@ class State: public StateType
                                                 // called from the non-static
                                                 // function
 };
+
+inline int State::type() const
+{
+    return d_stateType.type();
+}
 
 inline size_t State::idx() const
 {

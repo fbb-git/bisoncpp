@@ -7,7 +7,7 @@ void State::notReducible(size_t idx)
     symbol->used();     // For the showused bookkeeping
 
     if (symbol == Rules::errorTerminal())
-        setType(ERR_ITEM);
+        d_stateType.setType(StateType::ERR_ITEM);
 
     Next::ConstIter next;
     if (nextContains(&next, symbol)) // the symbol is in d_nextVector

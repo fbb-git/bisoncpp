@@ -2,7 +2,6 @@
 
 State::State(size_t idx)
 :
-    StateType(NORMAL),
     d_nKernelItems(0),
     d_nTransitions(0),
     d_nReductions(0),
@@ -12,5 +11,6 @@ State::State(size_t idx)
     d_idx(idx),
     d_nTerminalTransitions(0),
     d_srConflict(d_nextVector, d_itemVector, d_reducible),
-    d_rrConflict(d_itemVector, d_reducible)
+    d_rrConflict(d_itemVector, d_reducible),
+    d_stateType(StateType::NORMAL)
 {}
