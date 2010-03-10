@@ -28,7 +28,7 @@ void NonTerminal::setFirst(NonTerminal *nonTerminal)
             bool epsilon = true;        // epsilon in this rule's elements
             for 
             (
-                Production::const_iterator symPtrIt = production.begin();
+                auto symPtrIt = production.begin();
                     symPtrIt != production.end();
                         ++symPtrIt
             )

@@ -10,13 +10,15 @@
 #include "../symbol/symbol.h"
 #include "../terminal/terminal.h"
 
-#include <iostream>
+// #include <iostream>
 
 // NOTE: To obtain all productions of a certain Non-Terminal, use
 //       NonTerminal's `productions()' member
 
-class Production: public std::vector<Symbol *>
+class Production: private std::vector<Symbol *>
 {
+    typedef std::vector<Symbol *> Inherit;
+
     friend std::ostream &operator<<(std::ostream &out, 
                                                Production const *production);
     private:
@@ -33,6 +35,13 @@ class Production: public std::vector<Symbol *>
         static Production const *s_startProduction;
     
     public:
+        using Inherit::size;
+        using Inherit::begin;
+        using Inherit::end;
+        using Inherit::rbegin;
+        using Inherit::rend;
+        using Inherit::push_back;
+
         typedef std::vector<Production *>       Vector;
         typedef std::vector<Production const*>  ConstVector;
         typedef ConstVector::const_iterator     ConstIter;

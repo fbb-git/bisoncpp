@@ -15,8 +15,7 @@ void Rules::expandFollow(Production *production)
 
     for                         // walk along all elements of the rule's RHS
     (
-        Production::reverse_iterator it = production->rbegin(), 
-                                     end = production->rend(); 
+        auto it = production->rbegin(), end = production->rend(); 
             it != end; 
                 ++it
     )

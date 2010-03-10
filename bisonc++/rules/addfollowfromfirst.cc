@@ -21,7 +21,7 @@ void Rules::addFollowFromFirst(Production *production)
 
     for 
     (                               // visit each of the production's symbols
-        Production::reverse_iterator it = production->rbegin(); 
+        auto it = production->rbegin(); 
             it != production->rend(); 
                 ++it          // it points at a Production element, 
     )                               // which is a Symbol.
