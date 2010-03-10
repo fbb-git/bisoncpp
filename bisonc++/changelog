@@ -11,7 +11,8 @@ bisonc++ (2.6.0)
     restrictions on the users of the parser class, which is also considered
     undesirable. Public inheritance is now only used by NonTerminal, Terminal,
     and Symbol as these classes override virtual functions either in Symbol or
-    in Element.
+    in Element and the derived classes must all be usable where their base
+    classes are expected (in accordance with the LSP).
 
 bisonc++ (2.5.1)
 
