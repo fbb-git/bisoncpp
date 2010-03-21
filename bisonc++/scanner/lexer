@@ -46,11 +46,12 @@ IDENT   {ID1}{ID2}*
             if (d_includeOnly)
                 BEGIN includeOnly;
 
-<INITIAL,block>"{"          {
-                                            // open or count a nested a block 
-                                d_block.open(yylineno, sourceName()); 
-                                BEGIN block;
-                            }
+<INITIAL,block>{
+"{"          {
+                            // open or count a nested a block 
+                d_block.open(yylineno, sourceName()); 
+                BEGIN block;
+            }
 
     /*
         The whitespace-eating RegExes (REs) will normally simply consume the
@@ -59,22 +60,24 @@ IDENT   {ID1}{ID2}*
         as part of the code-block). Comment is part of the WS returning REs
     */
 
-<INITIAL,block>[ \t]+       {
-                                if (d_block)
-                                    d_block += " ";
-                            }
-                            
-<INITIAL,block>[\n]+        {
-                                if (d_block)
-                                    d_block += "\n";
-                            }
+[ \t]+       {
+                 if (d_block)
+                     d_block += " ";
+             }
+             
+[\n]+        {
+                 if (d_block)
+                     d_block += "\n";
+             }
 
-<INITIAL,block>"//".*       ;
+"//".*       ;   // ignore eoln comment in source blocks
+} /* INITIAL,block */
 
     /*
         Blocks start at { and end at their matching } char. They may contain
         comment and whitespace, but whitespace is reduced to single blanks or
-        newlines. All STRING and QUOTE constants are kept as-is.
+        newlines. All STRING and QUOTE constants are kept as-is, and are
+        registered as skip-ranges for $-checks
     */
 
 <block>"}"                  {
@@ -97,19 +100,21 @@ IDENT   {ID1}{ID2}*
                                 BEGIN comment;
                             }
 
-<comment>.                  ;
+<comment>{
+.                  ;
 
-<comment>\n                 d_commentChar[0] = '\n';
-                            
-<comment>"*/"               {
-                                if (!d_block)
-                                    BEGIN INITIAL;
-                                else
-                                {
-                                    d_block += d_commentChar;
-                                    BEGIN block;
-                                }
-                            }
+\n                 d_commentChar[0] = '\n';
+                   
+"*/"               {
+                       if (!d_block)
+                           BEGIN INITIAL;
+                       else
+                       {
+                           d_block += d_commentChar;
+                           BEGIN block;
+                       }
+                   }
+} /* comment */
 
     /*
         quote may be entered from INITIAL and block. 
@@ -119,76 +124,78 @@ IDENT   {ID1}{ID2}*
 
 <INITIAL,quote>"'"          {
                                 BEGIN quote;
+                                d_block.beginSkip();
                                 yymore();
                             }
                             
-<quote>"\\"{OCT3}"'"        {
-                                if (d_block(yytext))
-                                    BEGIN block;
-                                else
-                                {
-                                    BEGIN INITIAL;
-                                    octal();        // quoted octal constant
-                                    return Parser::QUOTE;
-                                }
-                            }
-                            
-<quote>"\\x"{HEX2}"'"       {
-                                if (d_block(yytext))
-                                    BEGIN block;
-                                else
-                                {
-                                    BEGIN INITIAL;
-                                    hexadecimal(); // quoted hex constant
-                                    return Parser::QUOTE;
-                                }
-                            }
-                            
-<quote>"\\"[abfnrtv]"'"     {
-                                if (d_block(yytext))
-                                    BEGIN block;
-                                else
-                                {
-                                    BEGIN INITIAL;
-                                    escape();       // quoted escape char
-                                    return Parser::QUOTE;
-                                }
-                            }    
-<quote>"\\"."'"             {
-                                // other quoted escaped char
-                                if (d_block(yytext))
-                                    BEGIN block;
-                                else           
-                                {
-                                    BEGIN INITIAL;
-                                    d_number = yytext[2];
-                                    return Parser::QUOTE;
-                                }
-                            }
-<quote>."'"                 {
-                                if (d_block(yytext))
-                                    BEGIN block;
-                                else
-                                {
-                                    BEGIN INITIAL;  // simple quoted constant
-                                    d_number = yytext[1];
-                                    return Parser::QUOTE;
-                                }
-                            }
-
-<quote>[^']+"'"             {
-                                if (d_block(yytext))
-                                    BEGIN block;
-                                else
-                                {
-                                    lineMsg() << "multiple characters in "
-                                                "quoted constant " << 
-                                                yytext << err;
-                                    d_number = 0;
-                                    BEGIN INITIAL;
-                                    return Parser::QUOTE;
-                                }
-                            }
+<quote>{
+"\\"{OCT3}"'"        {
+                         if (d_block.endSkip(yytext))
+                             BEGIN block;
+                         else
+                         {
+                             BEGIN INITIAL;
+                             octal();        // quoted octal constant
+                             return Parser::QUOTE;
+                         }
+                     }
+                     
+"\\x"{HEX2}"'"       {
+                         if (d_block.endSkip(yytext))
+                             BEGIN block;
+                         else
+                         {
+                             BEGIN INITIAL;
+                             hexadecimal(); // quoted hex constant
+                             return Parser::QUOTE;
+                         }
+                     }
+                     
+"\\"[abfnrtv]"'"     {
+                         if (d_block.endSkip(yytext))
+                             BEGIN block;
+                         else
+                         {
+                             BEGIN INITIAL;
+                             escape();       // quoted escape char
+                             return Parser::QUOTE;
+                         }
+                     }    
+"\\"."'"             {
+                         // other quoted escaped char
+                         if (d_block.endSkip(yytext))
+                             BEGIN block;
+                         else           
+                         {
+                             BEGIN INITIAL;
+                             d_number = yytext[2];
+                             return Parser::QUOTE;
+                         }
+                     }
+."'"                 {
+                         if (d_block.endSkip(yytext))
+                             BEGIN block;
+                         else
+                         {
+                             BEGIN INITIAL;  // simple quoted constant
+                             d_number = yytext[1];
+                             return Parser::QUOTE;
+                         }
+                     }
+[^']+"'"             {
+                         if (d_block.endSkip(yytext))
+                             BEGIN block;
+                         else
+                         {
+                             lineMsg() << "multiple characters in "
+                                         "quoted constant " << 
+                                         yytext << err;
+                             d_number = 0;
+                             BEGIN INITIAL;
+                             return Parser::QUOTE;
+                         }
+                     }
+} /* quote */
 
     /*                            
         string may be entered from block and xstring
@@ -198,48 +205,51 @@ IDENT   {ID1}{ID2}*
 
 <block>"\""                 {
                                 BEGIN string;
+                                d_block.beginSkip();
                                 yymore();
                             }
                             
-<string>"\""                {
-                                if (d_block(yytext))
-                                    BEGIN block;
-                                else
-                                {
-                                    BEGIN INITIAL;
+<string>{
+"\""                {
+                        if (d_block.endSkip(yytext))
+                            BEGIN block;
+                        else
+                        {
+                            BEGIN INITIAL;
 
-                                    ret = yytextChk(&nKept, 3, Parser::STRING);
-                                    if (ret)
-                                        return ret;
+                            ret = yytextChk(&nKept, 3, Parser::STRING);
+                            if (ret)
+                                return ret;
 
-                                    pushSource(YY_CURRENT_BUFFER, 
-                                                                YY_BUF_SIZE);
-                                }
-                            }
+                            pushSource(YY_CURRENT_BUFFER, 
+                                                        YY_BUF_SIZE);
+                        }
+                    }
 
-<string>"\\".               |              
-<string>.                   |
-<string>\n                  yymore();
-                            
+"\\".               |              
+.                   |
+\n                  yymore();
+} /* string */                            
 
     /*
         a pstring is a string surrounded by < and >
     */
 
-<pstring>">"                {
-                                BEGIN INITIAL;
+<pstring>{
+">"                {
+                       BEGIN INITIAL;
 
-                                ret = yytextChk(&nKept, 3, Parser::PSTRING);
-                                if (ret)
-                                    return ret;
+                       ret = yytextChk(&nKept, 3, Parser::PSTRING);
+                       if (ret)
+                           return ret;
 
-                                pushSource(YY_CURRENT_BUFFER, YY_BUF_SIZE);
-                            }
+                       pushSource(YY_CURRENT_BUFFER, YY_BUF_SIZE);
+                   }
 
-<pstring>"\\".              |              
-<pstring>.                  |
-<pstring>\n                 yymore();
-                            
+"\\".              |              
+.                  |
+\n                 yymore();
+} /* pstring */
 
 
     /*
@@ -264,25 +274,27 @@ IDENT   {ID1}{ID2}*
     /*
         pxstring selects either pstring, xstring or string
     */
-<pxstring>"\""              {
-                                yymore();
-                                BEGIN string;
-                            }
+<pxstring>{
+"\""              {
+                      yymore();
+                      BEGIN string;
+                  }
 
-<pxstring>"<"               {
-                                yymore();
-                                BEGIN pstring;
-                            }
+"<"               {
+                      yymore();
+                      BEGIN pstring;
+                  }
 
-<pxstring>\n                {
-                                yyless(0);
-                                BEGIN INITIAL;
-                            }
-                                
-<pxstring>.                 {
-                                yyless(0);
-                                BEGIN xstring;
-                            }
+\n                {
+                      yyless(0);
+                      BEGIN INITIAL;
+                  }
+                      
+.                 {
+                      yyless(0);
+                      BEGIN xstring;
+                  }
+} /* pxstring */
 
     /* 
         xstring returns the next string delimited by either blanks, tabs,
@@ -292,35 +304,37 @@ IDENT   {ID1}{ID2}*
         realized. Otherwise, the string is returned as a Parser::XSTRING
     */
 
-<xstring>"\\".              yymore();
+<xstring>{
+"\\".              yymore();
 
-<xstring>"//"               |
-<xstring>"/*"               {
-                                yyless(yyleng - 2);
+"//"               |
+"/*"               {
+                       yyless(yyleng - 2);
 
-                                BEGIN (d_includeOnly ? includeOnly : INITIAL);
+                       BEGIN (d_includeOnly ? includeOnly : INITIAL);
 
-                                ret = yytextChk(&nKept, 1, Parser::XSTRING);
-                                yyless(nKept);
+                       ret = yytextChk(&nKept, 1, Parser::XSTRING);
+                       yyless(nKept);
 
-                                if (ret)
-                                    return ret;
-                              
-                                pushSource(YY_CURRENT_BUFFER, YY_BUF_SIZE);
-                            }
+                       if (ret)
+                           return ret;
+                     
+                       pushSource(YY_CURRENT_BUFFER, YY_BUF_SIZE);
+                   }
 
-<xstring>[ \t]*$            {
-                                BEGIN (d_includeOnly ? includeOnly : INITIAL);
-                            
-                                ret = yytextChk(&nKept, 1, Parser::XSTRING);
-                                yyless(nKept);
-                                if (ret)
-                                    return ret;
+[ \t]*$            {
+                       BEGIN (d_includeOnly ? includeOnly : INITIAL);
+                   
+                       ret = yytextChk(&nKept, 1, Parser::XSTRING);
+                       yyless(nKept);
+                       if (ret)
+                           return ret;
 
-                                pushSource(YY_CURRENT_BUFFER, YY_BUF_SIZE);
-                            }
+                       pushSource(YY_CURRENT_BUFFER, YY_BUF_SIZE);
+                   }
 
-<xstring>.                yymore();
+.                yymore();
+} /* xstring */
 
       /*
           linetext is the remainder of a line, following %ltype or %stype

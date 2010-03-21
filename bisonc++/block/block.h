@@ -45,6 +45,10 @@ class Block: private std::string
         std::string const &source() const;
         std::string const &str() const;
 
+        void beginSkip();               // begins a new skip-area
+        bool endSkip(char const *text); // if a block, text is added and
+                                        // the current skip-area is ended
+
         using std::string::empty;
         using std::string::find_first_of;
         using std::string::find_last_of;
@@ -64,6 +68,11 @@ inline Block::Block()
 inline void Block::operator+=(char const *text)
 {
     append(text);
+}
+
+inline void Block::beginSkip()
+{
+    d_skip.push_back({d_source.length(), 0});
 }
 
 inline Block::operator bool() const

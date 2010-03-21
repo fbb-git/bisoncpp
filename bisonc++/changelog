@@ -1,3 +1,8 @@
+bisonc++ (2.6.1)
+
+  * $-coding appearing in strings or constants no longer cause warnings
+    about incorrect or negative $-indices
+
 bisonc++ (2.6.0)
 
   * Reorganized Bisonc++'s classes: public inheritance changed to private
