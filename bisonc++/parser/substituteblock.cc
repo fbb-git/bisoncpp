@@ -13,7 +13,6 @@ try
         // block-text to the beginning. If a special character is found,
         //  - ignore it if it is in an ignorable range
         //  - if not in an ignorable range, replace it by its meaning
-
     d_skipRbegin = block.skipRbegin();
     d_skipRend = block.skipRend();
 

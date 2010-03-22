@@ -2,11 +2,13 @@
 
 #include <iostream>
 
-bool Block::endSkip(char const *text)
+bool Block::skip(char const *text)
 {
+    size_t begin = length();
+
     if (!operator()(text))
         return false;
 
-    d_skip.back().second = length();
+    d_skip.push_back({begin, length()});
     return true;
 }

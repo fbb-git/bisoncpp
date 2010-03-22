@@ -122,15 +122,15 @@ IDENT   {ID1}{ID2}*
         escaped chars, or quoted constants 
     */
 
-<INITIAL,quote>"'"          {
+                            
+<INITIAL,block>"'"          {
                                 BEGIN quote;
-                                d_block.beginSkip();
                                 yymore();
                             }
                             
 <quote>{
 "\\"{OCT3}"'"        {
-                         if (d_block.endSkip(yytext))
+                         if (d_block.skip(yytext))
                              BEGIN block;
                          else
                          {
@@ -141,7 +141,7 @@ IDENT   {ID1}{ID2}*
                      }
                      
 "\\x"{HEX2}"'"       {
-                         if (d_block.endSkip(yytext))
+                         if (d_block.skip(yytext))
                              BEGIN block;
                          else
                          {
@@ -152,7 +152,7 @@ IDENT   {ID1}{ID2}*
                      }
                      
 "\\"[abfnrtv]"'"     {
-                         if (d_block.endSkip(yytext))
+                         if (d_block(yytext))
                              BEGIN block;
                          else
                          {
@@ -163,7 +163,7 @@ IDENT   {ID1}{ID2}*
                      }    
 "\\"."'"             {
                          // other quoted escaped char
-                         if (d_block.endSkip(yytext))
+                         if (d_block(yytext))
                              BEGIN block;
                          else           
                          {
@@ -173,7 +173,7 @@ IDENT   {ID1}{ID2}*
                          }
                      }
 ."'"                 {
-                         if (d_block.endSkip(yytext))
+                         if (d_block.skip(yytext))
                              BEGIN block;
                          else
                          {
@@ -183,7 +183,7 @@ IDENT   {ID1}{ID2}*
                          }
                      }
 [^']+"'"             {
-                         if (d_block.endSkip(yytext))
+                         if (d_block.skip(yytext))
                              BEGIN block;
                          else
                          {
@@ -198,7 +198,7 @@ IDENT   {ID1}{ID2}*
 } /* quote */
 
     /*                            
-        string may be entered from block and xstring
+        string may be entered from block and pxstring
         strings are all series (including escaped chars, like \") surrounded by
         double quotes:
     */

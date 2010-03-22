@@ -1,7 +1,7 @@
-bisonc++ (2.6.1)
+bisonc++ (2.6.1) (ISN)
 
-  * $-coding appearing in strings or constants no longer cause warnings
-    about incorrect or negative $-indices
+  * $-characters appearing in strings or character constants in action blocks 
+    no longer cause warnings about incorrect or negative $-indices
 
 bisonc++ (2.6.0)
 

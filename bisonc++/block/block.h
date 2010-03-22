@@ -9,8 +9,9 @@ class Block: private std::string
 
 {
     size_t  d_line;
-    std::string d_source;
-
+    std::string d_source;               // the source in which the block 
+                                        // was found. The block's text itself
+                                        // is in the Block's base class
     int     d_count;
     
     public:
@@ -42,12 +43,14 @@ class Block: private std::string
         std::vector<Range>::const_reverse_iterator skipRbegin() const;
         std::vector<Range>::const_reverse_iterator skipRend() const;
         size_t line() const;
-        std::string const &source() const;
-        std::string const &str() const;
+        std::string const &source() const;  // the block's source file
+        std::string const &str() const;     // the block's contents
 
         void beginSkip();               // begins a new skip-area
         bool endSkip(char const *text); // if a block, text is added and
                                         // the current skip-area is ended
+        bool skip(char const *text);    // if a block, text is added and
+                                        // added to the skip-areas
 
         using std::string::empty;
         using std::string::find_first_of;
@@ -72,7 +75,7 @@ inline void Block::operator+=(char const *text)
 
 inline void Block::beginSkip()
 {
-    d_skip.push_back({d_source.length(), 0});
+    d_skip.push_back({length(), 0});
 }
 
 inline Block::operator bool() const
