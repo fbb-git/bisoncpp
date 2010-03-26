@@ -1,7 +1,14 @@
-bisonc++ (2.6.1) (ISN)
+bisonc++ (2.7.0) (ISN)
 
   * $-characters appearing in strings or character constants in action blocks 
     no longer cause warnings about incorrect or negative $-indices
+
+  * Repaired incorrect counting of '{' and '}' in action blocks.
+
+  * Added option --tokens (-t) displaying tokens received by the scanner
+
+  * Added directive %scanner-function specifying the name of the scanner
+    function to call from the parser's lex() function
 
 bisonc++ (2.6.0)
 

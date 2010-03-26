@@ -53,14 +53,31 @@ void static_library(string library)
 
 void scanner()
 {
+    int idx;
+    list names;
+    string file;
+
     chdir("scanner");
-    if
-    (                                           // new lexer needed
-        exists("lexer")
-        &&
-        "lexer" younger "yylex.cc"
-    )
+    names = makelist("inc/*");
+    names += (list)"lexer";
+
+    for (idx = sizeof(names); idx--; )
+    {
+        file = names[idx];
+
+        if 
+        (                                          // new lexer needed
+            exists(file)
+            &&
+            file younger "yylex.cc"
+        )
+            break;
+    }
+    if (idx >= 0)
+    {
+        exec("buildlexer");
         exec("flex", "lexer");
+    }
 
     chdir("..");
 }

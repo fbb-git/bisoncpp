@@ -66,6 +66,7 @@ namespace
         Arg::LongOption("thread-safe"),
                 // no static data are modified, making bisonc++ thread-safe
 
+        {"tokens", 't'},
         {"usage", 'h'},
         {"version", 'v'},
         {"verbose", 'V'},
@@ -79,7 +80,7 @@ namespace
 int main(int argc, char **argv)
 try
 {
-    Arg &arg = Arg::initialize("AB:b:C:c:f:H:hI:i:ln:p:P:s:S:Vv", 
+    Arg &arg = Arg::initialize("AB:b:C:c:f:H:hI:i:ln:p:P:s:S:tVv", 
                     longOptions, longEnd, argc, argv);
 
     arg.versionHelp(usage, version, 1);

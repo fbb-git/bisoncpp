@@ -1,7 +1,5 @@
 #include "block.ih"
 
-#include <iostream>
-
 bool Block::endSkip(char const *text)
 {
     if (!operator()(text))

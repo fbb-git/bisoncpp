@@ -2,27 +2,6 @@
     #define _SKIP_YYFLEXLEXER_
     #include "scanner.ih"
 
-    /* 
-        WARNING: 
-
-        DUE TO #define DIRECTIVES IN THE FLEX SKELETON/PROGRAM
-        DO NOT USE `REJECT' IN RULES/CODE. ALSO, THE PARSER CANNOT
-        DEFINE A `REJECT' CONSTANT, AS THIS `REJECT' IS ALSO EXPANDED
-        BY THE CPP PREPROCESSOR.
-    */
-
-    /*  
-        WHEN BISON'S PARSER IS USED, DO NOT FORGET TO PREFIX THE PARSER'S 
-        CLASS NAME TO THE RETURNED TOKENS. E.G., RETURN 
-                               `Parser::IDENT'
-
-        When bison++'s parser isn't used, don't include parser.h
-        If the parser's filenames are not `parser' then change the name
-        of the following base.h file accordingly
-
-        The parserbase.h file is included by scanner.ih, to allow support
-        members to use the Parser's tokens as well.
-    */
 %}
 
 %option yyclass="Scanner" outfile="yylex.cc"
@@ -39,20 +18,23 @@ ID1     [a-zA-Z_]
 ID2     [0-9a-zA-Z_]
 IDENT   {ID1}{ID2}*
 
+
 %%
+
             int nKept;      // used by <xstring>
             int ret;
 
             if (d_includeOnly)
                 BEGIN includeOnly;
 
+
 <INITIAL,block>{
+
 "{"          {
-                            // open or count a nested a block 
+                    // open or count a nested a block 
                 d_block.open(yylineno, sourceName()); 
                 BEGIN block;
             }
-
     /*
         The whitespace-eating RegExes (REs) will normally simply consume the
         WS. However, if d_retWS is unequal 0 then WS is returned. This is
@@ -71,7 +53,21 @@ IDENT   {ID1}{ID2}*
              }
 
 "//".*       ;   // ignore eoln comment in source blocks
-} /* INITIAL,block */
+
+    /* If comment is entered from `block' either a blank or a newline will be
+        added to the block as soon as the matching end-comment is seen, and
+        the scanner will return to its block-miniscanner state
+    */
+"/*"         {
+                 d_commentChar[0] = ' ';
+                 BEGIN comment;
+             }
+}
+
+<INITIAL,includeOnly>"%include"[ \t]*   {
+                                            BEGIN pxstring;
+                                            d_include = true;
+                                        }
 
     /*
         Blocks start at { and end at their matching } char. They may contain
@@ -80,274 +76,31 @@ IDENT   {ID1}{ID2}*
         registered as skip-ranges for $-checks
     */
 
-<block>"}"                  {
-                                if (d_block.close())    // close a block
-                                {
-                                    BEGIN INITIAL;
-                                    return Parser::BLOCK;
-                                }
-                            }
+<block>{
 
-    /*
-        comment may be entered from INITIAL and block. If entered from `block'
-        either a blank or a newline will be added to the block as soon as the
-        matching end-comment is seen, and the scanner will return to its
-        block-miniscanner state
-    */
+"}"         {
+                if (d_block.close())    // close a block
+                {
+                    BEGIN INITIAL;
+                    return Parser::BLOCK;
+                }
+            }
 
-<INITIAL,block>"/*"         {
-                                d_commentChar[0] = ' ';
-                                BEGIN comment;
-                            }
+"\""        {
+                BEGIN string;
+                d_block.beginSkip();
+                yymore();
+            }
 
-<comment>{
-.                  ;
+"'"         {
+                BEGIN quote;
+                d_block.beginSkip();
+                yymore();
+            }
 
-\n                 d_commentChar[0] = '\n';
-                   
-"*/"               {
-                       if (!d_block)
-                           BEGIN INITIAL;
-                       else
-                       {
-                           d_block += d_commentChar;
-                           BEGIN block;
-                       }
-                   }
-} /* comment */
+.           d_block(yytext);
 
-    /*
-        quote may be entered from INITIAL and block. 
-        quoted constants start with a quote. They may be octal or hex numbers,
-        escaped chars, or quoted constants 
-    */
-
-                            
-<INITIAL,block>"'"          {
-                                BEGIN quote;
-                                yymore();
-                            }
-                            
-<quote>{
-"\\"{OCT3}"'"        {
-                         if (d_block.skip(yytext))
-                             BEGIN block;
-                         else
-                         {
-                             BEGIN INITIAL;
-                             octal();        // quoted octal constant
-                             return Parser::QUOTE;
-                         }
-                     }
-                     
-"\\x"{HEX2}"'"       {
-                         if (d_block.skip(yytext))
-                             BEGIN block;
-                         else
-                         {
-                             BEGIN INITIAL;
-                             hexadecimal(); // quoted hex constant
-                             return Parser::QUOTE;
-                         }
-                     }
-                     
-"\\"[abfnrtv]"'"     {
-                         if (d_block(yytext))
-                             BEGIN block;
-                         else
-                         {
-                             BEGIN INITIAL;
-                             escape();       // quoted escape char
-                             return Parser::QUOTE;
-                         }
-                     }    
-"\\"."'"             {
-                         // other quoted escaped char
-                         if (d_block(yytext))
-                             BEGIN block;
-                         else           
-                         {
-                             BEGIN INITIAL;
-                             d_number = yytext[2];
-                             return Parser::QUOTE;
-                         }
-                     }
-."'"                 {
-                         if (d_block.skip(yytext))
-                             BEGIN block;
-                         else
-                         {
-                             BEGIN INITIAL;  // simple quoted constant
-                             d_number = yytext[1];
-                             return Parser::QUOTE;
-                         }
-                     }
-[^']+"'"             {
-                         if (d_block.skip(yytext))
-                             BEGIN block;
-                         else
-                         {
-                             lineMsg() << "multiple characters in "
-                                         "quoted constant " << 
-                                         yytext << err;
-                             d_number = 0;
-                             BEGIN INITIAL;
-                             return Parser::QUOTE;
-                         }
-                     }
-} /* quote */
-
-    /*                            
-        string may be entered from block and pxstring
-        strings are all series (including escaped chars, like \") surrounded by
-        double quotes:
-    */
-
-<block>"\""                 {
-                                BEGIN string;
-                                d_block.beginSkip();
-                                yymore();
-                            }
-                            
-<string>{
-"\""                {
-                        if (d_block.endSkip(yytext))
-                            BEGIN block;
-                        else
-                        {
-                            BEGIN INITIAL;
-
-                            ret = yytextChk(&nKept, 3, Parser::STRING);
-                            if (ret)
-                                return ret;
-
-                            pushSource(YY_CURRENT_BUFFER, 
-                                                        YY_BUF_SIZE);
-                        }
-                    }
-
-"\\".               |              
-.                   |
-\n                  yymore();
-} /* string */                            
-
-    /*
-        a pstring is a string surrounded by < and >
-    */
-
-<pstring>{
-">"                {
-                       BEGIN INITIAL;
-
-                       ret = yytextChk(&nKept, 3, Parser::PSTRING);
-                       if (ret)
-                           return ret;
-
-                       pushSource(YY_CURRENT_BUFFER, YY_BUF_SIZE);
-                   }
-
-"\\".              |              
-.                  |
-\n                 yymore();
-} /* pstring */
-
-
-    /*
-        Only at this point all remaining `block' chars can be added, since
-        single chars like quote or semicolon should be handled first
-    */
-<block>.                    d_block(yytext);
-                            
-<INITIAL,includeOnly>"%include"[ \t]*   {
-                                            BEGIN pxstring;
-                                            d_include = true;
-                                        }
-
-    /*
-        when include is requested, pick all chars, but at %include
-        switch file
-    */
-<includeOnly>.  |
-<includeOnly>\n             cout << yytext << flush;
-
-
-    /*
-        pxstring selects either pstring, xstring or string
-    */
-<pxstring>{
-"\""              {
-                      yymore();
-                      BEGIN string;
-                  }
-
-"<"               {
-                      yymore();
-                      BEGIN pstring;
-                  }
-
-\n                {
-                      yyless(0);
-                      BEGIN INITIAL;
-                  }
-                      
-.                 {
-                      yyless(0);
-                      BEGIN xstring;
-                  }
-} /* pxstring */
-
-    /* 
-        xstring returns the next string delimited by either blanks, tabs,
-        newlines or C/C++ comment. Strings delimited by "..." are returned as
-        STRING, strings delimited by <...> as PSTRING. If d_include was set
-        before entering this mini scanner a file-switch is
-        realized. Otherwise, the string is returned as a Parser::XSTRING
-    */
-
-<xstring>{
-"\\".              yymore();
-
-"//"               |
-"/*"               {
-                       yyless(yyleng - 2);
-
-                       BEGIN (d_includeOnly ? includeOnly : INITIAL);
-
-                       ret = yytextChk(&nKept, 1, Parser::XSTRING);
-                       yyless(nKept);
-
-                       if (ret)
-                           return ret;
-                     
-                       pushSource(YY_CURRENT_BUFFER, YY_BUF_SIZE);
-                   }
-
-[ \t]*$            {
-                       BEGIN (d_includeOnly ? includeOnly : INITIAL);
-                   
-                       ret = yytextChk(&nKept, 1, Parser::XSTRING);
-                       yyless(nKept);
-                       if (ret)
-                           return ret;
-
-                       pushSource(YY_CURRENT_BUFFER, YY_BUF_SIZE);
-                   }
-
-.                yymore();
-} /* xstring */
-
-      /*
-          linetext is the remainder of a line, following %ltype or %stype
-      */
-        /*
-  <linetext>.*                    {
-                                      BEGIN INITIAL;
-                                      return Parser::LINETEXT;
-                                  }
-        */
-    /*
-        Simple REs to match:
-    */
+}
 
 "%baseclass-header"[ \t]*       {
                                     BEGIN pxstring;
@@ -406,6 +159,16 @@ IDENT   {ID1}{ID2}*
 "%union"                        return Parser::UNION;
 "%%"                            return Parser::TWO_PERCENTS;
 
+"'"                             {
+                                    BEGIN quote;
+                                    yymore();
+                                }
+
+"\""                            {
+                                    BEGIN string;
+                                    yymore();
+                                }
+
 {IDENT}                         return Parser::IDENTIFIER;
 
 [0-9]+                          return setNumber();
@@ -422,4 +185,224 @@ IDENT   {ID1}{ID2}*
                                     yyterminate();
                             }
 
+    /*
+        pxstring selects either pstring, xstring or string
+    */
+<pxstring>{
+        
+"\""    {
+            yymore();
+            BEGIN string;
+        }
+
+"<"     {
+            yymore();
+            BEGIN pstring;
+        }
+
+\n      {
+            yyless(0);
+            BEGIN INITIAL;
+        }
+            
+.       {
+            yyless(0);
+            BEGIN xstring;
+        }
+}
+
+    /*                            
+        string may be entered from block and pxstring
+        strings are all series (including escaped chars, like \") surrounded by
+        double quotes:
+    */
+<string>{
+        
+"\""    {
+            if (d_block.endSkip(yytext))
+                BEGIN block;
+            else
+            {
+                BEGIN INITIAL;
+
+                ret = yytextChk(&nKept, 3, Parser::STRING);
+                if (ret)
+                    return ret;
+
+                pushSource(YY_CURRENT_BUFFER, 
+                                            YY_BUF_SIZE);
+            }
+        }
+
+"\\".   |              
+.       |
+\n      yymore();
+
+}
+
+<comment>{
+.                  ;
+
+\n                 d_commentChar[0] = '\n';
+                   
+"*/"               {
+                       if (!d_block)
+                           BEGIN INITIAL;
+                       else
+                       {
+                           d_block += d_commentChar;
+                           BEGIN block;
+                       }
+                   }
+}
+
+    /*
+        when include is requested, pick all chars, but at %include
+        switch file
+    */
+<includeOnly>.|\n             cout << yytext << flush;
+
+    /*
+        a pstring is a string surrounded by < and >
+    */
+
+<pstring>{
+        
+">"     {
+            BEGIN INITIAL;
+
+            ret = yytextChk(&nKept, 3, Parser::PSTRING);
+            if (ret)
+                return ret;
+
+            pushSource(YY_CURRENT_BUFFER, YY_BUF_SIZE);
+        }
+
+"\\".   |              
+.       |
+\n      yymore();
+
+}
+
+    /*
+        quote may be entered from INITIAL and block. 
+        quoted constants start with a quote. They may be octal or hex numbers,
+        escaped chars, or quoted constants 
+    */
+                            
+<quote>{
+
+"\\"{OCT3}"'"        {
+                         if (d_block.skip(yytext))
+                             BEGIN block;
+                         else
+                         {
+                             BEGIN INITIAL;
+                             octal();        // quoted octal constant
+                             return Parser::QUOTE;
+                         }
+                     }
+                     
+"\\x"{HEX2}"'"       {
+                         if (d_block.skip(yytext))
+                             BEGIN block;
+                         else
+                         {
+                             BEGIN INITIAL;
+                             hexadecimal(); // quoted hex constant
+                             return Parser::QUOTE;
+                         }
+                     }
+                     
+"\\"[abfnrtv]"'"     {
+                         if (d_block(yytext))
+                             BEGIN block;
+                         else
+                         {
+                             BEGIN INITIAL;
+                             escape();       // quoted escape char
+                             return Parser::QUOTE;
+                         }
+                     }    
+"\\"."'"             {
+                         // other quoted escaped char
+                         if (d_block.skip(yytext))
+                             BEGIN block;
+                         else           
+                         {
+                             BEGIN INITIAL;
+                             d_number = yytext[2];
+                             return Parser::QUOTE;
+                         }
+                     }
+."'"                 {
+                         if (d_block.skip(yytext))
+                             BEGIN block;
+                         else
+                         {
+                             BEGIN INITIAL;  // simple quoted constant
+                             d_number = yytext[1];
+                             return Parser::QUOTE;
+                         }
+                     }
+[^']+"'"             {
+                         if (d_block.skip(yytext))
+                             BEGIN block;
+                         else
+                         {
+                             lineMsg() << "multiple characters in "
+                                         "quoted constant " << 
+                                         yytext << err;
+                             d_number = 0;
+                             BEGIN INITIAL;
+                             return Parser::QUOTE;
+                         }
+                     }
+}
+
+    /* 
+        xstring returns the next string delimited by either blanks, tabs,
+        newlines or C/C++ comment. Strings delimited by "..." are returned as
+        STRING, strings delimited by <...> as PSTRING. If d_include was set
+        before entering this mini scanner a file-switch is
+        realized. Otherwise, the string is returned as a Parser::XSTRING
+    */
+<xstring>{
+        
+"\\".         yymore();
+
+"//"          |
+"/*"          {
+                  yyless(yyleng - 2);
+
+                  BEGIN (d_includeOnly ? includeOnly : INITIAL);
+
+                  ret = yytextChk(&nKept, 1, Parser::XSTRING);
+                  yyless(nKept);
+
+                  if (ret)
+                      return ret;
+                
+                  pushSource(YY_CURRENT_BUFFER, YY_BUF_SIZE);
+              }
+            
+[ \t]*$       {
+                  BEGIN (d_includeOnly ? includeOnly : INITIAL);
+              
+                  ret = yytextChk(&nKept, 1, Parser::XSTRING);
+                  yyless(nKept);
+                  if (ret)
+                      return ret;
+
+                  pushSource(YY_CURRENT_BUFFER, YY_BUF_SIZE);
+              }
+
+.           yymore();
+
+}
+
+
+
+
 %%
+
