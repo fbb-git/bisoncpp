@@ -16,7 +16,7 @@ lines:
 expr:
     NR
     {
-        std::cout << d_scanner.YYText() << std::endl;
+        std::cout << d_scanner.YYText() << '\n';
     }
 |
     error

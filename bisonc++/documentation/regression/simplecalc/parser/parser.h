@@ -33,7 +33,7 @@ class Parser: public ParserBase
 
 inline void Parser::error(char const *msg)
 {
-    std::cerr << msg << std::endl;
+    std::cerr << msg << '\n';
 }
 
 // $insert lex
