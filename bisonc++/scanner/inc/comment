@@ -1,0 +1,15 @@
+<comment>{
+.                  ;
+
+\n                 d_commentChar[0] = '\n';
+                   
+"*/"               {
+                       if (!d_block)
+                           BEGIN INITIAL;
+                       else
+                       {
+                           d_block += d_commentChar;
+                           BEGIN block;
+                       }
+                   }
+}

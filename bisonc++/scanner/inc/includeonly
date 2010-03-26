@@ -1,0 +1,5 @@
+    /*
+        when include is requested, pick all chars, but at %include
+        switch file
+    */
+<includeOnly>.|\n             cout << yytext << flush;
