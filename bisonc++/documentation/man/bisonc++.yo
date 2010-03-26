@@ -396,6 +396,26 @@ arguments if their associated long options require arguments as well.
            Tokens received by the parser are written to the standard output
             stream. The associated matched text is shown unless 
             a plain character token was received.
+
+        MUST SPECIFY MATCH FUNCTION AS WELL
+
+    it() bf(%match-function) tt(function-name) nl() 
+           The function returning the text that matched the most recent 
+            token returned by the lexical scanner. The full
+            name should be provided, including the name of the scanner-object
+            providing that function. It is This option overrides the function 
+            tt(d_scanner.yylex()) that is called when the tt(%scanner)
+            directive is used. Example:
+                verb(
+    %match-function d_scanner.lex()
+                )
+           If the function to call contains blanks it should be surrounded by
+            double quotes ("-characters). In that case the name is embedded in
+            a string, that may also contain escape-sequences. 
+            The definition should em(not) end in a semicolon.
+            See also tt(%match-function).
+
+
     it() loption(usage)nl()
             Write basic usage information to the standard output stream and
             terminate. 
@@ -522,7 +542,7 @@ specification file.
            If bf(%ltype) is used, tt(typename) should be the name of an
             alternate (predefined) type (e.g., bf(size_t)). It should not be
             used if a bf(%locationstruct) specification is defined (see
-            below). Within the parser class, this type will be available as
+                below). Within the parser class, this type will be available as
             the type `bf(LTYPE__)'.  All text on the line following bf(%ltype)
             is used for the tt(typename) specification. It should therefore
             not contain comment or any other characters that are not part of
@@ -601,11 +621,12 @@ specification file.
             tt(d_scanner.yylex()) that is called when the tt(%scanner)
             directive is used. Example:
                 verb(
-    %scanner-function d_scanner.lex();
+    %scanner-function d_scanner.lex()
                 )
            If the function to call contains blanks it should be surrounded by
             double quotes ("-characters). In that case the name is embedded in
-            a string, that may also contain escape-sequences.
+            a string, that may also contain escape-sequences. 
+            See also tt(%match-function).
     it() bf(%start) tt(non-terminal) nl()    
             The non-terminal tt(non-terminal) should be used as the grammar's 
             start-symbol. If omitted, the first grammatical rule will be used

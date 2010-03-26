@@ -14,6 +14,8 @@ Parser::Parser(Rules &rules)
     d_typeDirective(false),
     d_unionDeclared(false),
     d_requiredTokens(0),
+    d_matchFunction("d_scanner.YYText();"),
+    d_scannerFunction("d_scanner.yylex();"),
     d_verboseName("(not requested)")
 {
     string value;

@@ -80,7 +80,7 @@ namespace
 int main(int argc, char **argv)
 try
 {
-    Arg &arg = Arg::initialize("AB:b:C:c:f:H:hI:i:ln:p:P:s:S:tVv", 
+    Arg &arg = Arg::initialize("AB:b:C:c:f:H:hI:i:ln:p:P:s:S:t:Vv", 
                     longOptions, longEnd, argc, argv);
 
     arg.versionHelp(usage, version, 1);

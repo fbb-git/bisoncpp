@@ -49,12 +49,14 @@ class Parser: public ParserBase
     std::string d_implementationHeader;
     std::string d_implementationSkeleton;
     std::string d_locationDecl;
+    std::string d_matchFunction;
     std::string d_msg;
     std::string d_nameSpace;
     std::string d_parsefunSkeleton;
     std::string d_parsefunSource;
     std::string d_preInclude;
     std::string d_scannerInclude;
+    std::string d_scannerFunction;
     std::string d_stackDecl;
     std::string d_verboseName;
 
@@ -102,12 +104,14 @@ class Parser: public ParserBase
         bool lines() const;
         bool lspNeeded() const;
         std::string const &ltype() const;
+        std::string const &matchFunction() const;
         std::string const &nameSpace() const;
         std::string const &parseSkeleton() const;
         std::string const &parseSource() const;
         std::string const &preInclude() const;
         size_t requiredTokens() const;
         std::string const &scanner() const;
+        std::string const &scannerFunction() const;
         std::string const &stype() const;
 
     private:
@@ -282,6 +286,10 @@ inline std::string const &Parser::ltype() const
 {
     return d_locationDecl;
 }
+inline std::string const &Parser::matchFunction() const
+{
+    return d_matchFunction;
+}
 inline std::string const &Parser::nameSpace() const
 {
     return d_nameSpace;
@@ -305,6 +313,11 @@ inline std::string const &Parser::preInclude() const
 inline std::string const &Parser::scanner() const
 {
     return d_scannerInclude;
+}
+
+inline std::string const &Parser::scannerFunction() const
+{
+    return d_scannerFunction;
 }
 
 inline void Parser::setBaseclassHeader(int type)
@@ -371,17 +384,14 @@ inline size_t Parser::requiredTokens() const
 {
     return d_requiredTokens;
 }
-
 inline void Parser::setScannerInclude()
 {
     validateInclude(&d_scannerInclude);
 }
-
 inline std::string const &Parser::stype() const
 {
     return d_stackDecl;
 }
-
 inline std::string *Parser::newYYText() const
 {
     return new std::string(d_scanner.YYText());
