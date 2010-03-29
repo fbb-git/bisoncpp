@@ -14,7 +14,7 @@ void Generator::debugFunctions(std::ostream &out) const
         out << "\n"
         "std::ostringstream " << d_baseclassScope << "s_out__;\n"
         "\n" 
-        "std::ostream &" << d_baseclassScope << "dflush(std::ostream &out)\n"
+        "std::ostream &" << d_baseclassScope << "dflush__(std::ostream &out)\n"
         "{\n"
         "    std::ostringstream &s_out__ = "
                                 "dynamic_cast<std::ostringstream &>(out);\n"

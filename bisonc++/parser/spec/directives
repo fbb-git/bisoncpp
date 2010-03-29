@@ -169,6 +169,12 @@ directiveAlt:
         setScannerInclude();
     }
 |
+    scanner_token_function_t
+    d_pxstring
+    {
+        setScannerTokenFunction($1);
+    }
+|
     start_t
     IDENTIFIER
     {

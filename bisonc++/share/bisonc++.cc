@@ -173,7 +173,7 @@ void \@Base::pop__(size_t count)
 $insert 4 debug "pop(" << count << ") from stack having size " << (d_stackIdx__ + 1)
     if (d_stackIdx__ < static_cast<int>(count))
     {
-$insert 8 debug "Terminating parse(): unrecoverable input error at token " << symbol(d_token__)
+$insert 8 debug "Terminating parse(): unrecoverable input error at token " << symbol__(d_token__)
         ABORT();
     }
 
@@ -181,7 +181,7 @@ $insert 8 debug "Terminating parse(): unrecoverable input error at token " << sy
     d_state__ = d_stateStack__[d_stackIdx__];
     d_vsp__ = &d_valueStack__[d_stackIdx__];
 $insert 4 LTYPEpop
-$insert 4 debug "pop(): next state: " << d_state__ << ", token: " << symbol(d_token__) +
+$insert 4 debug "pop(): next state: " << d_state__ << ", token: " << symbol__(d_token__) +
 $insert 4 debug stype__("semantic: ", d_val__)
 }
 
@@ -215,7 +215,7 @@ inline void \@Base::reduce__(PI__ const &pi)
     pop__(pi.d_size);
 
 $insert 4 debug "reduce(): by rule " << (&pi - s_productionInfo) +
-$insert 4 debug " to N-terminal " << symbol(d_token__) << stype__(", semantic = ", d_val__)
+$insert 4 debug " to N-terminal " << symbol__(d_token__) << stype__(", semantic = ", d_val__)
 }
 
 // If d_token__ is _UNDETERMINED_ then if d_nextToken__ is _UNDETERMINED_ another
@@ -228,7 +228,7 @@ void \@::nextToken()
     if (d_nextToken__ != _UNDETERMINED_)
     {
         popToken__();                       // consume pending token
-$insert 8 debug "nextToken(): popped " << symbol(d_token__) << stype__(", semantic = ", d_val__)
+$insert 8 debug "nextToken(): popped " << symbol__(d_token__) << stype__(", semantic = ", d_val__)
     }
     else
     {
@@ -239,7 +239,7 @@ $insert 8 debug "nextToken(): popped " << symbol(d_token__) << stype__(", semant
             d_token__ = _EOF_;
     }
     print();
-$insert 4 debug "nextToken(): using " << symbol(d_token__) << stype__(", semantic = ", d_val__)
+$insert 4 debug "nextToken(): using " << symbol__(d_token__) << stype__(", semantic = ", d_val__)
 }
 
 // if the final transition is negative, then we should reduce by the rule
@@ -253,11 +253,11 @@ $insert 4 threading
     {
         if (elementPtr->d_action < 0)   // default reduction
         {
-$insert 8 debug "lookup(" << d_state__ << ", " << symbol(d_token__) +
+$insert 8 debug "lookup(" << d_state__ << ", " << symbol__(d_token__) +
 $insert 8 debug "): default reduction by rule " << -elementPtr->d_action
             return elementPtr->d_action;                
         }
-$insert 8 debug "lookup(" << d_state__ << ", " << symbol(d_token__) << "): Not " +
+$insert 8 debug "lookup(" << d_state__ << ", " << symbol__(d_token__) << "): Not " +
 $insert 8 debug "found. " << (recovery ? "Continue" : "Start") << " error recovery." 
 
         // No default reduction, so token not found, so error.
@@ -339,7 +339,7 @@ $insert 4 debug "errorRecovery(): state " << top__() << " is an ERROR state"
                 push__(action);
                 popToken__();
 $insert 16 debug "errorRecovery() SHIFT state " << action +
-$insert 16 debug ", continue with " << symbol(d_token__)
+$insert 16 debug ", continue with " << symbol__(d_token__)
 
                 if (gotToken)
                 {
@@ -360,7 +360,7 @@ $insert 20 debug action << ", no token yet"
                                             // next token is the rule's LHS
                 reduce__(s_productionInfo[-action]); 
 $insert 16 debug "errorRecovery() REDUCE by rule " << -action +
-$insert 16 debug ", token = " << symbol(d_token__)
+$insert 16 debug ", token = " << symbol__(d_token__)
             }
             else
                 ABORT();                    // abort when accepting during

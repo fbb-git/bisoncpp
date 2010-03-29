@@ -192,6 +192,7 @@ class Parser: public ParserBase
         void setPrecedence(int type);
         void setRequiredTokens();
         void setScannerInclude();
+        void setScannerTokenFunction();
         void setStart();
         void setStype();
 
@@ -339,6 +340,7 @@ inline void Parser::setPreInclude()
 
 inline void Parser::setPrint()
 {
+    validateInclude(&d_print);
 }
 
 inline void Parser::setDebugFlag()
@@ -393,6 +395,10 @@ inline size_t Parser::requiredTokens() const
 inline void Parser::setScannerInclude()
 {
     validateInclude(&d_scannerInclude);
+}
+inline void Parser::setScannerTokenFunction()
+{
+    validateInclude(&d_scannerTokenFunction);
 }
 inline std::string const &Parser::stype() const
 {

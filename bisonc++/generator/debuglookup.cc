@@ -11,7 +11,7 @@ void Generator::debugLookup(std::ostream &out) const
         "    if (d_debug__)\n"
         "    {\n"
         "        s_out__ <<  \"lookup(\" << d_state__ << \", \" << "
-                                                    "symbol(d_token__);\n"
+                                                    "symbol__(d_token__);\n"
         "\n"
         "        if (action < 0)             // a reduction is found\n"
         "            s_out__ << \"): reduce by rule \" << -action;\n"
@@ -19,9 +19,9 @@ void Generator::debugLookup(std::ostream &out) const
         "            s_out__ <<  \"): ACCEPT\";\n"
         "        else \n"
         "            s_out__ <<  \"): shift \" << action << \" (\" << "
-                                                    "symbol(d_token__) << \n"
+                                                    "symbol__(d_token__) << \n"
         "                        \" processed)\";\n"
         "\n"
-        "        s_out__ << \"\\n\" << dflush;\n"
+        "        s_out__ << \"\\n\" << dflush__;\n"
         "    }\n";
 }
