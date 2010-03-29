@@ -5,10 +5,12 @@ bisonc++ (2.7.0) (ISN)
 
   * Repaired incorrect counting of '{' and '}' in action blocks.
 
-  * Added option --tokens (-t) displaying tokens received by the scanner
+  * Added option --print (directive %print) displaying tokens received by the
+    scanner used by the generated parser.
 
-  * Added directive %scanner-function specifying the name of the scanner
-    function to call from the parser's lex() function
+  * Added option --scanner-token-function (directive %scanner-token-function)
+    specifying the name of the function called from the generated parser's
+    lex() function. 
 
 bisonc++ (2.6.0)
 

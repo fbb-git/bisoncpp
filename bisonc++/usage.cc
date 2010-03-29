@@ -89,6 +89,10 @@ void usage(string const &program_name)
     "   --parsefun-source=<source> (-p):\n"
     "           filename holding the parse function's source.\n"
 
+    "   --print=<scanner match function>:\n"
+    "           the print() member displays the tokens and their matched\n"
+    "           text, retrieved by <scanner match function>.\n"
+
     "   --required-tokens=<value>:\n"
     "           minimum number of successfully processed tokens between\n"
     "           errors (default: 0).\n"
@@ -97,8 +101,12 @@ void usage(string const &program_name)
     "           include `header-file' declaring the class Scanner, and call\n"
     "           d_scanner.yylex() from Parser::lex().\n"
 
-    "   --scanner-debug: show de scanner's matched rules and returned "
-                                                                "tokens.\n"
+    "   --scanner-debug: show the rules and returned tokens returned by\n"
+    "           bisonc++'s scanner.\n"
+
+    "   --scanner-token-function=<scanner token function>: 
+    "           define the function called from lex() returning the next\n"
+    "           token returned (with --scanner by default d_scanner.yylex()\n"
 
     "   --show-filenames: show the names of the used/generated files on\n"
     "           the standard error stream.\n"

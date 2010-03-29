@@ -75,6 +75,13 @@ parsefun_source_t:
     }
 ;
 
+print_t:
+    PRINT
+    {
+        d_msg = "Scanner function returning matched text";
+    }
+;
+
 required_t:
     REQUIRED
     {

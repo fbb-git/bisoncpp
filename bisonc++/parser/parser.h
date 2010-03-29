@@ -55,8 +55,9 @@ class Parser: public ParserBase
     std::string d_parsefunSkeleton;
     std::string d_parsefunSource;
     std::string d_preInclude;
+    std::string d_print;
     std::string d_scannerInclude;
-    std::string d_scannerFunction;
+    std::string d_scannerTokenFunction;
     std::string d_stackDecl;
     std::string d_verboseName;
 
@@ -174,6 +175,7 @@ class Parser: public ParserBase
         void setClassHeader(int type);
         void setClassName();
         void setPreInclude();
+        void setPrint();
         void setDebugFlag();
         void setErrorVerbose();
         void setExpectedConflicts();
@@ -333,6 +335,10 @@ inline void Parser::setClassHeader(int type)
 inline void Parser::setPreInclude()
 {
     validateInclude(&d_preInclude);
+}
+
+inline void Parser::setPrint()
+{
 }
 
 inline void Parser::setDebugFlag()

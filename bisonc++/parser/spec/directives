@@ -146,6 +146,12 @@ directiveAlt:
         setParsefunSource($2);
     }
 |
+    print_t
+    d_pxstring
+    {
+        setPrint($2);
+    }
+|
     required_t
     NUMBER
     {

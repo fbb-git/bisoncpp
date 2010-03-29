@@ -20,6 +20,7 @@ Generator::Map Generator::s_insert =
     {"namespace-close",     &Generator::namespaceClose},
     {"namespace-use",       &Generator::namespaceUse},
     {"preincludes",         &Generator::preIncludes},
+    {"print",               &Generator::print},
     {"requiredtokens",      &Generator::requiredTokens},
     {"staticdata",          &Generator::staticData},
     {"threading",           &Generator::threading},

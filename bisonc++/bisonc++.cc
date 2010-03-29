@@ -25,7 +25,7 @@ namespace
         {"implementation-header", 'i'},
         {"parsefun-source", 'p'},
 
-        Arg::LongOption("class-name", Arg::Required),
+        {"class-name", Arg::Required},
 
         Arg::LongOption("construction"),
                 // implies verbose, but also shows FIRST and FOLLOW sets as
@@ -33,40 +33,40 @@ namespace
                 // items
 
         Arg::LongOption("debug"),
-
         Arg::LongOption("error-verbose"),
 
         {"filenames", 'f'},
 
         Arg::LongOption("force-implementation-header"),
         Arg::LongOption("force-class-header"),
-
         Arg::LongOption("insert-stype"),
 
         {"help", 'h'},
-        Arg::LongOption("include-only"),
-        Arg::LongOption("max-inclusion-depth", Arg::Required),
 
+        Arg::LongOption("include-only"),
+
+        {"max-inclusion-depth", Arg::Required},
         {"namespace", 'n'},
 
         Arg::LongOption("no-baseclass-header"),
         Arg::LongOption("no-parse-member"),
 
         {"lines", 'l'},
+
         Arg::LongOption("no-lines"),
 
-        Arg::LongOption("required-tokens", Arg::Required),
-
+        {"print", Args::Required},
+        {"required-tokens", Arg::Required},
         {"scanner", 's'},
-        Arg::LongOption("scanner-debug"),
 
+        Arg::LongOption("scanner-debug"),
+        Arg::LongOption("scanner-token-function"),
         Arg::LongOption("show-filenames"),
                 // writes the names of the files to the standard output
 
         Arg::LongOption("thread-safe"),
                 // no static data are modified, making bisonc++ thread-safe
 
-        {"tokens", 't'},
         {"usage", 'h'},
         {"version", 'v'},
         {"verbose", 'V'},
@@ -80,7 +80,7 @@ namespace
 int main(int argc, char **argv)
 try
 {
-    Arg &arg = Arg::initialize("AB:b:C:c:f:H:hI:i:ln:p:P:s:S:t:Vv", 
+    Arg &arg = Arg::initialize("AB:b:C:c:f:H:hI:i:ln:p:P:s:S:Vv", 
                     longOptions, longEnd, argc, argv);
 
     arg.versionHelp(usage, version, 1);
