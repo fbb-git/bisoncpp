@@ -33,11 +33,7 @@ inline void \@::error(char const *msg)
 }
 
 $insert lex
-
 $insert print
-// inline void \@::print()      // use d_token, d_loc
-// {}
-
 $insert namespace-close
 
 #endif

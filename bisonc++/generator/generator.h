@@ -27,13 +27,15 @@ class Generator
 
     std::string d_baseclassScope;
     std::string const &d_nameSpace;
+    std::string const &d_matchedTextFunction;
 
     mutable std::string d_key;          // extracted at $insert statements
     mutable size_t d_indent;
 
     mutable std::string d_line;
     bool d_debug;
-
+    bool d_print;
+    
     mutable Writer d_writer;                // maintains its own const-ness
 
     static Map s_insert;
@@ -77,6 +79,7 @@ class Generator
         void namespaceOpen(std::ostream &out) const;
         void namespaceUse(std::ostream &out) const;
         void preIncludes(std::ostream &out) const;
+        void print(std::ostream &out) const;
         void requiredTokens(std::ostream &out) const;
         void scannerH(std::ostream &out) const;
         void scannerObject(std::ostream &out) const;

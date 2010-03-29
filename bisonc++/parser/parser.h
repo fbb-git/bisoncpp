@@ -49,7 +49,7 @@ class Parser: public ParserBase
     std::string d_implementationHeader;
     std::string d_implementationSkeleton;
     std::string d_locationDecl;
-    std::string d_matchFunction;
+    std::string d_matchedTextFunction;      // set by --print or %print
     std::string d_msg;
     std::string d_nameSpace;
     std::string d_parsefunSkeleton;
@@ -105,14 +105,14 @@ class Parser: public ParserBase
         bool lines() const;
         bool lspNeeded() const;
         std::string const &ltype() const;
-        std::string const &matchFunction() const;
+        std::string const &matchedTextFunction() const;
         std::string const &nameSpace() const;
         std::string const &parseSkeleton() const;
         std::string const &parseSource() const;
         std::string const &preInclude() const;
         size_t requiredTokens() const;
         std::string const &scanner() const;
-        std::string const &scannerFunction() const;
+        std::string const &scannerTokenFunction() const;
         std::string const &stype() const;
 
     private:
@@ -289,9 +289,9 @@ inline std::string const &Parser::ltype() const
 {
     return d_locationDecl;
 }
-inline std::string const &Parser::matchFunction() const
+inline std::string const &Parser::matchedTextFunction() const
 {
-    return d_matchFunction;
+    return d_matchedTextFunction;
 }
 inline std::string const &Parser::nameSpace() const
 {
@@ -318,9 +318,9 @@ inline std::string const &Parser::scanner() const
     return d_scannerInclude;
 }
 
-inline std::string const &Parser::scannerFunction() const
+inline std::string const &Parser::scannerTokenFunction() const
 {
-    return d_scannerFunction;
+    return d_scannerTokenFunction;
 }
 
 inline void Parser::setBaseclassHeader(int type)
@@ -408,9 +408,6 @@ inline std::string *Parser::newYYText() const
 {
     return new std::string(d_scanner.YYText());
 }
-
-inline void Parser::print()      // use d_token, d_loc
-{}
 
 inline size_t Parser::nComponents(int nElements)
 {

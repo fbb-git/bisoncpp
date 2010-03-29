@@ -4,7 +4,7 @@ void Generator::debugFunctions(std::ostream &out) const
 {
     bool verbose = d_arg.option(0, "error-verbose");
 
-    if (!d_debug && !verbose)
+    if (!d_debug && !verbose && !d_print)
         return;
 
     key(out);
@@ -25,7 +25,7 @@ void Generator::debugFunctions(std::ostream &out) const
         "    return out;\n"
         "}\n"
         "\n"
-        "std::string " << d_baseclassScope << "symbol(int value) const\n"
+        "std::string " << d_baseclassScope << "symbol__(int value) const\n"
         "{\n"
         "    using namespace std;\n"
         "    ostringstream ostr;\n"
@@ -42,7 +42,7 @@ void Generator::debugFunctions(std::ostream &out) const
         "}\n"
         "\n"
         "std::string " << d_baseclassScope << "stype__(char const *pre, "
-                                            "STYPE__ const &semVal, char const *post) const\n"
+                          "STYPE__ const &semVal, char const *post) const\n"
         "{\n";
 
         if (d_arg.option(0, "insert-stype"))
