@@ -339,7 +339,7 @@ files already exist.
            Do not put tt(#line) preprocessor directives in the file containing
             the parser's tt(parse) function. This option is primarily useful
             in combination with the tt(%lines) directive, to suppress that
-            directive. It also overrides option tt(--lines), though.
+            directive. It also overrules option tt(--lines), though.
     it() loption(no-parse-member)nl()
            Do not write the file containing the parser's predefined parser
             member functions, even if that file doesn't yet exist. By default
@@ -357,12 +357,13 @@ files already exist.
            Define tt(source) as the name of the source file containing the
             parser member function tt(parse). Defaults to tt(parse.cc).
     it() laoption(print)(matched-text-function)nl()
-           The tt(print) function displays the current token value and the
-            text matched by the lexical scanner as received by the generated
-            tt(parse) function.
-            The option value tt(matched-text-function) must be set to
-            the function call returning the matched text. E.g.,
-                verb(
+           The tt(print) option provides an implementation of the Parser
+            class's tt(print) function displaying the current token value and
+            the text matched by the lexical scanner as received by the
+            generated tt(parse) function.  The option value
+            tt(matched-text-function) must be set to a function call
+            expression returning the matched text. E.g.,
+           verb(
     --print="d_scanner.YYText()"
                 )
     it() laoption(required-tokens)(number)nl()
@@ -397,12 +398,13 @@ files already exist.
             the rules and tokens matched and returned by bic()'s scanner, not
             the tokens received by the generated parser. If that is what you
             want use the tt(--print) option.
-    it() laoption(scanner-token-function)(function-name)nl() 
+    it() laoption(scanner-token-function)(function-call)nl() 
            The scanner function returning the next token, called from the
-            generated parser's tt(lex) function. The full function
-            call should be provided (including a scanner object, if
-            used). This option overrides tt(d_scanner.yylex()) that is called
-            by default when tt(--scanner) is specified. Example: 
+            generated parser's tt(lex) function. A complete function
+            call expression should be provided (including a scanner object, if
+            used). This option overrules the tt(d_scanner.yylex()) call
+            used by default when the tt(%scanner) directive is
+            specified. Example: 
            verb(
     --scanner-token-function "d_scanner.lex()"
                 )
@@ -591,15 +593,18 @@ ignored if these files already exist.
                 )
             (see below) following, e.g., the tt('*') and tt('/') operators.
 
-    it() bf(%print tt(matched-text-function) nl()
-           The tt(print) function displays the current token value and the
-            text matched by the lexical scanner for which the token value was
-            returned. The argument tt(matched-text-function) must be set to
-            the function call returning the matched text. E.g.,
-                verb(
+    it() bf(%print) tt(matched-text-function) nl()
+           The tt(print) directive provides an implementation of the Parser
+            class's tt(print) function displaying the current token value and
+            the text matched by the lexical scanner as received by the
+            generated tt(parse) function. The argument
+            tt(matched-text-function) must define a complete function call
+            expression returning the text matched by the lexical
+            scanner. E.g.,
+           verb(
     %print d_scanner.YYText()
                 )
-            If the function call contains white space
+           If the function call expression contains white space
             tt(matched-text-function) should be surrounded by double quotes.
     it() bf(%required-tokens) tt(number)nl()
            Following a syntactic error, require at least tt(number)
@@ -627,11 +632,11 @@ ignored if these files already exist.
             implementation of tt(int lex()) must be provided.
     it() bf(%scanner-token-function) tt(function-name) nl() 
            The scanner function returning the next token, called from the
-            generated parser's tt(lex) function. The full function
-            call should be provided (including a scanner object, if
-            used). This option overrides tt(d_scanner.yylex())
-            that is called by default when the tt(%scanner) directive is
-            used. Example: 
+            generated parser's tt(lex) function. A complete function
+            call expression should be provided (including a scanner object, if
+            used). This option overrules the tt(d_scanner.yylex()) call
+            used by default when the tt(%scanner) directive is
+            specified. Example: 
             verb(
     %scanner-token-function d_scanner.lex()
                 )

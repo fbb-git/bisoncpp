@@ -51,6 +51,13 @@ void main(int argc, list argv, list envp)
     if (option == "program")
         program(strip);
 
+    if (option == "parser")
+    {
+        chdir("parser");
+        run("bisonc++ grammar");
+        exit(0);
+    }
+
     if (option == "rebuild")
         rebuild(strip);
 
@@ -67,6 +74,8 @@ void main(int argc, list argv, list envp)
         "   library            - build bisonc++'s library\n"
         "   man                - build the man-page (requires Yodl)\n"
         "   manual             - build the manual (requires Yodl)\n"
+        "   parser             - use bisonc++ to rewrite parse.cc and\n"
+        "                        parserbase.h\n"
         "   program [strip]    - build bisonc++ (optionally strip the\n"
         "                        executable)\n"
         "   rebuild [strip]    - recreate the parser using bisonc++ created\n"

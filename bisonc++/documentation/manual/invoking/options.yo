@@ -159,8 +159,18 @@ as the directive tt(%requireed-tokens)) can be used to specify the number of
 tokens that must have been successfully processed before the parsing function
 reports another syntactic error. By default the number of required tokens is
 initialized to 0.
-
-
+    it() laoption(print)(matched-text-function)nl()
+    The tt(print) option provides an implementation of the Parser class's
+tt(print) function displaying the current token value and the text matched by
+the lexical scanner as received by the generated tt(parse) function.  The
+option value tt(matched-text-function) must be set to a function call
+expression returning the matched text. E.g.,
+                verb(
+    --print="d_scanner.YYText()"
+                )
+    If the matched text needs editing (e.g., newlines should be displayed as
+tt(\n)) then a wrapper function around the `real' function returning the text
+as matched by the scanner may be specified here.
     it() label(SCANOPT) lsoption(scanner)(s)(header)nl()
            Use tt(header) as the pathname to the file defining a class
             bf(Scanner), offering a member tt(int yylex()) producing the next
@@ -186,6 +196,16 @@ initialized to 0.
             '<header>')).
     it() loption(scanner-debug)nl() 
            Show de scanner's matched rules and returned tokens.
+    it() laoption(scanner-token-function)(function-call)nl() 
+           The scanner function returning the next token, called from the
+            generated parser's tt(lex) function. A complete function
+            call expression should be provided (including a scanner object, if
+            used). This option overrules the tt(d_scanner.yylex()) call
+            used by default when the tt(%scanner) directive is
+            specified. Example: 
+            verb(
+    --scanner-token-function="d_scanner.lex()"
+                )
     it() loption(show-filenames)nl() 
            Write the names of the files that are generated to the 
             standard error stream.

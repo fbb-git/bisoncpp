@@ -96,6 +96,13 @@ scanner_include_t:
     }
 ;
 
+scanner_token_function_t:
+    SCANNER_TOKEN_FUNCTION
+    {
+        d_msg = "Scanner function returning the next token";
+    }
+;
+
 start_t:
     START
     {

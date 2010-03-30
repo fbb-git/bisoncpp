@@ -27,7 +27,8 @@ class Generator
 
     std::string d_baseclassScope;
     std::string const &d_nameSpace;
-    std::string const &d_matchedTextFunction;
+    std::string const *d_matchedTextFunction;
+    std::string const *d_scannerTokenFunction;
 
     mutable std::string d_key;          // extracted at $insert statements
     mutable size_t d_indent;
@@ -42,6 +43,10 @@ class Generator
     static char const *s_baseFlag;          // text to change to the class 
                                             // name
     static size_t const s_baseFlagSize;     // # of characters in s_baseFlag
+
+    static std::string s_matchedTextFunction;   // default way to call the
+    static std::string s_scannerTokenFunction;  // scanner's token en text
+                                                // functions.
 
     public:
         Generator(Rules const &rules, Parser const &parser);

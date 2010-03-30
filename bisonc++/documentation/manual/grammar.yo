@@ -89,12 +89,19 @@ includefile(directives/intro.yo)
     subsect(%prec: overruling default precedences)
     includefile(directives/prec.yo)
 
+    subsect(%print: displaying tokens and matched text) 
+    includefile(directives/print.yo)
+
     subsect(%required-tokens: defining the minimum number of tokens between
         error reports) 
     includefile(directives/required.yo)
 
     lsubsect(SCANNER)(%scanner: using a standard scanner interface)
     includefile(directives/scanner.yo)
+
+    subsect(%scanner-token-function: define the name of the scanner's token
+            function) 
+    includefile(directives/scannertokenfunction.yo)
 
     subsect(%start: defining the start rule)
     includefile(directives/start.yo)

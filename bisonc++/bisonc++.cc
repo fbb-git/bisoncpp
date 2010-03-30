@@ -55,12 +55,14 @@ namespace
 
         Arg::LongOption("no-lines"),
 
-        {"print", Args::Required},
+        {"print", Arg::Required},
         {"required-tokens", Arg::Required},
         {"scanner", 's'},
 
         Arg::LongOption("scanner-debug"),
-        Arg::LongOption("scanner-token-function"),
+
+        {"scanner-token-function", Arg::Required},
+
         Arg::LongOption("show-filenames"),
                 // writes the names of the files to the standard output
 

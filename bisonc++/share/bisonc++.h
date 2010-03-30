@@ -33,6 +33,7 @@ inline void \@::error(char const *msg)
 }
 
 $insert lex
+
 $insert print
 $insert namespace-close
 

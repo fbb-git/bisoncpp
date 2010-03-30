@@ -55,7 +55,6 @@ class Parser: public ParserBase
     std::string d_parsefunSkeleton;
     std::string d_parsefunSource;
     std::string d_preInclude;
-    std::string d_print;
     std::string d_scannerInclude;
     std::string d_scannerTokenFunction;
     std::string d_stackDecl;
@@ -231,6 +230,9 @@ inline int Parser::lex()
     return d_scanner.yylex();
 }
 
+inline void Parser::print()
+{}
+
 inline std::string const &Parser::baseclassHeader() const
 {
     return d_baseclassHeader;
@@ -340,7 +342,7 @@ inline void Parser::setPreInclude()
 
 inline void Parser::setPrint()
 {
-    validateInclude(&d_print);
+    definePathname(&d_matchedTextFunction, 1);        // remove "s 
 }
 
 inline void Parser::setDebugFlag()
@@ -398,7 +400,7 @@ inline void Parser::setScannerInclude()
 }
 inline void Parser::setScannerTokenFunction()
 {
-    validateInclude(&d_scannerTokenFunction);
+    definePathname(&d_scannerTokenFunction, 0);
 }
 inline std::string const &Parser::stype() const
 {

@@ -4,4 +4,4 @@ namespace is defined.
 
     If this options is used the implementation header will contain a commented
 out tt(using namespace) directive for the requested namespace.  This directive
-is overridden by the bf(--namespace) command-line option.
+is overruled by the bf(--namespace) command-line option.

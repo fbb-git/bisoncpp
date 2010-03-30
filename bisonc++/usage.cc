@@ -104,9 +104,10 @@ void usage(string const &program_name)
     "   --scanner-debug: show the rules and returned tokens returned by\n"
     "           bisonc++'s scanner.\n"
 
-    "   --scanner-token-function=<scanner token function>: 
+    "   --scanner-token-function=<scanner token function>:\n"
     "           define the function called from lex() returning the next\n"
-    "           token returned (with --scanner by default d_scanner.yylex()\n"
+    "           token returned (by default d_scanner.yylex() when --scanner\n"
+    "           is used)\n"
 
     "   --show-filenames: show the names of the used/generated files on\n"
     "           the standard error stream.\n"

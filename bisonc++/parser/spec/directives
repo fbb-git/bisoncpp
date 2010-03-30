@@ -149,7 +149,7 @@ directiveAlt:
     print_t
     d_pxstring
     {
-        setPrint($2);
+        setPrint();
     }
 |
     required_t
@@ -172,7 +172,7 @@ directiveAlt:
     scanner_token_function_t
     d_pxstring
     {
-        setScannerTokenFunction($1);
+        setScannerTokenFunction();
     }
 |
     start_t
