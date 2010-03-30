@@ -10,7 +10,7 @@ void setRemovals()
 
     // unless `minimal':
         remove2 = "parser/SKEL tmp o */o release.yo libbisonc++.a "
-                  "scanner/yylex.cc";
+                  "scanner/yylex.cc scanner/lexer";
 
     // in ./documentation:
         remove3 = "man/*.1 man/*.html manual/manual-stamp manual/*.html "
