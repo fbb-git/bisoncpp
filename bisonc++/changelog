@@ -16,6 +16,8 @@ bisonc++ (2.7.0)
   * The build script received an additional option: `build parser' can be used
     to force the reconstruction of parser/parse.cc and parser/parserbase.h
 
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 30 Mar 2010 15:44:34 +0200
+
 bisonc++ (2.6.0)
 
   * Reorganized Bisonc++'s classes: public inheritance changed to private
