@@ -1,0 +1,340 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                      "http://www.w3.org/TR/html40/loose.dtd">
+<HTML>
+<!-- Created on January, 28 2005 by texi2html 1.66 -->
+<!--
+Written by: Lionel Cons <Lionel.Cons@cern.ch> (original author)
+            Karl Berry  <karl@freefriends.org>
+            Olaf Bachmann <obachman@mathematik.uni-kl.de>
+            and many others.
+Maintained by: Many creative people <dev@texi2html.cvshome.org>
+Send bugs and suggestions to <users@texi2html.cvshome.org>
+
+-->
+<HEAD>
+<TITLE>Bison 2.21.5: Invocation</TITLE>
+
+<META NAME="description" CONTENT="Bison 2.21.5: Invocation">
+<META NAME="keywords" CONTENT="Bison 2.21.5: Invocation">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META NAME="Generator" CONTENT="texi2html 1.66">
+
+</HEAD>
+
+<BODY LANG="en" BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#0000FF" VLINK="#800080" ALINK="#FF0000">
+
+<A NAME="SEC86"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison_11.html#SEC85"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison_12.html#SEC87"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison_11.html#SEC85"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison.html#SEC_Top"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison_13.html#SEC90"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison_toc.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison_15.html#SEC92">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison_abt.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H1> 9. Invoking Bison </H1>
+<!--docid::SEC86::-->
+<P>
+
+The usual way to invoke Bison is as follows:
+</P>
+<P>
+
+<TABLE><tr><td>&nbsp;</td><td class=example><pre>bison <VAR>infile</VAR>
+</pre></td></tr></table><P>
+
+Here <VAR>infile</VAR> is the grammar file name, which usually ends in
+`<SAMP>.y</SAMP>'.  The parser file's name is made by replacing the `<SAMP>.y</SAMP>'
+with `<SAMP>.tab.c</SAMP>'.  Thus, the `<SAMP>bison foo.y</SAMP>' filename yields
+`<TT>foo.tab.c</TT>', and the `<SAMP>bison hack/foo.y</SAMP>' filename yields
+`<TT>hack/foo.tab.c</TT>'.</P>
+<P>
+
+<TABLE BORDER="0" CELLSPACING="0">
+<TR><TD ALIGN="left" VALIGN="TOP"><A HREF="bison_12.html#SEC87">9.1 Bison Options</A></TD><TD>&nbsp;&nbsp;</TD><TD ALIGN="left" VALIGN="TOP">All the options described in detail, 
+			in alphabetical order by short options.</TD></TR>
+<TR><TD ALIGN="left" VALIGN="TOP"><A HREF="bison_12.html#SEC88">9.2 Option Cross Key</A></TD><TD>&nbsp;&nbsp;</TD><TD ALIGN="left" VALIGN="TOP">Alphabetical list of long options.</TD></TR>
+<TR><TD ALIGN="left" VALIGN="TOP"><A HREF="bison_12.html#SEC89">9.3 Invoking Bison under VMS</A></TD><TD>&nbsp;&nbsp;</TD><TD ALIGN="left" VALIGN="TOP">Bison command syntax on VMS.</TD></TR>
+</TABLE>
+<P>
+
+<A NAME="Bison Options"></A>
+<HR SIZE="6">
+<A NAME="SEC87"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison_12.html#SEC86"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison_12.html#SEC88"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison_12.html#SEC86"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison_12.html#SEC86"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison_13.html#SEC90"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison_toc.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison_15.html#SEC92">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison_abt.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H2> 9.1 Bison Options </H2>
+<!--docid::SEC87::-->
+<P>
+
+Bison supports both traditional single-letter options and mnemonic long
+option names.  Long option names are indicated with `<SAMP>--</SAMP>' instead of
+`<SAMP>-</SAMP>'.  Abbreviations for option names are allowed as long as they
+are unique.  When a long option takes an argument, like
+`<SAMP>--file-prefix</SAMP>', connect the option name and the argument with
+`<SAMP>=</SAMP>'.
+</P>
+<P>
+
+Here is a list of options that can be used with Bison, alphabetized by
+short option.  It is followed by a cross key alphabetized by long
+option.
+</P>
+<P>
+
+</P>
+<DL COMPACT>
+<DT>`<SAMP>-b <VAR>file-prefix</VAR></SAMP>'
+<DD><DT>`<SAMP>--file-prefix=<VAR>prefix</VAR></SAMP>'
+<DD>Specify a prefix to use for all Bison output file names.  The names are
+chosen as if the input file were named `<TT><VAR>prefix</VAR>.c</TT>'.
+<P>
+
+</P>
+<DT>`<SAMP>-d</SAMP>'
+<DD><DT>`<SAMP>--defines</SAMP>'
+<DD>Write an extra output file containing macro definitions for the token
+type names defined in the grammar and the semantic value type
+<CODE>YYSTYPE</CODE>, as well as a few <CODE>extern</CODE> variable declarations.
+<P>
+
+If the parser output file is named `<TT><VAR>name</VAR>.c</TT>' then this file
+is named `<TT><VAR>name</VAR>.h</TT>'.</P>
+<P>
+
+This output file is essential if you wish to put the definition of
+<CODE>yylex</CODE> in a separate source file, because <CODE>yylex</CODE> needs to
+be able to refer to token type codes and the variable
+<CODE>yylval</CODE>.  See section <A HREF="bison_7.html#SEC62">Semantic Values of Tokens</A>.</P>
+<P>
+
+</P>
+<DT>`<SAMP>-l</SAMP>'
+<DD><DT>`<SAMP>--no-lines</SAMP>'
+<DD>Don't put any <CODE>#line</CODE> preprocessor commands in the parser file.
+Ordinarily Bison puts them in the parser file so that the C compiler
+and debuggers will associate errors with your source file, the
+grammar file.  This option causes them to associate errors with the
+parser file, treating it as an independent source file in its own right.
+<P>
+
+</P>
+<DT>`<SAMP>-n</SAMP>'
+<DD><DT>`<SAMP>--no-parser</SAMP>'
+<DD>Do not include any C code in the parser file; generate tables only.  The
+parser file contains just <CODE>#define</CODE> directives and static variable
+declarations.
+<P>
+
+This option also tells Bison to write the C code for the grammar actions
+into a file named `<TT><VAR>filename</VAR>.act</TT>', in the form of a
+brace-surrounded body fit for a <CODE>switch</CODE> statement.
+</P>
+<P>
+
+</P>
+<DT>`<SAMP>-o <VAR>outfile</VAR></SAMP>'
+<DD><DT>`<SAMP>--output-file=<VAR>outfile</VAR></SAMP>'
+<DD>Specify the name <VAR>outfile</VAR> for the parser file.
+<P>
+
+The other output files' names are constructed from <VAR>outfile</VAR>
+as described under the `<SAMP>-v</SAMP>' and `<SAMP>-d</SAMP>' options.
+</P>
+<P>
+
+</P>
+<DT>`<SAMP>-p <VAR>prefix</VAR></SAMP>'
+<DD><DT>`<SAMP>--name-prefix=<VAR>prefix</VAR></SAMP>'
+<DD>Rename the external symbols used in the parser so that they start with
+<VAR>prefix</VAR> instead of `<SAMP>yy</SAMP>'.  The precise list of symbols renamed
+is <CODE>yyparse</CODE>, <CODE>yylex</CODE>, <CODE>yyerror</CODE>, <CODE>yynerrs</CODE>,
+<CODE>yylval</CODE>, <CODE>yychar</CODE> and <CODE>yydebug</CODE>.
+<P>
+
+For example, if you use `<SAMP>-p c</SAMP>', the names become <CODE>cparse</CODE>,
+<CODE>clex</CODE>, and so on.
+</P>
+<P>
+
+See section <A HREF="bison_6.html#SEC57">Multiple Parsers in the Same Program</A>.
+</P>
+<P>
+
+</P>
+<DT>`<SAMP>-r</SAMP>'
+<DD><DT>`<SAMP>--raw</SAMP>'
+<DD>Pretend that <CODE>%raw</CODE> was specified.  See section <A HREF="bison_6.html#SEC56">3.6.8 Bison Declaration Summary</A>.
+<P>
+
+</P>
+<DT>`<SAMP>-t</SAMP>'
+<DD><DT>`<SAMP>--debug</SAMP>'
+<DD>Output a definition of the macro <CODE>YYDEBUG</CODE> into the parser file,
+so that the debugging facilities are compiled.  See section <A HREF="bison_11.html#SEC85">Debugging Your Parser</A>.
+<P>
+
+</P>
+<DT>`<SAMP>-v</SAMP>'
+<DD><DT>`<SAMP>--verbose</SAMP>'
+<DD>Write an extra output file containing verbose descriptions of the
+parser states and what is done for each type of look-ahead token in
+that state.
+<P>
+
+This file also describes all the conflicts, both those resolved by
+operator precedence and the unresolved ones.
+</P>
+<P>
+
+The file's name is made by removing `<SAMP>.tab.c</SAMP>' or `<SAMP>.c</SAMP>' from
+the parser output file name, and adding `<SAMP>.output</SAMP>' instead.</P>
+<P>
+
+Therefore, if the input file is `<TT>foo.y</TT>', then the parser file is
+called `<TT>foo.tab.c</TT>' by default.  As a consequence, the verbose
+output file is called `<TT>foo.output</TT>'.</P>
+<P>
+
+</P>
+<DT>`<SAMP>-V</SAMP>'
+<DD><DT>`<SAMP>--version</SAMP>'
+<DD>Print the version number of Bison and exit.
+<P>
+
+</P>
+<DT>`<SAMP>-h</SAMP>'
+<DD><DT>`<SAMP>--help</SAMP>'
+<DD>Print a summary of the command-line options to Bison and exit.
+<P>
+
+</P>
+<DT>`<SAMP>-y</SAMP>'
+<DD><DT>`<SAMP>--yacc</SAMP>'
+<DD><DT>`<SAMP>--fixed-output-files</SAMP>'
+<DD>Equivalent to `<SAMP>-o y.tab.c</SAMP>'; the parser output file is called
+`<TT>y.tab.c</TT>', and the other outputs are called `<TT>y.output</TT>' and
+`<TT>y.tab.h</TT>'.  The purpose of this option is to imitate Yacc's output
+file name conventions.  Thus, the following shell script can substitute
+for Yacc:<P>
+
+<TABLE><tr><td>&nbsp;</td><td class=example><pre>bison -y $*
+</pre></td></tr></table></DL>
+<P>
+
+<A NAME="Option Cross Key"></A>
+<HR SIZE="6">
+<A NAME="SEC88"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison_12.html#SEC87"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison_12.html#SEC89"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison_12.html#SEC86"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison_12.html#SEC86"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison_13.html#SEC90"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison_toc.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison_15.html#SEC92">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison_abt.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H2> 9.2 Option Cross Key </H2>
+<!--docid::SEC88::-->
+<P>
+
+Here is a list of options, alphabetized by long option, to help you find
+the corresponding short option.
+</P>
+<P>
+
+<TABLE><tr><td>&nbsp;</td><td class=example><pre>--debug                               -t
+--defines                             -d
+--file-prefix=<VAR>prefix</VAR>                  -b <VAR>file-prefix</VAR>
+--fixed-output-files --yacc           -y
+--help                                -h
+--name-prefix=<VAR>prefix</VAR>                  -p <VAR>name-prefix</VAR>
+--no-lines                            -l
+--no-parser                           -n
+--output-file=<VAR>outfile</VAR>                 -o <VAR>outfile</VAR>
+--raw                                 -r			
+--token-table                         -k
+--verbose                             -v
+--version                             -V
+</pre></td></tr></table><P>
+
+<A NAME="VMS Invocation"></A>
+<HR SIZE="6">
+<A NAME="SEC89"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison_12.html#SEC88"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison_13.html#SEC90"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison_12.html#SEC86"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison_12.html#SEC86"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison_13.html#SEC90"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison_toc.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison_15.html#SEC92">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison_abt.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H2> 9.3 Invoking Bison under VMS </H2>
+<!--docid::SEC89::-->
+<P>
+
+The command line syntax for Bison on VMS is a variant of the usual
+Bison command syntax--adapted to fit VMS conventions.
+</P>
+<P>
+
+To find the VMS equivalent for any Bison option, start with the long
+option, and substitute a `<SAMP>/</SAMP>' for the leading `<SAMP>--</SAMP>', and
+substitute a `<SAMP>_</SAMP>' for each `<SAMP>-</SAMP>' in the name of the long option.
+For example, the following invocation under VMS:
+</P>
+<P>
+
+<TABLE><tr><td>&nbsp;</td><td class=example><pre>bison /debug/name_prefix=bar foo.y
+</pre></td></tr></table><P>
+
+is equivalent to the following command under POSIX.
+</P>
+<P>
+
+<TABLE><tr><td>&nbsp;</td><td class=example><pre>bison --debug --name-prefix=bar foo.y
+</pre></td></tr></table><P>
+
+The VMS file system does not permit filenames such as
+`<TT>foo.tab.c</TT>'.  In the above example, the output file
+would instead be named `<TT>foo_tab.c</TT>'.
+</P>
+<P>
+
+<A NAME="Table of Symbols"></A>
+<HR SIZE="6">
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison_12.html#SEC86"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison_13.html#SEC90"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison_toc.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison_15.html#SEC92">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="bison_abt.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<BR>
+<FONT SIZE="-1">
+This document was generated
+by <I>Frank B. Brokken</I> on <I>January, 28 2005</I>
+using <A HREF="http://texi2html.cvshome.org"><I>texi2html</I></A>
+</FONT>
+
+</BODY>
+</HTML>

@@ -1,0 +1,50 @@
+#!/bin/bash
+PROJECT=bisoncpp
+
+# When recreating to repair lintian/linda messages, define REPAIR
+# and rerun `distribution'
+# REPAIR=YES
+
+[ -d bisonc++ ] || exit 1             # the $PROJECT dir must exist
+
+cvsremove
+
+cd  bisonc++
+[ -s VERSION ] || exit 1                # VERSION must exist in $PROJECT
+
+if [ "$REPAIR" == "" ] 
+then
+    ./build distclean
+fi
+
+export BISONCPP=minimal 
+                                           # load the version
+VERSION=`grep VERSION VERSION | sed 's,#define VERSION \"\([^"]\+\)\",\1,'`
+
+DISTRIBUTION=bisonc++-${VERSION}      # define the distribution's dir name
+
+cd ..                                   # change the CVS dir name to the
+mv bisonc++ ${DISTRIBUTION}           # distribution's dir name
+
+
+if [ "$REPAIR" == "" ] 
+then
+    rm -f bisonc++_${VERSION}*          # remove old files
+
+                                        # create the .orig source tar
+    tar czvf bisonc++_${VERSION}.orig.tar.gz --exclude=debian ${DISTRIBUTION}
+fi
+
+cd ${DISTRIBUTION}                      # now build the distribution
+dpkg-buildpackage -mf.b.brokken@rug.nl  -rfakeroot 2>&1 | tee /tmp/$PROJECT 
+
+cd ..                                   # change the distribution's dir name
+mv ${DISTRIBUTION} bisonc++           # back to the cvs's dir name
+
+cvsrestore
+
+echo LINTIAN ...
+lintian -i bisonc++_${VERSION}*.changes 
+
+echo LINDA ...
+linda   -i bisonc++_${VERSION}*.changes

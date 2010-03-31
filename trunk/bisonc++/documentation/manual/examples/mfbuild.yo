@@ -1,0 +1,24 @@
+In order to construct tt(mfcalc), the following steps are suggested:
+    itemization(
+    it() Construct a program tt(mfcalc.cc). Actually, it is already available,
+        since all implementations of tt(main()) used so far are identical to
+        each other.
+    it() Construct the parser in a subdirectory tt(parser):
+        itemization(
+        it() First, construct b()'s input file as indicated above. Name
+            this file tt(grammar);
+        it() Run tt(bisonc++ grammar) to produce the files tt(Parser.h),
+            tt(Parserbase.h), tt(Parser.ih) and tt(parse.cc);
+        it() Modify tt(Parser.h) so as to include tt(FunctionPair, 
+            s_functions, s_funTab) and tt(d_symbols);
+        it() Modify tt(Parser.ih) so as to include tt(cmath) and optionally
+            `tt(using namespace std)', which is commented out by default;
+        it() Implement tt(data.cc) and tt(lex.cc) to initialize the static
+            data and to contain the lexical scanner, respectively.
+        )
+    it() Now construct tt(mfcalc) in tt(mfcalc.cc)'s directory using the
+        following command: 
+            verb(
+    g++ -o mfcalc *.cc parser/*.cc
+            )
+    )

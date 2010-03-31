@@ -1,0 +1,16 @@
+
+%token NR
+
+%%
+
+lines:
+    lines expr ';'
+|
+    /* empty */
+;
+
+expr:
+    NR
+|
+    error
+;

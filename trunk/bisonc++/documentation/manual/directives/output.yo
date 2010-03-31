@@ -1,0 +1,15 @@
+Unless otherwise specified, b() uses the name of the parser-class to derive
+the names of most of the files it may generate. Below tt(<CLASS>) should be
+interpreted as the name of the parser's class, tt(Parser) by default, but
+configurable using tt(%class-name) (see section ref(PARSERCLASS)).
+    itemization(
+    it() The parser's base class header: tt(<Class>base.h), configurable using
+        tt(%baseclass-header) (see section ref(BCHEADER)) or tt(%filenames)
+        (see section ref(FILES));
+    it() The parser's class header: tt(<Class>.h), configurable using
+        tt(%class-header) (see section ref(CHEADER)) or tt(%filenames)
+        (see section ref(FILES));
+    it() The parser's implementation header file: tt(<Class>.ih), configurable
+        using tt(%implementation-header) (see section ref(IHEADER)) or
+        tt(%filenames) (see section ref(FILES));
+    )

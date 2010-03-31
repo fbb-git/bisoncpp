@@ -1,0 +1,17 @@
+The first effect of the precedence directives is to assign precedence levels
+to the terminal symbols declared. The second effect is to assign precedence
+levels to certain rules: each rule gets its precedence from the last terminal
+symbol mentioned in the components. (You can also specify explicitly the
+precedence of a rule. See section ref(CONDEP)).
+
+Finally, the resolution of conflicts works by comparing the precedence of the
+rule being considered with that of the look-ahead token. If the token's
+precedence is higher, the choice is to shift. If the rule's precedence is
+higher, the choice is to reduce. If they have equal precedence, the choice is
+made based on the associativity of that precedence level. The verbose output
+file made by `tt(-V)' (see section ref(INVOKING)) shows how each conflict was
+resolved.
+
+Not all rules and not all tokens have precedence. If either the rule or the
+look-ahead token has no precedence, then the default is to shift.
+

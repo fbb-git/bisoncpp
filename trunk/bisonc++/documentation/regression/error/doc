@@ -1,0 +1,7 @@
+This example offers a demonstration of error-handling. 
+
+Enter lines, each containing one integral value. Use ^C to end the program
+other line content should result in a `syntax error'
+blanks and tabs are ignored (and thus OK)
+
+An empty line, however, *will* result in a `syntax error'

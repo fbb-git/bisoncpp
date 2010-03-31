@@ -1,0 +1,26 @@
+%class-name Parser
+
+%parsefun-source parse.cc
+%scanner ../scanner/scanner.h
+
+%token NR
+
+%%
+
+lines:
+    lines expr ';'
+|
+    // empty
+;
+
+expr:
+    NR
+    {
+        std::cout << d_scanner.YYText() << '\n';
+    }
+|
+    error
+    {
+        std::cout << "oops...\n";
+    }
+;

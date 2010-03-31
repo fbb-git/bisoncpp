@@ -1,0 +1,46 @@
+Simple alternatives can be specified using the vertical bar (tt(|)). Each
+alternative should begin with a unique identifying terminal token. The
+terminal token may actually be hidden in a non-terminal rule, in which case
+that nonterminal can be used as an alias for the non-terminal. In fact
+identical terminal tokens may be used if at some point the terminal tokens
+differ over different alternatives. Here are some examples:
+        verb(
+    // Example 1:  plain terminal distinguishing tokens
+    expr:
+        ID        
+    |
+        NUMBER
+    ;
+
+    // Example 2:  nested terminal distinguishing tokens
+    expr:
+        id
+    |
+        number
+    ;
+
+    id:
+        ID
+    ;
+
+    number:
+        NUMBER
+    ;
+
+    // Example 3:  eventually diverting routes
+    expr:
+        ID
+        id
+    |
+        ID
+        number
+    ;
+
+    id:
+        ID
+    ;
+
+    number:
+        NUMBER
+    ;
+        )

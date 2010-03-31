@@ -1,0 +1,16 @@
+int g_dryrun;       // set to 1 if envvar DRYRUN was set in main()
+
+
+void runP(int testValue, string cmd)
+{
+    if (g_dryrun)
+        printf(cmd, "\n");
+    else
+        system(testValue, cmd);
+}
+
+void run(string cmd)
+{
+    runP(0, cmd);
+}
+

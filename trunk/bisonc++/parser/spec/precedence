@@ -1,0 +1,32 @@
+left_p:
+    LEFT
+    typesymbol_m
+    {
+        d_association = Terminal::LEFT;
+    }
+;
+
+nonassoc_p:
+    NONASSOC
+    typesymbol_m
+    {
+        d_association = Terminal::NONASSOC;
+    }
+;
+
+right_p:
+    RIGHT
+    typesymbol_m
+    {
+        d_association = Terminal::RIGHT;
+    }
+;
+
+token_p:
+    TOKEN
+    typesymbol_m
+    {
+        d_association = Terminal::UNDEFINED;
+    }
+;
+

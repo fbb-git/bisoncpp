@@ -1,0 +1,24 @@
+%scanner scanner/scanner.h
+%token i
+
+%%
+
+S: 
+    L '=' R
+|
+    R
+    {
+        cout << "Hello world\n";
+    }
+;
+
+L: 
+    '*' R
+|
+    i
+;
+
+R: 
+    L
+;
+

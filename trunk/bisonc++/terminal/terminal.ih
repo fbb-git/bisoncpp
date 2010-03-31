@@ -1,0 +1,12 @@
+#include "terminal.h"
+
+#include <sstream>
+#include <ostream>
+#include <map>
+#include <iomanip>
+
+#include <bobcat/msg>
+
+using namespace std;
+using namespace FBB;
+

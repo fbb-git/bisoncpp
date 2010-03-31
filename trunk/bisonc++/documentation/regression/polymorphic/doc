@@ -1,0 +1,12 @@
+This is the original example resulting from a discussion I had with 
+Dallas A. Clement about polymorphic semantic values. The program creates a
+simple parser that can be run as follows:
+    demo < input
+When run as 
+    demo x < input
+debug output is shown, including selected semantic values on the semantic
+value stack.
+
+Also: see the files `dallas' and `dallas2'
+
+

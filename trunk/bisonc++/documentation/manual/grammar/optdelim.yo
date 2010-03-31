@@ -1,0 +1,49 @@
+An optional series of elements, separated from each other using delimiters
+occurs frequently in programming languages. For example, bf(C++) functions
+have parameter lists which may or may not require arguments. Since a parameter
+list may be defined empty, an em(empty) alternative is required. However, a
+simple generalization of the optional series construction (section
+ref(OPTSERIES)) won't work, since that would imply that the em(first) argument
+is preceded by a separator, which is clearly not the intention. So, the
+following construction is em(wrong):
+        verb(
+    opt_parlist:
+        // empty
+    |
+        opt_parlist ',' parameter
+        )
+    To define an optional series of delimited elements em(two) rules are
+required: one rule handling the optional part, the other the delimited series
+of elements. So, the correct definition is as follows:
+        verb(
+    opt_parlist:
+        // empty
+    |
+        parlist
+    ;
+
+    parlist:
+        parameter
+    |
+        parlist ',' parameter
+    ;
+        )
+    Again, the above rule pair can be used as a prototype for recognizing an
+optional series of delimited elements. The generic form of these rules could
+be formulated as follows:
+        verb(
+    opt_series:
+        // empty
+    |
+        series
+    ;
+
+    series:
+        element
+    |
+        series delimiter element
+        )
+    Note that the tt(opt_series) rules neatly distinguishes the no-element
+case from the case were elements are present. Usually these two cases need to
+be handled quite differently, and the tt(opt_series) rules empty alternative
+easily allows us to recognize the no-elements case.

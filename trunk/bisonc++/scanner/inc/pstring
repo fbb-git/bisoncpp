@@ -1,0 +1,21 @@
+    /*
+        a pstring is a string surrounded by < and >
+    */
+
+<pstring>{
+        
+">"     {
+            BEGIN INITIAL;
+
+            ret = yytextChk(&nKept, 3, Parser::PSTRING);
+            if (ret)
+                return ret;
+
+            pushSource(YY_CURRENT_BUFFER, YY_BUF_SIZE);
+        }
+
+"\\".   |              
+.       |
+\n      yymore();
+
+}

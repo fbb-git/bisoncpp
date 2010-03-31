@@ -1,0 +1,2 @@
+A highly reduced grammar derived from icmake V 7.00's grammar producing
+spurious RR conflicts with bisonc++ before version 1.5.0

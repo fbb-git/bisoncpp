@@ -1,0 +1,1191 @@
+%token
+        ARG_HEAD
+        ARG_TAIL
+        ASCII
+        BREAK
+        CHDIR
+        CMD_HEAD
+        CMD_TAIL
+        C_BASE
+        C_EXT
+        C_PATH
+        G_BASE
+        G_EXT
+        G_PATH
+        ELEMENT
+        ELSE
+        EXEC
+        EXECUTE
+        EXISTS
+        EXIT
+        FGETS
+        FIELDS
+        FOR
+        FPRINTF
+        GETENV
+        GETCH
+        GETPID
+        GETS
+        IDENTIFIER
+        IF
+        INT
+        LIST
+        MAKELIST
+        M_ECHO
+        NUMBER
+        PRINTF
+        PUTENV
+        RETURN
+        SIZEOFLIST
+        STAT
+        STRING
+        STRINGTYPE
+        STRLEN
+        STRLWR
+        STRUPR
+        STRFIND
+        SUBSTR
+        SYSTEM
+        VOID
+        WHILE
+
+%right
+    '='
+    AND_IS                                  /* binary-assignment */
+    OR_IS
+    XOR_IS
+    SHL_IS
+    SHR_IS
+
+    DIV_IS                                  /* arithmetic assignment */
+    MINUS_IS
+    MUL_IS
+    MOD_IS
+    PLUS_IS
+
+%left OR
+
+%left AND
+
+%left '|'
+
+%left '^'
+
+%left '&'
+
+%left EQUAL NOT_EQUAL
+
+%left '<' '>' SMALLER_EQUAL GREATER_EQUAL OLDER YOUNGER
+
+%left SHL SHR
+
+%left '+' '-'
+
+%left '*' '/' '%'
+
+%right '!' INC DEC '~'
+
+%left '['
+
+%expect 1
+
+       /* Grammar Rules */
+
+%%
+
+input:
+        input
+        def_var_or_fun
+    |
+        def_var_or_fun
+    ;
+
+                                            /* A */
+args:
+        args
+        comma
+        err_expression
+        {
+            $$ = *multargs(&$1, &$3);
+        }
+    |
+        err_expression
+        {
+            $$ = *firstarg(&$1);
+        }
+    ;
+                                            /* B */
+break_ok:
+        {
+            break_ok++;
+        }
+    ;
+
+break_stat:
+        BREAK
+        {
+            $$ = *break_stmnt();
+        }
+    ;
+                                            /* C */
+casttype:
+        INT
+    |
+        LIST
+    |
+        STRINGTYPE
+    ;
+
+backtick:   {parse_error = err_backtick_expected; }     '`' ;
+closebrace: {parse_error = err_closebrace_expected; }   '}' ;
+closepar:   {parse_error = err_closepar_expected; }     ')' ;
+comma:      {parse_error = err_comma_expected; }        ',' ;
+
+comma_arglist:
+        ','
+        args
+        {
+            $$ = $2;
+        }
+    |
+        zeroframe
+    ;
+
+comma_expr:
+        ','
+        err_expression
+        {
+            $$ = $2;
+        }
+    |
+        zeroframe
+    ;
+
+compound:
+        '{'                                 /* } (for matching) */
+        statements
+        closebrace
+        {
+            $$ = $2;
+        }
+    ;
+                                            /* D */
+def_var_or_fun:
+        opt_vartype
+        var_or_fun
+    |
+        voidtype
+        funcdef
+    ;
+                                            /* E */
+else_tail:
+        ELSE
+        statement
+        {
+            $$ = $2;
+        }
+    |
+        zeroframe
+    ;
+
+enterid:
+        IDENTIFIER
+        {
+            entervar();
+        }
+    ;
+
+entervarid:
+    enterid
+    {
+        $$ = fetchvar();
+    }
+;
+
+err_expression:
+        {
+            parse_error = err_in_expression;
+        }
+        expression
+        {
+            $$ = $2;
+        }
+    ;
+
+expression:
+        expression
+        '='
+        expression
+        {
+            $$ = *assign(&$1, &$3);
+        }
+    |
+        expression
+        '['
+        expression
+        ']'
+        {
+            $$ = *indexOp(&$1, &$3);
+        }
+    |
+        expression
+        MUL_IS
+        expression
+        {
+            $$ = *math_ass(&$1, &$3, multiply, "*=");
+        }
+    |
+        expression
+        DIV_IS
+        expression
+        {
+            $$ = *math_ass(&$1, &$3, divide, "/=");
+        }
+    |
+        expression
+        MOD_IS
+        expression
+        {
+            $$ = *math_ass(&$1, &$3, modulo, "%=");
+        }
+    |
+        expression
+        PLUS_IS
+        expression
+        {
+            $$ = *math_ass(&$1, &$3, addition, "+=");
+        }
+    |
+        expression
+        MINUS_IS
+        expression
+        {
+            $$ = *math_ass(&$1, &$3, subtract, "-=");
+        }
+    |
+        expression
+        AND_IS
+        expression
+        {
+            $$ = *math_ass(&$1, &$3, band, "&=");
+        }
+    |
+        expression
+        OR_IS
+        expression
+        {
+            $$ = *math_ass(&$1, &$3, bor, "|=");
+        }
+    |
+        expression
+        XOR_IS
+        expression
+        {
+            $$ = *math_ass(&$1, &$3, xor, "^=");
+        }
+    |
+        expression
+        SHL_IS
+        expression
+        {
+            $$ = *math_ass(&$1, &$3, shl, "<<=");
+        }
+    |
+        expression
+        SHR_IS
+        expression
+        {
+            $$ = *math_ass(&$1, &$3, shr, ">>=");
+        }
+    |
+        expression
+        OR
+        expression
+        {
+            $$ = *or_boolean(&$1, &$3);
+        }
+    |
+        expression
+        AND
+        expression
+        {
+            $$ = *and_boolean(&$1, &$3);
+        }
+    |
+        expression
+        EQUAL
+        expression
+        {
+            $$ = *equal(&$1, &$3);
+        }
+    |
+        expression
+        NOT_EQUAL
+        expression
+        {
+            $$ = *unequal(&$1, &$3);
+        }
+    |
+        expression
+        '<'
+        expression
+        {
+            $$ = *smaller(&$1, &$3);
+        }
+    |
+        expression
+        '>'
+        expression
+        {
+            $$ = *greater(&$1, &$3);
+        }
+    |
+        expression
+        SMALLER_EQUAL
+        expression
+        {
+            $$ = *sm_equal(&$1, &$3);
+        }
+    |
+        expression
+        GREATER_EQUAL
+        expression
+        {
+            $$ = *gr_equal(&$1, &$3);
+        }
+    |
+        expression
+        '+'
+        expression
+        {
+            $$ = *addition(&$1, &$3);
+        }
+    |
+        expression
+        '&'
+        expression
+        {
+            $$ = *band(&$1, &$3);
+        }
+    |
+        expression
+        '|'
+        expression
+        {
+            $$ = *bor(&$1, &$3);
+        }
+    |
+        expression
+        '^'
+        expression
+        {
+            $$ = *xor(&$1, &$3);
+        }
+    |
+        expression
+        SHL
+        expression
+        {
+            $$ = *shl(&$1, &$3);
+        }
+    |
+        expression
+        SHR
+        expression
+        {
+            $$ = *shr(&$1, &$3);
+        }
+    |
+        expression
+        '-'
+        expression
+        {
+            $$ = *subtract(&$1, &$3);
+        }
+    |
+        expression
+        '*'
+        expression
+        {
+            $$ = *multiply(&$1, &$3);
+        }
+    |
+        expression
+        YOUNGER
+        expression
+        {
+            $$ = *young(&$1, &$3);
+        }
+    |
+        expression
+        OLDER
+        expression
+        {
+            $$ = *old(&$1, &$3);
+        }
+    |
+        expression
+        '/'
+        expression
+        {
+            $$ = *divide(&$1, &$3);
+        }
+    |
+        expression
+        '%'
+        expression
+        {
+            $$ = *modulo(&$1, &$3);
+        }
+    |
+        '-'
+        expression          %prec '!'
+        {
+            $$ = *negate(&$2);
+        }
+    |
+        INC
+        expression
+        {
+            $$ = *incdec(pre_op, op_inc, &$2);
+        }
+    |
+        expression
+        INC
+        {
+            $$ = *incdec(post_op, op_inc, &$1);
+        }
+    |
+        DEC
+        expression
+        {
+            $$ = *incdec(pre_op, op_dec, &$2);
+        }
+    |
+        expression
+        DEC
+        {
+            $$ = *incdec(post_op, op_dec, &$1);
+        }
+    |
+        '+'
+        expression          %prec '!'
+        {
+            $$ = $2;
+        }
+    |
+        '~'
+        expression          %prec '!'
+        {
+            $$ = *bnot(&$2);
+        }
+    |
+        '!'
+        expression
+        {
+            $$ = *not_boolean(&$2);
+        }
+    |
+        '('
+        casttype
+        ')'
+        expression         %prec '!'
+        {
+            $$ = *cast($2.type, &$4);
+        }
+    |
+        string
+        {
+            $$ = stackframe(e_str | e_const);
+        }
+    |
+        NUMBER
+        {
+            $$ = stackframe(e_int | e_const);
+        }
+    |
+        '('
+        expression
+        closepar
+        {
+            $$ = $2;
+        }
+    |
+        func_or_var
+    |
+        '`'
+        expression
+        backtick
+        {
+            $$ = *onearg(f_backtick, &$2);
+        }
+    ;
+
+expr_code:
+        err_expression
+        {
+            $$ = *expr_stmnt(&$1);
+        }
+    ;
+
+expr_list:
+        expr_list
+        ','
+        expr_code
+        {
+            $$ = *catcode(&$1, &$3);
+        }
+    |
+        expr_code
+    ;
+                                            /* F */
+for:
+        FOR
+        nesting
+    ;
+
+for_stat:
+        for
+        openpar
+        opt_expr_list
+        semicol
+        opt_expression
+        semicol
+        opt_expr_list
+        closepar
+        break_ok
+        statement
+        popdead
+        {
+            $$ = *for_stmnt(&$3, &$5, &$7, &$10);
+        }
+    ;
+
+funcdef:
+        funid
+        funvars                         /* returns init code */
+        statements
+        closebrace
+        {
+            close_fun(&$3);
+        }
+    ;
+
+func_or_var:
+        function
+        closepar
+    |
+        IDENTIFIER
+        {
+            $$ = fetchvar();
+        }
+    ;
+
+function:
+        zero_arg_funs                       /* getch() or gets() */
+        openpar
+        {
+            $$ = *zeroargs($1.type);
+        }
+    |
+        one_arg_funs
+        openpar
+        err_expression
+        {
+            $$ = *onearg($1.type, &$3);
+        }
+    |
+        two_arg_funs
+        openpar
+        err_expression
+        comma
+        err_expression
+        {
+            $$ = *twoargs($1.type, &$3, &$5);
+        }
+    |
+        three_arg_funs
+        openpar
+        err_expression
+        comma
+        err_expression
+        comma
+        err_expression
+        {
+            $$ = *threeargs($1.type, &$3, &$5, &$7);
+        }
+    |
+        optint_string                       /* CHDIR, SYSTEM, STAT */
+        openpar
+        err_expression                      /* int inserted if string */
+        comma_expr                          /* may be string if first == int */
+        {
+            $$ = *optint_string($1.type, &$3, &$4);
+        }
+    |
+        optint_special                      /* EXEC, EXECUTE */
+        openpar                             /* alternatives: */
+        err_expression                      /* fun(int, string, ...) */
+        comma_arglist                       /* fun(string, ...)       */
+        {
+            $$ = *optint_special($1.type, &$3, &$4);
+        }
+    |
+        PRINTF
+        openpar
+        args                                /* first may be anything */
+        {
+            $$ = *specials(f_printf, &$3);
+        }
+    |
+        FPRINTF
+        openpar
+        args                                /* argcount >= 2 required */
+        {
+            $$ = *exec_fprintf($1.type, &$3);
+        }
+    |
+        funname
+        openpar
+        opt_arglist
+        {
+            $$ = *callfun($1.evalue, &$3);
+        }
+    |
+        makelist
+    ;
+
+funid:
+        IDENTIFIER
+        {
+            open_fun();
+        }
+    ;
+
+funname:
+        IDENTIFIER
+        {
+            $$.evalue = fetchfun();
+        }
+    ;
+
+funvars:
+        openpar
+        opt_parlist
+        ')'
+        openbrace
+        opt_locals
+        {
+            make_frame();
+            outbin($5.code, $5.codelen);
+        }
+    ;
+
+                                            /* G */
+                                            /* H */
+                                            /* I */
+idexpr:
+    enterid
+    zeroframe                           /* no explicit initialization */
+|
+    entervarid
+    initassign
+    expression
+    {
+        initialization = 0;
+        $$ = *expr_stmnt(assign(&$1, &$3));    /* explicit initialization */
+    }        
+;
+
+if:
+        IF
+        nesting
+    ;
+
+if_stat:
+        if
+        openpar
+        err_expression
+        closepar
+        statement
+        popdead
+        pushdead
+        else_tail
+        popdead
+        {
+            $$ = *if_stmnt(&$3, &$5, &$8);
+        }
+    ;
+
+initassign:
+    '='
+    {
+        initialization = 1;
+    }
+
+                                            /* J */
+                                            /* K */
+                                            /* L */
+leave_key:
+        RETURN
+    |
+        EXIT
+    ;
+
+local_list:
+        type_of_var
+        vardefs                         /* + semicol, initialization code */
+        {
+            $$ = $2;
+        }
+    ;
+
+locals:
+    locals
+    local_list                          /* type + variables */
+    {
+        $$ = *catcode(&$1, &$2);        /* cat initialization code */
+    }            
+|
+    local_list                          /* initialization code of 1st var */
+;
+                                            /* M */
+makelist:
+                                             /* makelist(expr) */
+        makelist_expr
+        makelist_normal                     /* returns O_FILE expression */
+        {
+            $$ = *makelist
+                 (
+                     multargs
+                     (
+                         firstarg(&$2),     /* O_FILE is passed */
+                         &$1                /* expression is passed */
+                     ),
+                     op_hlt                 /* not op_younger or op_older */
+                 );
+        }
+    |
+                                            /* makelist(expr, expr) */
+        makelist_expr
+        comma
+        err_expression
+        {
+            $$ = *makelist
+                 (
+                     multargs
+                     (
+                         firstarg(&$1),     /* fileattribute is passed */
+                         &$3                /* expression is passed */
+                     ),
+                     op_hlt                 /* not op_younger or op_older */
+                 );
+        }
+    |
+        makelist_expr                       /* makelist(expr, older, expr) */
+        comma
+        older_younger
+        comma
+        err_expression
+        makelist_normal
+        {
+            $$ = *makelist
+                 (
+                    multargs
+                    (
+                        multargs
+                        (
+                            firstarg(&$6),  /* O_FILE   is passed */
+                            &$1             /* 1st expression is passed */
+                        ),
+                        &$5                 /* 2nd expression is passed */
+                     ),
+                     $3.type                /* older/younger */
+                 );
+        }
+    |
+        makelist_expr                 /* makelist(expr, expr, older, expr) */
+        comma
+        err_expression
+        comma
+        older_younger
+        comma
+        err_expression
+        {
+            $$ = *makelist
+                 (
+                    multargs
+                    (
+                        multargs
+                        (
+                            firstarg(&$1),  /* attribute is passed */
+                            &$3             /* 2nd expression is passed */
+                        ),
+                        &$7                 /* 3rd expression is passed */
+                     ),
+                     $5.type                /* older/younger */
+                 );
+        }
+    ;
+
+makelist_expr:
+        MAKELIST
+        openpar
+        err_expression
+        {
+            $$ = $3;
+        }
+    ;
+
+makelist_normal:
+        {
+            $$ = stackframe(e_int | e_const);
+            $$.evalue = O_FILE;
+        }
+    ;
+                                             /* N */
+nesting:
+        pushdead
+        {
+            nestlevel++;
+        }
+    ;
+                                            /* O */
+ok:
+    ';'
+        {
+            yyerrok;
+        }
+    ;
+
+older_younger:
+        {parse_error = err_older_younger; }
+        old_young
+        {
+            $$ = $2;
+        }
+    ;
+
+old_young:
+        OLDER
+    |
+        YOUNGER
+    ;
+
+one_arg_funs:
+        ASCII
+    |
+        SIZEOFLIST
+    |
+        EXISTS
+    |
+        M_ECHO
+    |
+        CMD_TAIL
+    |
+        CMD_HEAD
+    |
+        ARG_HEAD
+    |
+        ARG_TAIL
+    |
+        G_BASE
+    |
+        G_PATH
+    |
+        G_EXT
+    |
+        PUTENV
+    |
+        GETENV
+    |
+        STRLEN
+    |
+        STRUPR
+    |
+        STRLWR
+    ;
+
+openpar:    {parse_error = err_openpar_expected; }      '(' ;
+openbrace:  {parse_error = err_openbrace_expected; }    '{' ;
+                                                     /* } for matching */
+opt_arglist:
+        args
+    |
+        zeroframe
+    ;
+
+opt_expression:
+        err_expression
+    |
+        {
+            $$ = stackframe(e_int | e_const);
+            $$.evalue = 1;
+        }
+    ;
+
+opt_expr_list:
+        expr_list
+    |
+        zeroframe
+    ;
+
+optint_special:
+        EXEC                                /* optional int allowed */
+    |
+        EXECUTE
+    ;
+
+optint_string:
+        STAT
+    |
+        CHDIR
+    |
+        SYSTEM
+    ;
+
+opt_locals:
+        locals                              /* initialization code */
+    |
+        zeroframe                           /* empty init. code */
+    ;
+
+opt_parlist:
+        pars
+    |
+    ;
+
+opt_vartype:
+        type_of_var
+    |
+        {
+            vartype = e_int;
+        }
+    ;
+                                            /* P */
+pars:
+        pars
+        comma
+        partype
+    |
+        partype
+    ;
+
+partype:
+        type_of_var
+        enterid
+        {
+            n_params++;
+        }
+    ;
+
+popdead:
+        {
+            pop_dead();
+        }
+    ;
+
+pushdead:
+        {
+            push_dead();                    /* set new dead-level */
+        }
+    ;
+
+                                            /* Q */
+                                            /* R */
+return_stat:
+        leave_key
+        return_tail
+        {
+            $$ = *return_stmnt($1.type, &$2);
+        }
+    ;
+
+return_tail:
+        err_expression
+    |
+        zeroframe
+    ;
+                                            /* S */
+semicol:    {parse_error = err_semicol_expected; }      ';' ;
+
+statement:
+        stm
+        {
+            sem_err = 0;
+        }
+    ;
+
+statements:
+        statements
+        statement
+        {
+            $$ = *cat_stmnt(&$1, &$2);
+        }
+    |
+        zeroframe
+    ;
+
+stm:
+        compound
+    |
+        ';'
+        zeroframe
+        {
+            $$ = $1;
+        }
+    |
+        expr_code
+        semicol
+    |
+        while_stat
+    |
+        if_stat
+    |
+        for_stat
+    |
+        return_stat
+        semicol
+    |
+        break_stat
+        semicol
+    |
+        error
+        ok
+    ;
+
+string:
+    string
+    STRING
+    {
+        stringbuf = xstrcat(stringbuf, string);/* catenate the new string */
+    }
+|
+    STRING
+    {
+        free(stringbuf);                    /* free former string */
+        stringbuf = xstrdup(string);        /* duplicate initial string */
+    }
+;
+
+                                        /* T */
+two_arg_funs:
+        C_EXT                               /* string, string */
+    |
+        C_BASE
+    |
+        C_PATH
+    |
+        ELEMENT                             /* int, list | int, string */
+    |
+        FGETS                               /* list fgets(string, int) */
+    |
+        FIELDS                              /* string, string */
+    |
+        STRFIND                              /* string, string */
+    ;
+
+three_arg_funs:
+    SUBSTR
+;
+        
+type_of_var:
+        vartype
+        {
+            parse_error = err_identifier_expected;
+            vartype = $1.type;
+        }
+    ;
+                                            /* U */
+                                            /* V */
+vardefs:
+    varnames
+    semicol
+    {
+        $$ = $1;                    /* initialization code */
+    }
+;
+
+varnames:
+        varnames
+        comma
+        idexpr
+        {
+            $$ = *catcode(&$1, &$3);    /* catenate variable    */
+                                        /* initialization code  */
+        }            
+    |
+        idexpr
+    |
+        error
+        ok
+        zeroframe                       /* Empty stmnt  */
+        {
+            $$ = $3;
+        }
+    ;
+
+var_or_fun:
+        vardefs
+        {
+            global_init = *catcode(&global_init, &$1);
+        }
+    |
+        funcdef
+    ;
+
+vartype:
+        INT
+    |
+        STRINGTYPE
+    |
+        LIST
+    ;
+
+voidtype:
+        VOID
+        {
+            vartype = 0;
+        }
+    ;
+                                            /* W */
+while:
+        WHILE
+        nesting
+    ;
+
+while_stat:
+        while
+        openpar
+        err_expression
+        closepar
+        break_ok
+        statement
+        popdead
+        {
+            $$ = *while_stmnt(&$3, &$6);
+        }
+    ;
+
+                                            /* X */
+                                            /* Y */
+                                            /* Z */
+zero_arg_funs:
+        GETCH
+    |
+        GETPID
+    |
+        GETS
+    ;
+
+zeroframe:
+        {
+            $$ = stackframe(0);
+        }
+    ;
+%%
+
+int yywrap()
+{
+    return (1);
+}

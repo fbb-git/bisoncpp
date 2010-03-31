@@ -1,0 +1,18 @@
+#!/bin/bash
+
+case $1 in
+    (clean)
+        rm -rf scanner/yylex.cc calculator parser/{calculatorbase.h,parse.*}
+    ;;
+    (demo)
+        cd parser
+        bisonc++ -V -l grammar
+        cd ../scanner
+        flex lexer
+        cd ..
+        g++ -Wall -o calculator *.cc */*.cc
+    ;;
+    (*)
+        echo "$0 [clean|demo] to clean or build the demo program"
+    ;;
+esac

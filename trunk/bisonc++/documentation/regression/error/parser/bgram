@@ -1,0 +1,16 @@
+
+%token NR
+
+%%
+
+lines:
+    lines line
+|
+    line
+;
+
+line:
+    NR '\n'
+|
+    error '\n'
+;

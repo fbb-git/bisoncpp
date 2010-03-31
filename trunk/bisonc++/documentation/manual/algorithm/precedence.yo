@@ -1,0 +1,6 @@
+Another situation where shift/reduce conflicts appear is in arithmetic
+expressions. Here shifting is not always the preferred resolution; the b()
+directives for operator precedence allow you to specify when to shift and
+when to reduce. How and when to do so is covered by the next sections.
+
+

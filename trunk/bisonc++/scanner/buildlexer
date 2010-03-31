@@ -1,0 +1,24 @@
+#!/bin/bash
+
+rm -f lexer
+
+for x in head definitions 
+do
+    cat inc/$x >> lexer
+    echo >> lexer
+done
+
+echo "
+%%
+"               >> lexer
+
+for x in precode common block initial pxstring string comment includeonly \
+         pstring quote xstring 
+do
+    cat inc/$x >> lexer
+    echo >> lexer
+done
+
+echo "
+%%
+"               >> lexer

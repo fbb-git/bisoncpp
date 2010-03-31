@@ -1,0 +1,11 @@
+#include "srconflict.h"
+
+#include <algorithm>
+
+#include <bobcat/fnwrap>
+
+#include "../enumsolution/enumsolution.h"
+
+using namespace std;
+using namespace FBB;
+

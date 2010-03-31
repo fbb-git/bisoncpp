@@ -1,0 +1,12 @@
+Syntax: bf(%stype typename) nl()    
+           The type of the semantic value of tokens.  The specification
+            tt(typename) should be the name of an unstructured type (e.g.,
+            bf(size_t)). By default it is bf(int). See bf(YYSTYPE) in
+            bf(bison).  It should not be used if a bf(%union) specification is
+            used.  Within the parser class, this type may be used as
+            bf(STYPE__).
+
+    Any text following tt(%stype) up to the end of the line, up to the first
+of a series of trailing blanks or tabs or up to a comment-token (tt(//) or
+tt(/*)) becomes part of the type definition. Be sure em(not) to end a
+tt(%stype) definition in a semicolon.

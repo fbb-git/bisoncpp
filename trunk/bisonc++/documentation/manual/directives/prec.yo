@@ -1,0 +1,42 @@
+Syntax: bf(%prec) tt(token) nl()
+    The construction bf(%prec) tt(token) may be used in production rules to
+overrule the actual precendence of an operator in a particular production
+rule. Well known is the construction
+                verb(
+    expression:
+        '-' expression %prec UMINUS
+        {
+            ...
+        }
+                ) 
+    Here, the default priority and precedence of the tt(`-') token as the
+subtraction operator is overruled by the precedence and priority of the
+tt(UMINUS) token, which is frequently defined as:
+                verb(
+    %right UMINUS
+                )
+    E.g., a list of arithmetic operators could consists of:
+        verb(
+    %left '+' '-'
+    %left '*' '/' '%'
+    %right UMINUS
+        )
+    giving tt('*' '/') and tt('%') a higher priority than tt('+') and tt('-'),
+ensuring at the same time that tt(UMINUS) is given both the highest priority
+and a right-associativity.
+
+In the above production rule the operator order would cause the
+construction 
+        verb(
+    '-' expression
+        )
+    to be evaluated from right to left, having a higher precedence than either
+the multiplication or the addition operators.
+
+
+
+
+
+
+
+

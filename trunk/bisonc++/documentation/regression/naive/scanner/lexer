@@ -1,0 +1,20 @@
+%{
+    #define _SKIP_YYFLEXLEXER_
+    #include "scanner.ih"
+
+    #include "../parser/Parserbase.h"
+%}
+
+%option yyclass="Scanner" outfile="yylex.cc"
+%option c++ 8bit warn noyywrap
+
+%%
+
+[ \t]+                          // Often used: skip white space
+\n                              // same
+
+[0-9]+                          return Parser::NR;
+
+.                               return yytext[0];
+
+%%

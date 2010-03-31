@@ -1,0 +1,29 @@
+Before running b() to produce a parser class, we need to decide how to
+arrange all the source code in one or more source files. Even though the
+example is fairly simple, all user-defined functions should be defined in
+source files of their own. For tt(rpn) this means that a source file
+tt(rpn.cc) is constructed holding tt(main()), and a file tt(parser/lex.cc)
+holding the lexical scanner's implementation. Note that I've put all the
+parser's files in a separate directory as well (also see section ref(LAYOUT)).
+
+In  url(rpn's parser)(examples/rpn/parser) directory the file tt(grammar)
+holds the grammar specification. B() will construct a parser class and a
+parsing member function from this file after issuing the following command:
+        verb(
+    b() grammar
+        )
+    From this, b() produced the following files:
+    itemization(
+    itt(Parser.h), the parser class definition;
+    itt(Parserbase.h), the parser's em(base) class definition, defining, among
+other, the grammatical tokens to be used by externally defined lexical
+scanners;
+    itt(Parser.ih), the em(internal header file), to be included by all
+implementations of the parser class' members;
+    itt(parse.cc), the parsing member function.
+    )
+    By default, tt(Parserbase.h) and tt(parse.cc) will be em(re-created) each
+time b() is re-run. tt(Parser.h) and tt(Parser.ih) may safely be modified
+by the programmer, e.g., to add new members to to the parser class. These two
+files will not be overwritten by b(), unless explicitly instructed to do
+so. 

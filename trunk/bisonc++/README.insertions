@@ -1,0 +1,11 @@
+Classes Item, Next, NonTerminal, StateItem and Terminal use a static
+inserter() function to define the way the object is inserted into a
+stream. These functions expect addresses of member functions defining a
+particular insertion as their arguments.
+
+In the class header files the members that define an insertion type are listed
+immediately following the inserter() prototype.
+
+Currently only the Terminal class supports a manipulator functionality for
+these member functions, allowing a insertion mode-switch within a single
+insertion statement.

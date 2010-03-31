@@ -1,0 +1,5 @@
+Syntax:    bf(%lines) nl() 
+           Put bf(#line) preprocessor directives in the file containing the
+            parser's tt(parse()) function. It acts identically to the bf(-l)
+            command line option and is suppressed by the bf(--no-lines)
+            option.
