@@ -25,22 +25,6 @@ void Generator::debugFunctions(std::ostream &out) const
         "    return out;\n"
         "}\n"
         "\n"
-        "std::string " << d_baseclassScope << "symbol__(int value) const\n"
-        "{\n"
-        "    using namespace std;\n"
-        "    ostringstream ostr;\n"
-        "    SMap::const_iterator it = s_symbol.find(value);\n"
-        "    if (it != s_symbol.end())\n"
-        "        ostr << \"`\" << it->second << \"'\";\n"
-        "    else if (isprint(value))\n"
-        "        ostr << \"`\" << static_cast<char>(value) << ""\"' "
-                                                    "(\" << value << \")\";\n"
-        "    else\n"
-        "        ostr << \"'\\\\x\" << setfill('0') << hex << setw(2) << "
-                                                        "value << \"'\";\n"
-        "    return ostr.str();\n"
-        "}\n"
-        "\n"
         "std::string " << d_baseclassScope << "stype__(char const *pre, "
                           "STYPE__ const &semVal, char const *post) const\n"
         "{\n";
@@ -57,6 +41,25 @@ void Generator::debugFunctions(std::ostream &out) const
         out << 
         "}\n";
     }
+
+    if (d_debug || d_print)
+        out <<
+        "std::string " << d_baseclassScope << "symbol__(int value) const\n"
+        "{\n"
+        "    using namespace std;\n"
+        "    ostringstream ostr;\n"
+        "    SMap::const_iterator it = s_symbol.find(value);\n"
+        "    if (it != s_symbol.end())\n"
+        "        ostr << \"`\" << it->second << \"'\";\n"
+        "    else if (isprint(value))\n"
+        "        ostr << \"`\" << static_cast<char>(value) << ""\"' "
+                                                    "(\" << value << \")\";\n"
+        "    else\n"
+        "        ostr << \"'\\\\x\" << setfill('0') << hex << setw(2) << "
+                                                        "value << \"'\";\n"
+        "    return ostr.str();\n"
+        "}\n"
+        "\n";
 
     if (verbose)
         out <<
