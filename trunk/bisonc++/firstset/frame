@@ -1,5 +1,0 @@
-#include "firstset.ih"
-
-FirstSet::() const
-{
-}

@@ -1,8 +1,0 @@
-#include "production.h"
-
-#include <iomanip>
-#include <bobcat/msg>
-
-using namespace std;
-using namespace FBB;
-

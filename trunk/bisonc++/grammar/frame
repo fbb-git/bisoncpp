@@ -1,5 +1,0 @@
-#include "grammar.ih"
-
-Grammar::() const
-{
-}

@@ -4,7 +4,7 @@ void Generator::debugIncludes(ostream &out) const
 {
     bool verbose = d_arg.option(0, "error-verbose");
 
-    if (!d_debug && !verbose)
+    if (!d_debug && !verbose && !d_print)
         return;
 
     key(out);
@@ -15,6 +15,5 @@ void Generator::debugIncludes(ostream &out) const
                 "#include <string>\n"
                 "#include <map>\n";
 
-    if (verbose || d_debug)
-        out <<  "#include <iomanip>\n";
+    out <<  "#include <iomanip>\n";
 }

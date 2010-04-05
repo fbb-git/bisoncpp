@@ -1,5 +1,0 @@
-#include "production.ih"
-
-Production::() const
-{
-}

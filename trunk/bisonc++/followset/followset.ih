@@ -1,7 +1,0 @@
-#include "followset.h"
-
-#include <iterator>
-#include <algorithm>
-
-using namespace std;
-

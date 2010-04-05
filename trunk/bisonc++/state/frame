@@ -1,5 +1,0 @@
-#include "state.ih"
-
-State::() const
-{
-}

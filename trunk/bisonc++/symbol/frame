@@ -1,5 +1,0 @@
-#include "symbol.ih"
-
-Symbol::() const
-{
-}

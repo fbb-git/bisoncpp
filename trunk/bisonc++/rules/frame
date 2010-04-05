@@ -1,5 +1,0 @@
-#include "rules.ih"
-
-Rules::() const
-{
-}

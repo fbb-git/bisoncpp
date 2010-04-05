@@ -1,9 +1,0 @@
-A more complex calculator offering types (char, int, double) and functions.
-Expressions and commands must be entered on lines.
-
-Compiling this program may take a little while.
-
-To end the program, enter:                      quit
-
-When the program has started the command        help
-will provide an overview of its possibilities.

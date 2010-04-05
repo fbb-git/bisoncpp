@@ -10,9 +10,8 @@ void Generator::staticData(ostream &out) const
     d_writer.srTables();
     d_writer.statesArray();
 
-    if (d_debug)
+    if (d_debug || d_print)
         d_writer.symbolicNames();
-
 
     out << "} // anonymous namespace ends\n"
             "\n";
