@@ -75,7 +75,7 @@ void scanner()
     }
     if (idx >= 0)
     {
-        exec("buildlexer");
+        exec("./buildlexer");
         exec("flex", "lexer");
     }
 
