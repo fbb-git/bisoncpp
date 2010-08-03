@@ -11,11 +11,11 @@ grammar's start symbol. The above is called an em(item) and the initial set of
 states is called the set of em(kernel items). In this state there's only one
 kernel item. Items are indexed, so this item receives index 0. Beyond, item
 indices are shown together with the items themselves. To the kernel set all
-production rules of nonterminals immediately following the dot are added
+production rules of non terminals immediately following the dot are added
 (repeatedly, so if new rules again show nonterminals to the right of the dot,
 then their production rules are added too). These added rules define the
-non-kernel set of items. Except for this statekernel items don't have dots at
-their first positions.
+non-kernel set of items. Except for the augmented grammar rule's state kernel
+items don't have dots at their first positions.
 
     From the above kernel item the following non-kernel items are derived:
         itemization(
