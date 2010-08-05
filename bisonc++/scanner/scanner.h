@@ -32,26 +32,33 @@ class Scanner: private yyFlexLexer
         {}
     };
 
-    std::ifstream   d_in;
-    size_t          d_retWS;
-    size_t          d_maxDepth;
+    std::ifstream   d_in;           // stream currently read
+
+//  size_t          d_retWS;        // true when whitespace is returned by the
+//                                  // scanner (currently not used)
+
+    size_t          d_maxDepth;     // max. file inclusion depth
+
     size_t          d_number;       // only valid after tokens NUMBER and
                                     // after escape(), octal() and 
                                     // hexadecimal(). Illegal (long)
                                     // character constants (> 1 char) have bit
                                     // 8 set.
-    bool            d_include;
+
+    bool            d_include;      // set to true/false by lexer-actions
     bool            d_includeOnly;
+
     char            d_commentChar[2];   // set to ' ' in `lexer' when C
                                     // comment without \n is matched,
                                     // otherwise set to \n. See
                                     // `lexer' for details
+
     std::string     d_nextSource;   // with the %include directive
 
-    std::stack<yy_buffer_state *>   d_state;
-    std::vector<FileInfo>           d_fileInfo;
+    std::stack<yy_buffer_state *>   d_state;        // used when switching
+    std::vector<FileInfo>           d_fileInfo;     // streams
 
-    Block           d_block;
+    Block           d_block;            // action block retrieved fm the input
 
     std::string     d_canonicalQuote;   // canonical quoted ident.
     

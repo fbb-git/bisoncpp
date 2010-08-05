@@ -6,12 +6,25 @@
 #include "../production/production.h"
 #include "../lookaheadset/lookaheadset.h"
 
+// An Item represents a point in a production rule. The point is indicated by
+// its 'dot', which represents the position until where that particular
+// production rule has been recognized.
+
 class Item
 {
     friend std::ostream &operator<<(std::ostream &out, Item const &item);
 
-    Production const *d_production;
-    size_t                d_dot;
+    Production const *d_production;         // Pointer to the production rule
+                                            // associated with this item
+
+    size_t d_dot;                           // The position in the production
+                                            // rule until where the rule has
+                                            // been recognized. Dot position 0
+                                            // is only found in the start-rule
+                                            // and augmented grammar rule and
+                                            // represents the position where
+                                            // nothing has as yet been
+                                            // recognized. 
 
     static std::ostream &(Item::*s_insertPtr)(std::ostream &out) const;
     

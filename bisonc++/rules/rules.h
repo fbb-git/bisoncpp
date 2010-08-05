@@ -19,11 +19,12 @@
 class Rules
 { 
     public:
-        // For each rule, maintain a record of file/line combinations
-        // indicating where the rule was first seen. This allows me to
-        // generate warnings when a rule is defined as full rule definitions
-        // rather than as alternatives. There's nothing inherently wrong with
-        // that, but it may also be a typo causing unexpected conflicts
+            // For each rule, maintain a record of file/line combinations
+            // indicating where the rule was first seen. This allows me to
+            // generate warnings when a rule is defined as full rule
+            // definitions rather than as alternatives. There's nothing
+            // inherently wrong with that, but it may also be a typo causing
+            // unexpected conflicts
         typedef std::pair<std::string, size_t> FileInfo;
 
     private:
@@ -37,23 +38,34 @@ class Rules
     
         NFileInfoMap d_location;            // the map holding information
                                             // about initial rule locations
-        NonTerminal *d_currentRule;       
+
+        NonTerminal *d_currentRule;         // Pointer to the N currently
+                                            // processed. Initially 0
     
         std::string d_startRule;            // name of the startrule
     
         Production::Vector d_production;    // the vector holding information
-        Production *d_currentProduction;    // about all productions
+                                            // about all productions
                                             // productions hold Symbol
                                             // elements, they contain
                                             // information about type and
                                             // index of their elements in the 
                                             // (non)terminal vectors
+
+        Production *d_currentProduction;    // currently processed production
+                                            // rule (pointer to a Production
+                                            // also in d_production)
     
-        static size_t s_acceptProductionNr;
-        static size_t s_nExpectedConflicts;
-        static Terminal s_errorTerminal;
-        static Terminal s_eofTerminal;
-        static Symbol *s_startSymbol;
+        static size_t s_acceptProductionNr; // index in d_production of the
+                                            // accept rule
+
+        static size_t s_nExpectedConflicts; // how many conflicts to expect?
+        static Terminal s_errorTerminal;    // predefined 'error' terminal
+        static Terminal s_eofTerminal;      // predefined eof terminal
+        static Symbol *s_startSymbol;       // derived from the initial N or
+                                            // from the N defined as the
+                                            // star tsymbol by
+                                            // augmentGrammar(). 
     
     public:
         Rules();

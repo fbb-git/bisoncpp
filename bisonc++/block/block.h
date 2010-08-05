@@ -12,7 +12,10 @@ class Block: private std::string
     std::string d_source;               // the source in which the block 
                                         // was found. The block's text itself
                                         // is in the Block's base class
-    int     d_count;
+
+    int     d_count;                    // curly braces nesting count, handled 
+                                        // by clear(), close(), and open()
+
     
     public:
         typedef std::pair<size_t, size_t> Range;

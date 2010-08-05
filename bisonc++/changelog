@@ -1,3 +1,22 @@
+bisonc++ (2.7.1) [ISN]
+
+  * Grammars having states in which the lhs of a production rule in which a
+    shift is indicated is different from the lhs of a production rule in which
+    a reduction is indicated have a S/R conflict that cannot be solved by
+    priority or association. See README.states-and-conflicts and
+    srconflict/visitreduction.cc for an example.  These grammars are now
+    showing S/R conflicts, where this did not happen before. The example was
+    brought to my attention by Ramanand Mandayam (thanks, Ramanand!).
+
+  * Previously the documentation stated that --construction writes the
+    construction process to stdout, whereas it is written to the same file as
+    used by --verbose. This is now repaired.
+
+  * The meaning/use of the data members of all classes are now described at
+    the data members in all the classes' header files.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 03 Aug 2010 22:29:47 +0200
+
 bisonc++ (2.7.0)
 
   * $-characters appearing in strings or character constants in action blocks 

@@ -4,13 +4,9 @@
 #include <vector>
 #include "../lookaheadset/lookaheadset.h"
 
+    // Data used when processing R/R conflicts. Used by, e.g., StateItem
 class RRData
 {
-    LookaheadSet d_laSet;
-    bool d_forced;
-    size_t d_idx;           // index of item with reduced LA set
-    size_t d_kept;          // index of item with kept LA set
-
     public:
         typedef std::vector<RRData>     Vector;
         typedef Vector::const_iterator  ConstIter;
@@ -21,6 +17,14 @@ class RRData
             KEEP_SECOND,
         };
 
+    private:
+        LookaheadSet d_laSet;   // set of LA symbols
+        bool d_forced;          // true if one of the two rules is explicitly
+                                // kept. 
+        size_t d_idx;           // index of item with reduced LA set
+        size_t d_kept;          // index of item with kept LA set
+
+    public:
         RRData(LookaheadSet first);
 
         bool empty() const;

@@ -12,15 +12,26 @@ class SRConflict
     friend std::ostream &operator<<(std::ostream &out, 
                                     SRConflict const &conflict);
 
-    Next::Vector const &d_nextVector;    
-    StateItem::Vector const &d_itemVector;
-    std::vector<size_t> const &d_reducible;
+    Next::Vector const &d_nextVector;           // the Next objects describing
+                                                // states to transit to
+
+    StateItem::Vector const &d_itemVector;      // the items which have S/R
+                                                // conflicts with the
+                                                // reducible items
+
+    std::vector<size_t> const &d_reducible;     // the indices of the
+                                                // reducible rules
     
-    RmReduction::Vector     d_rmReduction;
-    std::vector<size_t>     d_rmShift;
+    RmReduction::Vector     d_rmReduction;      // Vector of reducible rules
+                                                // to remove for this conflict
+    std::vector<size_t>     d_rmShift;          // vector of indices of items
+                                                // to remove having shift
+                                                // conflicts 
 
-    static size_t  s_nConflicts;
-
+    static size_t  s_nConflicts;                // the number of S/R conflicts
+                                                // that could not be solved by
+                                                // preference/association
+                                                // decisions. 
     public:
         SRConflict(Next::Vector const &next, 
                    StateItem::Vector const &stateItem, 
@@ -38,6 +49,8 @@ class SRConflict
         std::ostream &insert(std::ostream &out) const;
         void processShiftReduceConflict(Next::ConstIter const &next, 
                                         size_t itemIdx);
+        bool differentLHSs(Symbol const *reducibleLHS, 
+                            std::vector<size_t> const &shiftableItemIndices);
 
         static void visitReduction(size_t idx, SRConflict &context);
 };

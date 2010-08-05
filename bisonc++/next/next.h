@@ -1,6 +1,8 @@
 #ifndef _INCLUDED_NEXT_
 #define _INCLUDED_NEXT_
 
+#include <iostream>
+
 #include <iosfwd>
 #include <vector>
 
@@ -10,18 +12,12 @@
 #include "../item/item.h"
 #include "../stateitem/stateitem.h"
 
+// The state to transit to on a given terminal symbol. Refer to
+// README.states-and-conflicts for a more detailed description of the class
+// Next.
+
 class Next
 {
-    friend std::ostream &operator<<(std::ostream &out, Next const &next);
-
-    Symbol const *d_symbol;
-    size_t d_next;
-    std::vector<size_t> d_kernel;
-
-    StateType d_stateType;
-
-    static std::ostream &(Next::*s_insertPtr)(std::ostream &out) const;
-
     public:
         typedef Enum::Solution Solution;
 
@@ -29,6 +25,20 @@ class Next
         typedef Vector::iterator        Iterator;
         typedef Vector::const_iterator  ConstIter;
 
+    private:
+        friend std::ostream &operator<<(std::ostream &out, Next const &next);
+
+        Symbol const *d_symbol;         // on this symbol we transit to state
+                                        // d_next. 
+        size_t d_next;                  // the index of the state to transit 
+                                        // to on d_symbol. 
+        std::vector<size_t> d_kernel;   // indices of kernel items 
+                                        // from which to transit
+        StateType d_stateType;          // the type of the state 
+    
+        static std::ostream &(Next::*s_insertPtr)(std::ostream &out) const;
+
+    public:
         Next();
         Next(Symbol const *symbol, size_t stateItemOffset);
 

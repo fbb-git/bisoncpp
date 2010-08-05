@@ -7,7 +7,7 @@
 // vector to Next's checkShiftReduceConflict member which will solve all
 // observed shift-reduce conflicts.
 
-void State::checkConflicts() 
+void State::checkConflicts()
 {
     d_nTransitions = d_nextVector.size();
 

@@ -21,12 +21,17 @@ class Parser: public ParserBase
     typedef ActionMap::value_type 
             Value;
 
+            // data members that are self-explanatory are not explicitly
+            // described here.
+
     FBB::Arg &d_arg;
 
     // $insert scannerobject
     Scanner d_scanner;
     Rules      &d_rules;
     Symtab      d_symtab;
+
+            // all the flags that can be set using directives/options
 
     bool        d_debugFlag;
     bool        d_errorVerbose;
@@ -38,6 +43,8 @@ class Parser: public ParserBase
     bool        d_unionDeclared;            // see setuniondecl.cc
 
     size_t      d_requiredTokens;
+
+            // strings holding text set using directives/options
 
     std::string d_baseclassHeader;
     std::string d_baseclassSkeleton;
@@ -66,6 +73,7 @@ class Parser: public ParserBase
     std::vector<Block::Range>::const_reverse_iterator d_skipRbegin;
     std::vector<Block::Range>::const_reverse_iterator d_skipRend;
 
+            // strings containing default file and other names
     static char s_defaultBaseclassSkeleton[];
     static char s_defaultClassName[];
     static char s_defaultClassSkeleton[];
@@ -74,8 +82,6 @@ class Parser: public ParserBase
     static char s_defaultParsefunSource[];
 
     static std::ofstream s_verbose;
-
-
 
     static size_t s_nHidden;          // number of hidden nonterminals
     static std::ostringstream s_hiddenName;

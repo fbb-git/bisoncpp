@@ -7,17 +7,20 @@ class Symbol;
 
 class RmReduction
 {
-    size_t  d_idx;          // idx in a StateItem::Vector of reduce-production
-    size_t  d_next;         // next state when shifting
-    Symbol const *d_symbol; // symbol causing the S/R conflict
-    
-    bool   d_forced;        // forced if not based on precedence or
-                            // associativity 
     public:
         typedef std::vector<RmReduction>    Vector;
         typedef Vector::const_iterator      ConstIter;
 
-        RmReduction();      // Dummy, needed for vectors
+    private:
+        size_t  d_idx;              // idx in a StateItem::Vector of
+                                    // reduce-production 
+        size_t  d_next;             // next state when shifting
+        Symbol const *d_symbol;     // symbol causing the S/R conflict
+                                    
+        bool   d_forced;            // forced if not based on precedence or
+                                    // associativity 
+    public:
+        RmReduction() = default;    // Only needed for vectors
         RmReduction(size_t idx, size_t next, 
                     Symbol const *symbol, bool forced);
 
@@ -27,9 +30,6 @@ class RmReduction
 
         static bool isForced(RmReduction const &rmReduction);
 };
-
-inline RmReduction::RmReduction()
-{}
 
 inline size_t RmReduction::idx() const
 {

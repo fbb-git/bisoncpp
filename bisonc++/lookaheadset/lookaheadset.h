@@ -5,8 +5,11 @@
 #include "../terminal/terminal.h"
 
 class LookaheadSet: private FirstSet
-{                   // Elements const ptrs are known to be Terminal const ptrs
+{               // 'Elements const ptrs' are known to be 'Terminal const ptrs'
     public:
+        using FirstSet::begin;          // members from FirstSet made 
+        using FirstSet::end;            // available for LookaheadSet
+
         enum EndStatus
         {
             e_withoutEOF,
@@ -17,8 +20,6 @@ class LookaheadSet: private FirstSet
         EndStatus d_EOF;                // end-marker in the lookahead set
 
     public:
-        using FirstSet::begin;
-        using FirstSet::end;
         FirstSet &firstSet();
 
         LookaheadSet(EndStatus eof = e_withoutEOF);
@@ -32,7 +33,8 @@ class LookaheadSet: private FirstSet
         LookaheadSet &operator-=(Symbol const *symbol);
 
                         // true if *this contains other, 
-                        // i.e., true if other has NO new elements
+                        // i.e., true if other has NO elements not already
+                        // present in the current LookaheadSet
         bool operator>=(LookaheadSet const &other) const;
 
                         //  true if `symbol' is found in *this

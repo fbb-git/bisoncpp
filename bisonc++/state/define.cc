@@ -98,9 +98,11 @@
 //  5. When all states have been constructed, conflicts are located and
 //     solved. If the state contains any conflict, they are resolved and
 //     information about these conflicts is stored in an SRConflict::Vector
-//     and/or RRConflict::Vector. Conflicts are resolved by the member:
-//
-//          resolveConflicts();
+//     and/or RRConflict::Vector. Conflicts are identified and resolved by the
+//     member
+//          (static)checkConflicts();
+//     See README.states-and-conflicts for a description of the actions taken
+// by checkConflicts().
 
 void State::define()
 {
@@ -138,17 +140,16 @@ void State::define()
             ].next()                                // next state from there
         ];                                          // state pointer itself
 
-    // The rule start_$ -> start . is a spurious reduction. In fact no such
-    // reduction may occur, since at that point EOF is obtained and parsing
-    // should stop. Therefore, this reduction is removed.
-
+        // The rule start_$ -> start . is a spurious reduction. In fact no
+        // such reduction may occur, since at that point EOF is obtained and
+        // parsing should stop. Therefore, this reduction is removed.
     s_acceptState->d_reducible.erase(s_acceptState->d_reducible.begin());
 
-    // REQ_TOKEN is the state's type because it terminates at EOF, and 
-    // the EOF transition isn't interpreted as a terminal transition.
-    // Other (terminal) transitions are possible too, so in this case 
-    // a token is required anyway. Alternatively, keep NORMAL, and when
-    // reaching this state and its type is NORMAL: ACCEPT. Pondering...
+        // REQ_TOKEN is the state's type because it terminates at EOF, and 
+        // the EOF transition isn't interpreted as a terminal transition.
+        // Other (terminal) transitions are possible too, so in this case 
+        // a token is required anyway. Alternatively, keep NORMAL, and when
+        // reaching this state and its type is NORMAL: ACCEPT. Pondering...
     s_acceptState->d_stateType.setType(StateType::REQ_TOKEN);
 
     for_each(s_state.begin(), s_state.end(), staticCheckConflicts);
@@ -171,8 +172,3 @@ void State::define()
 
     for_each(s_state.begin(), s_state.end(), staticSummarizeActions);
 }
-
-
-
-
-

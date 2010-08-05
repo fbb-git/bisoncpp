@@ -13,11 +13,10 @@ class StateType
         };                          // Combinations may occur.
 
     private:
+        int d_type;                 // the type of a state
+
         static int const s_mask = 7;        // mask for all legal Type values
-
-        int d_type;
-
-        static char const  *s_stateName[];
+        static char const  *s_stateName[];  // array of all state type names
 
     public:
         StateType(int type);

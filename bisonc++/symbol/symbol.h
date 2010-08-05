@@ -9,20 +9,9 @@
 
 class Symbol: public Element
 {
-    private:
-        std::string const d_name;
-        std::string d_stype;        
-                                // Type assigned by explicit symbol type 
-                                // association, e.g. %type <int> symbol
-                                // but there's also a type association with
-                                // symbols when no %union is specified. In
-                                // that case it's either the default (int) or
-                                // %stype-defined type.
-    
-        int d_type;
-        mutable bool d_used;
-
     public:
+        typedef std::vector<Symbol const *>  Vector;
+    
         enum Type
         {
             UNDETERMINED        = 0,
@@ -32,8 +21,28 @@ class Symbol: public Element
             RESERVED            = 8,
         };
 
-        typedef std::vector<Symbol const *>  Vector;
+    private:
+        std::string const d_name;
+                                // Name of the symbol, assigned at
+                                // construction time, returned by name()
+
+        std::string d_stype;        
+                                // Type assigned by explicit symbol type 
+                                // association, e.g. %type <int> symbol
+                                // but there's also a type association with
+                                // symbols when no %union is specified. In
+                                // that case it's either the default (int) or
+                                // %stype-defined type.
     
+        int d_type;             // type of the symbol using the enum values of
+                                // the Type enum. Type's values are bit
+                                // values, and multiple values may therefore
+                                // be assigned.
+
+        mutable bool d_used;    // Set to true once the symbol has actually
+                                // been used in the grammar.
+
+    public:
         ~Symbol();
 
         bool isNonTerminal() const;

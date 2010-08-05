@@ -10,6 +10,13 @@
 #include "../rmreduction/rmreduction.h"
 #include "../rrdata/rrdata.h"
 
+// See also README.states-and-conflicts for a description of StateItem.
+//
+// A StateItem represents an item in one of the grammar's states. The
+// information of a StateItem is displayed when --construction is used and is
+// of a form like
+//              0: [P1 1] S -> C  . C   { <EOF> }  0, (1 2 ) 0
+
 class StateItem
 {
     friend std::ostream &operator<<(std::ostream &out, 

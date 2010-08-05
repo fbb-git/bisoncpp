@@ -12,15 +12,21 @@ class RRConflict
     friend std::ostream &operator<<(std::ostream &out, 
                                     RRConflict const &conflict);
 
-    StateItem::Vector const &d_itemVector;
-    std::vector<size_t> const &d_reducible;
+    StateItem::Vector const &d_itemVector;      // items involved in the RR
+                                                // conflict 
 
-    size_t d_firstIdx;
-    LookaheadSet const *d_firstLA;
+    std::vector<size_t> const &d_reducible;     // the numbers of rules that
+                                                // can be reduced 
+
+    size_t d_firstIdx;                          // index of the first
+                                                // reducible rule
+
+    LookaheadSet const *d_firstLA;              // pointer to the LA set of
+                                                // the first reducible rule
     
-    RRData::Vector d_rmReduction;
+    RRData::Vector d_rmReduction;               // RRData of rules to remove
 
-    static size_t  s_nConflicts;
+    static size_t  s_nConflicts;                // number of RR conflicts
 
     public:
         RRConflict(StateItem::Vector const &stateItem, 

@@ -32,24 +32,65 @@
 //  Production rules received their priority setting either explicitly (using
 //  %prec) or from their first terminal token. See also 
 //  rules/updateprecedences.cc
+// 
+// On the other hand (as pointed out by Ramanand Mandayam), S/R conflicts may
+// also have shifts in a production rule of N-terminal 'a' and reductions to a
+// N-terminal 'b'. Here is an example: 
+// 
+// %left  '*'                                
+// %token ID
+// %%
+// expr: 
+//     term 
+// ;
+// 
+// term:
+//     term '*' primary
+// | 
+//     ID
+// ;
+// 
+// primary:
+//     '-' expr
+// | 
+//     ID
+// ;
+// 
+// This grammar contains the following state
+// 
+// State 2:
+// 0: [P1 1] expr -> term  .   { <EOF> }  1, () -1
+// 1: [P2 1] term -> term  . '*' primary   { '*' <EOF> }  0, () 0
+//   0: On '*' to state 4 with (1 )
+//   Reduce item(s): 0 
+// 
+// Here, the reduction reduces to N 'expr' and the shift happens in a
+// production rule of the N 'term'.
+// 
+// In these cases the S/R conflict should not be solved by priority or
+// association as the reduction does not pertain to the production rules of
+// the N in which the shift.
 
-void SRConflict::visitReduction(size_t idx, SRConflict &context)
+    // idx is the index of a reducible item. That item can be reached as
+    // context.d_itemVector[idx]
+void SRConflict::visitReduction(size_t reducibleIdx, SRConflict &context)
 {
     auto nextIter = context.d_nextVector.begin();
+    auto reducibleLAset = context.d_itemVector[reducibleIdx].lookaheadSet();
 
     while (true)
     {
-        nextIter =                  // check whether the a nextVector symbol
+        nextIter =                  // check whether a nextVector symbol
             find_if(                // is in the reduction item's LA set.
                 nextIter, context.d_nextVector.end(), 
-                FnWrap::unary(
-                    Next::inLAset, context.d_itemVector[idx].lookaheadSet())
+                FnWrap::unary(Next::inLAset, reducibleLAset)
             );
 
         if (nextIter == context.d_nextVector.end())
             return;
-
-        context.processShiftReduceConflict(nextIter, idx);
+        
+        context.processShiftReduceConflict(nextIter, reducibleIdx);
         ++nextIter;
     }
 }
+

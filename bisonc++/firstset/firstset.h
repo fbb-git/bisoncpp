@@ -12,7 +12,8 @@ class FirstSet: private std::set<Element const *>
 
     friend std::ostream &operator<<(std::ostream &out, FirstSet const &fset);
 
-    bool d_epsilon;             // true if epsilon in {First}
+    bool d_epsilon;             // true if epsilon (the empty set indicator) 
+                                // is in {First}
 
     protected:
         typedef std::set<Element const *> Baseclass;

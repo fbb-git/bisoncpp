@@ -18,43 +18,56 @@ class Terminal: public Symbol
         enum
         {
             INITIAL_SYMBOLIC_VALUE = 257,   // See rules/data.cc for Terminals
-                                            // defined by default.
-            DEFAULT = UINT_MAX      // results in the next symbolic terminal
-                                    // value to be assigned.
+                                        // defined by default.
+
+            DEFAULT = UINT_MAX          // results in the next symbolic
+                                        // terminal value to be assigned.
         };
-        enum Association        // adapt s_association[] in data.cc if this
-        {                       // changes
+        enum Association                // adapt s_association[] in data.cc 
+        {                               // when this changes
             UNDEFINED,
             NONASSOC,
             LEFT,
             RIGHT,
         };
-        enum Precedence
-        {
+        enum Precedence                 // returned by comparePrecedence()
+        {                               
             SMALLER = -1,
             EQUAL   = 0,
             LARGER  = 1,
         };
 
     private:
-        size_t d_value;
-        Association d_association;
-        size_t d_precedence;
+        size_t d_value;                 // value assigned to the symbol
 
-        std::string d_literal;
-        std::string d_readableLiteral;
+        Association d_association;      // association type of the symbol
+        size_t d_precedence;            // precedence value of the symbol
+                                        
+        std::string d_literal;          // literal text value of a
+                                        // symbol.
+        std::string d_readableLiteral;  // with character terminals this
+                                        // contains a quoted character, maybe
+                                        // escaped as in '\n'
 
-        FirstSet d_firstSet;
+        FirstSet d_firstSet;            // set of symbols that can be seen at
+                                        // this terminal symbol. It only
+                                        // contains the current terminal
+                                        // symbol, but is returned by
+                                        // Element::firstSet() through the
+                                        // virtual v_firstSet() function below
 
-        static std::set<size_t> s_valueSet;   // all terminal token values
-        static size_t s_precedence;
-        static char const *s_association[];
-        static size_t s_value;        // value assigned, unless explictly
-                                        // requested
-        static size_t s_maxValue;     // maximum assigned terminal value
+        static std::set<size_t> s_valueSet; // all terminal token values
+        static size_t s_precedence;         // last-used precedence so far
+        static char const *s_association[]; // array of literal association
+                                            // names 
+        static size_t s_value;              // value assigned, unless 
+                                            // explictly defined
+        static size_t s_maxValue;           // maximum assigned terminal value
 
         static std::ostream &(Terminal::*s_insertPtr)(std::ostream &out) 
                                                                         const;
+                                        // pointer to the insertion function
+                                        // to use.
     public:
         Terminal(std::string const &name, 
                     Type type,

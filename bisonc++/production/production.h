@@ -19,18 +19,32 @@ class Production: private std::vector<Symbol *>
 
     friend std::ostream &operator<<(std::ostream &out, 
                                                Production const *production);
-    private:
-        Terminal const *d_precedence;
-        Block           d_action;
-        Symbol const *d_nonTerminal;
-        size_t d_nr;                          // production order number
-                                              // over all productions,
-                                              // starts at 1
-        mutable bool d_used;
 
-        static size_t s_nr;
-        static bool s_unused;
-        static Production const *s_startProduction;
+    Terminal const *d_precedence;       // 0 or a pointer to some terminal
+                                        // defining this production's
+                                        // precedence (through %prec)
+
+    Block           d_action;           // action associated with this
+                                        // production. 
+
+    Symbol const *d_nonTerminal;        // pointer to the lhs nonterminal of
+                                        // this production
+
+    size_t d_nr;                          // production order number
+                                          // over all productions,
+                                          // starts at 1
+
+    mutable bool d_used;                // true once this production has been
+                                        // used.
+
+
+    static size_t s_nr;                 // incremented at each new production
+
+    static bool s_unused;               // prevents multiple 'unused
+                                        // production rules' warnings
+
+    static Production const *s_startProduction; // a pointer to the start
+                                        // production rule.
     
     public:
         using Inherit::size;

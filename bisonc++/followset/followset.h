@@ -10,8 +10,9 @@ class FollowSet
 {
     friend std::ostream &operator<<(std::ostream &out, FollowSet const &fSet);
 
-    bool d_EOF;             // true if {Follow} contains EOF
-    std::set<Terminal const *> d_set;
+    bool d_EOF;                         // true if {Follow} contains EOF
+    std::set<Terminal const *> d_set;   // set of pointers to Terminal symbols
+                                        // that can follow a symbol
 
     public:
         FollowSet();

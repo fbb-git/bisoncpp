@@ -36,32 +36,34 @@ the classes used by Rules; RmReduction does not depend on any other class).
          |        |               |             |           |
          +--------+---------------+         LookaheadSet  Grammar 
          |                                      |           |
-         |                                   +--+--+        |
-         |                                   |     |        |
-         |                  RmReduction    RRData  |        |
-         |                       |           |     |        |
-         |                       +-----+-----+     |        |
-         |                             |           |        |
-         |    StateType  SRSolution StateItem      |        |
-         |        |           |        |           |        |
-         |        +-----+-----+--------+           |        |
-         |              |              |           |        |
-         |             Next            |           |        |
-         |              |              |           |        |
-         |          SrConflict     RRConflict    Item       |
-       Parser           |              |           |        |           
-         |              +--------------+-----------+        |
-         |                             |                    | 
-         |                           State                  |
+         |                                  +---+---+       |
+         |                                  |       |       |
+         |                  RmReduction   RRData   Item     |
+         |                       |          |       |       |
+         |                       +-----+----+-------+       |
          |                             |                    |
-         |                           Writer                 |
-         |                             |                    |
-         +-------------+---------------+                    |
+         |  StateType  EnumSolution StateItem               |
+         |      |           |          |                    |
+         |      +-----------+----------+                    |
+         |                  |          |                    |
+         |                 Next        |                    |
+         |                  |          |                    |
+         |              SrConflict  RRConflict              |
+       Parser               |          |                    |           
+         |                  +-----+----+                    |
+         |                        |                         | 
+         |                      State                       |
+         |                        |                         |
+         |                      Writer                      |
+         |                        |                         |
+         +-------------+----------+                         |
                        |                                    |
                     Generator                               |
                        |                                    |
                        +----------------+-------------------+
                                         |
                                      bisonc++
+
+
 
 

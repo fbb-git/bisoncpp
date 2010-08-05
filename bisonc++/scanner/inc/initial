@@ -38,10 +38,6 @@
                                     BEGIN pxstring;
                                     return Parser::PARSEFUN_SOURCE;
                                 }
-"%parsefun-source"[ \t]*        {
-                                    BEGIN pxstring;
-                                    return Parser::PARSEFUN_SOURCE;
-                                }
 "%prec"                         return Parser::PREC;
 "%print"                        {
                                     BEGIN pxstring;

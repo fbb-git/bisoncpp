@@ -18,20 +18,28 @@ class NonTerminal: public Symbol
 
     private:
         Production::Vector d_production;  // production rules in a vector
-                                // of ptrs to Production objects
-        FirstSet    d_first;
-        FollowSet   d_follow;
+                                    // of ptrs to Production objects
 
-        size_t d_nr;          // the NonTerminal's number
+        FirstSet    d_first;        // set of terminals that can be
+                                    // encountered at this NonTerminal
 
-        static size_t s_counter;
-        static size_t s_number;   // incremented at each call of setNr()
-        static bool s_unused;
-        static bool s_undefined;
+        FollowSet   d_follow;       // set of terminals that can follow this
+                                    // NonTerminal 
+
+        size_t d_nr;                // the NonTerminal's number
+
+        static size_t s_counter;    // counts the number of symbols in follow
+                                    // sets. May be reset to 0 by
+                                    // resetCounter()
+        static size_t s_number;     // incremented at each call of setNr()
+        static bool s_unused;       // prevents multiple unused warnings
+        static bool s_undefined;    // set to true once at least one
+                                    // nonterminal is not used.
         
         static std::ostream &(NonTerminal::*s_insertPtr)(std::ostream &out)
                                                                         const;
-
+                                    // pointer to the insertion function to be
+                                    // used. 
     public:
         NonTerminal(std::string const &name, std::string const &stype = "",
                                 Type type = NON_TERMINAL);

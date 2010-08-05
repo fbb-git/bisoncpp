@@ -19,53 +19,60 @@ class Production;
 
 class State
 {
-    friend std::ostream &operator<<(std::ostream &out, State const *state);
-
-    typedef std::vector<State *>                Vector;
-
-    StateItem::Vector   d_itemVector;
-
-    size_t              d_nKernelItems;
-
-    std::vector<size_t> d_reducible;    // d_itemVector offsets containing
-                                        // reducible items
-
-    size_t              d_nTransitions;     // elements in d_nextVector minus
-                                            // removed elements because of
-                                            // conflicts
-
-    size_t              d_nReductions;      // elements in d_reducible minus
-                                            // reductions having empty LA-sets
-
-    size_t              d_defaultReducible; // the d_reducible  index of the 
-                                            // reduction to use as default
-                                            // (or npos)
-
-    size_t              d_maxLAsize;    // the default reduction becomes the
-                                        // one having the largest LAset size
-
-    size_t              d_summedLAsize; // sum of all lookaheadsets of all
-                                        // non-default reductions. 
-
-    Next::Vector        d_nextVector;
-
-    size_t              d_idx;
-
-    size_t              d_nTerminalTransitions;
-
-    SRConflict          d_srConflict;
-    RRConflict          d_rrConflict;
+    typedef std::vector<State *> Vector;
     
-    StateType           d_stateType;
-
-    static Vector       s_state;
-    static State       *s_acceptState;
-
-    static std::ostream &(State::*s_insert)(std::ostream &out) const;
-
     public:
         typedef Vector::const_iterator  ConstIter;
 
+    private:
+        friend std::ostream &operator<<(std::ostream &out, 
+                                        State const *state); 
+
+        StateItem::Vector   d_itemVector;
+    
+        size_t              d_nKernelItems;
+    
+        std::vector<size_t> d_reducible;    // d_itemVector offsets containing
+                                            // reducible items
+    
+        size_t              d_nTransitions; // elements in d_nextVector minus
+                                            // removed elements because of
+                                            // conflicts
+    
+        size_t              d_nReductions;  // elements in d_reducible minus
+                                            // reductions having empty LA-sets
+
+        size_t              d_defaultReducible; // the d_reducible  index of
+                                            // the reduction to use as default
+                                            // (or npos)
+
+        size_t              d_maxLAsize;    // the default reduction becomes 
+                                            // the one having the largest
+                                            // LAset size 
+
+        size_t              d_summedLAsize; // sum of all lookaheadsets of all
+                                            // non-default reductions. 
+
+        Next::Vector        d_nextVector;   // Vector of Next elements
+                                            // describing where to transit to
+                                            // next. 
+
+        size_t              d_idx;          // index of this state in the
+                                            // vector of States
+
+        size_t              d_nTerminalTransitions;
+
+        SRConflict          d_srConflict;
+        RRConflict          d_rrConflict;
+    
+        StateType           d_stateType;
+
+        static Vector       s_state;
+        static State       *s_acceptState;
+
+        static std::ostream &(State::*s_insert)(std::ostream &out) const;
+
+    public:
         bool isAcceptState() const;
         bool nextContains(Next::ConstIter *iter, 
                           Symbol const *symbol) const;
@@ -221,16 +228,6 @@ inline size_t State::reductionsLAsize() const
     return d_summedLAsize;
 }
 
-inline void State::staticPropagateLA(State *state)
-{
-    state->propagateLA();
-}
-
-inline void State::staticAddKernelItem(Item const &item, State &state)
-{
-    state.addKernelItem(StateItem(item));
-}
-
 inline State::ConstIter State::begin()
 {
     return s_state.begin();
@@ -255,21 +252,6 @@ inline bool State::nextContains(Next::ConstIter *iter,
                                 Symbol const *symbol) const
 {
     return (*iter = nextFind(symbol)) != d_nextVector.end();
-}
-
-inline void State::staticSummarizeActions(State *state)
-{
-    state->summarizeActions();
-}
-
-inline void State::staticCheckConflicts(State *state)
-{
-    state->checkConflicts();
-}
-
-inline std::ostream &State::skipInsertion(std::ostream &out) const
-{
-    return out;
 }
 
 inline std::ostream &operator<<(std::ostream &out, State const *state)

@@ -3,7 +3,7 @@
 Scanner::Scanner(string const &fname)
 :
     d_in(fname.c_str()),
-    d_retWS(false),
+//    d_retWS(false),           currently not used, see also scanner.h
     d_include(false)
 {
     memset(d_commentChar, 0, 2);
