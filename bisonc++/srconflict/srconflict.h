@@ -49,8 +49,10 @@ class SRConflict
         std::ostream &insert(std::ostream &out) const;
         void processShiftReduceConflict(Next::ConstIter const &next, 
                                         size_t itemIdx);
-        bool differentLHSs(Symbol const *reducibleLHS, 
-                            std::vector<size_t> const &shiftableItemIndices);
+        static void handleSRconflict(size_t shiftableItemIdx, 
+                                     SRConflict &context,
+                                     Next::ConstIter const &next, 
+                                     size_t reducibleItemIdx);
 
         static void visitReduction(size_t idx, SRConflict &context);
 };
