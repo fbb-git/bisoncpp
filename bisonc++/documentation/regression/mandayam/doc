@@ -1,0 +1,8 @@
+This grammar was submitted by Ramanand Mandayam on July 5, 2010. The grammar
+generates 2 shift/reduce conflicts resulting from forced removal of shiftable
+items (in State 2), favoring reductions. Also it uses (production rule)
+priorities (in state 11) to remove shiftable items in favor of reductions. The
+grammar is interesting in that it shows that a grammar may (by default) reduce
+rather than shift. See also section 'Rule Precedence' in Bisonc++'s manual.
+
+
