@@ -42,6 +42,8 @@ example()
     echo --------------------------------
     
     cd parser
+    echo $BISONCPP --construction --debug $3 grammar
+
     $BISONCPP --construction --debug $3 grammar
     [ -e /usr/bin/bison -a -e bgram ] && bison -v bgram
     
@@ -50,7 +52,7 @@ example()
         cd ../scanner
         flex -I lexer
         cd ..
-        g++ -Wall -o demo *.cc */*.cc
+        g++ --std=c++0x -Wall -o demo *.cc */*.cc
         echo "Entering a shell: \`demo' runs the program, \`exit' returns"
         echo "The grammar analysis is in the \`parser' subdirectory:"
     else        
@@ -195,6 +197,11 @@ echo $EXAMPLE: an example of polymorphic semantic values
 echo $PRE
 readRUN
 example polymorphic $RUN --insert-stype
+
+echo $EXAMPLE: a lgrammar in which reduces precede shifts
+echo $PRE
+readRUN
+example mandayam $RUN
 
 
 tput clear

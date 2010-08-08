@@ -22,7 +22,6 @@ sect(Analyzing A Grammar)
         subsubsect(Preamble)
         includefile(algorithm/pstates.yo)
 
-        
     includefile(algorithm/transition.yo)
 
     lsubsect(PARSING)(Processing Input)
@@ -45,6 +44,9 @@ includefile(algorithm/precedence.yo)
 
     subsect(How Precedence Works)
     includefile(algorithm/howprec.yo)
+
+    subsect(Rule precedence)
+    includefile(algorithm/ruleprec.yo)
 
 lsect(CONDEP)(Context-Dependent Precedence)
 includefile(algorithm/condep.yo)
