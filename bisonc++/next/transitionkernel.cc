@@ -2,13 +2,22 @@
 
 ostream &Next::transitionKernel(ostream &out) const
 {
-    if (!d_symbol)         // symbols may be removed by the SRConflict
-        return out;             // resolution process.
+    checkRemoved(out);
 
     Terminal::inserter(&Terminal::plainName);
     NonTerminal::inserter(&NonTerminal::plainName);
 
-    out << "On " << symbol() << " to state " << 
+//    out << "On " << pSymbol() << " to state " << 
+    out << "  On ";
+    Symbol const *ps = pSymbol();
+    if (ps)
+        out << ps;
+    else
+        out << "????";
+
+    out << " to state " << 
+
+
            static_cast<int>(d_next) << " with (";
 
     copy(d_kernel.begin(), d_kernel.end(), 

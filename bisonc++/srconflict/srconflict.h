@@ -24,9 +24,9 @@ class SRConflict
     
     RmReduction::Vector     d_rmReduction;      // Vector of reducible rules
                                                 // to remove for this conflict
-    std::vector<size_t>     d_rmShift;          // vector of indices of items
-                                                // to remove having shift
-                                                // conflicts 
+    RmShift::Vector         d_rmShift;          // vector of indices of items
+                                                // having shift conflicts that
+                                                // are removed
 
     static size_t  s_nConflicts;                // the number of S/R conflicts
                                                 // that could not be solved by

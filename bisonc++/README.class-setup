@@ -38,9 +38,9 @@ the classes used by Rules; RmReduction does not depend on any other class).
          |                                      |           |
          |                                  +---+---+       |
          |                                  |       |       |
-         |                  RmReduction   RRData   Item     |
-         |                       |          |       |       |
-         |                       +-----+----+-------+       |
+         |        RmShift   RmReduction   RRData   Item     |
+         |          |            |          |       |       |
+         |          +------------+-----+----+-------+       |
          |                             |                    |
          |  StateType  EnumSolution StateItem               |
          |      |           |          |                    |

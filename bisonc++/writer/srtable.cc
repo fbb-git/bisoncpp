@@ -27,9 +27,14 @@ void Writer::srTable(State const *sp,  std::string const &baseclassScope,
 
     table.clear();
 
+        // 2nd element equals the index of the last array element
     table << StateType::typeName(stateType) << 
-            sp->transitions() + sp->reductionsLAsize() + acceptState + 1 <<
-            def;
+             sp->transitions() + sp->reductionsLAsize() + acceptState + 1 << 
+             def;
+
+//  cerr <<  (sp->transitions() + sp->reductionsLAsize() + acceptState + 1) << 
+//      " = " << sp->transitions() << ' ' << sp->reductionsLAsize() << ' ' << 
+//      acceptState << " 1\n";
 
     transitions(table, sp->next());
 

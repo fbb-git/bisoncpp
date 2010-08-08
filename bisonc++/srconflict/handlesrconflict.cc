@@ -9,31 +9,34 @@ void SRConflict::handleSRconflict(
     typedef Enum::Solution Solution;
 
     StateItem::Vector const &itemVector = context.d_itemVector;
+    Symbol const *productionSymbol = 
+                                itemVector[reducibleItemIdx].precedence();
+    bool forced = false;
 
     Solution solution;
 
-    if 
-    (
-        itemVector[reducibleItemIdx].item().lhs()
-        != itemVector[shiftableItemIdx].item().lhs()
-    )
-        solution = Solution::UNDECIDED;
-    else
+    if (productionSymbol == 0)              // no production rule precedence
     {
-        solution = next->solveByPrecedence(
-                            itemVector[reducibleItemIdx].precedence()
-                         );
+        solution = Solution::REDUCE;        // force a reduction
+        forced = true;
+        ++s_nConflicts;                     // and a conflict
+    }
+    else                                    // otherwise try to solve by 
+    {                                       // precedence or association
+        solution = next->solveByPrecedence(productionSymbol);
 
         if (solution == Solution::UNDECIDED)
             solution = next->solveByAssociation();
     }
     
-    bool forced = false;
-
-    switch (solution)
+    switch (solution)                       // perform SHIFT or REDUCE
     {
         case Solution::REDUCE:
-            context.d_rmShift.push_back(next - context.d_nextVector.begin());
+            context.d_rmShift.push_back(
+                                    RmShift(
+                                        next - context.d_nextVector.begin(),
+                                        forced)
+                                );
         return;
 
         case Solution::UNDECIDED:
@@ -51,3 +54,4 @@ void SRConflict::handleSRconflict(
                                 )
                           );
 }
+

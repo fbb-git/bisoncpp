@@ -2,8 +2,10 @@
 
 size_t SRConflict::removeShifts(Next::Vector &nextVector)
 {
-    for_each(d_rmShift.begin(), d_rmShift.end(),
-        FnWrap::unary(Next::removeShift, nextVector));
+    size_t nRemoved = 0;
 
-    return d_rmShift.size();
+    for_each(d_rmShift.begin(), d_rmShift.end(),
+        FnWrap::unary(Next::removeShift, nextVector, &nRemoved));
+
+    return d_rmShift.size() - nRemoved;
 }

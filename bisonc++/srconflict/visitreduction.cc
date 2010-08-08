@@ -23,7 +23,7 @@
 // Conflicts are inspected for all reduction elements, so for index element 0
 // in the above example, as follows:
 // 
-//     1. The nextVector's symbols are search in the LA set of the reduction
+//     1. The nextVector's symbols are searched in the LA set of the reduction
 //        item (so, subsequently '+', '-', '*' and '/' are searched in the LA
 //        set of itemVector[0].
 //     2. In this case, all are found and depending on the token's priority
@@ -32,6 +32,13 @@
 //  Production rules received their priority setting either explicitly (using
 //  %prec) or from their first terminal token. See also 
 //  rules/updateprecedences.cc
+//
+//  What happens if neither occurs? In a rule like 'expr: term' there is no
+//  first terminal token and there is no %prec being used. 
+//  One approach is that in this case no priority is available and so a
+//  conflict is observed.
+//
+// ===========================================================================
 // 
 // On the other hand (as pointed out by Ramanand Mandayam), S/R conflicts may
 // also have shifts in a production rule of N-terminal 'a' and reductions to a
@@ -93,4 +100,11 @@ void SRConflict::visitReduction(size_t reducibleIdx, SRConflict &context)
         ++nextIter;
     }
 }
+
+
+
+
+
+
+
 

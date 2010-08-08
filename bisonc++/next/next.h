@@ -30,6 +30,13 @@ class Next
 
         Symbol const *d_symbol;         // on this symbol we transit to state
                                         // d_next. 
+        Symbol const *d_removed;        // if d_symbol == 0 and d_removed
+                                        // isn't then this transition has been
+                                        // removed, and d_removed holds the
+                                        // original d_symbol value
+        bool d_forced;                  // forced removal of shift transition
+                                        // due to undefined precedence of a
+                                        // production rule
         size_t d_next;                  // the index of the state to transit 
                                         // to on d_symbol. 
         std::vector<size_t> d_kernel;   // indices of kernel items 
@@ -52,17 +59,21 @@ class Next
                          StateItem::Vector const &stateItem);
         void setNext(size_t next);
 
+        std::ostream &transition(std::ostream &out) const;
+        std::ostream &transitionKernel(std::ostream &out) const;
+        void checkRemoved(std::ostream &out) const;
+        Symbol const *pSymbol() const;
+
         static size_t addToKernel(Vector &next, Symbol const *symbol, 
                                   size_t stateItemOffset);
         static bool hasSymbol(Next const &next, Symbol const *symbol);
         static bool inLAset(Next const &next, LookaheadSet const &laSet);
 
-        static void removeShift(size_t idx, Vector &nextVector);
+        static void removeShift(RmShift const &rmShift, Vector &nextVector,
+                                size_t *nRemoved);
 
         static void inserter(std::ostream &(Next::*insertPtr)
                                             (std::ostream &out) const);
-        std::ostream &transition(std::ostream &out) const;
-        std::ostream &transitionKernel(std::ostream &out) const;
 };
 
 inline bool Next::hasSymbol(Next const &next, Symbol const *symbol)
@@ -80,6 +91,11 @@ inline Symbol const *Next::symbol() const
     return d_symbol;
 }
 
+inline Symbol const *Next::pSymbol() const
+{
+    return d_symbol ? d_symbol : d_removed;
+}
+
 inline size_t Next::next() const
 {
     return d_next;
@@ -95,11 +111,6 @@ inline bool Next::inLAset(Next const &next, LookaheadSet const &laSet)
     return laSet >= next.d_symbol;
 }
 
-inline void Next::removeShift(size_t idx, Vector &nextVector)
-{
-    nextVector[idx].d_symbol = 0;
-}
-
 inline void Next::inserter(std::ostream &(Next::*insertPtr)
                                          (std::ostream &out) const)
 {
@@ -110,6 +121,9 @@ inline void Next::inserter(std::ostream &(Next::*insertPtr)
 inline std::ostream &operator<<(std::ostream &out, Next const &next)
 {
     return (next.*Next::s_insertPtr)(out);
+
+    // Set by static void inserter(Next::*insertPtr)
+    //  to 'transition' or 'transitionKernel'
 }
 
 

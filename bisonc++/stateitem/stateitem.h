@@ -7,6 +7,7 @@
 #include "../symbol/symbol.h"
 #include "../item/item.h"
 #include "../lookaheadset/lookaheadset.h"
+#include "../rmshift/rmshift.h"
 #include "../rmreduction/rmreduction.h"
 #include "../rrdata/rrdata.h"
 

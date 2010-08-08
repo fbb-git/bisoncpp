@@ -140,6 +140,8 @@ inline void Item::inserter(std::ostream &(Item::*insertPtr)
 inline std::ostream &operator<<(std::ostream &out, Item const &item)
 {
     return (item.*Item::s_insertPtr)(out);
+    // Set by static void inserter(Item::*insertPtr)
+    // to 'plainItem' or 'pNrDotItem'
 }
 
 #endif
