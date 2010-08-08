@@ -1,0 +1,31 @@
+%debug
+
+%token  ID 
+
+%left  '+' '-'
+%left  '*' '/'
+%right UNARY
+
+%%
+
+expr:
+    expr '+'  term
+  | expr '-' term
+  | term
+  ;
+
+term:
+    term '*' primary
+  | term '/'  primary
+  | primary
+  ;
+
+primary:
+   '-' expr %prec UNARY
+  | '+'  expr %prec UNARY
+  | ID
+  ;
+
+
+
+
