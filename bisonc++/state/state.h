@@ -257,6 +257,7 @@ inline bool State::nextContains(Next::ConstIter *iter,
 inline std::ostream &operator<<(std::ostream &out, State const *state)
 {
     return (state->*State::s_insert)(out);
+    // One of: insertStd, insertExt or skipInsertion.
 }
 
 #endif

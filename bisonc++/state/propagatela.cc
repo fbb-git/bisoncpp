@@ -1,7 +1,7 @@
 #include "state.ih"
 
-// LA propagation proceeds as follows: In a cycle visit all stateitems. When a
-// stateitem X has its LA_enlarged flag set, 
+// LA propagation proceeds as follows: In a cycle visit all state items. When 
+// a state item X has its LA_enlarged flag set, 
 //      Set its nextEnlarged flag
 //      Lower its LA_enlarged flag
 //      Visit its dependent items, and determine their LA set from the item at

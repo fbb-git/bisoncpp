@@ -19,6 +19,10 @@ void State::checkConflicts()
                                         // Number of viable transitions:
                                         // reduced by the number of removed
                                         // shifts
+
+//    size_t nremoved = d_srConflict.removeShifts(d_nextVector);
+//    cerr << d_nTransitions << ' ' << nremoved << endl;
+//    d_nTransitions -= nremoved; //d_srConflict.removeShifts(d_nextVector);
     d_nTransitions -= d_srConflict.removeShifts(d_nextVector);
 
     d_srConflict.removeReductions(d_itemVector); 
