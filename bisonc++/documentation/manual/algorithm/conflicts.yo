@@ -86,4 +86,6 @@ However, shift-reduce conflicts can also be observed in grammars where a state
 contains items that could be reduced to a certain non-terminal and items in
 which a shift is possible in an item of a production rule of a completely
 different non-terminal. Here is an example of such a grammar:
-    verbinclude(algorithm/examples/shiftreduce)
+    verbinclude(algorithm/examples/peculiar)
+  Why these grammars show shift reduce conflicts and how these are solved is
+discussed in the next section.
