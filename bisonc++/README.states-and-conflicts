@@ -153,8 +153,7 @@ Defining states proceeds as follows:
     Different LHS elements of items:
 
 	As pointed out by Ramanand Mandayam, S/R conflicts may be observed when
-	shifts in a production rule of N-terminal 'a' and reductions to a
-	N-terminal 'b' are found in a state's itemVector. Here is an example:
+	reducible rules merely consist of non-terminals. Here is an example:
 	
 	%left  '*'                                
 	%token ID
@@ -184,6 +183,8 @@ Defining states proceeds as follows:
 	Here, item 0 reduces to N 'expr' and item 1 requires a shift in a
 	production rule of the N 'term'.
 	
-	In these cases the S/R conflict should not be solved by priority or
-	association as the reduction does not pertain to the production rules of
-	the N in which the shift.
+	In these cases the rule 'expr -> term .' has no precedence that can be
+    derived from either %prec or an initial terminal. Such reductions
+    automatically receive the highest possible precedence and 'reduce' is
+    used, rather than 'shift'. Since there is no explicit basis for this
+    choice the choice between shift and reduce is flagged as a conflict.
