@@ -1,4 +1,4 @@
-bisonc++ (2.7.1) [ISN]
+bisonc++ (2.8.0) [ISN]
 
   * Grammars having states in which the lhs of a production rule in which a
     shift is indicated is different from the lhs of a production rule in which
