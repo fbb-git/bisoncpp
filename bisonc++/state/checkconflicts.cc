@@ -23,6 +23,7 @@ void State::checkConflicts()
 //    size_t nremoved = d_srConflict.removeShifts(d_nextVector);
 //    cerr << d_nTransitions << ' ' << nremoved << endl;
 //    d_nTransitions -= nremoved; //d_srConflict.removeShifts(d_nextVector);
+
     d_nTransitions -= d_srConflict.removeShifts(d_nextVector);
 
     d_srConflict.removeReductions(d_itemVector); 

@@ -33,7 +33,7 @@ alternative:
     expression
     EOLN
     {
-        cout << $1 << endl;
+        cout << $1 << '\n';
     }
 |
     'q'

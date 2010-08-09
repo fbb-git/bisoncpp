@@ -44,5 +44,7 @@ Parser::Parser(Rules &rules)
     
     if (d_arg.option(&d_scannerInclude, 's'))
         addIncludeQuotes(&d_scannerInclude);
+
+    d_arg.option(&d_matchedTextFunction, "print");
 }
 

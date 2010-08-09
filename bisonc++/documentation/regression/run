@@ -21,7 +21,7 @@ example()
 
     orgdir=`pwd`
 
-    tput clear
+    echo 
 
     case $2 in
         ("go")
@@ -46,17 +46,18 @@ example()
 
     $BISONCPP --construction --debug $3 grammar
     [ -e /usr/bin/bison -a -e bgram ] && bison -v bgram
-    
+
+    echo    
     if [ -s ../demo.cc ] 
     then
         cd ../scanner
         flex -I lexer
         cd ..
         g++ --std=c++0x -Wall -o demo *.cc */*.cc
-        echo "Entering a shell: \`demo' runs the program, \`exit' returns"
-        echo "The grammar analysis is in the \`parser' subdirectory:"
-    else        
-        echo "Entering a shell: Inspect the results, use \`exit' to continue"
+        echo "ENTERING A SHELL: \`demo' runs the program, use \`exit' to return"
+        echo "      (the grammar analysis is in the \`parser' subdirectory)"
+    else    
+        echo "ENTERING A SHELL: Inspect the results, use \`exit' to return"
     fi
 
     echo "bison's output is in \`bgram.output', bisonc++'s output in \`grammar.output'"
@@ -80,6 +81,7 @@ example()
                 -exec rm '{}' ';'
 
     cd $orgdir
+    tput clear
 }
 
 readRUN()
@@ -90,6 +92,7 @@ readRUN()
         RUN=go
     else
         RUN=skip
+        tput clear
     fi
 }
 
@@ -198,7 +201,7 @@ echo $PRE
 readRUN
 example polymorphic $RUN --insert-stype
 
-echo $EXAMPLE: a lgrammar in which reduces precede shifts
+echo $EXAMPLE: a grammar in which reduces precede shifts
 echo $PRE
 readRUN
 example mandayam $RUN
