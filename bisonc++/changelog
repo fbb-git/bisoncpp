@@ -1,3 +1,7 @@
+bisonc++ (2.8.1) (ISN)
+
+  * Changed Errno::what() call to Errno::why()
+
 bisonc++ (2.8.0)
 
   * Grammars having states consisting of items in which a reduction from a

@@ -24,10 +24,9 @@ try
 
         cout << "Token " << t << ": " << scanner.text() << endl;
     }
-    return 0;
 }
 catch (Errno const &err)
 {
-    cout << err.what() << " (" << err.which() << ")" << endl;
+    cout << err.why() << " (" << err.which() << ")" << endl;
     return 1;
 }

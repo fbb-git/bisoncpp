@@ -144,7 +144,7 @@ try
 }
 catch(Errno const &err)
 {
-    cerr << err.what() << endl;
+    cerr << err.why() << endl;
     return err.which();
 }
 catch(int x)
