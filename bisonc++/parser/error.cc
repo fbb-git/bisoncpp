@@ -8,15 +8,15 @@ void Parser::error(char const *msg)
     if (d_msg.empty())
     {
         if (not repeated)
-            lineMsg() << "unrecognized input (`" << d_scanner.YYText() << 
-                         "') encountered" << err;
+            lineMsg(emsg) << "unrecognized input (`" << d_scanner.YYText() << 
+                         "') encountered" << endl;
         repeated = true;
     }
     else
     {
         if (lastMsg != d_msg)
-            lineMsg() << "at `" << d_scanner.YYText() << "': " << d_msg << 
-                         " expected." << err;
+            lineMsg(emsg) << "at `" << d_scanner.YYText() << "': " << d_msg << 
+                         " expected." << endl;
         repeated = false;
     }
 

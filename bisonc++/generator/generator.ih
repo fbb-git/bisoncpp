@@ -5,7 +5,7 @@
 #include <ostream>
 #include <iomanip>
 
-#include <bobcat/msg>
+#include <bobcat/errno>
 #include <bobcat/fnwrap>
 #include <bobcat/datetime>
 

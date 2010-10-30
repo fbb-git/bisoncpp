@@ -5,9 +5,9 @@ void Parser::cleanup()
     d_rules.clearLocations();   // locations aren't required anymore
 
     if (!d_rules.hasRules() || !d_rules.nProductions())
-        msg() << "No production rules" << fatal;
+        fmsg << "No production rules" << endl;
 
-    if (Msg::errors())      // Terminate if parsing produced errors. 
+    if (emsg.count())       // Terminate if parsing produced errors. 
         throw 1;
 
     setAccessorVariables();

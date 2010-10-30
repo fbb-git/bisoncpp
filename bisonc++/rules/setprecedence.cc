@@ -8,8 +8,8 @@ void Rules::setPrecedence(Terminal const *terminal)
         terminal->used();
     }
     else
-        msg() << "%prec " << terminal << ": precedence already set to " <<
+        emsg << "%prec " << terminal << ": precedence already set to " <<
                 &Terminal::quotedName << 
                 d_currentProduction->precedence() << 
-                &Terminal::plainName << err;
+                &Terminal::plainName << endl;
 }

@@ -1,7 +1,7 @@
 #include "scanner.ih"
 
-std::ostream &Scanner::lineMsg()
+std::ostream &Scanner::lineMsg(Mstream &mstream)
 {
-    Msg::setLine(yylineno);
-    return FBB::lineMsg() << "(" << d_fileInfo.back().d_name << ") ";
+    mstream.setLineNr(yylineno);
+    return mstream << "(" << d_fileInfo.back().d_name << ") ";
 }

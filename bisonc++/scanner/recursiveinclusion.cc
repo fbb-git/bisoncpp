@@ -6,7 +6,7 @@ void Scanner::recursiveInclusion()
                 FnWrap::unary(checkFilename, d_nextSource));
 
     if (it != d_fileInfo.end())
-        lineMsg() << "Recursive inclusion of `" << d_nextSource << 
-                                                            "'" << fatal;
+        lineMsg(fmsg) << "Recursive inclusion of `" << d_nextSource << '\'' << 
+                                                                        endl;
 }
 

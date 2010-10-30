@@ -2,15 +2,14 @@
 
 void State::allStates()
 {
-    if (!Msg::display())
+    if (!imsg.isActive())
         return;
 
-    msg() << info;
-
-    msg() << "Grammar States: " << info;
+    imsg << "\n"
+            "Grammar States: " << endl;
 
     if (s_insert == &State::insertExt)
-        msg() << 
+        imsg << 
     "\n"
     "For each state information like the following is shown for its items:\n"
     "   0: [P1 1] S -> C  . C   { <EOF> }  0, (1 2 ) 0\n"
@@ -40,13 +39,13 @@ void State::allStates()
     "or:\n"
     "   0 (removed by precedence): On C ...\n"
     "       in which case a production rule's precedence took priority\n"
-    "Also, reduction item(s) may be listed\n" << info;
-
-    msg() << info;
+    "Also, reduction item(s) may be listed\n"
+    "\n"
+    "\n";
 
     copy(s_state.begin(), s_state.end(), 
-                ostream_iterator<State const *>(msgstream(), "\n"));
+                ostream_iterator<State const *>(imsg, "\n"));
 
-    msgstream() << info;
+    imsg << endl;
 }
 

@@ -5,8 +5,8 @@ void Scanner::pushSource(yy_buffer_state *current, size_t size)
     undelimit(true);                    // remove " " and < > delimiters
 
     if (d_state.size() == d_maxDepth)
-        lineMsg() << "Max. inclusion nesting (" << d_maxDepth << 
-                    ") reached" << fatal;
+        lineMsg(fmsg) << "Max. inclusion nesting (" << d_maxDepth << 
+                    ") reached" << endl;
 
     d_nextSource = String::unescape(yytext);
 
@@ -15,7 +15,7 @@ void Scanner::pushSource(yy_buffer_state *current, size_t size)
     ifstream *newStream = d_fileInfo.back().d_in;
 
     if (!*newStream)
-        lineMsg() << "Can't read `" << d_nextSource << "'" << fatal;
+        lineMsg(fmsg) << "Can't read `" << d_nextSource << "'" << endl;
 
     d_state.push(current);
 

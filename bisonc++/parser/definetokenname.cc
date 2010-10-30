@@ -6,8 +6,8 @@ void Parser::defineTokenName(string *name, bool hasValue)
 
     if (hasValue)
     {
-        lineMsg() << "deprecated use of explicit value: `" << *name <<
-                    ' ' << d_scanner.number() << "'" << warning;
+        lineMsg(wmsg) << "deprecated use of explicit value: `" << *name <<
+                    ' ' << d_scanner.number() << '\'' << endl;
         d_rules.setLastTerminalValue(d_scanner.number());
     }
     delete name;

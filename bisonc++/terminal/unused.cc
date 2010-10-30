@@ -8,12 +8,11 @@ void Terminal::unused(Terminal const *terminal)
     {
         if (!header)
         {
-            msg() << 
-                "Terminal symbol(s) not used in productions:" << warning;
-            Msg::setWarning("");
+            wmsg << "Terminal symbol(s) not used in productions:" << endl;
+            wmsg.setTag("");    // Msg::setWarning("");
             header = true;
         }
 
-        msg() << terminal << warning;
+        wmsg << terminal << endl;
     }
 }

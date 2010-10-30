@@ -51,12 +51,14 @@ void Parser::defineTerminal(string const &name, Symbol::Type type)
             sp->setStype(d_field);
 
         else if (sp->sType() == d_field)
-            lineMsg() << "`" << name << "' type repeatedly specified as <" <<
-                         d_field << ">" << warning;
+            lineMsg(wmsg) << 
+                        '`' << name << "' type repeatedly specified as <" <<
+                        d_field << ">" << endl;
 
         else    // type clash
-            lineMsg() << "can't redefine type <" << sp->sType() << "> of `" <<
-                         name << "' to <" << d_field << ">" << err;
+            lineMsg(emsg) << 
+                        "can't redefine type <" << sp->sType() << "> of `" <<
+                        name << "' to <" << d_field << ">" << endl;
     }
 
     else // new symbol: insert it as (provisional or definitive) terminal

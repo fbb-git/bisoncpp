@@ -18,8 +18,8 @@ void Generator::baseclassHeader() const
     ofstream out;
     ifstream in;
 
-    Msg::open(in,  d_parser.baseclassSkeleton()); 
-    Msg::open(out, d_parser.baseclassHeader()); 
+    Errno::open(in,  d_parser.baseclassSkeleton()); 
+    Errno::open(out, d_parser.baseclassHeader()); 
 
     filter(in, out);    
 }

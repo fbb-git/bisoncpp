@@ -4,18 +4,14 @@
 #include <iosfwd>
 #include <vector>
 
-#include "../item/item.h"
-#include "../lookaheadset/lookaheadset.h"
-
 #include "../statetype/statetype.h"
-
-#include "../stateitem/stateitem.h"
 #include "../next/next.h"
-
 #include "../srconflict/srconflict.h"
 #include "../rrconflict/rrconflict.h"
 
+class Item;
 class Production;
+class StateItem;
 
 class State
 {

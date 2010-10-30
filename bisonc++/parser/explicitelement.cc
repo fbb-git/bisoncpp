@@ -15,16 +15,16 @@ bool Parser::explicitElement(size_t pos, int nElements, Block &block)
     size_t ruleElements = nComponents(nElements);
 
     if (!d_unionDeclared)               // no %union: no explicit types
-        lineMsg() << "No %union declaration: can't resolve $<" << 
+        lineMsg(wmsg) << "No %union declaration: can't resolve $<" << 
             explicitType << ">" << idx << " for element $" << idx << 
-            " in `" << d_rules.name()  << warning;
+            " in `" << d_rules.name()  << endl;
 
                                         // $i refers beyond this rule
     else if (idx > static_cast<int>(ruleElements))
-        lineMsg() << "In  " << d_rules.name() << 
+        lineMsg(emsg) << "In  " << d_rules.name() << 
                 ": $<" << explicitType << ">" << idx << 
                 " used, but the rule has only " << 
-                ruleElements << " elements" << err;
+                ruleElements << " elements" << endl;
     else if                                     
     (
         !idxType.length()               // idx'th element has no type
@@ -38,10 +38,10 @@ bool Parser::explicitElement(size_t pos, int nElements, Block &block)
             || 
             !d_negativeDollarIndices    // or don't accept indices <= 0
         )                             
-            lineMsg() << "Using $<" << explicitType << ">" << idx << 
+            lineMsg(wmsg) << "Using $<" << explicitType << ">" << idx << 
                 " for "<< (idx <= 0 ? "type-indeterminable" : "") <<
                 " element $" << idx << " in `" << 
-                d_rules.name() << "'" << warning;
+                d_rules.name() << "'" << endl;
     }
 
     ostringstream os;

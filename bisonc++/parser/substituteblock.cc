@@ -56,8 +56,8 @@ try
 }
 catch (int)
 {
-    lineMsg() << "rule `" << d_rules.name() << 
-                        "': incomplete $-specification" << err;
+    lineMsg(emsg) << "rule `" << d_rules.name() << 
+                        "': incomplete $-specification" << endl;
     return true;                            // since an error occurred, forget
                                             // about return-warnings for now
 }

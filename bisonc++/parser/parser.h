@@ -10,6 +10,11 @@ class NonTerminal;
 class Terminal;
 class Symbol;
 
+namespace FBB
+{
+    class Mstream;
+}
+
 #undef Parser
 class Parser: public ParserBase
 {
@@ -81,8 +86,6 @@ class Parser: public ParserBase
     static char s_defaultParsefunSkeleton[];
     static char s_defaultParsefunSource[];
 
-    static std::ofstream s_verbose;
-
     static size_t s_nHidden;          // number of hidden nonterminals
     static std::ostringstream s_hiddenName;
 
@@ -126,7 +129,7 @@ class Parser: public ParserBase
         void checkEmptyBlocktype();
         void checkFirstType();
 
-        std::ostream &lineMsg();
+        std::ostream &lineMsg(FBB::Mstream &mstream);
                                         
         bool defaultReturn(size_t pos, Block &block);
         Symbol *defineNonTerminal(std::string const &name, 
@@ -284,9 +287,9 @@ inline std::string const &Parser::implementationSkeleton() const
     return d_implementationSkeleton;
 }
 
-inline std::ostream &Parser::lineMsg()
+inline std::ostream &Parser::lineMsg(FBB::Mstream &mstream)
 {
-    return d_scanner.lineMsg();
+    return d_scanner.lineMsg(mstream);
 }
 
 inline bool Parser::lspNeeded() const

@@ -64,9 +64,9 @@
                              BEGIN block;
                          else
                          {
-                             lineMsg() << "multiple characters in "
+                             lineMsg(emsg) << "multiple characters in "
                                          "quoted constant " << 
-                                         yytext << err;
+                                         yytext << endl;
                              d_number = 0;
                              BEGIN INITIAL;
                              return Parser::QUOTE;

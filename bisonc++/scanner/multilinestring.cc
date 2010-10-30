@@ -2,7 +2,6 @@
 
 void Scanner::multiLineString()
 {
-    lineMsg() <<
-        "Multi-line strings are deprecated. Use string concatenation" <<
-        warning;
+    lineMsg(wmsg) <<
+        "Multi-line strings are deprecated. Use string concatenation" << endl;
 }

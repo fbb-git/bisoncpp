@@ -6,7 +6,7 @@
 void Grammar::deriveSentence()
 {
     if (!derivable(Rules::startSymbol()))
-        msg() << 
+        fmsg << 
             "Grammar's start symbol `" << Rules::startSymbol() <<
-            "' does not derive any sentence" << fatal;
+            "' does not derive any sentence" << endl;
 }

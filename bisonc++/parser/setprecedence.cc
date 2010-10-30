@@ -21,9 +21,9 @@ void Parser::setPrecedence(int type)
     else
     {
         string const &name = d_scanner.YYText();
-        lineMsg() << 
+        lineMsg(emsg) << 
             "`%prec " << name << "': `" << name << 
-            "' must be a declared terminal token" << err;
+            "' must be a declared terminal token" << endl;
     }
 }
 

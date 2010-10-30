@@ -3,7 +3,7 @@
 #include <iomanip>
 #include <algorithm>
 
-#include <bobcat/msg>
+#include <bobcat/mstream>
 
 using namespace std;
 using namespace FBB;

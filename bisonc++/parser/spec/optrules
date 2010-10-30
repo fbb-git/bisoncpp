@@ -34,8 +34,8 @@ optTypename:
 optTwo_percents:
     TWO_PERCENTS
     {
-        lineMsg() << 
-            "Ignoring all input beyond the second %% token" << warning;
+        lineMsg(wmsg) << 
+            "Ignoring all input beyond the second %% token" << endl;
         ACCEPT();
     }
 |

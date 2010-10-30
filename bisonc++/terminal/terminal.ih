@@ -5,7 +5,7 @@
 #include <map>
 #include <iomanip>
 
-#include <bobcat/msg>
+#include <bobcat/mstream>
 
 using namespace std;
 using namespace FBB;

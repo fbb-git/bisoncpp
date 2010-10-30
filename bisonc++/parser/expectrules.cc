@@ -13,5 +13,5 @@ void Parser::expectRules()
     // nonterminals left, change them into true nonterminals.
     d_rules.setNonTerminalTypes();
 
-    lineMsg() << "Preamble (until %%) parsed" << info;
+    lineMsg(imsg) << "Preamble (until %%) parsed" << endl;
 }

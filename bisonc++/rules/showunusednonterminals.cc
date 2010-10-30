@@ -2,17 +2,17 @@
 
 void Rules::showUnusedNonTerminals() const
 {
-    Msg::setWarning();
+    wmsg.setTag("Warning");
     for_each(d_nonTerminal.begin(), d_nonTerminal.end(), 
                                     &NonTerminal::unused);
 
     if (NonTerminal::notUsed())
-        msg() << info;
+        imsg << endl;
 
-    Msg::setWarning();
+    wmsg.setTag("Warning");
     for_each(d_nonTerminal.begin(), d_nonTerminal.end(), 
                                     &NonTerminal::undefined);
 
     if (NonTerminal::notDefined())
-        msg() << info;
+        imsg << endl;
 }

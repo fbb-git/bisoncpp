@@ -27,13 +27,14 @@ Terminal::Terminal(string const &name, Type type,
         }
     }
 
-    lineMsg() << "Defining terminal " << d_readableLiteral << ": pri = " << 
-                                                        d_precedence << spool;
-    msg() << info;
-
+// If the terminal definition is really requested (it isn't shown in bisonc++
+// 2.8.0) then pass yylineno from parser/useterminal.cc and
+// parser/defineterminal.cc to this function so the line can be shown.
+//
+//  imsg.setLineNr(lineNr);
+//  imsg << "Defining terminal " << d_readableLiteral << ": pri = " << 
+//                                                      d_precedence << endl;
     if (d_value > s_maxValue)
         s_maxValue = d_value;
 }
-
-
 

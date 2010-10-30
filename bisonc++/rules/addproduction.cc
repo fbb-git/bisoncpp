@@ -17,8 +17,14 @@ void Rules::addProduction()
     d_currentRule->addProduction(d_currentProduction);  // add production to 
                                                         // current rule.
 
-    lineMsg() << "  Adding production rule " << 
-                d_currentRule->nProductions() << 
-                " (" << d_production.size() << " productions in total)" << 
-                info;
+// If this line is to be shown (it isn't in bisonc++ 2.8.0) then pass the
+// linenr from parser/openrule.cc, parser/parse.cc and rules/augmentgrammar.cc
+//
+//  imsg.setLineNr(lineNr);
+//  imsg << "  Adding production rule " << 
+//              d_currentRule->nProductions() << 
+//              " (" << d_production.size() << " productions in total)" << 
+//              endl;
 }
+
+

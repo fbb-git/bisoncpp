@@ -2,17 +2,16 @@
 
 void Rules::showTerminals() const
 {
-    if (!Msg::display())
+    if (!imsg.isActive())
         return;
 
-    msg() << info;
-           
-    msgstream() << "Symbolic Terminal tokens:\n";
+    imsg << "\n"
+            "Symbolic Terminal tokens:\n";
 
     Terminal::inserter(&Terminal::valueQuotedName);
 
     copy(d_terminal.begin(), d_terminal.end(), 
-                ostream_iterator<Terminal const *>(msgstream(), "\n"));
+                ostream_iterator<Terminal const *>(imsg, "\n"));
 
-    msgstream() << info;
+    imsg << endl;
 }

@@ -1,10 +1,15 @@
-#include "rules.ih"
-
+    #include "rules.ih"
+    
 bool Rules::newRule(NonTerminal *np, string const &source, size_t line)
 {
-    msg() << info;
-
-    lineMsg() << "Adding production rule for `" << np->name() << "'" << info;
+// If the terminal definition is really requested (it isn't shown in bisonc++
+// 2.8.0) then pass yylineno from parser/openrule.cc and
+// rules/augmentgrammar.cc to this function so the line can be shown.
+//
+//  imsg << endl;
+//
+//  imsg.setLineNr(lineNr);
+//  imsg << "Adding production rule for `" << np->name() << "'" << endl;
 
     if (!d_startRule.length())
         d_startRule = np->name();

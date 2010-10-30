@@ -6,11 +6,11 @@ void Production::unused(Production const *production)
     {
         if (!s_unused)
         {
-            msg() << 
-                "Unused production rule(s):" << warning;
-            Msg::setWarning("");
+            wmsg << 
+                "Unused production rule(s):" << endl;
+            wmsg.setTag("");
             s_unused = true;
         }
-        msg() << "  " << production << warning;
+        wmsg << "  " << production << endl;
     }
 }

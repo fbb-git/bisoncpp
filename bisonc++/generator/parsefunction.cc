@@ -18,8 +18,8 @@ void Generator::parseFunction() const
     ofstream out;
     ifstream in;
 
-    Msg::open(in,  d_parser.parseSkeleton()); 
-    Msg::open(out, d_parser.parseSource()); 
+    Errno::open(in,  d_parser.parseSkeleton()); 
+    Errno::open(out, d_parser.parseSource()); 
 
     filter(in, out);    
 }

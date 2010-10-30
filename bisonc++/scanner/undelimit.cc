@@ -7,7 +7,7 @@ void Scanner::undelimit(bool warn)
         return;
 
     if (warn && yytext[0] == '<')
-        lineMsg() << "<...> delimiters interpreted as \"...\"" << warning;
+        lineMsg(wmsg) << "<...> delimiters interpreted as \"...\"" << endl;
 
     yytext[yyleng - 1] = 0;                     // remove the last delimiter
     memmove(yytext, yytext + 1, yyleng - 1);    // shiftleft 1 all bytes

@@ -17,9 +17,8 @@ void Parser::handleAtSign(size_t pos, int nElements, Block &block)
 
     if (!d_lspNeeded)
     {
-        msg() << "@ used in the action block at line " << 
-                block.line() <<
-                ": %lsp-needed forced" << warning;
+        wmsg << "@ used in the action block at line " << 
+                block.line() << ": %lsp-needed forced" << endl;
         d_lspNeeded = true;
     }
 }

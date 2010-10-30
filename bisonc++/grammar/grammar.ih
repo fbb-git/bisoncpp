@@ -3,7 +3,7 @@
 #include <algorithm>
 
 #include <bobcat/fnwrap>
-#include <bobcat/msg>
+#include <bobcat/mstream>
 
 #include "../rules/rules.h"
 

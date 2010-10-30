@@ -11,8 +11,9 @@
 #include <sstream>
 #include <algorithm>
 
-#include <bobcat/msg>
+#include <bobcat/mstream>
 #include <bobcat/a2x>
+#include <bobcat/errno>
 
 #include "../block/block.h"
 

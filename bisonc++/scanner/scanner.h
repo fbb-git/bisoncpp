@@ -16,6 +16,11 @@
 
 #include "../block/block.h"
 
+namespace FBB
+{
+    class Mstream;
+}
+
 class Scanner: private yyFlexLexer
 {
     struct FileInfo
@@ -33,9 +38,6 @@ class Scanner: private yyFlexLexer
     };
 
     std::ifstream   d_in;           // stream currently read
-
-//  size_t          d_retWS;        // true when whitespace is returned by the
-//                                  // scanner (currently not used)
 
     size_t          d_maxDepth;     // max. file inclusion depth
 
@@ -72,7 +74,7 @@ class Scanner: private yyFlexLexer
         Block &block();
         std::string const &canonicalQuote();
         void clearBlock();
-        std::ostream &lineMsg();    // hides/modifies Msg's lineMsg()
+        std::ostream &lineMsg(FBB::Mstream &mstream);
         size_t number() const;
         std::string const &sourceName() const;  // gramfile currently processed
         bool hasBlock() const;

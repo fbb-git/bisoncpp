@@ -3,7 +3,7 @@
 void Parser::setNameSpace()
 {
     if (d_nameSpace.size())
-        lineMsg() << "%namespace multiply specified" << err;
+        lineMsg(emsg) << "%namespace multiply specified" << endl;
     else
         d_nameSpace = d_scanner.YYText();
 }

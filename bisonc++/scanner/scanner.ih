@@ -12,7 +12,7 @@
 #include <iomanip>
 
 #include <bobcat/arg>
-#include <bobcat/msg>
+#include <bobcat/mstream>
 #include <bobcat/fnwrap>
 #include <bobcat/string>
 #include <bobcat/a2x>

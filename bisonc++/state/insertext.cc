@@ -23,7 +23,7 @@ ostream &State::insertExt(ostream &out) const
     {
         out << "  Reduce item(s): ";
         copy(d_reducible.begin(), d_reducible.end(), 
-            ostream_iterator<size_t>(out, " "));
+                                  ostream_iterator<size_t>(out, " "));
         out << '\n';                    
     }
 

@@ -1,6 +1,11 @@
-bisonc++ (2.8.1) (ISN)
+bisonc++ (2.9.0)
 
   * Changed Errno::what() call to Errno::why()
+
+  * Removed dependencies on Msg, using Mstreams and Errno::open
+    instead. Consequently, bisonc++ depends on at least Bobcat 2.9.0
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 30 Oct 2010 22:05:30 +0200
 
 bisonc++ (2.8.0)
 

@@ -162,12 +162,12 @@ void State::define()
     )
     {
         if (SRConflict::nConflicts())
-            msg() << SRConflict::nConflicts() << 
-                    " Shift/Reduce conflict(s)" << warning;
+            wmsg << SRConflict::nConflicts() << 
+                    " Shift/Reduce conflict(s)" << endl;
 
         if (RRConflict::nConflicts())
-            msg() << RRConflict::nConflicts() << 
-                    " Reduce/Reduce conflict(s)" << warning;
+            wmsg << RRConflict::nConflicts() << 
+                    " Reduce/Reduce conflict(s)" << endl;
     }
 
     for_each(s_state.begin(), s_state.end(), staticSummarizeActions);

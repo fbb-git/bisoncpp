@@ -6,7 +6,7 @@
 #include <algorithm>
 
 #include <bobcat/fnwrap>
-#include <bobcat/msg>
+#include <bobcat/mstream>
 #include <bobcat/arg>
 
 using namespace std;

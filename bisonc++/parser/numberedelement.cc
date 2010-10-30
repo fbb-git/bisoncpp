@@ -12,30 +12,30 @@ bool Parser::numberedElement(size_t pos, int nElements, Block &block)
     size_t ruleElements = nComponents(nElements);
 
     if (idx > static_cast<int>(ruleElements)) // $i refers beyond this rule
-        lineMsg() << "In production rule \n"<< 
+        lineMsg(emsg) << "In production rule \n"<< 
                     "\t`" << &d_rules.lastProduction() << " '\n"
                     "\t$" << idx << " used, but there are only " << 
-                    ruleElements << " elements" << err;
+                    ruleElements << " elements" << endl;
     else if (d_unionDeclared)
     {
         if (idx <= 0)                   // type of the $i can't be determined
         {                               // and indices <= 0 are not accepted
             if (!d_negativeDollarIndices)
-                lineMsg() << "In production rule \n"<< 
+                lineMsg(wmsg) << "In production rule \n"<< 
                             "\t`" << &d_rules.lastProduction() << " '\n"
                             "\tcannot determine default type of $" << 
-                            idx << warning;
+                            idx << endl;
         }
         else if (!idxType.length())     // or $i without type association
-                lineMsg() << "In production rule \n"<< 
+                lineMsg(wmsg) << "In production rule \n"<< 
                             "\t`" << &d_rules.lastProduction() << " '\n"
                             "\t$" << idx << " (" << d_rules.symbol(idx) << 
-                            ") has no default type-association" << warning;
+                            ") has no default type-association" << endl;
     }
     else if (!d_negativeDollarIndices && idx <= 0)
-        lineMsg() << "In production rule \n"<< 
+        lineMsg(wmsg) << "In production rule \n"<< 
                     "\t`" << &d_rules.lastProduction() << " '\n"
-                    "\tnon-positive $" << idx << " used" << warning;
+                    "\tnon-positive $" << idx << " used" << endl;
 
     ostringstream os;
     os << s_semanticValueStack << "[" << indexToOffset(idx, nElements) << "]";

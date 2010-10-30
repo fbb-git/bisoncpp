@@ -22,8 +22,8 @@ void Generator::implementationHeader() const
     ofstream out;
     ifstream in;
 
-    Msg::open(in,  d_parser.implementationSkeleton()); 
-    Msg::open(out, d_parser.implementationHeader()); 
+    Errno::open(in,  d_parser.implementationSkeleton()); 
+    Errno::open(out, d_parser.implementationHeader()); 
 
     filter(in, out);    
 }

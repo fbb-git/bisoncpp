@@ -17,9 +17,9 @@ void Parser::openRule(string *ruleNamePtr)
         {
             Rules::FileInfo const &fileInfo = d_rules.fileInfo(nt);
     
-            lineMsg() << "Extending rule `" << *ruleNamePtr << 
+            lineMsg(wmsg) << "Extending rule `" << *ruleNamePtr << 
                         "', first defined in `" << fileInfo.first << 
-                        "' (" << fileInfo.second << ")" << warning;
+                        "' (" << fileInfo.second << ")" << endl;
         }
         d_rules.addProduction();
     }

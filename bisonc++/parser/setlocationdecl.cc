@@ -6,7 +6,8 @@
 void Parser::setLocationDecl()
 {
     if (d_locationDecl.size())
-        lineMsg() << "%location-struct or %ltype multiply specified" << err;
+        lineMsg(emsg) << "%location-struct or %ltype multiply specified" << 
+                                                                        endl;
     
     (d_locationDecl = "struct LTYPE__\n" + d_scanner.block().str()) += ";\n";
 

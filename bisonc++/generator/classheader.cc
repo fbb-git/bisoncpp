@@ -19,8 +19,8 @@ void Generator::classHeader() const
     ofstream out;
     ifstream in;
 
-    Msg::open(in,  d_parser.classSkeleton()); 
-    Msg::open(out, d_parser.classHeader()); 
+    Errno::open(in,  d_parser.classSkeleton()); 
+    Errno::open(out, d_parser.classHeader()); 
 
     filter(in, out);    
 }

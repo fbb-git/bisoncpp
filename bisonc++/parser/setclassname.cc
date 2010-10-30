@@ -3,7 +3,7 @@
 void Parser::setClassName()
 {
     if (d_className.size())
-        lineMsg() << "%class-name multiply specified" << err;
+        lineMsg(emsg) << "%class-name multiply specified" << endl;
     else
         d_className = d_scanner.YYText();
 }

@@ -6,7 +6,7 @@
 void Parser::setUnionDecl()
 {
     if (d_stackDecl.size())
-        lineMsg() << "%union or %stype multiply specified" << err;
+        lineMsg(emsg) << "%union or %stype multiply specified" << endl;
 
     (d_stackDecl = "union STYPE__\n" + d_scanner.block().str()) += ";\n";
 

@@ -4,9 +4,10 @@
 #include <ostream>
 #include <algorithm>
 #include <functional>
+#include <iterator>
 #include <iomanip>
 
-#include <bobcat/msg>
+#include <bobcat/mstream>
 #include <bobcat/arg>
 #include <bobcat/fnwrap>
 #include <bobcat/indent>
@@ -14,6 +15,9 @@
 #include "../rules/rules.h"
 #include "../nonterminal/nonterminal.h"
 #include "../production/production.h"
+#include "../item/item.h"
+#include "../lookaheadset/lookaheadset.h"
+#include "../stateitem/stateitem.h"
 
 using namespace std;
 using namespace FBB;

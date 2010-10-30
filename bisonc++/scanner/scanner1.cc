@@ -2,14 +2,11 @@
 
 Scanner::Scanner(string const &fname)
 :
-    d_in(fname.c_str()),
-//    d_retWS(false),           currently not used, see also scanner.h
     d_include(false)
 {
     memset(d_commentChar, 0, 2);
 
-    if (!d_in)
-        FBB::lineMsg() << "Can't read `" << fname << "'" << fatal;
+    Errno::open(d_in, fname);
 
     d_fileInfo.push_back(FileInfo(fname, 0));   // for the first pushed
                                                 // element `second' is not

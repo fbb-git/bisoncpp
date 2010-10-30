@@ -5,17 +5,16 @@ void Rules::showFirst() const
     if (!Arg::instance().option(0, "construction"))
         return;
 
-    msg() << info;
-
-    msgstream() << "FIRST sets:\n";
+    imsg << "\n"
+            "FIRST sets:\n";
 
     NonTerminal::inserter(&NonTerminal::nameAndFirstset);
     Terminal::inserter(&Terminal::plainName);
 
     copy(d_nonTerminal.begin(), d_nonTerminal.end(), 
-                ostream_iterator<NonTerminal const *>(msgstream(), "\n"));
+                ostream_iterator<NonTerminal const *>(imsg, "\n"));
 
-    msgstream() << info;
+    imsg << endl;
 }
 
 
