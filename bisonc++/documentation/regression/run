@@ -8,12 +8,13 @@ COMMAND=/bin/bash
     # Assuming bisonc++ is in your computer's search-path. If not, define
     # BISONCPP as the full path to bisconc++:
 BISONCPP=bisonc++
+BISONCPP=/home/frank/svn/bisonc++/tmp/bin/bisonc++
 
     # UNCOMMENT the following variables if you want to run the examples from
     # the source distribution's documentation/regression directory rather than
     # from bisonc++ documentation's `regression' subdirectory.
-SKEL=../../../../share
-BISONCPP="../../../../tmp/bin/bisonc++ --skeleton-directory ${SKEL}"
+#SKEL=../../../../share
+#BISONCPP="../../../../tmp/bin/bisonc++ --skeleton-directory ${SKEL}"
 
 example()
 {
@@ -121,10 +122,16 @@ the augmented grammar rule G* -> G . Bisonc++ will not execute an action here,
 but that should be ok, since the grammar specification does not make G* -> G
 visible, so no action can be associated with its reduction anyway.
 
+[press Enter to continue]
 "
 
+read RUN
+tput clear
+echo
+
+
 EXAMPLE=1
-PRE="To run: press Enter, enter other input to skip an example"
+PRE="Enter x to skip; a plain Enter to run; ^c to end this script"
 
 echo $EXAMPLE: AHO Example 4.42, p. 231
 echo $PRE

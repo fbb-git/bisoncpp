@@ -13,5 +13,6 @@ void Parser::expectRules()
     // nonterminals left, change them into true nonterminals.
     d_rules.setNonTerminalTypes();
 
-    lineMsg(imsg) << "Preamble (until %%) parsed" << endl;
+// not shown in Bisonc++ 2.8.0:
+//    lineMsg(imsg) << "Preamble (until %%) parsed" << endl;
 }
