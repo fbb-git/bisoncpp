@@ -65,7 +65,7 @@ grammar to eventually derive a sentence this way. Adding one non-recursive
 alternative is enough to convert the grammar into one that em(does) derive
 sentences. Here is a complete b() input file that actually manifests the
 conflict:
-    verbinclude(algorithm/examples/dangling)
+    verbinclude(examples/dangling)
 
 Looking again at the dangling else problem note that there are multiple ways
 to handle tt(stmnt) productions. Depending on the particular input that is
@@ -86,6 +86,6 @@ However, shift-reduce conflicts can also be observed in grammars where a state
 contains items that could be reduced to a certain non-terminal and items in
 which a shift is possible in an item of a production rule of a completely
 different non-terminal. Here is an example of such a grammar:
-    verbinclude(algorithm/examples/peculiar)
+    verbinclude(examples/peculiar)
   Why these grammars show shift reduce conflicts and how these are solved is
 discussed in the next section.

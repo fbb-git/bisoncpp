@@ -24,19 +24,19 @@ base class it should have the following characteristics:
     )
 
 The class bf(Base) has the following interface:
-    verbinclude(grammar/poly/base/base.h)
+    verbinclude(poly/base/base.h)
 
 The alternatives defined by a classical tt(union) are defined by classes
 derived from the class tt(Base). For example:
     itemization(
     it() Objects of the class tt(Int) contain tt(int) value values. Here is
 its interface (and implementation):
-    verbinclude(grammar/poly/int/int.h)
+    verbinclude(poly/int/int.h)
 
     it() Objects of the class tt(Text) contain text. These objects can be
 used, e.g., to store the names of identifiers recognized by a lexical scanner.
 Here is the interface of the class tt(Text):
-    verbinclude(grammar/poly/text/text.h)
+    verbinclude(poly/text/text.h)
     )
 
 Realize that tt(Base) can't be the parser's semantic value:
@@ -55,7 +55,7 @@ Consequently, a wrapper class tt(Semantic) around a tt(Base) pointer is
 used. The wrapper class will take care of the proper destruction of objects
 accessed through a tt(Base) pointer and will offer facilities to obtain the
 proper derived class. The interface of the class tt(Semantic) is:
-    verbinclude(grammar/poly/semantic/semantic.h)
+    verbinclude(poly/semantic/semantic.h)
 
 
 tt(Semantic) is a slightly more `complete' class than tt(Base) and its

@@ -1,5 +1,5 @@
 Consider the following (somewhat peculiar) grammar:
-        verbinclude(algorithm/examples/peculiar)
+        verbinclude(examples/peculiar)
 
 Even though operator precedence and association rules are used the grammar
 still displays a shift/reduce conflict. One of the grammar's states consists
@@ -46,5 +46,5 @@ expression parser `by hand') but which are not required when defining grammars
 for b(). The following grammar does not use tt(term) and tt(factor) but
 recognizes the same grammar as the above `peculiar' grammar without reporting
 any shift/reduce conflict:
-        verbinclude(algorithm/examples/notpeculiar)
+        verbinclude(examples/notpeculiar)
 

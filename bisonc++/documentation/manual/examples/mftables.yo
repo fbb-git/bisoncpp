@@ -32,6 +32,6 @@ tt(private typedef)
         )
     These definitions allow us to initialize tt(s_functions) in a separate
 source file (tt(data.cc)):
-        verbinclude(examples/mfcalc/parser/data.cc)
+        verbinclude(mfcalc/parser/data.cc)
     By simply editing the definition of tt(s_funTab), additional
 functions can be added to the calculator.

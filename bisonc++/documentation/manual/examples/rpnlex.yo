@@ -29,4 +29,4 @@ A token value of zero is returned once end-of-file is encountered. (B()
 recognizes any nonpositive value as indicating the end of the input).
 
 Here is the lexical scanner's implementation:
-    verbinclude(examples/rpn/parser/lex.cc)
+    verbinclude(rpn/parser/lex.cc)

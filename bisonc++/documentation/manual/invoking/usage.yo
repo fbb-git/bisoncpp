@@ -7,5 +7,5 @@ information:
     If a message about a failing NOEXPANDINCLUDE is shown, create the file 
 `usage' in documentation/manual/invoking containing the latest usage info
 )
-    verbinclude(invoking/usage)
+    verbinclude(usage.txt)
 

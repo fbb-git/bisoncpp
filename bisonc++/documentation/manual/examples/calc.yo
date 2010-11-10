@@ -2,7 +2,7 @@ We now modify tt(rpn) to handle infix operators instead of postfix. Infix
 notation involves the concept of operator precedence and the need for
 parentheses nested to arbitrary depth. Here is the b() grammar
 specification for tt(calc), an infix desk-top calculator:
-        verbinclude(examples/calc/parser/grammar)
+        verbinclude(calc/parser/grammar)
     The functions tt(lex()), tt(error()) and tt(main()) can be the same as
 used with tt(rpn).
 

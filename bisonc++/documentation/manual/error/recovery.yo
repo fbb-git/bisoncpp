@@ -70,7 +70,7 @@ the input
         )
 
 The program defining the parser and calling the parsing member was:
-    verbinclude(algorithm/example/demo.cc)
+    verbinclude(../algorithm/example/demo.cc)
 
 For this example the following implementation of the tt(lex()) member 
 was used:

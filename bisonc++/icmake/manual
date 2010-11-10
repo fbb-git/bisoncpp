@@ -20,8 +20,7 @@ void manual()
     {
         chdir("usage");
         run("g++ -o usage usage.cc");
-        if ("usage" newer "../manual/invoking/usage")
-            run("./usage > ../manual/invoking/usage");
+        run("./usage > ../manual/invoking/usage");
         chdir("..");
     }
 

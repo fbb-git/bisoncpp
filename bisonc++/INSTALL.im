@@ -49,6 +49,6 @@ void setLocations()
     DOC  = BASE + "/share/doc/bisonc++";
 
     COMPILER = "g++";
-//    COMPILER = "g++-4.5";
+    COMPILER = "g++-4.5";
 }
 

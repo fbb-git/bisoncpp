@@ -42,4 +42,4 @@ The parser's tt(lex()) member uses the following approach:
         tt(d_symbol[name]) wasn't already there.
     )
     Here is tt(mfcalc)'s parser's tt(lex()) member function:
-        verbinclude(examples/mfcalc/parser/lex.cc)
+        verbinclude(mfcalc/parser/lex.cc)
