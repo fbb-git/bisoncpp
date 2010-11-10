@@ -1,0 +1,51 @@
+Finally, we add the em(nested) rule to our bag of rule-tricks. Again, nested
+rules appear frequently: parenthesized expressions and compound statements are
+two very well known examples. These kind of rules are characterized by the
+fact that the nested variant is itself an example of the element appearing in
+the nested variant. The definition of a statement is actually a bit more
+complex than the definition of an expression, since the statement appearing in
+the compound statement is in fact an optional series of elements. Let's first
+have a look at the nested expression rule. Here it is, in a basic form:
+        verb(
+    expr:
+        NUMBER
+    |
+        ID
+    |
+        expr '+' expr
+    |
+        ...
+    |
+        '(' expr ')'
+    ;
+        )
+    This definition is simply characterized that the non-terminal tt(expr)
+appears within a set of parentheses, which is not too complex. 
+
+    The definition of tt(opt_statements), however, is a bit more complex. But
+acknowledging the fact that a tt(statement) contains among other elements a
+compound statement, and that a compound statement, in turn, contains
+tt(opt_statements) an tt(opt_statements) construction can be formulated
+accordingly:
+        verb(
+    opt_statements:         // define an optional series
+        // empty
+    |
+        opt_statements statement
+    ;
+        
+    statement:              // define alternatives for `statement'
+        expr_statement
+    |
+        if_statement
+    |
+        ...
+    |
+        compound_statement
+    ;
+
+    compound_statement:     // define the compound statement itself
+        '{' opt_statements '}'
+    ;
+        )
+

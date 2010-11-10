@@ -1,0 +1,38 @@
+Consider the following ambiguous grammar fragment (ambiguous because the input
+`tt(1 - 2 * 3)' can be parsed in two different ways):
+        verb(
+    expr:     
+        expr '-' expr
+    |
+        expr '*' expr
+    | 
+        expr '<' expr
+    | 
+        '(' expr ')'
+    ...
+    ;
+        )
+    Suppose the parser has seen the tokens `tt(1)', `tt(-') and `tt(2)';
+should it reduce them via the rule for the addition operator? It depends on
+the next token. Of course, if the next token is `CLOSEPAR', we must reduce;
+shifting is invalid because no single rule can reduce the token sequence `tt(-
+2) CLOSEPAR' or anything starting with that. But if the next token is `tt(*)'
+or `tt(<)', we have a choice: either shifting or reduction would allow the
+parse to complete, but with different results.
+
+    To decide which one b() should do, we must consider the results. If
+the next operator token tt(op) is shifted, then it must be reduced first in
+order to permit another opportunity to reduce the sum. The result is (in
+effect) `tt(1 - (2 op 3))'. On the other hand, if the subtraction is reduced
+before shifting tt(op), the result is `tt((1 - 2) op 3)'. Clearly, then, the
+choice of shift or reduce should depend on the relative precedence of the
+operators `tt(-)' and tt(op): `tt(*)' should be shifted first, but not
+`tt(<)'.
+
+What about input such as `tt(1 - 2 - 5)'; should this be `tt((1 - 2) - 5)' or
+should it be `tt(1 - (2 - 5))'? For most operators we prefer the former, which
+is called em(left association). The latter alternative, em(right association),
+is desirable for, e.g., assignment operators. The choice of left or right
+association is a matter of whether the parser chooses to shift or reduce when
+the stack contains `tt(1 - 2)' and the look-ahead token is `tt(-)': shifting
+results in right-associativity.

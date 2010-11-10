@@ -1,0 +1,42 @@
+    /* 
+        xstring returns the next string delimited by either blanks, tabs,
+        newlines or C/C++ comment. Strings delimited by "..." are returned as
+        STRING, strings delimited by <...> as PSTRING. If d_include was set
+        before entering this mini scanner a file-switch is
+        realized. Otherwise, the string is returned as a Parser::XSTRING
+    */
+<xstring>{
+        
+"\\".         yymore();
+
+"//"          |
+"/*"          {
+                  yyless(yyleng - 2);
+
+                  BEGIN (d_includeOnly ? includeOnly : INITIAL);
+
+                  ret = yytextChk(&nKept, 1, Parser::XSTRING);
+                  yyless(nKept);
+
+                  if (ret)
+                      return ret;
+                
+                  pushSource(YY_CURRENT_BUFFER, YY_BUF_SIZE);
+              }
+            
+[ \t]*$       {
+                  BEGIN (d_includeOnly ? includeOnly : INITIAL);
+              
+                  ret = yytextChk(&nKept, 1, Parser::XSTRING);
+                  yyless(nKept);
+                  if (ret)
+                      return ret;
+
+                  pushSource(YY_CURRENT_BUFFER, YY_BUF_SIZE);
+              }
+
+.           yymore();
+
+}
+
+

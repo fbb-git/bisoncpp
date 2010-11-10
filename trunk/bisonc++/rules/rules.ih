@@ -1,0 +1,14 @@
+#include "rules.h"
+
+#include <iostream>
+#include <sstream>
+#include <iterator>
+#include <algorithm>
+
+#include <bobcat/fnwrap>
+#include <bobcat/mstream>
+#include <bobcat/arg>
+
+using namespace std;
+using namespace FBB;
+

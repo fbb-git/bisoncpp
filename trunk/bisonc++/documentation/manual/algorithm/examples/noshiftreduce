@@ -1,0 +1,14 @@
+%token ID
+%left  '*'                                
+%right '-'
+
+%%
+
+term:
+    term '*' term
+| 
+    ID
+|
+    '-' term
+;
+

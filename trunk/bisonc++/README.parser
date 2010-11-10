@@ -1,0 +1,56 @@
+Bisonc++ 2.0.0 uses a grammar specification file (parser/grammar) defining the
+input language that it will recognize. The grammar specification file was
+initially written to be used with Bisonc++ 1.6.1, but once Bisonc++ 2.0.0 was
+available it was split into various subfiles, each having a well defined
+function. As a result, the individual grammar specification files are fairly
+small, which facilitates understanding of the grammar. 
+
+The main grammar specification file is the file parser/grammar, the
+subdirectory parser/spec contains the grammar specification subfiles:
+
+    parser/spec/messages
+    parser/spec/precedence
+    parser/spec/optrules
+    parser/spec/directives
+    parser/spec/symbols
+    parser/spec/rules
+    parser/spec/productionlist
+    parser/spec/auxiliary
+
+
+    parser/grammar: 
+        A short file, defining tokens, the semantic value union, the grammar's
+    start rule and one support rule used by the start rule.
+
+    parser/spec/messages:
+        Defines all rules that expect a token and assign an appropriate text
+    to the syntactic error message variable `d_msg'. All these rules end in
+    _t. Another set of rules (ending in _m) merely set the `d_msg' data
+    member.
+
+    parser/spec/precedence:
+        Defines support rules when recognizing the precedence (LEFT, RIGHT,
+    NONASSOC) and TOKEN terminals directives. These rules end in _p.
+
+    parser/spec/optrules
+        Defines rules for all tokens that may optionally be given. These rules
+    all start with the phrase `opt'.
+
+    parser/spec/directives
+        Defines the syntax for each of Bisonc++'s directives.
+
+    parser/spec/symbols
+        All precedence directives, the %token directive and the %type
+    directive all expect one or more symbols. The `symbols' rule is defined in
+    this file.
+
+    parser/spec/rules
+        Defines the grammar recognizing Bisonc++'s rules
+
+    parser/spec/productionlist
+        Defines the grammar recognizing the production rules recognized by
+    Bisonc++. 
+
+    parser/spec/auxiliary
+        Defines rules that are used in at least two specification files. These
+    rules all end in _a.

@@ -1,0 +1,19 @@
+Syntax: bf(%print) tt(matched-text-function) nl()
+
+    The tt(print) directive provides an implementation of the Parser class's
+tt(print) function displaying the current token value and the text
+matched by the lexical scanner as received by the generated tt(parse)
+function.  
+
+The argument tt(matched-text-function) must define a complete function call
+expression returning the text matched by the lexical scanner. E.g.,
+           verb(
+    %print d_scanner.YYText()
+                )
+           If the function call expression contains white space
+tt(matched-text-function) should be surrounded by double quotes (tt(")).  If
+the text returned by the lexical scanner needs editing (e.g., newlines should
+be displayed as tt(\n)) then a wrapper function around the `real' function
+returning the text as matched by the scanner may be specified here.  This
+directive is overruled by the bf(--print) command-line option.
+

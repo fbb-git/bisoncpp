@@ -1,0 +1,40 @@
+<INITIAL,block>{
+
+"{"          {
+                    // open or count a nested a block 
+                d_block.open(yylineno, sourceName()); 
+                BEGIN block;
+            }
+    /*
+        The whitespace-eating RegExes (REs) will normally simply consume the
+        WS. However, if d_retWS is unequal 0 then WS is returned. This is
+        sometimes needed (e.g., inside code blocks to be able to return the ws
+        as part of the code-block). Comment is part of the WS returning REs
+    */
+
+[ \t]+       {
+                 if (d_block)
+                     d_block += " ";
+             }
+             
+[\n]+        {
+                 if (d_block)
+                     d_block += "\n";
+             }
+
+"//".*       ;   // ignore eoln comment in source blocks
+
+    /* If comment is entered from `block' either a blank or a newline will be
+        added to the block as soon as the matching end-comment is seen, and
+        the scanner will return to its block-miniscanner state
+    */
+"/*"         {
+                 d_commentChar[0] = ' ';
+                 BEGIN comment;
+             }
+}
+
+<INITIAL,includeOnly>"%include"[ \t]*   {
+                                            BEGIN pxstring;
+                                            d_include = true;
+                                        }

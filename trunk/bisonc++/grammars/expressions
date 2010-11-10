@@ -1,0 +1,60 @@
+%token NR IDENT
+%left '+' '-'
+%left '*' '/'
+%right UMIN
+
+%%
+
+lines:
+    lines line
+    {
+        cout << "lines line\n";
+    }
+|
+    {
+        cout << "lines <empty>\n";
+    }
+;
+
+line:
+    content
+    '\n'
+    {
+        cout << "line\n";
+    }
+;
+
+content:
+    expr
+    {
+        cout << "content - expr\n";
+    }
+|
+    error
+    {
+        cout << "content - error\n"
+    }
+|
+    {
+        cout << "content - empty\n";
+    }
+;
+
+expr:
+    NR
+|
+    IDENT
+|
+    '(' expr ')'
+|
+    '-' expr %prec UMIN
+|
+    expr '+' expr
+|
+    expr '-' expr
+|
+    expr '*' expr
+|
+    expr '/' expr
+;
+

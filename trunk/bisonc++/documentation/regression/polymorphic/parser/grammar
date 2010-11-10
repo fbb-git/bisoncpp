@@ -1,0 +1,61 @@
+%class-name Parser
+
+%filenames parser
+%parsefun-source parse.cc
+%scanner ../scanner/scanner.h
+
+%baseclass-preinclude      preinclude.h
+
+%stype   SemVal
+
+%token BOOL INT CONST IDENTIFIER 
+
+%%
+
+// at:                  const abc j = xyz;
+// output should be:    type_specifier j scoped_identifier
+
+constant_definition:
+   CONST type_specifier IDENTIFIER 
+    {
+        cout << "Mid-rule: " << $2 << ", " << $3 << endl;
+    }
+    '=' scoped_identifier ';'
+    {
+         cout << $2 << " " << $3 << " " << $6 << endl;
+    }
+;
+
+type_specifier:
+   BOOL
+   {
+      $$ = new Ident("type_specifier");
+   }
+|
+   INT
+   {
+      $$ = new Ident("type_specifier");
+   }
+|
+   scoped_identifier
+   {
+      $$ = new Ident("s-type");
+   }
+;
+
+scoped_identifier:
+   IDENTIFIER
+   {
+      $$ = new Ident("scoped");
+   }
+|
+   ':' IDENTIFIER
+   {
+      $$ = new Ident("scoped");
+   }
+|
+   scoped_identifier ':' IDENTIFIER
+   {
+      $$ = new Ident("scoped");
+   }
+;

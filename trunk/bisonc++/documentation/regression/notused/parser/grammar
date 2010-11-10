@@ -1,0 +1,22 @@
+%token  TOKEN_ONE TOKEN_TWO
+
+%%
+
+start:
+    one
+|
+    '+'
+;
+
+one:
+    '-'
+    {}
+;
+
+unused_one:
+    TOKEN_ONE
+;
+
+unused_two:
+    TOKEN_TWO
+;

@@ -1,0 +1,11 @@
+%token i e a
+%%
+
+S: 
+    i S e S
+|
+    i S
+|
+    a
+;
+

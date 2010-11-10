@@ -1,0 +1,11 @@
+ bf(%ltype typename) nl()    
+    Specifies a user-defined token location type.  If bf(%ltype) is used,
+tt(typename) should be the name of an alternate (predefined) type (e.g.,
+bf(size_t)). It should not be used together with a
+link(%locationstruct)(LOCSTRUCT) specification. From within the parser class,
+this type may be used as bf(LTYPE__).
+
+    Any text following tt(%ltype) up to the end of the line, up to the first
+of a series of trailing blanks or tabs or up to a comment-token (tt(//) or
+tt(/*)) becomes part of the type definition. Be sure em(not) to end a
+tt(%ltype) definition in a semicolon.

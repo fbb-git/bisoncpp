@@ -1,0 +1,50 @@
+Consider the following (somewhat peculiar) grammar:
+        verbinclude(examples/peculiar)
+
+Even though operator precedence and association rules are used the grammar
+still displays a shift/reduce conflict. One of the grammar's states consists
+of the following two items:
+        verb(
+    0: expr -> term  .   
+    1: term -> term  . '*' factor
+        )
+ and b() reduces to item 0, dropping item 1 rather than shifting a tt('*') and
+proceeding with item 0. 
+
+    When considering states where shift/reduce conflicts are encountered the
+`shiftable' items of these states shift when encountering terminal tokens that
+are also in the follow sets of the reducible items of these states. In the
+above example item 1 shifts when tt('*') is encountered, but tt('*') is also
+an element of the set of lookahead tokens of item 0. B() must now decide what
+to do. In cases we've seen earlier b() could make the decision because the
+reducible item itself had a well known precedence. The precedence of a
+reducible item is defined as the precedence of the left-hand side
+non-terminal of the production rule to which the reducible item belongs. Item
+0 in the above example is an item of the rule tt(expr -> term). 
+
+    The precedence of a production rule is defined as follows:
+    itemization(
+    it() If tt(%prec) is used then the precedence of the production rule is
+equal to the precedence of the terminal that is specified with the tt(%prec)
+directive;
+    it() If tt(%prec) is not used then the production rule's precedence is
+equal to the precedence of the first terminal token that is used in the
+production rule;
+    it() In all other cases the production rule's precedence is set to the
+maximum possible precedence.
+    )
+
+    Since tt(expr -> term) does not contain a terminal token and does not use
+tt(%prec), its precedence is the maximum possible precedence. Consequently in
+the above state the shift/reduce conflict is solved by em(reducing) rather
+than shifting. 
+
+Some final remark as to why the above grammar is peculiar. It is peculiar as
+it combines precedence and association specifying directives with auxiliary
+non-terminals that may be useful conceptually (or when implementing an
+expression parser `by hand') but which are not required when defining grammars
+for b(). The following grammar does not use tt(term) and tt(factor) but
+recognizes the same grammar as the above `peculiar' grammar without reporting
+any shift/reduce conflict:
+        verbinclude(examples/notpeculiar)
+

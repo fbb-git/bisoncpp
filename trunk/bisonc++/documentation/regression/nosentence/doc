@@ -1,0 +1,7 @@
+This grammar has a single left-recursive rule, so no rule reduces to 
+`start'. Consequently, no sentences can be derived from this grammar.
+Here is its sole production rule:
+
+start:
+    NR start
+;

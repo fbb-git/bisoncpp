@@ -1,0 +1,17 @@
+Here are the bf(C++) and b() directives for the reverse polish notation
+calculator. As in bf(C++), end-of-line comments may be used.
+        verbinsert(DECL)(rpn/parser/grammar)
+    The directive section provides information to b() about the token
+types (see section The b() Declarations Section). Each terminal symbol
+that is not a single-character literal must be declared here (Single-character
+literals normally don't need to be declared). In this example, all the
+arithmetic operators are designated by single-character literals, so the only
+terminal symbol that needs to be declared is tt(NUM), the token type for
+numeric constants. Since b() uses the type tt(int) as the default
+semantic value type, one additional directive is required to inform b()
+about the fact that we will be using tt(double) values. The tt(%stype)
+(semantic value type) directive is used to do so.
+
+
+
+

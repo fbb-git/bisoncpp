@@ -1,0 +1,11 @@
+%{
+    #define _SKIP_YYFLEXLEXER_
+    #include "scanner.ih"
+
+%}
+
+%option yyclass="Scanner" outfile="yylex.cc"
+%option c++ 8bit warn noyywrap yylineno
+%option debug
+
+%x xstring pstring pxstring string comment quote block includeOnly

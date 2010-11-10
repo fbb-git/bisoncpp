@@ -1,0 +1,48 @@
+#!/bin/bash
+PROJECT=bisonc++
+
+if [ -e /usr/share/common-licenses/GPL ] ; then
+    cp /usr/share/common-licenses/GPL ${PROJECT}/LICENSE
+fi
+                                        # load the version
+VERSION=`grep VERSION ${PROJECT}/VERSION |
+    sed 's/#define[[:space:]]\+VERSION[[:space:]]\+"\([^"]*\).*/\1/'`
+
+DISTRIBUTION=${PROJECT}-${VERSION}      # define the distribution's dir name
+
+tgz()
+{
+    ln -s ${PROJECT} ${DISTRIBUTION}        # distribution's dir name
+    tar czvf $1 --exclude-from=excluded  ${DISTRIBUTION}/*
+    rm ${DISTRIBUTION} ${PROJECT}/LICENSE  # rm the link/LICENSE file
+}
+
+case "$1" in 
+    (d)
+        tgz ${HOME}/debian/${PROJECT}/tarballs/${PROJECT}_${VERSION}.orig.tar.gz
+    ;;
+
+    (l|u)
+        tgz ${PROJECT}_${VERSION}.tar.gz
+
+        if [ "$1" == "u" ]
+        then
+            scp ${PROJECT}_${VERSION}.tar.gz oosix:ftp/debian/${PROJECT}
+            md5sum ${PROJECT}_${VERSION}.tar.gz
+            rm ${PROJECT}_${VERSION}.tar.gz
+        fi
+    ;;
+
+    (*)
+        echo "
+Provide arg:
+    d (debian)  to create a local .orig.tar.gz archive in 
+                ../debian/${PROJECT}/tarballs
+    l (local)   to create ${PROJECT}_${VERSION}.tar.gz in this directory
+    u (upload)  same as 'l', but upload to oosix and show MD5 hash
+"
+    exit 1
+    ;;
+
+esac
+

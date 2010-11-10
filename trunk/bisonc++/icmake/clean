@@ -1,0 +1,49 @@
+string remove1;
+string remove2;
+string remove3;
+
+void setRemovals()
+{
+    // always:
+        remove1 = 
+            "debian/*substvars* debian/bisonc++ build-stamp configure-stamp";
+
+    // unless `minimal':
+        remove2 = "parser/SKEL tmp o */o release.yo libbisonc++.a "
+                  "scanner/yylex.cc scanner/lexer";
+
+    // in ./documentation:
+        remove3 = "man/*.1 man/*.html manual/manual-stamp manual/*.html "
+                  "manual/invoking/usage.txt bisonc++ usage/usage";
+}
+
+void clean(int dist)
+{
+    setRemovals();
+
+    run("rm -rf " + remove1);
+
+    if (!dist && my_getenv("BISONCPP") == "minimal")
+    {
+        printf("\n"
+            "WARNING: PERFORMED MINIMAL CLEANUP\n");
+        exit(0);
+    }
+
+    run("rm -rf " + remove2);
+
+    chdir("documentation");
+    run("rm -rf " + remove3);
+
+    if (dist)
+    {
+        chdir("..");
+        run("rm -rf tmp documentation/usage/usage");
+    }
+
+    exit(0);
+}
+
+
+
+

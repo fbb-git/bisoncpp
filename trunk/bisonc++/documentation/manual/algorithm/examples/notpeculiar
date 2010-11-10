@@ -1,0 +1,20 @@
+    %token  ID 
+    %left  '-'
+    %left  '*'
+    %right UNARY
+    
+    %%
+    
+    expr:
+        expr '-' expr
+    |
+        expr '*' expr
+    | 
+       '-' expr %prec UNARY
+    | 
+        ID
+    ;
+
+
+
+

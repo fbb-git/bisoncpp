@@ -1,0 +1,15 @@
+/* AHO et al, example 4.46 */
+
+%token i
+
+%%     
+
+S: L '=' R ;
+
+S: R ;
+
+L: '*' R ;
+
+L:  i ;
+
+R:  L ;

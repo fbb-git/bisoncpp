@@ -1,0 +1,58 @@
+The grammar specification file for the tt(mfcalc) calculator allows us to
+introduce several new features. Here is the b() directive section for
+the tt(mfcalc) multi-function calculator (line numbers were added for
+referential purposes, they are not part of the declaraction section as used in
+the actual grammar file):
+        verb(
+    1   %union
+    2   {
+    3       double u_val;
+    4       double *u_symbol;
+    5       double (*u_fun)(double);
+    6   }
+    7
+    8   %token <u_val>  NUM         // Simple double precision number
+    9   %token <u_symbol> VAR       // Variable
+   10   %token <u_fun>  FNCT        // Function
+   11   %type  <u_val>  exp
+   12
+   13   %right '='
+   14   %left '-' '+'
+   15   %left '*' '/'
+   16   %left NEG                   // negation--unary minus 
+   17   %right '^'                  // exponentiation        
+        )
+    The above grammar introduces only two new features of the Bison
+language. These features allow semantic values to have various data types 
+
+    The tt(%union) directive given in lines 1 until 6 allow semantic values
+to have various data types (see section ref(MORETYPES)).
+    The tt(%union) directive is used instead of tt(%stype), and defines the
+type tt(Parser::STYPE) as the indicated union: all semantic values will now
+have this tt(Parser::STYPE) type. As defined here the allowable types are now
+    itemization(
+    itt(double) (for tt(exp) and tt(NUM)); 
+    it() a em(pointer) to a tt(double), which will be a pointer to entries in
+        tt(mfcalc)'s symbol table, used with tt(VAR) tokens (see section
+        ref(COLLECTION)).
+    it() a em(pointer to a function) expecting a tt(double) argument and
+        returning a tt(double) value, used with tt(FNCT) tokens.
+    )
+    Since values can now have various types, it is necessary to associate a
+type with each grammar symbol whose semantic value is used. These symbols are
+tt(NUM), tt(VAR), tt(FNCT), and tt(exp). Their declarations are augmented with
+information about their data type (placed between angle brackets).
+
+The Bison construct tt(%type) (line 12) is used for declaring nonterminal
+symbols, just as tt(%token) is used for declaring token types. We have not
+used tt(%type) before because nonterminal symbols are normally declared
+implicitly by the rules that define them. But tt(exp) must be declared
+explicitly so we can specify its value type. See also section 
+ref(NONTERMS).
+
+Finally note the em(right associative) operator `tt(=)', defined in line 13:
+by making the assignment operator right-associative we can allow em(sequential
+assignments) of the form tt(a = b = c = expression).
+
+
+

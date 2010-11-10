@@ -1,0 +1,26 @@
+%token NR IDENT
+
+%%
+
+lines:
+    lines line
+|
+;
+
+line:
+    content
+        '\n'
+;
+
+content:
+    expr
+|
+    error
+|
+;   
+
+expr:
+    NR
+|
+    IDENT
+;

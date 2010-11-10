@@ -1,0 +1,19 @@
+list g_env;         // set to env in main()
+int g_envvar;    // set to the env var if defined
+
+string my_getenv(string var)
+{
+    int idx;
+
+    for (idx = sizeof(g_env); idx; )
+    {
+        idx -= 2;
+        if (element(idx, g_env) == var)
+        {
+            g_envvar = 1;
+            return element(idx + 1, g_env);
+        }
+    }
+    g_envvar = 0;
+    return "";
+}

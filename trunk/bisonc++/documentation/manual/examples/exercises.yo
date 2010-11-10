@@ -1,0 +1,21 @@
+Here are some suggestions for you to consider to improve tt(mfcalc)'s
+implementation and operating mode:
+    itemization(
+    it() Add some additional functions from `tt(cmath)' to the
+        tt(Parser::s_functions);
+    it() Define a class tt(Symbol) in which the symbol type, and an
+appropriate value for the symbol is stored. Define only one map tt(d_symbols)
+in the Parser, and provide the tt(Symbol) class with means to obtain the
+appropriate values for the various token types.
+    it() Remove the tt(%union) directive, and change it into tt(%stype
+Symbol). Hint: use the tt(%preinclude-header) directive to make
+tt(Symbol) known to the parser's base class.
+    it() Define a token tt(CONST) for numerical constants (like tt(PI), (E)),
+and pre-define some numerical constants;
+    it() Make the program report an error if the user refers to an
+uninitialized variable in any way except to store a value in it. Hints: use a
+tt(get()) and tt(set()) member pair in tt(Symbol), and use the appropriate
+member in the appropriate tt(expr) rule; use tt(ERROR()) to initiate error
+recovery.
+    )
+   

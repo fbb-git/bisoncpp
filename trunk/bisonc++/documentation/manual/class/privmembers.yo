@@ -1,0 +1,86 @@
+    The following members can be used by members of parser classes generated
+by b(). All members are private unless prefixed by bf(Base::) in which case
+they are em(protected) members inherited from the parser's base class. Members
+for which the phrase ``Used internally'' is used should not be called by
+user-defined code, but are
+listed here to present an exhaustive list.
+    itemization(
+    it() bf(Base::ParserBase()):nl()
+        The default base-class constructor. Used internally.
+    it() bf(void Base::ABORT() const throw(Return__)):nl()
+       This member can be called from any member function (called from any of
+        the parser's action blocks) to indicate a failure while parsing thus
+        terminating the parsing function with an error value 1. Note that this
+        offers a marked extension and improvement of the macro bf(YYABORT)
+        defined by bf(bison++) in that bf(YYABORT) could not be called from
+        outside of the parsing member function.
+    it() bf(void Base::ACCEPT() const throw(Return__)):nl()
+       This member can be called from any member function (called from any of
+        the parser's action blocks) to indicate successful parsing and thus
+        terminating the parsing function. Note that this offers a marked
+        extension and improvement of the macro bf(YYACCEPT) defined by
+        bf(bison++) in that bf(YYACCEPT) could not be called from outside of
+        the parsing member function.
+    it() bf(void Base::clearin+nop()()):nl()
+       This member replaces bf(bison)(++)'s macro bf(yyclearin) and causes
+        bf(bisonc++) to request another token from its tt(lex+nop()()) member,
+        even if the current token has not yet been processed. It is a useful
+        member when the parser should be reset to its initial state, e.g.,
+        between successive calls of tt(parse()). In this situation the scanner
+        will probably be reloaded with new information too (in the context of
+        a tt(flex)-generated scanner by, e.g., calling the scanner's
+        tt(yyrestart()) member.
+    it() bf(bool Base::debug() const):nl()
+       This member returns the current value of the debug variable.
+    it() bf(void Base::ERROR+nop()() const throw(ErrorRecovery__)):nl()
+       This member can be called from any member function (called from any of
+        the parser's action blocks) to generate an error, and thus initiate
+        the parser's error recovery code. Note that this offers a marked
+        extension and improvement of the macro bf(YYERROR) defined by
+        bf(bison++) in that bf(YYERROR) could not be called from outside of
+        the parsing member function.
+    it() bf(void error(char const *msg)):nl()
+       This member may be redefined in the parser class. Its default (inline)
+        implementation is to write a simple message to the standard error
+        stream. It is called when a syntactic error is encountered.
+    it() bf(void errorRecovery__+nop()()):nl()
+       Used internally.
+    it() bf(void Base::errorVerbose__+nop()()):nl()
+       Used internally.
+    it() bf(void executeAction+nop()()):nl()
+       Used internally.
+    it() bf(int lex()):nl()
+       This member may be pre-implemented using the bf(scanner) option or
+        directive (see above) or it em(must) be implemented by the
+        programmer. It interfaces to the lexical scanner, and should
+        return the next token produced by the lexical scanner, either as a
+        plain character or as one of the symbolic tokens defined in the
+        bf(Parser::Tokens__) enumeration. Zero or negative token values are
+        interpreted as `end of input'.
+    it() bf(int lookup+nop()()):nl()
+       Used internally.
+       otherwise. See also below, section bf(BUGS).
+    it() bf(void nextToken+nop()()):nl()
+       Used internally.
+       otherwise. See also below, section bf(BUGS).
+    it() bf(void Base::pop__+nop()()):nl()
+       Used internally.
+    it() bf(void Base::popToken__+nop()()):nl()
+       Used internally.
+    it() bf(void print())):nl()
+       This member can be redefined in the parser class to print information
+        about the parser's state. It is called by the parser immediately after
+        retrieving a token from tt(lex()). As it is a member function it has
+        access to all the parser's members, in particular bf(d_token), the
+        current token value and bf(d_loc__), the current token location
+        information (if bf(%lsp-needed, %ltype) or bf(%locationstruct) has
+        been specified).
+    it() bf(void Base::push__+nop()()):nl()
+       Used internally.
+    it() bf(void Base::pushToken__+nop()()):nl()
+       Used internally.
+    it() bf(void Base::reduce__+nop()()):nl()
+       Used internally.
+    it() bf(void Base::top__+nop()()):nl()
+       Used internally.
+    )

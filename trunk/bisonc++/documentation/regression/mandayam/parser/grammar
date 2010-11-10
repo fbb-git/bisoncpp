@@ -1,0 +1,140 @@
+%debug
+
+%union {
+  int ival;
+  char cval;
+  char *strval;
+  float fval;
+}
+
+
+/* Keywords */
+%token DEFINEtkn DEFINE_GROUPtkn 
+
+
+%token LPARAtkn RPARAtkn LBRtkn RBRtkn COLONtkn SEMItkn COMMAtkn
+
+/* Arithmetic operators */
+%token EQtkn
+
+%left  PLUStkn MINUStkn
+%left  MULTtkn DIVtkn
+%right UNARY
+
+%token <strval> IDtkn 
+
+%token <ival>   INT_CONSTtkn
+%token <fval>   FLOAT_CONSTtkn 
+%token <strval> STRING_CONSTtkn
+%token <ival>   TRUEtkn FALSEtkn
+
+
+%%
+
+file:    collection ;
+
+collection:
+    prefix LBRtkn statement_list RBRtkn
+  | prefix LBRtkn RBRtkn
+  ;
+
+prefix:
+    IDtkn  LPARAtkn param_list RPARAtkn 
+  | IDtkn  LPARAtkn RPARAtkn 
+  ;
+
+param_list:
+    param_list COMMAtkn parameter
+  | parameter
+  ;
+
+parameter:
+    numeric_constant
+  | string_or_named_constant
+  | string_or_named_constant COLONtkn string_or_named_constant
+  | boolean_constant
+  ;
+
+statement_list:
+    statement_list statement
+  | statement
+  ;
+
+statement:
+    primitive_attribute
+  | complex_attribute
+  | definition
+  | definition_group
+  | collection
+  ;
+
+definition: 
+    DEFINEtkn LPARAtkn enumerator COMMAtkn enumerator COMMAtkn enumerator RPARAtkn SEMItkn 
+  ;
+
+definition_group:
+    DEFINE_GROUPtkn LPARAtkn enumerator COMMAtkn enumerator RPARAtkn SEMItkn 
+  ;
+
+primitive_attribute:
+    IDtkn COLONtkn primitive_attribute_value 
+  | IDtkn COLONtkn primitive_attribute_value SEMItkn
+  | IDtkn EQtkn    primitive_attribute_value
+  ;
+
+primitive_attribute_value: 
+    expr
+  ;
+
+
+expr:
+    expr PLUStkn  term
+  | expr MINUStkn term
+  | term
+  ;
+
+term:
+    term MULTtkn primary
+  | term DIVtkn  primary
+  | primary
+  ;
+
+primary:
+    LPARAtkn expr RPARAtkn
+  | MINUStkn expr %prec UNARY
+  | PLUStkn  expr %prec UNARY
+  | constant
+  ;
+
+constant:
+    boolean_constant
+  | numeric_constant
+  | string_or_named_constant
+  ;
+
+enumerator: 
+    string_or_named_constant
+  ;
+
+string_or_named_constant:
+    STRING_CONSTtkn
+  | IDtkn
+  ;
+
+numeric_constant:
+    INT_CONSTtkn
+  | FLOAT_CONSTtkn
+  ;
+
+boolean_constant:
+    TRUEtkn
+  | FALSEtkn
+  ;
+
+complex_attribute:    
+    prefix SEMItkn
+  | prefix
+  ;
+
+
+

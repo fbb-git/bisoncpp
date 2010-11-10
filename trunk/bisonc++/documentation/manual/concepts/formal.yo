@@ -1,0 +1,34 @@
+A formal grammar is a mathematical construct. To define the language for
+B(), you must write a file expressing the grammar in b() syntax: a
+em(B() grammar file). See chapter ref(GRAMMARFILES).
+
+A nonterminal symbol in the formal grammar is represented in b() input as
+an identifier, like an identifier in bf(C++). By convention, it should be in
+lower case, such as tt(expr), tt(stmt) or tt(declaration). 
+
+The b() representation for a terminal symbol is also called a token
+type. Token types as well can be represented as bf(C++)-like identifiers. By
+convention, these identifiers should be upper case to distinguish them from
+nonterminals: for example, tt(INTEGER), tt(IDENTIFIER), tt(IF) or
+tt(RETURN). A terminal symbol that stands for a particular keyword in the
+language should be named after that keyword converted to upper case. The
+terminal symbol tt(error) is reserved for error recovery. See section 
+ref(SYMBOLS), which also describes the current restrictions on the names of
+terminal symbols.
+
+A terminal symbol can also be represented as a character literal, just like a
+bf(C++) character constant. You should do this whenever a token is just a
+single character (parenthesis, plus-sign, etc.): use that same character in a
+literal as the terminal symbol for that token.
+
+The grammar rules also have an expression in b() syntax. For example, here is
+the b() rule for a bf(C++) return statement. The semicolon in quotes is a
+literal character token, representing part of the bf(C++) syntax for the
+statement; the naked semicolon, and the colon, are b() punctuation used in
+every rule.
+        verb(
+    stmt:   
+        RETURN expr ';'
+    ;
+        )
+    See section ref(RULES).

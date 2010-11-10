@@ -1,0 +1,34 @@
+Now that the basics of b() have been discussed, it is time to move on to
+a more advanced problem. The above calculators provided only five functions,
+`tt(+)', `tt(-)', `tt(*)', `tt(/)' and `tt(^)'. It would be nice to have a
+calculator that provides other mathematical functions such as tt(sin),
+tt(cos), etc..
+
+It is easy to add new operators to the infix calculator as long as they are
+only single-character literals. The parser's member tt(lex()) passes back all
+non-number characters as tokens, so new grammar rules suffice for adding a new
+operator. But we want something more flexible: built-in functions whose
+syntaxis is as follows:
+        verb(
+    function_name (argument)
+        )
+    At the same time, we will add memory to the calculator, by allowing you to
+create named variables, store values in them, and use them later. Here is a
+sample session with the multi-function calculator:
+        verb(
+	pi = 3.141592653589
+	        3.14159
+	sin(pi)
+	        7.93266e-13
+	alpha = beta1 = 2.3
+	        2.3
+	alpha
+	        2.3
+	ln(alpha)
+	        0.832909
+	exp(ln(beta1))
+	        2.3
+        )
+Note that multiple assignment and nested function calls are permitted.
+
+

@@ -1,0 +1,28 @@
+    %token  ID 
+    %left  '-'
+    %left  '*'
+    %right UNARY
+    
+    %%
+    
+    expr:
+        expr '-' term
+    | 
+        term
+    ;
+    
+    term:
+        term '*' factor
+    | 
+        factor
+    ;
+    
+    factor:
+       '-' expr %prec UNARY
+    | 
+        ID
+    ;
+
+
+
+
