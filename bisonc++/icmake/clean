@@ -14,7 +14,7 @@ void setRemovals()
 
     // in ./documentation:
         remove3 = "man/*.1 man/*.html manual/manual-stamp manual/*.html "
-                  "manual/invoking/usage bisonc++ usage/usage";
+                  "manual/invoking/usage.txt bisonc++ usage/usage";
 }
 
 void clean(int dist)
