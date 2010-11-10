@@ -20,7 +20,7 @@ void manual()
     {
         chdir("usage");
         run("g++ -o usage usage.cc");
-        run("./usage > ../manual/invoking/usage");
+        run("./usage > ../manual/invoking/usage.txt");
         chdir("..");
     }
 
