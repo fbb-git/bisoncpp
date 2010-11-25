@@ -1,4 +1,0 @@
-- %nonassoc should probably produce an error when %nonassoc operators are used
-  repeatedly. 
-
-

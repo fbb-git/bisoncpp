@@ -1,4 +1,0 @@
-includefile(conditions/intro.yo)
-
-sect(The `GNU General Public License' (GPL))
-includefile(conditions/gpl.yo)

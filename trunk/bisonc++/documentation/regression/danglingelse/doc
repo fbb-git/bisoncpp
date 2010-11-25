@@ -1,4 +1,0 @@
-The well-known dangling-else problem. This grammar shows one S/R conflict,
-which is solved as SHIFT, using the default S/R conflict resolution method.
-
-By using %expect 1 the S/R warning can be prevented

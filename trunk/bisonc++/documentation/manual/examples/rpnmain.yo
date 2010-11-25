@@ -1,7 +1,0 @@
-In keeping with the spirit of this example, the controlling function
-tt(main()) is kept to the bare minimum. The only requirement is that it
-constructs a parser object and then calls its parsing function tt(parse()) to
-start the process of parsing:
-    verbinclude(rpn/rpn.cc)
-
-

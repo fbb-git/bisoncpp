@@ -1,6 +1,0 @@
-#include "element.h"
-
-#include <ostream>
-
-using namespace std;
-

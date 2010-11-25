@@ -1,7 +1,0 @@
-#include "transition.h"
-
-#include <bobcat/mstream>
-
-using namespace std;
-using namespace FBB;
-

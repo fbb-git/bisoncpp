@@ -1,5 +1,0 @@
-#include "terminal.ih"
-
-Terminal::() const
-{
-}

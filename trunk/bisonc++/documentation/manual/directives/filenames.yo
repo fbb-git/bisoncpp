@@ -1,4 +1,0 @@
-Syntax:     bf(%filenames) tt(header) nl()
-           Defines the generic name of all generated files, unless overruled
-            by specific names. This directive is also overruled by the
-            bf(--filenames) (bf(-f)) command-line option.

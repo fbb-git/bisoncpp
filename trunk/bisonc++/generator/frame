@@ -1,5 +1,0 @@
-#include "generator.ih"
-
-Generator::() const
-{
-}

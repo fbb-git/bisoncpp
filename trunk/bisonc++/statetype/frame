@@ -1,5 +1,0 @@
-#include "statetype.ih"
-
-StateType::() const
-{
-}
