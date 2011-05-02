@@ -1,3 +1,9 @@
+bisonc++ (2.09.02)
+
+  * Repaired flaws that emerged with g++ 4.6
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 02 May 2011 16:30:43 +0200
+
 bisonc++ (2.9.1)
 
   * Documentation requires >= Yodl 3.00.0

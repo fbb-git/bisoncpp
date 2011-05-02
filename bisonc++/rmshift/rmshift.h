@@ -2,6 +2,7 @@
 #define INCLUDED_RMSHIFT_
 
 #include <vector>
+#include <cstddef>
 
 class RmShift
 {

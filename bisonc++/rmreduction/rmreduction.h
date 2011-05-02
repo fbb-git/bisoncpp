@@ -2,6 +2,7 @@
 #define _INCLUDED_RMREDUCTION_
 
 #include <vector>
+#include <cstddef>
 
 class Symbol;
 
