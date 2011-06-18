@@ -146,7 +146,7 @@ class State
 
         static void initialState();
         static State &newState();
-        static void nextState(Next &next, State &state);
+        void nextState(Next &next);
         static bool hasKernel(State const *state, Item::Vector const &kernel);
 
         static void staticAddKernelItem(Item const &item, State &state);

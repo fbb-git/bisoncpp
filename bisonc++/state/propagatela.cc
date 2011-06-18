@@ -15,8 +15,12 @@ void State::propagateLA()
     (
         find_if(
             d_itemVector.begin(), d_itemVector.end(), 
-            FnWrap::unary(StateItem::propagateLA, d_itemVector)
-        ) != d_itemVector.end()
+            [&](StateItem &stateItem)
+            {
+                return StateItem::propagateLA(stateItem, d_itemVector);
+            }
+        ) 
+        != d_itemVector.end()
     )
         ;
 

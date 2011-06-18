@@ -9,7 +9,6 @@
 
 #include <bobcat/mstream>
 #include <bobcat/arg>
-#include <bobcat/fnwrap>
 #include <bobcat/indent>
 
 #include "../rules/rules.h"
