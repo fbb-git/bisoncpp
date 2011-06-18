@@ -40,24 +40,27 @@
 //  Mandayam).
 
     // idx is the index of a reducible item. That item can be reached as
-    // context.d_itemVector[idx]
-void SRConflict::visitReduction(size_t reducibleIdx, SRConflict &context)
+    // d_itemVector[idx]
+void SRConflict::visitReduction(size_t reducibleIdx)
 {
-    auto nextIter = context.d_nextVector.begin();
-    auto reducibleLAset = context.d_itemVector[reducibleIdx].lookaheadSet();
+    auto nextIter = d_nextVector.begin();
+    auto reducibleLAset = d_itemVector[reducibleIdx].lookaheadSet();
 
     while (true)
     {
         nextIter =                  // check whether a nextVector symbol
             find_if(                // is in the reduction item's LA set.
-                nextIter, context.d_nextVector.end(), 
-                FnWrap::unary(Next::inLAset, reducibleLAset)
+                nextIter, d_nextVector.end(), 
+                [&](Next const &next)
+                {
+                    return next.inLAset(reducibleLAset);
+                }
             );
 
-        if (nextIter == context.d_nextVector.end())
+        if (nextIter == d_nextVector.end())
             return;
         
-        context.processShiftReduceConflict(nextIter, reducibleIdx);
+        processShiftReduceConflict(nextIter, reducibleIdx);
         ++nextIter;
     }
 }

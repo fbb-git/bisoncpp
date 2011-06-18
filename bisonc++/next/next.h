@@ -66,8 +66,8 @@ class Next
 
         static size_t addToKernel(Vector &next, Symbol const *symbol, 
                                   size_t stateItemOffset);
-        static bool hasSymbol(Next const &next, Symbol const *symbol);
-        static bool inLAset(Next const &next, LookaheadSet const &laSet);
+
+        bool inLAset(LookaheadSet const &laSet) const;
 
         static void removeShift(RmShift const &rmShift, Vector &nextVector,
                                 size_t *nRemoved);
@@ -75,11 +75,6 @@ class Next
         static void inserter(std::ostream &(Next::*insertPtr)
                                             (std::ostream &out) const);
 };
-
-inline bool Next::hasSymbol(Next const &next, Symbol const *symbol)
-{
-    return next.d_symbol == symbol;
-}
 
 inline std::vector<size_t> const &Next::kernel() const
 {
@@ -106,9 +101,9 @@ inline void Next::setNext(size_t next)
     d_next = next;
 }
 
-inline bool Next::inLAset(Next const &next, LookaheadSet const &laSet)
+inline bool Next::inLAset(LookaheadSet const &laSet) const
 {
-    return laSet >= next.d_symbol;
+    return laSet >= d_symbol;
 }
 
 inline void Next::inserter(std::ostream &(Next::*insertPtr)

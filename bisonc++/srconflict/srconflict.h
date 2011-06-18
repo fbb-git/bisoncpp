@@ -49,12 +49,11 @@ class SRConflict
         std::ostream &insert(std::ostream &out) const;
         void processShiftReduceConflict(Next::ConstIter const &next, 
                                         size_t itemIdx);
-        static void handleSRconflict(size_t shiftableItemIdx, 
-                                     SRConflict &context,
+        void handleSRconflict(size_t shiftableItemIdx, 
                                      Next::ConstIter const &next, 
                                      size_t reducibleItemIdx);
 
-        static void visitReduction(size_t idx, SRConflict &context);
+        void visitReduction(size_t idx);
 };
 
 inline size_t SRConflict::nConflicts()

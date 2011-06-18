@@ -21,12 +21,22 @@ bool Grammar::derivable(Symbol const *symbol)
                                 // if there is already a derivable production
                                 // then `symbol' is derivable.
     bool ret = 
-        find_if(productions.begin(), productions.end(),
-            FnWrap::unary(isDerivable, *this))
+            find_if(
+                productions.begin(), productions.end(),
+                [this](Production const *prod)
+                {
+                    return isDerivable(prod);
+                }
+            ) 
             != productions.end()
         ||
-        find_if(productions.begin(), productions.end(),
-            FnWrap::unary(becomesDerivable, *this)) 
+            find_if(
+                productions.begin(), productions.end(),
+                [&](Production const *prod)
+                {
+                    return becomesDerivable(prod);
+                }
+            )
             != productions.end();
 
     if (ret)

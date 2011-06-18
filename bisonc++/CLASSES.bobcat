@@ -3,8 +3,6 @@ align
 arg
 datetime
 errno
-fnwrap1
-fnwrap1c
 indent
 msg
 string

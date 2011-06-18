@@ -7,8 +7,13 @@
 
 void SRConflict::inspect()
 {
-    for_each(d_reducible.begin(), d_reducible.end(), 
-        FnWrap::unary(visitReduction, *this));
+    for_each(
+        d_reducible.begin(), d_reducible.end(), 
+        [this](size_t idx)
+        {
+            this->visitReduction(idx);
+        }
+    );
 }
 
 

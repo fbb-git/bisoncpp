@@ -6,7 +6,6 @@
 #include <iomanip>
 
 #include <bobcat/errno>
-#include <bobcat/fnwrap>
 #include <bobcat/datetime>
 
 #include "../rules/rules.h"

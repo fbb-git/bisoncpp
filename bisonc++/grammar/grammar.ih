@@ -2,7 +2,6 @@
 
 #include <algorithm>
 
-#include <bobcat/fnwrap>
 #include <bobcat/mstream>
 
 #include "../rules/rules.h"

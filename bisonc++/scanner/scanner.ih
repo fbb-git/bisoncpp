@@ -13,7 +13,6 @@
 
 #include <bobcat/arg>
 #include <bobcat/mstream>
-#include <bobcat/fnwrap>
 #include <bobcat/string>
 #include <bobcat/a2x>
 

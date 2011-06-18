@@ -2,13 +2,12 @@
 
 void SRConflict::handleSRconflict(
         size_t shiftableItemIdx,
-        SRConflict &context,
         Next::ConstIter const &next, 
         size_t reducibleItemIdx)
 {
     typedef Enum::Solution Solution;
 
-    StateItem::Vector const &itemVector = context.d_itemVector;
+    StateItem::Vector const &itemVector = d_itemVector;
     Symbol const *productionSymbol = 
                                 itemVector[reducibleItemIdx].precedence();
     bool forced = false;
@@ -32,9 +31,9 @@ void SRConflict::handleSRconflict(
     switch (solution)                       // perform SHIFT or REDUCE
     {
         case Solution::REDUCE:
-            context.d_rmShift.push_back(
+            d_rmShift.push_back(
                                     RmShift(
-                                        next - context.d_nextVector.begin(),
+                                        next - d_nextVector.begin(),
                                         forced)
                                 );
         return;
@@ -48,7 +47,7 @@ void SRConflict::handleSRconflict(
         break;
     }
     
-    context.d_rmReduction.push_back(
+    d_rmReduction.push_back(
                                 RmReduction(reducibleItemIdx, next->next(), 
                                             next->symbol(), forced
                                 )

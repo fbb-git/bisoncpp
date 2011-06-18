@@ -10,8 +10,10 @@ void Generator::actionCases(ostream &out) const
     for_each
     (
         productions.begin(), productions.end(), 
-        FnWrap::unary(Production::insertAction, out, d_parser.lines(), 
-                                                d_indent)
+        [&, d_indent](Production const *prod)
+        {
+            Production::insertAction(prod, out, d_parser.lines(), d_indent);
+        }
     );
 }
 

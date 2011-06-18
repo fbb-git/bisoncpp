@@ -7,7 +7,10 @@ void Generator::tokens(ostream &out) const
     for_each
     (
         d_rules.terminals().begin(), d_rules.terminals().end(), 
-        FnWrap::unary(selectSymbolic, &tokens)
+        [&](Terminal const *terminal)
+        {
+            selectSymbolic(terminal, tokens);
+        }
     );
  
     key(out);

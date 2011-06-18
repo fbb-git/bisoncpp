@@ -94,7 +94,7 @@ class Generator
         void tokens(std::ostream &out) const;
 
         static void selectSymbolic(Terminal const *terminal, 
-                                   Terminal::ConstVector *symbolicTokens);
+                                   Terminal::ConstVector &symbolicTokens);
 };
 
 #endif

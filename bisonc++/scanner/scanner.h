@@ -93,9 +93,6 @@ class Scanner: private yyFlexLexer
         void hexadecimal();
         int setNumber();
         int yytextChk(int *nKept, int minLength, int ret);
-
-        static bool checkFilename(FileInfo const &info, 
-                                    std::string const &nextSource);
 };
 
 inline Block &Scanner::block()
@@ -111,12 +108,6 @@ inline void Scanner::clearBlock()
 inline size_t Scanner::number() const
 {
     return d_number;
-}
-
-inline bool Scanner::checkFilename(FileInfo const &info, 
-                                    std::string const &nextSource)
-{
-    return info.d_name == nextSource;
 }
 
 inline std::string const &Scanner::sourceName() const

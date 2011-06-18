@@ -5,7 +5,6 @@
 #include <iterator>
 #include <algorithm>
 
-#include <bobcat/fnwrap>
 #include <bobcat/mstream>
 #include <bobcat/arg>
 

@@ -1,7 +1,7 @@
 #include "generator.ih"
 
 void Generator::selectSymbolic(Terminal const *terminal,
-                               Terminal::ConstVector *symbolicTokens)
+                               Terminal::ConstVector &symbolicTokens)
 {
     if 
     (
@@ -13,5 +13,5 @@ void Generator::selectSymbolic(Terminal const *terminal,
         && 
         terminal->value() > Rules::eofTerminal()->value()
     )
-        symbolicTokens->push_back(terminal);
+        symbolicTokens.push_back(terminal);
 }
