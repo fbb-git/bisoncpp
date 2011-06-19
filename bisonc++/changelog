@@ -1,3 +1,9 @@
+bisonc++ (2.10.00)
+
+    * Replaced all FnWrap* calls by lambda function calls
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 19 Jun 2011 13:17:44 +0200
+
 bisonc++ (2.09.02)
 
     * Repaired flaws that emerged with g++ 4.6

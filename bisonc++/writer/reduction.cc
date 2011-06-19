@@ -6,7 +6,11 @@ void Writer::reduction(Table &table, StateItem const &stateItem)
 
     for_each(
         stateItem.lookaheadSet().begin(), stateItem.lookaheadSet().end(),
-        FnWrap::unary(reductionSymbol, ruleNr, table));
+        [&, ruleNr](Element const *sym)
+        {
+            reductionSymbol(sym, ruleNr, table);
+        }
+    );
 
     if (stateItem.lookaheadSet().hasEOF())
         reductionSymbol(Rules::eofTerminal(), ruleNr, table);

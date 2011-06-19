@@ -147,9 +147,7 @@ class State
         static void initialState();
         static State &newState();
         void nextState(Next &next);
-        static bool hasKernel(State const *state, Item::Vector const &kernel);
-
-        static void staticAddKernelItem(Item const &item, State &state);
+        bool hasKernel(Item::Vector const &kernel) const;
 
         static void staticCheckConflicts(State *state);   // calls inline:
         void checkConflicts();

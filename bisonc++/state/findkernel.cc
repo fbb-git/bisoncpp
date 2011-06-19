@@ -8,7 +8,10 @@ size_t State::findKernel(Item::Vector const &searchKernel) const
     return  find_if
             (
                 s_state.begin(), s_state.end(),
-                FnWrap::unary(hasKernel, searchKernel)
+                [&](State const *state)
+                {
+                    return state->hasKernel(searchKernel);
+                }
             )
             - s_state.begin();
 }

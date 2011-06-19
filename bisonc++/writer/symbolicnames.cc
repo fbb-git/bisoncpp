@@ -14,11 +14,21 @@ void Writer::symbolicNames() const
         "    SMapVal(256, \"_error_\"),\n"
         "\n";
 
-    for_each(d_rules.terminals().begin(), d_rules.terminals().end(),
-            FnWrap::unary(terminalSymbol, *d_out));
+    for_each(
+        d_rules.terminals().begin(), d_rules.terminals().end(),
+        [=](Terminal const *terminal)
+        {
+            terminalSymbol(terminal, *d_out);
+        }
+    );
 
-    for_each(d_rules.nonTerminals().begin(), d_rules.nonTerminals().end(),
-            FnWrap::unary(nonTerminalSymbol, *d_out));
+    for_each(
+        d_rules.nonTerminals().begin(), d_rules.nonTerminals().end(),
+        [=](NonTerminal const *nonTerminal)
+        {
+            nonTerminalSymbol(nonTerminal, *d_out);
+        }
+    );
 
     *d_out <<  "};\n"
             "\n"

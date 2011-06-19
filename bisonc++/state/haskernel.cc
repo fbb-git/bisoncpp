@@ -2,17 +2,20 @@
 
 // return true if `state' contains all items stored in `searchKernel'
 
-bool State::hasKernel(State const *state, Item::Vector const &searchKernel)
+bool State::hasKernel(Item::Vector const &searchKernel) const
 {
-    return state->d_nKernelItems == searchKernel.size() 
+    return d_nKernelItems == searchKernel.size() 
             &&
            searchKernel.size() ==
            static_cast<size_t>(
                 count_if
                 (
                     searchKernel.begin(), searchKernel.end(), 
-                    FnWrap::unary(StateItem::containsKernelItem, 
-                                 state->d_nKernelItems, state->d_itemVector)
+                    [&, d_nKernelItems](Item const &searchItem)
+                    {
+                        return StateItem::containsKernelItem(searchItem,
+                                d_nKernelItems, d_itemVector);
+                    }
                 )
            );
 }

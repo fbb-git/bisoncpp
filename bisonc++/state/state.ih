@@ -36,11 +36,6 @@ inline void State::staticPropagateLA(State *state)
     state->propagateLA();
 }
 
-inline void State::staticAddKernelItem(Item const &item, State &state)
-{
-    state.addKernelItem(StateItem(item));
-}
-
 inline std::ostream &State::skipInsertion(std::ostream &out) const
 {
     return out;

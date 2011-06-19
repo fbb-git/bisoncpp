@@ -2,6 +2,11 @@
 
 void Writer::transitions(Table &table, Next::Vector const &next)
 {
-    for_each(next.begin(), next.end(), 
-             FnWrap::unary(transition, table));
+    for_each(
+        next.begin(), next.end(), 
+        [&](Next const &next)
+        {
+            transition(next, table);
+        }
+    );
 }

@@ -2,7 +2,6 @@
 
 #include <iomanip>
 
-#include <bobcat/fnwrap>
 #include <bobcat/align>
 #include <bobcat/tablesupport>
 #include <bobcat/arg>

@@ -17,10 +17,16 @@ void State::addProductions(Symbol const *symbol, size_t idx)
     Production::Vector const &productions = 
                         NonTerminal::downcast(symbol)->productions();
 
-    for_each(productions.begin(), productions.end(),
-            FnWrap::unary(
-                StateItem::addProduction, d_itemVector, idx));
+    for_each(
+        productions.begin(), productions.end(),
+        [&, idx](Production const *production)
+        {
+            StateItem::addProduction(production, d_itemVector, idx);
+        }
+    );                
 }
+
+
 
 
 

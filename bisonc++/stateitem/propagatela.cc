@@ -23,8 +23,16 @@ bool StateItem::propagateLA(StateItem &stateItem, Vector &vector)
     if (stateItem.d_item.firstBeyondDot(&proposedLA.firstSet()))
         proposedLA += stateItem.d_LA;
 
-    for_each(stateItem.d_child.begin(), stateItem.d_child.end(), 
-        FnWrap::unary(propagate, vector, proposedLA));
+    for_each(
+        stateItem.d_child.begin(), stateItem.d_child.end(), 
+        [&](size_t idx)
+        {
+            propagate(idx,  vector, proposedLA);
+        }
+    );
 
     return true;
 }
+
+
+

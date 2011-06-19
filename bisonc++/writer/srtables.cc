@@ -16,8 +16,13 @@ void Writer::srTables() const
 
     table << Align(2, std::left);
 
-    for_each(State::begin(), State::end(),
-             FnWrap::unary(srTable, d_baseclass, table, *d_out));
+    for_each(
+        State::begin(), State::end(),
+        [&, d_out](State const *state)
+        {
+            srTable(state, d_baseclass, table, *d_out);
+        }
+    );
 
     *d_out << '\n';
 }

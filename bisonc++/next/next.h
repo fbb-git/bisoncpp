@@ -67,6 +67,7 @@ class Next
         static size_t addToKernel(Vector &next, Symbol const *symbol, 
                                   size_t stateItemOffset);
 
+        bool hasSymbol(Symbol const *symbol) const;
         bool inLAset(LookaheadSet const &laSet) const;
 
         static void removeShift(RmShift const &rmShift, Vector &nextVector,
@@ -84,6 +85,11 @@ inline std::vector<size_t> const &Next::kernel() const
 inline Symbol const *Next::symbol() const
 {
     return d_symbol;
+}
+
+inline bool Next::hasSymbol(Symbol const *symbol) const
+{
+    return d_symbol == symbol;
 }
 
 inline Symbol const *Next::pSymbol() const

@@ -9,8 +9,13 @@ void Writer::insert(Terminal::ConstVector const &tokens) const
 
     size_t lastTokenValue = 0;
 
-    for_each(tokens.begin(), tokens.end(),
-        FnWrap::unary(insertToken, lastTokenValue, *d_out));
+    for_each(
+        tokens.begin(), tokens.end(),
+        [&, d_out](Terminal const *token)
+        {
+            insertToken(token, lastTokenValue, *d_out);
+        }
+    );
 
     *d_out <<  "    };\n"
            "\n";
