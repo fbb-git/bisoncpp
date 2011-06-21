@@ -35,10 +35,15 @@ string COMPILER;
     // particular version can be used. The distributed definition uses the
     // `default' compiler version.
 
-//#define PROFILE "-pg"
-    // Uncomment the above #define to construct a binary program that can be
-    // used with the gprof profiler. When specified, no stripping is performed
-    // at ./build program strip (see INSTALL)
+#define CXXFLAGS    "-O2 -g"
+    // Specify compiler options that should be used. Overruled by the CXXFLAGS
+    // environment variables
+    // This is overruled by the environment variable CPPFLAGS
+    // The option "-Wall" is always used, and should not be altered.
+    // For profiling use the  -pg flags, and don't strip
+
+#define LDFLAGS     ""
+    // Specify linker options. None by default
 
 void setLocations()
 {

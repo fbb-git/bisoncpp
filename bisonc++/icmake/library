@@ -8,6 +8,7 @@
 
 
 string                  // contain options for
+    g_copt,             // compiler options
     g_cwd,              // current WD
     libs,               // extra libs, e.g., "-lrss -licce"
     libpath,            // extra lib-paths, eg, "-L../rss"
@@ -17,6 +18,20 @@ int
     g_nClasses;         // number of classes/subdirectories
 list
     g_classes;          // list of classes/directories
+
+setGcopt(string always, string envvar)
+{
+    list optvar;
+
+    optvar = getenv("CXXFLAGS");    
+
+    g_copt = always;
+
+    if (optvar[0] == "1")
+        g_copt += optvar[1];
+    else if (CXXFLAGS != "")
+        g_copt += CXXFLAGS;
+}
 
 void setClasses()
 {
