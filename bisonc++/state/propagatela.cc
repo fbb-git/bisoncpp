@@ -34,11 +34,26 @@ void State::propagateLA()
                            // remaining fields managed by distributeLA
     };
 
-    for_each(d_nextVector.begin(), d_nextVector.end(),
-        FnWrap::unary(distributeLA, context));
+    for_each(
+        d_nextVector.begin(), d_nextVector.end(),
+        [&](Next &next)
+        {
+            distributeLA(next, context);
+        }
+    );
 
-    for_each(context.child.begin(), context.child.end(), staticPropagateLA);
+    for_each(
+        context.child.begin(), context.child.end(), 
+        [](State *state)
+        {
+            state->propagateLA();   
+        }
+    );
 }
+
+
+
+
 
 
 

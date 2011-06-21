@@ -43,7 +43,8 @@ string COMPILER;
     // For profiling use the  -pg flags, and don't strip
 
 #define LDFLAGS     ""
-    // Specify linker options. None by default
+    // Specify linker options. None by default. Do not specify -s (strip) here
+    // as strip is handled by adding a command to the build call.
 
 void setLocations()
 {

@@ -21,21 +21,6 @@
 using namespace std;
 using namespace FBB;
 
-inline void State::staticCheckConflicts(State *state)
-{
-    state->checkConflicts();
-}
-
-inline void State::staticSummarizeActions(State *state)
-{
-    state->summarizeActions();
-}
-
-inline void State::staticPropagateLA(State *state)
-{
-    state->propagateLA();
-}
-
 inline std::ostream &State::skipInsertion(std::ostream &out) const
 {
     return out;

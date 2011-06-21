@@ -146,13 +146,10 @@ class State
 
         static void initialState();
         static State &newState();
+
         void nextState(Next &next);
         bool hasKernel(Item::Vector const &kernel) const;
-
-        static void staticCheckConflicts(State *state);   // calls inline:
         void checkConflicts();
-
-        static void staticSummarizeActions(State *state);  // calls inline:
         void summarizeActions();
 
         struct LookaheadContext 
@@ -164,14 +161,9 @@ class State
             StateItem::Vector::iterator childKernel;
         };
         static void distributeLA(Next &next, LookaheadContext &context);
-
-        static void updateLA(size_t itemIdx, 
-                             LookaheadContext &context);
+        static void updateLA(size_t itemIdx, LookaheadContext &context);
 
         void propagateLA(); // propagate the LA's over the State's items.
-        static void staticPropagateLA(State *state);  
-                                                // called from the non-static
-                                                // function
 };
 
 inline int State::type() const

@@ -29,7 +29,7 @@ string setOpt(string install_im, string envvar)
     else 
         ret = install_im;
 
-    ret;
+    return ret;
 }
 
 void setClasses()
