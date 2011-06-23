@@ -1,11 +1,11 @@
-bisonc++ (2.10.00)
+bisonc++ (2.09.03)
 
     * Replaced all FnWrap* calls by lambda function calls
 
     * `build' script now recognizes CXXFLAGS and LDFLAGS for, resp. g++ and ld
        flags. Default values are set in INSTALL.im, as before.
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 21 Jun 2011 22:42:25 +0200
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Thu, 23 Jun 2011 10:06:02 +0200
 
 bisonc++ (2.09.02)
 

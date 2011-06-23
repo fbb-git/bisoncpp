@@ -37,9 +37,8 @@ string COMPILER;
 
 #define CXXFLAGS    "-O2 -g"
     // Specify compiler options that should be used. Overruled by the CXXFLAGS
-    // environment variables
-    // This is overruled by the environment variable CPPFLAGS
-    // The option "-Wall" is always used, and should not be altered.
+    // environment variables. 
+    // The option "-Wall" is always used.
     // For profiling use the  -pg flags, and don't strip
 
 #define LDFLAGS     ""
