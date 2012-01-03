@@ -7,14 +7,17 @@ void Generator::actionCases(ostream &out) const
 
     vector<Production const *> const &productions = d_rules.productions();
 
-    for_each
-    (
-        productions.begin(), productions.end(), 
-        [&, d_indent](Production const *prod)
-        {
-            Production::insertAction(prod, out, d_parser.lines(), d_indent);
-        }
-    );
+    for (auto prod: productions)
+        Production::insertAction(prod, out, d_parser.lines(), d_indent);
+
+//    for_each
+//    (
+//        productions.begin(), productions.end(), 
+//        [&](Production const *prod)
+//        {
+//            Production::insertAction(prod, out, d_parser.lines(), d_indent);
+//        }
+//    );
 }
 
 

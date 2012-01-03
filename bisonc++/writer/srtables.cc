@@ -18,7 +18,7 @@ void Writer::srTables() const
 
     for_each(
         State::begin(), State::end(),
-        [&, d_out](State const *state)
+        [&](State const *state)
         {
             srTable(state, d_baseclass, table, *d_out);
         }

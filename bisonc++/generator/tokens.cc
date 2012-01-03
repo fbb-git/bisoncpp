@@ -4,14 +4,16 @@ void Generator::tokens(ostream &out) const
 {
     Terminal::ConstVector tokens;
 
-    for_each
-    (
-        d_rules.terminals().begin(), d_rules.terminals().end(), 
-        [&](Terminal const *terminal)
-        {
+    for (auto terminal: d_rules.terminals())
+//
+//    for_each
+//    (
+//        d_rules.terminals().begin(), d_rules.terminals().end(), 
+//        [&](Terminal const *terminal)
+//        {
             selectSymbolic(terminal, tokens);
-        }
-    );
+//        }
+//    );
  
     key(out);
  
@@ -26,11 +28,6 @@ void Generator::tokens(ostream &out) const
     d_writer.useStream(out);
     d_writer.insert(tokens);
 }
-
-
-
-
-
 
 
 

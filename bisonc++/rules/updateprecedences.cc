@@ -7,11 +7,12 @@
 
 void Rules::updatePrecedences()
 {   
-    for_each(
-        d_production.begin(), d_production.end(),
-        [&](Production *production)
-        {
+    for (auto production: d_production)
+//    for_each(
+//        d_production.begin(), d_production.end(),
+//        [&](Production *production)
+//        {
             updatePrecedence(production, d_terminal);
-        }
-    );
+//        }
+//    );
 }

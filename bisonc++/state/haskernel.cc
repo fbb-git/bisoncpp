@@ -11,7 +11,7 @@ bool State::hasKernel(Item::Vector const &searchKernel) const
                 count_if
                 (
                     searchKernel.begin(), searchKernel.end(), 
-                    [&, d_nKernelItems](Item const &searchItem)
+                    [&](Item const &searchItem)
                     {
                         return StateItem::containsKernelItem(searchItem,
                                 d_nKernelItems, d_itemVector);

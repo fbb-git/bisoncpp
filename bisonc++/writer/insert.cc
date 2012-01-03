@@ -11,7 +11,7 @@ void Writer::insert(Terminal::ConstVector const &tokens) const
 
     for_each(
         tokens.begin(), tokens.end(),
-        [&, d_out](Terminal const *token)
+        [&](Terminal const *token)
         {
             insertToken(token, lastTokenValue, *d_out);
         }

@@ -7,13 +7,16 @@
 
 void SRConflict::inspect()
 {
-    for_each(
-        d_reducible.begin(), d_reducible.end(), 
-        [this](size_t idx)
-        {
-            this->visitReduction(idx);
-        }
-    );
+    for (size_t idx: d_reducible)
+        visitReduction(idx);
+
+//    for_each(
+//        d_reducible.begin(), d_reducible.end(), 
+//        [this](size_t idx)
+//        {
+//            this->visitReduction(idx);
+//        }
+//    );
 }
 
 

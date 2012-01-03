@@ -1,15 +1,21 @@
+bisonc++ (2.09.04)
+    
+  * Replaced many for_each calls and lamda functions by range-based for-loops
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 03 Jan 2012 21:46:21 +0100
+
 bisonc++ (2.09.03)
 
-    * Replaced all FnWrap* calls by lambda function calls
+  * Replaced all FnWrap* calls by lambda function calls
 
-    * `build' script now recognizes CXXFLAGS and LDFLAGS for, resp. g++ and ld
-       flags. Default values are set in INSTALL.im, as before.
+  * `build' script now recognizes CXXFLAGS and LDFLAGS for, resp. g++ and ld
+     flags. Default values are set in INSTALL.im, as before.
 
  -- Frank B. Brokken <f.b.brokken@rug.nl>  Thu, 23 Jun 2011 10:06:02 +0200
 
 bisonc++ (2.09.02)
 
-    * Repaired flaws that emerged with g++ 4.6
+  * Repaired flaws that emerged with g++ 4.6
 
  -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 02 May 2011 16:30:43 +0200
 
