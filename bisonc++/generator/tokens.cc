@@ -5,16 +5,8 @@ void Generator::tokens(ostream &out) const
     Terminal::ConstVector tokens;
 
     for (auto terminal: d_rules.terminals())
-//
-//    for_each
-//    (
-//        d_rules.terminals().begin(), d_rules.terminals().end(), 
-//        [&](Terminal const *terminal)
-//        {
-            selectSymbolic(terminal, tokens);
-//        }
-//    );
- 
+        selectSymbolic(terminal, tokens);
+
     key(out);
  
     if (!tokens.size())

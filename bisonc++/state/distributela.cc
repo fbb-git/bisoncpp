@@ -8,13 +8,8 @@ void State::distributeLA(Next &next, LookaheadContext &context)
     context.visitChildState = false;
 
         // visit all kernel items of the child state
-    for_each(
-        next.kernel().begin(), next.kernel().end(),
-        [&](size_t itemIdx)
-        {
-            updateLA(itemIdx, context);
-        }
-    );
+    for (size_t itemIdx: next.kernel())
+        updateLA(itemIdx, context);
 
         // if the child's state has its LA changed, make sure it's visited
     if (context.visitChildState)

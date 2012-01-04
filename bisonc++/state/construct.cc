@@ -4,11 +4,6 @@ void State::construct()
 {
     setItems();
 
-    for_each(
-        d_nextVector.begin(), d_nextVector.end(),
-        [this](Next &next)
-        {
-            this->nextState(next);
-        }
-    );
+    for (auto &next: d_nextVector)
+        nextState(next);
 }

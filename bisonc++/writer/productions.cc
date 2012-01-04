@@ -10,13 +10,8 @@ void Writer::productions() const
             "{\n"
             "     {0, 0}, // not used: reduction values are negative\n";
 
-    for_each(
-        prods.begin(), prods.end(),
-        [=](Production const *production)
-        {
-            productionInfo(production, *d_out);
-        }
-    );
+    for (auto production: prods)
+        productionInfo(production, *d_out);
 
     *d_out << "};\n";
 }

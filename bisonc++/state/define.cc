@@ -152,13 +152,8 @@ void State::define()
         // reaching this state and its type is NORMAL: ACCEPT. Pondering...
     s_acceptState->d_stateType.setType(StateType::REQ_TOKEN);
 
-    for_each(
-        s_state.begin(), s_state.end(),
-        [](State *state)
-        {
-            state->checkConflicts();
-        }
-    );
+    for (auto state: s_state)
+        state->checkConflicts();
 
     if 
     (
@@ -176,13 +171,8 @@ void State::define()
                     " Reduce/Reduce conflict(s)" << endl;
     }
 
-    for_each(
-        s_state.begin(), s_state.end(),
-        [](State *state)
-        {
-            state->summarizeActions();
-        }
-    );
+    for (auto state: s_state)
+        state->summarizeActions();
 }
 
 

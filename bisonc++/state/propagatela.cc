@@ -34,21 +34,11 @@ void State::propagateLA()
                            // remaining fields managed by distributeLA
     };
 
-    for_each(
-        d_nextVector.begin(), d_nextVector.end(),
-        [&](Next &next)
-        {
-            distributeLA(next, context);
-        }
-    );
+    for (auto &next: d_nextVector)
+        distributeLA(next, context);
 
-    for_each(
-        context.child.begin(), context.child.end(), 
-        [](State *state)
-        {
-            state->propagateLA();   
-        }
-    );
+    for (auto state: context.child)
+        state->propagateLA();   
 }
 
 

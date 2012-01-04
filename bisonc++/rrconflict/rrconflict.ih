@@ -1,6 +1,4 @@
 #include "rrconflict.h"
 
-#include <algorithm>
-
 using namespace std;
 

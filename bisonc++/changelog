@@ -1,8 +1,10 @@
 bisonc++ (2.09.04)
     
   * Replaced many for_each calls and lamda functions by range-based for-loops
+  
+  * Used g++-4.7
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 03 Jan 2012 21:46:21 +0100
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Wed, 04 Jan 2012 12:26:01 +0100
 
 bisonc++ (2.09.03)
 
