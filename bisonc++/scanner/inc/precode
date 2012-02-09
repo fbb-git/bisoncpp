@@ -1,6 +1,0 @@
-            int nKept;      // used by <xstring>
-            int ret;
-
-            if (d_includeOnly)
-                BEGIN includeOnly;
-

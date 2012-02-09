@@ -277,6 +277,11 @@ files already exist.
             Specific options overriding particular filenames are also
             available (which then, in turn, overide the name specified by this
             option).
+    it() loption(flexc++)nl() 
+           This option uses tt(d_scanner.lex()) as the call returning the next
+            lexical token, and uses tt(d_scanner.matched()) as the call
+            returning the matched text, unless overruled by options or
+            directives explicitly defining these functions. 
     it() loption(force-class-header)nl()
            By default the generated class header is not overwritten once it
             has been created. This option can be used to force the
@@ -369,6 +374,10 @@ files already exist.
            verb(
     --print="d_scanner.YYText()"
                 )
+           No option value should be provided if the tt(scanner) option or
+            directive and either the tt(flexc++) or
+            tt(scanner-matched-text-function) option or directive is
+            specified.
     it() laoption(required-tokens)(number)nl()
            Following a syntactic error, require at least tt(number)
             successfully processed tokens before another syntactic error can
@@ -401,6 +410,17 @@ files already exist.
             the rules and tokens matched and returned by bic()'s scanner, not
             the tokens received by the generated parser. If that is what you
             want use the tt(--print) option.
+    it() laoption(scanner-matched-text-function)(function-call)nl() 
+           The scanner function returning the text that was matched at the
+            last call of the scanner's token function. A complete function
+            call expression should be provided (including a scanner object, if
+            used). This option overrules the tt(d_scanner.yylex()) call
+            used by default when the tt(%scanner) directive is
+            specified, and it overrules the tt(d_scanner.lex()) call used when
+            the tt(%flexc++) directive is provided. Example: 
+           verb(
+    --scanner-matched-text-function "d_scanner.lex()"
+                )
     it() laoption(scanner-token-function)(function-call)nl() 
            The scanner function returning the next token, called from the
             generated parser's tt(lex) function. A complete function
@@ -494,6 +514,11 @@ ignored if these files already exist.
            Defines the generic name of all generated files, unless overridden
             by specific names. This directive is overridden by the
             tt(--filenames) or tt(-f) command-line options.
+    it() bf(%flexc++) nl()
+           When provided, the scanner matched text function is called as 
+            tt(d_scanner.matched()), and the scanner token function is called
+            as tt(d_scanner.lex()). This directive is only interpreted if the
+            tt(%scanner) directive is also provided. 
     it() bf(%implementation-header) tt(header) nl()
            Defines the pathname of the file containing the implementation
             header.  This directive is overridden by the
@@ -608,6 +633,10 @@ ignored if these files already exist.
                 )
            If the function call expression contains white space
             tt(matched-text-function) should be surrounded by double quotes.
+           If the tt(%scanner) directive and either the
+            tt(%scanner-matched-text-function) or the tt(%flexc+) directive is
+            also provided then the tt(matched-text-function) specification is
+            ignored and should be omitted.
     it() bf(%required-tokens) tt(number)nl()
            Following a syntactic error, require at least tt(number)
             successfully processed tokens before another syntactic error can
@@ -632,13 +661,22 @@ ignored if these files already exist.
             parser, as well as a predefined tt(int lex()) member, returning
             tt(d_scanner.yylex()). If this is inappropriate, a user defined
             implementation of tt(int lex()) must be provided.
-    it() bf(%scanner-token-function) tt(function-name) nl() 
+    it() bf(%scanner-matched-text-function) tt(function-call) nl() 
+           The scanner function returning the text that was matched by the
+            lexical scanner after its token function (see below) has
+            returned. A complete function call
+            expression should be provided (including a scanner object, if
+            used).  Example:
+            verb(
+    %scanner-matched-text-function d_scanner.lex()
+                )
+           If the function call contains white space
+            tt(scanner-token-function) should be surrounded by double quotes.
+    it() bf(%scanner-token-function) tt(function-call) nl() 
            The scanner function returning the next token, called from the
             generated parser's tt(lex) function. A complete function
             call expression should be provided (including a scanner object, if
-            used). This option overrules the tt(d_scanner.yylex()) call
-            used by default when the tt(%scanner) directive is
-            specified. Example: 
+            used). Example: 
             verb(
     %scanner-token-function d_scanner.lex()
                 )

@@ -102,6 +102,7 @@ IDENT   {ID1}{ID2}*
                                     begin(StartCondition__::pxstring);
                                     return Parser::FILENAMES;
                                 }
+"%flexc++"                      return Parser::FLEXCPP;
 "%implementation-header"[ \t]*  {
                                     begin(StartCondition__::pxstring);
                                     return Parser::IMPLEMENTATION_HEADER;
@@ -135,6 +136,11 @@ IDENT   {ID1}{ID2}*
 "%scanner-token-function"[ \t]* {
                                     begin(StartCondition__::pxstring);
                                     return Parser::SCANNER_TOKEN_FUNCTION;
+                                }
+"%scanner-matched-text-function"[ \t]* {
+                                    begin(StartCondition__::pxstring);
+                                    return 
+                                        Parser::SCANNER_MATCHED_TEXT_FUNCTION;
                                 }
 "%start"                        return Parser::START;
 "%stype"                        {

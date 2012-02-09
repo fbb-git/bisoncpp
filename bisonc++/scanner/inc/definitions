@@ -1,7 +1,0 @@
-OCTAL   [0-7]
-OCT3    OCTAL{3}
-HEX     [0-9a-fA-F]
-HEX2    HEX{2}
-ID1     [a-zA-Z_]
-ID2     [0-9a-zA-Z_]
-IDENT   {ID1}{ID2}*
