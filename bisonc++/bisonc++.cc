@@ -57,7 +57,10 @@ namespace
 
         {"print", Arg::Required},
         {"required-tokens", Arg::Required},
+
         {"scanner", 's'},
+        {"scanner-function-name", 't'},
+        {"flexc++", 'F'},
 
         Arg::LongOption("scanner-debug"),
 
@@ -82,7 +85,7 @@ namespace
 int main(int argc, char **argv)
 try
 {
-    Arg &arg = Arg::initialize("AB:b:C:c:f:H:hI:i:ln:p:P:s:S:Vv", 
+    Arg &arg = Arg::initialize("AB:b:C:c:f:H:hI:i:ln:p:P:s:S:t:Vv", 
                     longOptions, longEnd, argc, argv);
 
     arg.versionHelp(usage, version, 1);
