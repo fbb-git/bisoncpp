@@ -1,8 +1,8 @@
 #include "generator.h"
 
 #include <sstream>
-#include <ostream>
 #include <iomanip>
+#include <fstream>
 
 #include <bobcat/errno>
 #include <bobcat/datetime>

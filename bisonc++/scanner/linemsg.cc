@@ -2,8 +2,8 @@
 
 std::ostream &Scanner::lineMsg(Mstream &mstream)
 {
-    cerr << "Scanner::lineMsg(): yylineno = " << yylineno << endl;
+    cerr << "Scanner::lineMsg(): lineNr = " << lineNr() << endl;
 
-    mstream.setLineNr(yylineno);
-    return mstream << "(" << d_fileInfo.back().d_name << ") ";
+    mstream.setLineNr(lineNr());
+    return mstream << "(" << filename() << ") ";
 }

@@ -2,7 +2,7 @@
 
 void Scanner::hexadecimal()
 {
-    istringstream istr(yytext + 3);
+    istringstream istr(d_matched.substr(3));
     istr >> hex >> d_number;
 
     checkZeroNumber();

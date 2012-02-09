@@ -33,5 +33,5 @@ namespace
 
 void Scanner::escape()
 {
-    d_number = find_if(escapeChars, escapeChars + n, Find(yytext[2]))->second;
+    d_number = find_if(escapeChars, escapeChars + n, Find(d_matched[2]))->second;
 }

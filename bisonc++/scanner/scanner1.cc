@@ -1,19 +1,14 @@
 #include "scanner.ih"
 
-Scanner::Scanner(string const &fname)
+Scanner::Scanner(std::string const &infile)
 :
-    d_include(false)
+    ScannerBase(infile, "-"),
+    d_include(false),
+    d_matched(matched())
 {
     memset(d_commentChar, 0, 2);
 
-    Errno::open(d_in, fname);
-
-    d_fileInfo.push_back(FileInfo(fname, 0));   // for the first pushed
-                                                // element `second' is not
-                                                // used. For next elements
-                                                // `second' stores yylineno
-                                                // of the pushed file.
-    switch_streams(&d_in, &cerr);
+//    switch_streams(&d_in, &cerr);
 
     Arg &arg = Arg::instance();
 

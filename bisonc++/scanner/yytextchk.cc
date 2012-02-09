@@ -3,22 +3,22 @@
     // called from lexer's action when the xstring mini scanner terminates.
     // if nKept != 0, determine *nKept as the number of trailing blanks
 
-int Scanner::yytextChk(int *nKept, int minLength, int ret)
+int Scanner::matchedCheck(size_t minLength, int retToken)
 {
-    int idx = yyleng;
+    size_t idx = length();
 
-    while (idx-- && (yytext[idx] == ' ' || yytext[idx] == '\t'))
+    while (idx-- && (d_matched[idx] == ' ' || d_matched[idx] == '\t'))
         ;
 
-    if ((idx > 0 || yytext[0] != ' ') && yytext[0] != '\t')
+    if ((idx > 0 || d_matched[0] != ' ') && d_matched[0] != '\t')
         ++idx;
     
-    *nKept = idx;
+    d_nKept = idx;
 
     if (d_include)
         return 0;                       // from an %include: yylex doesn't ret
 
-    return idx < minLength ? ' ' : ret;
+    return idx < minLength ? ' ' : retToken;
 }
 
 

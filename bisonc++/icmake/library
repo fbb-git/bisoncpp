@@ -71,6 +71,9 @@ void scanner()
     list names;
     string file;
 
+    return;
+
+
     chdir("scanner");
     names = makelist("inc/*");
     names += (list)"lexer";
