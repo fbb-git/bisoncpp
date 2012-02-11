@@ -7,11 +7,12 @@ int Scanner::matchedCheck(size_t minLength, int retToken)
 {
     size_t idx = length();
 
-    while (idx-- && (d_matched[idx] == ' ' || d_matched[idx] == '\t'))
-        ;
+    size_t pos = d_matched.find_last_not_of(" \t");
+        //while (idx-- && (d_matched[idx] == ' ' || d_matched[idx] == '\t'))
+        //;
 
-    if ((idx > 0 || d_matched[0] != ' ') && d_matched[0] != '\t')
-        ++idx;
+        // if ((idx > 0 || d_matched[0] != ' ') && d_matched[0] != '\t')
+        // ++idx;
     
     d_nKept = idx;
 

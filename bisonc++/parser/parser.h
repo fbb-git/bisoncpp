@@ -30,6 +30,7 @@ class Parser: public ParserBase
             // described here.
 
     FBB::Arg &d_arg;
+    Options &d_options;
 
     // $insert scannerobject
     Scanner d_scanner;
@@ -38,70 +39,68 @@ class Parser: public ParserBase
 
             // all the flags that can be set using directives/options
 
-    bool        d_debugFlag;
-    bool        d_errorVerbose;
-    bool        d_generateBaseclass;
-    bool        d_lines;
-    bool        d_lspNeeded;
-    bool        d_negativeDollarIndices;
-    bool        d_typeDirective;            // true following %type
-    bool        d_unionDeclared;            // see setuniondecl.cc
+//    bool        d_generateBaseclass;
+//    bool        d_lines;
+//    bool        d_lspNeeded;
+//    bool        d_negativeDollarIndices;
+//    bool        d_typeDirective;            // true following %type
+//    bool        d_unionDeclared;            // see setuniondecl.cc
+//
+//    size_t      d_requiredTokens;
+//
+//            // strings holding text set using directives/options
+//
+//    std::string d_baseclassSkeleton;
+//    std::string d_classHeader;
+//    std::string d_className;
+//    std::string d_classSkeleton;
+//    std::string d_field;                    // %union field in <type> specs.
+//    std::string d_genericFilename;
+//    std::string d_implementationHeader;
+//    std::string d_implementationSkeleton;
+//    std::string d_locationDecl;
+//    std::string d_matchedTextFunction;      // set by --print or %print
 
-    size_t      d_requiredTokens;
+    std::string d_expect;
 
-            // strings holding text set using directives/options
-
-    std::string d_baseclassHeader;
-    std::string d_baseclassSkeleton;
-    std::string d_classHeader;
-    std::string d_className;
-    std::string d_classSkeleton;
-    std::string d_field;                    // %union field in <type> specs.
-    std::string d_genericFilename;
-    std::string d_implementationHeader;
-    std::string d_implementationSkeleton;
-    std::string d_locationDecl;
-    std::string d_matchedTextFunction;      // set by --print or %print
-    std::string d_msg;
-    std::string d_nameSpace;
-    std::string d_parsefunSkeleton;
-    std::string d_parsefunSource;
-    std::string d_preInclude;
-    std::string d_scannerInclude;
-    std::string d_scannerTokenFunction;
-    std::string d_stackDecl;
-    std::string d_verboseName;
-
-    Terminal::Association d_association;
-
-                                // used in processBlock() and sipIgnore()
-    std::vector<Block::Range>::const_reverse_iterator d_skipRbegin;
-    std::vector<Block::Range>::const_reverse_iterator d_skipRend;
-
-            // strings containing default file and other names
-    static char s_defaultBaseclassSkeleton[];
-    static char s_defaultClassName[];
-    static char s_defaultClassSkeleton[];
-    static char s_defaultImplementationSkeleton[];
-    static char s_defaultParsefunSkeleton[];
-    static char s_defaultParsefunSource[];
-
-    static size_t s_nHidden;          // number of hidden nonterminals
-    static std::ostringstream s_hiddenName;
-
-    static char s_semanticValue[];  // name of the semantic value variable
-                                    // used by the generated parser
-    static char s_semanticValueStack[];  
-                                    // name of the semantic value stack
-                                    // used by the generated parser
-    static char s_locationValueStack[];  
-                                    // name of the location value stack
-                                    // used by the generated parser
+//    std::string d_nameSpace;
+//    std::string d_parsefunSkeleton;
+//    std::string d_parsefunSource;
+//    std::string d_preInclude;
+//    std::string d_scannerInclude;
+//    std::string d_scannerTokenFunction;
+//    std::string d_stackDecl;
+//    std::string d_verboseName;
+//
+//    Terminal::Association d_association;
+//
+//                                // used in processBlock() and sipIgnore()
+//    std::vector<Block::Range>::const_reverse_iterator d_skipRbegin;
+//    std::vector<Block::Range>::const_reverse_iterator d_skipRend;
+//
+//            // strings containing default file and other names
+//    static char s_defaultBaseclassSkeleton[];
+//    static char s_defaultClassName[];
+//    static char s_defaultClassSkeleton[];
+//    static char s_defaultImplementationSkeleton[];
+//    static char s_defaultParsefunSkeleton[];
+//    static char s_defaultParsefunSource[];
+//
+//    static size_t s_nHidden;          // number of hidden nonterminals
+//    static std::ostringstream s_hiddenName;
+//
+//    static char s_semanticValue[];  // name of the semantic value variable
+//                                    // used by the generated parser
+//    static char s_semanticValueStack[];  
+//                                    // name of the semantic value stack
+//                                    // used by the generated parser
+//    static char s_locationValueStack[];  
+//                                    // name of the location value stack
+//                                    // used by the generated parser
     public:
         Parser(Rules &rules);
         int parse();
         void cleanup();             // do cleanup following parse();
-        std::string const &baseclassHeader() const;
         std::string const &baseclassSkeleton() const;
         std::string const &classHeader() const;
         std::string const &className() const;
@@ -179,13 +178,10 @@ class Parser: public ParserBase
         NonTerminal *requireNonTerminal(std::string const &name);
 
         void setAccessorVariables();
-        void setBaseclassHeader(int type);
         void setClassHeader(int type);
         void setClassName();
-        void setPreInclude();
+        //void setPreInclude();
         void setPrint();
-        void setDebugFlag();
-        void setErrorVerbose();
         void setExpectedConflicts();
         void setGenericFilename(int type);
         void setImplementationHeader(int type);
@@ -241,11 +237,6 @@ inline int Parser::lex()
 
 inline void Parser::print()
 {}
-
-inline std::string const &Parser::baseclassHeader() const
-{
-    return d_baseclassHeader;
-}
 
 inline std::string const &Parser::baseclassSkeleton() const
 {
@@ -334,34 +325,25 @@ inline std::string const &Parser::scannerTokenFunction() const
     return d_scannerTokenFunction;
 }
 
-inline void Parser::setBaseclassHeader(int type)
-{
-    definePathname(&d_baseclassHeader, type);
-}
-
-inline void Parser::setClassHeader(int type)
-{
-    definePathname(&d_classHeader, type);
-}
-
-inline void Parser::setPreInclude()
-{
-    validateInclude(&d_preInclude);
-}
+//inline void Parser::setBaseclassHeader(int type)
+//{
+//    
+//    definePathname(&d_baseclassHeader, type);
+//}
+//
+//inline void Parser::setClassHeader(int type)
+//{
+//    definePathname(&d_classHeader, type);
+//}
+//
+//inline void Parser::setPreInclude()
+//{
+//    validateInclude(&d_preInclude);
+//}
 
 inline void Parser::setPrint()
 {
     definePathname(&d_matchedTextFunction, 1);        // remove "s 
-}
-
-inline void Parser::setDebugFlag()
-{
-    d_debugFlag = true;
-}
-
-inline void Parser::setErrorVerbose()
-{
-    d_errorVerbose = true;
 }
 
 inline void Parser::setExpectedConflicts()

@@ -168,7 +168,8 @@ IDENT   {ID1}{ID2}*
 
 .                               return d_matched[0];
 
-    // pxstring selects either pstring, xstring or string
+    // pxstring selects either pstring, xstring or string. The matched text
+    // after string/xstring has an initial non-blank
 <pxstring>{
         
 "\""    {
@@ -350,23 +351,13 @@ IDENT   {ID1}{ID2}*
         
 "\\".         more();
 
-"//"          |
-"/*"          {
-                  accept(length() - 2);
-
-                  begin(d_includeOnly ? StartCondition__::includeOnly : 
-                                        StartCondition__::INITIAL);
-
-                  d_ret = matchedCheck(1, Parser::XSTRING);
-                  accept(d_nKept);
-
-                  if (d_ret)
-                      return d_ret;
-                
-                  pushSource();
-              }
+"//"        |
+"/*"        {
+                if (int ret = tokenOrPushStream())
+                    return ret;
+            }
             
-[ \t]*$       {
+[ \t]*$     {
                   begin(d_includeOnly ? StartCondition__::includeOnly : 
                                         StartCondition__::INITIAL);
               
@@ -381,3 +372,4 @@ IDENT   {ID1}{ID2}*
 .           more();
 
 }
+

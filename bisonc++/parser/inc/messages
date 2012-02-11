@@ -1,0 +1,18 @@
+
+
+
+
+type_t:
+    TYPE
+    {
+        d_msg = "type-name";
+        d_typeDirective = true;
+    }
+;
+
+union_t:
+    UNION
+    {
+        d_msg = "Semantic value union definition";
+    }
+;

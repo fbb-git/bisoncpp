@@ -40,14 +40,13 @@ two_percents:
     }
 ;
 
-%include spec/messages
-%include spec/precedence
-%include spec/optrules
+%include inc/messages
+%include inc/optrules
 
-%include spec/directives
-%include spec/symbols
+%include inc/directives
+%include inc/symbols
 
-%include spec/rules
-%include spec/productionlist
+%include inc/rules
+%include inc/productionlist
 
-%include spec/auxiliary
+%include inc/auxiliary

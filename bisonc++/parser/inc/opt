@@ -21,11 +21,17 @@ optSemiCol:
     // empty
 ;
 
+_token:
+    {
+        d_expect = "token name";
+    }
+;
+
 optTypename:
     typename_a
-    token_m
+    _token
 |
-    token_m
+    _token
     {
         d_field.clear();
     }

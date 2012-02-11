@@ -11,7 +11,7 @@ rule:
 ;
 
 ruleName:
-    identifier_a
+    identifier
     ':'
     {
         openRule($1);

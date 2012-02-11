@@ -1,0 +1,9 @@
+typename:
+    '<'
+    identifier
+    '>'
+    {
+        d_field = *$2;
+        delete $2;
+    }
+;

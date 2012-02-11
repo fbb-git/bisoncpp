@@ -1,0 +1,18 @@
+#include "options.h"
+
+#include <iostream>
+#include <bobcat/arg>
+#include <bobcat/string>
+#include <bobcat/mstream>
+
+#include "SKEL"
+
+using namespace std;
+using namespace FBB;
+
+
+#define FLEXCPPBASE_H  "/flexc++base.h"
+#define FLEXCPP_H      "/flexc++.h"
+#define FLEXCPP_IH     "/flexc++.ih"
+#define FLEXCPP_CC     "/flexc++.cc"
+

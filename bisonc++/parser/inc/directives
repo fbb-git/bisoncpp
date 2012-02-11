@@ -1,0 +1,405 @@
+_pxstring:
+    PSTRING
+    {
+        $$ = PSTRING;
+    }
+|
+    STRING
+    {
+        $$ = STRING;
+    }
+|
+    XSTRING
+    {
+        $$ = XSTRING;
+    }
+;
+    
+_incrementPrecedence:
+    {
+        Terminal::incrementPrecedence();
+    }
+;
+
+d_pushPrecedence:
+    {
+        $$ = Terminal::sPrecedence();
+        Terminal::resetPrecedence();
+    }
+;
+
+_baseclass_header:
+    BASECLASS_HEADER
+    {
+        d_expect = "baseclass header name";
+    }
+;
+
+_baseclass_preinclude:
+    BASECLASS_PREINCLUDE
+    {
+        d_expect = "baseclass pre-include name";
+    }
+;
+
+_class_header:
+    CLASS_HEADER
+    {
+        d_expect = "class header name";
+    }
+;
+
+_class_name:
+    CLASS_NAME
+    {
+        d_expect = "class name";
+    }
+;
+
+_expect:
+    EXPECT
+    {
+        d_expect = "number (of conflicts)";
+    }
+;
+
+_filenames:
+    FILENAMES
+    {
+        d_expect = "generic name of files";
+    }
+;
+
+_implementation_header:
+    IMPLEMENTATION_HEADER
+    {
+        d_expect = "implementation header name";
+    }
+;
+
+_typesymbol:
+    {
+        d_expect = "opt. <type> identifier(s) or char constant(s)";
+    }
+;
+
+_left:
+    LEFT
+    _typesymbol
+    {
+        d_association = Terminal::LEFT;
+    }
+;
+
+_locationstruct:
+    LOCATIONSTRUCT
+    {
+        d_expect = "Location struct definition";
+    }
+;
+
+_ltype:
+    LTYPE
+    {
+        d_expect = "Location type specification";
+    }
+;
+
+_namespace:
+    NAMESPACE
+    {
+        d_expect = "Namespace identifier";
+    }
+;
+
+_nonassoc:
+    NONASSOC
+    _typesymbol
+    {
+        d_association = Terminal::NONASSOC;
+    }
+;
+
+_parsefun_source_t:
+    PARSEFUN_SOURCE
+    {
+        d_expect = "File name for the parse() member";
+    }
+;
+
+_print:
+    PRINT
+    {
+        d_expect = "Scanner function returning matched text";
+    }
+;
+
+_required:
+    REQUIRED
+    {
+        d_expect = "Required number of tokens between errors";
+    }
+;
+
+_right:
+    RIGHT
+    _typesymbol
+    {
+        d_association = Terminal::RIGHT;
+    }
+;
+
+_scanner_include:
+    SCANNER_INCLUDE
+    {
+        d_expect = "Path to the scanner header filename";
+    }
+;
+
+_scanner_token_function:
+    SCANNER_TOKEN_FUNCTION
+    {
+        d_expect = "Scanner function returning the next token";
+    }
+;
+
+_start:
+    START
+    {
+        d_expect = "Start rule" ;
+    }
+;
+
+_symbol_exp:
+    {
+        d_expect = "identifier or character-constant";
+    }
+;
+
+_symbol:
+    QUOTE
+    {
+        defineTerminal(d_scanner.canonicalQuote(), Symbol::CHAR_TERMINAL);
+    }
+|
+    identifier
+    optNumber
+    {
+        defineTokenName($1, $2);    // try to define as symbolic terminal
+    }
+;
+
+_symbolList:
+    _symbolList optComma symbol_
+|
+    symbol_
+;
+
+_symbols:
+    _symbol_exp
+    _symbolList
+    optSemiCol
+;
+
+
+_token:
+    TOKEN
+    _typesymbol
+    {
+        d_association = Terminal::UNDEFINED;
+    }
+;
+
+
+_directiveAlt:
+    _baseclass_header
+    _pxstring
+    {
+        d_options.setBaseClassHeaderPath(d_matched); 
+        // setBaseclassHeader($2);
+    }
+|
+    _baseclass_preinclude
+    _pxstring
+    {
+        d_options.setPreInclude(d_matched);
+        //setPreInclude();
+    }
+|
+    _class_header
+    _pxstring
+    {
+        d_options.setClassHeaderPath(d_matched);
+        //setClassHeader($2);
+    }
+|
+    _class_name
+    IDENTIFIER
+    {
+        d_options.setClassName(d_matched);
+        // setClassName();
+    }
+|
+    DEBUGFLAG
+    {
+        d_options.setDebug();
+    }
+|
+    ERROR_VERBOSE
+    {
+        d_options.setErrorVerbose();
+    }
+|
+    _expect
+    NUMBER
+    {
+        setExpectedConflicts();
+    }
+|
+    _filenames
+    _pxstring
+    {
+        d_options.setGenericFilename(d_matched);
+        //setGenericFilename($2);
+    }
+|
+    FLEXCPP
+    {
+        d_options.setFlexcpp();
+    }
+|
+    _implementation_header
+    _pxstring
+    {
+        d_options.setImplementationHeader(d_matched);
+        //setImplementationHeader($2);
+    }
+|
+    _left
+    _incrementPrecedence
+    optTypename
+    symbols
+|
+    LINES
+    {
+        d_options.setLines();
+    }
+|
+    _locationstruct
+    BLOCK
+    optSemiCol
+    {
+        d_options.setLocationDecl();
+    }
+|
+    LSP_NEEDED
+    {
+        d_options.setLspNeeded();
+    }
+|
+    _ltype
+    XSTRING
+    {
+        d_options.setLtype();
+    }
+|
+    _namespace
+    IDENTIFIER
+    {
+        d_options.setNameSpace();
+    }
+|
+    NEG_DOLLAR
+    {
+        d_options.setNegativeDollar();
+    }
+|
+    _nonassoc
+    _incrementPrecedence
+    optTypename
+    _symbols
+|
+    _parsefun_source
+    _pxstring
+    {
+        setParsefunSource($2);
+    }
+|
+    _print
+    _pxstring
+    {
+        d_options.setPrint();
+    }
+|
+    _required
+    NUMBER
+    {
+        d_options.setRequiredTokens();
+    }
+|
+    _right
+    _incrementPrecedence
+    optTypename
+    _symbols
+|
+    _scanner_include
+    _pxstring
+    {
+        d_options.setScannerInclude();
+    }
+|
+    _scanner_token_function
+    _pxstring
+    {
+        d_options.setScannerTokenFunction();
+    }
+|
+    _start
+    IDENTIFIER
+    {
+        d_options.setStart();
+    }
+|
+    _stype
+    XSTRING
+    {
+        setStype();
+    }
+|
+    _token
+    optTypename
+    d_pushPrecedence        // make sure %token precedences are zero
+    symbols
+    {
+        Terminal::set_sPrecedence($3);
+    }
+|
+    type_t
+    typename_a
+    symbols
+|
+    union_t
+    BLOCK
+    optSemiCol
+    {
+        setUnionDecl();
+    }
+|
+    error
+;
+
+
+_directive:
+    _directiveAlt
+    {
+        d_msg.erase();
+        d_typeDirective = false;
+    }
+;
+
+directives:
+    directives _directive
+|
+    // empty
+;
+
