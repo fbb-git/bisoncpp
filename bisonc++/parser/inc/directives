@@ -1,33 +1,3 @@
-_pxstring:
-    PSTRING
-    {
-        $$ = PSTRING;
-    }
-|
-    STRING
-    {
-        $$ = STRING;
-    }
-|
-    XSTRING
-    {
-        $$ = XSTRING;
-    }
-;
-    
-_incrementPrecedence:
-    {
-        Terminal::incrementPrecedence();
-    }
-;
-
-d_pushPrecedence:
-    {
-        $$ = Terminal::sPrecedence();
-        Terminal::resetPrecedence();
-    }
-;
-
 _baseclass_header:
     BASECLASS_HEADER
     {
@@ -77,9 +47,9 @@ _implementation_header:
     }
 ;
 
-_typesymbol:
+_incrementPrecedence:
     {
-        d_expect = "opt. <type> identifier(s) or char constant(s)";
+        Terminal::incrementPrecedence();
     }
 ;
 
@@ -120,7 +90,7 @@ _nonassoc:
     }
 ;
 
-_parsefun_source_t:
+_parsefun_source:
     PARSEFUN_SOURCE
     {
         d_expect = "File name for the parse() member";
@@ -134,6 +104,30 @@ _print:
     }
 ;
 
+_pushPrecedence:
+    {
+        $$ = Terminal::sPrecedence();
+        Terminal::resetPrecedence();
+    }
+;
+
+_pxstring:
+    PSTRING
+    {
+        $$ = PSTRING;
+    }
+|
+    STRING
+    {
+        $$ = STRING;
+    }
+|
+    XSTRING
+    {
+        $$ = XSTRING;
+    }
+;
+    
 _required:
     REQUIRED
     {
@@ -190,9 +184,9 @@ _symbol:
 ;
 
 _symbolList:
-    _symbolList optComma symbol_
+    _symbolList optComma _symbol
 |
-    symbol_
+    _symbol
 ;
 
 _symbols:
@@ -201,6 +195,33 @@ _symbols:
     optSemiCol
 ;
 
+_target_directory:
+    TARGET_DIRECTORY
+    {
+        d_expect = "target directory";
+    }
+;
+
+_type:
+    TYPE
+    {
+        d_expect = "type-name";
+        d_typeDirective = true;
+    }
+;
+
+_stype:
+    STYPE
+    {
+        d_expect = "STYPE type name" ;
+    }
+;
+    
+_typesymbol:
+    {
+        d_expect = "opt. <type> identifier(s) or char constant(s)";
+    }
+;
 
 _token:
     TOKEN
@@ -210,8 +231,14 @@ _token:
     }
 ;
 
+_union:
+    UNION
+    {
+        d_expect = "Semantic value union definition";
+    }
+;
 
-_directiveAlt:
+_directiveSpec:
     _baseclass_header
     _pxstring
     {
@@ -278,7 +305,7 @@ _directiveAlt:
     _left
     _incrementPrecedence
     optTypename
-    symbols
+    _symbols
 |
     LINES
     {
@@ -322,7 +349,7 @@ _directiveAlt:
     _parsefun_source
     _pxstring
     {
-        setParsefunSource($2);
+        d_options.setParsefunSource(); // setParsefunSource($2);
     }
 |
     _print
@@ -366,19 +393,25 @@ _directiveAlt:
         setStype();
     }
 |
+    _target_directory
+    _pxstring
+    {
+        d_options.setTargetDirectory();
+    }
+|
     _token
     optTypename
-    d_pushPrecedence        // make sure %token precedences are zero
-    symbols
+    _pushPrecedence        // make sure %token precedences are zero
+    _symbols
     {
         Terminal::set_sPrecedence($3);
     }
 |
-    type_t
-    typename_a
-    symbols
+    _type
+    typename
+    _symbols
 |
-    union_t
+    _union
     BLOCK
     optSemiCol
     {
@@ -390,7 +423,7 @@ _directiveAlt:
 
 
 _directive:
-    _directiveAlt
+    _directiveSpec
     {
         d_msg.erase();
         d_typeDirective = false;

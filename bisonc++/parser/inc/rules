@@ -1,19 +1,97 @@
-rules:
-    rules rule
+_precSpec:
+    IDENTIFIER
+    {
+        $$ = IDENTIFIER;
+    }
 |
-    // empty
+    QUOTE
+    {
+        $$ = QUOTE;
+    }
 ;
 
-rule:
-    ruleName
-    productionList
-    ';'
+_productionElement:
+    QUOTE
+    {
+        $$ = new PTag(useTerminal());
+    }
+|
+    IDENTIFIER
+    {
+        $$ = new PTag(useSymbol());
+    }
+|
+    BLOCK
+    {
+        $$ = new PTag(d_scanner.block());
+    }
+|
+    PREC
+    _precSpec
+    {
+        setPrecedence($2);
+        $$ = 0;             // a 0 PTag * indicates a %prec has been handled
+    }
 ;
 
-ruleName:
+_productionElements:
+    _productionElements _productionElement
+    {
+        $$ = handleProductionElements($1, $2);
+            // process the first element, return the second
+            // if the 1st element is a block, handle it as a nested block
+    }
+|
+    _productionElement
+;
+
+_production:
+    _productionElements
+    {
+        handleProductionElement($1);
+        // process the returned element: if it's a block, it becomes the
+        // production's action block
+    }
+|
+    {
+        // nothing to do for this empty production. But do check for a typed
+        // nonterminal. 
+        checkEmptyBlocktype();
+    }
+;
+
+
+_productionSeparator:
+    '|'
+    {
+        d_rules.addProduction();
+    }
+;
+
+_productionList:
+    _productionList _productionSeparator _production
+|
+    _production
+;
+
+
+_ruleName:
     identifier
     ':'
     {
         openRule($1);
     }
 ;
+
+_rule:
+    _ruleName
+    _productionList
+    ';'
+;
+
+rules:
+    rules _rule
+|
+    // empty
+;
+

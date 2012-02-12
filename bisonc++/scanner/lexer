@@ -82,74 +82,75 @@ IDENT   {ID1}{ID2}*
 
 }
 
-"%baseclass-header"[ \t]*       {
+%baseclass-header[ \t]*         {
                                     begin(StartCondition__::pxstring);
                                     return Parser::BASECLASS_HEADER;
                                 }
-"%baseclass-preinclude"[ \t]*   {
+%baseclass-preinclude[ \t]*     {
                                     begin(StartCondition__::pxstring);
                                     return Parser::BASECLASS_PREINCLUDE;
                                 }
-"%class-header"[ \t]*           {
+%class-header[ \t]*             {
                                     begin(StartCondition__::pxstring);
                                     return Parser::CLASS_HEADER;
                                 }
-"%class-name"                   return Parser::CLASS_NAME;
-"%debug"                        return Parser::DEBUGFLAG;
-"%error-verbose"                return Parser::ERROR_VERBOSE;
-"%expect"                       return Parser::EXPECT;
-"%filenames"[ \t]*              {
+%class-name                     return Parser::CLASS_NAME;
+%debug                          return Parser::DEBUGFLAG;
+%error-verbose                  return Parser::ERROR_VERBOSE;
+%expect                         return Parser::EXPECT;
+%filenames[ \t]*                {
                                     begin(StartCondition__::pxstring);
                                     return Parser::FILENAMES;
                                 }
 "%flexc++"                      return Parser::FLEXCPP;
-"%implementation-header"[ \t]*  {
+%implementation-header[ \t]*    {
                                     begin(StartCondition__::pxstring);
                                     return Parser::IMPLEMENTATION_HEADER;
                                 }
-"%left"                         return Parser::LEFT;
-"%lines"                        return Parser::LINES;
-"%locationstruct"               return Parser::LOCATIONSTRUCT;
-"%lsp-needed"                   return Parser::LSP_NEEDED;
-"%ltype"[ \t]*                  {
+%left                           return Parser::LEFT;
+%lines                          return Parser::LINES;
+%locationstruct                 return Parser::LOCATIONSTRUCT;
+%lsp-needed                     return Parser::LSP_NEEDED;
+%ltype[ \t]*                    {
                                     begin(StartCondition__::xstring);
                                     return Parser::LTYPE;
                                 }
-"%namespace"                    return Parser::NAMESPACE;
-"%negative-dollar-indices"      return Parser::NEG_DOLLAR;
-"%nonassoc"                     return Parser::NONASSOC;
-"%parsefun-source"[ \t]*        {
+%namespace                      return Parser::NAMESPACE;
+%negative-dollar-indices        return Parser::NEG_DOLLAR;
+%nonassoc                       return Parser::NONASSOC;
+%parsefun-source[ \t]*          {
                                     begin(StartCondition__::pxstring);
                                     return Parser::PARSEFUN_SOURCE;
                                 }
-"%prec"                         return Parser::PREC;
-"%print"                        {
+%prec                           return Parser::PREC;
+%print                          {
                                     begin(StartCondition__::pxstring);
                                     return Parser::PRINT;
                                 }
-"%right"                        return Parser::RIGHT;
-"%required-tokens"              return Parser::REQUIRED;
-"%scanner"[ \t]*                {
+%right                          return Parser::RIGHT;
+%required-tokens                return Parser::REQUIRED;
+%scanner[ \t]*                  {
                                     begin(StartCondition__::pxstring);
                                     return Parser::SCANNER_INCLUDE;
                                 }
-"%scanner-token-function"[ \t]* {
+%scanner-token-function[ \t]*   {
                                     begin(StartCondition__::pxstring);
                                     return Parser::SCANNER_TOKEN_FUNCTION;
                                 }
-"%scanner-matched-text-function"[ \t]* {
+%scanner-matched-text-function[ \t]* {
                                     begin(StartCondition__::pxstring);
                                     return 
                                         Parser::SCANNER_MATCHED_TEXT_FUNCTION;
                                 }
-"%start"                        return Parser::START;
-"%stype"                        {
+%start                          return Parser::START;
+%stype                          {
                                     begin(StartCondition__::xstring);
                                     return Parser::STYPE;
                                 }
-"%token"                        return Parser::TOKEN;
-"%type"                         return Parser::TYPE;
-"%union"                        return Parser::UNION;
+%target-directory               return Parser::TARGET_DIRECTORY;
+%token                          return Parser::TOKEN;
+%type                           return Parser::TYPE;
+%union                          return Parser::UNION;
 "%%"                            return Parser::TWO_PERCENTS;
 
 "'"                             {

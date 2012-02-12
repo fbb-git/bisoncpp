@@ -10,6 +10,7 @@
         LTYPE NAMESPACE NEG_DOLLAR NONASSOC NUMBER PARSEFUN_SOURCE PREC PRINT 
         PSTRING QUOTE REQUIRED RIGHT SCANNER_INCLUDE SCANNER_TOKEN_FUNCTION
         START STRING STYPE TOKEN TWO_PERCENTS TYPE UNION XSTRING
+        TARGET_DIRECTORY FLEXCPP
 
 %union
 {
@@ -19,34 +20,29 @@
     bool                        logic;
 };
 
-%type <sp>      identifier_a
-%type <tag>     productionElement productionElements
-%type <type>    d_pxstring d_pushPrecedence p_precSpec 
+%type <sp>      identifier
+%type <tag>     _productionElement _productionElements
+%type <type>    _pxstring _pushPrecedence _precSpec 
 %type <logic>   optNumber
 
 %%
 
 input:
     directives
-    two_percents
+    _two_percents
     rules
     optTwo_percents
 ;
 
-two_percents:
+_two_percents:
     TWO_PERCENTS
     {
         expectRules();
     }
 ;
 
-%include inc/messages
-%include inc/optrules
-
+%include inc/identifier
+%include inc/typename
+%include inc/opt
 %include inc/directives
-%include inc/symbols
-
 %include inc/rules
-%include inc/productionlist
-
-%include inc/auxiliary
