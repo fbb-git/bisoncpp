@@ -6,16 +6,17 @@ Parser::Parser(Rules &rules)
     d_options(Options::instance()),
     d_scanner(d_arg[0]),
     d_rules(rules),
-    d_debugFlag(d_arg.option(0, "debug")),
-    d_errorVerbose(d_arg.option(0, "error-verbose")),
-    d_generateBaseclass(!d_arg.option(0, "dont-rewrite-baseclass-header")),
-    d_lines(false),
-    d_lspNeeded(false),
-    d_negativeDollarIndices(false),
-    d_typeDirective(false),
-    d_unionDeclared(false),
-    d_requiredTokens(0),
-    d_verboseName("(not requested)")
+    d_matched(d_scanner.matched())
+//    d_debugFlag(d_arg.option(0, "debug")),
+//    d_errorVerbose(d_arg.option(0, "error-verbose")),
+//    d_generateBaseclass(!d_arg.option(0, "dont-rewrite-baseclass-header")),
+//    d_lines(false),
+//    d_lspNeeded(false),
+//    d_negativeDollarIndices(false),
+//    d_typeDirective(false),
+//    d_unionDeclared(false),
+//    d_requiredTokens(0),
+//    d_verboseName("(not requested)")
 {
     string value;
 

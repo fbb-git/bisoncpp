@@ -5,14 +5,14 @@
 #include <bobcat/string>
 #include <bobcat/mstream>
 
-#include "SKEL"
+//#include "SKEL"
 
 using namespace std;
 using namespace FBB;
 
 
-#define FLEXCPPBASE_H  "/flexc++base.h"
-#define FLEXCPP_H      "/flexc++.h"
-#define FLEXCPP_IH     "/flexc++.ih"
-#define FLEXCPP_CC     "/flexc++.cc"
+//#define FLEXCPPBASE_H  "/flexc++base.h"
+//#define FLEXCPP_H      "/flexc++.h"
+//#define FLEXCPP_IH     "/flexc++.ih"
+//#define FLEXCPP_CC     "/flexc++.cc"
 

@@ -9,6 +9,7 @@
 class NonTerminal;
 class Terminal;
 class Symbol;
+class Options;
 
 namespace FBB
 {
@@ -34,93 +35,34 @@ class Parser: public ParserBase
 
     // $insert scannerobject
     Scanner d_scanner;
+    std::string const &d_matched;
+
     Rules      &d_rules;
     Symtab      d_symtab;
 
-            // all the flags that can be set using directives/options
-
-//    bool        d_generateBaseclass;
-//    bool        d_lines;
-//    bool        d_lspNeeded;
-//    bool        d_negativeDollarIndices;
-//    bool        d_typeDirective;            // true following %type
-//    bool        d_unionDeclared;            // see setuniondecl.cc
-//
-//    size_t      d_requiredTokens;
-//
-//            // strings holding text set using directives/options
-//
-//    std::string d_baseclassSkeleton;
-//    std::string d_classHeader;
-//    std::string d_className;
-//    std::string d_classSkeleton;
-//    std::string d_field;                    // %union field in <type> specs.
-//    std::string d_genericFilename;
-//    std::string d_implementationHeader;
-//    std::string d_implementationSkeleton;
-//    std::string d_locationDecl;
-//    std::string d_matchedTextFunction;      // set by --print or %print
-
     std::string d_expect;
 
-//    std::string d_nameSpace;
-//    std::string d_parsefunSkeleton;
-//    std::string d_parsefunSource;
-//    std::string d_preInclude;
-//    std::string d_scannerInclude;
-//    std::string d_scannerTokenFunction;
-//    std::string d_stackDecl;
-//    std::string d_verboseName;
-//
-//    Terminal::Association d_association;
-//
-//                                // used in processBlock() and sipIgnore()
-//    std::vector<Block::Range>::const_reverse_iterator d_skipRbegin;
-//    std::vector<Block::Range>::const_reverse_iterator d_skipRend;
-//
-//            // strings containing default file and other names
-//    static char s_defaultBaseclassSkeleton[];
-//    static char s_defaultClassName[];
-//    static char s_defaultClassSkeleton[];
-//    static char s_defaultImplementationSkeleton[];
-//    static char s_defaultParsefunSkeleton[];
-//    static char s_defaultParsefunSource[];
-//
-//    static size_t s_nHidden;          // number of hidden nonterminals
-//    static std::ostringstream s_hiddenName;
-//
-//    static char s_semanticValue[];  // name of the semantic value variable
-//                                    // used by the generated parser
-//    static char s_semanticValueStack[];  
-//                                    // name of the semantic value stack
-//                                    // used by the generated parser
-//    static char s_locationValueStack[];  
-//                                    // name of the location value stack
-//                                    // used by the generated parser
+    Terminal::Association d_association;
+
+                                // used in processBlock() and sipIgnore()
+    std::vector<Block::Range>::const_reverse_iterator d_skipRbegin;
+    std::vector<Block::Range>::const_reverse_iterator d_skipRend;
+
+    static size_t s_nHidden;          // number of hidden nonterminals
+    static std::ostringstream s_hiddenName;
+
+    static char s_semanticValue[];  // name of the semantic value variable
+                                    // used by the generated parser
+    static char s_semanticValueStack[];  
+                                    // name of the semantic value stack
+                                    // used by the generated parser
+    static char s_locationValueStack[];  
+                                    // name of the location value stack
+                                    // used by the generated parser
     public:
         Parser(Rules &rules);
         int parse();
         void cleanup();             // do cleanup following parse();
-        std::string const &baseclassSkeleton() const;
-        std::string const &classHeader() const;
-        std::string const &className() const;
-        std::string const &classSkeleton() const;
-        bool errorVerbose() const;
-        bool debugFlag() const;
-        std::string const &implementationHeader() const;
-        std::string const &implementationSkeleton() const;
-        bool lines() const;
-        bool lspNeeded() const;
-        std::string const &ltype() const;
-        std::string const &matchedTextFunction() const;
-        std::string const &nameSpace() const;
-        std::string const &parseSkeleton() const;
-        std::string const &parseSource() const;
-        std::string const &preInclude() const;
-        size_t requiredTokens() const;
-        std::string const &scanner() const;
-        std::string const &scannerTokenFunction() const;
-        std::string const &stype() const;
 
     private:
         void addIncludeQuotes(std::string *target); // ensure ".." or <..> 
@@ -163,10 +105,13 @@ class Parser: public ParserBase
         void multiplyDefined(Symbol const *sp);
 
         void nestedBlock(Block &block); // define inner block as pseudo N
-        std::string *newYYText() const; // make dynamic copy of YYText()
+
+//        std::string *newYYText() const; // make dynamic copy of YYText()
 
         std::string nextHiddenName();
         void noDefaultTypeWarning();
+
+        void setStart();
 
         bool numberedElement(size_t pos, int nElements, Block &block);
 
@@ -177,41 +122,11 @@ class Parser: public ParserBase
 
         NonTerminal *requireNonTerminal(std::string const &name);
 
-        void setAccessorVariables();
-        void setClassHeader(int type);
-        void setClassName();
-        //void setPreInclude();
-        void setPrint();
-        void setExpectedConflicts();
-        void setGenericFilename(int type);
-        void setImplementationHeader(int type);
-        void setLines();
-        void setLocationDecl();
-        void setLspNeeded();
-        void setLtype();
-        void setName(std::string *target, char const *extension);
-        void setNameSpace();
-        void setNegativeDollar();
-        void setParsefunSource(int type);
-        void setPrecedence(int type);
-        void setRequiredTokens();
-        void setScannerInclude();
-        void setScannerTokenFunction();
-        void setStart();
-        void setStype();
-
-        void setUnionDecl();
-        void setVerbosity();            // Prepare Msg for verbose output
-
-        void showFilenames() const;
-
         size_t skipIgnore(size_t pos);
         bool substituteBlock(int nElements, Block &block);
 
         Symbol *useSymbol();
         Terminal *useTerminal();
-
-        void validateInclude(std::string *target);
 
         void error(char const *msg);    // called on (syntax) errors
         int lex();                      // returns the next token from the
@@ -232,180 +147,33 @@ class Parser: public ParserBase
 // $insert lex
 inline int Parser::lex()
 {
-    return d_scanner.yylex();
+    return d_scanner.lex();
 }
 
 inline void Parser::print()
 {}
 
-inline std::string const &Parser::baseclassSkeleton() const
-{
-    return d_baseclassSkeleton;
-}
-
-inline std::string const &Parser::classHeader() const
-{
-    return d_classHeader;
-}
-
-inline std::string const &Parser::className() const
-{
-    return d_className;
-}
-
-inline std::string const &Parser::classSkeleton() const
-{
-    return d_classSkeleton;
-}
-
-inline bool Parser::debugFlag() const
-{
-    return d_debugFlag;
-}
-
-inline bool Parser::errorVerbose() const
-{
-    return d_errorVerbose;
-}
-
-inline std::string const &Parser::implementationHeader() const
-{
-    return d_implementationHeader;
-}
-
-inline std::string const &Parser::implementationSkeleton() const
-{
-    return d_implementationSkeleton;
-}
-
-inline std::ostream &Parser::lineMsg(FBB::Mstream &mstream)
-{
-    return d_scanner.lineMsg(mstream);
-}
-
-inline bool Parser::lspNeeded() const
-{
-    return d_lspNeeded;
-}
-inline std::string const &Parser::ltype() const
-{
-    return d_locationDecl;
-}
-inline std::string const &Parser::matchedTextFunction() const
-{
-    return d_matchedTextFunction;
-}
-inline std::string const &Parser::nameSpace() const
-{
-    return d_nameSpace;
-}
-
-inline std::string const &Parser::parseSkeleton() const
-{
-    return d_parsefunSkeleton;
-}
-
-inline std::string const &Parser::parseSource() const
-{
-    return d_parsefunSource;
-}
-
-inline std::string const &Parser::preInclude() const
-{
-    return d_preInclude;
-}
-
-inline std::string const &Parser::scanner() const
-{
-    return d_scannerInclude;
-}
-
-inline std::string const &Parser::scannerTokenFunction() const
-{
-    return d_scannerTokenFunction;
-}
-
-//inline void Parser::setBaseclassHeader(int type)
+//inline std::ostream &Parser::lineMsg(FBB::Mstream &mstream)
 //{
-//    
-//    definePathname(&d_baseclassHeader, type);
-//}
-//
-//inline void Parser::setClassHeader(int type)
-//{
-//    definePathname(&d_classHeader, type);
-//}
-//
-//inline void Parser::setPreInclude()
-//{
-//    validateInclude(&d_preInclude);
+//    return d_scanner.lineMsg(mstream);
 //}
 
-inline void Parser::setPrint()
-{
-    definePathname(&d_matchedTextFunction, 1);        // remove "s 
-}
 
 inline void Parser::setExpectedConflicts()
 {
     Rules::setExpectedConflicts(d_scanner.number());
 }
 
-inline void Parser::setGenericFilename(int type)
-{
-    definePathname(&d_genericFilename, type);
-}
 
-inline void Parser::setImplementationHeader(int type)
-{
-    definePathname(&d_implementationHeader, type);
-}
-
-inline void Parser::setLines()
-{
-    d_lines = true;
-}
-
-inline void Parser::setLspNeeded()
-{
-    d_lspNeeded = true;
-}
-
-inline void Parser::setNegativeDollar()
-{
-    d_negativeDollarIndices = true;
-}        
-
-inline void Parser::setParsefunSource(int type)
-{
-    definePathname(&d_parsefunSource, type);
-}
-
-inline size_t Parser::requiredTokens() const
-{
-    return d_requiredTokens;
-}
-inline void Parser::setScannerInclude()
-{
-    validateInclude(&d_scannerInclude);
-}
-inline void Parser::setScannerTokenFunction()
-{
-    definePathname(&d_scannerTokenFunction, 0);
-}
-inline std::string const &Parser::stype() const
-{
-    return d_stackDecl;
-}
-inline std::string *Parser::newYYText() const
-{
-    return new std::string(d_scanner.YYText());
-}
+//inline std::string *Parser::newYYText() const
+//{
+//    return new std::string(d_scanner.YYText());
+//}
 
 inline size_t Parser::nComponents(int nElements)
 {
     return nElements >= 0 ? nElements : -nElements - 1;
 }
 
-
 #endif
+

@@ -251,7 +251,7 @@ IDENT   {ID1}{ID2}*
 ">"     {
             begin(StartCondition__::INITIAL);
 
-            d_ret = matchedCheck(3, Parser::PSTRING);
+            d_ret = matchedCheck(3, Parser::STRING);
             if (d_ret)
                 return d_ret;
 
@@ -341,13 +341,11 @@ IDENT   {ID1}{ID2}*
                      }
 }
 
-    /* 
-        xstring returns the next string delimited by either blanks, tabs,
-        newlines or C/C++ comment. Strings delimited by "..." are returned as
-        STRING, strings delimited by <...> as PSTRING. If d_include was set
-        before entering this mini scanner a file-switch is
-        realized. Otherwise, the string is returned as a Parser::XSTRING
-    */
+    //  xstring returns the next string delimited by either blanks, tabs,
+    //  newlines or C/C++ comment. Strings delimited by "..." or <...>
+    //  are returned as STRING. If d_include was set
+    //  before entering this mini scanner a file-switch is
+    //  realized. Otherwise, the string is returned as a Parser::STRING
 <xstring>{
         
 "\\".         more();
@@ -362,7 +360,7 @@ IDENT   {ID1}{ID2}*
                   begin(d_includeOnly ? StartCondition__::includeOnly : 
                                         StartCondition__::INITIAL);
               
-                  d_ret = matchedCheck(1, Parser::XSTRING);
+                  d_ret = matchedCheck(1, Parser::STRING);
                   accept(d_nKept);
                   if (d_ret)
                       return d_ret;

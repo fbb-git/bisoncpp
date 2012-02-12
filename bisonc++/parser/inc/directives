@@ -111,23 +111,6 @@ _pushPrecedence:
     }
 ;
 
-_pxstring:
-    PSTRING
-    {
-        $$ = PSTRING;
-    }
-|
-    STRING
-    {
-        $$ = STRING;
-    }
-|
-    XSTRING
-    {
-        $$ = XSTRING;
-    }
-;
-    
 _required:
     REQUIRED
     {
@@ -154,6 +137,13 @@ _scanner_token_function:
     SCANNER_TOKEN_FUNCTION
     {
         d_expect = "Scanner function returning the next token";
+    }
+;
+
+_scanner_matched_text_function:
+    SCANNER_MATCHED_TEXT_FUNCTION
+    {
+        d_expect = "Scanner function returning the matched text";
     }
 ;
 
@@ -240,31 +230,27 @@ _union:
 
 _directiveSpec:
     _baseclass_header
-    _pxstring
+    STRING
     {
-        d_options.setBaseClassHeaderPath(d_matched); 
-        // setBaseclassHeader($2);
+        d_options.setBaseClassHeaderPath(); 
     }
 |
     _baseclass_preinclude
-    _pxstring
+    STRING
     {
-        d_options.setPreInclude(d_matched);
-        //setPreInclude();
+        d_options.setPreInclude();
     }
 |
     _class_header
-    _pxstring
+    STRING
     {
-        d_options.setClassHeaderPath(d_matched);
-        //setClassHeader($2);
+        d_options.setClassHeaderPath();
     }
 |
     _class_name
     IDENTIFIER
     {
-        d_options.setClassName(d_matched);
-        // setClassName();
+        d_options.setClassName();
     }
 |
     DEBUGFLAG
@@ -284,10 +270,9 @@ _directiveSpec:
     }
 |
     _filenames
-    _pxstring
+    STRING
     {
-        d_options.setGenericFilename(d_matched);
-        //setGenericFilename($2);
+        d_options.setGenericFilename();
     }
 |
     FLEXCPP
@@ -296,10 +281,9 @@ _directiveSpec:
     }
 |
     _implementation_header
-    _pxstring
+    STRING
     {
-        d_options.setImplementationHeader(d_matched);
-        //setImplementationHeader($2);
+        d_options.setImplementationHeader();
     }
 |
     _left
@@ -316,7 +300,7 @@ _directiveSpec:
     BLOCK
     optSemiCol
     {
-        d_options.setLocationDecl();
+            d_options.setLocationDecl(d_scanner.block().str());
     }
 |
     LSP_NEEDED
@@ -325,7 +309,7 @@ _directiveSpec:
     }
 |
     _ltype
-    XSTRING
+    STRING
     {
         d_options.setLtype();
     }
@@ -338,7 +322,7 @@ _directiveSpec:
 |
     NEG_DOLLAR
     {
-        d_options.setNegativeDollar();
+        d_options.setNegativeDollarIndices();
     }
 |
     _nonassoc
@@ -347,13 +331,13 @@ _directiveSpec:
     _symbols
 |
     _parsefun_source
-    _pxstring
+    STRING
     {
-        d_options.setParsefunSource(); // setParsefunSource($2);
+        d_options.setParsefunSource();
     }
 |
     _print
-    _pxstring
+    STRING
     {
         d_options.setPrint();
     }
@@ -370,31 +354,37 @@ _directiveSpec:
     _symbols
 |
     _scanner_include
-    _pxstring
+    STRING
     {
         d_options.setScannerInclude();
     }
 |
     _scanner_token_function
-    _pxstring
+    STRING
     {
         d_options.setScannerTokenFunction();
+    }
+|
+    _scanner_matched_text_function
+    STRING
+    {
+        d_options.setScannerMatchedTextFunction();
     }
 |
     _start
     IDENTIFIER
     {
-        d_options.setStart();
+        setStart();
     }
 |
     _stype
-    XSTRING
+    STRING
     {
-        setStype();
+        d_options.setStype();
     }
 |
     _target_directory
-    _pxstring
+    STRING
     {
         d_options.setTargetDirectory();
     }
@@ -415,7 +405,7 @@ _directiveSpec:
     BLOCK
     optSemiCol
     {
-        setUnionDecl();
+        d_options.setUnionDecl(d_scanner.block().str());
     }
 |
     error
