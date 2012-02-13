@@ -13,6 +13,6 @@ void Generator::lex(ostream &out) const
     if (d_print)
         out << "    print();\n";
 
-    out << "    return " << *d_scannerTokenFunction << ";\n"
+    out << "    return " << d_tokenFunction << ";\n"
            "}\n";
 }

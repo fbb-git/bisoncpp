@@ -20,7 +20,7 @@ void Generator::print(ostream &out) const
             "        if (d_token__ == _UNDETERMINED_)\n"
             "            std::cout << \"'\\n\";\n"
             "        else\n"
-            "            std::cout << " << *d_matchedTextFunction << 
+            "            std::cout << " << d_matchedTextFunction << 
                                                             " << \"'\\n\";\n"
             "}\n";
 }

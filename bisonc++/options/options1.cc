@@ -7,9 +7,7 @@ Options::Options()
     d_errorVerbose(false),
     d_flexcpp(false),
     d_lines(true),
-
-    d_lines(false),
-    d_requiredTokens(0)
-
-    d_verboseName("(not requested)"),
+    d_lspNeeded(false),
+    d_requiredTokens(0),
+    d_verboseName("(not requested)")
 {}

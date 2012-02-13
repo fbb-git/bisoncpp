@@ -26,9 +26,10 @@ class Generator
     Options &d_options;
 
     std::string d_baseClassScope;
-    std::string const *d_nameSpace;
-    std::string const *d_matchedTextFunction;
-    std::string const *d_scannerTokenFunction;
+    std::string const &d_nameSpace;
+    std::string const &d_matchedTextFunction;
+    std::string const &d_printFunction;
+    std::string const &d_tokenFunction;
 
     mutable std::string d_key;          // extracted at $insert statements
     mutable size_t d_indent;

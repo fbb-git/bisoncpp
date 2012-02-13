@@ -6,16 +6,13 @@ Generator::Generator(Rules const &rules)
     d_rules(rules),
     d_options(Options::instance()),
     d_baseClassScope(d_options.className() + "Base::"),
-    d_writer(d_baseClassScope, rules)
-{
-    d_nameSpace = &d_options.nameSpace();
-    d_matchedTextFunction = &d_options.matchedTextFunction();
-    d_scannerTokenFunction = &d_options.scannerTokenFunction();
-    d_debug = d_options.debug();
-    d_print = !d_matchedTextFunction->empty();
+    d_nameSpace(d_options.nameSpace()),
+    d_matchedTextFunction(d_options.scannerMatchedTextFunction()),
+    d_printFunction(d_options.scannerPrintFunction()),
+    d_tokenFunction(d_options.scannerTokenFunction()),
 
-//    if (d_matchedTextFunction->empty())
-//        d_matchedTextFunction = &s_matchedTextFunction;
-//    if (d_scannerTokenFunction->empty())
-//        d_scannerTokenFunction = &s_scannerTokenFunction;
-}
+    d_debug(d_options.debug()),
+    d_print(d_printFunction.size()),
+
+    d_writer(d_baseClassScope, rules)
+{}

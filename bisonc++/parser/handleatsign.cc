@@ -15,11 +15,11 @@ void Parser::handleAtSign(size_t pos, int nElements, Block &block)
 
     block.replace(pos, replaceSize, os.str());
 
-    if (!d_lspNeeded)
+    if (!d_options.lspNeeded())
     {
         wmsg << "@ used in the action block at line " << 
                 block.line() << ": %lsp-needed forced" << endl;
-        d_lspNeeded = true;
+        d_options.setLspNeeded();
     }
 }
 

@@ -297,12 +297,12 @@ _directiveSpec:
     BLOCK
     optSemiCol
     {
-        setLocationDecl();
+        d_options.setLocationDecl(d_scanner.block().str());
     }
 |
     LSP_NEEDED
     {
-        setLspNeeded();
+        d_options.setLspNeeded();
     }
 |
     _ltype
@@ -336,7 +336,7 @@ _directiveSpec:
     _print
     STRING
     {
-        d_options.setPrint();
+        d_options.setScannerPrintFunction();
     }
 |
     _required

@@ -45,7 +45,6 @@ class Parser: public ParserBase
     bool        d_typeDirective;            // true following %type
     bool        d_unionDeclared;            // see setuniondecl.cc
     bool        d_negativeDollarIndices;
-    bool        d_lspNeeded;
 
     Terminal::Association d_association;
 
@@ -86,7 +85,6 @@ class Parser: public ParserBase
 
         void setExpectedConflicts();
         void setLocationDecl();
-        void setLspNeeded();
         void setNegativeDollarIndices();
         void setPrecedence(int type);
         void setUnionDecl();
@@ -163,11 +161,6 @@ inline int Parser::lex()
 inline void Parser::print()
 {}
 
-
-inline void Parser::setLspNeeded()
-{
-    d_lspNeeded = true;
-}
 
 inline void Parser::setNegativeDollarIndices()
 {

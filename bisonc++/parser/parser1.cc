@@ -9,8 +9,7 @@ Parser::Parser(Rules &rules)
     d_rules(rules),
     d_typeDirective(false),
     d_unionDeclared(false),
-    d_negativeDollarIndices(false),
-    d_lspNeeded(false)
+    d_negativeDollarIndices(false)
 
 //    d_debugFlag(d_arg.option(0, "debug")),
 //    d_errorVerbose(d_arg.option(0, "error-verbose")),

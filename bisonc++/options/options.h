@@ -22,6 +22,7 @@ class Options
     bool        d_errorVerbose;
     bool        d_flexcpp;
     bool        d_lines;
+    bool        d_lspNeeded;
 
     size_t      d_requiredTokens;
 
@@ -38,7 +39,7 @@ class Options
     std::string d_parsefunSkeleton;
     std::string d_parsefunSource;
     std::string d_preInclude;
-    std::string d_printFunction;            // set by --print or %print
+    std::string d_scannerPrintFunction;        // set by --print or %print
     std::string d_scannerInclude;
     std::string d_scannerMatchedTextFunction;
     std::string d_scannerTokenFunction;
@@ -48,9 +49,6 @@ class Options
     std::string d_verboseName;
 
 
-	static char s_defaultClassName[];
-	static char s_defaultParsefunSource[];
-	static char s_defaultTargetDirectory[];
     static char s_defaultBaseClassSkeleton[];
     static char s_defaultClassName[];
     static char s_defaultClassSkeleton[];
@@ -58,16 +56,9 @@ class Options
     static char s_defaultParsefunSkeleton[];
     static char s_defaultParsefunSource[];
     static char s_defaultSkeletonDirectory[];
-
-// std::string Options::classHeaderName() const
-// {
-//     size_t pos = d_classHeaderPath.rfind('/');
-// 
-//     return pos == string::npos ? 
-//                         d_classHeaderPath 
-//                     :
-//                         d_classHeaderPath.substr(pos + 1);
-// }
+    static char s_defaultTargetDirectory[];
+    static char s_defaultScannerMatchedTextFunction[];
+    static char s_defaultScannerTokenFunction[];
 
     static Options s_options;
 
@@ -79,7 +70,9 @@ class Options
         void setMatched(std::string const &matched);
 
         void setAccessorVariables();
+
         void setBaseClassHeader();
+        void setBaseClassSkeleton();
         void setClassHeader();
         void setClassName();
         void setDebug();
@@ -88,17 +81,17 @@ class Options
         void setGenericFilename();
         void setImplementationHeader();
         void setLines();
-        void setLines(bool yesNo);
         void setLocationDecl(std::string const &block);
+        void setLspNeeded();
         void setLtype();
         void setNamespace();
         void setParsefunSource();
         void setPreInclude();
-        void setPrint();
         void setRequiredTokens();
         void setScannerInclude();
-        void setScannerTokenFunction();
         void setScannerMatchedTextFunction();
+        void setScannerPrintFunction();
+        void setScannerTokenFunction();
         void setSkeletonDirectory();
         void setStype();
         void setTargetDirectory();
@@ -113,6 +106,7 @@ class Options
         bool debug() const;
         bool errorVerbose() const;
         bool lines() const;
+        bool lspNeeded() const;
 
         size_t requiredTokens() const;
 
@@ -124,12 +118,13 @@ class Options
         std::string const &implementationHeader() const;
         std::string const &implementationSkeleton() const;
         std::string const &ltype() const;
-        std::string const &matchedTextFunction() const;
         std::string const &nameSpace() const;
         std::string const &parseSkeleton() const;
         std::string const &parseSource() const;
         std::string const &preInclude() const;
         std::string const &scannerInclude() const;
+        std::string const &scannerMatchedTextFunction() const;
+        std::string const &scannerPrintFunction() const;
         std::string const &scannerTokenFunction() const;
         std::string const &stype() const;
 
@@ -138,8 +133,17 @@ class Options
     private:
         Options();
 
-        void cleanDir(string &dir);     // undelimit and append / if missing
-        void addIncludeQuotes(string &target);
+            // called by setAccessorVariables()
+        void setBooleans();
+        bool setBasicStrings();
+        std::string setOpt(char const *opt, std::string const &defaultSpec);
+        void setQuotedStrings();
+        void setPathStrings(bool targetDirOption);
+        void setSkeletons();
+        
+
+        void cleanDir(std::string &dir); // undelimit and append / if missing
+        void addIncludeQuotes(std::string &target);
 
         void assign(std::string *target, char const *declTxt);
 
@@ -148,95 +152,9 @@ class Options
                       char const *suffix);
 };
 
-inline void Options::setBaseClassHeader()
+inline bool Options::debug() const
 {
-    assign(&d_baseClassHeader, "baseclass-header");
-}
-
-inline void Options::setClassHeader()
-{
-    assign(&d_classHeader, "class-header");
-}
-
-inline void Options::setClassName()
-{
-    assign(&d_className, "class-name");
-}
-
-inline void Options::setErrorVerbose()
-{
-    d_errorVerbose = true;
-}
-
-inline void Options::setDebug()
-{
-    d_debug = true;
-}
-
-inline void Options::setGenericFilename()
-{
-    assign(&d_genericFilename, "filenames");
-}
-
-inline void Options::setFlexcpp()
-{
-    d_flexcpp = true;
-}
-
-inline void Options::setImplementationHeader()
-{
-    assign(&d_implementationHeader, "implementation-header");
-}
-
-inline void Options::setLines()
-{
-    d_lines = true;
-}
-
-inline void Options::setNamespace()
-{
-    assign(&d_nameSpace, "namespace");
-}
-
-inline void Options::setParsefunSource()
-{
-    assign(&d_parsefunSource, "parsefun-source");
-}
-
-inline void Options::setPrint()
-{
-    assign(&d_printFunction, "print");
-}
-
-inline void Options::setPreInclude()
-{
-    assign(&d_preInclude, "baseclass-preinclude");
-}
-
-inline void Options::setScannerInclude()
-{
-    assign(&d_scannerInclude, "scanner");
-}
-
-inline void Options::setScannerTokenFunction()
-{
-    assign(&d_scannerTokenFunction, "scanner-token-function");
-}
-
-inline void Options::setScannerMatchedTextFunction()
-{
-    assign(&d_scannerMatchedTextFunction, "scanner-matched-text-function");
-}
-
-inline void Options::setSkeletonDirectory()
-{
-    assign(&d_skeletonDirectory, "skeleton-directory (-S)");
-}
-
-
-inline void Options::setTargetDirectory()
-{
-    assign(&d_targetDirectory, "target-directory");
+    return d_debug;
 }
 
 inline std::string const &Options::baseClassHeader() const
@@ -279,14 +197,19 @@ inline std::string const &Options::implementationSkeleton() const
     return d_implementationSkeleton;
 }
 
+inline bool Options::lines() const
+{
+    return d_lines;
+}
+
+inline bool Options::lspNeeded() const
+{
+    return d_lspNeeded;
+}
+
 inline std::string const &Options::ltype() const
 {
     return d_locationDecl;
-}
-
-inline std::string const &Options::matchedTextFunction() const
-{
-    return d_scannerMatchedTextFunction;
 }
 
 inline std::string const &Options::nameSpace() const
@@ -304,9 +227,29 @@ inline std::string const &Options::parseSource() const
     return d_parsefunSource;
 }
 
+inline std::string const &Options::preInclude() const
+{
+    return d_preInclude;
+}
+
+inline size_t Options::requiredTokens() const
+{
+    return d_requiredTokens;
+}
+
 inline std::string const &Options::scannerInclude() const
 {
     return d_scannerInclude;
+}
+
+inline std::string const &Options::scannerMatchedTextFunction() const
+{
+    return d_scannerMatchedTextFunction;
+}
+
+inline std::string const &Options::scannerPrintFunction() const
+{
+    return d_scannerPrintFunction;
 }
 
 inline std::string const &Options::scannerTokenFunction() const
@@ -314,9 +257,106 @@ inline std::string const &Options::scannerTokenFunction() const
     return d_scannerTokenFunction;
 }
 
-inline size_t Options::requiredTokens() const
+inline void Options::setBaseClassHeader()
 {
-    return d_requiredTokens;
+    assign(&d_baseClassHeader, "baseclass-header");
+}
+
+inline void Options::setBaseClassSkeleton()
+{
+    assign(&d_baseClassSkeleton, "baseclass-skeleton");
+}
+
+inline void Options::setClassHeader()
+{
+    assign(&d_classHeader, "class-header");
+}
+
+inline void Options::setClassName()
+{
+    assign(&d_className, "class-name");
+}
+
+inline void Options::setErrorVerbose()
+{
+    d_errorVerbose = true;
+}
+
+inline void Options::setDebug()
+{
+    d_debug = true;
+}
+
+inline void Options::setGenericFilename()
+{
+    assign(&d_genericFilename, "filenames");
+}
+
+inline void Options::setFlexcpp()
+{
+    d_flexcpp = true;
+}
+
+inline void Options::setImplementationHeader()
+{
+    assign(&d_implementationHeader, "implementation-header");
+}
+
+inline void Options::setLines()
+{
+    d_lines = true;
+}
+
+inline void Options::setLspNeeded()
+{
+    d_lspNeeded = true;
+}
+
+
+inline void Options::setNamespace()
+{
+    assign(&d_nameSpace, "namespace");
+}
+
+inline void Options::setParsefunSource()
+{
+    assign(&d_parsefunSource, "parsefun-source");
+}
+
+inline void Options::setPreInclude()
+{
+    assign(&d_preInclude, "baseclass-preinclude");
+}
+
+inline void Options::setScannerInclude()
+{
+    assign(&d_scannerInclude, "scanner");
+}
+
+inline void Options::setScannerMatchedTextFunction()
+{
+    assign(&d_scannerMatchedTextFunction, "scanner-matched-text-function");
+}
+
+inline void Options::setScannerPrintFunction()
+{
+    assign(&d_scannerPrintFunction, "print");
+}
+
+inline void Options::setScannerTokenFunction()
+{
+    assign(&d_scannerTokenFunction, "scanner-token-function");
+}
+
+inline void Options::setSkeletonDirectory()
+{
+    assign(&d_skeletonDirectory, "skeleton-directory (-S)");
+}
+
+
+inline void Options::setTargetDirectory()
+{
+    assign(&d_targetDirectory, "target-directory");
 }
 
 inline std::string const &Options::stype() const
