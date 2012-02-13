@@ -2,7 +2,7 @@
 
 void Generator::ltypePush(ostream &out) const
 {
-    if (!d_parser.lspNeeded())
+    if (!d_options.lspNeeded())
         return;
 
     key(out);

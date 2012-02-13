@@ -1,18 +1,46 @@
-#define MANPAGE "../../tmp/man/bisonc++.1"
-#define MANHTML "../../tmp/manhtml/bisonc++man.html"
+#define MANPAGE "../../tmp/man/"
+#define MANHTML "../../tmp/manhtml/"
 
 void manpage()
 {
+    string pages;
+    list pagelist;
+    string man;
+    list manlist;
+    int idx;
+    string name;
+    string manpage;
+
+    pages = "bisonc++";
+    pagelist = strtok(pages, " ");
+
+    man =  ".1";
+    manlist = strtok(man, " ");
+
     md("tmp/man tmp/manhtml");
 
     special();
 
     chdir("documentation/man");
 
-    if ("bisonc++.yo" younger MANPAGE || "release.yo" younger MANPAGE)
-    {
-        run("yodl2man  -o " MANPAGE " bisonc++");
-        run("yodl2html  -o " MANHTML " bisonc++");
+    for (idx = sizeof(pagelist); idx--; )
+    {    
+        name = pagelist[idx];
+        manpage = MANPAGE + name + manlist[idx];
+
+        if 
+        (
+            name + ".yo" younger manpage 
+            || 
+            "../../release.yo" younger manpage
+        )
+        {
+            run("yodl2man --no-warnings -o " + manpage + " " + name);
+            run("yodl2html --no-warnings -o " MANHTML + name + ".html " 
+                                                                    + name);
+        }
     }
+
     exit(0);
 }
+

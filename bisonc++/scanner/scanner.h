@@ -70,7 +70,7 @@ class Scanner: public ScannerBase
         Scanner(std::string const &infile);
         
         // $insert lexFunctionDecl
-        int yylex();
+        int lex();
 
         Block &block();
         std::string const &canonicalQuote();
@@ -88,6 +88,7 @@ class Scanner: public ScannerBase
         void preCode();     // re-implement this function for code that must 
                             // be exec'ed before the patternmatching starts
 
+        int tokenOrPushStream();
         void pushSource();
 
         void checkZeroNumber();
@@ -97,12 +98,11 @@ class Scanner: public ScannerBase
         void multiLineString();
         void octal();
         void hexadecimal();
-        int setNumber();
         int matchedCheck(size_t minLength, int retToken);
 };
 
 // $insert inlineLexFunction
-inline int Scanner::yylex()
+inline int Scanner::lex()
 {
     return lex__();
 }

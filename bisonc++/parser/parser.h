@@ -41,6 +41,11 @@ class Parser: public ParserBase
     Symtab      d_symtab;
 
     std::string d_expect;
+    std::string d_field;                    // %union field in <type> specs.
+    bool        d_typeDirective;            // true following %type
+    bool        d_unionDeclared;            // see setuniondecl.cc
+    bool        d_negativeDollarIndices;
+    bool        d_lspNeeded;
 
     Terminal::Association d_association;
 
@@ -59,6 +64,14 @@ class Parser: public ParserBase
     static char s_locationValueStack[];  
                                     // name of the location value stack
                                     // used by the generated parser
+
+	static char s_defaultClassName[];
+	static char s_defaultParsefunSource[];
+    static char s_defaultBaseClassSkeleton[];
+    static char s_defaultClassSkeleton[];
+    static char s_defaultImplementationSkeleton[];
+    static char s_defaultParsefunSkeleton[];
+
     public:
         Parser(Rules &rules);
         int parse();
@@ -70,15 +83,21 @@ class Parser: public ParserBase
         void checkEmptyBlocktype();
         void checkFirstType();
 
-        std::ostream &lineMsg(FBB::Mstream &mstream);
-                                        
         bool defaultReturn(size_t pos, Block &block);
         Symbol *defineNonTerminal(std::string const &name, 
                                   std::string const &stype);
-        void definePathname(std::string *target, int type); // 0: no undelimit
+        void definePathname(std::string *target);
         void defineTerminal(std::string const &name, Symbol::Type type);
         void defineTokenName(std::string *name, bool hasValue);
         void expectRules();
+
+        void setExpectedConflicts();
+        void setLocationDecl();
+        void setLspNeeded();
+        void setNegativeDollarIndices();
+        void setPrecedence(int type);
+        void setUnionDecl();
+                                        
 
         bool explicitElement(size_t pos, int nElements, Block &block);
         bool explicitReturn(size_t pos, Block &block);
@@ -105,8 +124,6 @@ class Parser: public ParserBase
         void multiplyDefined(Symbol const *sp);
 
         void nestedBlock(Block &block); // define inner block as pseudo N
-
-//        std::string *newYYText() const; // make dynamic copy of YYText()
 
         std::string nextHiddenName();
         void noDefaultTypeWarning();
@@ -152,6 +169,18 @@ inline int Parser::lex()
 
 inline void Parser::print()
 {}
+
+
+inline void Parser::setLspNeeded()
+{
+    d_lspNeeded = true;
+}
+
+inline void Parser::setNegativeDollarIndices()
+{
+    d_negativeDollarIndices = true;
+}        
+
 
 //inline std::ostream &Parser::lineMsg(FBB::Mstream &mstream)
 //{

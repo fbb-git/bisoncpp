@@ -1,14 +1,50 @@
+void link(string maino, string strip)
+{
+    string binary = BINARY EXTENSION;
+
+    string compiler;
+
+    chdir(TMP_DIR);
+
+    compiler = COMPILER " -o bin/" + binary + " " + maino +
+                        " -L. -l" LIBRARY " " LIBS;
+
+//    if 
+//    (
+//        maino younger "bin/" + binary
+//        || 
+//        "lib" LIBRARY ".a" younger "bin/" + binary
+//        ||
+//        g_compiled
+//    )
+    {
+        showCd(TMP_DIR);
+        md("bin");
+        printf("LINKING:\n");
+        system(compiler + " " + strip + setOpt(LDFLAGS, "LDFLAGS"));
+    }
+
+    chdir("");
+}
 
 void program(string strip)
 {
+    string maino = change_ext(MAIN, ".o");
     string lopt;
 
-    library(0);
+    build_library();
 
     lopt = strip + setOpt(LDFLAGS, "LDFLAGS");
 
-    exec(COMPILER, "-o", g_binary,
-            "-lbisonc++", libs, "-L.", libpath , lopt);
+    if (g_base || MAIN younger TMP_DIR "/" + maino)
+    {
+        printf("\n"
+                "chdir .\n"
+                "RECOMPILE: " MAIN "\n");
+        system(g_compiler + " -c -o " TMP_DIR "/" + maino + " " MAIN);
+    }
+
+    link(maino, strip);
 
     exit(0);
 }

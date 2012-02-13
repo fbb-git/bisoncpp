@@ -2,13 +2,13 @@
 
 void Generator::ltype(ostream &out) const
 {
-    if (!d_parser.lspNeeded())
+    if (!d_options.lspNeeded())
         return;
 
     key(out);
 
-    if (!d_parser.ltype().empty())
-        out << d_parser.ltype() << '\n';
+    if (!d_options.ltype().empty())
+        out << d_options.ltype() << '\n';
     else
         out <<  
             "    struct LTYPE__\n"

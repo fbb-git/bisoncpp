@@ -3,7 +3,7 @@
 void Parser::noDefaultTypeWarning()
 {
     if (d_unionDeclared)
-        lineMsg(wmsg) << "In production rule \n"<< 
+        wmsg << "In production rule \n"<< 
                             "\t`" << &d_rules.lastProduction() << " '\n"
                             "\t`" << d_rules.name() << "' has no default "
                                         "($$) type-association" << endl;

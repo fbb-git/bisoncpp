@@ -3,5 +3,5 @@
 void Generator::classIH(ostream &out) const
 {
     key(out);
-    out << "#include \"" << d_parser.implementationHeader() << "\"\n";
+    out << "#include \"" << d_options.implementationHeader() << "\"\n";
 }

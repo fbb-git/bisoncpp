@@ -4,7 +4,7 @@ void Generator::print(ostream &out) const
 {
     key(out);
 
-    out << "inline void " << d_parser.className() << "::print()\n"
+    out << "inline void " << d_options.className() << "::print()\n"
             "{";
 
     if (!d_print)

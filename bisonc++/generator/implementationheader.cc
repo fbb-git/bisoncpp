@@ -13,7 +13,7 @@ void Generator::implementationHeader() const
 {
     if 
     (
-        access(d_parser.implementationHeader().c_str(), F_OK) == 0
+        access(d_options.implementationHeader().c_str(), F_OK) == 0
         &&
         not d_arg.option(0, "force-implementation-header")
     )
@@ -22,8 +22,8 @@ void Generator::implementationHeader() const
     ofstream out;
     ifstream in;
 
-    Errno::open(in,  d_parser.implementationSkeleton()); 
-    Errno::open(out, d_parser.implementationHeader()); 
+    Errno::open(in,  d_options.implementationSkeleton()); 
+    Errno::open(out, d_options.implementationHeader()); 
 
     filter(in, out);    
 }

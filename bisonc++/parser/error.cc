@@ -5,20 +5,20 @@ void Parser::error(char const *msg)
     static bool repeated;
     static string lastMsg;
 
-    if (d_msg.empty())
+    if (d_expect.empty())
     {
         if (not repeated)
-            lineMsg(emsg) << "unrecognized input (`" << d_scanner.YYText() << 
+            emsg << "unrecognized input (`" << d_scanner.YYText() << 
                          "') encountered" << endl;
         repeated = true;
     }
     else
     {
-        if (lastMsg != d_msg)
-            lineMsg(emsg) << "at `" << d_scanner.YYText() << "': " << d_msg << 
+        if (lastMsg != d_expect)
+            emsg << "at `" << d_scanner.YYText() << "': " << d_expect << 
                          " expected." << endl;
         repeated = false;
     }
 
-    lastMsg = d_msg;
+    lastMsg = d_expect;
 }

@@ -12,7 +12,7 @@ bool Parser::numberedElement(size_t pos, int nElements, Block &block)
     size_t ruleElements = nComponents(nElements);
 
     if (idx > static_cast<int>(ruleElements)) // $i refers beyond this rule
-        lineMsg(emsg) << "In production rule \n"<< 
+        emsg << "In production rule \n"<< 
                     "\t`" << &d_rules.lastProduction() << " '\n"
                     "\t$" << idx << " used, but there are only " << 
                     ruleElements << " elements" << endl;
@@ -21,19 +21,19 @@ bool Parser::numberedElement(size_t pos, int nElements, Block &block)
         if (idx <= 0)                   // type of the $i can't be determined
         {                               // and indices <= 0 are not accepted
             if (!d_negativeDollarIndices)
-                lineMsg(wmsg) << "In production rule \n"<< 
+                wmsg << "In production rule \n"<< 
                             "\t`" << &d_rules.lastProduction() << " '\n"
                             "\tcannot determine default type of $" << 
                             idx << endl;
         }
         else if (!idxType.length())     // or $i without type association
-                lineMsg(wmsg) << "In production rule \n"<< 
+                wmsg << "In production rule \n"<< 
                             "\t`" << &d_rules.lastProduction() << " '\n"
                             "\t$" << idx << " (" << d_rules.symbol(idx) << 
                             ") has no default type-association" << endl;
     }
     else if (!d_negativeDollarIndices && idx <= 0)
-        lineMsg(wmsg) << "In production rule \n"<< 
+        wmsg << "In production rule \n"<< 
                     "\t`" << &d_rules.lastProduction() << " '\n"
                     "\tnon-positive $" << idx << " used" << endl;
 

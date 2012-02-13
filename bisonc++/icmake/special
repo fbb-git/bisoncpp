@@ -1,11 +1,12 @@
 void special()
 {
-    if ("INSTALL.im" newer "parser/SKEL")
-        run("echo \"#define _Skel_  \\\"" + SKEL + "\\\"\" > parser/SKEL");
+    if ("INSTALL.im" newer "options/SKEL")
+        run("echo \"#define _Skel_  \\\"" + SKEL + "\\\"\" > options/SKEL");
 
     if (! exists("release.yo") || "VERSION" newer "release.yo") 
     {
         system("touch version.cc");
-        run("gcc -E VERSION.h | grep -v '#' | sed 's/\\\"//g' > release.yo");
+        run("gcc -E VERSION.h | grep -v '#' | sed 's/\\\"//g' > "
+                                                            "release.yo");
     }
 }

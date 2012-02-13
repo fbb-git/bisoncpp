@@ -2,6 +2,26 @@
 
 #include "INSTALL.im"
 
+#define BINARY              "bisonc++" 
+#define COMPILER            "g++ -Wall --std=c++0x "
+#define LIBRARY             "bisonc++"       // NO lib, NO .a
+#define LIBS                "-lbobcat"      // -l required
+#define MAIN                "bisonc++.cc"
+#define SOURCES             "*.cc"
+#define TMP_DIR             "tmp"
+
+list    g_classes;          // all class-directories
+int     g_nClasses;         // number of class-directories
+int     g_compiled;         // any source compiled (but main)?
+list    g_classLines;       // list of all lines in CLASSES
+list    g_inspected;        // list of classes whose dependencies have been 
+                            // inspected (used with USE_ALL)
+int     g_base;             // compile the sources in the base directory
+int     g_chdir;            // display chdirs to directories without sources
+                            // to compile
+string  g_compiler;
+string  g_cwd = chdir("");  // initial working directory
+
 #include "icmake/run"
 #include "icmake/md"
 #include "icmake/getenv"
@@ -9,14 +29,19 @@
 #include "icmake/clean"
 #include "icmake/manpage"
 #include "icmake/manual"
-#include "icmake/library"
+#include "icmake/library2"
 #include "icmake/program"
-#include "icmake/rebuild"
+
+// #include "icmake/rebuild"
+
 #include "icmake/install"
+
+// #include "icmake/test"
 
 void main(int argc, list argv, list envp)
 {
     string option;
+    string option2;
     string strip;
 
     g_env = envp;
@@ -27,7 +52,9 @@ void main(int argc, list argv, list envp)
     g_dryrun = g_envvar;
 
     option = element(1, argv);
-    if (element(2, argv) == "strip")
+    option2 = element(2, argv);
+    
+    if (option2 == "strip")
         strip = "-s";
 
     if (option == "clean")
@@ -37,7 +64,10 @@ void main(int argc, list argv, list envp)
         clean(1);
 
     if (option == "install")
-        install(argv[2], argv[3]);
+        install(option2, 1);
+
+    if (option == "installprog")
+        install(option2, 0);
 
     if (option == "man")
         manpage();
@@ -46,26 +76,27 @@ void main(int argc, list argv, list envp)
         manual();
 
     if (option == "library")
-        library(1);
+    {
+        build_library();
+        exit(0);
+    }
 
     if (option == "program")
         program(strip);
 
-    if (option == "parser")
+//    if (option == "rebuild")
+//        rebuild(strip);
+
+    if (option == "scanner")
     {
-        chdir("parser");
-        run("bisonc++ grammar");
-        exit(0);
+        chdir("scanner");
+        system("./newscanner");
+        chdir("..");
+        program(strip);
     }
 
-    if (option == "rebuild")
-        rebuild(strip);
-
-    if (option == "sourceforge")
-    {
-        special();
-        exit(0);
-    }
+//    if (option == "test")
+//        test(option2);
 
     printf("Usage: build [-p] what\n"
         "Where `what' is one of:\n"
@@ -74,26 +105,21 @@ void main(int argc, list argv, list envp)
         "   library            - build bisonc++'s library\n"
         "   man                - build the man-page (requires Yodl)\n"
         "   manual             - build the manual (requires Yodl)\n"
-        "   parser             - use bisonc++ to rewrite parse.cc and\n"
-        "                        parserbase.h\n"
         "   program [strip]    - build bisonc++ (optionally strip the\n"
         "                        executable)\n"
+        "   scanner [strip]    - build new scanner, then 'build program'\n"
+        "   test [what]        - run the test-suite\n"
+        "                        `what' can be the name of a specific test\n"
+        "                        to run. If omitted, all tests are run.\n"
         "   rebuild [strip]    - recreate the parser using bisonc++ created\n"
         "                        by `build program' (optionally strip the\n"
         "                        executable)\n"
-        "   install program <base> - install the program in the locations "
-                                                        "defined\n"
+        "   install <base>     - install the software in the locations "
+                                                            "defined\n"
+                                                               
         "                        in the INSTALL.cf file, optionally "
                                                             "below <base>\n"
-        "   install man <base> - install the man pages in the location "
-                                                        "defined\n"
-        "                        in the INSTALL.cf file, optionally "
-                                                            "below <base>\n"
-        "   install manual <base> - install the manual in the location "
-                                                        "defined\n"
-        "                        in the INSTALL.cf file, optionally "
-                                                            "below <base>\n"
-        "   sourceforge        - create files for sourceforge index update\n"
+        "   installprog <base> - only install the program and skeleton files\n"
         "\n"
         "If the environment variable DRYRUN is defined, no commands are\n"
         "actually executed\n"

@@ -4,10 +4,10 @@ void Generator::lex(ostream &out) const
 {
     key(out);
 
-    if (!d_print && d_parser.scanner().empty())
+    if (!d_print && d_options.scannerInclude().empty())
         return;
 
-    out << "inline int " << d_parser.className() << "::lex()\n"
+    out << "inline int " << d_options.className() << "::lex()\n"
             "{\n";
 
     if (d_print)

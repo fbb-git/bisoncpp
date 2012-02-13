@@ -1,5 +1,4 @@
 %class-name = "Scanner" 
-%lex-function-name = "yylex"
 %debug
 
 %x xstring pstring pxstring string comment quote block includeOnly
@@ -165,7 +164,7 @@ IDENT   {ID1}{ID2}*
 
 {IDENT}                         return Parser::IDENTIFIER;
 
-[[:digit:]]+                    return setNumber();
+[[:digit:]]+                    return Parser::NUMBER;
 
 .                               return d_matched[0];
 

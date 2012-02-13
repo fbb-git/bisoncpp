@@ -10,7 +10,7 @@ void Generator::classHeader() const
 {
     if 
     (
-        access(d_parser.classHeader().c_str(), F_OK) == 0
+        access(d_options.classHeader().c_str(), F_OK) == 0
         &&
         not d_arg.option(0, "force-class-header")
     )
@@ -19,8 +19,8 @@ void Generator::classHeader() const
     ofstream out;
     ifstream in;
 
-    Errno::open(in,  d_parser.classSkeleton()); 
-    Errno::open(out, d_parser.classHeader()); 
+    Errno::open(in,  d_options.classSkeleton()); 
+    Errno::open(out, d_options.classHeader()); 
 
     filter(in, out);    
 }

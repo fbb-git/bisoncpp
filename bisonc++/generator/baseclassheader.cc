@@ -10,7 +10,7 @@
 // necessary, as all additional functionality should be defined in the
 // parser's class header.
 
-void Generator::baseclassHeader() const
+void Generator::baseClassHeader() const
 {
     if (d_arg.option(0, "no-baseclass-header"))
         return;
@@ -18,8 +18,8 @@ void Generator::baseclassHeader() const
     ofstream out;
     ifstream in;
 
-    Errno::open(in,  d_parser.baseclassSkeleton()); 
-    Errno::open(out, d_parser.baseclassHeader()); 
+    Errno::open(in,  d_options.baseClassSkeleton()); 
+    Errno::open(out, d_options.baseClassHeader()); 
 
     filter(in, out);    
 }

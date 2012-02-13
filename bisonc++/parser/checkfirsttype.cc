@@ -11,7 +11,7 @@ void Parser::checkFirstType()
     string const &firstStype = d_rules.sType(1);
 
     if (stype.length() && stype != firstStype)
-        lineMsg(wmsg) << 
+        wmsg << 
             "rule `" << d_rules.name() << "' type clash (`" << 
             stype << "' `" << firstStype << "') on default action" << endl;
 }

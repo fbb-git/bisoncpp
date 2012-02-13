@@ -18,8 +18,8 @@
 using namespace std;
 using namespace FBB;
 
-//#define BISONCPPBASE_H  "/bisonc++base.h"
-//#define BISONCPP_H      "/bisonc++.h"
-//#define BISONCPP_IH     "/bisonc++.ih"
-//#define BISONCPP_CC     "/bisonc++.cc"
+//#define BISONCPPBASE_H  
+//#define BISONCPP_H      
+//#define BISONCPP_IH     
+//#define BISONCPP_CC     
 

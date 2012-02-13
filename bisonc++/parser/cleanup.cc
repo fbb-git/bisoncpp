@@ -10,14 +10,15 @@ void Parser::cleanup()
     if (emsg.count())       // Terminate if parsing produced errors. 
         throw 1;
 
-    setAccessorVariables();
+    d_options.setAccessorVariables();
 
     d_rules.augmentGrammar(d_symtab.lookup(d_rules.startRule()));
 
-    setVerbosity();         // prepare Msg for verbose output
-                            // (--verbose, --construction) 
+    d_options.setVerbosity();   // prepare Msg for verbose output
+                                // (--verbose, --construction) 
 
-    showFilenames();        // shows the verbosity-filename, otherwise 
+    d_options.showFilenames();
+                            // shows the verbosity-filename, otherwise 
                             // independent of the verbosity setting
 
 }

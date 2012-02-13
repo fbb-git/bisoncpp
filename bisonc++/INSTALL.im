@@ -47,6 +47,8 @@ string COMPILER;
 
 void setLocations()
 {
+    // Recompile parser/data.cc if the skeleton locations change
+
     BASE  = "/usr";
     BIN  = BASE + "/bin";
     SKEL = BASE + "/share/bisonc++";

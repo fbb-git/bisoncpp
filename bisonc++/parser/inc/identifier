@@ -1,6 +1,6 @@
 identifier:
     IDENTIFIER
     {
-        $$ = newYYText();
+        $$ = new string(d_matched);
     }
 ;

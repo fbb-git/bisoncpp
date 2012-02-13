@@ -40,7 +40,7 @@ optTypename:
 optTwo_percents:
     TWO_PERCENTS
     {
-        lineMsg(wmsg) << 
+        wmsg << 
             "Ignoring all input beyond the second %% token" << endl;
         ACCEPT();
     }

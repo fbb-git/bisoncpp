@@ -14,17 +14,18 @@ void manual()
 
     special();
 
-    chdir("documentation");
+    chdir("documentation/manual");
 
-    if (!exists("usage/usage"))
-    {
-        chdir("usage");
-        run("g++ -o usage usage.cc");
-        run("./usage > ../manual/invoking/usage.txt");
-        chdir("..");
-    }
+//    if (!exists("usage/usage"))
+//    {
+//        chdir("usage");
+//        run("g++ -o usage usage.cc");
+//        if ("usage" newer "../manual/invoking/usage")
+//            run("./usage > ../manual/invoking/usage");
+//        chdir("..");
+//    }
 
-    chdir("manual");
+//    chdir("manual");
 
     files = makelist("*.yo") + makelist("*/*.yo");
     for (idx = sizeof(files); idx--; )
@@ -35,7 +36,7 @@ void manual()
             run("yodl2html -l3 bisonc++.yo");
             run("touch " STAMP);
             run("mv *.html " HTMLDEST);
-            run("cp -r grammar/poly " HTMLDEST"/poly");
+//            run("cp -r grammar/poly " HTMLDEST"/poly");
             break;
         }
     }

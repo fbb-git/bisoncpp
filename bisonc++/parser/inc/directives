@@ -232,7 +232,7 @@ _directiveSpec:
     _baseclass_header
     STRING
     {
-        d_options.setBaseClassHeaderPath(); 
+        d_options.setBaseClassHeader(); 
     }
 |
     _baseclass_preinclude
@@ -244,7 +244,7 @@ _directiveSpec:
     _class_header
     STRING
     {
-        d_options.setClassHeaderPath();
+        d_options.setClassHeader();
     }
 |
     _class_name
@@ -300,12 +300,12 @@ _directiveSpec:
     BLOCK
     optSemiCol
     {
-            d_options.setLocationDecl(d_scanner.block().str());
+        setLocationDecl();
     }
 |
     LSP_NEEDED
     {
-        d_options.setLspNeeded();
+        setLspNeeded();
     }
 |
     _ltype
@@ -317,12 +317,12 @@ _directiveSpec:
     _namespace
     IDENTIFIER
     {
-        d_options.setNameSpace();
+        d_options.setNamespace();
     }
 |
     NEG_DOLLAR
     {
-        d_options.setNegativeDollarIndices();
+        setNegativeDollarIndices();
     }
 |
     _nonassoc
@@ -405,7 +405,7 @@ _directiveSpec:
     BLOCK
     optSemiCol
     {
-        d_options.setUnionDecl(d_scanner.block().str());
+        setUnionDecl();
     }
 |
     error
@@ -415,7 +415,7 @@ _directiveSpec:
 _directive:
     _directiveSpec
     {
-        d_msg.erase();
+        d_expect.erase();
         d_typeDirective = false;
     }
 ;

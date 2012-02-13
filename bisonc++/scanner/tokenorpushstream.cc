@@ -1,19 +1,21 @@
 #include "scanner.ih"
 
-Scanner::() const
+int Scanner::tokenOrPushStream()
 {
-    accept(length() - 2);
-    
-    begin(d_includeOnly ? StartCondition__::includeOnly : 
-                          StartCondition__::INITIAL);
+//    accept(length() - 2);
+//    
+//    begin(d_includeOnly ? StartCondition__::includeOnly : 
+//                          StartCondition__::INITIAL);
+//
+//    d_ret = matchedCheck(1, Parser::STRING);
+//    accept(d_nKept);
+//
+//    if (d_ret)
+//        return d_ret;
+//    
+//    pushSource();
 
-    d_ret = matchedCheck(1, Parser::STRING);
-    accept(d_nKept);
-
-    if (d_ret)
-        return d_ret;
-    
-    pushSource();
+    return 0;
 }
 
 

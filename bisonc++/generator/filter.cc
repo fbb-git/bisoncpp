@@ -26,7 +26,7 @@ void Generator::filter(istream &in, ostream &out) const
             size_t pos = d_line.rfind(s_baseFlag);
             if (pos == string::npos)
                 break;
-            d_line.replace(pos, s_baseFlagSize, d_parser.className());
+            d_line.replace(pos, s_baseFlagSize, d_options.className());
         }
 
         out << d_line << '\n';

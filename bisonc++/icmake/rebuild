@@ -3,9 +3,9 @@ void rebuild(string strip)
 {
     initialize();
 
-    chdir("parser");
-    exec("../" + g_binary, "--skeleton-directory", "../share", "grammar");
+    chdir("scanner");
+    exec("../" + g_binary, "-S", "../skeletons", "lexer");
     chdir("..");
 
-    program(strip);      // terminates
+    program(strip, 1);      // terminates
 }

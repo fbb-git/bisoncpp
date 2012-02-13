@@ -51,12 +51,12 @@ void Parser::defineTerminal(string const &name, Symbol::Type type)
             sp->setStype(d_field);
 
         else if (sp->sType() == d_field)
-            lineMsg(wmsg) << 
+            wmsg << 
                         '`' << name << "' type repeatedly specified as <" <<
                         d_field << ">" << endl;
 
         else    // type clash
-            lineMsg(emsg) << 
+            emsg << 
                         "can't redefine type <" << sp->sType() << "> of `" <<
                         name << "' to <" << d_field << ">" << endl;
     }

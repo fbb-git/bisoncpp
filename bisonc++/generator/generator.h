@@ -11,8 +11,8 @@
 #include "../writer/writer.h"
 
 class Terminal;
-class Parser;
 class Rules;
+class Options;
 
 class Generator
 {
@@ -23,10 +23,10 @@ class Generator
 
     FBB::Arg &d_arg;
     Rules const &d_rules;
-    Parser const &d_parser;
+    Options &d_options;
 
-    std::string d_baseclassScope;
-    std::string const &d_nameSpace;
+    std::string d_baseClassScope;
+    std::string const *d_nameSpace;
     std::string const *d_matchedTextFunction;
     std::string const *d_scannerTokenFunction;
 
@@ -44,14 +44,11 @@ class Generator
                                             // name
     static size_t const s_baseFlagSize;     // # of characters in s_baseFlag
 
-    static std::string s_matchedTextFunction;   // default way to call the
-    static std::string s_scannerTokenFunction;  // scanner's token en text
-                                                // functions.
 
     public:
-        Generator(Rules const &rules, Parser const &parser);
+        Generator(Rules const &rules);
 
-        void baseclassHeader() const;
+        void baseClassHeader() const;
         void classHeader() const;
         void implementationHeader() const;
         void parseFunction() const;

@@ -1,6 +1,6 @@
-#include "parser.ih"
+#include "options.ih"
 
-void Parser::showFilenames() const
+void Options::showFilenames() const
 {
     if (!d_arg.option(0, "show-filenames"))
         return;
@@ -9,7 +9,7 @@ void Parser::showFilenames() const
         "\n"
         "SKELETONS AND FILENAMES:\n"
         "  Base class skeleton:\n"
-        "\t`" << d_baseclassSkeleton << "'\n"
+        "\t`" << d_baseClassSkeleton << "'\n"
         "  Class skeleton:\n"
         "\t`" << d_classSkeleton << "'\n"
         "  Implementation header skeleton:\n"
@@ -17,7 +17,7 @@ void Parser::showFilenames() const
         "  Parser implementation skeleton:\n"
         "\t`" << d_parsefunSkeleton << "'\n"
         "\n"
-        "  Base class header:           `" << d_baseclassHeader << "'\n"
+        "  Base class header:           `" << d_baseClassHeader << "'\n"
         "  Class header:                `" << d_classHeader << "'\n"
         "  Implementation header:       `" << d_implementationHeader << "'\n"
         "  Parser Implementation:       `" << d_parsefunSource << "'\n"

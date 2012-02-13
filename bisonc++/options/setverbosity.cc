@@ -1,6 +1,6 @@
-#include "parser.ih"
+#include "options.ih"
 
-void Parser::setVerbosity()
+void Options::setVerbosity()
 {
     if (!d_arg.option(0, "construction") && !d_arg.option('V'))
     {

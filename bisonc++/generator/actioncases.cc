@@ -8,7 +8,7 @@ void Generator::actionCases(ostream &out) const
     vector<Production const *> const &productions = d_rules.productions();
 
     for (auto prod: productions)
-        Production::insertAction(prod, out, d_parser.lines(), d_indent);
+        Production::insertAction(prod, out, d_options.lines(), d_indent);
 }
 
 

@@ -12,9 +12,9 @@ void Generator::debugFunctions(std::ostream &out) const
     if (d_debug)
     {
         out << "\n"
-        "std::ostringstream " << d_baseclassScope << "s_out__;\n"
+        "std::ostringstream " << d_baseClassScope << "s_out__;\n"
         "\n" 
-        "std::ostream &" << d_baseclassScope << "dflush__(std::ostream &out)\n"
+        "std::ostream &" << d_baseClassScope << "dflush__(std::ostream &out)\n"
         "{\n"
         "    std::ostringstream &s_out__ = "
                                 "dynamic_cast<std::ostringstream &>(out);\n"
@@ -25,7 +25,7 @@ void Generator::debugFunctions(std::ostream &out) const
         "    return out;\n"
         "}\n"
         "\n"
-        "std::string " << d_baseclassScope << "stype__(char const *pre, "
+        "std::string " << d_baseClassScope << "stype__(char const *pre, "
                           "STYPE__ const &semVal, char const *post) const\n"
         "{\n";
 
@@ -44,7 +44,7 @@ void Generator::debugFunctions(std::ostream &out) const
 
     if (d_debug || d_print)
         out <<
-        "std::string " << d_baseclassScope << "symbol__(int value) const\n"
+        "std::string " << d_baseClassScope << "symbol__(int value) const\n"
         "{\n"
         "    using namespace std;\n"
         "    ostringstream ostr;\n"
@@ -63,7 +63,7 @@ void Generator::debugFunctions(std::ostream &out) const
 
     if (verbose)
         out <<
-        "void " << d_baseclassScope << "errorVerbose__()\n"
+        "void " << d_baseClassScope << "errorVerbose__()\n"
         "{\n"
         "    std::cout << \"Parser State stack containing \" << "
                                 "(d_stackIdx__ + 1) << \" \"\n" <<

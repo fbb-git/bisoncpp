@@ -1,12 +1,12 @@
 #include "options.ih"
 
-string Options::undelimit()
+string Options::undelimit(std::string const &str)
 {
     string ret = String::unescape(
-                    d_matched->find("<\"") != 0  ?  
-                        *d_matched 
+                    str.find("<\"") != 0  ?  
+                        str
                     : 
-                        d_matched->substr(1, str.size() - 2)
+                        str.substr(1, str.size() - 2)
                 );
 
     return ret;

@@ -2,9 +2,9 @@
 
 void Generator::scannerH(ostream &out) const
 {
-    if (d_parser.scanner().empty())
+    if (d_options.scannerInclude().empty())
         return;
 
     key(out);
-    out <<  "#include " << d_parser.scanner() << '\n';
+    out <<  "#include " << d_options.scannerInclude() << '\n';
 }
