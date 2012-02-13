@@ -291,10 +291,7 @@ _directiveSpec:
     optTypename
     _symbols
 |
-    LINES
-    {
-        d_options.setLines();
-    }
+    LINES                   // no action: now the default
 |
     _locationstruct
     BLOCK

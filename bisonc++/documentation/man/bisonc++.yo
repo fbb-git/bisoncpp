@@ -321,11 +321,12 @@ files already exist.
             specified if objects or variables of the semantic value type
             tt(STYPE__) can be inserted into tt(ostreams).
     it() loption(lines) (soption(l))nl() 
-           Put tt(#line) preprocessor directives in the file containing the
-            parser's tt(parse) function. By including this option the
-            compiler and debuggers will associate errors with lines in your
-            grammar specification file, rather than with the source file
-            containing the tt(parse) function itself.
+           This option is now the default: it puts tt(#line) preprocessor
+            directives in the file containing the parser's tt(parse)
+            function. This option causes the compiler and debuggers to
+            associate errors with lines in your grammar specification file,
+            rather than with the source file containing the tt(parse) function
+            itself.
     it() laoption(max-inclusion-depth)(value)nl()
            Set the maximum number of nested grammar files. Defaults to 10.
     it() lsoption(namespace)(n)(namespace)nl()
@@ -345,9 +346,7 @@ files already exist.
             the lexical scanner.
     it() loption(no-lines)nl() 
            Do not put tt(#line) preprocessor directives in the file containing
-            the parser's tt(parse) function. This option is primarily useful
-            in combination with the tt(%lines) directive, to suppress that
-            directive. It also overrules option tt(--lines), though.
+            the parser's tt(parse) function. It overrules option tt(--lines).
     it() loption(no-parse-member)nl()
            Do not write the file containing the parser's predefined parser
             member functions, even if that file doesn't yet exist. By default
@@ -539,10 +538,9 @@ ignored if these files already exist.
             expressions, the first used directive will have the lowest
             precedence, the last used the highest. See also tt(%token) below.
     it() bf(%lines) nl() 
-           Put tt(#line) preprocessor directives in the file containing the
-            parser's tt(parse) function. It acts identically to the tt(-l)
-            command line option, and is suppressed by the tt(--no-lines)
-            option.
+           This option is now the default: put tt(#line) preprocessor
+            directives in the file containing the parser's tt(parse)
+            function. It is suppressed by the tt(--no-lines) option.
     it() bf(%locationstruct) tt(struct-definition) nl() 
        Defines the organization of the location-struct data type
         tt(LTYPE__). This struct should be specified analogously to the way

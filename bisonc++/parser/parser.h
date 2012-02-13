@@ -65,13 +65,6 @@ class Parser: public ParserBase
                                     // name of the location value stack
                                     // used by the generated parser
 
-	static char s_defaultClassName[];
-	static char s_defaultParsefunSource[];
-    static char s_defaultBaseClassSkeleton[];
-    static char s_defaultClassSkeleton[];
-    static char s_defaultImplementationSkeleton[];
-    static char s_defaultParsefunSkeleton[];
-
     public:
         Parser(Rules &rules);
         int parse();

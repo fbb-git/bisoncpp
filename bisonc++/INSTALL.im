@@ -47,7 +47,7 @@ string COMPILER;
 
 void setLocations()
 {
-    // Recompile parser/data.cc if the skeleton locations change
+    // Recompile options/data.cc if the skeleton locations change
 
     BASE  = "/usr";
     BIN  = BASE + "/bin";

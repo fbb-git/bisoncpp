@@ -46,10 +46,10 @@
 
 
 void Options::setPath(string *dest, int optChar, bool targetDirOption, 
-                      char const *optionName, string const &className, 
+                      char const *optionName, string const &filename, 
                       char const *suffix)
 {
-    if (not Arg::instance().option(dest, optChar))  // catches '3'
+    if (not d_arg.option(dest, optChar))            // catches '3'
     {
         if (not dest->empty())                      // catches '4'
         {
@@ -58,7 +58,7 @@ void Options::setPath(string *dest, int optChar, bool targetDirOption,
                         endl;
         }
         else                                        // Defaults:
-            *dest = d_targetDirectory + className + suffix;
+            *dest = d_targetDirectory + filename + suffix;
     }
 }
         

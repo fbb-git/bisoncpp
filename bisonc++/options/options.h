@@ -18,6 +18,13 @@ class Options
     std::string d_fileName;                 // the name of the current file
     size_t d_lineNr;                        // the current line nr.
 
+    bool        d_debug;
+    bool        d_errorVerbose;
+    bool        d_flexcpp;
+    bool        d_lines;
+
+    size_t      d_requiredTokens;
+
     std::string d_baseClassHeader;
     std::string d_baseClassSkeleton;
     std::string d_classHeader;
@@ -40,15 +47,9 @@ class Options
     std::string d_targetDirectory;
     std::string d_verboseName;
 
-    bool        d_debug;
-    bool        d_errorVerbose;
-    bool        d_flexcpp;
-    bool        d_generateBaseClass;
-    bool        d_lines;
 
-    size_t      d_requiredTokens;
-
-	static char s_defaultLexFunctionName[];
+	static char s_defaultClassName[];
+	static char s_defaultParsefunSource[];
 	static char s_defaultTargetDirectory[];
     static char s_defaultBaseClassSkeleton[];
     static char s_defaultClassName[];
@@ -83,7 +84,6 @@ class Options
         void setClassName();
         void setDebug();
         void setErrorVerbose();
-        void setExpectedConflicts();
         void setFlexcpp();
         void setGenericFilename();
         void setImplementationHeader();
@@ -91,9 +91,6 @@ class Options
         void setLines(bool yesNo);
         void setLocationDecl(std::string const &block);
         void setLtype();
-
-        void setName(std::string *target, char const *extension);
-
         void setNamespace();
         void setParsefunSource();
         void setPreInclude();
@@ -141,7 +138,9 @@ class Options
     private:
         Options();
 
-        void delimit(std::string *target, char const *declTxt);
+        void cleanDir(string &dir);     // undelimit and append / if missing
+        void addIncludeQuotes(string &target);
+
         void assign(std::string *target, char const *declTxt);
 
         void setPath(std::string *dest, int optChar, bool targetDirOption, 
@@ -211,12 +210,12 @@ inline void Options::setPrint()
 
 inline void Options::setPreInclude()
 {
-    delimit(&d_preInclude, "baseclass-preinclude");
+    assign(&d_preInclude, "baseclass-preinclude");
 }
 
 inline void Options::setScannerInclude()
 {
-    delimit(&d_scannerInclude, "scanner");
+    assign(&d_scannerInclude, "scanner");
 }
 
 inline void Options::setScannerTokenFunction()

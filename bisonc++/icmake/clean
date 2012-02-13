@@ -7,7 +7,7 @@ void setRemovals()
     // always:
         remove1 = 
             "build-stamp configure-stamp options/SKEL "
-            "tmp/bisonc++ o */o release.yo tmp/libbisonc++.a "    
+            "tmp/bisonc++.o o */o release.yo tmp/libbisonc++.a "    
             ;
 
     // dist:

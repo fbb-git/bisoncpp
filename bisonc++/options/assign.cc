@@ -3,8 +3,8 @@
 void Options::assign(std::string *target, char const *declTxt)
 {
     if (target->empty())
-        *target = undelimit(*d_matched);
+        *target = *d_matched;
     else
-        emsg << "%" << declTxt << "multiply specified " << endl;
+        emsg << "%" << declTxt << " multiply specified " << endl;
 }
         

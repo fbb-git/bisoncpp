@@ -2,34 +2,89 @@
 
 void Options::setAccessorVariables()
 {
-//    return !d_arg.option(0, "no-lines") &&
-//        (d_arg.option('l') || d_lines);
+    if (d_arg.option('d'))
+        d_debug = true;
 
-//    if (d_arg.option(&d_preInclude, 'H'))
-//        addIncludeQuotes(&d_preInclude);
-//    
-//    if (d_arg.option(&d_implementationHeader, 'i'))
-//        addIncludeQuotes(&d_implementationHeader);
-//    
-//    if (d_arg.option(&d_scannerInclude, 's'))
-//        addIncludeQuotes(&d_scannerInclude);
-//
-//    d_arg.option(&d_matchedTextFunction, "print");
+    if (d_arg.option(0, "error-verbose"))
+        d_errorVerbose = true;
 
-//    d_arg.option(&d_nameSpace, 'n');
-//    d_arg.option(&d_parsefunSource, 'p');
-//    d_arg.option(&d_genericFilename, 'f');
+    if (d_arg.option(0, "flexcpp"))
+        d_flexcpp = true;
 
-//    if (!d_arg.option(&nTokens, "required-tokens"))
-//        d_requiredTokens = d_scanner.number();
+    if (d_arg.option(0, "no-lines"))
+        d_lines = false;
+
+    if (d_className.empty())
+        d_className = s_defaultClassName;
+
+    d_arg.option(&d_genericFilename, 'f');
+
+    string filename = d_genericFilename.size() ? 
+                            d_genericFilename 
+                        :
+                            String::lc(d_className);
+
+    d_arg.option(&d_preInclude, 'H');
+    addIncludeQuotes(&d_preInclude);
+
+    bool targetDirOption =      // true if --target-directory was specified
+        d_arg.option(&d_targetDirectory, "target-directory");
+
+    if (d_targetDirectory.empty())
+        d_targetDirectory = s_defaultTargetDirectory;
+    else
+        cleanDir(d_targetDirectory);
+
+
+    setPath(&d_baseClassHeader, 'b', targetDirOption, "baseclass-header", 
+            filename, "base.h");
+
+
+    d_arg.option(&d_implementationHeader, 'i'))
+    addIncludeQuotes(&d_implementationHeader);
+
+    d_arg.option(&d_nameSpace, 'n');
+
+    setPath(&d_parsefunSource, 'p', targetDirOption, "parsefun-source",
+            s_defaultParsefunSource, "");
+
+    d_arg.option(&d_printFunction, "print");
+    d_printFunction = undelimit(d_printFunction);
+
+    string nTokens;
+    if (d_arg.option(&nTokens, "required-tokens"))
+        d_requiredTokens = A2x(nTokens);
+    
+    d_arg.option(&d_scannerInclude, 's');
+    addIncludeQuotes(&d_scannerInclude);
+
+    d_arg.option(&d_scannerTokenFunction, "scanner-token-function");
+    d_scannerTokenfunction = 
+            d_scannerTokenfunction.empty() ?
+                s_defaultScannerTokenFunction
+            :
+                undelimit(d_scannerTokenFunction;
+
+    d_arg.option(&d_scannerMatchedTextFunction, 
+                                            "scanner-matched-text-function");
+    d_scannerMatchedTextfunction = 
+            d_scannerMatchedTextfunction.empty() ?
+                s_defaultScannerMatchedTextFunction
+            :
+                undelimit(d_scannerMatchedTextFunction;
+
+    if (d_printFunction.empty())
+        d_printFunction = d_scannerMatchedTextFunction;
+
+     d_arg.option(&skeletonDir, 'S');
+        d_arg.option(&d_targetDirectory, "target-directory");
+
+    if (d_targetDirectory.empty())
+        d_targetDirectory = s_defaultTargetDirectory;
+    else
+        cleanDir(d_targetDirectory);
+
 //
-//
-//    string skeletonDir;
-//
-//     d_arg.option(&skeletonDir, 'S');
-//
-//    if (d_className.empty())
-//        d_className = s_defaultClassName;
 //
 //    if (!d_arg.option(&d_baseclassSkeleton, 'B'))
 //        d_baseclassSkeleton =   skeletonDir.empty() ?
@@ -54,21 +109,6 @@ void Options::setAccessorVariables()
 //                                    s_defaultParsefunSkeleton
 //                                :    
 //                                    skeletonDir + BISONCPP_CC;
-//    if 
-//    (
-//        !d_arg.option(&d_parsefunSource, 'p')
-//        &&
-//        d_parsefunSource.empty()
-//    )
-//        d_parsefunSource = s_defaultParsefunSource;
-//
-//    if 
-//    (
-//        !d_arg.option(&d_baseclassHeader, 'b')
-//        &&
-//        d_baseclassHeader.empty()
-//    )
-//        setName(&d_baseclassHeader, "base.h");
 //
 //    if 
 //    (
@@ -85,11 +125,6 @@ void Options::setAccessorVariables()
 //        d_implementationHeader.empty()
 //    )
 //        setName(&d_implementationHeader, ".ih");
-//
-//    Arg &arg = Arg::instance();
-//
-//    if (d_className.empty())
-//        d_className = s_defaultClassName;
 //
 //    if (d_lexFunctionName.empty())
 //        d_lexFunctionName = s_defaultLexFunctionName;
@@ -112,33 +147,15 @@ void Options::setAccessorVariables()
 //    if (!arg.option(&d_lexSkeleton, 'L'))
 //        d_lexSkeleton            = d_skeletonDirectory + FLEXCPP_CC;
 //
-//    if (arg.option(0, "interactive")) // does not overwrite %option when no
-//        d_interactive = true;         // --interactive is supplied
+
+    // Paths
+
+
 //
-//    d_debugAll |= arg.option('d');         // debug facility requested
-//
-//    if (arg.option(0, "lines"))             // --lines overrules 
-//        d_lines = true;                     // --no-lines
-//    else if (arg.option(0, "no-lines"))
-//        d_lines = false;
-//
-//    // Paths
-//
-//    bool targetDirOption = arg.option(&d_targetDirectory, "target-directory");
-//
-//    if (d_targetDirectory.length() && *d_targetDirectory.rbegin() != '/')
-//        d_targetDirectory += '/';
-//
-//    string className = String::lc(d_className);
-//
-//    if (!targetDirOption && d_targetDirectory.empty())
-//        d_targetDirectory = s_defaultTargetDirectory;
-//
+
 //    setPath(&d_classHeaderPath, 'c', targetDirOption, "class-header", 
 //            className, ".h");
 //
-//    setPath(&d_baseClassHeaderPath, 'b', targetDirOption, "base-class-header", 
-//            className, "base.h");
 //
 //    setPath(&d_implementationHeaderPath, 'i', targetDirOption, 
 //            "implementation-header", className, ".ih");
