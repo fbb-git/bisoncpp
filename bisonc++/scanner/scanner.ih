@@ -17,6 +17,7 @@
 #include <bobcat/a2x>
 
 #include "../parser/parserbase.h"   
+#include "../options/options.h"
 
 using namespace std;
 using namespace FBB;

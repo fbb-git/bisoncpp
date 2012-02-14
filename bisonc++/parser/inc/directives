@@ -347,7 +347,7 @@ _directiveSpec:
     _required
     NUMBER
     {
-        d_options.setRequiredTokens();
+        d_options.setRequiredTokens(d_scanner.number());
     }
 |
     _right

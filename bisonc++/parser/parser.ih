@@ -3,14 +3,7 @@
 // $insert class.h
 #include "parser.h"
 
-//#include <cstring>
-//#include <iomanip>
-//#include <sstream>
-//#include <algorithm>
-
 #include <bobcat/mstream>
-//#include <bobcat/a2x>
-//#include <bobcat/errno>
 
 #include "../block/block.h"
 #include "../options/options.h"
@@ -18,8 +11,4 @@
 using namespace std;
 using namespace FBB;
 
-//#define BISONCPPBASE_H  
-//#define BISONCPP_H      
-//#define BISONCPP_IH     
-//#define BISONCPP_CC     
 

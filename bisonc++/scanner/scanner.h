@@ -21,9 +21,6 @@ namespace FBB
 // $insert classHead
 class Scanner: public ScannerBase
 {
-    size_t      d_nKept;        // used by <xstring>
-    int         d_ret;
-
     size_t      d_number;       // only valid after tokens NUMBER and
                                 // after escape(), octal() and 
                                 // hexadecimal(). Illegal (long)
@@ -31,14 +28,11 @@ class Scanner: public ScannerBase
                                 // 8 set.
 
     bool        d_include;      // set to true/false by lexer-actions
-    bool        d_includeOnly;
 
     char        d_commentChar[2];   // set to ' ' in `lexer' when C
                                 // comment without \n is matched,
                                 // otherwise set to \n. See
                                 // `lexer' for details
-
-    std::string d_nextSource;   // with the %include directive
 
     Block       d_block;            // action block retrieved fm the input
 
@@ -60,8 +54,6 @@ class Scanner: public ScannerBase
         std::ostream &lineMsg(FBB::Mstream &mstream);
         size_t number() const;
         bool hasBlock() const;
-        bool includeOnly() const;
-        void undelimit(bool warn);  // remove delimiters warn: about < >
 
     private:
         int lex__();
@@ -70,17 +62,13 @@ class Scanner: public ScannerBase
         void preCode();     // re-implement this function for code that must 
                             // be exec'ed before the patternmatching starts
 
-        int tokenOrPushStream();
-        void pushSource();
-
-        void checkZeroNumber();
-//        void recursiveInclusion(); also check: popSource
+        bool handleXstring(size_t nRedo);
+        int eoln();
 
         void escape();
-        void multiLineString();
+        void checkZeroNumber();
         void octal();
         void hexadecimal();
-        int matchedCheck(size_t minLength, int retToken);
 };
 
 // $insert inlineLexFunction
@@ -91,8 +79,6 @@ inline int Scanner::lex()
 
 inline void Scanner::preCode() 
 {
-    if (d_includeOnly)
-        begin(StartCondition__::includeOnly);
 }
 
 inline Block &Scanner::block()
@@ -114,12 +100,6 @@ inline bool Scanner::hasBlock() const
 {
     return not d_block.empty();
 }
-
-inline bool Scanner::includeOnly() const
-{
-    return d_includeOnly;
-}
-
 
 #endif // Scanner_H_INCLUDED_
 

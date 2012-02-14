@@ -46,40 +46,38 @@ IDENT   {ID1}{ID2}*
              }
 }
 
-<INITIAL>"%include"[ \t]+   {
-                                begin(StartCondition__::pxstring);
-                                d_include = true;
-                            }
-
     //  Blocks start at { and end at their matching } char. They may contain
     //  comment and whitespace, but whitespace is reduced to single blanks or
     //  newlines. All STRING and QUOTE constants are kept as-is, and are
     //  registered as skip-ranges for $-checks
 <block>{
-
-"}"         {
-                if (d_block.close())    // close a block
-                {
-                    begin(StartCondition__::INITIAL);
-                    return Parser::BLOCK;
+    "}"         {
+                    if (d_block.close())    // close a block
+                    {
+                        begin(StartCondition__::INITIAL);
+                        return Parser::BLOCK;
+                    }
                 }
-            }
-
-"\""        {
-                begin(StartCondition__::string);
-                d_block.beginSkip();
-                more();
-            }
-
-"'"         {
-                begin(StartCondition__::quote);
-                d_block.beginSkip();
-                more();
-            }
-
-.           d_block(d_matched.c_str());
-
+    
+    "\""        {
+                    begin(StartCondition__::string);
+                    d_block.beginSkip();
+                    more();
+                }
+    
+    "'"         {
+                    begin(StartCondition__::quote);
+                    d_block.beginSkip();
+                    more();
+                }
+    
+    .           d_block(d_matched.c_str());
 }
+
+%include[ \t]+                  {
+                                    begin(StartCondition__::pxstring);
+                                    d_include = true;
+                                }
 
 %baseclass-header[ \t]+         {
                                     begin(StartCondition__::pxstring);
@@ -122,7 +120,7 @@ IDENT   {ID1}{ID2}*
                                     return Parser::PARSEFUN_SOURCE;
                                 }
 %prec                           return Parser::PREC;
-%print                          {
+%print[ \t]+                    {
                                     begin(StartCondition__::pxstring);
                                     return Parser::PRINT;
                                 }
@@ -174,62 +172,64 @@ IDENT   {ID1}{ID2}*
     // pxstring is activated after a directive has been sensed.
     // it extracts a string, pstring or any sequence of non-blank characters,
 <pxstring>{
-        
-"\""    {
-            more();
-            begin(StartCondition__::string);
-        }
-
-"<"     {
-            more();
-            begin(StartCondition__::pstring);
-        }
-
-\n      {
-            accept(0);
-            begin(StartCondition__::INITIAL);
-        }
-            
-.       {
-            accept(0);
-            begin(StartCondition__::xstring);
-        }
+    "\""    {
+                more();
+                begin(StartCondition__::string);
+            }
+    "<"     {
+                more();
+                begin(StartCondition__::pstring);
+            }
+    .       {
+                accept(0);
+                begin(StartCondition__::xstring);
+            }
+    \n      return eoln();
 }
-
     // string may be entered from block and pxstring
     // strings are all series (including escaped chars, like \") surrounded by
     // double quotes:
 <string>{
-        
-"\""    {
-            if (token = handleString())
-                return token;
+    "\""    {
+                if (handleXstring(0))
+                    return Parser::STRING;
+            }
+    "\\".   |              
+    .       more();
+    \n      return eoln();
+}
 
-            //if (d_block.endSkip(d_matched.c_str()))
-            //    begin(StartCondition__::block);
-            //else
-            //{
-            //    begin(StartCondition__::INITIAL);
-            //
-            //    d_ret = matchedCheck(3, Parser::STRING);
-            //    if (d_ret)
-            //        return d_ret;
-            //
-            //    pushSource();
-            //}
-        }
+    // a pstring is a string surrounded by < and >
+<pstring>{      
+    ">"     {
+                if (handleXstring(0))
+                    return Parser::STRING;
+            }
+    "\\".   |              
+    .       more();
+    \n      return eoln();
+}
 
-"\\".   |              
-.       |
-\n      more();
+    //  xstring returns the next string delimited by either blanks, tabs,
+    //  newlines or C/C++ comment. 
+<xstring>{
+    [[:space:]]     {
+                        if (handleXstring(1))
+                            return Parser::STRING;
+                    }
 
+    "//"            |
+    "/*"            {
+                        if (handleXstring(2))
+                            return Parser::STRING;
+                    }
+
+    .           more();
 }
 
 <comment>{
-.                  ;
-
+.                  
 \n                 d_commentChar[0] = '\n';
-                   
 "*/"               {
                        if (!d_block)
                            begin(StartCondition__::INITIAL);
@@ -240,27 +240,6 @@ IDENT   {ID1}{ID2}*
                        }
                    }
 }
-
-    // a pstring is a string surrounded by < and >
-<pstring>{
-        
-">"     {
-            if (token = handleString())
-                return token;
-
-            //begin(StartCondition__::INITIAL);
-            //
-            //d_ret = matchedCheck(3, Parser::STRING);
-            //if (d_ret)
-            //    return d_ret;
-        }
-
-"\\".   |              
-.       |
-\n      more();
-
-}
-
     //  quote may be entered from INITIAL and block. 
     //  quoted constants start with a quote. They may be octal or hex numbers,
     //  escaped chars, or quoted constants 
@@ -334,40 +313,4 @@ IDENT   {ID1}{ID2}*
                          }
                      }
 }
-
-    //  xstring returns the next string delimited by either blanks, tabs,
-    //  newlines or C/C++ comment. Strings delimited by "..." or <...>
-    //  are returned as STRING. If d_include was set
-    //  before entering this mini scanner a file-switch is
-    //  realized. Otherwise, the string is returned as a Parser::STRING
-<xstring>.*         {
-                        if (handleXstring())
-                            return Parser::STRING;
-                    }
-
-// {
-//         
-// "\\".         more();
-// 
-// "//"        |
-// "/*"        {
-//                 if (int ret = tokenOrPushStream())
-//                     return ret;
-//             }
-//             
-// [ \t]*$     {
-//                   begin(d_includeOnly ? StartCondition__::includeOnly : 
-//                                         StartCondition__::INITIAL);
-//               
-//                   d_ret = matchedCheck(1, Parser::STRING);
-//                   accept(d_nKept);
-//                   if (d_ret)
-//                       return d_ret;
-// 
-//                   pushSource();
-//               }
-// 
-// .           more();
-// 
-// }
 

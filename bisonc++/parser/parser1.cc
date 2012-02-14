@@ -12,13 +12,6 @@ Parser::Parser(Rules &rules)
     d_negativeDollarIndices(false)
 {
     d_options.setMatched(d_matched);
-
-    if (d_scanner.includeOnly())
-    {
-        lex();
-        throw 0;
-    }
-
     d_scanner.setDebug(d_arg.option(0, "scanner-debug"));
 
     predefine(Rules::errorTerminal());

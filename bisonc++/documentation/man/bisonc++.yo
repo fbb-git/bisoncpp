@@ -309,10 +309,6 @@ files already exist.
            Use tt(skeleton) as the pathname of the file containing the
             skeleton of the implementation header. Its filename defaults to
             tt(bisonc++.ih).
-    it() loption(include-only)nl()
-           All grammar files are concatenated to the standard output
-            stream in their order of processing. Following this, bic()
-            terminates.
     it() loption(insert-stype)nl()
            This option is only effective if the tt(debug) option (or
             tt(%debug) directive) has also been specified. When
@@ -1155,6 +1151,11 @@ manpageseealso()
     Aho, A.V., Sethi, R., Ullman, J.D. (1986) bf(Compilers), Addison Wesley.
 
 manpagebugs()
+
+    Discontinued option:
+    itemization(
+        it() loption(include-only)
+    )
 
     To avoid collisions with names defined by the parser's (base) class, the
 following identifiers should not be used as token nams:

@@ -1,8 +1,29 @@
 #include "scanner.ih"
 
-bool Scanner::handleXstring()
+bool Scanner::handleXstring(size_t nRedo)
 {
-    size_t pos = min(d_matched.rfind("//"), d_matched.rfind("/*"));
+    redo(nRedo);
 
-    pos = d_matched.find_last_not_of(" \t", pos);
+    if (d_block)
+    {
+        begin(StartCondition__::block);
+        d_block += d_matched.c_str();
+        return false;
+    }
+
+    begin(StartCondition__::INITIAL);
+
+    if (not d_include)
+        return true;
+
+    d_include = false;
+
+    string filename = 
+                string("\"<").find(d_matched[0]) == 0 ?
+                    Options::undelimit(d_matched)
+                :
+                    d_matched;
+
+    pushStream(filename);
+    return false;
 }

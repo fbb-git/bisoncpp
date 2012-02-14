@@ -5,7 +5,7 @@ rmshift
 rmreduction
 statetype
 element
-scanner         block 
+scanner         block options
 firstset        element
 symbol          firstset
 terminal        symbol
@@ -18,7 +18,7 @@ grammar         rules
 lookaheadset    rules
 rrdata          lookaheadset
 item            lookaheadset 
-parser          scanner options rules symtab
+parser          scanner rules symtab
 transition      item
 stateitem       item rmshift rmreduction rrdata 
 rrconflict      stateitem 

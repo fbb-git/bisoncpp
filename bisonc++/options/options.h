@@ -91,7 +91,7 @@ class Options
         void setNamespace();
         void setParsefunSource();
         void setPreInclude();
-        void setRequiredTokens();
+        void setRequiredTokens(size_t nRequiredTokens);
         void setScannerInclude();
         void setScannerMatchedTextFunction();
         void setScannerPrintFunction();

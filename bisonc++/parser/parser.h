@@ -158,8 +158,18 @@ inline int Parser::lex()
     return d_scanner.lex();
 }
 
+// $insert print
 inline void Parser::print()
-{}
+{
+    enum { _UNDETERMINED_ = -2 };
+
+    std::cout << "Token: " << symbol__(d_token__) <<
+                ", text: `";
+        if (d_token__ == _UNDETERMINED_)
+            std::cout << "'\n";
+        else
+            std::cout <<  d_scanner.matched() << "'\n";
+}
 
 
 inline void Parser::setNegativeDollarIndices()
