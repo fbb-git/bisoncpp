@@ -4,9 +4,12 @@ Scanner::Scanner(std::string const &infile)
 :
     ScannerBase(infile, ""),
     d_include(false),
-    d_matched(matched())
+    d_matched(matched()),
+    d_inclusionDepth(1)
 {
     memset(d_commentChar, 0, 2);
+
+    setTags();
 
     Arg &arg = Arg::instance();
 

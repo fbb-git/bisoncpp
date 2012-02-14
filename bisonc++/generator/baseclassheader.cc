@@ -12,7 +12,15 @@
 
 void Generator::baseClassHeader() const
 {
-    if (d_arg.option(0, "no-baseclass-header"))
+    if (
+        d_arg.option(0, "no-baseclass-header")
+        ||
+        (
+            d_arg.option(0, "dont-rewrite-baseclass-header") 
+            &&
+            access(d_options.baseClassHeader().c_str(), F_OK) == 0
+        )
+    )
         return;
 
     ofstream out;

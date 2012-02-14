@@ -1,5 +1,7 @@
 #include "generator.h"
 
+#include <unistd.h>
+
 #include <sstream>
 #include <iomanip>
 #include <fstream>

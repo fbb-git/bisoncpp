@@ -4,6 +4,8 @@ bool Scanner::handleXstring(size_t nRedo)
 {
     redo(nRedo);
 
+    setLineNrs();
+
     if (d_block)
     {
         begin(StartCondition__::block);
@@ -24,6 +26,17 @@ bool Scanner::handleXstring(size_t nRedo)
                 :
                     d_matched;
 
+    if (++d_inclusionDepth > d_maxDepth)
+        fmsg << "maximum inclusion depth (" << d_inclusionDepth << ", " <<
+                    d_maxDepth << ") exceeded" <<
+                endl;
+
     pushStream(filename);
+    setTags();
     return false;
 }
+
+
+
+
+

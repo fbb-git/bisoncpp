@@ -39,8 +39,8 @@ class Scanner: public ScannerBase
     std::string d_canonicalQuote;   // canonical quoted ident.
     std::string const &d_matched;
 
-    size_t          d_maxDepth;     // max. file inclusion depth
-
+    size_t          d_maxDepth;         // max. file inclusion depth
+    size_t          d_inclusionDepth;   // actual inclusion depth
 
     public:
         Scanner(std::string const &infile);
@@ -51,7 +51,6 @@ class Scanner: public ScannerBase
         Block &block();
         std::string const &canonicalQuote();
         void clearBlock();
-        std::ostream &lineMsg(FBB::Mstream &mstream);
         size_t number() const;
         bool hasBlock() const;
 
@@ -62,13 +61,18 @@ class Scanner: public ScannerBase
         void preCode();     // re-implement this function for code that must 
                             // be exec'ed before the patternmatching starts
 
-        bool handleXstring(size_t nRedo);
+        bool handleXstring(size_t nRedo);   // performs pushStream
         int eoln();
 
         void escape();
         void checkZeroNumber();
         void octal();
         void hexadecimal();
+
+        void setTags() const;
+        void setLineNrs() const;
+
+        bool popStream();
 };
 
 // $insert inlineLexFunction
