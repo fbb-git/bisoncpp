@@ -1,7 +1,7 @@
 %class-name = "Scanner" 
 %debug
 
-%x xstring pstring pxstring string comment quote block includeOnly
+%x xstring pstring pxstring string comment quote block 
 
 OCTAL   [0-7]
 OCT3    {OCTAL}{3}
@@ -46,10 +46,10 @@ IDENT   {ID1}{ID2}*
              }
 }
 
-<INITIAL,includeOnly>"%include"[ \t]*   {
-                                            begin(StartCondition__::pxstring);
-                                            d_include = true;
-                                        }
+<INITIAL>"%include"[ \t]+   {
+                                begin(StartCondition__::pxstring);
+                                d_include = true;
+                            }
 
     //  Blocks start at { and end at their matching } char. They may contain
     //  comment and whitespace, but whitespace is reduced to single blanks or
@@ -81,15 +81,15 @@ IDENT   {ID1}{ID2}*
 
 }
 
-%baseclass-header[ \t]*         {
+%baseclass-header[ \t]+         {
                                     begin(StartCondition__::pxstring);
                                     return Parser::BASECLASS_HEADER;
                                 }
-%baseclass-preinclude[ \t]*     {
+%baseclass-preinclude[ \t]+     {
                                     begin(StartCondition__::pxstring);
                                     return Parser::BASECLASS_PREINCLUDE;
                                 }
-%class-header[ \t]*             {
+%class-header[ \t]+             {
                                     begin(StartCondition__::pxstring);
                                     return Parser::CLASS_HEADER;
                                 }
@@ -97,12 +97,12 @@ IDENT   {ID1}{ID2}*
 %debug                          return Parser::DEBUGFLAG;
 %error-verbose                  return Parser::ERROR_VERBOSE;
 %expect                         return Parser::EXPECT;
-%filenames[ \t]*                {
+%filenames[ \t]+                {
                                     begin(StartCondition__::pxstring);
                                     return Parser::FILENAMES;
                                 }
 "%flexc++"                      return Parser::FLEXCPP;
-%implementation-header[ \t]*    {
+%implementation-header[ \t]+    {
                                     begin(StartCondition__::pxstring);
                                     return Parser::IMPLEMENTATION_HEADER;
                                 }
@@ -110,14 +110,14 @@ IDENT   {ID1}{ID2}*
 %lines                          return Parser::LINES;
 %locationstruct                 return Parser::LOCATIONSTRUCT;
 %lsp-needed                     return Parser::LSP_NEEDED;
-%ltype[ \t]*                    {
+%ltype[ \t]+                    {
                                     begin(StartCondition__::xstring);
                                     return Parser::LTYPE;
                                 }
 %namespace                      return Parser::NAMESPACE;
 %negative-dollar-indices        return Parser::NEG_DOLLAR;
 %nonassoc                       return Parser::NONASSOC;
-%parsefun-source[ \t]*          {
+%parsefun-source[ \t]+          {
                                     begin(StartCondition__::pxstring);
                                     return Parser::PARSEFUN_SOURCE;
                                 }
@@ -128,15 +128,15 @@ IDENT   {ID1}{ID2}*
                                 }
 %right                          return Parser::RIGHT;
 %required-tokens                return Parser::REQUIRED;
-%scanner[ \t]*                  {
+%scanner[ \t]+                  {
                                     begin(StartCondition__::pxstring);
                                     return Parser::SCANNER_INCLUDE;
                                 }
-%scanner-token-function[ \t]*   {
+%scanner-token-function[ \t]+   {
                                     begin(StartCondition__::pxstring);
                                     return Parser::SCANNER_TOKEN_FUNCTION;
                                 }
-%scanner-matched-text-function[ \t]* {
+%scanner-matched-text-function[ \t]+ {
                                     begin(StartCondition__::pxstring);
                                     return 
                                         Parser::SCANNER_MATCHED_TEXT_FUNCTION;
@@ -164,12 +164,15 @@ IDENT   {ID1}{ID2}*
 
 {IDENT}                         return Parser::IDENTIFIER;
 
-[[:digit:]]+                    return Parser::NUMBER;
+[[:digit:]]+                    {
+                                    d_number = A2x(d_matched);
+                                    return Parser::NUMBER;
+                                }
 
 .                               return d_matched[0];
 
-    // pxstring selects either pstring, xstring or string. The matched text
-    // after string/xstring has an initial non-blank
+    // pxstring is activated after a directive has been sensed.
+    // it extracts a string, pstring or any sequence of non-blank characters,
 <pxstring>{
         
 "\""    {
@@ -199,18 +202,21 @@ IDENT   {ID1}{ID2}*
 <string>{
         
 "\""    {
-            if (d_block.endSkip(d_matched.c_str()))
-                begin(StartCondition__::block);
-            else
-            {
-                begin(StartCondition__::INITIAL);
+            if (token = handleString())
+                return token;
 
-                d_ret = matchedCheck(3, Parser::STRING);
-                if (d_ret)
-                    return d_ret;
-
-                pushSource();
-            }
+            //if (d_block.endSkip(d_matched.c_str()))
+            //    begin(StartCondition__::block);
+            //else
+            //{
+            //    begin(StartCondition__::INITIAL);
+            //
+            //    d_ret = matchedCheck(3, Parser::STRING);
+            //    if (d_ret)
+            //        return d_ret;
+            //
+            //    pushSource();
+            //}
         }
 
 "\\".   |              
@@ -235,26 +241,18 @@ IDENT   {ID1}{ID2}*
                    }
 }
 
-    /*
-        when include is requested, pick all chars, but at %include
-        switch file
-    */
-<includeOnly>.|\n             cout << d_matched << flush;
-
-    /*
-        a pstring is a string surrounded by < and >
-    */
-
+    // a pstring is a string surrounded by < and >
 <pstring>{
         
 ">"     {
-            begin(StartCondition__::INITIAL);
+            if (token = handleString())
+                return token;
 
-            d_ret = matchedCheck(3, Parser::STRING);
-            if (d_ret)
-                return d_ret;
-
-            // pushSource(YY_CURRENT_BUFFER, YY_BUF_SIZE);
+            //begin(StartCondition__::INITIAL);
+            //
+            //d_ret = matchedCheck(3, Parser::STRING);
+            //if (d_ret)
+            //    return d_ret;
         }
 
 "\\".   |              
@@ -263,12 +261,9 @@ IDENT   {ID1}{ID2}*
 
 }
 
-    /*
-        quote may be entered from INITIAL and block. 
-        quoted constants start with a quote. They may be octal or hex numbers,
-        escaped chars, or quoted constants 
-    */
-                            
+    //  quote may be entered from INITIAL and block. 
+    //  quoted constants start with a quote. They may be octal or hex numbers,
+    //  escaped chars, or quoted constants 
 <quote>{
 
 "\\"{OCT3}"'"        {
@@ -345,29 +340,34 @@ IDENT   {ID1}{ID2}*
     //  are returned as STRING. If d_include was set
     //  before entering this mini scanner a file-switch is
     //  realized. Otherwise, the string is returned as a Parser::STRING
-<xstring>{
-        
-"\\".         more();
+<xstring>.*         {
+                        if (handleXstring())
+                            return Parser::STRING;
+                    }
 
-"//"        |
-"/*"        {
-                if (int ret = tokenOrPushStream())
-                    return ret;
-            }
-            
-[ \t]*$     {
-                  begin(d_includeOnly ? StartCondition__::includeOnly : 
-                                        StartCondition__::INITIAL);
-              
-                  d_ret = matchedCheck(1, Parser::STRING);
-                  accept(d_nKept);
-                  if (d_ret)
-                      return d_ret;
-
-                  pushSource();
-              }
-
-.           more();
-
-}
+// {
+//         
+// "\\".         more();
+// 
+// "//"        |
+// "/*"        {
+//                 if (int ret = tokenOrPushStream())
+//                     return ret;
+//             }
+//             
+// [ \t]*$     {
+//                   begin(d_includeOnly ? StartCondition__::includeOnly : 
+//                                         StartCondition__::INITIAL);
+//               
+//                   d_ret = matchedCheck(1, Parser::STRING);
+//                   accept(d_nKept);
+//                   if (d_ret)
+//                       return d_ret;
+// 
+//                   pushSource();
+//               }
+// 
+// .           more();
+// 
+// }
 
