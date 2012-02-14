@@ -2,5 +2,8 @@
 
 Options &Options::instance()
 {
-    return s_options;
+    if (s_options == 0)
+        s_options = new Options();
+
+    return *s_options;
 }

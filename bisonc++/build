@@ -90,7 +90,7 @@ void main(int argc, list argv, list envp)
     if (option == "scanner")
     {
         chdir("scanner");
-        system("./newscanner");
+        system("flexc++ lexer");
         chdir("..");
         program(strip);
     }

@@ -2,18 +2,16 @@
 
 Symbol *Parser::useSymbol() 
 {
-    string const &name = d_scanner.YYText();
-
-    if (Symbol *sp = d_symtab.lookup(name))
+    if (Symbol *sp = d_symtab.lookup(d_matched))
         return sp;
 
-    NonTerminal *np = new NonTerminal(name);
+    NonTerminal *np = new NonTerminal(d_matched);
 
     d_symtab.insert
     (
         Symtab::value_type
         (
-            name, 
+            d_matched, 
             d_rules.insert(np)
         )
     );

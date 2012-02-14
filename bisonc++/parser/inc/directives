@@ -339,6 +339,11 @@ _directiveSpec:
         d_options.setScannerPrintFunction();
     }
 |
+    PRINT
+    {
+        d_options.useMatchForPrint();
+    }
+|
     _required
     NUMBER
     {

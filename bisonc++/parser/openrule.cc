@@ -12,7 +12,7 @@ void Parser::openRule(string *ruleNamePtr)
         if 
         (
             not d_rules.newRule(nt, 
-                                d_scanner.sourceName(), d_scanner.lineno())
+                                d_scanner.filename(), d_scanner.lineNr())
         )
         {
             Rules::FileInfo const &fileInfo = d_rules.fileInfo(nt);

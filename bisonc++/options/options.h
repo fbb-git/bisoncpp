@@ -9,6 +9,9 @@ namespace FBB
     class Arg;
 }
 
+// CHECK:
+//    d_generateBaseclass(!d_arg.option(0, "dont-rewrite-baseclass-header")),
+
 class Options
 {
     FBB::Arg &d_arg;
@@ -23,6 +26,7 @@ class Options
     bool        d_flexcpp;
     bool        d_lines;
     bool        d_lspNeeded;
+    bool        d_useMatchForPrint;
 
     size_t      d_requiredTokens;
 
@@ -60,7 +64,7 @@ class Options
     static char s_defaultScannerMatchedTextFunction[];
     static char s_defaultScannerTokenFunction[];
 
-    static Options s_options;
+    static Options *s_options;
 
     public:
         static Options &instance();
@@ -97,6 +101,7 @@ class Options
         void setTargetDirectory();
         void setUnionDecl(std::string const &block);
         void setVerbosity();            // Prepare Msg for verbose output
+        void useMatchForPrint();
 
         void finalizeAccessorVariables();
 
@@ -312,6 +317,10 @@ inline void Options::setLspNeeded()
     d_lspNeeded = true;
 }
 
+inline void Options::setMatched(std::string const &matched)
+{
+    d_matched = &matched;
+}
 
 inline void Options::setNamespace()
 {
@@ -363,6 +372,12 @@ inline std::string const &Options::stype() const
 {
     return d_stackDecl;
 }
+
+inline void Options::useMatchForPrint()
+{
+    d_useMatchForPrint = true;
+}
+
 
 #endif
 

@@ -10,7 +10,16 @@ bool Options::setBasicStrings()
     d_scannerMatchedTextFunction = setOpt("scanner-matched-text-function",
                                     s_defaultScannerMatchedTextFunction); 
 
-    d_scannerPrintFunction = setOpt("print", d_scannerMatchedTextFunction);
+    string printFunction;
+    if (d_arg.option(&printFunction, "print"))  // option used ?
+    {
+        d_scannerPrintFunction = printFunction.size() ?
+                                        undelimit(printFunction)
+                                    :
+                                        d_scannerMatchedTextFunction;
+    }
+    else if (d_useMatchForPrint)
+        d_scannerPrintFunction = d_scannerMatchedTextFunction;
 
     d_arg.option(&d_nameSpace, 'n');
 
@@ -21,7 +30,7 @@ bool Options::setBasicStrings()
 
     d_arg.option(&d_genericFilename, 'f');
     if (d_genericFilename.empty())
-        d_genericFilename = String::lc(d_className);
+        d_genericFilename = d_className;
 
      d_arg.option(&d_skeletonDirectory, 'S');
     if (d_skeletonDirectory.empty())

@@ -14,5 +14,5 @@ void Options::setSkeletons()
                         d_skeletonDirectory + s_defaultImplementationSkeleton;
 
     if (!d_arg.option(&d_parsefunSkeleton, 'P'))
-        d_parsefunSkeleton = d_skeletonDirectory + s_defaultParsefunSource;
+        d_parsefunSkeleton = d_skeletonDirectory + s_defaultParsefunSkeleton;
 }

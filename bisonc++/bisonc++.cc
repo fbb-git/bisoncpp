@@ -24,6 +24,7 @@ namespace
         {"class-header", 'c'},
         {"implementation-header", 'i'},
         {"parsefun-source", 'p'},
+        {"target-directory", Arg::Required},
 
         {"class-name", Arg::Required},
 
@@ -55,12 +56,12 @@ namespace
 
         Arg::LongOption("no-lines"),
 
-        {"print", Arg::Required},
+        {"print", Arg::Optional},
         {"required-tokens", Arg::Required},
 
         {"scanner", 's'},
         {"scanner-function-name", 't'},
-        {"flexc++", 'F'},
+        Arg::LongOption("flexc++"),
 
         Arg::LongOption("scanner-debug"),
 

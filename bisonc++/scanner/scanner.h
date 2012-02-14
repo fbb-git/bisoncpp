@@ -49,24 +49,6 @@ class Scanner: public ScannerBase
 
 
     public:
-        std::string const &YYText() const   // TMP
-        {
-            return d_matched;
-        }
-        void set_debug(bool on)
-        {
-            setDebug(on);
-        }
-        size_t lineno() const
-        {
-            return lineNr();
-        }
-        std::string const &sourceName() const
-        {
-            return filename();
-        }
-
-
         Scanner(std::string const &infile);
         
         // $insert lexFunctionDecl

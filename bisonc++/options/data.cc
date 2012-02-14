@@ -11,7 +11,11 @@ char Options::s_defaultBaseClassSkeleton[]      = "bisonc++base.h";
 char Options::s_defaultClassSkeleton[]          = "bisonc++.h";
 char Options::s_defaultImplementationSkeleton[] = "bisonc++.ih";
 char Options::s_defaultParsefunSkeleton[]       = "bisonc++.cc";
-char Options::s_defaultScannerMatchedTextFunction[] = "d_scanner.matched()";
-char Options::s_defaultScannerTokenFunction[]   = "d_scanner.lex()";
 
-Options Options::s_options;
+    // the defaults are (still) flex-defaults.
+    // use --flexc++ or %flexc++ to obtain flexc++ defaults
+
+char Options::s_defaultScannerMatchedTextFunction[] = "d_scanner.YYText()";
+char Options::s_defaultScannerTokenFunction[]   = "d_scanner.yylex()";
+
+Options *Options::s_options = 0;

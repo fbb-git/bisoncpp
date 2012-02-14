@@ -20,7 +20,7 @@ Terminal *Parser::useTerminal()
         Symtab::value_type
         (
             name, 
-            d_rules.insert(tp, d_scanner.YYText())
+            d_rules.insert(tp, d_matched)
         )
     );
 

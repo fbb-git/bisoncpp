@@ -8,7 +8,7 @@ void Parser::setPrecedence(int type)
     switch (type)
     {
         case IDENTIFIER:
-            sp = d_symtab.lookup(d_scanner.YYText());
+            sp = d_symtab.lookup(d_matched);
         break;
 
         case QUOTE:
@@ -19,11 +19,8 @@ void Parser::setPrecedence(int type)
     if (sp && sp->isTerminal())
         d_rules.setPrecedence(Terminal::downcast(sp));
     else
-    {
-        string const &name = d_scanner.YYText();
-        emsg << "`%prec " << name << "': `" << name << 
+        emsg << "`%prec " << d_matched << "': `" << d_matched << 
                 "' must be a declared terminal token" << endl;
-    }
 }
 
 

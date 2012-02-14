@@ -79,7 +79,7 @@ void Parser::defineTerminal(string const &name, Symbol::Type type)
                                     :
                                         Terminal::DEFAULT, 
                                     d_association, d_field),
-                    d_scanner.YYText()
+                    d_matched
                 )
             )
         );

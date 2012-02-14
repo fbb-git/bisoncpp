@@ -10,14 +10,8 @@ Parser::Parser(Rules &rules)
     d_typeDirective(false),
     d_unionDeclared(false),
     d_negativeDollarIndices(false)
-
-//    d_debugFlag(d_arg.option(0, "debug")),
-//    d_errorVerbose(d_arg.option(0, "error-verbose")),
-//    d_generateBaseclass(!d_arg.option(0, "dont-rewrite-baseclass-header")),
-//    d_lines(false),
-//    d_requiredTokens(0),
 {
-    string value;
+    d_options.setMatched(d_matched);
 
     if (d_scanner.includeOnly())
     {
