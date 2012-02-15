@@ -13,9 +13,9 @@ void Generator::implementationHeader() const
 {
     if 
     (
-        access(d_options.implementationHeader().c_str(), F_OK) == 0
-        &&
         not d_arg.option(0, "force-implementation-header")
+        &&
+        Stat(d_options.implementationHeader())
     )
         return;
 

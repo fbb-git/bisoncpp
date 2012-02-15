@@ -1,6 +1,6 @@
 #include "block.ih"
 
-bool Block::operator()(char const *text)
+bool Block::operator()(string const &text)
 {
     if (d_count == 0)
         return false;

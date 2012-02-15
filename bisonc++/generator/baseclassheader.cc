@@ -18,7 +18,7 @@ void Generator::baseClassHeader() const
         (
             d_arg.option(0, "dont-rewrite-baseclass-header") 
             &&
-            access(d_options.baseClassHeader().c_str(), F_OK) == 0
+            Stat(d_options.baseClassHeader())
         )
     )
         return;

@@ -10,9 +10,9 @@ void Generator::classHeader() const
 {
     if 
     (
-        access(d_options.classHeader().c_str(), F_OK) == 0
-        &&
         not d_arg.option(0, "force-class-header")
+        &&
+        Stat(d_options.classHeader())
     )
         return;
 

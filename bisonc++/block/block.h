@@ -36,12 +36,12 @@ class Block: private std::string
         void saveDollar1(int offset);   // save $1 in $$ at the beginning
                                         // of a nested block
 
-        void operator+=(char const *text);
+        void operator+=(std::string const &text);
   
         operator bool() const;          // return true if a block is active
 
-        bool operator()(char const *text);  // add text if a block is active,
-                                            // returning true if active
+                                        // add text if a block is active,
+        bool operator()(std::string  const &text);  // returns true if active
 
         std::vector<Range>::const_reverse_iterator skipRbegin() const;
         std::vector<Range>::const_reverse_iterator skipRend() const;
@@ -50,9 +50,9 @@ class Block: private std::string
         std::string const &str() const;     // the block's contents
 
         void beginSkip();               // begins a new skip-area
-        bool endSkip(char const *text); // if a block, text is added and
-                                        // the current skip-area is ended
-        bool skip(char const *text);    // if a block, text is added and
+        bool endSkip(std::string const &text); // if a block, text is added 
+                                        // and the current skip-area is ended
+        bool skip(std::string const &text); // if a block, text is added and
                                         // added to the skip-areas
 
         using std::string::empty;
@@ -71,7 +71,7 @@ inline Block::Block()
     d_count(0)
 {}
 
-inline void Block::operator+=(char const *text)
+inline void Block::operator+=(std::string const &text)
 {
     append(text);
 }

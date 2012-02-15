@@ -1,13 +1,12 @@
 #include "generator.h"
 
-#include <unistd.h>
-
 #include <sstream>
 #include <iomanip>
 #include <fstream>
 
 #include <bobcat/errno>
 #include <bobcat/datetime>
+#include <bobcat/stat>
 
 #include "../options/options.h"
 #include "../rules/rules.h"

@@ -9,7 +9,7 @@ bool Scanner::handleXstring(size_t nRedo)
     if (d_block)
     {
         begin(StartCondition__::block);
-        d_block += d_matched.c_str();
+        d_block += d_matched;
         return false;
     }
 

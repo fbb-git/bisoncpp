@@ -1,0 +1,4 @@
+#include "semunion.h"
+
+using namespace std;
+

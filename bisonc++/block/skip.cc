@@ -1,6 +1,6 @@
 #include "block.ih"
 
-bool Block::skip(char const *text)
+bool Block::skip(string const &text)
 {
     size_t begin = length();
 

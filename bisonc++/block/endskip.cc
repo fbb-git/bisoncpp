@@ -1,6 +1,6 @@
 #include "block.ih"
 
-bool Block::endSkip(char const *text)
+bool Block::endSkip(string const &text)
 {
     if (!operator()(text))
         return false;

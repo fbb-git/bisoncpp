@@ -72,7 +72,7 @@ IDENT   {ID1}{ID2}*
                     more();
                 }
     
-    .           d_block(d_matched.c_str());
+    .           d_block(d_matched);
 }
 
 %include[ \t]+                  {
@@ -247,7 +247,7 @@ IDENT   {ID1}{ID2}*
 <quote>{
 
 "\\"{OCT3}"'"        {
-                         if (d_block.skip(d_matched.c_str()))
+                         if (d_block.skip(d_matched))
                              begin(StartCondition__::block);
                          else
                          {
@@ -258,7 +258,7 @@ IDENT   {ID1}{ID2}*
                      }
                      
 "\\x"{HEX2}"'"       {
-                         if (d_block.skip(d_matched.c_str()))
+                         if (d_block.skip(d_matched))
                              begin(StartCondition__::block);
                          else
                          {
@@ -269,7 +269,7 @@ IDENT   {ID1}{ID2}*
                      }
                      
 "\\"[abfnrtv]"'"     {
-                         if (d_block(d_matched.c_str()))
+                         if (d_block(d_matched))
                              begin(StartCondition__::block);
                          else
                          {
@@ -280,7 +280,7 @@ IDENT   {ID1}{ID2}*
                      }    
 "\\"."'"             {
                          // other quoted escaped char
-                         if (d_block.skip(d_matched.c_str()))
+                         if (d_block.skip(d_matched))
                              begin(StartCondition__::block);
                          else           
                          {
@@ -290,7 +290,7 @@ IDENT   {ID1}{ID2}*
                          }
                      }
 ."'"                 {
-                         if (d_block.skip(d_matched.c_str()))
+                         if (d_block.skip(d_matched))
                              begin(StartCondition__::block);
                          else
                          {
@@ -301,7 +301,7 @@ IDENT   {ID1}{ID2}*
                          }
                      }
 [^']+"'"             {
-                         if (d_block.skip(d_matched.c_str()))
+                         if (d_block.skip(d_matched))
                              begin(StartCondition__::block);
                          else
                          {
