@@ -62,7 +62,6 @@ $insert debugdecl
         void push__(size_t nextState);
         void popToken__();
         void pushToken__(int token);
-        void print__();
         void reduce__(PI__ const &productionInfo);
         void errorVerbose__();
         size_t top__() const;

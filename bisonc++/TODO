@@ -1,13 +1,10 @@
 - %nonassoc should probably produce an error when %nonassoc operators are used
   repeatedly. 
 
-scanner/scanner1.cc should use std::cerr as its output stream. Currently using
-std::cout
-
 block.h: skip should expect std::string const &, see also skip-calls in
 e.g. lexer.  Same for Block constructor
 
-void Parser::setStype(): uses string, old char const *
-void Parser::setLtype(): uses string, old char const *
+--print dropped, use --display-tokens instead without argument
 
-parser/parser1: calls set_debug for the scanner, see also scanner/scanner.h
+Parser::print() calls Parser::print__, implemented in lex.cc, but is commented
+out by default. Uncomment or control by option if tokens should be displayed.

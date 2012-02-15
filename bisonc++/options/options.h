@@ -20,7 +20,7 @@ class Options
 
     bool        d_debug;
     bool        d_errorVerbose;
-    bool        d_flexcpp;
+    bool        d_flex;
     bool        d_lines;
     bool        d_lspNeeded;
     bool        d_displayTokens;
@@ -79,7 +79,7 @@ class Options
         void setClassName();
         void setDebug();
         void setErrorVerbose();
-        void setFlexcpp();
+        void setFlex();
         void setGenericFilename();
         void setImplementationHeader();
         void setLocationDecl(std::string const &block);
@@ -294,9 +294,9 @@ inline void Options::setGenericFilename()
     assign(&d_genericFilename, "filenames");
 }
 
-inline void Options::setFlexcpp()
+inline void Options::setFlex()
 {
-    d_flexcpp = true;
+    d_flex = true;
 }
 
 inline void Options::setImplementationHeader()

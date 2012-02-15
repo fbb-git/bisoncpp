@@ -268,9 +268,9 @@ _directiveSpec:
         d_options.setGenericFilename();
     }
 |
-    FLEXCPP
+    FLEX
     {
-        d_options.setFlexcpp();
+        d_options.setFlex();
     }
 |
     _implementation_header
@@ -284,7 +284,7 @@ _directiveSpec:
     optTypename
     _symbols
 |
-    NO_LINES
+    NOLINES
     {
         d_options.unsetLines();
     }

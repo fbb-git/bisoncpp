@@ -25,6 +25,7 @@ $insert 4 scannerobject
         void errorRecovery();
         int lookup(bool recovery);
         void nextToken();
+        void print__();
 };
 
 inline void \@::error(char const *msg)

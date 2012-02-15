@@ -6,8 +6,7 @@ void Scanner::octal()
     istr >> oct >> d_number;
 
     if (d_number > 0xff)
-        lineMsg(emsg) << "Quoted constant " << d_matched << " exceeds 0177" << 
-                                                                        endl;
+        emsg << "Quoted constant " << d_matched << " exceeds 0177" << endl;
     else 
         checkZeroNumber();
 }

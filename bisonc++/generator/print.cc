@@ -4,10 +4,10 @@ void Generator::print(ostream &out) const
 {
     key(out);
 
-    out << "inline void " << d_options.className() << "::print()\n"
+    out << "void " << d_options.className() << "::print__()\n"
             "{";
 
-    if (!d_print)
+    if (!d_displayTokens)
         out << "}\n";
     else
         out <<

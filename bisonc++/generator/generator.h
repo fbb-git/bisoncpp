@@ -28,7 +28,6 @@ class Generator
     std::string d_baseClassScope;
     std::string const &d_nameSpace;
     std::string const &d_matchedTextFunction;
-    std::string const &d_printFunction;
     std::string const &d_tokenFunction;
 
     mutable std::string d_key;          // extracted at $insert statements
@@ -36,7 +35,7 @@ class Generator
 
     mutable std::string d_line;
     bool d_debug;
-    bool d_print;
+    bool d_displayTokens;
     
     mutable Writer d_writer;                // maintains its own const-ness
 

@@ -2,7 +2,7 @@
 
 void Generator::debugDecl(std::ostream &out) const
 {
-    if (!d_debug && !d_print)
+    if (!d_debug && !d_displayTokens)
         return;
 
     key(out);
