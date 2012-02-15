@@ -100,13 +100,12 @@ IDENT   {ID1}{ID2}*
                                     begin(StartCondition__::pxstring);
                                     return Parser::FILENAMES;
                                 }
-"%flexc++"                      return Parser::FLEXCPP;
+"%flex"                         return Parser::FLEX;
 %implementation-header[ \t]+    {
                                     begin(StartCondition__::pxstring);
                                     return Parser::IMPLEMENTATION_HEADER;
                                 }
 %left                           return Parser::LEFT;
-%lines                          return Parser::LINES;
 %locationstruct                 return Parser::LOCATIONSTRUCT;
 %lsp-needed                     return Parser::LSP_NEEDED;
 %ltype[ \t]+                    {
@@ -116,21 +115,19 @@ IDENT   {ID1}{ID2}*
 %namespace                      return Parser::NAMESPACE;
 %negative-dollar-indices        return Parser::NEG_DOLLAR;
 %nonassoc                       return Parser::NONASSOC;
+%no-lines                       return Parser::NOLINES;
 %parsefun-source[ \t]+          {
                                     begin(StartCondition__::pxstring);
                                     return Parser::PARSEFUN_SOURCE;
                                 }
 %prec                           return Parser::PREC;
-%print[ \t]+                    {
-                                    begin(StartCondition__::pxstring);
-                                    return Parser::PRINT;
-                                }
 %right                          return Parser::RIGHT;
 %required-tokens                return Parser::REQUIRED;
 %scanner[ \t]+                  {
                                     begin(StartCondition__::pxstring);
                                     return Parser::SCANNER_INCLUDE;
                                 }
+%display-tokens                 return Parser::DISPLAY_TOKENS;
 %scanner-token-function[ \t]+   {
                                     begin(StartCondition__::pxstring);
                                     return Parser::SCANNER_TOKEN_FUNCTION;

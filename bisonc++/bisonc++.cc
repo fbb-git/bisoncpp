@@ -44,28 +44,21 @@ namespace
 
         {"help", 'h'},
 
-        Arg::LongOption("include-only"),
-
         {"max-inclusion-depth", Arg::Required},
         {"namespace", 'n'},
 
         Arg::LongOption("no-baseclass-header"),
+        Arg::LongOption("no-lines"),
         Arg::LongOption("no-parse-member"),
 
-        {"lines", 'l'},
-
-        Arg::LongOption("no-lines"),
-
-        {"print", Arg::Optional},
         {"required-tokens", Arg::Required},
 
         {"scanner", 's'},
-        {"scanner-function-name", 't'},
-        Arg::LongOption("flexc++"),
-
+        {"display-tokens", 't'},
         Arg::LongOption("scanner-debug"),
-
         {"scanner-token-function", Arg::Required},
+        {"scanner-matched-text-function", Arg::Required},
+        Arg::LongOption("flex"),
 
         Arg::LongOption("show-filenames"),
                 // writes the names of the files to the standard output
@@ -86,7 +79,7 @@ namespace
 int main(int argc, char **argv)
 try
 {
-    Arg &arg = Arg::initialize("AB:b:C:c:f:H:hI:i:ln:p:P:s:S:t:Vv", 
+    Arg &arg = Arg::initialize("AB:b:C:c:f:H:hI:i:n:p:P:s:S:t:Vv", 
                     longOptions, longEnd, argc, argv);
 
     arg.versionHelp(usage, version, 1);

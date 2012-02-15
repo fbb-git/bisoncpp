@@ -97,13 +97,6 @@ _parsefun_source:
     }
 ;
 
-_print:
-    PRINT
-    {
-        d_expect = "Scanner function returning matched text";
-    }
-;
-
 _pushPrecedence:
     {
         $$ = Terminal::sPrecedence();
@@ -291,7 +284,10 @@ _directiveSpec:
     optTypename
     _symbols
 |
-    LINES                   // no action: now the default
+    NO_LINES
+    {
+        d_options.unsetLines();
+    }
 |
     _locationstruct
     BLOCK
@@ -333,15 +329,9 @@ _directiveSpec:
         d_options.setParsefunSource();
     }
 |
-    _print
-    STRING
+    DISPLAY_TOKENS
     {
-        d_options.setScannerPrintFunction();
-    }
-|
-    PRINT
-    {
-        d_options.useMatchForPrint();
+        d_options.setDisplayTokens();
     }
 |
     _required

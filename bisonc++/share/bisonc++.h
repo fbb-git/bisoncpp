@@ -34,7 +34,11 @@ inline void \@::error(char const *msg)
 
 $insert lex
 
-$insert print
+inline void Parser::print()         
+{
+    // print__();           // displays tokens if --print was specified
+}
+
 $insert namespace-close
 
 #endif

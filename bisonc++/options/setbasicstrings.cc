@@ -5,21 +5,16 @@ bool Options::setBasicStrings()
     d_className = setOpt("class-name", s_defaultClassName);
 
     d_scannerTokenFunction = setOpt("scanner-token-function",
-                                    s_defaultScannerTokenFunction); 
+                                    d_flex ?
+                                        s_yylex
+                                    :
+                                        s_defaultScannerTokenFunction); 
 
     d_scannerMatchedTextFunction = setOpt("scanner-matched-text-function",
-                                    s_defaultScannerMatchedTextFunction); 
-
-    string printFunction;
-    if (d_arg.option(&printFunction, "print"))  // option used ?
-    {
-        d_scannerPrintFunction = printFunction.size() ?
-                                        undelimit(printFunction)
+                                    d_flex ?
+                                        s_YYText
                                     :
-                                        d_scannerMatchedTextFunction;
-    }
-    else if (d_useMatchForPrint)
-        d_scannerPrintFunction = d_scannerMatchedTextFunction;
+                                        s_defaultScannerMatchedTextFunction); 
 
     d_arg.option(&d_nameSpace, 'n');
 
@@ -27,7 +22,6 @@ bool Options::setBasicStrings()
     if (d_arg.option(&nTokens, "required-tokens"))
         d_requiredTokens = A2x(nTokens);
     
-
     d_arg.option(&d_genericFilename, 'f');
     if (d_genericFilename.empty())
         d_genericFilename = d_className;

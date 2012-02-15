@@ -62,6 +62,7 @@ $insert debugdecl
         void push__(size_t nextState);
         void popToken__();
         void pushToken__(int token);
+        void print__();
         void reduce__(PI__ const &productionInfo);
         void errorVerbose__();
         size_t top__() const;
@@ -97,7 +98,6 @@ inline void \@Base::ERROR() const
 $insert 4 debug "ERROR(): Forced error condition"
     throw UNEXPECTED_TOKEN__;
 }
-
 
 // As a convenience, when including ParserBase.h its symbols are available as
 // symbols in the class Parser, too.

@@ -9,9 +9,6 @@ namespace FBB
     class Arg;
 }
 
-// CHECK:
-//    d_generateBaseclass(!d_arg.option(0, "dont-rewrite-baseclass-header")),
-
 class Options
 {
     FBB::Arg &d_arg;
@@ -26,7 +23,7 @@ class Options
     bool        d_flexcpp;
     bool        d_lines;
     bool        d_lspNeeded;
-    bool        d_useMatchForPrint;
+    bool        d_displayTokens;
 
     size_t      d_requiredTokens;
 
@@ -43,7 +40,6 @@ class Options
     std::string d_parsefunSkeleton;
     std::string d_parsefunSource;
     std::string d_preInclude;
-    std::string d_scannerPrintFunction;        // set by --print or %print
     std::string d_scannerInclude;
     std::string d_scannerMatchedTextFunction;
     std::string d_scannerTokenFunction;
@@ -63,6 +59,8 @@ class Options
     static char s_defaultTargetDirectory[];
     static char s_defaultScannerMatchedTextFunction[];
     static char s_defaultScannerTokenFunction[];
+    static char s_YYText[];
+    static char s_yylex[];
 
     static Options *s_options;
 
@@ -84,30 +82,30 @@ class Options
         void setFlexcpp();
         void setGenericFilename();
         void setImplementationHeader();
-        void setLines();
         void setLocationDecl(std::string const &block);
         void setLspNeeded();
         void setLtype();
         void setNamespace();
         void setParsefunSource();
+        void setDisplayTokens();
         void setPreInclude();
         void setRequiredTokens(size_t nRequiredTokens);
         void setScannerInclude();
         void setScannerMatchedTextFunction();
-        void setScannerPrintFunction();
         void setScannerTokenFunction();
         void setSkeletonDirectory();
         void setStype();
         void setTargetDirectory();
         void setUnionDecl(std::string const &block);
         void setVerbosity();            // Prepare Msg for verbose output
-        void useMatchForPrint();
+        void unsetLines();
 
         void finalizeAccessorVariables();
 
         void showFilenames() const;
 
 
+        bool displayTokens() const;
         bool debug() const;
         bool errorVerbose() const;
         bool lines() const;
@@ -129,7 +127,6 @@ class Options
         std::string const &preInclude() const;
         std::string const &scannerInclude() const;
         std::string const &scannerMatchedTextFunction() const;
-        std::string const &scannerPrintFunction() const;
         std::string const &scannerTokenFunction() const;
         std::string const &stype() const;
 
@@ -237,6 +234,11 @@ inline std::string const &Options::preInclude() const
     return d_preInclude;
 }
 
+inline bool Options::displayTokens() const
+{
+    return d_displayTokens;
+}
+
 inline size_t Options::requiredTokens() const
 {
     return d_requiredTokens;
@@ -250,11 +252,6 @@ inline std::string const &Options::scannerInclude() const
 inline std::string const &Options::scannerMatchedTextFunction() const
 {
     return d_scannerMatchedTextFunction;
-}
-
-inline std::string const &Options::scannerPrintFunction() const
-{
-    return d_scannerPrintFunction;
 }
 
 inline std::string const &Options::scannerTokenFunction() const
@@ -307,9 +304,9 @@ inline void Options::setImplementationHeader()
     assign(&d_implementationHeader, "implementation-header");
 }
 
-inline void Options::setLines()
+inline void Options::unsetLines()
 {
-    d_lines = true;
+    d_lines = false;
 }
 
 inline void Options::setLspNeeded()
@@ -347,9 +344,9 @@ inline void Options::setScannerMatchedTextFunction()
     assign(&d_scannerMatchedTextFunction, "scanner-matched-text-function");
 }
 
-inline void Options::setScannerPrintFunction()
+inline void Options::setDisplayTokens()
 {
-    assign(&d_scannerPrintFunction, "print");
+    d_displayTokens = true;
 }
 
 inline void Options::setScannerTokenFunction()
@@ -372,12 +369,6 @@ inline std::string const &Options::stype() const
 {
     return d_stackDecl;
 }
-
-inline void Options::useMatchForPrint()
-{
-    d_useMatchForPrint = true;
-}
-
 
 #endif
 

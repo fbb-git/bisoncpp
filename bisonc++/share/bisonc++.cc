@@ -130,6 +130,8 @@ $insert 4 requiredtokens
 
 $insert debugfunctions
 
+$insert print
+
 void \@Base::clearin()
 {
     d_token__ = d_nextToken__ = _UNDETERMINED_;
