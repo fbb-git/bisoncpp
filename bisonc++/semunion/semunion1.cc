@@ -21,11 +21,11 @@ SemUnion::SemUnion(SemUnion const &other)
         break;
 
         case TERMINAL:
-            new (&d_terminal) Terminal(other.d_terminal);
+            d_terminal = other.d_terminal;
         break;
 
         case SYMBOL:
-            new (&d_symbol) Symbol(other.d_symbol);
+            d_symbol = other.d_symbol;
         break;
 
         default:

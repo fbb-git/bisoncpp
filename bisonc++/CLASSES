@@ -9,6 +9,8 @@ scanner         block options
 firstset        element
 symbol          firstset
 terminal        symbol
+semunion        terminal block
+spsemunion      semunion
 production      block terminal 
 followset       terminal
 nonterminal     production  firstset followset
@@ -18,7 +20,7 @@ grammar         rules
 lookaheadset    rules
 rrdata          lookaheadset
 item            lookaheadset 
-parser          scanner rules symtab
+parser          scanner rules symtab spsemunion
 transition      item
 stateitem       item rmshift rmreduction rrdata 
 rrconflict      stateitem 

@@ -17,7 +17,7 @@ namespace FBB
 }
 
 #undef Parser
-class Parser: public ParserBase
+class Parser: private DataType, public ParserBase
 {
             // actions to taken given tokens returned by the lexical scanner
     typedef std::map<size_t, void (Parser::*)()> 
@@ -80,7 +80,7 @@ class Parser: public ParserBase
                                   std::string const &stype);
         void definePathname(std::string *target);
         void defineTerminal(std::string const &name, Symbol::Type type);
-        void defineTokenName(std::string *name, bool hasValue);
+        void defineTokenName(STYPE__ const &nm, STYPE__ const &hasValue);
         void expectRules();
 
         void setExpectedConflicts();
@@ -104,9 +104,9 @@ class Parser: public ParserBase
                                         // reference ($) in a received action 
                                         // block
 
-        FBB::PTag *handleProductionElements(FBB::PTag *first, 
-                                            FBB::PTag *second);
-        void handleProductionElement(FBB::PTag *last);
+//        FBB::PTag *handleProductionElements(FBB::PTag *first, 
+//                                            FBB::PTag *second);
+//        void handleProductionElement(FBB::PTag *last);
 
 
         void installAction(Block &block);

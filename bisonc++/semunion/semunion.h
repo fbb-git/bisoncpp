@@ -57,7 +57,7 @@ struct Type<Int<DataType::BLOCK>>                // given BLOCK
 };
 
 template <>
-struct Type<Terminal>                        // define 'DataType'
+struct Type<Terminal *>                        // define 'DataType'
 {                                               // given Terminal
     enum { dataType = DataType::TERMINAL };
 };
@@ -65,11 +65,11 @@ struct Type<Terminal>                        // define 'DataType'
 template <>                                     // defining 'Terminal'
 struct Type<Int<DataType::TERMINAL>>                // given TERMINAL
 {
-    typedef Terminal type;
+    typedef Terminal *type;
 };
 
 template <>
-struct Type<Symbol>                        // define 'DataType'
+struct Type<Symbol *>                        // define 'DataType'
 {                                               // given Symbol
     enum { dataType = DataType::SYMBOL };
 };
@@ -77,7 +77,7 @@ struct Type<Symbol>                        // define 'DataType'
 template <>                                     // defining 'Symbol'
 struct Type<Int<DataType::SYMBOL>>                // given SYMBOL
 {
-    typedef Symbol type;
+    typedef Symbol *type;
 };
 
 
@@ -98,8 +98,8 @@ class SemUnion: public DataType
         bool        d_bool;
         std::string d_str;
         Block       d_block;
-        Terminal    d_terminal;
-        Symbol      d_symbol;
+        Terminal    *d_terminal;
+        Symbol      *d_symbol;
     };
 
     public:
@@ -111,14 +111,15 @@ class SemUnion: public DataType
     
         ~SemUnion();
 
-        template <Symbol dataType>
-        typename Type<Int<dataType>>::type &value();
+        template <Type dataType>
+        typename ::Type<Int<dataType>>::type &value();
 
-        Symbol index() const;
+        Type index() const;
 
     private:
         template <typename Type>
         Type const *conversion() const;
+        void verify(Type request);
 };
 
 inline SemUnion::SemUnion()
@@ -134,7 +135,7 @@ inline DataType::Type SemUnion::index() const
 template <typename Tp>
 inline SemUnion::SemUnion(Tp const &value)
 :
-    d_index(static_cast<Type>(Type<Tp>::dataType))
+    d_index(static_cast<Type>(::Type<Tp>::dataType))
 {
     new (&d_int) Tp(value);
 }
@@ -146,10 +147,11 @@ inline Type const *SemUnion::conversion() const
 }
 
 template <DataType::Type dataType>
-inline typename Type<Int<dataType>>::type &SemUnion::value()
+typename ::Type<Int<dataType>>::type &SemUnion::value()
 {
-    return *const_cast<typename Type<Int<dataType>>::type *>(
-                conversion<typename Type<Int<dataType>>::type>());
+    verify(dataType);
+    return *const_cast<typename ::Type<Int<dataType>>::type *>(
+                conversion<typename ::Type<Int<dataType>>::type>());
 }
         
 #endif

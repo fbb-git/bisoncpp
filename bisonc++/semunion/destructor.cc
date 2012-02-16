@@ -14,13 +14,5 @@ SemUnion::~SemUnion()
         case BLOCK:
             d_block.~Block();
         break;
-
-        case TERMINAL:
-            d_terminal.~Terminal();
-        break;
-
-        case SYMBOL:
-            d_symbol.~Symbol();
-        break;
     }
 }

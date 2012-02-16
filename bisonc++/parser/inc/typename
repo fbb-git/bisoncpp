@@ -3,7 +3,6 @@ typename:
     identifier
     '>'
     {
-        d_field = *$2;
-        delete $2;
+        d_field = $2->value<Type::STRING>();
     }
 ;
