@@ -9,8 +9,6 @@ scanner         block options
 firstset        element
 symbol          firstset
 terminal        symbol
-semunion        terminal block
-spsemunion      semunion
 production      block terminal 
 followset       terminal
 nonterminal     production  firstset followset

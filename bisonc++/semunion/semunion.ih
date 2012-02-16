@@ -1,6 +1,0 @@
-#include "semunion.h"
-
-#include <bobcat/mstream>
-
-using namespace std;
-

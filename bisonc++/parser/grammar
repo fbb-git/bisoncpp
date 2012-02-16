@@ -15,20 +15,18 @@
         TWO_PERCENTS TYPE UNION
         
 
-//%union
-//{
-//    std::string                *sp;
-//    FBB::PTag                  *tag;
-//    int                         type;
-//    bool                        logic;
-//};
-//
-//%type <sp>      identifier
-//%type <tag>     _productionElement _productionElements
-//%type <type>    _pushPrecedence _precSpec 
-//%type <logic>   optNumber
+%union
+{
+    std::string                *sp;
+    FBB::PTag                  *tag;
+    int                         type;
+    bool                        logic;
+};
 
-%stype spSemUnion
+%type <sp>      identifier
+%type <tag>     _productionElement _productionElements
+%type <type>    _pushPrecedence _precSpec 
+%type <logic>   optNumber
 
 %%
 

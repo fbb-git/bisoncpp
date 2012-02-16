@@ -284,10 +284,7 @@ _directiveSpec:
     optTypename
     _symbols
 |
-    NOLINES
-    {
-        d_options.unsetLines();
-    }
+    NOLINES                   // no action: now the default
 |
     _locationstruct
     BLOCK
@@ -331,7 +328,7 @@ _directiveSpec:
 |
     DISPLAY_TOKENS
     {
-        d_options.setDisplayTokens();
+        d_options.displayTokens();
     }
 |
     _required

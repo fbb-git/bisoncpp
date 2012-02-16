@@ -17,7 +17,7 @@ namespace FBB
 }
 
 #undef Parser
-class Parser: private DataType, public ParserBase
+class Parser: public ParserBase
 {
             // actions to taken given tokens returned by the lexical scanner
     typedef std::map<size_t, void (Parser::*)()> 
@@ -80,7 +80,7 @@ class Parser: private DataType, public ParserBase
                                   std::string const &stype);
         void definePathname(std::string *target);
         void defineTerminal(std::string const &name, Symbol::Type type);
-        void defineTokenName(STYPE__ const &nm, STYPE__ const &hasValue);
+        void defineTokenName(std::string *name, bool hasValue);
         void expectRules();
 
         void setExpectedConflicts();
@@ -104,9 +104,9 @@ class Parser: private DataType, public ParserBase
                                         // reference ($) in a received action 
                                         // block
 
-//        FBB::PTag *handleProductionElements(FBB::PTag *first, 
-//                                            FBB::PTag *second);
-//        void handleProductionElement(FBB::PTag *last);
+        FBB::PTag *handleProductionElements(FBB::PTag *first, 
+                                            FBB::PTag *second);
+        void handleProductionElement(FBB::PTag *last);
 
 
         void installAction(Block &block);
@@ -158,18 +158,8 @@ inline int Parser::lex()
     return d_scanner.lex();
 }
 
-// $insert print
 inline void Parser::print()
-{
-//    enum { _UNDETERMINED_ = -2 };
-//
-//    std::cout << "Token: " << symbol__(d_token__) <<
-//                ", text: `";
-//        if (d_token__ == _UNDETERMINED_)
-//            std::cout << "'\n";
-//        else
-//            std::cout <<  d_scanner.matched() << "'\n";
-}
+{}
 
 
 inline void Parser::setNegativeDollarIndices()
