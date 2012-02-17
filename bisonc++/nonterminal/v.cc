@@ -1,6 +1,6 @@
 #include "nonterminal.ih"
 
-inline size_t NonTerminal::v_size() const
+size_t NonTerminal::v_size() const
 {
     return d_nr;
 }
