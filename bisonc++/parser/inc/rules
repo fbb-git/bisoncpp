@@ -23,7 +23,7 @@ _productionElement:
 |
     BLOCK
     {
-        //$$ = spSemBase(new SemBlock(d_scanner.block()));
+        $$ = spSemBase(new SemBlock(d_scanner.block()));
     }
 |
     PREC
