@@ -80,7 +80,7 @@ class Parser: public ParserBase
                                   std::string const &stype);
         void definePathname(std::string *target);
         void defineTerminal(std::string const &name, Symbol::Type type);
-        void defineTokenName(std::string *name, bool hasValue);
+        void defineTokenName(std::string const &name, bool hasValue);
         void expectRules();
 
         void setExpectedConflicts();
@@ -104,9 +104,9 @@ class Parser: public ParserBase
                                         // reference ($) in a received action 
                                         // block
 
-        FBB::PTag *handleProductionElements(FBB::PTag *first, 
-                                            FBB::PTag *second);
-        void handleProductionElement(FBB::PTag *last);
+//        FBB::PTag *handleProductionElements(FBB::PTag *first, 
+//                                            FBB::PTag *second);
+//        void handleProductionElement(FBB::PTag *last);
 
 
         void installAction(Block &block);

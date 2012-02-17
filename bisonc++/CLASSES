@@ -1,10 +1,14 @@
 enumsolution
+sembase
+element         sembase
+semstring       sembase
+sembool         sembase
+semsizet        sembase
 block
 options         
 rmshift
 rmreduction
 statetype
-element
 scanner         block options
 firstset        element
 symbol          firstset
@@ -18,7 +22,7 @@ grammar         rules
 lookaheadset    rules
 rrdata          lookaheadset
 item            lookaheadset 
-parser          scanner rules symtab spsemunion
+parser          scanner rules symtab spsemunion sembase semsizet
 transition      item
 stateitem       item rmshift rmreduction rrdata 
 rrconflict      stateitem 

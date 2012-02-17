@@ -3,6 +3,6 @@
 void Writer::terminalSymbol(Terminal const *terminal, ostream &out)
 {
     if (terminal->isSymbolic() && !terminal->isReserved())
-        out <<  "    SMapVal(" << terminal->value() << ", \"" <<
+        out <<  "    SMapVal(" << terminal->size() << ", \"" <<
                                   terminal << "\"),\n";
 }

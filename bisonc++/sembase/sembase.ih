@@ -1,0 +1,12 @@
+#include "sembase.h"
+
+#include <bobcat/mstream>
+
+using namespace std;
+using namespace FBB;
+
+inline void SemBase::notImplemented() const
+{
+    fmsg << "Internal error: Parser requests inappropriate semantic value" <<
+            endl;
+}

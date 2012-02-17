@@ -1,14 +1,13 @@
 #include "parser.ih"
 
-void Parser::defineTokenName(string *name, bool hasValue)
+void Parser::defineTokenName(string const &name, bool hasValue)
 {
-    defineTerminal(*name,   Symbol::SYMBOLIC_TERMINAL);
+    defineTerminal(name, Symbol::SYMBOLIC_TERMINAL);
 
     if (hasValue)
     {
-        wmsg << "deprecated use of explicit value: `" << *name <<
+        wmsg << "deprecated use of explicit value: `" << name <<
                     ' ' << d_scanner.number() << '\'' << endl;
         d_rules.setLastTerminalValue(d_scanner.number());
     }
-    delete name;
 }

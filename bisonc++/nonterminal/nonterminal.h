@@ -79,11 +79,12 @@ class NonTerminal: public Symbol
         std::ostream &nameAndFollowset(std::ostream &out) const;
                                     // the N's value 
         std::ostream &value(std::ostream &out) const;
-        using Symbol::value;
+//        using Symbol::value;
 
     private:
         virtual std::ostream &insert(std::ostream &out) const;
-        virtual size_t v_value() const;
+        virtual size_t v_size() const;
+
         virtual FirstSet const &v_firstSet() const;
         std::ostream &insName(std::ostream &out) const;
 };
@@ -115,7 +116,7 @@ inline std::ostream &NonTerminal::nameAndFollowset(std::ostream &out) const
 
 inline std::ostream &NonTerminal::value(std::ostream &out) const
 {
-    return out << std::setw(3) << v_value();
+    return out << std::setw(3) << v_size();
 }
 
 
@@ -174,11 +175,6 @@ inline size_t NonTerminal::nProductions() const
     return d_production.size();
 }
 
-inline size_t NonTerminal::v_value() const
-{
-    return d_nr;
-}
-
 inline void NonTerminal::addEpsilon() 
 {
     d_first.addEpsilon();
@@ -217,11 +213,6 @@ inline void NonTerminal::addToFollow(FirstSet const &firstSet)
 inline void NonTerminal::addToFollow(NonTerminal const *nonTerminal)
 {
     d_follow += nonTerminal->d_follow;
-}
-
-inline std::ostream &NonTerminal::insert(std::ostream &out) const
-{
-    return (this->*NonTerminal::s_insertPtr)(out);
 }
 
 inline void NonTerminal::inserter(std::ostream &(NonTerminal::*insertPtr)

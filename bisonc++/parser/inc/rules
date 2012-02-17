@@ -1,43 +1,43 @@
 _precSpec:
     IDENTIFIER
     {
-        $$ = IDENTIFIER;
+        $$ = spSemBase(new SemSizeT(IDENTIFIER));
     }
 |
     QUOTE
     {
-        $$ = QUOTE;
+        $$ = spSemBase(new SemSizeT(QUOTE));
     }
 ;
 
 _productionElement:
     QUOTE
     {
-        $$ = new PTag(useTerminal());
+        $$ = spSemBase(useTerminal());
     }
 |
     IDENTIFIER
     {
-        $$ = new PTag(useSymbol());
+        $$ = spSemBase(useSymbol());
     }
 |
     BLOCK
     {
-        $$ = new PTag(d_scanner.block());
+        //$$ = spSemBase(new SemBlock(d_scanner.block()));
     }
 |
     PREC
     _precSpec
     {
-        setPrecedence($2);
-        $$ = 0;             // a 0 PTag * indicates a %prec has been handled
+        //setPrecedence($2);
+        //$$ = 0;             // a 0 PTag * indicates a %prec has been handled
     }
 ;
 
 _productionElements:
     _productionElements _productionElement
     {
-        $$ = handleProductionElements($1, $2);
+        //$$ = handleProductionElements($1, $2);
             // process the first element, return the second
             // if the 1st element is a block, handle it as a nested block
     }
@@ -48,7 +48,7 @@ _productionElements:
 _production:
     _productionElements
     {
-        handleProductionElement($1);
+        //handleProductionElement($1);
         // process the returned element: if it's a block, it becomes the
         // production's action block
     }
@@ -79,7 +79,7 @@ _ruleName:
     identifier
     ':'
     {
-        openRule($1);
+        //openRule($1);
     }
 ;
 

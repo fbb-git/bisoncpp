@@ -99,7 +99,7 @@ _parsefun_source:
 
 _pushPrecedence:
     {
-        $$ = Terminal::sPrecedence();
+        $$ = spSemBase(new SemSizeT(Terminal::sPrecedence()));
         Terminal::resetPrecedence();
     }
 ;
@@ -162,8 +162,8 @@ _symbol:
     identifier
     optNumber
     {
-        defineTokenName($1, $2);    // try to define as symbolic terminal
-    }
+        defineTokenName($1->str(), $2->logic());    // try to define as 
+    }                                               // symbolic terminal
 ;
 
 _symbolList:
@@ -383,7 +383,7 @@ _directiveSpec:
     _pushPrecedence        // make sure %token precedences are zero
     _symbols
     {
-        Terminal::set_sPrecedence($3);
+        Terminal::set_sPrecedence($3->size());
     }
 |
     _type
