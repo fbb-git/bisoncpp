@@ -29,8 +29,8 @@ _productionElement:
     PREC
     _precSpec
     {
-        //setPrecedence($2);
-        //$$ = 0;             // a 0 PTag * indicates a %prec has been handled
+        setPrecedence($2->size());
+        $$ = 0;             // a 0 PTag * indicates a %prec has been handled
     }
 ;
 

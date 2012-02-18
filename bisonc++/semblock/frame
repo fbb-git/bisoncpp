@@ -1,4 +1,4 @@
-#include "sembool.ih"
+#include "semBlock.ih"
 
 SemBool::
 {

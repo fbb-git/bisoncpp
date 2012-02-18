@@ -1,23 +1,22 @@
-#ifndef INCLUDED_SEMBOOL_
-#define INCLUDED_SEMBOOL_
+#ifndef INCLUDED_SEMBLOCK_
+#define INCLUDED_SEMBLOCK_
 
 #include "../sembase/sembase.h"
 
-class SemBool: public SemBase
+#include "../block/block.h"
+
+class SemBlock: public SemBase
 {
-    bool d_logic;
+    Block d_block;
 
     public:
-        SemBool(bool logic = false);
-
-    private:
-        virtual SemBase *v_clone() const;
-        virtual bool v_logic() const;
+        SemBlock(Block const &block = Block());
 };
 
-inline SemBool::SemBool(bool logic)
+inline SemBlock::SemBlock(Block const &block)
 :
-    d_logic(logic)
+    SemBase(Type::BLOCK),
+    d_block(block)
 {}
         
 #endif

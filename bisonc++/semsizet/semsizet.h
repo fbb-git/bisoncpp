@@ -9,14 +9,11 @@ class SemSizeT: public SemBase
 
     public:
         SemSizeT(size_t size = 0);
-
-    private:
-        virtual SemBase *v_clone() const;
-        virtual size_t v_size() const;
 };
 
 inline SemSizeT::SemSizeT(size_t size)
 :
+    SemBase(Type::SIZE_T),
     d_size(size)
 {}
         

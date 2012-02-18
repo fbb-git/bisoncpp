@@ -1,6 +1,7 @@
 enumsolution
 sembase
 element         sembase
+semblock        sembase
 semstring       sembase
 sembool         sembase
 semsizet        sembase

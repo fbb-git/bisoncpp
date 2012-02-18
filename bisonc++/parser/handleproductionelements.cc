@@ -1,6 +1,7 @@
 #include "parser.ih"
 
-//PTag *Parser::handleProductionElements(PTag *first, PTag *second)
+//spSemData Parser::handleProductionElements(spSemData const &first, 
+//                                           spSemData const &second)
 //{
 //    if (!first)         // the first PTag was a %prec specification
 //        return second;  
@@ -30,6 +31,5 @@
 //    delete first;
 //    return second;
 //}
-//
-//
-//
+
+

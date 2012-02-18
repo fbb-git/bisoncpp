@@ -9,14 +9,11 @@ class SemBool: public SemBase
 
     public:
         SemBool(bool logic = false);
-
-    private:
-        virtual SemBase *v_clone() const;
-        virtual bool v_logic() const;
 };
 
 inline SemBool::SemBool(bool logic)
 :
+    SemBase(Tag::BOOL),
     d_logic(logic)
 {}
         

@@ -4,19 +4,15 @@
 #include <string>
 #include "../sembase/sembase.h"
 
-class SemString: private std::string, public SemBase
+class SemString: public SemBase, private std::string
 {
     public:
-        SemString() = default;
         SemString(std::string const &text);
-
-    private:
-        virtual SemBase *v_clone() const;
-        virtual std::string const &v_str() const;
 };
-   
+
 inline SemString::SemString(std::string const &text)
 :
+    SemBase(Tag::STRING),
     std::string(text)
 {}
      

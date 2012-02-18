@@ -1,11 +1,11 @@
-#include "sembool.ih"
+#include "semblock.ih"
 
-SemBase *SemBool::v_clone() const
+SemBase *SemBlock::v_clone() const
 {
-    return new SemBool(*this);
+    return new SemBlock(*this);
 }
 
-bool SemBool::v_logic() const
+Block const &SemBlock::v_block() const
 {
-    return d_logic;
+    return d_block;
 }

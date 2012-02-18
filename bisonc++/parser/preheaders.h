@@ -11,9 +11,10 @@
 #include "../semstring/semstring.h"
 #include "../sembool/sembool.h"
 #include "../semsizet/semsizet.h"
+#include "../semblock/semblock.h"
 
-typedef std::shared_ptr<SemBase> spSemBase;
-        
+#include "../spsembase/spsembase.h"
+
 #include "../rules/rules.h"
 #include "../symtab/symtab.h"
 
