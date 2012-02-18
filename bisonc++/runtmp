@@ -6,12 +6,12 @@ if [ $# == 0 ]
 then
     echo "
 Provide arguments to $PRE/tmp/bin/bisonc++. 
-The skeletons in ${PRE}/share are used.
+The skeletons in ${PRE}/skeletons are used.
 "
     exit 1
 fi
 
-${PRE}/tmp/bin/bisonc++ -B ${PRE}/share/bisonc++base.h \
-                        -C ${PRE}/share/bisonc++.h \
-                        -I ${PRE}/share/bisonc++.ih \
-                        -P ${PRE}/share/bisonc++.cc $*
+${PRE}/tmp/bin/bisonc++ -B ${PRE}/skeletons/bisonc++base.h \
+                        -C ${PRE}/skeletons/bisonc++.h \
+                        -I ${PRE}/skeletons/bisonc++.ih \
+                        -P ${PRE}/skeletons/bisonc++.cc $*

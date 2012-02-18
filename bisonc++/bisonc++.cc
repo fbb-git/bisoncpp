@@ -30,14 +30,11 @@ namespace
 
         Arg::LongOption("debug"),
         Arg::LongOption("error-verbose"),
-
-
         {"filenames", 'f'},
         Arg::LongOption("flex"),
-
                                             // options only
-        Arg::LongOption("force-implementation-header"),
         Arg::LongOption("force-class-header"),
+        Arg::LongOption("force-implementation-header"),
 
         {"help", 'h'},                      // option only
 
