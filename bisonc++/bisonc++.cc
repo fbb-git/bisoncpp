@@ -11,22 +11,17 @@ namespace
 {
     Arg::LongOption longOptions[] = 
     {
-        {"analyze-only", 'A'},
-
-        {"baseclass-preinclude", 'H'},
-        {"baseclass-skeleton", 'B'},
-        {"class-skeleton", 'C'},
-        {"implementation-skeleton", 'I'},
-        {"parsefun-skeleton", 'P'},
-        {"skeleton-directory", 'S'},
+        {"analyze-only", 'A'},              // option only
 
         {"baseclass-header", 'b'},
-        {"class-header", 'c'},
-        {"implementation-header", 'i'},
-        {"parsefun-source", 'p'},
-        {"target-directory", Arg::Required},
+        {"baseclass-preinclude", 'H'},
 
+        {"baseclass-skeleton", 'B'},        // option only
+
+        {"class-header", 'c'},
         {"class-name", Arg::Required},
+
+        {"class-skeleton", 'C'},            // option only
 
         Arg::LongOption("construction"),
                 // implies verbose, but also shows FIRST and FOLLOW sets as
@@ -34,39 +29,51 @@ namespace
                 // items
 
         Arg::LongOption("debug"),
+        {"display-tokens", 't'},
         Arg::LongOption("error-verbose"),
 
-        {"filenames", 'f'},
 
+        {"filenames", 'f'},
+        Arg::LongOption("flex"),
+
+                                            // options only
         Arg::LongOption("force-implementation-header"),
         Arg::LongOption("force-class-header"),
-        Arg::LongOption("insert-stype"),
 
-        {"help", 'h'},
+        {"help", 'h'},                      // option only
+
+        {"implementation-header", 'i'},
+
+        {"implementation-skeleton", 'I'},   // option only
+        Arg::LongOption("insert-stype"),    // option only
 
         {"max-inclusion-depth", Arg::Required},
         {"namespace", 'n'},
 
+                                            // option only
         Arg::LongOption("no-baseclass-header"),
+
         Arg::LongOption("no-lines"),
-        Arg::LongOption("no-parse-member"),
+
+        Arg::LongOption("no-parse-member"), // option only
+        {"parsefun-skeleton", 'P'},         // option only
+
+        {"parsefun-source", 'p'},
 
         {"required-tokens", Arg::Required},
 
         {"scanner", 's'},
-        {"display-tokens", 't'},
         Arg::LongOption("scanner-debug"),
         {"scanner-token-function", Arg::Required},
         {"scanner-matched-text-function", Arg::Required},
-        Arg::LongOption("flex"),
 
-        Arg::LongOption("show-filenames"),
-                // writes the names of the files to the standard output
+        Arg::LongOption("show-filenames"),  // option only
+        {"skeleton-directory", 'S'},        // option only
 
-        Arg::LongOption("thread-safe"),
-                // no static data are modified, making bisonc++ thread-safe
+        {"target-directory", Arg::Required},
 
-        {"usage", 'h'},
+        Arg::LongOption("thread-safe"),     // options only
+        {"usage", 'h'},                     
         {"version", 'v'},
         {"verbose", 'V'},
                 // shows rules, tkoens, final states and kernel items, 
