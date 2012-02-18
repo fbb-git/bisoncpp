@@ -2,6 +2,7 @@
 #define _INCLUDED_ELEMENT_
 
 #include <ostream>
+#include <string>
 
     // Placeholder in FirstSet for Symbols, to prevent circular class 
     // dependencies
@@ -22,17 +23,16 @@
     // Terminal::insert inserts the symbol followed by (= value)
 
 
-class Element:
+class Element
 {
     friend std::ostream &operator<<(std::ostream &out, Element const *el);
 
     public:
-        virtual ~Element();       // empty, and implied by SemBase's destr.
-        size_t value() const;     // use sembase's size() member
+        virtual ~Element();
+        size_t value() const;
 
     private:
         virtual size_t v_value() const = 0;
-
         virtual std::ostream &insert(std::ostream &out) const = 0;
 };
 

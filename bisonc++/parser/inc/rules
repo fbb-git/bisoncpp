@@ -1,43 +1,44 @@
 _precSpec:
     IDENTIFIER
     {
-        $$ = spSemBase(new SemSizeT(IDENTIFIER));
+        $$ = new SemSizeT(IDENTIFIER);
     }
 |
     QUOTE
     {
-        $$ = spSemBase(new SemSizeT(QUOTE));
+        $$ = new SemSizeT(QUOTE);
     }
 ;
 
 _productionElement:
     QUOTE
     {
-        $$ = spSemBase(useTerminal());
+        $$ = new SemTerminal(useTerminal());
     }
 |
     IDENTIFIER
     {
-        $$ = spSemBase(useSymbol());
+        $$ = new SemSymbol(useSymbol());
     }
 |
     BLOCK
     {
-        $$ = spSemBase(new SemBlock(d_scanner.block()));
+        $$ = new SemBlock(d_scanner.block());
     }
 |
     PREC
     _precSpec
     {
-        setPrecedence($2->size());
-        $$ = 0;             // a 0 PTag * indicates a %prec has been handled
+        setPrecedence($2->as<Tag::SIZE_T>());
+        $$ = spSemBase();   // a 0-ptr spSemBase indicates 
+                            // that a %prec has been handled
     }
 ;
 
 _productionElements:
     _productionElements _productionElement
     {
-        //$$ = handleProductionElements($1, $2);
+        $$ = handleProductionElements($1, $2);
             // process the first element, return the second
             // if the 1st element is a block, handle it as a nested block
     }
@@ -48,7 +49,7 @@ _productionElements:
 _production:
     _productionElements
     {
-        //handleProductionElement($1);
+        handleProductionElement($1);
         // process the returned element: if it's a block, it becomes the
         // production's action block
     }
@@ -79,7 +80,7 @@ _ruleName:
     identifier
     ':'
     {
-        //openRule($1);
+        openRule($1->as<Tag::STRING>());
     }
 ;
 

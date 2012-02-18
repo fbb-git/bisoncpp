@@ -79,13 +79,13 @@ class NonTerminal: public Symbol
         std::ostream &nameAndFollowset(std::ostream &out) const;
                                     // the N's value 
         std::ostream &value(std::ostream &out) const;
-//        using Symbol::value;
+        using Symbol::value;
 
     private:
         virtual std::ostream &insert(std::ostream &out) const;
-        virtual size_t v_size() const;
-
+        virtual size_t v_value() const;
         virtual FirstSet const &v_firstSet() const;
+
         std::ostream &insName(std::ostream &out) const;
 };
 
@@ -116,7 +116,7 @@ inline std::ostream &NonTerminal::nameAndFollowset(std::ostream &out) const
 
 inline std::ostream &NonTerminal::value(std::ostream &out) const
 {
-    return out << std::setw(3) << v_size();
+    return out << std::setw(3) << v_value();
 }
 
 
@@ -158,11 +158,6 @@ inline size_t NonTerminal::firstSize() const
 inline std::set<Element const *> const &NonTerminal::firstTerminals() const
 {
     return d_first.set();
-}
-
-inline FirstSet const &NonTerminal::v_firstSet() const
-{
-    return d_first;
 }
 
 inline void NonTerminal::addProduction(Production *next)

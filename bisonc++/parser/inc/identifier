@@ -1,6 +1,6 @@
 identifier:
     IDENTIFIER
     {
-        $$ = spSemBase(new SemString(d_matched));
+        $$ = new SemString(d_matched);
     }
 ;

@@ -11,7 +11,7 @@ void Generator::selectSymbolic(Terminal const *terminal,
             (terminal->isUsed() && terminal->isUndetermined())
         )
         && 
-        terminal->size() > Rules::eofTerminal()->size()
+        terminal->value() > Rules::eofTerminal()->value()
     )
         symbolicTokens.push_back(terminal);
 }

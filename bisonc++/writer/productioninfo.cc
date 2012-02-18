@@ -3,7 +3,7 @@
 void Writer::productionInfo(Production const *production, ostream &out) 
 {
     NonTerminal const *np = NonTerminal::downcast(production->lhs());
-    out << "     {" << np->size() << ", " << 
+    out << "     {" << np->value() << ", " << 
         production->size() << "}, // " << production << '\n';
 }
 

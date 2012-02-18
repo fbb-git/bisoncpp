@@ -7,11 +7,11 @@ optComma:
 optNumber:
     NUMBER
     {
-        $$ = spSemBase(new SemBool(true));
+        $$ = new SemBool(true);
     }
 |
     {
-        $$ = spSemBase(new SemBool(false));
+        $$ = new SemBool(false);
     }
 ;
 

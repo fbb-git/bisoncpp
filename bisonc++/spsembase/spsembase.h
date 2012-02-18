@@ -6,23 +6,16 @@
 class spSemBase: public std::shared_ptr<SemBase>
 {
     public:
-        template <typename Type>
-        spSemUnion(Type *obj);
+        spSemBase() = default;
 
         template <typename Type>
-        Type const &as() const;
+        spSemBase(Type *obj);
 };
         
 template <typename Type>
-inline spSemUnion::spSemUnion(Type *obj)
+inline spSemBase::spSemBase(Type *obj)
 :
     std::shared_ptr<SemBase>(obj)
 {}
-
-template <typename Type>
-inline Type const &spSemUnion::as() const
-{
-    return dynamic_cast<Type &>(*this);
-}
 
 #endif

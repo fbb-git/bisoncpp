@@ -5,9 +5,9 @@ void Writer::insertToken(Terminal const *token, size_t &lastTokenValue,
 {
     out <<  "        " << token;
 
-    if (token->size() != ++lastTokenValue)
+    if (token->value() != ++lastTokenValue)
     {
-        lastTokenValue = token->size();
+        lastTokenValue = token->value();
         out << " = " << lastTokenValue;
     }
     out << ",\n";

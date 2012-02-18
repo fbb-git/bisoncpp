@@ -21,9 +21,8 @@ void Parser::nestedBlock(Block &block)
 
     d_rules.setHiddenAction(block);     // define the action in the hidden
                                         // terminal's production rule
-
-// Not shown in 2.8.0:
-//    lineMsg(imsg) << 
-//            "Adding hidden non-terminal " << name << " for the block\n" << 
-//            block.str() << endl;
 }
+
+
+
+

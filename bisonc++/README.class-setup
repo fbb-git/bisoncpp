@@ -1,68 +1,87 @@
 This hierarchy defines the header and the implementation dependencies among
 the classes. The topmost class is not dependent on any class. Lines should be
-read down-to-up to finde the the lowest class in the hierarchy on which a
+read down-to-up to find the the lowest class in the hierarchy on which a
 given class depends (e.g., LookaheadSet depends on Rules, and possibly uses
 the classes used by Rules; RmReduction does not depend on any other class).
+The semantic value classes SemBlock until SemSymbol only derive from SemBase,
+not from semantic values classes mentioned above them. All semantic value
+classes derived from SemBase, and spSemBase only uses the features of SemBase.
 
 
-                        Block
-                          |
-         +----------------+------------+
-         |                             |
-         |                             |
-         |             Element         |
-         |                |            |
-         |            FirstSet         |
-         |                |            |
-         |             Symbol          |  
-         |                |            |  
-         |            Terminal         |  
-         |                |            |  
-         |        +-------+-------+    |  
-         |        |               |    |  
-         |        |               +----+            
-         |        |               |                 
-         |    FollowSet       Production            
-         |        |               |                 
-         |        +-------+-------+                  
-         |                |                          
-         |            NonTerminal                    
-         |                |                          
-         |        +-------+-------+                  
-         |        |               |                  
-         |     Symtab           Rules                
-       Scanner    |               |                  
-         |        |               +-------------+-----------+
-         |        |               |             |           |
-         +--------+---------------+         LookaheadSet  Grammar 
-         |                                      |           |
-         |                                  +---+---+       |
-         |                                  |       |       |
-         |        RmShift   RmReduction   RRData   Item     |
-         |          |            |          |       |       |
-         |          +------------+-----+----+-------+       |
-         |                             |                    |
-         |  StateType  EnumSolution StateItem               |
-         |      |           |          |                    |
-         |      +-----------+----------+                    |
-         |                  |          |                    |
-         |                 Next        |                    |
-         |                  |          |                    |
-         |              SrConflict  RRConflict              |
-       Parser               |          |                    |           
-         |                  +-----+----+                    |
-         |                        |                         | 
-         |                      State                       |
-         |                        |                         |
-         |                      Writer                      |
-         |                        |                         |
-         +-------------+----------+                         |
-                       |                                    |
-                    Generator                               |
-                       |                                    |
-                       +----------------+-------------------+
-                                        |
-                                     bisonc++
+	SemBase                    Block
+	   |                         |
+    +--+----+    +---------------+
+    |       |    |               |
+ spSemBase  +-SemBlock           |
+    |       |                    |
+    |       +-SemString          |
+	|	    |                    |
+	|	    +-SemBool            |
+	|	    |                    |
+	|	    +-SemSizeT           |
+	|	    |                    |
+	|	    +-SemTerminal        |
+	|	    |                    |
+	|	    +-SemSymbol          |
+	|	    |                    |
+	+---+---+                    |
+	    |                        |
+		|        +---------------+-------------+
+		|        |                             |
+		|        |                             |
+		|        |             Element         |
+		|        |                |            |
+		|        |            FirstSet         |
+		|        |                |            |
+		|        |             Symbol          |  
+		|        |                |            |  
+		|        |            Terminal         |  
+		|        |                |            |  
+		|        |        +-------+-------+    |  
+		|        |        |               |    |  
+		|        |        |               +----+            
+		|        |        |               |                 
+		|        |    FollowSet       Production            
+		|        |        |               |                 
+		|        |        +-------+-------+                  
+		|        |                |                          
+		|        |            NonTerminal                    
+		|        |                |                          
+		|        |        +-------+-------+                  
+		|        |        |               |                  
+		|        |     Symtab           Rules                
+		|      Scanner    |               |                  
+		|        |        |               +-------------+-----------+
+		|        |        |               |             |           |
+		|        +--------+---------------+         LookaheadSet  Grammar 
+		|        |                                      |           |
+		|        |                                  +---+---+       |
+		|        |                                  |       |       |
+		|        |        RmShift   RmReduction   RRData   Item     |
+		|        |          |            |          |       |       |
+		|        |          +------------+-----+----+-------+       |
+		|        |                             |                    |
+		|        |  StateType  EnumSolution StateItem               |
+		|        |      |           |          |                    |
+		|        |      +-----------+----------+                    |
+		|        |                  |          |                    |
+		|        |                 Next        |                    |
+		+--------+                  |          |                    |
+		         |              SrConflict  RRConflict              |
+		       Parser               |          |                    |           
+		         |                  +-----+----+                    |
+		         |                        |                         | 
+		         |                      State                       |
+		         |                        |                         |
+		         |                      Writer                      |
+		         |                        |                         |
+		         +-------------+----------+                         |
+		                       |                                    |
+		                    Generator                               |
+		                       |                                    |
+		                       +----------------+-------------------+
+		                                        |
+		                                     bisonc++
 
 
 

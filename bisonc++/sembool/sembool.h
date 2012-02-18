@@ -9,6 +9,7 @@ class SemBool: public SemBase
 
     public:
         SemBool(bool logic = false);
+        operator bool() const;
 };
 
 inline SemBool::SemBool(bool logic)
@@ -16,5 +17,18 @@ inline SemBool::SemBool(bool logic)
     SemBase(Tag::BOOL),
     d_logic(logic)
 {}
+
+inline SemBool::operator bool() const
+{
+    return d_logic;
+}
+
+template <>
+struct Type<SemEnum::Tag::BOOL>
+{
+    typedef SemBool const &conversionType;
+    typedef bool semType;
+};
+
         
 #endif

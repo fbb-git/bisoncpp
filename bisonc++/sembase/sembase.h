@@ -4,25 +4,32 @@
 #include <iosfwd>
 class Block;
 
-class SemBase
+struct SemEnum
 {
-    public:
-        enum class Tag
-        {
-            STRING,
-            BOOL,
-            SIZE_T,
-            BLOCK,
-            TERMINAL,
-            SYMBOL
-        };
+    enum class Tag
+    {
+        STRING,
+        BOOL,
+        SIZE_T,
+        BLOCK,
+        TERMINAL,
+        SYMBOL
+    };
+};
 
-    private:
-        Tag d_tag;
+template <SemEnum::Tag tag>
+struct Type;
+
+class SemBase: public SemEnum
+{
+    Tag d_tag;
 
     public:
         virtual ~SemBase();
         Tag tag() const;
+
+        template <SemEnum::Tag tg_>
+        typename Type<tg_>::semType as() const;
 
     protected:
         SemBase(Tag tag);
@@ -38,7 +45,15 @@ inline SemBase::SemBase(Tag tag)
 :
     d_tag(tag)
 {}
-    
+
+template <SemEnum::Tag tg_>
+inline typename Type<tg_>::semType SemBase::as() const
+{
+    return dynamic_cast<typename Type<tg_>::conversionType>(*this);
+}
+
 #endif
+
+
 
 

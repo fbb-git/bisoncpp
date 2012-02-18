@@ -17,7 +17,7 @@ namespace FBB
 }
 
 #undef Parser
-class Parser: public ParserBase
+class Parser: public ParserBase, protected SemEnum
 {
             // actions to taken given tokens returned by the lexical scanner
     typedef std::map<size_t, void (Parser::*)()> 
@@ -104,9 +104,9 @@ class Parser: public ParserBase
                                         // reference ($) in a received action 
                                         // block
 
-//        FBB::PTag *handleProductionElements(FBB::PTag *first, 
-//                                            FBB::PTag *second);
-//        void handleProductionElement(FBB::PTag *last);
+        spSemBase handleProductionElements(spSemBase const &first, 
+                                           spSemBase const &second);
+        void handleProductionElement(spSemBase const &last);
 
 
         void installAction(Block &block);
@@ -123,7 +123,7 @@ class Parser: public ParserBase
 
         bool numberedElement(size_t pos, int nElements, Block &block);
 
-        void openRule(std::string *ruleNamePtr);
+        void openRule(std::string const &ruleName);
 
         void predefine(Terminal const *terminal);   // Used by Parser() to 
                                                     // pre-enter into d_symtab

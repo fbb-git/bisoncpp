@@ -2,9 +2,9 @@
 
     // I've seen the begin of a rule. If not yet defined, do so
     // now, and prepare for productions.
-void Parser::openRule(string *ruleNamePtr)
+void Parser::openRule(string const &ruleName)
 {
-    NonTerminal *nt = requireNonTerminal(*ruleNamePtr);
+    NonTerminal *nt = requireNonTerminal(ruleName);
                                                 // rule must start with N
 
     if (nt)
@@ -17,11 +17,10 @@ void Parser::openRule(string *ruleNamePtr)
         {
             Rules::FileInfo const &fileInfo = d_rules.fileInfo(nt);
     
-            wmsg << "Extending rule `" << *ruleNamePtr << 
+            wmsg << "Extending rule `" << ruleName << 
                     "', first defined in `" << fileInfo.first << 
                     "' (" << fileInfo.second << ")" << endl;
         }
         d_rules.addProduction();
     }
-    delete ruleNamePtr;
 }
