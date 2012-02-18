@@ -23,7 +23,7 @@ class Options
     bool        d_flex;
     bool        d_lines;
     bool        d_lspNeeded;
-    bool        d_displayTokens;
+    bool        d_printTokens;
 
     size_t      d_requiredTokens;
 
@@ -87,7 +87,7 @@ class Options
         void setLtype();
         void setNamespace();
         void setParsefunSource();
-        void setDisplayTokens();
+        void setPrintTokens();
         void setPreInclude();
         void setRequiredTokens(size_t nRequiredTokens);
         void setScannerInclude();
@@ -105,7 +105,7 @@ class Options
         void showFilenames() const;
 
 
-        bool displayTokens() const;
+        bool printTokens() const;
         bool debug() const;
         bool errorVerbose() const;
         bool lines() const;
@@ -234,9 +234,9 @@ inline std::string const &Options::preInclude() const
     return d_preInclude;
 }
 
-inline bool Options::displayTokens() const
+inline bool Options::printTokens() const
 {
-    return d_displayTokens;
+    return d_printTokens;
 }
 
 inline size_t Options::requiredTokens() const
@@ -344,9 +344,9 @@ inline void Options::setScannerMatchedTextFunction()
     assign(&d_scannerMatchedTextFunction, "scanner-matched-text-function");
 }
 
-inline void Options::setDisplayTokens()
+inline void Options::setPrintTokens()
 {
-    d_displayTokens = true;
+    d_printTokens = true;
 }
 
 inline void Options::setScannerTokenFunction()

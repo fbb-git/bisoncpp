@@ -11,7 +11,7 @@ Generator::Generator(Rules const &rules)
     d_tokenFunction(d_options.scannerTokenFunction()),
 
     d_debug(d_options.debug()),
-    d_displayTokens(d_options.displayTokens()),
+    d_printTokens(d_options.printTokens()),
 
     d_writer(d_baseClassScope, rules)
 {}

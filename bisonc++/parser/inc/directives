@@ -251,9 +251,9 @@ _directiveSpec:
         d_options.setDebug();
     }
 |
-    DISPLAY_TOKENS
+    PRINT_TOKENS
     {
-        d_options.displayTokens();
+        d_options.printTokens();
     }
 |
     ERROR_VERBOSE

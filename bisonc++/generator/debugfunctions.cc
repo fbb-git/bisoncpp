@@ -4,7 +4,7 @@ void Generator::debugFunctions(std::ostream &out) const
 {
     bool verbose = d_arg.option(0, "error-verbose");
 
-    if (!d_debug && !verbose && !d_displayTokens)
+    if (!d_debug && !verbose && !d_printTokens)
         return;
 
     key(out);
@@ -42,7 +42,7 @@ void Generator::debugFunctions(std::ostream &out) const
         "}\n";
     }
 
-    if (d_debug || d_displayTokens)
+    if (d_debug || d_printTokens)
         out <<
         "std::string " << d_baseClassScope << "symbol__(int value) const\n"
         "{\n"

@@ -92,7 +92,6 @@ IDENT   {ID1}{ID2}*
                                 }
 %class-name                     return Parser::CLASS_NAME;
 %debug                          return Parser::DEBUGFLAG;
-%display-tokens                 return Parser::DISPLAY_TOKENS;
 %error-verbose                  return Parser::ERROR_VERBOSE;
 %expect                         return Parser::EXPECT;
 %filenames[ \t]+                {
@@ -124,6 +123,7 @@ IDENT   {ID1}{ID2}*
                                     return Parser::PARSEFUN_SOURCE;
                                 }
 %prec                           return Parser::PREC;
+%print-tokens                   return Parser::PRINT_TOKENS;
 %required-tokens                return Parser::REQUIRED;
 %right                          return Parser::RIGHT;
 %scanner[ \t]+                  {

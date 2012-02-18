@@ -8,7 +8,7 @@ Options::Options()
     d_flex(false),
     d_lines(true),
     d_lspNeeded(false),
-    d_displayTokens(false),
+    d_printTokens(false),
     d_requiredTokens(0),
     d_verboseName("(not requested)")
 {}

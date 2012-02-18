@@ -29,7 +29,6 @@ namespace
                 // items
 
         Arg::LongOption("debug"),
-        {"display-tokens", 't'},
         Arg::LongOption("error-verbose"),
 
 
@@ -56,9 +55,13 @@ namespace
         Arg::LongOption("no-lines"),
 
         Arg::LongOption("no-parse-member"), // option only
+
+        {"own-tokens", 'T'},
+
         {"parsefun-skeleton", 'P'},         // option only
 
         {"parsefun-source", 'p'},
+        {"print-tokens", 't'},
 
         {"required-tokens", Arg::Required},
 
@@ -86,7 +89,7 @@ namespace
 int main(int argc, char **argv)
 try
 {
-    Arg &arg = Arg::initialize("AB:b:C:c:f:H:hI:i:n:p:P:s:S:t:Vv", 
+    Arg &arg = Arg::initialize("AB:b:C:c:f:H:hI:i:n:p:P:s:S:tTVv", 
                     longOptions, longEnd, argc, argv);
 
     arg.versionHelp(usage, version, 1);

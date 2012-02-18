@@ -7,7 +7,7 @@ void Generator::print(ostream &out) const
     out << "void " << d_options.className() << "::print__()\n"
             "{";
 
-    if (!d_displayTokens)
+    if (!d_printTokens)
         out << "}\n";
     else
         out <<

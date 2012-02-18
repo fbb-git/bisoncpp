@@ -146,6 +146,7 @@ class Parser: public ParserBase, protected SemEnum
         void errorRecovery();
         int lookup(bool recovery);
         void nextToken();
+        void print__();
                                         // used in, e.g., explicitElement()
                                         // to obtain # elements for
                                         // end- or mid-rule actions
@@ -159,7 +160,10 @@ inline int Parser::lex()
 }
 
 inline void Parser::print()
-{}
+{
+    if (d_arg.option('T'))
+        print__();
+}
 
 
 inline void Parser::setNegativeDollarIndices()
@@ -167,23 +171,10 @@ inline void Parser::setNegativeDollarIndices()
     d_negativeDollarIndices = true;
 }        
 
-
-//inline std::ostream &Parser::lineMsg(FBB::Mstream &mstream)
-//{
-//    return d_scanner.lineMsg(mstream);
-//}
-
-
 inline void Parser::setExpectedConflicts()
 {
     Rules::setExpectedConflicts(d_scanner.number());
 }
-
-
-//inline std::string *Parser::newYYText() const
-//{
-//    return new std::string(d_scanner.YYText());
-//}
 
 inline size_t Parser::nComponents(int nElements)
 {
