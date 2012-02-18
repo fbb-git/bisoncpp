@@ -47,7 +47,6 @@ class Scanner: public ScannerBase
         
         // $insert lexFunctionDecl
         int lex();
-
         Block &block();
         std::string const &canonicalQuote();
         void clearBlock();
@@ -55,6 +54,7 @@ class Scanner: public ScannerBase
         bool hasBlock() const;
 
     private:
+        void print();
         int lex__();
         int executeAction__(size_t ruleNr);
 
@@ -83,6 +83,11 @@ inline int Scanner::lex()
 
 inline void Scanner::preCode() 
 {
+}
+
+inline void Scanner::print() 
+{
+    print__();
 }
 
 inline Block &Scanner::block()

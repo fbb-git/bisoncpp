@@ -4,30 +4,16 @@
 
 %baseclass-preinclude preheaders.h
 
-%print "d_scanner.matched()"
+%display-tokens
 
 %token BASECLASS_HEADER BASECLASS_PREINCLUDE BLOCK CLASS_HEADER CLASS_NAME
         DEBUGFLAG DISPLAY_TOKENS ERROR_VERBOSE EXPECT FILENAMES FLEX
         IDENTIFIER IMPLEMENTATION_HEADER LEFT LOCATIONSTRUCT LSP_NEEDED LTYPE
         NAMESPACE NEG_DOLLAR NOLINES NONASSOC NUMBER PARSEFUN_SOURCE PREC
-        QUOTE REQUIRED RIGHT SCANNER_INCLUDE SCANNER_MATCHED_TEXT_FUNCTION
+        QUOTE REQUIRED RIGHT SCANNER SCANNER_MATCHED_TEXT_FUNCTION
         SCANNER_TOKEN_FUNCTION START STRING STYPE TARGET_DIRECTORY TOKEN
         TWO_PERCENTS TYPE UNION
         
-
-//%union
-//{
-//    std::string                *sp;
-//    FBB::PTag                  *tag;
-//    int                         type;
-//    bool                        logic;
-//};
-//
-//%type <sp>      identifier
-//%type <tag>     _productionElement _productionElements
-//%type <type>    _pushPrecedence _precSpec 
-//%type <logic>   optNumber
-
 %stype  spSemBase
 
 %%

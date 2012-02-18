@@ -119,8 +119,8 @@ _right:
     }
 ;
 
-_scanner_include:
-    SCANNER_INCLUDE
+_scanner:
+    SCANNER
     {
         d_expect = "Path to the scanner header filename";
     }
@@ -251,6 +251,11 @@ _directiveSpec:
         d_options.setDebug();
     }
 |
+    DISPLAY_TOKENS
+    {
+        d_options.displayTokens();
+    }
+|
     ERROR_VERBOSE
     {
         d_options.setErrorVerbose();
@@ -284,8 +289,6 @@ _directiveSpec:
     optTypename
     _symbols
 |
-    NOLINES                   // no action: now the default
-|
     _locationstruct
     BLOCK
     optSemiCol
@@ -315,6 +318,11 @@ _directiveSpec:
         setNegativeDollarIndices();
     }
 |
+    NOLINES
+    {
+        d_options.unsetLines();
+    }
+|
     _nonassoc
     _incrementPrecedence
     optTypename
@@ -324,11 +332,6 @@ _directiveSpec:
     STRING
     {
         d_options.setParsefunSource();
-    }
-|
-    DISPLAY_TOKENS
-    {
-        d_options.displayTokens();
     }
 |
     _required
@@ -342,7 +345,7 @@ _directiveSpec:
     optTypename
     _symbols
 |
-    _scanner_include
+    _scanner
     STRING
     {
         d_options.setScannerInclude();

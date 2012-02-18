@@ -1,5 +1,8 @@
+%filenames scanner
+
 %class-name = "Scanner" 
 %debug
+// %print-tokens
 
 %x xstring pstring pxstring string comment quote block 
 
@@ -15,7 +18,7 @@ IDENT   {ID1}{ID2}*
 
 <INITIAL,block>{
 
-"{"          {
+"{"         {
                     // open or count a nested a block 
                 d_block.open(lineNr(), filename()); 
                 begin(StartCondition__::block);
@@ -32,8 +35,8 @@ IDENT   {ID1}{ID2}*
              
 [\n]+        {
                 setLineNrs();
-                 if (d_block)
-                     d_block += "\n";
+                if (d_block)
+                    d_block += "\n";
              }
 
 "//".*       // ignore eoln comment in source blocks
@@ -75,11 +78,6 @@ IDENT   {ID1}{ID2}*
     .           d_block(d_matched);
 }
 
-%include[ \t]+                  {
-                                    begin(StartCondition__::pxstring);
-                                    d_include = true;
-                                }
-
 %baseclass-header[ \t]+         {
                                     begin(StartCondition__::pxstring);
                                     return Parser::BASECLASS_HEADER;
@@ -94,6 +92,7 @@ IDENT   {ID1}{ID2}*
                                 }
 %class-name                     return Parser::CLASS_NAME;
 %debug                          return Parser::DEBUGFLAG;
+%display-tokens                 return Parser::DISPLAY_TOKENS;
 %error-verbose                  return Parser::ERROR_VERBOSE;
 %expect                         return Parser::EXPECT;
 %filenames[ \t]+                {
@@ -105,6 +104,10 @@ IDENT   {ID1}{ID2}*
                                     begin(StartCondition__::pxstring);
                                     return Parser::IMPLEMENTATION_HEADER;
                                 }
+%include[ \t]+                  {
+                                    begin(StartCondition__::pxstring);
+                                    d_include = true;
+                                }
 %left                           return Parser::LEFT;
 %locationstruct                 return Parser::LOCATIONSTRUCT;
 %lsp-needed                     return Parser::LSP_NEEDED;
@@ -114,20 +117,19 @@ IDENT   {ID1}{ID2}*
                                 }
 %namespace                      return Parser::NAMESPACE;
 %negative-dollar-indices        return Parser::NEG_DOLLAR;
-%nonassoc                       return Parser::NONASSOC;
 %no-lines                       return Parser::NOLINES;
+%nonassoc                       return Parser::NONASSOC;
 %parsefun-source[ \t]+          {
                                     begin(StartCondition__::pxstring);
                                     return Parser::PARSEFUN_SOURCE;
                                 }
 %prec                           return Parser::PREC;
-%right                          return Parser::RIGHT;
 %required-tokens                return Parser::REQUIRED;
+%right                          return Parser::RIGHT;
 %scanner[ \t]+                  {
                                     begin(StartCondition__::pxstring);
-                                    return Parser::SCANNER_INCLUDE;
+                                    return Parser::SCANNER;
                                 }
-%display-tokens                 return Parser::DISPLAY_TOKENS;
 %scanner-token-function[ \t]+   {
                                     begin(StartCondition__::pxstring);
                                     return Parser::SCANNER_TOKEN_FUNCTION;
@@ -138,7 +140,7 @@ IDENT   {ID1}{ID2}*
                                         Parser::SCANNER_MATCHED_TEXT_FUNCTION;
                                 }
 %start                          return Parser::START;
-%stype                          {
+%stype[ \t]+                    {
                                     begin(StartCondition__::xstring);
                                     return Parser::STYPE;
                                 }

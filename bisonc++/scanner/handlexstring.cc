@@ -16,7 +16,7 @@ bool Scanner::handleXstring(size_t nRedo)
     begin(StartCondition__::INITIAL);
 
     if (not d_include)
-        return true;
+       return true;
 
     d_include = false;
 
