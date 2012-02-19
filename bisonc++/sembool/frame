@@ -1,5 +1,0 @@
-#include "sembool.ih"
-
-SemBool::
-{
-}

@@ -20,13 +20,7 @@ rrdata          lookaheadset
 item            lookaheadset 
 sembase
 spsembase       sembase
-semblock        sembase block
-semstring       sembase
-sembool         sembase
-semsizet        sembase
-semterminal     sembase
-semsymbol       sembase
-parser          scanner rules symtab spsembase semstring sembool semsizet semterminal semsymbol
+parser          scanner rules symtab spsembase 
 transition      item
 stateitem       item rmshift rmreduction rrdata 
 rrconflict      stateitem 

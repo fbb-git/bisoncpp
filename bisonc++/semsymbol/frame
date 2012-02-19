@@ -1,5 +1,0 @@
-#include "semsymbol.ih"
-
-SemSymbol::
-{
-}

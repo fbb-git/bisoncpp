@@ -17,7 +17,7 @@ namespace FBB
 }
 
 #undef Parser
-class Parser: public ParserBase, protected SemEnum
+class Parser: public ParserBase
 {
             // actions to taken given tokens returned by the lexical scanner
     typedef std::map<size_t, void (Parser::*)()> 

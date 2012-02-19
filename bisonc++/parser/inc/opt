@@ -7,11 +7,11 @@ optComma:
 optNumber:
     NUMBER
     {
-        $$ = new SemBool(true);
+        $$ = new Semantic<Tag::BOOL>(true);
     }
 |
     {
-        $$ = new SemBool(false);
+        $$ = new Semantic<Tag::BOOL>(false);
     }
 ;
 

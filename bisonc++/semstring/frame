@@ -1,5 +1,0 @@
-#include "semstring.ih"
-
-SemString::
-{
-}

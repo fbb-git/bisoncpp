@@ -99,7 +99,7 @@ _parsefun_source:
 
 _pushPrecedence:
     {
-        $$ = new SemSizeT(Terminal::sPrecedence());
+        $$ = new Semantic<Tag::SIZE_T>(Terminal::sPrecedence());
         Terminal::resetPrecedence();
     }
 ;

@@ -1,29 +1,29 @@
 _precSpec:
     IDENTIFIER
     {
-        $$ = new SemSizeT(IDENTIFIER);
+        $$ = new Semantic<Tag::SIZE_T>(IDENTIFIER);
     }
 |
     QUOTE
     {
-        $$ = new SemSizeT(QUOTE);
+        $$ = new Semantic<Tag::SIZE_T>(QUOTE);
     }
 ;
 
 _productionElement:
     QUOTE
     {
-        $$ = new SemTerminal(useTerminal());
+        $$ = new Semantic<Tag::TERMINAL>(useTerminal());
     }
 |
     IDENTIFIER
     {
-        $$ = new SemSymbol(useSymbol());
+        $$ = new Semantic<Tag::SYMBOL>(useSymbol());
     }
 |
     BLOCK
     {
-        $$ = new SemBlock(d_scanner.block());
+        $$ = new Semantic<Tag::BLOCK>(d_scanner.block());
     }
 |
     PREC
