@@ -4,12 +4,7 @@ void Generator::print(ostream &out) const
 {
     key(out);
 
-    out << "void " << d_options.className() << "::print__()\n"
-            "{";
-
-    if (!d_printTokens)
-        out << "}\n";
-    else
+    if (d_printTokens)
         out <<
             "\n"
                     // _UNDETERMINED_ is also used in writer/symbolicnames.cc
@@ -21,6 +16,5 @@ void Generator::print(ostream &out) const
             "            std::cout << \"'\\n\";\n"
             "        else\n"
             "            std::cout << " << d_matchedTextFunction << 
-                                                            " << \"'\\n\";\n"
-            "}\n";
+                                                            " << \"'\\n\";\n";
 }

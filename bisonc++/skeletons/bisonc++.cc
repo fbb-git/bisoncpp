@@ -130,7 +130,10 @@ $insert 4 requiredtokens
 
 $insert debugfunctions
 
+void \@::print__()
+{
 $insert print
+}
 
 void \@Base::clearin()
 {

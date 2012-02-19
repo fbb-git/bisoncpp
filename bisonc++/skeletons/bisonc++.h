@@ -37,7 +37,7 @@ $insert lex
 
 inline void Parser::print()         
 {
-    // print__();           // displays tokens if --print was specified
+    print__();           // displays tokens if --print was specified
 }
 
 $insert namespace-close
