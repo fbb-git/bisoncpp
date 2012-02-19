@@ -1,5 +1,9 @@
-Syntax:    bf(%lines) nl() 
-           Put bf(#line) preprocessor directives in the file containing the
-            parser's tt(parse()) function. It acts identically to the bf(-l)
-            command line option and is suppressed by the bf(--no-lines)
-            option.
+Syntax:    bf(%no-lines) nl() 
+           Do not put bf(#line) preprocessor directives in the file containing
+            the parser's tt(parse()) function. By default tt(#line)
+            preprocessor directives are inserted just before action blocks in
+            the generated tt(parse.cc) file.
+
+           The tt(#line) directives allow compilers and debuggers to associate
+            errors with lines in your grammar specification file, rather than
+            with the source file containing the tt(parse) function itself.

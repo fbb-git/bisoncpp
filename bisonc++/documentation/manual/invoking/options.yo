@@ -1,236 +1,303 @@
-    Where available, single letter options are listed between parentheses
+    If available, single letter options are listed between parentheses
 following their associated long-option variants. Single letter options require
-arguments if their associated long options require arguments as well.
+arguments if their associated long options require arguments as well. Options
+affecting the class header or implementation header file are ignored if these
+files already exist.
     itemization(
     it() loption(analyze-only) (soption(A))nl()
            Only analyze the grammar. No files are (re)written. This option can
-            be used to test the grammatical correctness of modification `in
+            be used to test the grammatic correctness of modification `in
             situ', without overwriting previously generated files. If the
             grammar contains syntactic errors only syntax analysis is 
             performed.
-    it() label(PREINCLUDE) lsoption(baseclass-preinclude)(H)(header)nl()
-           Use tt(header) as the pathname to the file preincluded in the
-            parser's base-class header. This option is useful in situations
-            where the base class header file refers to types which might not
-            yet be known. E.g., with bf(%union) a bf(std::string *) field
-            might be used. Since the class bf(std::string) might not yet be
-            known to the compiler once it processes the base class header file
-            we need a way to inform the compiler about these classes and
-            types. The suggested procedure is to use a pre-include header file
-            declaring the required types. By default tt(header) will be
-            surrounded by double quotes (using, e.g., tt(#include "header")).
-            When the argument is surrounded by pointed brackets
-            tt(#include <header>) will be included. In the latter case,
-            quotes might be required to escape interpretation by the shell
-            (e.g., using tt(-H '<header>')).
+
     it() lsoption(baseclass-header)(b)(header)nl()
-           Use tt(header) as the pathname of the file containing the parser's
+           Use tt(header) as the pathname of the file to contain the parser's
             base class. This class defines, e.g., the parser's symbolic
             tokens. Defaults to the name of the parser class plus the suffix
             tt(base.h). It is generated, unless otherwise indicated (see
-            bf(--no-baseclass-header) and bf(--dont-rewrite-baseclass-header)
+            tt(--no-baseclass-header) and tt(--dont-rewrite-baseclass-header)
             below).
+
+    it() lsoption(baseclass-preinclude)(H)(header)nl()
+           Use tt(header) as the pathname to the file preincluded in the
+            parser's base-class header. This option is useful in situations
+            where the base class header file refers to types which might not
+            yet be known. E.g., with tt(%union) a tt(std::string *) field
+            might be used. Since the class tt(std::string) might not yet be
+            known to the compiler once it processes the base class header file
+            we need a way to inform the compiler about these classes and
+            types. The suggested procedure is to use a pre-include header file
+            declaring the required types. By default tt(header) is
+            surrounded by double quotes (using, e.g., tt(#include "header")).
+            When the argument is surrounded by pointed brackets
+            tt(#include <header>) is included. In the latter case,
+            quotes might be required to escape interpretation by the shell
+            (e.g., using tt(-H '<header>')).
+
     it() lsoption(baseclass-skeleton)(B)(skeleton)nl() 
            Use tt(skeleton) as the pathname of the file containing the
             skeleton of the parser's base class. Its filename defaults to
             tt(bisonc++base.h).
+
     it() lsoption(class-header)(c)(header)nl()
-           Use tt(header) as the pathname of the file containing the parser
+           Use tt(header) as the pathname of the file to contain the parser
             class. Defaults to the name of the parser class plus the suffix
             tt(.h)
+
+    it() loption(class-name) tt(className) nl()
+           Defines the name of the bf(C++) class that is generated.  If
+            neither this option, nor the tt(%class-name) directory is
+            specified, then the default class name (tt(Parser)) is used.
+
     it() lsoption(class-skeleton)(C)(skeleton)nl()
            Use tt(skeleton) as the pathname of the file containing the
             skeleton of the parser class. Its filename defaults to
-            tt(bisonc++.h). The environment variable tt(BISON_SIMPLE_H)
-            is not inspected anymore.
+            tt(bisonc++.h). 
+
     it() loption(construction)nl() 
-           This option may be specified to write details about the
-            construction of the parsing tables to the same file as written by
-            the tt(--verbose) option (i.e., tt(<parse>.output), where
-            tt(<parse>) is the filename (without the tt(.cc) extension) of the
-            file containing tt(parse)'s implementation). This information is
-            primarily useful for developers. It augments the information
-            written to the verbose grammar output file, generated by the
-            bf(--verbose) option.
+           Details about the construction of the parsing tables are written to
+            the same file as written by the tt(--verbose) option (i.e.,
+            tt(<grammar>.output), where tt(<grammar>) is the input file read
+            by bic(). This information is primarily useful for developers. It
+            augments the information written to the verbose grammar output
+            file, generated by the tt(--verbose) option.
+
     it() loption(debug)nl() 
-           Provide tt(parse()) and its support functions with debugging code,
+           Provide tt(parse) and its support functions with debugging code,
             showing the actual parsing process on the standard output
             stream. When included, the debugging output is active by default,
-            but its activity may be controlled using the bf(setDebug(bool
-            on-off)) member. Note that no tt(#ifdef DEBUG) macros are used
-            anymore. By rerunning b()() without the bf(--debug) option an
-            equivalent parser is generated not containing the debugging
-            code. 
-    it() label(ERRORVERBOSE) loption(error-verbose)nl()
+            but its activity may be controlled using the tt(setDebug(bool
+            on-off)) member. A tt(#ifdef DEBUG) macro is not supported by
+            bic(). Rerun bic() without the tt(--debug) option to remove the
+            debugging code.
+
+    it() loption(error-verbose)nl()
            When a syntactic error is reported, the generated parse function
             will dump the parser's state stack to the standard output
             stream. The stack dump shows on separate lines a stack index
             followed by the state stored at the indicated stack element. The
             first stack element is the stack's top element.
+
     it() lsoption(filenames)(f)(filename)nl()
-           Specify a filename to use for all files produced by b()(). 
+           Specify a filename to use for all files produced by bic(). 
             Specific options overriding particular filenames are also
             available (which then, in turn, overide the name specified by this
             option).
+
+    it() loption(flex)nl() 
+           Bic() generates code calling tt(d_scanner.yylex()) for the next
+            lexical token, and tt(d_scanner.YYText()) for the matched text,
+            unless overruled by options or directives explicitly defining
+            these functions. By default, the interface defined by
+            bf(flexc++)(1) is used. This option is unly interpreted if the
+            tt(--scanner) option or tt(%scanner) directive is also used.
+
     it() loption(force-class-header)nl()
            By default the generated class header is not overwritten once it
             has been created. This option can be used to force the
             (re)writing of the file containing the parser's class.
+
     it() loption(force-implementation-header)nl()
            By default the generated implementation header is not overwritten
             once it has been created. This option can be used to force the
             (re)writing of the implementation header file.
+
     it() loption(help) (soption(h))nl()
             Write basic usage information to the standard output stream and
             terminate. 
+
     it() lsoption(implementation-header)(i)(header)nl()
-           Use tt(header) as the pathname of the file containing the
+           Use tt(header) as the pathname of the file to contain the
             implementation header. Defaults to the name of the generated
             parser class plus the suffix tt(.ih). The implementation header
             should contain all directives and declarations em(only) used by
             the implementations of the parser's member functions. It is the
             only header file that is included by the source file containing
-            tt(parse())'s implementation . User defined implementation of
+            tt(parse)'s implementation . User defined implementation of
             other class members may use the same convention, thus
             concentrating all directives and declarations that are required
             for the compilation of other source files belonging to the parser
             class in one header file.
+
     it() lsoption(implementation-skeleton)(I)(skeleton)nl()
            Use tt(skeleton) as the pathname of the file containing the
             skeleton of the implementation header. Its filename defaults to
             tt(bisonc++.ih).
-    it() loption(include-only)nl()
-           All grammar files will be concatenated to the standard output
-            stream in their order of processing. Following this, b()
-            terminates.
+
     it() loption(insert-stype)nl()
-           This option is only effective if the bf(debug) option (or
-            bf(%debug) directive) has also been specified. When
-            bf(insert-stype) has been specified the parsing function's debug
+           This option is only effective if the tt(debug) option (or
+            tt(%debug) directive) has also been specified. When
+            tt(insert-stype) has been specified the parsing function's debug
             output will also show selected semantic values. It should only be
-            specified if objects or variables of the semantic value type
-            bf(STYPE__) can be inserted into tt(ostreams).
-    it() loption(lines) (soption(l))nl() 
-           Put bf(#line) preprocessor directives in the file containing the
-            parser's tt(parse()) function. By including this option the
-            compiler and debuggers will associate errors with lines in your
-            grammar specification file, rather than with the source file
-            containing the tt(parse()) function itself.
-    it() label(MAXDEPTH) laoption(max-inclusion-depth)(value)nl()
+            used if objects or variables of the semantic value type
+            tt(STYPE__) can be inserted into tt(ostreams).
+
+
+    it() laoption(max-inclusion-depth)(value)nl()
            Set the maximum number of nested grammar files. Defaults to 10.
+
     it() lsoption(namespace)(n)(namespace)nl()
            Define the parser base class, the paser class and the parser
             implentations in the namespace tt(namespace). By default
             no namespace is defined. If this options is used the
             implementation header will contain a commented out tt(using
             namespace) declaration for the requested namespace. 
+
     it() loption(no-baseclass-header)nl()
            Do not write the file containing the parser class' base class, even
             if that file doesn't yet exist. By default the file containing the
-            parser's base class is (re)written each time b()() is called. Note
+            parser's base class is (re)written each time bic() is called. Note
             that this option should normally be avoided, as the base class
             defines the symbolic terminal tokens that are returned by the
             lexical scanner. By suppressing the construction of this file any
             modification in these terminal tokens will not be communicated to
             the lexical scanner.
+
     it() loption(no-lines)nl() 
-           Do not put bf(#line) preprocessor directives in the file containing
-            the parser's tt(parse()) function. This option is primarily useful
-            in combination with the bf(%lines) directive, to suppress that
-            directive. It also overrides option bf(--lines), though.
+           Do not put tt(#line) preprocessor directives in the file containing
+            the parser's tt(parse) function. By default tt(#line) preprocessor
+            directives are placed in the file containing the parser's
+            tt(parse) function. This option allows the compiler and debuggers
+            to associate errors with lines in your grammar specification file,
+            rather than with the source file containing the tt(parse) function
+            itself.
+
     it() loption(no-parse-member)nl()
            Do not write the file containing the parser's predefined parser
             member functions, even if that file doesn't yet exist. By default
-            the file containing the parser's tt(parse()) member function is
-            (re)written each time b()() is called. Note that this option
+            the file containing the parser's tt(parse) member function is
+            (re)written each time bic() is called. Note that this option
             should normally be avoided, as this file contains parsing
             tables which are altered whenever the grammar definition is
             modified. 
+
+    it() loption(own-debug)nl()
+           Extensively displays the actions performed by bic()'s parser when
+            it processes the grammar specification file(s). This implies the
+            tt(--verbose) option.
+
+    it() loption(own-tokens) (soption(T))nl()
+           The tokens returned as well as the text matched when bic() reads
+            its input files(s) are shown when this option is used.
+
+           This option does em(not) result in the generated parsing function
+            displaying returned tokens and matched text. If that is what you
+            want, use the tt(--print-tokens) option.
+
     it() lsoption(parsefun-skeleton)(P)(skeleton)nl()
            Use tt(skeleton) as the pathname of the file containing the parsing
             member function's skeleton. Its filename defaults to
-            tt(bisonc++.cc). The environment variable tt(BISON_SIMPLE) is not
-            inspected anymore.
+            tt(bisonc++.cc).
+
     it() lsoption(parsefun-source)(p)(source)nl()
-           Define tt(source) as the name of the source file containing the
-            parser member function tt(parse()). Defaults to tt(parse.cc).
-    it() label(REQUIRED) laoption(required-tokens)(value)nl()
-    Whenever a syntactic error is detected during the parsing process the next
-few tokens that are received  by the parsing function may easily cause yet
-another (spurious) syntactic error. The option tt(--required-tokens) (as well
-as the directive tt(%requireed-tokens)) can be used to specify the number of
-tokens that must have been successfully processed before the parsing function
-reports another syntactic error. By default the number of required tokens is
-initialized to 0.
-    it() laoption(print)(matched-text-function)nl()
-    The tt(print) option provides an implementation of the Parser class's
-tt(print) function displaying the current token value and the text matched by
-the lexical scanner as received by the generated tt(parse) function.  The
-option value tt(matched-text-function) must be set to a function call
-expression returning the matched text. E.g.,
-                verb(
-    --print="d_scanner.YYText()"
-                )
-    If the matched text needs editing (e.g., newlines should be displayed as
-tt(\n)) then a wrapper function around the `real' function returning the text
-as matched by the scanner may be specified here.
-    it() label(SCANOPT) lsoption(scanner)(s)(header)nl()
+           Define tt(source) as the name of the source file to contain the
+            parser member function tt(parse). Defaults to tt(parse.cc).
+
+    it() loption(print-tokens) (soption(t))nl()
+           The generated parsing function implements a function tt(print__)
+            displaying (on the standard output stream) the tokens returned by
+            the parser's scanner as well as the corresponding matched
+            text. This implementation is suppressed when the parsing function
+            is generated without using this option. The member tt(print__)) is
+            called from tt(Parser::print), which is defined in-line in the the
+            parser's class header. Calling tt(Parser::print__), therefore, can
+            also easily be controlled by an option controlled by the program
+            using the parser generated by bic().
+
+           This option does em(not) show the tokens returned and text matched
+            by bic() itself when reading its input file(s). If that is what
+            you want, use the tt(--own-tokens) option.
+
+    it() laoption(required-tokens)(number)nl()
+           Following a syntactic error, require at least tt(number)
+            successfully processed tokens before another syntactic error can
+            be reported. By default tt(number) is zero.
+
+    it() lsoption(scanner)(s)(header)nl()
            Use tt(header) as the pathname to the file defining a class
-            bf(Scanner), offering a member tt(int yylex()) producing the next
-            token from the input stream to be analyzed by the parser generated
-            by b()(). When this option is used the parser's member bf(int
-            lex()) will be predefined as 
+            tt(Scanner). When this option is used the parser's member tt(int
+            lex()) is predefined as 
                 verb(
     int lex()
     {
-        return d_scanner.yylex();
+        return d_scanner.lex();
     }
                 )
-           and an object tt(Scanner d_scanner) will be composed into the
-            parser. The tt(d_scanner) object will be constructed using its
-            default constructor. If another constructor is required, the
-            parser class may be provided with an appropriate (overloaded)
-            parser constructor after having constructed the default parser
-            class header file using b()().  By default tt(header) will be
-            surrounded by double quotes (using, e.g., tt(#include "header")).
-            When the argument is surrounded by pointed brackets tt(#include
-            <header>) will be included. In the latter case, quotes might be
-            required to escape interpretation by the shell (e.g., using tt(-s
-            '<header>')).
+           and an object tt(Scanner d_scanner) is composed into the
+            parser. The example shows the function that's called by
+            default. By specifying the tt(--flex) option (or tt(%flex)
+            directive) the function tt(d_scanner.yylex()) is called. Any other
+            function to call can be specified using the
+            tt(--scanner-token-function) option (or
+            tt(%scanner-token-function) directive). 
+
+           By default tt(header) is surrounded by double quotes (using, e.g.,
+            tt(#include "header")).  When the argument is surrounded by
+            pointed brackets tt(#include <header>) is included. 
+
     it() loption(scanner-debug)nl() 
-           Show de scanner's matched rules and returned tokens.
+           Show de scanner's matched rules and returned tokens. This offers an
+            extensive display of the rules and tokens matched and returned by
+            bic()'s scanner, not of just the tokens and matched text received
+            by bic(). If that is what you want use the tt(--own-tokens)
+            option.
+
+    it() laoption(scanner-matched-text-function)(function-call)nl() 
+           The scanner function returning the text that was matched at the
+            last call of the scanner's token function. A complete function
+            call expression should be provided (including a scanner object, if
+            used). This option overrules the tt(d_scanner.matched()) call used
+            by default when the tt(%scanner) directive is specified, and it
+            overrules the tt(d_scanner.YYText()) call used when the tt(%flex)
+            directive is provided. Example:
+           verb(
+    --scanner-matched-text-function "myScanner.matchedText()"
+                )
+
     it() laoption(scanner-token-function)(function-call)nl() 
            The scanner function returning the next token, called from the
-            generated parser's tt(lex) function. A complete function
+            parser's tt(lex) function. A complete function
             call expression should be provided (including a scanner object, if
-            used). This option overrules the tt(d_scanner.yylex()) call
-            used by default when the tt(%scanner) directive is
-            specified. Example: 
-            verb(
-    --scanner-token-function="d_scanner.lex()"
+            used). This option overrules the tt(d_scanner.lex()) call used
+            by default when the tt(%scanner) directive is specified, and it
+            overrules the tt(d_scanner.yylex()) call used when the tt(%flex)
+            directive is provided. Example:
+           verb(
+    --scanner-token-function "myScanner.nextToken()"
                 )
+
     it() loption(show-filenames)nl() 
-           Write the names of the files that are generated to the 
-            standard error stream.
-    it() laoption(skeleton-directory)(directory)nl() 
+           Writes the names of the generated files to the standard error
+            stream.
+
+    it() lsoption(skeleton-directory)(S)(directory)nl() 
            Specifies the directory containing the skeleton files to use. This
             option can be overridden by the specific skeleton-specifying
             options (tt(-B -C, -H,) and tt(-I)).
+
+    it() laoption(target-directory)(directory) nl() 
+           Specifies the directory where generated files should be written.
+            By default this is the directory of bic()'s input file.
+            The tt(--target-directory) option does not affect files that were 
+            explicitly named (either as option or as directive).
+
     it() loption(thread-safe)nl() 
-            No static data are modified, making bisonc++ thread-safe.
+           No static data are modified, making bic() thread-safe.
+
     it() loption(usage)nl()
             Write basic usage information to the standard output stream and
             terminate. 
+
     it() loption(verbose) (soption(V))nl() 
-           Write a file containing verbose descriptions of
-            the parser states and what is done for each type of look-ahead
-            token in that state.  This file also describes all conflicts
-            detected in the grammar, both those resolved by operator
-            precedence and those that remain unresolved.  By default it will
-            not be created, but if requested it will receive the filename
-            tt(<grammar>.output), where tt(<grammar>)
-            is the name of the file containing the grammar definition (i.e,
-            the file passed as argument to b()()).
+           Write a file containing verbose descriptions of the parser states
+            and what is done for each type of look-ahead token in that state.
+            This file also describes all conflicts detected in the grammar,
+            both those resolved by operator precedence and those that remain
+            unresolved.  It is not created by default, but if requested the
+            information is written on tt(<grammar>.output), where
+            tt(<grammar>) is the grammar specification file passed to bic().
+
     it() loption(version) (soption(v))nl()
-            Display b()()'s version number and terminate.
+            Display bic()'s version number and terminate.
     )

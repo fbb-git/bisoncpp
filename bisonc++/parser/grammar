@@ -4,6 +4,8 @@
 
 %baseclass-preinclude preheaders.h
 
+%debug
+
 %print-tokens
 
 %token BASECLASS_HEADER BASECLASS_PREINCLUDE BLOCK CLASS_HEADER CLASS_NAME

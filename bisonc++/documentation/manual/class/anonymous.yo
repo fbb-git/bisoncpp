@@ -1,10 +1,11 @@
-    In the file defining the tt(parse()) function (see section
-ref(PARSESOURCE)) the following types and variables are defined in the
-anonymous namespace. These are mentioned here for the sake of completeness,
-and are not normally accessible to other parts of the parser.
+    In the file defining the tt(parse) function the following types and
+variables are defined in the anonymous namespace. These are mentioned here for
+the sake of completeness, and are not normally accessible to other parts of
+the parser.
+
     itemization(
     it() bf(char const author[]):nl()
-       Defining the name and e-mail address of bic()'s author.
+       Defining the name and e-mail address of Bic()'s author.
     it() bf(ReservedTokens):nl()
        This enumeration defines some token values used internally by the
         parsing functions. They are:
@@ -39,14 +40,14 @@ and are not normally accessible to other parts of the parser.
         defining non-terminal;nl()
        Its second field defines the number of elements of a production
     it() bf(SR__) (Shift-Reduce Info):nl()
-       This bf(struct) provides the shift/reduce information for the various
-        grammatical states. bf(SR__) values are collected in arrays, one array
-        per grammatical state. These array, named bf(s_)tt(<nr>), 
+       This tt(struct) provides the shift/reduce information for the various
+        grammatic states. tt(SR__) values are collected in arrays, one array
+        per grammatic state. These array, named tt(s_)tt(<nr>), 
         where tt<nr> is a state number are defined in the anonymous namespace
-        as well. The bf(SR__) elements consist of two unions,
+        as well. The tt(SR__) elements consist of two unions,
         defining fields that are applicable to, respectively, the first,
         intermediate and the last array elements.nl()
-       The first element of each array consists of (1st field) a bf(StateType)
+       The first element of each array consists of (1st field) a tt(StateType)
         and (2nd field) the index of the last array element;
        intermediate elements consist of (1st field) a symbol value and (2nd
         field) (if negative) the production rule number reducing to the
@@ -62,15 +63,15 @@ and are not normally accessible to other parts of the parser.
        An enumeration value specifying the number of additional elements that
         are added to the state- and semantic value stacks when full.
     it() bf(PI__) (Production Info):nl()
-       This bf(struct) provides information about production rules. It has two
-        fields: bf(d_nonTerm) is the identification number of the production's
-        non-terminal, bf(d_size) represents the number of elements of the
+       This tt(struct) provides information about production rules. It has two
+        fields: tt(d_nonTerm) is the identification number of the production's
+        non-terminal, tt(d_size) represents the number of elements of the
         productin rule.
     it() bf(static PI__ s_productionInfo):nl()
-       Used internally.
+       Used internally by the parsing function.
     it() bf(static SR__ s_<nr>[]):nl()
        Here, tt(<nr>) is a numerical value representing a state number.
-       Used internally.
+       Used internally by the parsing function.
     it() bf(static SR__ *s_state[]):nl()
-       Used internally.
+       Used internally by the parsing function.
     )

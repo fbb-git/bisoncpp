@@ -39,8 +39,8 @@ void usage(string const &program_name)
 
     "   --construction: write details about the grammar analysis to stdout.\n"
 
-    "   --debug: generates debug output statements in the parse function's\n"
-    "           source.\n"
+    "   --debug: generates debug output statements in the generated parse\n"
+    "           function's source.\n"
 
     "   --error-verbose: the parse function will dump the parser's state\n"
     "           stack to stdout when a syntactic error is reported\n"
@@ -68,7 +68,7 @@ void usage(string const &program_name)
                                                                 "generated\n"
     "           by --debug. Ignored unless --debug was specified.\n"
 
-    "   --lines (-l): put #line directives in generated output.\n"
+    "   --no-lines: don't put #line directives in generated output.\n"
 
     "   --max-inclusion-depth=<value>:\n"
     "           sets the maximum number of nested grammar files (default: "
@@ -83,15 +83,24 @@ void usage(string const &program_name)
 
     "   --no-parse-member: don't create the member parse().\n"
 
+    "   --own-debug:\n"
+    "           bisonc++ displays the actions of its parser while "
+                                                                "processing\n"
+    "           its input file(s) (implies --verbose).\n"
+
+    "   --own-tokens (-t):\n"
+    "           bisonc++ displays the tokens and their corresponding\n"
+    "           matched text it received from its lexcial scanner.\n"
+
     "   --parser-skeleton=<parserskel> (-P):\n"
     "           location of the parse function's skeleton.\n"
 
     "   --parsefun-source=<source> (-p):\n"
     "           filename holding the parse function's source.\n"
 
-    "   --print=<scanner match function>:\n"
-    "           the print() member displays the tokens and their matched\n"
-    "           text, retrieved by <scanner match function>.\n"
+    "   --print-tokens (-t):\n"
+    "           the print() member of the generated parser class displays\n"
+    "           the tokens and their corresponding matched text.\n"
 
     "   --required-tokens=<value>:\n"
     "           minimum number of successfully processed tokens between\n"
@@ -101,8 +110,8 @@ void usage(string const &program_name)
     "           include `header-file' declaring the class Scanner, and call\n"
     "           d_scanner.yylex() from Parser::lex().\n"
 
-    "   --scanner-debug: show the rules and returned tokens returned by\n"
-    "           bisonc++'s scanner.\n"
+    "   --scanner-debug: extensive display of the actions of bisonc++'s "
+                                                                "scanner\n"
 
     "   --scanner-token-function=<scanner token function>:\n"
     "           define the function called from lex() returning the next\n"

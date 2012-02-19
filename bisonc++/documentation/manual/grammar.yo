@@ -60,15 +60,15 @@ includefile(directives/intro.yo)
     lsubsect(EXPECT)(%expect: suppressing conflict warnings)
     includefile(directives/expect.yo)
 
+    subsect(%flex: using the traditional `flex++'  interface)
+    includefile(directives/flex.yo)
+
     lsubsect(INCLUDE)(%include: splitting the input file)
     includefile(directives/include.yo)
 
     lsubsect(PRECEDENCE)(%left, %right, %nonassoc: defining operator
         precedence)
     includefile(directives/precedence.yo)
-
-    subsect(%lines: inserting `#line' directives)
-    includefile(directives/lines.yo)
 
     lsubsect(LOCSTRUCT)
             (%locationstruct: specifying a dedicated location struct)
@@ -86,10 +86,13 @@ includefile(directives/intro.yo)
     subsect(%negative-dollar-indices: using constructions like $-1)
     includefile(directives/negative.yo)
 
+    subsect(%no-lines: suppressing `#line' directives)
+    includefile(directives/lines.yo)
+
     subsect(%prec: overruling default precedences)
     includefile(directives/prec.yo)
 
-    subsect(%print: displaying tokens and matched text) 
+    subsect(%print-tokens: displaying tokens and matched text) 
     includefile(directives/print.yo)
 
     subsect(%required-tokens: defining the minimum number of tokens between
@@ -98,6 +101,10 @@ includefile(directives/intro.yo)
 
     lsubsect(SCANNER)(%scanner: using a standard scanner interface)
     includefile(directives/scanner.yo)
+
+    subsect(%scanner-matched-text-function: define the name of the scanner's
+        member returning the matched texttoken) 
+    includefile(directives/scannermatchedtextfunction.yo)
 
     subsect(%scanner-token-function: define the name of the scanner's token
             function) 
@@ -144,6 +151,9 @@ includefile(directives/intro.yo)
                (%parsefun-source: defining the parse() function's sourcefile)
         includefile(directives/parse.yo)
 
+        subsubsect(%target-directory: defining the directory where files must
+                be written)
+        includefile(directives/targetdir.yo)
 
 sect(Basic Grammatical Constructions)
 includefile(grammar/gramcons.yo)

@@ -23,7 +23,7 @@ namespace
 
         {"class-skeleton", 'C'},            // option only
 
-        Arg::LongOption("construction"),
+        Arg::LongOption("construction"),    // option only
                 // implies verbose, but also shows FIRST and FOLLOW sets as
                 // well as the full set of states, including the non-kernel
                 // items
@@ -43,7 +43,8 @@ namespace
         {"implementation-skeleton", 'I'},   // option only
         Arg::LongOption("insert-stype"),    // option only
 
-        {"max-inclusion-depth", Arg::Required},
+        {"max-inclusion-depth", Arg::Required}, // option only
+
         {"namespace", 'n'},
 
                                             // option only
@@ -51,11 +52,10 @@ namespace
 
         Arg::LongOption("no-lines"),
 
-        Arg::LongOption("no-parse-member"), // option only
-
+        Arg::LongOption("no-parse-member"), // options only
+        {"own-debug", Arg::None},
         {"own-tokens", 'T'},
-
-        {"parsefun-skeleton", 'P'},         // option only
+        {"parsefun-skeleton", 'P'},         
 
         {"parsefun-source", 'p'},
         {"print-tokens", 't'},
@@ -64,8 +64,8 @@ namespace
 
         {"scanner", 's'},
         Arg::LongOption("scanner-debug"),
-        {"scanner-token-function", Arg::Required},
         {"scanner-matched-text-function", Arg::Required},
+        {"scanner-token-function", Arg::Required},
 
         Arg::LongOption("show-filenames"),  // option only
         {"skeleton-directory", 'S'},        // option only
@@ -74,10 +74,10 @@ namespace
 
         Arg::LongOption("thread-safe"),     // options only
         {"usage", 'h'},                     
-        {"version", 'v'},
         {"verbose", 'V'},
                 // shows rules, tkoens, final states and kernel items, 
                 // and describes conflicts when found
+        {"version", 'v'},
     };
     auto longEnd = longOptions + 
                                sizeof(longOptions) / sizeof(Arg::LongOption);  
