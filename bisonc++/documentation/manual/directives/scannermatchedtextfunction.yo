@@ -1,0 +1,17 @@
+Syntax: bf(%scanner-matched-text-function) tt(function-call) nl()
+
+The tt(%scanner-matched-text-function) directive defines the scanner function
+returning the text matching the previously returned token. By default this is
+tt(d_scanner.matched()).
+
+A complete function call expression should be provided (including a scanner
+object, if used). This option overrules the tt(d_scanner.matched()) call used
+by default when the tt(%scanner) directive is specified. Example:
+            verb(
+    %scanner-matched-text-function myScanner.matchedText()
+                )
+    If the function call expression contains white space then the
+tt(function-call) specification should be surrounded by double quotes (tt(")).
+This directive is overruled by the bf(--scanner-matched-text-function)
+command-line option.
+

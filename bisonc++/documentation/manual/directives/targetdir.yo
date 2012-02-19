@@ -1,0 +1,5 @@
+Syntax: bf(%target-directory) tt(directory) nl()
+           Specifies the directory where generated files should be written.
+            By default this is the directory of bic()'s input file.  The
+            tt(%target-directory) directive does not affect files that were
+            explicitly named (either as option or as directive).
