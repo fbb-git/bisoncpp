@@ -36,8 +36,6 @@ string  g_cwd = chdir("");  // initial working directory
 
 #include "icmake/install"
 
-// #include "icmake/test"
-
 void main(int argc, list argv, list envp)
 {
     string option;
@@ -95,9 +93,6 @@ void main(int argc, list argv, list envp)
         program(strip);
     }
 
-//    if (option == "test")
-//        test(option2);
-
     printf("Usage: build [-p] what\n"
         "Where `what' is one of:\n"
         "   clean              - clean up remnants of previous compilations\n"
@@ -108,9 +103,6 @@ void main(int argc, list argv, list envp)
         "   program [strip]    - build bisonc++ (optionally strip the\n"
         "                        executable)\n"
         "   scanner [strip]    - build new scanner, then 'build program'\n"
-        "   test [what]        - run the test-suite\n"
-        "                        `what' can be the name of a specific test\n"
-        "                        to run. If omitted, all tests are run.\n"
         "   rebuild [strip]    - recreate the parser using bisonc++ created\n"
         "                        by `build program' (optionally strip the\n"
         "                        executable)\n"
