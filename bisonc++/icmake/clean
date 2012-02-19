@@ -8,6 +8,7 @@ void setRemovals()
         remove1 = 
             "build-stamp configure-stamp options/SKEL "
             "tmp/bisonc++.o o */o release.yo tmp/libbisonc++.a "    
+            "parser/grammar.output "
             ;
 
     // dist:
@@ -16,7 +17,8 @@ void setRemovals()
 
     // in ./documentation:
         remove3 = "man/*.1 man/*.3bisonc++ man/*.html manual/manual-stamp "
-                  "manual/*.html manual/invoking/usage bisonc++ usage/usage";
+                  "manual/*.html manual/invoking/usage bisonc++ usage/usage "
+                  "manual/invoking/usage.txt";
 }
 
 void clean(int dist)
