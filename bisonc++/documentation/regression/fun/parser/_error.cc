@@ -3,7 +3,7 @@
 void Parser::error(char const *)
 {
     if (!d_error)
-        cout << "At " << d_scanner.YYText() << ": error in expression.\n"
-                "(" << static_cast<int>(*d_scanner.YYText()) << ")\n";
+        cout << "At " << d_scanner.matched() << ": error in expression.\n"
+                "(" << static_cast<int>(d_scanner.matched()[0]) << ")\n";
     d_error = true;
 }

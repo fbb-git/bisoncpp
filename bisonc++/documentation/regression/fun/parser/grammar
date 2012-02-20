@@ -1,9 +1,7 @@
 %scanner ../scanner/scanner.h
 %baseclass-preinclude ../rulevalue/_rulevalue.h
-%parsefun-source parse.cc
 %filenames parser
-%debug
-
+//%debug
 
 %stype RuleValue
 

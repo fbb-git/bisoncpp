@@ -2,7 +2,7 @@
 
 void Parser::setAngleType()
 {
-    string type = d_scanner.YYText();
+    string type = d_scanner.matched();
 
     if (type == "rad")
     {

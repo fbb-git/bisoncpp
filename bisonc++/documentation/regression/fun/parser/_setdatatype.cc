@@ -2,7 +2,7 @@
 
 RuleValue Parser::setDataType()
 {
-    string type = d_scanner.YYText();
+    string type = d_scanner.matched();
     return 
         type == "char"  ? RuleValue(RuleValue::CHAR)    :
         type == "int"   ? RuleValue(RuleValue::INT)     :

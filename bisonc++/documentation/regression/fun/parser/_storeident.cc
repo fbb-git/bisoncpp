@@ -2,5 +2,5 @@
 
 void Parser::storeIdent()
 {
-    d_lastIdent = d_scanner.YYText();
+    d_lastIdent = d_scanner.matched();
 }

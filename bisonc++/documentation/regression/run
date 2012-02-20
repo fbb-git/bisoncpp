@@ -141,11 +141,6 @@ echo
 EXAMPLE=1
 PRE="Enter x to skip; a plain Enter to run; ^c to end this script"
 
-echo $EXAMPLE: an extensive calculator supporting functions
-echo $PRE
-readRUN
-example fun $RUN
-
 echo $EXAMPLE: an example of polymorphic semantic values
 echo $PRE
 readRUN
