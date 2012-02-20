@@ -7,16 +7,16 @@
 
 class Ident: public Base
 {
-    string d_ident;
+    std::string d_ident;
 
     public:
-        Ident(char const *id);
+        Ident(std::string const &id);
         virtual Base *clone() const;
         string const &id() const;           // directly access the name.
         virtual ostream &insert(ostream &os) const;
 };
 
-inline Ident::Ident(char const *id)
+inline Ident::Ident(std::string const &id)
 :
     d_ident(id)
 {}
