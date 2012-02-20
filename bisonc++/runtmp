@@ -11,7 +11,4 @@ The skeletons in ${PRE}/skeletons are used.
     exit 1
 fi
 
-${PRE}/tmp/bin/bisonc++ -B ${PRE}/skeletons/bisonc++base.h \
-                        -C ${PRE}/skeletons/bisonc++.h \
-                        -I ${PRE}/skeletons/bisonc++.ih \
-                        -P ${PRE}/skeletons/bisonc++.cc $*
+${PRE}/tmp/bin/bisonc++ -S ${PRE}/skeletons $*

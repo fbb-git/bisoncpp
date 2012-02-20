@@ -102,6 +102,6 @@ expression:
 |
     NUMBER
     {
-        $$ = atoi(d_scanner.YYText());
+        $$ = atoi(d_scanner.matched().c_str());
     }
 ;
