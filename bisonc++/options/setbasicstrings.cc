@@ -2,7 +2,15 @@
 
 bool Options::setBasicStrings()
 {
-    d_className = setOpt("class-name", s_defaultClassName);
+        // classname and namespace can only be followed by IDENTIFIERs, so
+        // no undelimit is required.
+    d_arg.option(&d_nameSpace, 'n');
+
+    d_arg.option(&d_className, "class-name");
+    if (d_className.empty())
+        d_className = s_defaultClassName;
+
+
 
     d_scannerTokenFunction = setOpt("scanner-token-function",
                                     d_flex ?
@@ -15,8 +23,6 @@ bool Options::setBasicStrings()
                                         s_YYText
                                     :
                                         s_defaultScannerMatchedTextFunction); 
-
-    d_arg.option(&d_nameSpace, 'n');
 
     string nTokens;
     if (d_arg.option(&nTokens, "required-tokens"))

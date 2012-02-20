@@ -7,14 +7,14 @@ COMMAND=/bin/bash
 
     # Assuming bisonc++ is in your computer's search-path. If not, define
     # BISONCPP as the full path to bisconc++:
-BISONCPP=bisonc++
 BISONCPP=/home/frank/git/bisonc++//bisonc++/tmp/bin/bisonc++
+BISONCPP=bisonc++
 
     # UNCOMMENT the following variables if you want to run the examples from
     # the source distribution's documentation/regression directory rather than
     # from bisonc++ documentation's `regression' subdirectory.
-SKEL=../../../../skeletons
-BISONCPP="../../../../tmp/bin/bisonc++ -S ${SKEL}"
+# SKEL=../../../../skeletons
+# BISONCPP="../../../../tmp/bin/bisonc++ -S ${SKEL}"
 
 example()
 {
@@ -140,19 +140,6 @@ echo
 
 EXAMPLE=1
 PRE="Enter x to skip; a plain Enter to run; ^c to end this script"
-
-echo $EXAMPLE: an example of polymorphic semantic values
-echo $PRE
-readRUN
-example polymorphic $RUN --insert-stype
-
-echo $EXAMPLE: a grammar in which reduces precede shifts
-echo $PRE
-readRUN
-example mandayam $RUN
-
-
-
 
 echo $EXAMPLE: AHO Example 4.42, p. 231
 echo $PRE
