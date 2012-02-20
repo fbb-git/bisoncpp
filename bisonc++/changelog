@@ -1,3 +1,34 @@
+bisonc++ (3.00.00)
+
+  * This release's scanner was built by flexc++
+
+  * Option handling was separated from parsing, following the method also used
+    in flexc++: a class Options holds and maintains directives and options
+    that are used in multiple points in bisonc++'s sources. The Parser passes
+    directive specifications to set-functions defined by the class Options.
+
+  * The parser's semantic value handling recevied a complete overhaul. Unions
+    are no longer used; instead a light-weight polymorphic base class in
+    combination with some template meta programming was used to handle the
+    semantic values. See sembase/sembase.h for a description of the appproach.
+
+  * Options and directives were rationalized/standardized. See the man-page
+    for details. Grammar specification files should no longer use %print, but
+    should either use %print-tokens or %own-tokens (or the equivalent
+    command-line options).
+
+  * NOTE: Existing Parser class interfaces (i.e. parser.h) must be
+    (hand-) modified by declaring a private member 
+
+        void print__();
+
+    See the man-page and/or manual for details about print__.
+
+  * All regression tests (in documentation/regression) are now expecting
+    that flexc++ (>= 0.93.00) is available.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 20 Feb 2012 16:32:01 +0100
+  
 bisonc++ (2.09.04)
     
   * Replaced many for_each calls and lamda functions by range-based for-loops
