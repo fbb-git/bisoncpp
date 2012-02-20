@@ -1,43 +1,16 @@
-%{
-    #define _SKIP_YYFLEXLEXER_
-    #include "scanner.ih"
-
-    /* 
-        WARNING: 
-
-        DUE TO #define DIRECTIVES IN THE FLEX SKELETON/PROGRAM
-        DO NOT USE `REJECT' IN RULES/CODE. ALSO, THE PARSER CANNOT
-        DEFINE A `REJECT' CONSTANT, AS THIS `REJECT' IS ALSO EXPANDED
-        BY THE CPP PREPROCESSOR.
-    */
-
-    /*  
-        WHEN BISON'S PARSER IS USED, DO NOT FORGET TO PREFIX THE PARSER'S 
-        CLASS NAME TO THE RETURNED TOKENS. E.G., RETURN 
-                               `Parser::IDENT'
-
-        When bison++'s parser isn't used, don't include parser.h
-        If the parser's filenames are not `parser' then change the name
-        of the following base.h file accordingly
-    */
-%}
-
-%option yyclass="Scanner" outfile="yylex.cc"
-%option c++ 8bit warn noyywrap yylineno
-%option debug
+%interactive
+%filenames scanner
 
 %%
 
 [ \t]+                          // Often used: skip white space
 
 [0-9]+                          {
-                                    *d_val = atoi(yytext);
+                                    *d_val = atoi(matched().c_str());
                                     return Parser::NR;
                                 }
 
 .|\n                            {
-                                    d_loc->first_line = yylineno - 1;
-                                    return yytext[0];
+                                    d_loc->first_line = lineNr() - 1;
+                                    return matched()[0];
                                 }
-
-%%

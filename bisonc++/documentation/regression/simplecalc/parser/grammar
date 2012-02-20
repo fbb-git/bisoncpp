@@ -1,4 +1,3 @@
-%class-name Parser
 %filenames parser
 
 %scanner ../scanner/scanner.h
@@ -44,7 +43,7 @@ expression:
 number:
     NUMBER
     {
-        $$ = atoi(d_scanner.YYText());
+        $$ = atoi(d_scanner.matched().c_str());
     }
 ;
 

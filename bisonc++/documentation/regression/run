@@ -68,18 +68,26 @@ example()
     cd $cwd
 
         # the doc-test is a safequard agains accidentally removing files
-    [ -s doc ] && \
-            find ./ -type f -not -regex '.*/\.svn/.*'           \
-                \( -name Parser\*h -or -name parserbase.h \)    \
-                -exec rm '{}' ';'   &&  \
-            find ./ -type f -not -regex '.*/\.svn/.*' \
-                -not -regex '.*/_.*' \
-                -not -name doc -not -name demo.cc \
-                -not -name bgram \
-                -not -name grammar -not -regex '.*/*h' \
-                -not -regex '.*/dallas.*' -not -name input \
-                -not -name lexer \
-                -exec rm '{}' ';'
+
+    [ -s doc ]			    &&	\
+    find ./ -type f			\
+	\(				\
+            -name Parser*h	-or	\
+	    -name parserbase.h	-or	\
+	    -name scannerbase.h     	\
+	\)				\
+        -exec rm '{}' ';'	    &&	\
+    find ./ -type f			\
+        -not -regex '.*/_.*'		\
+        -not -name doc			\
+	-not -name demo.cc		\
+        -not -name bgram		\
+        -not -name grammar		\
+	-not -regex '.*/*h'		\
+        -not -regex '.*/dallas.*'	\
+        -not -name input		\
+        -not -name lexer		\
+        -exec rm '{}' ';'
 
     cd $orgdir
     tput clear
@@ -132,6 +140,34 @@ echo
 
 EXAMPLE=1
 PRE="Enter x to skip; a plain Enter to run; ^c to end this script"
+
+echo $EXAMPLE: the man-page calculator
+echo $PRE
+readRUN
+example calculator $RUN
+
+echo $EXAMPLE: a calculator from the C++ Annotations
+echo $PRE
+readRUN
+example annotations $RUN
+
+echo $EXAMPLE: an extensive calculator supporting functions
+echo $PRE
+readRUN
+example fun $RUN
+
+echo $EXAMPLE: an example of polymorphic semantic values
+echo $PRE
+readRUN
+example polymorphic $RUN --insert-stype
+
+echo $EXAMPLE: a grammar in which reduces precede shifts
+echo $PRE
+readRUN
+example mandayam $RUN
+
+
+
 
 echo $EXAMPLE: AHO Example 4.42, p. 231
 echo $PRE

@@ -29,6 +29,7 @@ class Parser: public ParserBase
         void errorRecovery();
         int lookup(bool recovery);
         void nextToken();
+        void print__();
 };
 
 inline void Parser::error(char const *msg)
@@ -39,11 +40,13 @@ inline void Parser::error(char const *msg)
 // $insert lex
 inline int Parser::lex()
 {
-    return d_scanner.yylex();
+    return d_scanner.lex();
 }
 
 inline void Parser::print()      // use d_token, d_loc
-{}
+{
+    print__();
+}
 
 
 #endif
