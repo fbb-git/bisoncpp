@@ -1,7 +1,6 @@
 //DECLARATION
 %filenames parser
 %scanner ../scanner/scanner.h
-%lines
 
 %union {
     int i;

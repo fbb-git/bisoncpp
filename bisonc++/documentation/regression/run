@@ -141,16 +141,6 @@ echo
 EXAMPLE=1
 PRE="Enter x to skip; a plain Enter to run; ^c to end this script"
 
-echo $EXAMPLE: the man-page calculator
-echo $PRE
-readRUN
-example calculator $RUN
-
-echo $EXAMPLE: a calculator from the C++ Annotations
-echo $PRE
-readRUN
-example annotations $RUN
-
 echo $EXAMPLE: an extensive calculator supporting functions
 echo $PRE
 readRUN

@@ -1,12 +1,5 @@
-%{
-    #define _SKIP_YYFLEXLEXER_
-    #include "scanner.ih"
-
-    #include "../parser/parserbase.h"
-%}
-
-%option yyclass="Scanner" outfile="yylex.cc" c++ 8bit warn noyywrap
-%option debug
+%filenames scanner
+%interactive
 
 %%
 
@@ -16,6 +9,4 @@
 "."[0-9]*                   |
 [0-9]+("."[0-9]*)?          return Parser::DOUBLE;
 
-.|\n                        return *yytext;
-
-%%
+.|\n                        return matched()[0];
