@@ -334,6 +334,11 @@ _directiveSpec:
         d_options.setParsefunSource();
     }
 |
+    PRINT_TOKENS
+    {
+        d_options.setPrintTokens();
+    }
+|
     _required
     NUMBER
     {
