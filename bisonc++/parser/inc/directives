@@ -251,11 +251,6 @@ _directiveSpec:
         d_options.setDebug();
     }
 |
-    PRINT_TOKENS
-    {
-        d_options.printTokens();
-    }
-|
     ERROR_VERBOSE
     {
         d_options.setErrorVerbose();

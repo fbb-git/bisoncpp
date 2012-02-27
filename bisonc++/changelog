@@ -1,3 +1,14 @@
+bisonc++ (3.01.00)
+
+  * The `%print-tokens' directive was accidentally omitted from
+    3.00.00. Repaired in this release.
+
+  * Starting this release all release tags (using names that are identical to
+    the version number, so for this release the tag is 3.01.00) are signed to
+    allow authentication.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 27 Feb 2012 13:33:20 +0100
+
 bisonc++ (3.00.00)
 
   * This release's scanner was built by flexc++

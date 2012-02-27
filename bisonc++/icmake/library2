@@ -45,7 +45,7 @@ void parser()
     {
         if (gramfiles[idx] younger "parse.cc")
         {
-            exec("bisonc++", "-V -l", "grammar");
+            exec("bisonc++", "-V", "grammar");
             break;
         }
     }
