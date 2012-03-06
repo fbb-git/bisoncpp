@@ -1,4 +1,5 @@
-Below the way Bisonc++ may use a polymorphic semantic value is discussed. The
+Below the way Bisonc++ may use a polymorphic semantic value is
+discussed. The
 approach discussed below is a direct result of an suggestion initially made by
 Dallas A. Clement in September 2007. All sources of the example discussed
 below are found in the lurl(poly) directory.
@@ -11,7 +12,7 @@ approach is supported by Bisonc++ since it is supported by bf(bison)(1) and
 bf(bison++); dropping the tt(union) would impede backward portability.
 
 The alternative to using a tt(union) is using a polymorphic base class. This
-class will be developed below as the class tt(Base). Since it's a polymorphic
+class is developed below as the class tt(Base). Since it's a polymorphic
 base class it should have the following characteristics:
     itemization(
     it() Its destructor must be virtual;

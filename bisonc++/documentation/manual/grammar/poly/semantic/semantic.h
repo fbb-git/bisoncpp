@@ -2,76 +2,37 @@
 #define _INCLUDED_SEMANTIC_
 
 #include <ostream>
+#include <memory>
 
-#include "../base/base.h"
+#include "../int/int.h"
+#include "../text/text.h"
 
-class Semantic
+class Semantic: public std::shared_ptr<Base>
 {
-    Base *d_bp;
-
     public:
-        Semantic(Base *bp = 0);             // Semantic will own the bp
-        Semantic(Semantic const &other);
-        ~Semantic();
-
-        Semantic &operator=(Semantic const &other);
-
-        Base const &base() const;
-
-        template <typename Class>
-        Class const &downcast();
-
-    private:
-        void copy(Semantic const &other);
+        template <typename>
+        void assign(std::string const &matched);
 };
 
-inline Base const &Semantic::base() const
+template <>
+inline void Semantic::assign<TagType<Tag::INT>>(std::string const &matched)
 {
-    return *d_bp;
+    reset(new Int(matched));
 }
 
-inline Semantic::Semantic(Base *bp)
-:
-    d_bp(bp)
-{}
-
-inline Semantic::~Semantic()
+template <>
+inline void Semantic::assign<TagType<Tag::TEXT>>(std::string const &matched)
 {
-    delete d_bp;
-}
-       
-inline Semantic::Semantic(Semantic const &other)
-{
-    copy(other);
-}
-
-inline Semantic &Semantic::operator=(Semantic const &other)
-{
-    if (this != &other)
-    {
-        delete d_bp;
-        copy(other);        
-    }
-    return *this;
-}
-
-inline void Semantic::copy(Semantic const &other)
-{
-    d_bp = other.d_bp ? other.d_bp->clone() : 0;
-}
-
-template <typename Class>
-inline  Class const &Semantic::downcast()
-{
-    return dynamic_cast<Class &>(*d_bp);
+    reset(new Text(matched));
 }
 
 inline std::ostream &operator<<(std::ostream &out, Semantic const &obj)
 {
-    if (&obj.base())
-        return out << obj.base();
-
-    return out << "<UNDEFINED>";
+    return out << *obj;
 }
 
 #endif
+
+
+
+

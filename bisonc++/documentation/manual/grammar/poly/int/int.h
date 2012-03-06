@@ -2,6 +2,7 @@
 #define _INCLUDED_INT_
 
 #include <ostream>
+#include <string>
 
 #include <bobcat/a2x>
 
@@ -12,36 +13,21 @@ class Int: public Base
     int d_value;
 
     public:
-        Int(char const *text);
-        Int(int v);
-        virtual Base *clone() const;
-        int value() const;                // directly access the value
-        virtual std::ostream &insert(std::ostream &os) const;
+        Int(std::string const &text);
+
+    private:
+        virtual std::ostream &v_insert(std::ostream &os) const;
 };
 
-inline Int::Int(char const *txt)
+inline Int::Int(std::string const &txt)
 :
     d_value(FBB::A2x(txt))
 {}
 
-inline Int::Int(int v)
-:
-    d_value(v)
-{}
-
-inline Base *Int::clone() const 
-{
-    return new Int(*this);
-}
-
-inline int Int::value() const
-{
-    return d_value;
-}
-
-inline std::ostream &Int::insert(std::ostream &out) const
+inline std::ostream &Int::v_insert(std::ostream &out) const
 {
     return out << d_value;
 }
 
 #endif
+

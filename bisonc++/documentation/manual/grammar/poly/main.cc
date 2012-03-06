@@ -1,12 +1,7 @@
 #include "main.ih"
 
-int main(int argc, char **argv)
+int main()
 {
     Parser parser;
-
-    parser.setDebug(argc == 1);
-
     parser.parse();
-
-    return 0;
 }
