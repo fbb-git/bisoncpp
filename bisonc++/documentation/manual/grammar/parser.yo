@@ -1,50 +1,47 @@
-The parser's tt(%stype) is of course tt(Semantic). For this illustrative
+The parser's tt(%stype) is tt(Semantic). For this illustrative
 example the parser's grammar is a simple one expecting input according to the
 following two rules:
         verb(
     rule:
-        IDENTIFIER '(' IDENTIFIER ')' ';'
+        identifier '(' identifier ')' '\n'
     |
-        IDENTIFIER '=' INT ';'
+        identifier '=' int '\n'
+    ;
+        )
+    
+    The rules for tt(identifier) and tt(int) simply pass the text matched by
+the scanner on to tt(Semantic::assign):
+        verb(
+    identifier:
+        IDENTIFIER
+        {
+            $$.assign<TagType<Tag::TEXT>>(d_scanner.matched());
+        }
+    ;
+    int:
+        INT
+        {
+            $$.assign<TagType<Tag::INT>>(d_scanner.matched());
+        }
     ;
         )
 
-The rule's actions simply echo the received identifiers and tt(int) values to
-tt(cout). Here is an example of an action block:
+The rule's actions are also simple, echoing the received identifiers and
+tt(int) values to tt(cout). Here is an example of such an action block:
         verb(
-    IDENTIFIER '=' INT ';'
+    identifier '(' identifier ')' '\n'
     {
-          cout << $1 << " " << $3 << endl;
+          cout << $1 << " " << $3 << '\n';
     }
         )
 
-Alternative actions could easily be defined, e.g., using the tt(downcast())
-member:
-        verb(
-    IDENTIFIER '=' INT ';'
-    {
-        int value = $3.downcast<Int>().value();
-    }
-        )
+So, in this example Bisonc++'s parser stores em(all) semantic values on its
+semantic values stack, even though different tokens were returned by different
+rules. At any time em(all) semantic values associated with previously
+recognized tokens are available in the action block. Once the semantic value
+stack is reduced, the tt(Semantic) class takes care of the proper destruction
+of the objects pointed to by tt(Semantic)'s tt(shard_ptr) base class.
 
-So, in these cases Bisonc++'s parser stores em(all) semantic values on the
-semantic values stack, even though multiple tokens were returned in a
-particular rule. At any time em(all) semantic values associated with
-previously recognized tokens are available in the action block. Once the
-semantic value stack is reduced, the tt(Semantic) class takes care of the
-proper destruction of the objects pointed to by the tt(Semantic d_bp) data
-member. 
 
-The scanner must of course be able to access the parser's data member
-representing the most recent demantic value. This data member is tt(d_lval__),
-which can be offered to the scanner object when it's constructed. E.g., with a
-scanner expecting an tt(STYPE__ *) the parser's constructor could simply be
-defined as:
-        verb(
-    inline Parser::Parser()
-    :
-        d_scanner(&d_val__)
-    {}
-        )
 
 
