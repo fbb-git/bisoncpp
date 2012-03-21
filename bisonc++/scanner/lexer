@@ -4,7 +4,7 @@
 %debug
 // %print-tokens
 
-%x xstring pstring pxstring string comment quote block 
+%x xstring pstring pxstring string comment quote block typespec
 
 OCTAL   [0-7]
 OCT3    {OCTAL}{3}
@@ -122,6 +122,7 @@ IDENT   {ID1}{ID2}*
                                     begin(StartCondition__::pxstring);
                                     return Parser::PARSEFUN_SOURCE;
                                 }
+%polymorphic                    return Parser::POLYMORPHIC;
 %prec                           return Parser::PREC;
 %print-tokens                   return Parser::PRINT_TOKENS;
 %required-tokens                return Parser::REQUIRED;
@@ -315,4 +316,14 @@ IDENT   {ID1}{ID2}*
                              return Parser::QUOTE;
                          }
                      }
+}
+
+    // a typespec holds all chars after a ':' until a ';' or '%' (which are
+    // pushed back). It is used as a type specification in
+    // parser/inc/directives. Escape characters are interpreted
+<typespec>{
+    \\.             |
+    [^;%]           more();
+
+    [;%]            returnTypeSpec();  // resets to INITIAL, returns BLOCK
 }

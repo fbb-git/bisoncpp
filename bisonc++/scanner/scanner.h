@@ -53,6 +53,8 @@ class Scanner: public ScannerBase
         size_t number() const;
         bool hasBlock() const;
 
+        void beginTypeSpec();
+
     private:
         void print();
         int lex__();
