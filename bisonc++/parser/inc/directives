@@ -221,6 +221,33 @@ _union:
     }
 ;
 
+_polymorphic:
+    POLYMORPHIC
+    {
+        d_expect = "Polymorphic base class specifications";
+    }
+;
+
+_typespec:
+    ':'
+    {
+        d_scanner.beginTypeSpec();
+    }
+;
+
+_polyspec:
+    identifier _typespec BLOCK      // the block holds the typespec for ident.
+    {
+    }
+;
+
+    
+_polyspecs:
+    _polyspecs ';' _polyspec
+|
+    _polyspec
+;
+
 _directiveSpec:
     _baseclass_header
     STRING
@@ -399,6 +426,9 @@ _directiveSpec:
     {
         setUnionDecl();
     }
+|
+    _polymorphic
+    _polyspecs
 |
     error
 ;
