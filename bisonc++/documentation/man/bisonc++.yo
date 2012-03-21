@@ -348,6 +348,20 @@ ignored if these files already exist.
            Defines the pathname of the file containing the parser member
             tt(parse). This directive is overridden by the 
             tt(--parse-source) or tt(-p) command-line options.
+    it() bf(%polymorphic) tt(polymorphic-specification(s))
+
+            Bison's traditional way to handle multiple semantic values is to
+            use a tt(%union) specification (see below). Although tt(%union) is
+            still supported by bic(), a polymorphic semantic value class is
+            actually preferred due to its improved type safety.
+
+            The tt(%polymorphic) directive defines such a polymorphic semantic
+            value class and can be used instead of a tt(%union)
+            specification. Refer to section bf(POLYMORPHIC SEMANTIC VALUES)
+            below for a detailed description of the specification,
+            characteristics, and use of polymorphic semantic values as defined
+            by bic.
+
     it() bf(%prec) tt(token) nl()    
             Overrules the defined precendence of an operator for a particular
             grammatic rule. Well known is the construction
@@ -470,6 +484,8 @@ ignored if these files already exist.
             directive. If no tt(%stype) directive is used, the default
             stacktype (bf(int)) is used.
     )
+
+manpagesection(POLYMORPHIC SEMANTIC VALUES)
 
 manpagesection(PUBLIC MEMBERS AND -TYPES)
 
