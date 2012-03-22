@@ -43,7 +43,7 @@ class Parser: public ParserBase
     std::string d_expect;
     std::string d_field;                    // %union field in <type> specs.
     bool        d_typeDirective;            // true following %type
-    bool        d_unionDeclared;            // see setuniondecl.cc
+    bool        d_unionDeclared;            // see options/setuniondecl.cc
     bool        d_negativeDollarIndices;
 
     Terminal::Association d_association;

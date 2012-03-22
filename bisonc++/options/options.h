@@ -24,6 +24,7 @@ class Options
     bool        d_lines;
     bool        d_lspNeeded;
     bool        d_printTokens;
+    bool        d_polymorphic;
 
     size_t      d_requiredTokens;
 
@@ -87,6 +88,7 @@ class Options
         void setLtype();
         void setNamespace();
         void setParsefunSource();
+        void setPolymorphicDecl();
         void setPrintTokens();
         void setPreInclude();
         void setRequiredTokens(size_t nRequiredTokens);
@@ -110,6 +112,7 @@ class Options
         bool errorVerbose() const;
         bool lines() const;
         bool lspNeeded() const;
+        bool polymorphic() const;
 
         size_t requiredTokens() const;
 
@@ -152,6 +155,8 @@ class Options
         void setPath(std::string *dest, int optChar, bool targetDirOption, 
                       char const *optionName, std::string const &className, 
                       char const *suffix);
+
+        bool isFirstStypeDefinition() const;
 };
 
 inline bool Options::debug() const
@@ -207,6 +212,11 @@ inline bool Options::lines() const
 inline bool Options::lspNeeded() const
 {
     return d_lspNeeded;
+}
+
+inline bool Options::polymorphic() const
+{
+    return d_polymorphic;
 }
 
 inline std::string const &Options::ltype() const

@@ -224,7 +224,7 @@ _union:
 _polymorphic:
     POLYMORPHIC
     {
-        d_expect = "Polymorphic base class specifications";
+        setPolymorphicDecl();
     }
 ;
 

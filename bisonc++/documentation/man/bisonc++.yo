@@ -505,9 +505,14 @@ a tt(std::vector<double>):
         )
     The identifier to the left of the colon is called the em(type-identifier),
 and the type definition to the right of the colon is called the
-em(type-definition). The tt(%type) directive is used to associate
-non-terminals with a particular semantic value type using the type-identifier
-identifying a type-definition. E.g., after
+em(type-definition). The tt(type-definition) may refer to types declared in
+header files that are not already included by the parser's base class
+header. If so, then these header file(s) must be inserted using the
+tt(%baseclass-preinclude) directive.
+
+The tt(%type) directive is used to associate non-terminals with a particular
+semantic value type using the type-identifier identifying a
+type-definition. E.g., after
         verb(
     %type <INT> expr
         )
@@ -578,9 +583,6 @@ been specified like this:
             $$->as<Tag__::INT>.data() = - $2->as<Tag__::INT>.data();
         }
         )
-
-
-    
 
 
 manpagesection(PUBLIC MEMBERS AND -TYPES)

@@ -2,9 +2,10 @@
 
 void Options::setStype()
 {
-    if (d_stackDecl.size())
-        emsg << "%union or %stype multiply specified" << endl;
-    else if (d_matched->find(';') != string::npos)
+    if (not isFirstStypeDefinition())
+        return;
+
+    if (d_matched->find(';') != string::npos)
         emsg << "`;' in %stype type-definition `" << *d_matched << 
                 '\'' << endl;
     else

@@ -80,6 +80,7 @@ class Generator
         void namespaceClose(std::ostream &out) const;
         void namespaceOpen(std::ostream &out) const;
         void namespaceUse(std::ostream &out) const;
+        void polymorphic(std::ostream &out) const;
         void preIncludes(std::ostream &out) const;
         void print(std::ostream &out) const;
         void requiredTokens(std::ostream &out) const;

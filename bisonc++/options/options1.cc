@@ -9,6 +9,7 @@ Options::Options()
     d_lines(true),
     d_lspNeeded(false),
     d_printTokens(false),
+    d_polymorphic(false),
     d_requiredTokens(0),
     d_verboseName("(not requested)")
 {}

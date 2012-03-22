@@ -18,6 +18,7 @@ class \@Base
 {
     public:
 $insert tokens
+$insert polymorphic
 $insert LTYPE
 $insert STYPE
 

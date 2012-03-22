@@ -5,9 +5,7 @@
 
 void Options::setUnionDecl(std::string const &block)
 {
-    if (d_stackDecl.size())
-        emsg << "%union or %stype multiply specified" << endl;
-    else
+    if (isFirstStypeDefinition())
         d_stackDecl = "union STYPE__\n" + block + ";\n";
 }
 
