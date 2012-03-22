@@ -473,9 +473,15 @@ ignored if these files already exist.
             currently enforced by bic(), but unexpected compilation errors may
             result if this requirement is violated.
     it() bf(%type) tt(<type> non-terminal ...) nl()    
-            In combination with tt(%union): associate the semantical value of
+            In combination with tt(%union): associate the semantic value of
             a non-terminal symbol with a union field defined by the tt(%union)
-            directive.
+            directive;
+
+            In combination with tt(%polymorphic): associate the semantic value
+            of a non-terminal symbol with the type indicated by the identifier
+            specified at the tt(%polymorphic) directive (see section
+            bf(POLYMORPHIC SEMANTIC VALUES), below.
+
     it() bf(%union) tt(union-definition) nl()    
             Acts identically to the bf(bison) and bf(bison++) declaration. 
             as with bison generate a union for semantic type. 
@@ -486,6 +492,96 @@ ignored if these files already exist.
     )
 
 manpagesection(POLYMORPHIC SEMANTIC VALUES)
+
+    When the tt(%polymorphic) directive is used bic() generates a parser using
+polymorphic semantic values. Each semantic value is specified using a em(tag),
+which is a bf(C++) identifier, and a bf(C++) type definition. Tag and type
+definition are separated from each other by a colon. Multiple tag and type
+definition combinations are separated from each other by semicolons. Here is
+an example, definiing three semantic values: an tt(int), a tt(std::string) and
+a tt(std::vector<double>):
+        verb(
+    %polymorphic INT: int; STRING: std::string; VECT: std::vector<double>
+        )
+    The identifier to the left of the colon is called the em(type-identifier),
+and the type definition to the right of the colon is called the
+em(type-definition). The tt(%type) directive is used to associate
+non-terminals with a particular semantic value type using the type-identifier
+identifying a type-definition. E.g., after
+        verb(
+    %type <INT> expr
+        )
+    the tt(expr) non-terminal returns tt(int) semantic values; in a rule like
+        verb(
+    expr:
+        '-' expr
+        {
+            $$ = -$2;
+        }
+        )
+    the tt($$) represents an tt(int) lvalue (i.e. the semantic value
+associated with the tt(expr:) rule), while tt($2) represents the tt(int)
+semantic value that is associated with the tt(expr) non-terminal in the
+production rule tt('-' expr).
+
+    Semantic value types cannot be pre-associated with negative dollar
+indices. However, semantic value types can be forced (or explicitly specified)
+using the tt($?<type-identifier>) syntax. In this syntax the tt(?) is either a
+tt($) or a (positive or negative) number (like tt($$, $2, $-1)). To avoid
+confusion with the tt(<) and tt(>) comparison operators no blanks can be used
+here. In the unlikely event the comparison operators are intended put at least
+one blank space around at least one of the angular brackets.
+
+    Polymorphic semantic values are defined as follows:
+    itemization(
+    it() All semantic value type-identifiers are collected in a strongly typed
+enumeration tt(Tag__), nested under the parser's base class. E.g.,
+        verb(
+    enum class Tag__
+    {
+        INT,
+        STRING,
+        VECT
+    };
+        )
+    it() A polymorphic base class tt(Base__) is defined within the parser's
+base class. This class defines an empty virtual destructor; a
+tt(ParserBase::Tag__ tag() const) member returning the type identifier
+associated with a semantic value; and a member template tt(as) that can be
+used to downcast a tt(Base__) class pointer or reference to its derived class
+semantic value. E.g., tt(ptr->as<Tag__::STRING) downcasts tt(ptr) to a class
+holding a tt(std::string) semantic value.
+    it() For each of the type-identifiers specified with the tt(%polymorphic)
+directive: a class template tt(Semantic__<Tag__::type-identifier>)
+containing:nl() 
+a data member of the tt(type-definition) matching the
+tt(Tag__::type-identifier) (e.g., for tt(Tag__::VECT) a
+tt(std::vector<double>));nl()
+    a constructor expecting a tt(const &) to such a data type object;nl()
+    a constructor expecting an rvalue reference to such a data type
+object;nl()
+    a tt(data()) member returning a reference to the class's data member;nl()
+    a tt(data() const) member returning a const-reference to the class's data
+member;
+    it() The actual semantic value type (tt(STYPE__)) is defined as a
+tt(shared_ptr<Base__>). 
+    )
+
+    Using this implementation of polymorphic semantic values the action block
+of the tt(expr) rule used before could also be implemented `by hand' (i.e.,
+without having specified tt(%type <INT> expr)). In that case, it had 
+been specified like this:
+        verb(
+    expr:
+        '-' expr
+        {
+            $$->as<Tag__::INT>.data() = - $2->as<Tag__::INT>.data();
+        }
+        )
+
+
+    
+
 
 manpagesection(PUBLIC MEMBERS AND -TYPES)
 
