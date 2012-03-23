@@ -61,6 +61,7 @@ class Generator
                                                     // generated code 
         void actionCases(std::ostream &out) const;
         void baseClass(std::ostream &out) const;
+        void basicTrait(std::ostream &out) const;
         void classH(std::ostream &out) const;
         void classIH(std::ostream &out) const;
         void debug(std::ostream &out) const;

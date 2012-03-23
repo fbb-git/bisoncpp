@@ -10,6 +10,9 @@ $insert debugincludes
 namespace // anonymous
 {
     struct PI__;
+
+$insert basictrait
+
 }
 
 $insert namespace-open

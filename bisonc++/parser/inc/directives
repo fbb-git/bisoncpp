@@ -236,8 +236,9 @@ _typespec:
 ;
 
 _polyspec:
-    identifier _typespec BLOCK      // the block holds the typespec for ident.
+    identifier _typespec STRING  // the STRING holds the typespec for ident.
     {
+        addPolymorphic($1->as<Tag::STRING>());
     }
 ;
 

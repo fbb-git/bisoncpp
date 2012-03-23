@@ -4,7 +4,5 @@
 block.h: skip should expect std::string const &, see also skip-calls in
 e.g. lexer.  Same for Block constructor
 
---print dropped, use --display-tokens instead without argument
+Replace #include <map> by #include <unordered_map> in parser
 
-Parser::print() calls Parser::print__, implemented in lex.cc, but is commented
-out by default. Uncomment or control by option if tokens should be displayed.

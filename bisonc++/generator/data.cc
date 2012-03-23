@@ -7,6 +7,7 @@ Generator::Map Generator::s_insert =
     {"scanner.h",           &Generator::scannerH},
     {"scannerobject",       &Generator::scannerObject},
     {"baseclass",           &Generator::baseClass},
+    {"basictrait",          &Generator::basicTrait},
     {"class.h",             &Generator::classH},
     {"class.ih",            &Generator::classIH},
     {"debug",               &Generator::debug},

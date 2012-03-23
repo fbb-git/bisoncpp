@@ -6,6 +6,8 @@
 // $insert scanner.h
 #include "../scanner/scanner.h"
 
+#include <unordered_map>
+
 class NonTerminal;
 class Terminal;
 class Symbol;
@@ -52,6 +54,10 @@ class Parser: public ParserBase
     std::vector<Block::Range>::const_reverse_iterator d_skipRbegin;
     std::vector<Block::Range>::const_reverse_iterator d_skipRend;
 
+        // associations between type-identifiers and type-definitions of
+        // polymorphic semantic values
+    std::map<std::string, std::string> d_polymorphic;
+
     static size_t s_nHidden;          // number of hidden nonterminals
     static std::ostringstream s_hiddenName;
 
@@ -70,6 +76,8 @@ class Parser: public ParserBase
         void cleanup();             // do cleanup following parse();
 
     private:
+        void addPolymorphic(std::string const &tag);
+
         void addIncludeQuotes(std::string *target); // ensure ".." or <..> 
                                                     // around target name
         void checkEmptyBlocktype();

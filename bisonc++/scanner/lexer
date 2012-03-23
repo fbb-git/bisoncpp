@@ -325,5 +325,5 @@ IDENT   {ID1}{ID2}*
     \\.             |
     [^;%]           more();
 
-    [;%]            returnTypeSpec();  // resets to INITIAL, returns BLOCK
+    [;%]            returnTypeSpec();  // resets to INITIAL, returns STRING
 }
