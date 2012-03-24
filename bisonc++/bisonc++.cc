@@ -138,7 +138,7 @@ try
     if (arg.option('A'))    // Analyze only
         return 0;
 
-    Generator generator(rules);
+    Generator generator(rules, parser.polymorphic());
 
     generator.baseClassHeader();
     generator.classHeader();

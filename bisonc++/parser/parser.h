@@ -74,6 +74,7 @@ class Parser: public ParserBase
         Parser(Rules &rules);
         int parse();
         void cleanup();             // do cleanup following parse();
+        std::map<std::string, std::string> const &polymorphic() const;
 
     private:
         void addPolymorphic(std::string const &tag);
@@ -128,6 +129,7 @@ class Parser: public ParserBase
         void noDefaultTypeWarning();
 
         void setStart();
+        void setPolymorphicDecl();
 
         bool numberedElement(size_t pos, int nElements, Block &block);
 
@@ -173,6 +175,10 @@ inline void Parser::print()
         print__();
 }
 
+inline std::map<std::string, std::string> const &Parser::polymorphic() const
+{
+    return d_polymorphic;
+}
 
 inline void Parser::setNegativeDollarIndices()
 {

@@ -128,8 +128,6 @@ $insert 4 requiredtokens
     d_nextToken__(_UNDETERMINED_)
 {}
 
-$insert polymorphicImpl
-
 $insert debugfunctions
 
 void \@::print__()
@@ -459,4 +457,8 @@ $insert 4 debug "parse(): returns " << retValue
     return retValue;
 }
 
+$insert polymorphicImpl
+
 $insert namespace-close
+
+

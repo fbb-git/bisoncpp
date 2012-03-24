@@ -37,6 +37,8 @@ class Generator
     bool d_debug;
     bool d_printTokens;
     
+    std::map<std::string, std::string> const &d_polymorphic; 
+
     mutable Writer d_writer;                // maintains its own const-ness
 
     static Map s_insert;
@@ -46,7 +48,8 @@ class Generator
 
 
     public:
-        Generator(Rules const &rules);
+        Generator(Rules const &rules, 
+                  std::map<std::string, std::string> const &polymorphic); 
 
         void baseClassHeader() const;
         void classHeader() const;

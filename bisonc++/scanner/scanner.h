@@ -66,10 +66,16 @@ class Scanner: public ScannerBase
         bool handleXstring(size_t nRedo);   // performs pushStream
         int eoln();
 
+        void returnTypeSpec();
+        void returnQuoted(void (Scanner::*handler)());  // handle quoted
+                                                        // constants
         void escape();
         void checkZeroNumber();
         void octal();
         void hexadecimal();
+        void matched2();
+        void matched1();
+        void multiCharQuote();
 
         void setTags() const;
         void setLineNrs() const;
@@ -110,6 +116,11 @@ inline size_t Scanner::number() const
 inline bool Scanner::hasBlock() const
 {
     return not d_block.empty();
+}
+
+inline void Scanner::beginTypeSpec()
+{
+    begin(StartCondition__::typespec);
 }
 
 #endif // Scanner_H_INCLUDED_

@@ -2,7 +2,7 @@
 
 void Generator::polymorphic(ostream &out) const
 {
-    if (not d_options.polymorphic)
+    if (not d_options.polymorphic())
         return;
 
     key(out);
@@ -12,7 +12,7 @@ void Generator::polymorphic(ostream &out) const
     out << 
         "namespace " << className << "Meta__\n"
         "{\n"
-            "enum Tag\n"                            // Tags
+        "    enum Tag\n"                            // Tags
         "    {\n";
 
     for (auto &poly: d_polymorphic)
@@ -32,7 +32,7 @@ void Generator::polymorphic(ostream &out) const
         "    {\n"
         "        typedef " << poly.second << " DataType;\n"
         "    };\n"
-        \n";
+        "\n";
 
     out <<                                          // Class-/BasicType
         "    struct ClassType\n"
@@ -51,7 +51,10 @@ void Generator::polymorphic(ostream &out) const
         "    template <typename T>\n"
         "    ClassType test(void (T::*)());\n"
         "\n"
-        "    template <Tag tg_>\n"                  // struct TypeOf<Tag>
+
+                                   // struct TypeOf<Tag> defines DataType and
+                                   // ReturnType (as value type or const &)
+        "    template <Tag tg_>\n"
         "    struct TypeOf: public TypeOfBase<tg_>\n"
         "    {\n"
         "        typedef typename TypeOfBase<tg_>::DataType DataType;\n"
@@ -79,7 +82,7 @@ void Generator::polymorphic(ostream &out) const
         "    {\n"
         "        static Tag const tag = " << poly.first << ";\n"
         "    };\n"
-        \n";
+        "\n";
 
                                                     // the Base class:
     out <<
@@ -93,7 +96,7 @@ void Generator::polymorphic(ostream &out) const
         "            Tag tag() const;\n"
         "    \n"
         "            template <Tag tg_>\n"
-        "            typename Trait<tg_>::ReturnType as() const;\n"
+        "            typename TypeOf<tg_>::ReturnType get() const;\n"
         "    \n"
         "        protected:\n"
         "            Base(Tag tag);\n"

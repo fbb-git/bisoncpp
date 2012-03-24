@@ -5,7 +5,8 @@
 void Options::setPolymorphicDecl()
 {
     if (isFirstStypeDefinition())
-        d_stackDecl = "typedef std::shared_ptr<Base__> STYPE__;\n";
+        d_stackDecl = 
+            "    typedef std::shared_ptr<ParserMeta__::Base> STYPE__;\n";
 
     d_polymorphic = true;
 }

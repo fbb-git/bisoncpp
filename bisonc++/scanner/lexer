@@ -249,27 +249,9 @@ IDENT   {ID1}{ID2}*
     //  escaped chars, or quoted constants 
 <quote>{
 
-"\\"{OCT3}"'"        {
-                         if (d_block.skip(d_matched))
-                             begin(StartCondition__::block);
-                         else
-                         {
-                             begin(StartCondition__::INITIAL);
-                             octal();        // quoted octal constant
-                             return Parser::QUOTE;
-                         }
-                     }
+"\\"{OCT3}"'"        returnQuoted(&Scanner::octal);
                      
-"\\x"{HEX2}"'"       {
-                         if (d_block.skip(d_matched))
-                             begin(StartCondition__::block);
-                         else
-                         {
-                             begin(StartCondition__::INITIAL);
-                             hexadecimal(); // quoted hex constant
-                             return Parser::QUOTE;
-                         }
-                     }
+"\\x"{HEX2}"'"       returnQuoted(&Scanner::hexadecimal);
                      
 "\\"[abfnrtv]"'"     {
                          if (d_block(d_matched))
@@ -280,42 +262,14 @@ IDENT   {ID1}{ID2}*
                              escape();       // quoted escape char
                              return Parser::QUOTE;
                          }
-                     }    
-"\\"."'"             {
-                         // other quoted escaped char
-                         if (d_block.skip(d_matched))
-                             begin(StartCondition__::block);
-                         else           
-                         {
-                             begin(StartCondition__::INITIAL);
-                             d_number = d_matched[2];
-                             return Parser::QUOTE;
-                         }
                      }
-."'"                 {
-                         if (d_block.skip(d_matched))
-                             begin(StartCondition__::block);
-                         else
-                         {
-                                              // simple quoted constant
-                             begin(StartCondition__::INITIAL);
-                             d_number = d_matched[1];
-                             return Parser::QUOTE;
-                         }
-                     }
-[^']+"'"             {
-                         if (d_block.skip(d_matched))
-                             begin(StartCondition__::block);
-                         else
-                         {
-                             emsg << 
-                                "multiple characters in quoted constant " << 
-                                d_matched << endl;
-                             d_number = 0;
-                             begin(StartCondition__::INITIAL);
-                             return Parser::QUOTE;
-                         }
-                     }
+
+"\\"."'"            returnQuoted(&Scanner::matched2);
+
+."'"                returnQuoted(&Scanner::matched1);
+
+[^']+"'"            returnQuoted(&Scanner::multiCharQuote);
+
 }
 
     // a typespec holds all chars after a ':' until a ';' or '%' (which are
@@ -325,5 +279,15 @@ IDENT   {ID1}{ID2}*
     \\.             |
     [^;%]           more();
 
-    [;%]            returnTypeSpec();  // resets to INITIAL, returns STRING
+    [;%]            returnTypeSpec();   // resets to INITIAL, returns STRING
 }
+
+
+
+
+
+
+
+
+
+

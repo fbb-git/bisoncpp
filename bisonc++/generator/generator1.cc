@@ -1,6 +1,7 @@
 #include "generator.ih"
 
-Generator::Generator(Rules const &rules)
+Generator::Generator(Rules const &rules, 
+                     map<string, string> const &polymorphic)
 :
     d_arg(Arg::instance()),
     d_rules(rules),
@@ -12,6 +13,7 @@ Generator::Generator(Rules const &rules)
 
     d_debug(d_options.debug()),
     d_printTokens(d_options.printTokens()),
+    d_polymorphic(polymorphic),
 
     d_writer(d_baseClassScope, rules)
 {}
