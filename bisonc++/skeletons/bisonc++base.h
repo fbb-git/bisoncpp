@@ -10,18 +10,16 @@ $insert debugincludes
 namespace // anonymous
 {
     struct PI__;
-
-$insert basictrait
-
 }
 
 $insert namespace-open
+
+$insert polymorphic
 
 class \@Base
 {
     public:
 $insert tokens
-$insert polymorphic
 $insert LTYPE
 $insert STYPE
 
@@ -101,6 +99,8 @@ inline void \@Base::ERROR() const
 $insert 4 debug "ERROR(): Forced error condition"
     throw UNEXPECTED_TOKEN__;
 }
+
+$insert polymorphicInline
 
 // As a convenience, when including ParserBase.h its symbols are available as
 // symbols in the class Parser, too.

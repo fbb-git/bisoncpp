@@ -7,49 +7,116 @@ void Generator::polymorphic(ostream &out) const
 
     key(out);
 
-        // insert the Tags:
+    string const &className = d_options.className();
 
     out << 
-    "        enum class Tag__\n"
-    "        {\n";
+        "namespace " << className << "Meta__\n"
+        "{\n"
+            "enum Tag\n"                            // Tags
+        "    {\n";
 
     for (auto &poly: d_polymorphic)
-        out << "            " << poly.first << ",\n";
+        out << "        " << poly.first << ",\n";
 
-    out << "        }\n;
+    out << 
+        "    };\n"
+        "\n"
+        "    template <Tag tag>\n"                  // struct TypeOfBase
+        "    struct TypeOfBase;\n"
+        "\n";
 
+    for (auto &poly: d_polymorphic)
+        out << 
+        "    template <>\n"
+        "    struct TypeOfBase<" << poly.first << ">\n"
+        "    {\n"
+        "        typedef " << poly.second << " DataType;\n"
+        "    };\n"
+        \n";
 
-        // insert the Base class:
-class Base__
-{
-    Tag__ d_tag;
+    out <<                                          // Class-/BasicType
+        "    struct ClassType\n"
+        "    {\n"
+        "        char _[2];\n"
+        "    };\n"
+        "    \n"
+        "    struct BasicType\n"
+        "    {\n"
+        "        char _;\n"
+        "    };\n"
+        "\n"
+        "    template <typename T>\n"
+        "    BasicType test(...);\n"
+        "\n"
+        "    template <typename T>\n"
+        "    ClassType test(void (T::*)());\n"
+        "\n"
+        "    template <Tag tg_>\n"                  // struct TypeOf<Tag>
+        "    struct TypeOf: public TypeOfBase<tg_>\n"
+        "    {\n"
+        "        typedef typename TypeOfBase<tg_>::DataType DataType;\n"
+        "        enum: bool \n"
+        "        { \n"
+        "            isBasicType = "
+                            "sizeof(test<DataType>(0)) == sizeof(BasicType)\n"
+        "        };\n"
+        "\n"
+        "        typedef typename std::conditional<\n"
+        "                    isBasicType, \n"
+            "                    DataType, \n"
+            "                    DataType const &\n"
+        "                >::type ReturnType;\n"
+        "    };\n"
+        "\n"
+        "    template <typename Tp_>\n"             // struct TagOf<Type>
+        "    struct TagOf;\n"
+        "\n";
 
-    public:
-        Base__(Base__ const &other) = delete;
-        virtual ~Base__();
-        Tag__ tag() const;
+    for (auto &poly: d_polymorphic)
+        out << 
+        "    template <>\n"
+        "    struct TagOf<" << poly.second << ">\n"
+        "    {\n"
+        "        static Tag const tag = " << poly.first << ";\n"
+        "    };\n"
+        \n";
 
-        template <Tag__ tg_>
-        typename Trait__<tg_>::ReturnType__ as() const;
-
-    protected:
-        Base__(Tag__ tag);
-};
-
-        // insert the 
-
-MOVE THESE TO THE IMPLEMENTATION SECTION OF parserbase.h:
-
-inline Tag Base__::tag() const
-{
-    return d_tag;
+                                                    // the Base class:
+    out <<
+        "    class Base\n"
+        "    {\n"
+        "        Tag d_tag;\n"
+        "    \n"
+        "        public:\n"
+        "            Base(Base const &other) = delete;\n"
+        "            virtual ~Base();\n"
+        "            Tag tag() const;\n"
+        "    \n"
+        "            template <Tag tg_>\n"
+        "            typename Trait<tg_>::ReturnType as() const;\n"
+        "    \n"
+        "        protected:\n"
+        "            Base(Tag tag);\n"
+        "    };\n"
+        "    \n"
+                                                    // the Semantic class:
+        "    template <Tag tg_>\n"
+        "    class Semantic: public Base\n"
+        "    {\n"
+        "        typedef typename TypeOf<tg_>::DataType DataType;\n"
+        "    \n"
+        "        mutable DataType d_data;\n"
+        "    \n"
+        "        public:\n"
+        "            typedef typename TypeOf<tg_>::ReturnType ReturnType;\n"
+        "    \n"
+        "            Semantic(DataType const &data);\n"
+        "            Semantic(DataType &&tmp);\n"
+        "    \n"
+        "            ReturnType data() const;\n"
+        "            DataType &data();\n"
+        "    };\n"
+        "}  // namespace " << className << "Meta__\n"
+    "\n";
 }
 
-inline Base__::Base__(Tag tag)
-:
-    d_tag(tag)
-{}
-
-
-
-}

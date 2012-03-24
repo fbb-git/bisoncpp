@@ -61,7 +61,6 @@ class Generator
                                                     // generated code 
         void actionCases(std::ostream &out) const;
         void baseClass(std::ostream &out) const;
-        void basicTrait(std::ostream &out) const;
         void classH(std::ostream &out) const;
         void classIH(std::ostream &out) const;
         void debug(std::ostream &out) const;
@@ -82,6 +81,9 @@ class Generator
         void namespaceOpen(std::ostream &out) const;
         void namespaceUse(std::ostream &out) const;
         void polymorphic(std::ostream &out) const;
+        void polymorphicImpl(std::ostream &out) const;
+        void polymorphicInline(std::ostream &out) const;
+        void polymorphicTrait(std::ostream &out) const;
         void preIncludes(std::ostream &out) const;
         void print(std::ostream &out) const;
         void requiredTokens(std::ostream &out) const;
