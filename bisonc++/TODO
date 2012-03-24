@@ -4,5 +4,21 @@
 block.h: skip should expect std::string const &, see also skip-calls in
 e.g. lexer.  Same for Block constructor
 
-Replace #include <map> by #include <unordered_map> in parser
+Replace #include <map> by #include <unordered_map> in parser (?)
+
+Still to do:
+    - It would be nice if the semantic value ($s) would act like values, not
+        as pointers. 
+    - The tags are in ParserMeta__::Tag; maybe they should remain in the
+        Parser's namespace.
+This would allow for constructions like:
+        $$.get<INT>() = $1.get<INT>()
+instead of:
+        $$->get<ParserMeta__::INT>() = $1->get<ParserMeta__::INT>()
+
+Also, STYPE__ should allow for assignments:
+        $$ = newSemantic(12)
+instead of:
+        $$.reset(newSemantic(12))
+
 
