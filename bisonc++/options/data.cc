@@ -11,6 +11,9 @@ char Options::s_defaultBaseClassSkeleton[]      = "bisonc++base.h";
 char Options::s_defaultClassSkeleton[]          = "bisonc++.h";
 char Options::s_defaultImplementationSkeleton[] = "bisonc++.ih";
 char Options::s_defaultParsefunSkeleton[]       = "bisonc++.cc";
+char Options::s_defaultPolymorphicSkeleton[]    = "bisonc++polymorphic";
+char Options::s_defaultPolymorphicInlineSkeleton[] 
+                                              = "bisonc++polymorphic.inline";
 
     // the defaults are flexc++-defaults.
     // use --flex or %flex or explicit options to use  flex defaults

@@ -15,4 +15,12 @@ void Options::setSkeletons()
 
     if (!d_arg.option(&d_parsefunSkeleton, 'P'))
         d_parsefunSkeleton = d_skeletonDirectory + s_defaultParsefunSkeleton;
+
+    if (!d_arg.option(&d_polymorphicSkeleton, 'M'))
+        d_polymorphicSkeleton = 
+                        d_skeletonDirectory + s_defaultPolymorphicSkeleton;
+
+    if (!d_arg.option(&d_polymorphicInlineSkeleton, 'm'))
+        d_polymorphicInlineSkeleton = d_skeletonDirectory + 
+                                      s_defaultPolymorphicInlineSkeleton;
 }

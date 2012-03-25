@@ -30,6 +30,9 @@ class Options
 
     std::string d_baseClassHeader;
     std::string d_baseClassSkeleton;
+    std::string d_polymorphicInline;
+    std::string d_polymorphicInlineSkeleton;
+    std::string d_polymorphicSkeleton;
     std::string d_classHeader;
     std::string d_className;
     std::string d_classSkeleton;
@@ -51,6 +54,8 @@ class Options
 
 
     static char s_defaultBaseClassSkeleton[];
+    static char s_defaultPolymorphicInlineSkeleton[];
+    static char s_defaultPolymorphicSkeleton[];
     static char s_defaultClassName[];
     static char s_defaultClassSkeleton[];
     static char s_defaultImplementationSkeleton[];
@@ -89,6 +94,8 @@ class Options
         void setNamespace();
         void setParsefunSource();
         void setPolymorphicDecl();
+        void setPolymorphicInlineSkeleton();
+        void setPolymorphicSkeleton();
         void setPrintTokens();
         void setPreInclude();
         void setRequiredTokens(size_t nRequiredTokens);
@@ -101,8 +108,6 @@ class Options
         void setUnionDecl(std::string const &block);
         void setVerbosity();            // Prepare Msg for verbose output
         void unsetLines();
-
-        void finalizeAccessorVariables();
 
         void showFilenames() const;
 
@@ -128,6 +133,8 @@ class Options
         std::string const &parseSkeleton() const;
         std::string const &parseSource() const;
         std::string const &preInclude() const;
+        std::string const &polymorphicInlineSkeleton() const;
+        std::string const &polymorphicSkeleton() const;
         std::string const &scannerInclude() const;
         std::string const &scannerMatchedTextFunction() const;
         std::string const &scannerTokenFunction() const;
@@ -239,6 +246,16 @@ inline std::string const &Options::parseSource() const
     return d_parsefunSource;
 }
 
+inline std::string const &Options::polymorphicInlineSkeleton() const
+{
+    return d_polymorphicInlineSkeleton;
+}
+
+inline std::string const &Options::polymorphicSkeleton() const
+{
+    return d_polymorphicSkeleton;
+}
+
 inline std::string const &Options::preInclude() const
 {
     return d_preInclude;
@@ -337,6 +354,16 @@ inline void Options::setNamespace()
 inline void Options::setParsefunSource()
 {
     assign(&d_parsefunSource, "parsefun-source");
+}
+
+inline void Options::setPolymorphicInlineSkeleton()
+{
+    assign(&d_polymorphicInlineSkeleton, "polymorphic-inline-skeleton");
+}
+
+inline void Options::setPolymorphicSkeleton()
+{
+    assign(&d_polymorphicSkeleton, "polymorphic-skeleton");
 }
 
 inline void Options::setPreInclude()

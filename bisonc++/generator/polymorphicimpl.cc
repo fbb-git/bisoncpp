@@ -8,7 +8,7 @@ void Generator::polymorphicImpl(ostream &out) const
     key(out);
 
     out <<
-    "namespace " << d_options.className() << "Meta__\n"
+    "namespace Meta__\n"
     "{\n"
     "   Base::~Base()\n"
     "   {}\n"

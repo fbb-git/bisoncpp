@@ -98,6 +98,12 @@ void usage(string const &program_name)
     "   --parsefun-source=<source> (-p):\n"
     "           filename holding the parse function's source.\n"
 
+    "   --polymorphic-inline-skeleton=<skeleton> (-m):\n"
+    "           location of the polymorphic inline functions skeleton.\n"
+
+    "   --polymorphic-skeleton=<skeleton> (-M):\n"
+    "           location of the polymorphic semantic values skeleton.\n"
+
     "   --print-tokens (-t):\n"
     "           the print() member of the generated parser class displays\n"
     "           the tokens and their corresponding matched text.\n"

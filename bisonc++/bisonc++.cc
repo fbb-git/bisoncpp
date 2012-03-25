@@ -16,7 +16,9 @@ namespace
         {"baseclass-header", 'b'},
         {"baseclass-preinclude", 'H'},
 
-        {"baseclass-skeleton", 'B'},        // option only
+        {"baseclass-skeleton", 'B'},        // options only
+        {"polymorphic-skeleton", 'M'},
+        {"polymorphic-inline-skeleton", 'm'},
 
         {"class-header", 'c'},
         {"class-name", Arg::Required},
@@ -86,7 +88,7 @@ namespace
 int main(int argc, char **argv)
 try
 {
-    Arg &arg = Arg::initialize("AB:b:C:c:f:H:hI:i:n:p:P:s:S:tTVv", 
+    Arg &arg = Arg::initialize("AB:b:C:c:f:H:hI:i:M:m:n:p:P:s:S:tTVv", 
                     longOptions, longEnd, argc, argv);
 
     arg.versionHelp(usage, version, 1);

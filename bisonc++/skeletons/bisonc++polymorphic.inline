@@ -1,0 +1,96 @@
+namespace Meta__
+{
+
+inline Base::Base(Tag__ tag)
+:
+    d_tag(tag)
+{}
+
+inline Tag__ Base::tag() const
+{
+    return d_tag;
+}
+
+template <Tag__ tg_>
+inline Semantic<tg_>::Semantic(typename TypeOf<tg_>::DataType const &data)
+:
+    Base(tg_),
+    d_data(data)
+{}
+
+template <Tag__ tg_>
+inline Semantic<tg_>::Semantic(typename TypeOf<tg_>::DataType &&tmp)
+:
+    Base(tg_),
+    d_data(std::move(tmp))
+{}
+
+template <Tag__ tg_>
+inline Semantic<tg_>::operator ReturnType() const
+{
+    return d_data;
+}
+
+template <Tag__ tg_>
+inline Semantic<tg_>::operator typename Semantic<tg_>::DataType &()
+{
+    return d_data;
+}
+
+template <Tag__ tg_>
+inline typename TypeOf<tg_>::ReturnType Base::get() const
+{
+    return dynamic_cast<Semantic<tg_> const &>(*this);
+}
+
+template <Tag__ tg_>
+inline typename TypeOf<tg_>::DataType &Base::get()
+{
+    return dynamic_cast<Semantic<tg_> &>(*this);
+}
+
+template <Tag__ tg_>
+inline SType::SType(typename TypeOf<tg_>::type const &data)
+:
+    std::shared_ptr<Base>(new Semantic<tg_>(data))
+{}
+
+template <Tag__ tg_>
+inline SType::SType(typename TypeOf<tg_>::type &&tmp)
+:
+    std::shared_ptr<Base>(new Semantic<tg_>(std::move(tmp)))
+{}
+
+template <Tag__ tg_>
+inline SType &SType::operator=(Semantic<tg_> *newSemantic)
+{
+    reset(newSemantic);
+    return *this;
+}
+
+template <Tag__ tg_>
+inline typename TypeOf<tg_>::ReturnType SType::get() const
+{
+    return std::shared_ptr<Base>::get()->get<tg_>();
+}
+
+template <Tag__ tg_>
+inline typename TypeOf<tg_>::DataType &SType::get()
+{
+    return std::shared_ptr<Base>::get()->get<tg_>();
+}
+ 
+} // namespace Meta__
+
+
+template <typename Tp_> 
+inline Meta__::Semantic<Meta__::TagOf<Tp_>::tag> *semantic__(Tp_ const &init)
+{
+    return new Meta__::Semantic<Meta__::TagOf<Tp_>::tag>(init);
+}
+
+template <typename Tp_> 
+inline Meta__::Semantic<Meta__::TagOf<Tp_>::tag> *semantic__(Tp_ &&tmp)
+{
+    return new Meta__::Semantic<Meta__::TagOf<Tp_>::tag>(std::move(tmp));
+}

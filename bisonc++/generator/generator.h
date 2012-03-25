@@ -57,7 +57,9 @@ class Generator
         void parseFunction() const;
 
     private:
-        void filter(std::istream &in, std::ostream &out) const;
+        void filter(std::istream &in, std::ostream &out, 
+                                        bool header = true) const;
+
         void insert(std::ostream &out) const;
         void key(std::ostream &out) const;          // show which $insert is
                                                     // called, just before the
@@ -86,7 +88,7 @@ class Generator
         void polymorphic(std::ostream &out) const;
         void polymorphicImpl(std::ostream &out) const;
         void polymorphicInline(std::ostream &out) const;
-        void polymorphicTrait(std::ostream &out) const;
+        void polymorphicSpecializations(std::ostream &out) const;
         void preIncludes(std::ostream &out) const;
         void print(std::ostream &out) const;
         void requiredTokens(std::ostream &out) const;

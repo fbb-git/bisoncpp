@@ -1,0 +1,124 @@
+namespace Meta__
+{
+    template <Tag__ tag>
+    struct TypeOfBase;
+
+    template <typename Tp_>
+    struct TagOf;
+
+$insert polymorphicSpecializations
+
+        // determining the nature of a polymorphic semantic value:
+        // if it's a class-type, use 'Type const &' as returntype of const
+        // functions; if it's a built-in type (like 'int') use Type:
+
+    struct ClassType
+    {
+        char _[2];
+    };
+    
+    struct BuiltinType
+    {
+        char _;
+    };
+
+    template <typename T>
+    BuiltinType test(...);
+
+    template <typename T>
+    ClassType test(void (T::*)());
+
+    template <Tag__ tg_>
+    struct TypeOf: public TypeOfBase<tg_>
+    {
+        typedef typename TypeOfBase<tg_>::DataType DataType;
+        enum: bool 
+        { 
+            isBuiltinType = sizeof(test<DataType>(0)) == sizeof(BuiltinType)
+        };
+
+        typedef typename std::conditional<
+                    isBuiltinType, DataType, DataType const &
+                >::type ReturnType;
+    };
+
+        // The Base class: 
+        // Individual semantic value classes are derived from this class.
+        // This class offers a member returning the value's Tag__
+        // and two member templates get() offering const/non-const access to
+        // the actual semantic value type.
+    class Base
+    {
+        Tag__ d_tag;
+    
+        protected:
+            Base(Tag__ tag);
+
+        public:
+            Base(Base const &other) = delete;
+            virtual ~Base();
+
+            Tag__ tag() const;
+    
+            template <Tag__ tg_>
+            typename TypeOf<tg_>::ReturnType get() const;
+    
+            template <Tag__ tg_>
+            typename TypeOf<tg_>::DataType &get();
+    };
+    
+        // The class Semantic is derived from Base. It stores a particular
+        // semantic value type. The stored data are declared 'mutable' to
+        // allow the definitions of a const and non-const conversion operator.
+        // This way, const objects continue to offer non-modifiable data
+    template <Tag__ tg_>
+    class Semantic: public Base
+    {
+        typedef typename TypeOf<tg_>::DataType DataType;
+    
+        mutable DataType d_data;
+    
+        public:
+            typedef typename TypeOf<tg_>::ReturnType ReturnType;
+    
+                // Constructors only exist for defined data types
+            Semantic(DataType const &data);
+            Semantic(DataType &&tmp);
+
+                // Conversion operators allow const/non-const access to d_data
+            operator ReturnType() const;
+            operator DataType &();
+    };
+
+        // The class Stype wraps the shared_ptr holding a pointer to Base.
+        // It becomes the polymorphic STYPE__
+        // Constructors expect (l/r-value) references to defined semantic
+        // value types.
+        // It also wraps Base's get members, allowing constructions like
+        // $$.get<INT> to be used, rather than $$->get<INT>.
+        // Furthermore, its operator= can be used to assign a Semantic *
+        // directly to the SType object. The free functions (in the parser's
+        // namespace (if defined)) semantic__ can be used to obtain a 
+        // Semantic *. 
+    class SType: public std::shared_ptr<Base>
+    {
+        public:
+            SType() = default;
+
+            template <Tag__ tg_>
+            SType(typename TypeOf<tg_>::type const &data);
+
+            template <Tag__ tg_>
+            SType(typename TypeOf<tg_>::type &&tmp);
+    
+            template <Tag__ tg_>
+            SType &operator=(Semantic<tg_> *newSemantic);
+
+            template <Tag__ tg_>
+            typename TypeOf<tg_>::ReturnType get() const;
+    
+            template <Tag__ tg_>
+            typename TypeOf<tg_>::DataType &get();
+    };
+                
+}  // namespace Meta__
