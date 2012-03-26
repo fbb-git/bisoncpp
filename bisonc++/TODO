@@ -9,7 +9,7 @@ Replace #include <map> by #include <unordered_map> in parser (?)
 parser/handledollar handles the dollar indices.
 
 To initialize $$ with %polymorphic use $$.reset(semantic__). Alternative:
-    let semantic__ initialize d_val__ itself? Would this prevent the isMember
-    test?
+    let semantic__ initialize d_val__ itself? 
+    Would this prevent the isMember test?
 
 
