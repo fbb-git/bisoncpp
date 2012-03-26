@@ -52,7 +52,15 @@ bool Parser::explicitElement(size_t pos, int nElements, Block &block)
     string const &typeToUse = explicitType.empty() ? idxType : explicitType;
 
     if (typeToUse.length())
-        replacement += "." + typeToUse;
+    {
+        if (d_semType == UNION)                     // %polymorphic type
+            replacement += "." + typeToUse;
+        else if (d_polymorphic.find(typeToUse) != d_polymorphic.end())
+            replacement += ".get<" + typeToUse + ">()";
+        else
+            emsg << "no such polymorphic semantic value identifier `" <<
+                    typeToUse << '\'';
+    }
 
     block.replace(pos, length, replacement);
 

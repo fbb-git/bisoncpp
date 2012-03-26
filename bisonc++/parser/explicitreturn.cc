@@ -26,10 +26,19 @@ bool Parser::explicitReturn(size_t pos, Block &block)
     string const &type =    typeSpec.length() ? typeSpec : defaultType;
 
     if (type.length())      // use an explicit type if available
-        replacement += "." + type;
+    {                                               // %union field or
+        if (d_semType == UNION)                     // %polymorphic type
+            replacement += "." + type;
+        else if (d_polymorphic.find(defaultType) != d_polymorphic.end())
+            replacement += ".get<" + type + ">()";
+        else
+            emsg << "no such polymorphic semantic value identifier `" <<
+                    defaultType << '\'';
+    }
 
     block.replace(dollar1, pos - dollar1 + 1, replacement);
 
     return true;            // this block uses $$
 }
+
 

@@ -41,9 +41,6 @@ bool Parser::numberedElement(size_t pos, int nElements, Block &block)
     os << s_semanticValueStack << "[" << indexToOffset(idx, nElements) << "]";
     string replacement = os.str();
 
-    cerr << "BLOCK: " <<
-            block.substr(pos) << ' ' << length << ' ' << pos << '\n';
-
     if (idxType.length())
     {
         if (d_semType == UNION)                     // %polymorphic type

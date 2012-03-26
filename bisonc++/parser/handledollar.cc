@@ -3,10 +3,14 @@
 // We're at a $ character at position pos.
 // The following can be expected here: $$, $$<type>, $i, $i<type>
 //                                      ^   ^        ^   ^
-// The following can be expected here: $$, $<type>$, $i, $<type>i, $$(
-//                                      ^         ^  ^   ^          ^
+// The following can be expected here: $$, $<type>$, $i, $<type>i
+//                                      ^         ^  ^   ^
 // (The ^ marking the `pos' location, searching proceeds from the end, see
 // substuteBlock).  
+//
+//  With %polymorphic: $$ and $i can be followed by . in which case a member
+// is called, and $$ and $i is merely replaced by the indicated semantic value 
+// variable. 
 //
 // Depending on the $'s context the following happens:
 //  - if there is a previous character:
@@ -41,3 +45,5 @@ bool Parser::handleDollar(size_t pos, int nElements, Block &block)
     
     return numberedElement(pos, nElements, block); // it must be $i
 }
+
+
