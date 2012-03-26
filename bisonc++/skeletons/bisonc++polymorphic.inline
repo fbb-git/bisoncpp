@@ -75,3 +75,16 @@ inline Meta__::Semantic<Meta__::TagOf<Tp_>::tag> *semantic__(Tp_ &&tmp)
 {
     return new Meta__::Semantic<Meta__::TagOf<Tp_>::tag>(std::move(tmp));
 }
+
+template <typename Tp_> 
+inline void \@Base::setSemantic__(Tp_ const &init)
+{
+    d_val__.reset(semantic__(init));
+}
+
+template <typename Tp_> 
+inline void \@Base::setSemantic__(Tp_ &&tmp)
+{
+    d_val__.reset(semantic__(tmp));
+}
+
