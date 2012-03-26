@@ -6,7 +6,6 @@
 #include <string>
 
 class Block: private std::string
-
 {
     size_t  d_line;
     std::string d_source;               // the source in which the block 
@@ -27,6 +26,17 @@ class Block: private std::string
                                         // found inside the matched block
     public:
         Block();
+
+        using std::string::empty;
+        using std::string::find_first_of;
+        using std::string::find_first_not_of;
+        using std::string::find_last_of;
+        using std::string::substr;
+        using std::string::find;
+        using std::string::length;
+
+        using std::string::replace;
+        using std::string::operator[];
 
         void clear();
                                         // clears the previous block contents
@@ -55,15 +65,6 @@ class Block: private std::string
         bool skip(std::string const &text); // if a block, text is added and
                                         // added to the skip-areas
 
-        using std::string::empty;
-        using std::string::find_first_of;
-        using std::string::find_last_of;
-        using std::string::substr;
-        using std::string::find;
-        using std::string::length;
-
-        using std::string::replace;
-        using std::string::operator[];
 };
 
 inline Block::Block()

@@ -8,7 +8,7 @@ Parser::Parser(Rules &rules)
     d_matched(d_scanner.matched()),
     d_rules(rules),
     d_typeDirective(false),
-    d_unionDeclared(false),
+    d_semType(SINGLE),
     d_negativeDollarIndices(false)
 {
     d_options.setMatched(d_matched);

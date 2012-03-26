@@ -3,14 +3,17 @@
 // We're at a $ character at position pos.
 // The following can be expected here: $$, $$<type>, $i, $i<type>
 //                                      ^   ^        ^   ^
-// The following can be expected here: $$, $<type>$, $i, $<type>i
-//                                      ^         ^  ^   ^
+// The following can be expected here: $$, $<type>$, $i, $<type>i, $$(
+//                                      ^         ^  ^   ^          ^
 // (The ^ marking the `pos' location, searching proceeds from the end, see
 // substuteBlock).  
 //
 // Depending on the $'s context the following happens:
 //  - if there is a previous character:
-//      - if it is a $, it is an explicit return of the rule's default 
+//      - if it is a $, 
+//          for %polymorphic: if the next char = '(' then the semantic value
+//              is initialized by its constructor.
+//          otherwise: it is an explicit return of the rule's default 
 //        semantic value (and done)
 //      - if it is a >, then it must be an explicit return of a %union element
 //        (and done)

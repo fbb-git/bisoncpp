@@ -14,7 +14,7 @@ bool Parser::explicitElement(size_t pos, int nElements, Block &block)
 
     size_t ruleElements = nComponents(nElements);
 
-    if (!d_unionDeclared)               // no %union: no explicit types
+    if (d_semType != UNION)               // no %union: no explicit types
         wmsg << "No %union declaration: can't resolve $<" << 
             explicitType << ">" << idx << " for element $" << idx << 
             " in `" << d_rules.name()  << endl;

@@ -2,7 +2,7 @@
 
 void Parser::addPolymorphic(string const &tag) 
 {
-    if (not d_options.polymorphic())
+    if (d_semType != POLYMORPHIC)
         return;
 
     if (d_polymorphic.find(tag) != d_polymorphic.end())

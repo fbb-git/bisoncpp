@@ -2,7 +2,7 @@
 
 void Parser::noDefaultTypeWarning()
 {
-    if (d_unionDeclared)
+    if (d_semType != SINGLE)
         wmsg << "In production rule \n"<< 
                             "\t`" << &d_rules.lastProduction() << " '\n"
                             "\t`" << d_rules.name() << "' has no default "

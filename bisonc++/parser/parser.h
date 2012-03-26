@@ -22,12 +22,16 @@ namespace FBB
 class Parser: public ParserBase
 {
             // actions to taken given tokens returned by the lexical scanner
-    typedef std::map<size_t, void (Parser::*)()> 
-            ActionMap;
-    typedef ActionMap::iterator 
-            Iterator;
-    typedef ActionMap::value_type 
-            Value;
+    typedef std::map<size_t, void (Parser::*)()>    ActionMap;
+    typedef ActionMap::iterator                     Iterator;
+    typedef ActionMap::value_type                   Value;
+
+    enum SemType
+    {
+        SINGLE,
+        UNION,
+        POLYMORPHIC
+    };
 
             // data members that are self-explanatory are not explicitly
             // described here.
@@ -43,9 +47,9 @@ class Parser: public ParserBase
     Symtab      d_symtab;
 
     std::string d_expect;
-    std::string d_field;                    // %union field in <type> specs.
-    bool        d_typeDirective;            // true following %type
-    bool        d_unionDeclared;            // see options/setuniondecl.cc
+    std::string d_field;                // %union field in <type> specs.
+    bool        d_typeDirective;        // true following %type
+    SemType     d_semType;              // see set{union,polymorphic}decl.cc
     bool        d_negativeDollarIndices;
 
     Terminal::Association d_association;
@@ -85,6 +89,13 @@ class Parser: public ParserBase
         void checkFirstType();
 
         bool defaultReturn(size_t pos, Block &block);
+
+                    // pos must be the position of the last $-related
+                    // specification. It can be, e.g., $$, $-1, $3
+                    // if the next non-blank char equals '.' then true is
+                    // returned
+        bool callsMember(Block const &block, size_t pos);   
+
         Symbol *defineNonTerminal(std::string const &name, 
                                   std::string const &stype);
         void definePathname(std::string *target);

@@ -103,17 +103,6 @@ $insert polymorphicSpecializations
     class SType: public std::shared_ptr<Base>
     {
         public:
-            SType() = default;
-
-            template <Tag__ tg_>
-            SType(typename TypeOf<tg_>::type const &data);
-
-            template <Tag__ tg_>
-            SType(typename TypeOf<tg_>::type &&tmp);
-    
-            template <Tag__ tg_>
-            SType &operator=(Semantic<tg_> *newSemantic);
-
             template <Tag__ tg_>
             typename TypeOf<tg_>::ReturnType get() const;
     
