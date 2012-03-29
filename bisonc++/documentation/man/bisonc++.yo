@@ -350,17 +350,17 @@ ignored if these files already exist.
             tt(--parse-source) or tt(-p) command-line options.
     it() bf(%polymorphic) tt(polymorphic-specification(s))
 
-            Bison's traditional way to handle multiple semantic values is to
+            Bison's traditional way of handling multiple semantic values is to
             use a tt(%union) specification (see below). Although tt(%union) is
             still supported by bic(), a polymorphic semantic value class is
-            actually preferred due to its improved type safety.
+            preferred due to its improved type safety.
 
             The tt(%polymorphic) directive defines such a polymorphic semantic
             value class and can be used instead of a tt(%union)
             specification. Refer to section bf(POLYMORPHIC SEMANTIC VALUES)
             below for a detailed description of the specification,
             characteristics, and use of polymorphic semantic values as defined
-            by bic.
+            by bic().
 
     it() bf(%prec) tt(token) nl()    
             Overrules the defined precendence of an operator for a particular
@@ -493,30 +493,35 @@ ignored if these files already exist.
 
 manpagesection(POLYMORPHIC SEMANTIC VALUES)
 
-    When the tt(%polymorphic) directive is used bic() generates a parser using
-polymorphic semantic values. Each semantic value is specified using a em(tag),
-which is a bf(C++) identifier, and a bf(C++) type definition. Tag and type
-definition are separated from each other by a colon. Multiple tag and type
-definition combinations are separated from each other by semicolons. Here is
-an example, definiing three semantic values: an tt(int), a tt(std::string) and
-a tt(std::vector<double>):
+    The tt(%polymorphic) directive causes bic() to generate a parser using
+polymorphic semantic values. The various semantic values are specified using a
+em(tag), which is a bf(C++) identifier, and a bf(C++) type definition. Tag and
+type definition are separated from each other by a colon. Multiple tag and
+type definition combinations are separated from each other by semicolons. 
+
+Here is an example, definiing three semantic values: an tt(int), a
+tt(std::string) and a tt(std::vector<double>):
         verb(
-    %polymorphic INT: int; STRING: std::string; VECT: std::vector<double>
+    %polymorphic INT: int; STRING: std::string; 
+                 VECT: std::vector<double>
         )
     The identifier to the left of the colon is called the em(type-identifier),
 and the type definition to the right of the colon is called the
-em(type-definition). The tt(type-definition) may refer to types declared in
-header files that are not already included by the parser's base class
-header. If so, then these header file(s) must be inserted using the
-tt(%baseclass-preinclude) directive.
+em(type-definition). The types specified at the tt(%polymorphic)
+type-definitions must be built-in types or must offer default constructors.
 
-The tt(%type) directive is used to associate non-terminals with a particular
-semantic value type using the type-identifier identifying a
-type-definition. E.g., after
+    If type definitions refer to types declared in header files that were
+not already included by the parser's base class header, then these header
+file(s) must be inserted using the tt(%baseclass-preinclude) directive.
+
+    The tt(%type) directive is used to associate (non-)terminals with 
+particular semantic value types using the type-identifiers identifying these
+type-definitions. E.g., after
         verb(
     %type <INT> expr
         )
-    the tt(expr) non-terminal returns tt(int) semantic values; in a rule like
+    the tt(expr) non-terminal returns tt(int) semantic values. So, after the
+above tt(%type) specification a rule like
         verb(
     expr:
         '-' expr
@@ -524,63 +529,137 @@ type-definition. E.g., after
             $$ = -$2;
         }
         )
-    the tt($$) represents an tt(int) lvalue (i.e. the semantic value
-associated with the tt(expr:) rule), while tt($2) represents the tt(int)
-semantic value that is associated with the tt(expr) non-terminal in the
-production rule tt('-' expr).
+    automatically associates tt($$) and tt($2) with tt(int) values. tt($$)
+represents an lvalue (i.e. the semantic value associated with the tt(expr:)
+rule), while tt($2) represents the tt(int) semantic value associated with the
+tt(expr) non-terminal in the production rule tt('-' expr) (an rvalue).
 
-    Semantic value types cannot be pre-associated with negative dollar
-indices. However, semantic value types can be forced (or explicitly specified)
-using the tt($?<type-identifier>) syntax. In this syntax the tt(?) is either a
-tt($) or a (positive or negative) number (like tt($$, $2, $-1)). To avoid
-confusion with the tt(<) and tt(>) comparison operators no blanks can be used
-here. In the unlikely event the comparison operators are intended put at least
-one blank space around at least one of the angular brackets.
+    As with the tt(%union) specification, semantic value types cannot be
+pre-associated with negative dollar indices. However, semantic value types can
+be specified (or tt(%type) associations can be overruled) using the common
+tt($<type-identifier>$) or tt($<type-identifier>nr) syntax. In this syntax
+tt(nr) is a (positive or negative) number (like tt($2, $-1)). No blanks can be
+used here.
 
-    Polymorphic semantic values are defined as follows:
+    The tt(%polymorphic) directive results in the following definitions and
+declarations being added to the generated base class header and parser source
+file (if the tt(%namespace) directive was used then all declared/defined
+elements are placed in the name space specified by that directive):
     itemization(
-    it() All semantic value type-identifiers are collected in a strongly typed
+    it() Two additional headers are included by the parser's base class
+header: 
+            verb(
+    #include <memory>
+    #include <sstream>
+            )
+    )
+
+    it() All semantic value type identifiers are collected in an
 enumeration tt(Tag__), nested under the parser's base class. E.g.,
         verb(
-    enum class Tag__
+    enum Tag__
     {
         INT,
         STRING,
         VECT
     };
         )
-    it() A polymorphic base class tt(Base__) is defined within the parser's
-base class. This class defines an empty virtual destructor; a
-tt(ParserBase::Tag__ tag() const) member returning the type identifier
-associated with a semantic value; and a member template tt(as) that can be
-used to downcast a tt(Base__) class pointer or reference to its derived class
-semantic value. E.g., tt(ptr->as<Tag__::STRING) downcasts tt(ptr) to a class
-holding a tt(std::string) semantic value.
+    )
+
+    Nested under the name space surrounding the parser's elements (if defined)
+the name space tt(Meta__) is opened. The following elements are
+declared/defined in this nested name space:
+
+    itemization(
+    it() A polymorphic base class tt(Base). This class defines an empty
+virtual destructor; a tt(Tag__ tag() const) member returning the
+type identifier (tag) associated with a semantic value; 
+    and member templates tt(get) that are used to obtain a derived class's
+semantic value from a base class pointer or reference E.g., to obtain (a
+reference to) the tt(std::string) semantic value associated with the tag
+tt(STRING) from a base class pointer tt(ptr) write:
+        verb(
+    ptr->get<STRING>()
+        )
+    The tt(get) member returns a non-const reference to the derived class's
+semantic value when called from a non-const pointer or reference, and returns
+a tt(const) reference (or a copy of the semantic value if it is of a built-in
+type) when called from a const pointer or reference.
+
     it() For each of the type-identifiers specified with the tt(%polymorphic)
-directive: a class template tt(Semantic__<Tag__::type-identifier>)
-containing:nl() 
-a data member of the tt(type-definition) matching the
-tt(Tag__::type-identifier) (e.g., for tt(Tag__::VECT) a
-tt(std::vector<double>));nl()
+directive: 
+
+    a class template tt(Semantic<Tag__>) containing a data member of
+the type definition associated with the tt(class Semantic)'s tt(Tag__) (e.g.,
+for tt(Tag__::VECT) it contains a tt(std::vector<double>) data member);nl()
     a constructor expecting a tt(const &) to such a data type object;nl()
     a constructor expecting an rvalue reference to such a data type
 object;nl()
-    a tt(data()) member returning a reference to the class's data member;nl()
-    a tt(data() const) member returning a const-reference to the class's data
-member;
-    it() The actual semantic value type (tt(STYPE__)) is defined as a
-tt(shared_ptr<Base__>). 
+    a non-const conversion operator returning a reference to the class's data
+member;nl()
+    a const conversion operator returning a const-reference to the class's
+data member (or a copy of its value if it is of a built-in type);
+
+    it() A class tt(SType), derived from tt(std::shared_ptr<Base>) which
+becomes the parser's semantic value type, offering three members:nl()
+        tt(Tag__ tag() const), returning the base class's tag;nl()
+    Two tt(get) member templates returning, respectively, a non-const
+reference to the derived class's semantic value when called from a non-const
+tt(SType) object, and returning a tt(const) reference (or a copy of the
+semantic value if it is of a built-in type) when called from a constant
+tt(SType) object.
     )
 
-    Using this implementation of polymorphic semantic values the action block
-of the tt(expr) rule used before could also be implemented `by hand' (i.e.,
-without having specified tt(%type <INT> expr)). In that case, it had 
-been specified like this:
+    Finally, three protected member templates are declared in the the parser's
+base class. These members simplify the assignment of a value to a rule's
+semantic value (i.e., it assigns a value to tt(d_val__)):
+    itemization(
+    it() The member template tt(extract__) extracts a value of the type that
+is associated with its tt(Tag__) parameter:
+        verb(
+    template <Tag__ tag>
+    void extract__(std::string const &txt);
+
+    // example:
+    extract__<INT>("123");
+        )
+    it() Member templates tt(setSemantic__) expecting either a constant
+reference or an anonymous temporary value (rvalue reference) to a type
+declared at the tt(%polymorphic) directive. E.g.,
+        verb(
+    template <typename Tp_>
+    void ParserBase::setSemantic__(Tp const &value);
+    template <typename Tp_>
+    void ParserBase::setSemantic__(Tp &tmp);
+
+    // example:
+    setSemantic(123);   // assigns to an INT representing d_val__
+        )
+    )
+
+    Using these members the action block of the tt(expr) rule shown before
+could also have been implemented like this:
         verb(
     expr:
         '-' expr
         {
-            $$->as<Tag__::INT>.data() = - $2->as<Tag__::INT>.data();
+            extract<INT>(d_scanner.matched());
+        }
+        )
+    or:
+        verb(
+    expr:
+        '-' expr
+        {
+            setSemantic__(-$2);
+        }
+        )
+    or even as:
+        verb(
+    expr:
+        '-' expr
+        {
+            $$->get<INT>() = -$2->get<INT>();
         }
         )
 
