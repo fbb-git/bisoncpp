@@ -24,12 +24,3 @@ void Generator::polymorphic(ostream &out) const
 
     filter(in, out, false);
 }
-
-
-
-
-
-
-
-
-

@@ -7,7 +7,10 @@ void Generator::polymorphicDecl(ostream &out) const
 
     key(out);
 
-    out <<  "        template <typename Tp_>\n"
+    out <<  
+            "        template <Tag__ tag>\n"
+            "        void extract__(std::string const &in);\n"
+            "        template <typename Tp_>\n"
             "        void setSemantic__(Tp_ const &value);\n"
             "        template <typename Tp_>\n"
             "        void setSemantic__(Tp_ &&tmp);\n";

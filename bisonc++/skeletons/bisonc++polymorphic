@@ -103,6 +103,8 @@ $insert polymorphicSpecializations
     class SType: public std::shared_ptr<Base>
     {
         public:
+            Tag__ tag() const;
+
             template <Tag__ tg_>
             typename TypeOf<tg_>::ReturnType get() const;
     
