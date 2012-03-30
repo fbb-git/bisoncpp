@@ -14,6 +14,7 @@ void Generator::preIncludes(std::ostream &out) const
     {
         out <<  "#include <memory>\n"
                 "#include <sstream>\n";
+    }
  
     if (preInclude)    
         out << "#include " << d_options.preInclude() << '\n';
