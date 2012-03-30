@@ -242,7 +242,7 @@ _polyspec:
     }
 ;
 
-    
+
 _polyspecs:
     _polyspecs ';' _polyspec
 |
@@ -430,6 +430,7 @@ _directiveSpec:
 |
     _polymorphic
     _polyspecs
+    optSemiCol
 |
     error
 ;
