@@ -1,5 +1,0 @@
-#include "sembase.ih"
-
-SemBase::
-{
-}
