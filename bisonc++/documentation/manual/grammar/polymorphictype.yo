@@ -1,5 +1,14 @@
     The tt(%type) directive is used to associate (non-)terminals with 
-particular semantic value types using the type-identifiers identifying these
+particular semantic value types. 
+
+Semantic values assigned to terminal tokens
+is the responsibility of the lexical scanner, assigning the proper value to
+the parser's tt(STYPE__ d_val__) data member. 
+
+Non-terminals may or may not be associated with polymorphic semantic values.
+
+
+For  using the type-identifiers identifying these
 type-definitions. E.g., after
         verb(
     %type <INT> expr

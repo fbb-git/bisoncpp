@@ -147,8 +147,8 @@ includefile(grammar/semantics.yo)
         subsubsect(The %polymorphic directive)
         includefile(grammar/polymorphicdirective.yo)
 
-        subsubsect(The %polymorphic and %type: associating semantic values to
-        (non-)terminals) 
+        subsubsect(The %polymorphic and %type: associating semantic values
+        with (non-)terminals) 
         includefile(grammar/polymorphictype.yo)
 
         subsubsect(The parser using a polymorphic semantic value type)
