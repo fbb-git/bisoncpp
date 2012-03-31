@@ -1,6 +1,6 @@
 identifier:
     IDENTIFIER
     {
-        $$ = new Semantic<Tag::STRING>(d_matched);
+        $$ = d_matched;
     }
 ;

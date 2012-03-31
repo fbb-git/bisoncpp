@@ -1,3 +1,4 @@
+%no-lines
 %filenames parser
 
 %scanner ../scanner/scanner.h
@@ -16,7 +17,20 @@
         SCANNER_MATCHED_TEXT_FUNCTION SCANNER_TOKEN_FUNCTION START STRING
         STYPE TARGET_DIRECTORY TOKEN TWO_PERCENTS TYPE UNION
         
-%stype  spSemBase
+%polymorphic    BOOL:       bool;
+                SIZE_T:     size_t;
+                TEXT:       std::string;
+                BLOCK:      Block;
+                TERMINAL:   Terminal *;
+                SYMBOL:     Symbol *;
+
+%type <TEXT>    identifier
+%type <BOOL>    optNumber
+%type <SIZE_T>  _pushPrecedence _precSpec
+
+   // NEW: USE THIS TO ASSIGN A GENERIC POLYMORPHIC VALUE TO (NON-)TERMINALS
+    // these (non-)terminals MUST explicitly return an STYPE__
+%type <STYPE__> _productionElements _productionElement
 
 %%
 

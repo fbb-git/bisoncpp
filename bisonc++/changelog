@@ -1,3 +1,15 @@
+bisonc++ (3.02.00)
+
+  * Implemented the %polymorphic directive. Bisonc++ itself uses %polymorphic
+    to implement its own polymorphic semantic values; man-page and manual
+    extended with sections about polymorphic semantic values.
+
+  * The previously used class spSemBase and derivatives (e.g., SemBase,
+    Semantic) are now obsolete and the directory sembase implementing these
+    classes was removed.
+
+TO DO: Adapt the manual/manpage
+
 bisonc++ (3.01.00)
 
   * The `%print-tokens' directive was accidentally omitted from

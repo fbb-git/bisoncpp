@@ -12,6 +12,13 @@ inline Tag__ Base::tag() const
 }
 
 template <Tag__ tg_>
+inline Semantic<tg_>::Semantic()
+:
+    Base(tg_),
+    d_data(typename TypeOf<tg_>::DataType())
+{}
+
+template <Tag__ tg_>
 inline Semantic<tg_>::Semantic(typename TypeOf<tg_>::DataType const &data)
 :
     Base(tg_),
@@ -63,6 +70,11 @@ inline typename TypeOf<tg_>::ReturnType SType::get() const
 template <Tag__ tg_>
 inline typename TypeOf<tg_>::DataType &SType::get()
 {
+                    // if we're not yet holding a value, initialize to 
+                    // a semantic__ holding a default value
+    if (std::shared_ptr<Base>::get() == 0)
+        reset(new Semantic<tg_>());
+
     return std::shared_ptr<Base>::get()->get<tg_>();
 }
  
@@ -92,23 +104,3 @@ SType &SType::operator=(Tp_ const &value)
 }
 
 }
-
-// template <Tag__ tag> 
-// inline void \@Base::extract__(std::string const &in)
-// {
-//     std::istringstream ins(in);
-//     ins >> d_val__.get<tag>();
-// }
-//
-//template <typename Tp_> 
-//inline void \@Base::setSemantic__(Tp_ const &value)
-//{
-//    d_val__.reset(semantic__(value));
-//}
-//
-//template <typename Tp_> 
-//inline void \@Base::setSemantic__(Tp_ &&tmp)
-//{
-//    d_val__.reset(semantic__(std::move(tmp)));
-//}
-//

@@ -18,9 +18,7 @@ grammar         rules
 lookaheadset    rules
 rrdata          lookaheadset
 item            lookaheadset 
-sembase
-spsembase       sembase
-parser          scanner rules symtab spsembase 
+parser          scanner rules symtab
 transition      item
 stateitem       item rmshift rmreduction rrdata 
 rrconflict      stateitem 

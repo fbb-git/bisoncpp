@@ -1,37 +1,38 @@
 _precSpec:
     IDENTIFIER
     {
-        $$ = new Semantic<Tag::SIZE_T>(IDENTIFIER);
+        $$ = static_cast<size_t>(IDENTIFIER);
     }
 |
     QUOTE
     {
-        $$ = new Semantic<Tag::SIZE_T>(QUOTE);
+        $$ = static_cast<size_t>(QUOTE);
     }
 ;
 
 _productionElement:
     QUOTE
     {
-        $$ = new Semantic<Tag::TERMINAL>(useTerminal());
+        $$ = useTerminal();
     }
 |
     IDENTIFIER
     {
-        $$ = new Semantic<Tag::SYMBOL>(useSymbol());
+        $$ = useSymbol();
     }
 |
     BLOCK
     {
-        $$ = new Semantic<Tag::BLOCK>(d_scanner.block());
+        $$ = d_scanner.block();
     }
 |
     PREC
     _precSpec
     {
-        setPrecedence($2->as<Tag::SIZE_T>());
-        $$ = spSemBase();   // a 0-ptr spSemBase indicates 
-                            // that a %prec has been handled
+        setPrecedence($2);
+        $$ = STYPE__();
+        //  $$ = spSemBase();   // a 0-ptr spSemBase indicates 
+                                // that a %prec has been handled
     }
 ;
 
@@ -80,7 +81,7 @@ _ruleName:
     identifier
     ':'
     {
-        openRule($1->as<Tag::STRING>());
+        openRule($1);
     }
 ;
 

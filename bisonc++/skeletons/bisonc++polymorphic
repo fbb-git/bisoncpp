@@ -81,7 +81,9 @@ $insert polymorphicSpecializations
         public:
             typedef typename TypeOf<tg_>::ReturnType ReturnType;
     
-                // Constructors only exist for defined data types
+                // The default constructor and constructors for 
+                // defined data types are available
+            Semantic();
             Semantic(DataType const &data);
             Semantic(DataType &&tmp);
 

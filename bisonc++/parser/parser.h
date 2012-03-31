@@ -128,9 +128,9 @@ class Parser: public ParserBase
                                         // reference ($) in a received action 
                                         // block
 
-        spSemBase handleProductionElements(spSemBase const &first, 
-                                           spSemBase const &second);
-        void handleProductionElement(spSemBase const &last);
+        STYPE__ handleProductionElements(STYPE__ &first, 
+                                         STYPE__ const &second);
+        void handleProductionElement(STYPE__ &last);
 
 
         void installAction(Block &block);

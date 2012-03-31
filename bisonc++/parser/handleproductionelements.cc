@@ -1,7 +1,7 @@
 #include "parser.ih"
 
-spSemBase Parser::handleProductionElements(spSemBase const &first, 
-                                           spSemBase const &second)
+Parser::STYPE__ Parser::handleProductionElements(STYPE__ &first, 
+                                                 STYPE__ const &second)
 {
     if (!first)         // the first PTag was a %prec specification
         return second;  
@@ -14,14 +14,14 @@ spSemBase Parser::handleProductionElements(spSemBase const &first,
 
     switch (first->tag())
     {
-        case Tag::TERMINAL:
-            d_rules.addElement(first->as<Tag::TERMINAL>());
+        case TERMINAL:
+            d_rules.addElement(first.get<TERMINAL>());
         break;
-        case Tag::SYMBOL:
-            d_rules.addElement(first->as<Tag::SYMBOL>());
+        case SYMBOL:
+            d_rules.addElement(first.get<SYMBOL>());
         break;
-        case Tag::BLOCK:
-            nestedBlock(first->as<Tag::BLOCK>());
+        case Tag__::BLOCK:
+            nestedBlock(first.get<Tag__::BLOCK>());
         break;
 
         default:            // can't occur, but used to keep the 

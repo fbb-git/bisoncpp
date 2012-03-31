@@ -3,6 +3,6 @@ typename:
     identifier
     '>'
     {
-        d_field = $2->as<Tag::STRING>(); 
+        d_field = $2; 
     }
 ;
