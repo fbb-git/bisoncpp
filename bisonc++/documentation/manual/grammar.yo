@@ -12,34 +12,6 @@ includefile(grammar/syntax.yo)
 lsect(RECURSIVE)(Writing recursive rules)
 includefile(grammar/recursive.yo)
 
-lsect(DEFSEM)(Defining Language Semantics)
-includefile(grammar/semantics.yo)
-
-    lsubsect(SEMANTICTYPES)(Data Types of Semantic Values)
-    includefile(grammar/datatypes.yo)
-
-    lsubsect(MORETYPES)(More Than One Value Type)
-    includefile(grammar/union.yo)
-
-    lsubsect(POLYMORPHIC)(More Than One Value Type: Using Polymorphism)
-    includefile(grammar/polymorphic.yo)
-
-        subsubsect(The parser using a polymorphic semantic value type)
-        includefile(grammar/parser.yo)
-
-        subsubsect(The scanner using a polymorphic semantic value type)
-        includefile(grammar/scanner.yo)
-
-
-    lsubsect(ACTIONS)(Actions)
-    includefile(grammar/actions.yo)
-
-    lsubsect(ACTIONTYPES)(Data Types of Values in Actions)
-    includefile(grammar/actiontypes.yo)
-
-    lsubsect(MIDACTIONS)(Actions in Mid-Rule)
-    includefile(grammar/midrule.yo)
-
 lsect(DIRECTIVES)(Bisonc++ Directives)
 includefile(directives/intro.yo)
 
@@ -92,6 +64,10 @@ includefile(directives/intro.yo)
     subsect(%prec: overruling default precedences)
     includefile(directives/prec.yo)
 
+    subsect(%polymorphic: using polymorphism to define multiple semantic
+            values) 
+    includefile(directives/polymorphic.yo)
+
     subsect(%print-tokens: displaying tokens and matched text) 
     includefile(directives/print.yo)
 
@@ -122,10 +98,10 @@ includefile(directives/intro.yo)
         lsubsubsect(IMPROPER)(Improper token names)
         includefile(directives/improper.yo)
 
-    lsubsect(NONTERMS)(%type: associating semantic values to (non)terminals)
+    lsubsect(TYPE)(%type: associating semantic values to (non)terminals)
     includefile(directives/nonterms.yo)
 
-    lsubsect(COLLECTION)(%union: using multiple semantic values) 
+    lsubsect(UNION)(%union: using a 'union' to define multiple semantic values) 
     includefile(directives/union.yo)
 
     subsect(Directives controlling the names of generated files)
@@ -154,6 +130,42 @@ includefile(directives/intro.yo)
         subsubsect(%target-directory: defining the directory where files must
                 be written)
         includefile(directives/targetdir.yo)
+
+lsect(DEFSEM)(Defining Language Semantics)
+includefile(grammar/semantics.yo)
+
+    lsubsect(SEMANTICTYPES)(Data Types of Semantic Values)
+    includefile(grammar/datatypes.yo)
+
+    lsubsect(MORETYPES)(More Than One Value Type)
+    includefile(grammar/union.yo)
+
+    lsubsect(POLYMORPHIC)(Polymorphism and multiple semantic values:
+                        `%polymorphic') 
+    includefile(grammar/polymorphic.yo)
+
+        subsubsect(The %polymorphic directive)
+        includefile(grammar/polymorphicdirective.yo)
+
+        subsubsect(The %polymorphic and %type: associating semantic values to
+        (non-)terminals) 
+        includefile(grammar/polymorphictype.yo)
+
+        subsubsect(The parser using a polymorphic semantic value type)
+        includefile(grammar/parser.yo)
+
+        subsubsect(The scanner using a polymorphic semantic value type)
+        includefile(grammar/scanner.yo)
+
+
+    lsubsect(ACTIONS)(Actions)
+    includefile(grammar/actions.yo)
+
+    lsubsect(ACTIONTYPES)(Data Types of Values in Actions)
+    includefile(grammar/actiontypes.yo)
+
+    lsubsect(MIDACTIONS)(Actions in Mid-Rule)
+    includefile(grammar/midrule.yo)
 
 sect(Basic Grammatical Constructions)
 includefile(grammar/gramcons.yo)

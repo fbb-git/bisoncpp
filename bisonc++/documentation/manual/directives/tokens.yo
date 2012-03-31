@@ -11,7 +11,7 @@ or by commas.
 semantic value when a token specified to the right of a tt(<type>)
 specification is received. The pointed arrows are part of the type
 specification; the type itself must be a field of a tt(%union) specification
-(see section ref(COLLECTION)).
+(see section ref(UNION)).
 
         b() will convert the symbolic tokens (including those defined by the
 precedence directives (cf. section ref(PRECEDENCE))) into a tt(Parser::Tokens)

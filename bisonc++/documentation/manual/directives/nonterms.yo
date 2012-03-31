@@ -1,14 +1,22 @@
 Syntax: bf(%type) tt(<type> symbol(s))nl()
-    When tt(%union) is used to specify multiple value types, the value type of
-each rule returning a semantic value can be defined. For this the bf(%type)
-directive is used.
+    When tt(%polymorphic) is used to specify multiple semantic value types,
+(non-)terminals can be associated with one of the semantic value types
+specified with the tt(%polymorphic) directive.
+
+    When tt(%union) is used to specify multiple semantic value types,
+(non-)terminals can be associated with one of the tt(union) fields specified
+with the tt(%union) directive.
+
+    To associate (non-)terminals with specific semantic value types
+the bf(%type) directive is used.
 
     With this directive, tt(symbol(s)) represents of one or more blank or
 comma delimited grammatical symbols (i.e., terminal and/or nonterminal
-symbols); tt(type) is a field name defined in the tt(%union) specification
-that you want to associate with the specified nonterminal(s). The type itself
-must be a field of a tt(%union) specification (see section
-ref(COLLECTION)). The pointed arrows are part of the type specification.
+symbols); tt(type) is either a polymorphic type-identifier or a field name
+defined in the tt(%union) specification. The
+specified nonterminal(s) are automatically associated with the indicate
+semantic type. The pointed arrows are part of
+the type specification.
 
     When the semantic value type of a terminal symbol is defined the
 em(lexical scanner) rather than the parser's actions must assign the

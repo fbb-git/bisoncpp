@@ -81,22 +81,34 @@ inline Meta__::Semantic<Meta__::TagOf<Tp_>::tag> *semantic__(Tp_ &&tmp)
     return new Meta__::Semantic<Meta__::TagOf<Tp_>::tag>(std::move(tmp));
 }
 
-template <Tag__ tag> 
-inline void \@Base::extract__(std::string const &in)
+namespace Meta__
 {
-    std::istringstream ins(in);
-    ins >> d_val__.get<tag>();
+
+template <typename Tp_>
+SType &SType::operator=(Tp_ const &value)
+{
+    reset(semantic__(value));
+    return *this;
 }
 
-template <typename Tp_> 
-inline void \@Base::setSemantic__(Tp_ const &value)
-{
-    d_val__.reset(semantic__(value));
 }
 
-template <typename Tp_> 
-inline void \@Base::setSemantic__(Tp_ &&tmp)
-{
-    d_val__.reset(semantic__(std::move(tmp)));
-}
-
+// template <Tag__ tag> 
+// inline void \@Base::extract__(std::string const &in)
+// {
+//     std::istringstream ins(in);
+//     ins >> d_val__.get<tag>();
+// }
+//
+//template <typename Tp_> 
+//inline void \@Base::setSemantic__(Tp_ const &value)
+//{
+//    d_val__.reset(semantic__(value));
+//}
+//
+//template <typename Tp_> 
+//inline void \@Base::setSemantic__(Tp_ &&tmp)
+//{
+//    d_val__.reset(semantic__(std::move(tmp)));
+//}
+//

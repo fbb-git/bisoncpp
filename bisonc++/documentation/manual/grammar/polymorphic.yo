@@ -3,26 +3,19 @@ approach discussed below is a direct result of an suggestion initially made by
 Dallas A. Clement in September 2007. All sources of the example discussed
 below are found in the lurl(poly) directory.
 
-One may wonder why a tt(union) is still used by Bisonc++ as bf(C++) offers
+One may wonder why a tt(union) is still used by b() as bf(C++) offers
 inherently superior approaches to combine multiple types in one type. The
 bf(C++) way to do so is by defining a polymorphic base class and a series of
 derived classes implementing the various exclusive data types. The tt(union)
-approach, however, is still supported by Bisonc++ since it is supported by
-bf(bison)(1) and bf(bison++); dropping the tt(union) would impede backward
-portability.
+approach is still supported by b() since it is supported by bf(bison)(1) and
+bf(bison++); dropping the tt(union) would impede backward compatibility.
 
-The alternative to using a tt(union) is using a polymorphic base class. This
-class is developed below as the class tt(Base). Since it's a polymorphic
-base class it should at least have a virtual destructor. 
+The alternative to using a tt(union) is to use a polymorphic base
+class. Although it is possible to define your own polymorphic semantic value
+classes, b() makes life easy by offering the tt(%polymorphic) directive.
 
-In addition, for the benefit of the example, an overloaded insertion operator
-is defined, eventually calling a virtual tt(v_insert) member that is
-overridden by derived classes. Other real-life situations may use comparable
-solutions for additional or other functionality.
 
-As a result, the class bf(Base) has the following minimal interface:
-    verbinclude(poly/base/base.h)
-
+In the example program (cf. lurl(poly)) 
 The fields of a classical tt(union), defining the various values that are
 handled by the parser are now defined by classes derived from the class
 tt(Base). For example:

@@ -68,8 +68,6 @@ $insert debugdecl
         void errorVerbose__();
         size_t top__() const;
 
-$insert polymorphicdecl
-
     public:
         void setDebug(bool mode);
 }; 

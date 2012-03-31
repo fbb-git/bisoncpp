@@ -16,7 +16,8 @@ bool Parser::defaultReturn(size_t pos, Block &block)
     {                                               // %union field or
         if (d_semType == UNION)                     // %polymorphic type
             replacement += "." + defaultType;
-        else if (not callsMember(block, pos)) 
+//        else if (not callsMember(block, pos)) 
+        else if (not callsMember(block, pos) && defaultType != "STYPE__")
         {
             if (d_polymorphic.find(defaultType) != d_polymorphic.end())
                 replacement += ".get<" + defaultType + ">()";

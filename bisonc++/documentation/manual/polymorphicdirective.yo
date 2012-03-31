@@ -1,0 +1,27 @@
+    The tt(%polymorphic) directive causes bic() to generate a parser using
+polymorphic semantic values. The various semantic values are specified using a
+em(tag), which is a bf(C++) identifier, and a bf(C++) type definition. Tag and
+type definition are separated from each other by a colon. Multiple tag and
+type definition combinations are separated from each other by semicolons. 
+
+Here is an example, defining three semantic values: an tt(int), a
+tt(std::string) and a tt(std::vector<double>):
+        verb(
+    %polymorphic INT: int; STRING: std::string; 
+                 VECT: std::vector<double>
+        )
+    The identifier to the left of the colon is called the em(type-identifier),
+and the type definition to the right of the colon is called the
+em(type-definition). The types specified at the tt(%polymorphic)
+type-definitions must be built-in types or must offer default constructors.
+
+    If type definitions refer to types declared in header files that were
+not already included by the parser's base class header, then these header
+file(s) must be inserted using the tt(%baseclass-preinclude) directive.
+
+
+
+
+
+
+

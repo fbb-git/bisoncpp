@@ -1,0 +1,21 @@
+    Syntax: bf(%polymorphic) tt(polymorphic-specification(s))
+
+            The tt(%polymorphic) directive causes bic() to defines and use a
+            polymorphic semantic value class, which can be used as a
+            (preferred) alternative to the (traditional) a tt(union)
+            specification. 
+
+            Refer to section ref(POLYMORPHIC) for a detailed description of
+            the specification, characteristics, and use of polymorphic
+            semantic values as defined by bic().
+
+            As a quick reference: to define multiple semantic values using a 
+            polymorphic semantic value class offering either an tt(int), a
+            tt(std::string) or a tt(std::vector<double>) specify:
+                verb(
+    %polymorphic INT: int; STRING: std::string; 
+                 VECT: std::vector<double>
+                )
+            and use tt(%type) specifications (cf. section ref(TYPE)) to
+            associate (non-)terminals with specific semantic values.
+

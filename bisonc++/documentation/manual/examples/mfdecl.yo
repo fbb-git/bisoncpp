@@ -34,7 +34,7 @@ have this tt(Parser::STYPE) type. As defined here the allowable types are now
     itt(double) (for tt(exp) and tt(NUM)); 
     it() a em(pointer) to a tt(double), which will be a pointer to entries in
         tt(mfcalc)'s symbol table, used with tt(VAR) tokens (see section
-        ref(COLLECTION)).
+        ref(UNION)).
     it() a em(pointer to a function) expecting a tt(double) argument and
         returning a tt(double) value, used with tt(FNCT) tokens.
     )
@@ -48,7 +48,7 @@ symbols, just as tt(%token) is used for declaring token types. We have not
 used tt(%type) before because nonterminal symbols are normally declared
 implicitly by the rules that define them. But tt(exp) must be declared
 explicitly so we can specify its value type. See also section 
-ref(NONTERMS).
+ref(TYPE).
 
 Finally note the em(right associative) operator `tt(=)', defined in line 13:
 by making the assignment operator right-associative we can allow em(sequential

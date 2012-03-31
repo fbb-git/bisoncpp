@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-void Parser::addPolymorphic(string const &tag) 
+void Parser::addPolymorphic(string const &tag, string const &typeSpec) 
 {
     if (d_semType != POLYMORPHIC)
         return;
@@ -9,5 +9,5 @@ void Parser::addPolymorphic(string const &tag)
         emsg << "Polymorphic semantic tag `" << tag << "' multiply defined" <<
                 endl;
     else
-        d_polymorphic[tag] = d_scanner.matched(); 
+        d_polymorphic[tag] = typeSpec; 
 }

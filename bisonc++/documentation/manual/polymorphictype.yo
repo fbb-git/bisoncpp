@@ -1,0 +1,27 @@
+    The tt(%type) directive is used to associate (non-)terminals with 
+particular semantic value types using the type-identifiers identifying these
+type-definitions. E.g., after
+        verb(
+    %type <INT> expr
+        )
+    the tt(expr) non-terminal returns tt(int) semantic values. So, after the
+above tt(%type) specification a rule like
+        verb(
+    expr:
+        '-' expr
+        {
+            $$ = -$2;
+        }
+        )
+    automatically associates tt($$) and tt($2) with tt(int) values. tt($$)
+represents an lvalue (i.e. the semantic value associated with the tt(expr:)
+rule), while tt($2) represents the tt(int) semantic value associated with the
+tt(expr) non-terminal in the production rule tt('-' expr) (an rvalue).
+
+    As with the tt(%union) specification, semantic value types cannot be
+pre-associated with negative dollar indices. However, semantic value types can
+be specified (or tt(%type) associations can be overruled) using the common
+tt($<type-identifier>$) or tt($<type-identifier>nr) syntax. In this syntax
+tt(nr) is a (positive or negative) number (like tt($2, $-1)). No blanks can be
+used here.
+

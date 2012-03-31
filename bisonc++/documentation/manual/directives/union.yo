@@ -12,17 +12,22 @@ For example:
     This says that the two alternative types are tt(double) and tt(symrec
 *). They are given names tt(u_val) and tt(u_tptr); these names are used in the
 tt(%token) and tt(%type) directives to pick one of the types for a terminal or
-nonterminal symbol (see section ref(NONTERMS)).
+nonterminal symbol (see section ref(TYPE)).
 
     Notes:
     itemization(
     it() The semicolon following the closing brace is em(optional).
-    it() bf(C++) does not allow class types to be used in tt(union)
-        definitions. Consequently, they cannot be used in tt(%union)
-        directives either. When a class type variant is required, a
-        em(pointer) to a class object should be used. The responsibility for
-        the correct construction and destruction of the pointed-to class 
-        objects lies with the programmer. See also section ref(MORETYPES).
+    it() bf(C++-11) does allow class types to be used in tt(union)
+        definitions, so they can also be used in tt(%union)
+        directives. When a class type variant is required, all required
+        constructors, the destructor and other members (like overloaded
+        assignment operators) must be able to handle the actual class type
+        data fields properly. A discussion of how to use unrestricted unions
+        is beyon this manual's scope, but can be found, e.g., in the url(C++
+        Annotations)(http://cppannotations.sf.net). See also section
+        ref(MORETYPES). 
     )
+
+
 
 

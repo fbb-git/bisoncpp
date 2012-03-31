@@ -26,7 +26,7 @@ em(later) has the higher precedence and is grouped em(first).
 semantic value when a token specified to the right of a tt(<type>)
 specification is received. The pointed arrows are part of the type
 specification; the type itself must be a field of a tt(%union) specification
-(see section ref(COLLECTION)).
+(see section ref(UNION)).
 
     When multiple tokens are listed they must be separated by whitespace or by
 commas. Note that the precedence directives also serve to define token names:

@@ -103,7 +103,17 @@ $insert polymorphicSpecializations
     class SType: public std::shared_ptr<Base>
     {
         public:
+            SType() = default;
+            SType(SType const &other) = default;
+            SType(SType &&tmp) = default;
+        
             Tag__ tag() const;
+
+            SType &operator=(SType const &rhs) = default;
+
+            template <typename Tp_>
+            SType &operator=(Tp_ const &value);
+
 
             template <Tag__ tg_>
             typename TypeOf<tg_>::ReturnType get() const;
@@ -113,3 +123,4 @@ $insert polymorphicSpecializations
     };
                 
 }  // namespace Meta__
+

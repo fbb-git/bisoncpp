@@ -81,7 +81,8 @@ class Parser: public ParserBase
         std::map<std::string, std::string> const &polymorphic() const;
 
     private:
-        void addPolymorphic(std::string const &tag);
+        void addPolymorphic(std::string const &tag, 
+                            std::string const &typeSpec);
 
         void addIncludeQuotes(std::string *target); // ensure ".." or <..> 
                                                     // around target name

@@ -1,30 +1,27 @@
-In most programs, you will need different data types for different kinds of
-tokens and groupings. For example, a numeric constant may need type tt(int) or
-tt(double), while a string needs type tt(std::string), and an identifier might
-need a pointer to an entry in a symbol table.
+In many programs, different kinds of data types are used in combination with
+different kinds of terminal and non-terminal tokens. For example, a numeric
+constant may need type tt(int) or tt(double), while a string needs type
+tt(std::string), and an identifier might need a pointer to an entry in a
+symbol table.
 
 To use more than one data type for semantic values in one parser, b()
 offers the following feature:
     itemization(
+    it() Define polymorphic semantic values, associating (non)terminals with
+their proper semantic types (cf section ref(POLYMORPHIC)), and associate
+(non-)terminal tokens with their appropriate semantic values;
     it() Specify the entire collection of possible data types, using a
-tt(%union) directive (see section ref(COLLECTION)).
-    it() Choose one of those types for each symbol (terminal or nonterminal)
-for which semantic values are used. This is done for tokens with the
-tt(%token) directive (see section ref(TOKTYPENAMES))
-and for groupings with the tt(%type) directive (see section
-ref(NONTERMS)).
+tt(%union) directive (see section ref(UNION)), and associate
+(non-)terminal tokens with their appropriate semantic values;
+    it() Define your own class handling the various semantic values, 
+and associate that class with the parser's semantic value type using the
+tt(%stype) directive. The association of (non-)terminal tokens and specific
+value types is handled by your own class.
     )
-    This approach has the advantage that b() is able to enforce the
-correct association between semantic types and rules and/or tokens, and that
-B() is able to check the type-correctness of assignments to rule
-results. 
+    The first approach (and to a lesser extent, the second approach) has the
+advantage that b() is able to enforce the correct association between semantic
+types and rules and/or tokens, and that b() is able to check the
+type-correctness of assignments to rule results.
 
-The em(drawback) of all this is that tt(union) fields cannot contain tt(class)
-objects as fields, and thus such objects must be accessed through
-pointers. So, if the semantic value of a textual token is returned in
-tt(std::string) object, then the tt(union) should have a tt(std::string *)
-field. Consequently, the programmer must take care to delete the memory
-pointed to by the tt(string *) fields whenever these fields become
-obsolete. In practice this requirement is not too hard to meet, and so
-tt(union) constructions containing pointers to class type objects are
-commonly seen.
+
+

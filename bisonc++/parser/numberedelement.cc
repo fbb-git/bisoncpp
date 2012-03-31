@@ -45,7 +45,7 @@ bool Parser::numberedElement(size_t pos, int nElements, Block &block)
     {
         if (d_semType == UNION)                     // %polymorphic type
             replacement += "." + idxType;
-        else if (not callsMember(block, pos + length)) 
+        else if (not callsMember(block, pos + length) && idxType != "STYPE__") 
         {
             if (d_polymorphic.find(idxType) != d_polymorphic.end())
                 replacement += ".get<" + idxType + ">()";
