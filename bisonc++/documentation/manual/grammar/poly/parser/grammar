@@ -1,11 +1,12 @@
 %filenames parser
 %scanner ../scanner/scanner.h
 
-%baseclass-preinclude      ../semantic/semantic.h
+%polymorphic INT: int; TEXT: std::string;
 
-%stype   Semantic
+%token NR IDENTIFIER 
 
-%token INT IDENTIFIER 
+%type <TEXT>    identifier
+%type <INT>     int
 
 %%
 
@@ -23,14 +24,14 @@ prompt:
 identifier:
     IDENTIFIER
     {
-        $$.assign<TagType<Tag::TEXT>>(d_scanner.matched());
+        $$ = d_scanner.matched();
     }
 ;
 
 int:
-    INT
+    NR
     {
-        $$.assign<TagType<Tag::INT>>(d_scanner.matched());
+        $$ = intValue();
     }
 ;
 

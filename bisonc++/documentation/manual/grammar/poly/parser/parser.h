@@ -17,6 +17,8 @@ class Parser: public ParserBase
         int parse();
 
     private:
+        int intValue() const;
+
         void error(char const *msg);    // called on (syntax) errors
         int lex();                      // returns the next token from the
                                         // lexical scanner. 

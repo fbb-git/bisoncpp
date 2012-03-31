@@ -5,7 +5,7 @@
 
 [ \t]+                  // skip white space
 
-[0-9]+                  return Parser::INT;
+[0-9]+                  return Parser::NR;
 
 [a-zA-Z_][a-zA-Z0-9_]*  return Parser::IDENTIFIER;
 

@@ -3,5 +3,7 @@
 // $insert class.h
 #include "parser.h"
 
+#include <sstream>
+
 using namespace std;
 
