@@ -93,9 +93,12 @@ class Parser: public ParserBase
 
                     // pos must be the position of the last $-related
                     // specification. It can be, e.g., $$, $-1, $3
-                    // if the next non-blank char equals '.' then true is
-                    // returned
-        bool callsMember(Block const &block, size_t pos);   
+                    // if the next non-blank char equals '.' then a member is
+                    // called and no replacement should be performed: false is
+                    // returned. False is also returned when 
+                    // defaultType == STYPE__ 
+        bool replaceDollar(Block const &block, size_t pos, 
+                           std::string const &defaultType);   
 
         Symbol *defineNonTerminal(std::string const &name, 
                                   std::string const &stype);

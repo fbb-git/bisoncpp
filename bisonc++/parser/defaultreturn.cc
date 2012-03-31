@@ -14,10 +14,9 @@ bool Parser::defaultReturn(size_t pos, Block &block)
 
     if (defaultType.length())                       // augment with
     {                                               // %union field or
-        if (d_semType == UNION)                     // %polymorphic type
+        if (d_semType == UNION)                     // no %polymorphic type
             replacement += "." + defaultType;
-//        else if (not callsMember(block, pos)) 
-        else if (not callsMember(block, pos) && defaultType != "STYPE__")
+        else if (replaceDollar(block, pos, defaultType))    // %polymorphic
         {
             if (d_polymorphic.find(defaultType) != d_polymorphic.end())
                 replacement += ".get<" + defaultType + ">()";

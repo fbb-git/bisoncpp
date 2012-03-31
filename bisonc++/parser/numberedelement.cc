@@ -43,9 +43,9 @@ bool Parser::numberedElement(size_t pos, int nElements, Block &block)
 
     if (idxType.length())
     {
-        if (d_semType == UNION)                     // %polymorphic type
+        if (d_semType == UNION)                     // no %polymorphic type
             replacement += "." + idxType;
-        else if (not callsMember(block, pos + length) && idxType != "STYPE__") 
+        else if (replaceDollar(block, pos + length, idxType)) // %polymorphic
         {
             if (d_polymorphic.find(idxType) != d_polymorphic.end())
                 replacement += ".get<" + idxType + ">()";
