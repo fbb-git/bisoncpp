@@ -2,9 +2,8 @@
 
 void Parser::noDefaultTypeWarning()
 {
-    if (d_semType != SINGLE)
-        wmsg << "In production rule \n"<< 
-                            "\t`" << &d_rules.lastProduction() << " '\n"
-                            "\t`" << d_rules.name() << "' has no default "
-                                        "($$) type-association" << endl;
+    wmsg << "production rule \n"<< 
+            "\t`" << &d_rules.lastProduction() << " ':\n"
+            "\tno auto type for `" << d_rules.name() << "'"
+            " ($$)" << endl;
 }

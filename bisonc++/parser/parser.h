@@ -33,6 +33,14 @@ class Parser: public ParserBase
         POLYMORPHIC
     };
 
+    enum PolyTag
+    {
+        UNTYPED,
+        STYPED,
+        TYPED,
+        DELTATYPED
+    };
+
             // data members that are self-explanatory are not explicitly
             // described here.
 
@@ -89,16 +97,42 @@ class Parser: public ParserBase
         void checkEmptyBlocktype();
         void checkFirstType();
 
-        bool defaultReturn(size_t pos, Block &block);
 
-                    // pos must be the position of the last $-related
-                    // specification. It can be, e.g., $$, $-1, $3
-                    // if the next non-blank char equals '.' then a member is
-                    // called and no replacement should be performed: false is
-                    // returned. False is also returned when 
-                    // defaultType == STYPE__ 
-        bool replaceDollar(Block const &block, size_t pos, 
-                           std::string const &defaultType);   
+        bool dollarDollar(size_t pos, Block &block);
+        std::string dollarDollarUnion() const;
+        std::string dollarDollarPolymorphic() const;
+
+        bool dollarIndex(size_t pos, int nElements, Block &block);
+        std::string dollarIndexUnion() const;
+        std::string dollarIndexPolymorphic() const;
+
+        bool dollarTypedDollar(size_t pos, Block &block);
+        std::string dollarTypedDollarUnion(std::string const &typeSpec) const;
+        std::string dollarTypedDollarPolymorphic(
+                                        std::string const &typeSpec) const;
+
+        bool dollarTypedIndex(size_t pos, int nElements, Block &block);
+        std::string dollarTypedIndexUnion(
+                        int idx, std::string const &idxType,
+                        size_t nElements, std::string const &specType) const;
+        std::string dollarTypedIndexPolymorphic(
+                        int idx, std::string const &idxType,
+                        size_t nElements, std::string const &specType) const;
+
+        bool callsMember(Block const &block, size_t pos) const;
+        bool indexTooLarge(int idx, std::string const &typeSpec, 
+                                                    size_t nElements) const;
+
+        PolyType polyType(std::string const &specifiedType = "") const;
+
+//                    // pos must be the position of the last $-related
+//                    // specification. It can be, e.g., $$, $-1, $3
+//                    // if the next non-blank char equals '.' then a member is
+//                    // called and no replacement should be performed: false is
+//                    // returned. False is also returned when 
+//                    // defaultType == STYPE__ 
+//        bool replaceDollar(Block const &block, size_t pos, 
+//                           std::string const &defaultType);   
 
         Symbol *defineNonTerminal(std::string const &name, 
                                   std::string const &stype);
@@ -114,8 +148,6 @@ class Parser: public ParserBase
         void setUnionDecl();
                                         
 
-        bool explicitElement(size_t pos, int nElements, Block &block);
-        bool explicitReturn(size_t pos, Block &block);
         size_t extractIndex(int *idx, size_t pos);
         size_t extractType(std::string *type, size_t pos, Block &block);
 
@@ -146,7 +178,6 @@ class Parser: public ParserBase
         void setStart();
         void setPolymorphicDecl();
 
-        bool numberedElement(size_t pos, int nElements, Block &block);
 
         void openRule(std::string const &ruleName);
 

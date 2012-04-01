@@ -15,3 +15,11 @@ of confusing tokens with Tags. When they occur simple solutions exist:
                                  Token)
     - prefix the offending tags by their enum-name (Parser::STRING,
                                  Tag__::STRING) 
+
+With %polymorphic:
+$$. is recognized as calling a member for $$.  ($$). and comparable
+constructions do not recognize a member call.
+
+parser/replacedollar.cc is obsolete and can be removed
+
+

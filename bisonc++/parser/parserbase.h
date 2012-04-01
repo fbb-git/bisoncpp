@@ -295,7 +295,7 @@ class ParserBase
     protected:
         enum Return__
         {
-            PARSE_ACCEPT__ = 0,   // values used as parse()'s return values
+            PARSE_ACCEPT__ = 0, // values used as parse()'s return values
             PARSE_ABORT__  = 1
         };
         enum ErrorRecovery__
