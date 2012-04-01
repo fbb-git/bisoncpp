@@ -1,0 +1,88 @@
+handleDollar handles all $-typed variables in blocks.
+
+dollarDollar handles two consecutive $s. This can be encountered as $$ or as
+$$. 
+
+    Handling depends on the rule's semantic type (SINGLE, UNION, POLYMORPHIC) 
+        - SINGLE means $$ is used as-is, and is simply replaced by the
+            semantic value variable (d_val__) (UNTYPED replacement)
+
+        - UNION: processed by dollarDollarUnion:
+
+            If the current rule is not associated with a union field,
+            warn that a plain union is returned, and do an UNTYPED
+            replacement. 
+
+            If the current rule is associaed with a union field, do a .field
+            (TYPED) replacement. 
+
+            There is no need for special $$. handling: it automatically
+            becomes the field's member in the case of a TYPED replacement.
+
+        - POLYMORPHIC: processed by dollarDollarPolymorphic
+
+            $$:
+                If the current rule is not associated with a polymorphic type
+                warn that a plain polymorphic value is referred to union is returned, and do an UNTYPED
+            replacement. 
+
+            If the current rule is associaed with a union field, do a .field
+            (TYPED) replacement. 
+
+            There is no need for special $$. handling: it automatically
+            becomes the field's member in the case of a TYPED replacement.
+
+
+            $$. indicates
+
+    A $$ variable may:
+        - not be associated with 
+ With %polymorphic: $$ and $i can be followed by . in which case a member
+is called, and $$ and $i is merely replaced by the indicated semantic value 
+variable. 
+
+Depending on the $'s context the following happens:
+ - if there is a previous character:
+     - if it is a $, we saw $$.
+         for %polymorphic: see below
+         otherwise: it is an explicit return of the rule's default 
+       semantic value (e,g, a union field) and done)
+     - if it is a >, then it must be an explicit return of a %union element
+         or %polymorphic semantic value type. In the latter case: see
+         below, and done.
+ - if the next character is a <, then an explicit value of the number
+   following the type-specification is used ($<spec>i). For %polymorphic:
+   see below  (and done).
+ - otherwise the next character must be a (possibly negative) number of a
+   rule element (and done)
+
+With %polymorphic:
+    non-terminals may be tagged with a %polymorphic type tag, may be tagged
+with STYPE__ or may not be tagged at all. Tagging is done with 
+%type <tag identifier> (non-)terminal(s)
+
+Here's what happens:
+
+-------------------------------------------------------------------
+                            Used syntax:
+            -------------------------------------------------------
+                    rvalue               lvalue
+                ----------------     --------------------
+Tag:            $$       $<tag>$     $$      $<tag>i   $i     $$., $i. 
+--------------------------------------------------------------------
+identifier      OK       OK          OK      OK        OK     OK
+                         warn-1              warn-1
+--------------------------------------------------------------------
+STYPE__         OK       OK          OK      OK        OK     OK
+                warn-2               warn-2            warn-2        
+--------------------------------------------------------------------
+no tag          OK       OK          OK      OK        OK     OK
+                warn-2   warn-3      warn-2  warn-3    warn-2 warn-3
+====================================================================
+handling        default  explicit    default explicit  numb.  default
+function        Return   Return      Return  Return    elem.  Return
+--------------------------------------------------------------------
+
+warn-1: warn if tag != identifier
+warn-2: warn that untagged STYPE__ is used
+warn-3: warn that sem. value is not tagged

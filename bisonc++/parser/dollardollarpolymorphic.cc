@@ -4,13 +4,14 @@ string Parser::dollarDollarPolymorphic(Block const &block, size_t pos) const
 {
     string ret;
 
-    if (callsMember(block, pos))
-        return ret;
-
     switch (polyType())
     {
         case TYPED:
-            ret = ".get<" + defaultType + ">()";
+            if (not callsMember(block, pos))
+                ret = ".get<" + d_rules.sType() + ">()";
+            else
+                wmsg << "$$. ignores auto-type for " << d_rules.name() << 
+                        endl;
         break;
 
         default:
