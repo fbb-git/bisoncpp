@@ -1,29 +1,32 @@
 #include "parser.ih"
 
-string Parser::dollarIndexPolymorphic(
-        int idx,
-        string const &idxType,
-        size_t nElements
-
-                ) const
+string Parser::dollarIndexPolymorphic(Block const &block, size_t pos, 
+                                size_t nRuleElments, int idx, 
+                                string const &typeTag) const 
 {
-
     string ret;
 
-    switch (polyType(idxType, "", idx, nElements))
+    if (callsMember(block, pos))
     {
+        autoIgnoredWarning(idx, "type");
+        return ret;
+    }
+
+    switch (semTagDIP(nRuleElements, idx, typeTag))
+    {
+        case TYPEIGNORED:
+            autoIgnoredWarning(idx, "type");
+        // FALLING THROUGH
+
         default:
         break;
 
         case TYPED:
-            ret = "." + idxType;
-        break;
-
-        case DELTATYPED:
-            ret = "." + specType;
+            ret = "." + typeTag;
         break;
     }
 
     return ret;
 }
+
 

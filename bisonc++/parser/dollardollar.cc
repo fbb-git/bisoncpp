@@ -13,7 +13,7 @@ bool Parser::dollarDollar(size_t pos, Block &block)
         break;
 
         case UNION:
-            replacement += dollarDollarUnion();
+            replacement += dollarDollarUnion(block, pos);
         break;
 
         case POLYMORPHIC:

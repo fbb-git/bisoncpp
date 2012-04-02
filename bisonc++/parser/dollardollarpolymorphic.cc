@@ -4,14 +4,20 @@ string Parser::dollarDollarPolymorphic(Block const &block, size_t pos) const
 {
     string ret;
 
-    switch (polyType())
+    if (callsMember(block, pos))
     {
+        autoIgnoredWarning("type");
+        return ret;
+    }
+
+    switch (semTagDDP())
+    {
+        case UNTYPED:
+            noAutoWarning("type");
+        break;
+
         case TYPED:
-            if (not callsMember(block, pos))
-                ret = ".get<" + d_rules.sType() + ">()";
-            else
-                wmsg << "$$. ignores auto-type for " << d_rules.name() << 
-                        endl;
+            ret = ".get<" + d_rules.sType() + ">()";
         break;
 
         default:

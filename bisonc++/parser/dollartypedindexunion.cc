@@ -1,27 +1,23 @@
 #include "parser.ih"
 
 string Parser::dollarTypedIndexUnion(
-        int idx,
-        string const &idxType,
-        size_t nElements,
-        string const &specType,
-
-                ) const
+        size_t nElements, int idx, string const &autoField, 
+        string const &unionField) const
 {
-
     string ret;
 
-    switch (unionType(idxType, specType, idx, nElements))
+    switch (semTagDTIU(nElements, autoField, idx, unionField))
     {
         default:
         break;
 
         case TYPED:
-            ret = "." + idxType;
+            ret = "." + autoField;
         break;
 
         case DELTATYPED:
-            ret = "." + specType;
+            autoOverrideWarning("field", unionField);
+            ret = "." + unionField;
         break;
     }
 

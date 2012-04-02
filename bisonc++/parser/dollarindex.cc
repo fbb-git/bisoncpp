@@ -6,30 +6,30 @@ bool Parser::dollarIndex(size_t pos, int nElements, Block &block)
 {
     int idx;                // extract the index, determine its length
     size_t length  = extractIndex(&idx, pos + 1);
-    string const &idxType = d_rules.sType(idx);
-    size_t ruleElements = nComponents(nElements);
+    string const &elementType = d_rules.sType(idx);
+    size_t nRuleElements = nComponents(nElements);
 
-
+    if (not dollarIdx(idx, nRuleElements))
+        return false;
+        
     ostringstream os;
-    os << s_semanticValueStack << "[" << indexToOffset(idx, nElements) << 
-                                  "]";
+    os << s_semanticValueStack << "[" << indexToOffset(idx, nElements) << "]";
     string replacement = os.str();
 
 
     switch (d_semType)
     {
         case SINGLE:
-            if (not d_negativeDollarIndices && idx <= 0)
-                wmsg << &d_rules.lastProduction() << ": "
-                        "non-positive $" << idx << " used" << endl;
         break;
 
         case UNION:
-            replacement += dollarIndexUnion(idx, idxType, ruleElements);
+            replacement += dollarIndexUnion(block, pos + 1 + length, 
+                                            nRuleElements, idx, elementType);
         break;
 
         case POLYMORPHIC:
-            replacement += dollarIndexPolymorphic(block, pos, typeSpec);
+            replacement += dollarIndexPolymorphic(block, pos + 1 + length, 
+                                            nRuleElements, idx, elementType);
         break;
     }
 
@@ -39,11 +39,11 @@ bool Parser::dollarIndex(size_t pos, int nElements, Block &block)
 }
 
 
-//    if (idx > static_cast<int>(ruleElements)) // $i refers beyond this rule
+//    if (idx > static_cast<int>(nRuleElements)) // $i refers beyond this rule
 //        emsg << "In production rule \n"<< 
 //                "\t`" << &d_rules.lastProduction() << " '\n"
 //                "\t$" << idx << " used, but there are only " << 
-//                ruleElements << " elements" << endl;
+//                nRuleElements << " elements" << endl;
 //    else if (d_semType != SINGLE)
 //    {
 //        if (idx <= 0)                   // type of the $i can't be determined
@@ -54,7 +54,7 @@ bool Parser::dollarIndex(size_t pos, int nElements, Block &block)
 //                            "\tcannot determine default type of $" << 
 //                            idx << endl;
 //        }
-//        else if (!idxType.length())     // or $i without type association
+//        else if (!elementType.length())     // or $i without type association
 //                wmsg << "In production rule \n"<< 
 //                            "\t`" << &d_rules.lastProduction() << " '\n"
 //                            "\t$" << idx << " (" << d_rules.symbol(idx) << 
@@ -69,17 +69,17 @@ bool Parser::dollarIndex(size_t pos, int nElements, Block &block)
 //    os << s_semanticValueStack << "[" << indexToOffset(idx, nElements) << "]";
 //    string replacement = os.str();
 //
-//    if (idxType.length())
+//    if (elementType.length())
 //    {
 //        if (d_semType == UNION)                     // no %polymorphic type
-//            replacement += "." + idxType;
-//        else if (replaceDollar(block, pos + length, idxType)) // %polymorphic
+//            replacement += "." + elementType;
+//        else if (replaceDollar(block, pos + length, elementType)) // %polymorphic
 //        {
-//            if (d_polymorphic.find(idxType) != d_polymorphic.end())
-//                replacement += ".get<" + idxType + ">()";
+//            if (d_polymorphic.find(elementType) != d_polymorphic.end())
+//                replacement += ".get<" + elementType + ">()";
 //            else
 //                emsg << "no such polymorphic semantic value identifier `" <<
-//                        idxType << '\'';
+//                        elementType << '\'';
 //        }
 //    }
 

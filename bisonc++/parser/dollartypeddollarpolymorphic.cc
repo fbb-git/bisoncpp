@@ -1,23 +1,25 @@
 #include "parser.ih"
 
-string Parser::dollarTypedDollarPolymorphic(Block const &block, size_t pos,
-                                            string const &typeSpec) const
+string Parser::dollarTypedDollarPolymorphic(string const &typeSpec) const
 {
     string ret;
 
-    switch (polyType(typeSpec))
+    switch (semTagDTDP(typeSpec))
     {
         case DELTATYPED:
+            autoOverrideWarning("field", typeSpec);
             ret = ".get<" + typeSpec + ">()";
         break;
 
         case TYPED:
-            ret = ".get<" + defaultType + ">()";
-        break;
+            ret = ".get<" + d_rules.sType() << ">()";
+        // FALLING THROUGH
 
+        case UNTYPED:
+        // FALLING THROUGH
         default:
         break;
-    };
+    }
 
     return ret;
 }

@@ -1,20 +1,30 @@
 #include "parser.ih"
 
-string Parser::dollarIndexUnion() const
+string Parser::dollarIndexUnion(Block const &block, size_t pos, 
+                                size_t nRuleElments, int idx, 
+                                string const &elementType) const 
 {
     string ret;
 
-    switch (unionType(idxType, "", idx, nElements))
+    if (callsMember(block, pos))
     {
+        autoIgnoredWarning(idx, "field");
+        return ret;
+    }
+
+    switch (semTagDIU(nRuleElements, idx, elementType))
+    {
+        case TYPEIGNORED:
+            autoIgnoredWarning(idx, "field");
+        break;
+
         default:
+        case UNTYPED:
+            noAutoWarning(idx, "field");
         break;
 
         case TYPED:
-            ret = "." + idxType;
-        break;
-
-        case DELTATYPED:
-            ret = "." + specType;
+            ret = "." + elementType;
         break;
     }
 

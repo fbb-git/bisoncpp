@@ -1,27 +1,22 @@
 #include "parser.ih"
 
 string Parser::dollarTypedIndexPolymorphic(
-        int idx,
-        string const &idxType,
-        size_t nElements,
-        string const &specType,
-
-                ) const
+                    size_t nElements, int idx, std::string const &autoTag, 
+                    std::string const &tagName) const
 {
-
     string ret;
 
-    switch (polymorphicType(idxType, specType, idx, nElements))
+    switch (semTagDTIP(nElements, autoTag, idx, tagName))
     {
-        default:
-        break;
-
         case TYPED:
-            ret = "." + idxType;
+            ret = ".get<" + autoTag << ">()";
         break;
 
         case DELTATYPED:
-            ret = "." + specType;
+            ret = ".get<" + tagName << ">()";
+        break;
+
+        default:
         break;
     }
 

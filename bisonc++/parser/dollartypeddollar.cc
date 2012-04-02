@@ -19,6 +19,7 @@ bool Parser::dollarTypedDollar(size_t pos, Block &block)
     switch (d_semType)
     {
         case SINGLE:
+            noSTYPEtypeAssociations();
         break;
 
         case UNION:
@@ -26,7 +27,7 @@ bool Parser::dollarTypedDollar(size_t pos, Block &block)
         break;
 
         case POLYMORPHIC:
-            replacement += dollarTypedDollarPolymorphic(block, pos, typeSpec);
+            replacement += dollarTypedDollarPolymorphic(typeSpec);
         break;
     }
 

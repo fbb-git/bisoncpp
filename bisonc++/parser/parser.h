@@ -33,9 +33,10 @@ class Parser: public ParserBase
         POLYMORPHIC
     };
 
-    enum PolyTag
+    enum SemTag
     {
         UNTYPED,
+        TYPEIGNORED,
         STYPED,
         TYPED,
         DELTATYPED
@@ -103,7 +104,9 @@ class Parser: public ParserBase
         std::string dollarDollarPolymorphic() const;
 
         bool dollarIndex(size_t pos, int nElements, Block &block);
-        std::string dollarIndexUnion() const;
+        std::string dollarIndexUnion(Block const &block, size_t pos,
+                                    size_t nRuleElments, int idx, 
+                                    std::string const &elementType) const;
         std::string dollarIndexPolymorphic() const;
 
         bool dollarTypedDollar(size_t pos, Block &block);
@@ -113,17 +116,32 @@ class Parser: public ParserBase
 
         bool dollarTypedIndex(size_t pos, int nElements, Block &block);
         std::string dollarTypedIndexUnion(
-                        int idx, std::string const &idxType,
-                        size_t nElements, std::string const &specType) const;
+                        size_t nElements, int idx, std::string const &autoField, 
+                        std::string const &unionField) const;
         std::string dollarTypedIndexPolymorphic(
-                        int idx, std::string const &idxType,
-                        size_t nElements, std::string const &specType) const;
+                        size_t nElements, int idx, std::string const &autoField, 
+                        std::string const &tagName) const;
 
+                        // returns true if the char following [pos] == '.'
         bool callsMember(Block const &block, size_t pos) const;
-        bool indexTooLarge(int idx, std::string const &typeSpec, 
-                                                    size_t nElements) const;
 
-        PolyType polyType(std::string const &specifiedType = "") const;
+                        // false if idx > nElements
+        bool dollarIdx(int idx, size_t nElements) const;
+
+            // Suffixes specify the members calling the semTag function:
+            // D: Dollar, T: Typed, I: Index, U: Union
+        SemTag semTagDDP() const;
+        SemTag semTagDIP(size_t nElements, int idx, 
+                                        std::string const &tagName) const;
+        SemTag semTagDIU(size_t nElements, int idx, 
+                                        std::string const &unionField) const;
+        SemTag semTagDTaux(std::string const &tagName) const;
+        SemTag semTagDTDP(std::string const &specifiedType);
+        SemTag semTagDTIP(size_t nElements, std::string const &autoTag, 
+                            int idx, std::string const &tagName) const;
+        SemTag semTagDTDU(std::string const &specifiedType) const;
+        SemTag semTagDTIU(size_t nElements, std::string const &autoField, 
+                            int idx, std::string const &unionField) const;
 
 //                    // pos must be the position of the last $-related
 //                    // specification. It can be, e.g., $$, $-1, $3
@@ -173,7 +191,19 @@ class Parser: public ParserBase
         void nestedBlock(Block &block); // define inner block as pseudo N
 
         std::string nextHiddenName();
-        void noDefaultTypeWarning();
+
+
+        // generating wmsgs:
+        void noAutoWarning(char const *typeOrField) const;
+        void noAutoWarning(int idx, char const *typeOrField) const;
+        voi autoOverrideWarning(char const *typeOrField,
+                                std::string const &override) const;
+        void autoIgnoredWarning(char const *typeOrField) const;
+        void autoIgnoredWarning(int idx, char const *typeOrField) const;
+
+        // generating emsgs:
+        void noSTYPEtypeAssociations() const;
+        void noSemanticTag(std::string const &tag) const
 
         void setStart();
         void setPolymorphicDecl();

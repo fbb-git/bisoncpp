@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-    // callsMember does not recognize constructions like ($$).
+    // callsMember does not recognize constructions like '($$).'
 
 bool Parser::callsMember(Block const &block, size_t pos) const
 {
