@@ -100,14 +100,17 @@ class Parser: public ParserBase
 
 
         bool dollarDollar(size_t pos, Block &block);
-        std::string dollarDollarUnion() const;
-        std::string dollarDollarPolymorphic() const;
+        std::string dollarDollarUnion(Block const &block, size_t pos) const;
+        std::string dollarDollarPolymorphic(Block const &block, 
+                                                          size_t pos) const;
 
         bool dollarIndex(size_t pos, int nElements, Block &block);
         std::string dollarIndexUnion(Block const &block, size_t pos,
                                     size_t nRuleElments, int idx, 
                                     std::string const &elementType) const;
-        std::string dollarIndexPolymorphic() const;
+        std::string dollarIndexPolymorphic(Block const &block, size_t pos, 
+                                size_t nRuleElments, int idx, 
+                                std::string const &typeTag) const;
 
         bool dollarTypedDollar(size_t pos, Block &block);
         std::string dollarTypedDollarUnion(std::string const &typeSpec) const;
@@ -136,7 +139,7 @@ class Parser: public ParserBase
         SemTag semTagDIU(size_t nElements, int idx, 
                                         std::string const &unionField) const;
         SemTag semTagDTaux(std::string const &tagName) const;
-        SemTag semTagDTDP(std::string const &specifiedType);
+        SemTag semTagDTDP(std::string const &specifiedType) const;
         SemTag semTagDTIP(size_t nElements, std::string const &autoTag, 
                             int idx, std::string const &tagName) const;
         SemTag semTagDTDU(std::string const &specifiedType) const;
@@ -196,14 +199,14 @@ class Parser: public ParserBase
         // generating wmsgs:
         void noAutoWarning(char const *typeOrField) const;
         void noAutoWarning(int idx, char const *typeOrField) const;
-        voi autoOverrideWarning(char const *typeOrField,
+        void autoOverrideWarning(char const *typeOrField,
                                 std::string const &override) const;
         void autoIgnoredWarning(char const *typeOrField) const;
         void autoIgnoredWarning(int idx, char const *typeOrField) const;
 
         // generating emsgs:
         void noSTYPEtypeAssociations() const;
-        void noSemanticTag(std::string const &tag) const
+        void noSemanticTag(std::string const &tag) const;
 
         void setStart();
         void setPolymorphicDecl();

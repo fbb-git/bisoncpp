@@ -3,7 +3,7 @@
     // A specific type was provided (as in $<TYPE>$)
 
 Parser::SemTag Parser::semTagDTIP(
-                    size_t nElements, int idx, std::string const &autoTag, 
+                    size_t nElements, std::string const &autoTag, int idx, 
                     std::string const &tagName) const
 {
     if (idx > static_cast<int>(nElements))

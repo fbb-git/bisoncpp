@@ -9,11 +9,11 @@ string Parser::dollarTypedIndexPolymorphic(
     switch (semTagDTIP(nElements, autoTag, idx, tagName))
     {
         case TYPED:
-            ret = ".get<" + autoTag << ">()";
+            ret = ".get<" + autoTag + ">()";
         break;
 
         case DELTATYPED:
-            ret = ".get<" + tagName << ">()";
+            ret = ".get<" + tagName + ">()";
         break;
 
         default:

@@ -1,7 +1,7 @@
 #include "parser.ih"
 
 string Parser::dollarIndexPolymorphic(Block const &block, size_t pos, 
-                                size_t nRuleElments, int idx, 
+                                size_t nRuleElements, int idx, 
                                 string const &typeTag) const 
 {
     string ret;

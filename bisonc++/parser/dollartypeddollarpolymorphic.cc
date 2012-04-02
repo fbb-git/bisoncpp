@@ -12,11 +12,9 @@ string Parser::dollarTypedDollarPolymorphic(string const &typeSpec) const
         break;
 
         case TYPED:
-            ret = ".get<" + d_rules.sType() << ">()";
+            ret = ".get<" + d_rules.sType() + ">()";
         // FALLING THROUGH
 
-        case UNTYPED:
-        // FALLING THROUGH
         default:
         break;
     }
