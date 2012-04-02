@@ -22,4 +22,4 @@ constructions do not recognize a member call.
 
 parser/replacedollar.cc is obsolete and can be removed
 
-
+INSTALL.im: tmp doesn't use -g

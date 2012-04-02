@@ -4,6 +4,8 @@
 
 bool Parser::dollarTypedIndex(size_t pos, int nElements, Block &block) 
 {
+    cerr << "dollarTypedIndex\n";
+
     string explicitType;        // extract the explicit type
     size_t length = 1 + extractType(&explicitType, pos + 1, block);
 
@@ -12,30 +14,30 @@ bool Parser::dollarTypedIndex(size_t pos, int nElements, Block &block)
     string const &idxType = d_rules.sType(idx); // get the idx'th default type
     size_t nRuleElements = nComponents(nElements);
 
-    if (not dollarIdx(idx, nRuleElements))
-        return false;
 
     ostringstream os;
     os << s_semanticValueStack << "[" << indexToOffset(idx, nElements) << 
                                   "]";
     string replacement = os.str();
 
-
-    switch (d_semType)
+    if (dollarIdx(idx, nRuleElements))
     {
-        case SINGLE:
-            noSTYPEtypeAssociations();
-        return false;                           // false: no $$ variant
+        switch (d_semType)
+        {
+            case SINGLE:
+                noSTYPEtypeAssociations();
+            break;
 
-        case UNION:
-            replacement += dollarTypedIndexUnion(nRuleElements, idx, idxType,
-                                                 explicitType);
-        break;
+            case UNION:
+                replacement += dollarTypedIndexUnion(nRuleElements, idx, 
+                                                     idxType, explicitType);
+            break;
 
-        case POLYMORPHIC:
-            replacement += dollarTypedIndexPolymorphic(nRuleElements,
+            case POLYMORPHIC:
+                replacement += dollarTypedIndexPolymorphic(nRuleElements,
                                                 idx, idxType, explicitType);
-        break;
+            break;
+        }
     }
 
     block.replace(pos, length, replacement);

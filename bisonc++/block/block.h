@@ -1,12 +1,14 @@
 #ifndef _INCLUDED_BLOCK_
 #define _INCLUDED_BLOCK_
 
-#include <iosfwd>
+#include <ostream>
 #include <vector>
 #include <string>
 
 class Block: private std::string
 {
+    friend std::ostream &operator<<(std::ostream &out, Block const &blk);
+
     size_t  d_line;
     std::string d_source;               // the source in which the block 
                                         // was found. The block's text itself
@@ -109,6 +111,11 @@ inline std::string const &Block::source() const
 inline std::string const &Block::str() const
 {
     return *this;
+}
+
+inline std::ostream &operator<<(std::ostream &out, Block const &blk)
+{
+    return out << '`' << static_cast<std::string>(blk) << '\'';
 }
 
 #endif

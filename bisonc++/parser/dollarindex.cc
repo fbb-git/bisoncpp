@@ -4,33 +4,35 @@
 
 bool Parser::dollarIndex(size_t pos, int nElements, Block &block) 
 {
+    cerr << "dollarIndex\n";
+
     int idx;                // extract the index, determine its length
     size_t length  = extractIndex(&idx, pos + 1);
     string const &elementType = d_rules.sType(idx);
     size_t nRuleElements = nComponents(nElements);
 
-    if (not dollarIdx(idx, nRuleElements))
-        return false;
-        
     ostringstream os;
     os << s_semanticValueStack << "[" << indexToOffset(idx, nElements) << "]";
     string replacement = os.str();
 
-
-    switch (d_semType)
+    if (dollarIdx(idx, nRuleElements))
     {
-        case SINGLE:
-        break;
-
-        case UNION:
-            replacement += dollarIndexUnion(block, pos + 1 + length, 
+        switch (d_semType)
+        {
+            case SINGLE:
+                negativeIndexWarning(idx);
+            break;
+    
+            case UNION:
+                replacement += dollarIndexUnion(block, pos + 1 + length, 
                                             nRuleElements, idx, elementType);
-        break;
-
-        case POLYMORPHIC:
-            replacement += dollarIndexPolymorphic(block, pos + 1 + length, 
+            break;
+    
+            case POLYMORPHIC:
+                replacement += dollarIndexPolymorphic(block, pos + 1 + length, 
                                             nRuleElements, idx, elementType);
-        break;
+            break;
+        }
     }
 
     block.replace(pos, length + 1, replacement);    // + 1 for the $

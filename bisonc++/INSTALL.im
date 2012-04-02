@@ -35,7 +35,7 @@ string COMPILER;
     // particular version can be used. The distributed definition uses the
     // `default' compiler version.
 
-#define CXXFLAGS    "-O2 -g"
+#define CXXFLAGS    "-O2"   // -g"
     // Specify compiler options that should be used. Overruled by the CXXFLAGS
     // environment variables. 
     // The option "-Wall" is always used.

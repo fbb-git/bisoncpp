@@ -4,6 +4,8 @@
 
 bool Parser::dollarTypedDollar(size_t pos, Block &block) 
 {
+    cerr << "dollarTypedDollar\n";
+
     size_t dollar1 = block.find_last_of("$", pos - 1);
 
                                 // no first $ or no $<

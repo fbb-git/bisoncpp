@@ -2,7 +2,8 @@
 
 void Parser::autoIgnoredWarning(int idx, char const *typeOrField) const
 {
-    wmsg << &d_rules.lastProduction() << ":\n"
-            "\tignoring any auto " << typeOrField << " for element " << idx <<
+    if (not negativeIndexWarning(idx, typeOrField))
+        wmsg << &d_rules.lastProduction() << ":\n"
+            "\tignoring auto " << typeOrField << " for element " << idx <<
                                                                         endl;
 }

@@ -197,6 +197,8 @@ class Parser: public ParserBase
 
 
         // generating wmsgs:
+        void negativeIndexWarning(int idx) const;
+        bool negativeIndexWarning(int idx, char const *typeOrField) const;
         void noAutoWarning(char const *typeOrField) const;
         void noAutoWarning(int idx, char const *typeOrField) const;
         void autoOverrideWarning(char const *typeOrField,

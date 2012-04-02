@@ -5,6 +5,8 @@
 
 bool Parser::dollarDollar(size_t pos, Block &block) 
 {
+    cerr << "dollarDollar\n";
+
     string replacement = s_semanticValue;           // use the semantic value
                                                     // data member
     switch (d_semType)
@@ -26,8 +28,3 @@ bool Parser::dollarDollar(size_t pos, Block &block)
 
     return true;                                    // this block uses $$
 }
-
-
-
-
-
