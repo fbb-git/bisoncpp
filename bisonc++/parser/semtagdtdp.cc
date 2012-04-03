@@ -8,7 +8,7 @@ Parser::SemTag Parser::semTagDTDP(string const &tagName) const
 
     if (autoTag.empty())
     {
-        noAutoWarning("type");
+        warnNoAuto("type");
         return semTagDTaux(tagName);
     }
 

@@ -4,12 +4,13 @@
 
 bool Parser::dollarIndex(size_t pos, int nElements, Block &block) 
 {
-    cerr << "dollarIndex\n";
-
     int idx;                // extract the index, determine its length
     size_t length  = extractIndex(&idx, pos + 1);
     string const &elementType = d_rules.sType(idx);
     size_t nRuleElements = nComponents(nElements);
+
+    cerr << "DOLLARINDEX " << nElements << " " << nRuleElements << "\n";
+
 
     ostringstream os;
     os << s_semanticValueStack << "[" << indexToOffset(idx, nElements) << "]";
@@ -20,7 +21,7 @@ bool Parser::dollarIndex(size_t pos, int nElements, Block &block)
         switch (d_semType)
         {
             case SINGLE:
-                negativeIndexWarning(idx);
+                warnNegativeIndex(idx);
             break;
     
             case UNION:

@@ -4,16 +4,13 @@ string Parser::dollarDollarPolymorphic(Block const &block, size_t pos) const
 {
     string ret;
 
-    if (callsMember(block, pos))
-    {
-        autoIgnoredWarning("type");
+    if (callsMember(block, pos, "type"))
         return ret;
-    }
 
     switch (semTagDDP())
     {
         case UNTYPED:
-            noAutoWarning("type");
+            warnNoAuto("type");
         break;
 
         case TYPED:

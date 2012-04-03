@@ -12,8 +12,8 @@
 
 bool Parser::handleDollar(size_t pos, int nElements, Block &block) 
 {
-    cerr << "handleDollar " << pos << ", #elems: " << nElements << 
-            ", block:\n" << block << endl;
+//    cerr << "handleDollar " << pos << ", #elems: " << nElements << 
+//            ", block:\n" << block << endl;
 
     if (pos > 0)            // handle $$, $$. and $<type>$     (pos at 2nd $)
     {
@@ -34,5 +34,7 @@ bool Parser::handleDollar(size_t pos, int nElements, Block &block)
         :                               // '$i' or '$i.' is expected
             dollarIndex(pos, nElements, block); 
 }
+
+
 
 

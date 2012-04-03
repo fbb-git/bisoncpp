@@ -7,6 +7,7 @@
 #include "../scanner/scanner.h"
 
 #include <unordered_map>
+#include <limits>
 
 class NonTerminal;
 class Terminal;
@@ -126,7 +127,9 @@ class Parser: public ParserBase
                         std::string const &tagName) const;
 
                         // returns true if the char following [pos] == '.'
-        bool callsMember(Block const &block, size_t pos) const;
+        bool callsMember(Block const &block, size_t pos, 
+                         char const *typeOrField, 
+                         int idx = std::numeric_limits<int>::max()) const;
 
                         // false if idx > nElements
         bool dollarIdx(int idx, size_t nElements) const;
@@ -195,16 +198,13 @@ class Parser: public ParserBase
 
         std::string nextHiddenName();
 
-
-        // generating wmsgs:
-        void negativeIndexWarning(int idx) const;
-        bool negativeIndexWarning(int idx, char const *typeOrField) const;
-        void noAutoWarning(char const *typeOrField) const;
-        void noAutoWarning(int idx, char const *typeOrField) const;
-        void autoOverrideWarning(char const *typeOrField,
+        void warnNegativeIndex(int idx) const;
+        bool warnNegativeIndex(int idx, char const *typeOrField) const;
+        void warnNoAuto(char const *typeOrField) const;
+        void warnNoAuto(int idx, char const *typeOrField) const;
+        void warnAutoOverride(char const *typeOrField,
                                 std::string const &override) const;
-        void autoIgnoredWarning(char const *typeOrField) const;
-        void autoIgnoredWarning(int idx, char const *typeOrField) const;
+        void warnAutoIgnored(char const *typeOrField, int idx = 0) const;
 
         // generating emsgs:
         void noSTYPEtypeAssociations() const;

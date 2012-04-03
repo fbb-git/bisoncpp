@@ -16,7 +16,7 @@ dollarDollar:
     ---------------------------------------------------------
     SemTag:     replacement:        comment:
     ---------------------------------------------------------
-    UNTYPED     d_val__             noAutoWarning
+    UNTYPED     d_val__             warnNoAuto
     TYPED       d_val__.get<>
     ---------------------------------------------------------
 
@@ -25,7 +25,7 @@ dollarDollar:
     ---------------------------------------------------------
     SemTag:     replacement:        comment:
     ---------------------------------------------------------
-    -           d_val__             autoIgnoredWarning
+    -           d_val__             warnAutoIgnored
     ---------------------------------------------------------
 
         - POLYMORPHIC: processed by dollarDollarPolymorphic
@@ -35,7 +35,7 @@ dollarDollar:
     ---------------------------------------------------------
     SemTag:     replacement:        comment:
     ---------------------------------------------------------
-    UNTYPED     d_val__             noAutoWarning
+    UNTYPED     d_val__             warnNoAuto
     TYPED       d_val__.get<>
     ---------------------------------------------------------
 
@@ -44,7 +44,7 @@ dollarDollar:
     ---------------------------------------------------------
     SemTag:     replacement:        comment:
     ---------------------------------------------------------
-    -           d_val__             autoIgnoredWarning
+    -           d_val__             warnAutoIgnored
     ---------------------------------------------------------
 
         
@@ -72,8 +72,8 @@ dollarIndex:
     ---------------------------------------------------------
     SemTag:     replacement:        comment:
     ---------------------------------------------------------
-    TYPEIGNORED d_val__             autoIgnoredWarning
-    UNTYPED     d_val__             noAutoWarning
+    TYPEIGNORED d_val__             warnAutoIgnored
+    UNTYPED     d_val__             warnNoAuto
     TYPED       d_val__.fieldname
     ---------------------------------------------------------
 
@@ -82,7 +82,7 @@ dollarIndex:
     ---------------------------------------------------------
     SemTag:     replacement:        comment:
     ---------------------------------------------------------
-    -           d_val__             autoIgnoredWarning
+    -           d_val__             warnAutoIgnored
     ---------------------------------------------------------
 
         - POLYMORPHIC: processed by dollarDollarPolymorphic
@@ -92,8 +92,8 @@ dollarIndex:
     ---------------------------------------------------------
     SemTag:     replacement:        comment:
     ---------------------------------------------------------
-    TYPEIGNORED d_val__             autoIgnoredWarning
-    UNTYPED     d_val__             noAutoWarning
+    TYPEIGNORED d_val__             warnAutoIgnored
+    UNTYPED     d_val__             warnNoAuto
     TYPED       d_val__.get<>
     ---------------------------------------------------------
 
@@ -102,7 +102,7 @@ dollarIndex:
     ---------------------------------------------------------
     SemTag:     replacement:        comment:
     ---------------------------------------------------------
-    -           d_val__             autoIgnoredWarning
+    -           d_val__             warnAutoIgnored
     ---------------------------------------------------------
 
 
@@ -126,8 +126,8 @@ dollarTypedDollar:
     ---------------------------------------------------------
     SemTag:     replacement:        comment:
     ---------------------------------------------------------
-    DELTATYPED  d_val__.field       autoOverrideWarning
-    UNTYPED     d_val__             noAutoWarning
+    DELTATYPED  d_val__.field       warnAutoOverride
+    UNTYPED     d_val__             warnNoAuto
     TYPED       d_val__.field
     ---------------------------------------------------------
 
@@ -139,7 +139,7 @@ dollarTypedDollar:
     ---------------------------------------------------------
     SemTag:     replacement:        comment:
     ---------------------------------------------------------
-    DELTATYPED  d_val__.get<tag>    autoOverrideWarning
+    DELTATYPED  d_val__.get<tag>    warnAutoOverride
     UNTYPED     d_val__             generates emsg
     TYPED       d_val__.get<tag>
     STYPED      d_val__.get<tag>
@@ -147,7 +147,7 @@ dollarTypedDollar:
     ---------------------------------------------------------
     SemTag:     replacement:        comment:
     ---------------------------------------------------------
-    UNTYPED     d_val__             noAutoWarning
+    UNTYPED     d_val__             warnNoAuto
     TYPED       d_val__.get<>
     ---------------------------------------------------------
 
@@ -171,8 +171,8 @@ dollarTypedIndex:
     ---------------------------------------------------------
     SemTag:     replacement:        comment:
     ---------------------------------------------------------
-    DELTATYPED  d_val__.field       autoOverrideWarning
-    UNTYPED     d_val__             noAutoWarning
+    DELTATYPED  d_val__.field       warnAutoOverride
+    UNTYPED     d_val__             warnNoAuto
     TYPED       d_val__.field
     ---------------------------------------------------------
 
@@ -184,7 +184,7 @@ dollarTypedIndex:
     ---------------------------------------------------------
     SemTag:     replacement:        comment:
     ---------------------------------------------------------
-    DELTATYPED  d_val__.get<tag>    autoOverrideWarning
+    DELTATYPED  d_val__.get<tag>    warnAutoOverride
     UNTYPED     d_val__             generates emsg
     TYPED       d_val__.get<tag>
     STYPED      d_val__.get<tag>

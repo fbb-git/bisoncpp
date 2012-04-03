@@ -2,7 +2,8 @@
 
     // callsMember does not recognize constructions like '($$).'
 
-bool Parser::callsMember(Block const &block, size_t pos) const
+bool Parser::callsMember(Block const &block, size_t pos, 
+                         char const *typeOrField, int idx) const
 {
     if (block.length() == pos + 1)  // nothing trails the $:  no member called
         return false;
@@ -13,5 +14,10 @@ bool Parser::callsMember(Block const &block, size_t pos) const
     if (pos == string::npos)        // none found, so no member called
         return false;
                                     // member is called (replace $$ by
-    return block[pos] == '.';       // d_val__) if $$. is used
+    if (block[pos] != '.')          // d_val__) if $$. is used
+        return false;
+
+    warnAutoIgnored(typeOrField, idx);
+    return true;
 }
+

@@ -6,21 +6,22 @@ string Parser::dollarIndexUnion(Block const &block, size_t pos,
 {
     string ret;
 
-    if (callsMember(block, pos))
-    {
-        autoIgnoredWarning(idx, "field");
+cerr << "DOLLARINDEXUNION\n";
+
+    if (callsMember(block, pos, "field", idx))
         return ret;
-    }
+
+cerr << "NO MEMBER CALL\n";
 
     switch (semTagDIU(nRuleElements, idx, elementType))
     {
         case TYPEIGNORED:
-            autoIgnoredWarning(idx, "field");
+            warnAutoIgnored("field", idx);
         break;
 
         default:
         case UNTYPED:
-            noAutoWarning(idx, "field");
+            warnNoAuto(idx, "field");
         break;
 
         case TYPED:

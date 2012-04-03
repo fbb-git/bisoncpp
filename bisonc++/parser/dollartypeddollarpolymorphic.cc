@@ -7,7 +7,7 @@ string Parser::dollarTypedDollarPolymorphic(string const &typeSpec) const
     switch (semTagDTDP(typeSpec))
     {
         case DELTATYPED:
-            autoOverrideWarning("field", typeSpec);
+            warnAutoOverride("field", typeSpec);
             ret = ".get<" + typeSpec + ">()";
         break;
 

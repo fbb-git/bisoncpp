@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-void Parser::negativeIndexWarning(int idx) const
+void Parser::warnNegativeIndex(int idx) const
 {
     if (idx >= 0)
         return;

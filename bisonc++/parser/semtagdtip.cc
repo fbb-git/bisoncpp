@@ -11,7 +11,7 @@ Parser::SemTag Parser::semTagDTIP(
         
     if (autoTag.empty())
     {
-        noAutoWarning("type");
+        warnNoAuto("type");
         return semTagDTaux(tagName);
     }
 

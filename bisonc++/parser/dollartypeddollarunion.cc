@@ -7,12 +7,12 @@ string Parser::dollarTypedDollarUnion(std::string const &unionField) const
     switch (semTagDTDU(unionField))
     {
         case UNTYPED:
-            noAutoWarning("field");
+            warnNoAuto("field");
             ret = "." + unionField;
         break;
 
         case DELTATYPED:
-            autoOverrideWarning("field", unionField);
+            warnAutoOverride("field", unionField);
             ret = "." + unionField;
         break;
 

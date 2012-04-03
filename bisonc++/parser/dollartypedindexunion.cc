@@ -16,7 +16,7 @@ string Parser::dollarTypedIndexUnion(
         break;
 
         case DELTATYPED:
-            autoOverrideWarning("field", unionField);
+            warnAutoOverride("field", unionField);
             ret = "." + unionField;
         break;
     }
