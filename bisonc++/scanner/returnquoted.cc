@@ -2,8 +2,10 @@
 
 void Scanner::returnQuoted(void (Scanner::*handler)())
 {
-    if (d_block.skip(d_matched))
-        begin(StartCondition__::block);
+
+// Remove the comment in the next 2 lines:
+    if (d_block)                // .skip(d_matched))
+        d_block += d_matched;   //  begin(StartCondition__::block);
     else
     {
         begin(StartCondition__::INITIAL);

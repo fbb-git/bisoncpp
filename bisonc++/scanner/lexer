@@ -13,6 +13,7 @@ HEX2    {HEX}{2}
 ID1     [[:alpha:]_]
 ID2     [[:alnum:]_]
 IDENT   {ID1}{ID2}*
+NR      [[:digit:]]+
 
 %%
 
@@ -65,16 +66,30 @@ IDENT   {ID1}{ID2}*
     
     "\""        {
                     begin(StartCondition__::string);
-                    d_block.beginSkip();
+                    // d_block.beginSkip();
                     more();
                 }
     
     "'"         {
                     begin(StartCondition__::quote);
-                    d_block.beginSkip();
+                    // d_block.beginSkip();
                     more();
                 }
-    
+
+    "$$"                    d_block.dollar(lineNr(), d_matched, false);
+                            
+    "$$."                   d_block.dollar(lineNr(), d_matched, true);
+                            
+    @{NR}                   d_block.atIndex(lineNr(), d_matched);
+
+    \$-?{NR}                d_block.dollarIndex(lineNr(), d_matched, false);
+
+    \$-?{NR}\.              d_block.dollarIndex(lineNr(), d_matched, true);
+
+    "$<"{IDENT}">$"         d_block.IDdollar(lineNr(), d_matched);
+
+    "$<"{IDENT}">"-?{NR}    d_block.IDindex(lineNr(), d_matched);
+
     .           d_block(d_matched);
 }
 
