@@ -6,22 +6,28 @@
 
 bool Parser::handleDollar(Block &block, AtDollar const &atd, int nElements) 
 {
-    switch (atd.action())
+    string replacement = s_semanticValue;           // use the semantic value
+                                                    // data member
+    switch (d_semType)
     {
-        case AtDollar::RETURN_VALUE:
-            returnValue(block, atd);
-        return true;                        // true if $$ is used
+        case SINGLE:
+            returnSingle(atd);
+        break;
 
-//        case AtDollar::NUMBERED_ELEMENT:
-//        return dollarIndex(pos, nElements, block); 
-//
-//        case AtDollar::TYPED_RETURN_VALUE:
-//        return dollarTypedDollar(pos, block);
-//
-//        case AtDollar::TYPED_NUMBERED_ELEMENT:
-//        return dollarTypedIndex(pos, nElements, block);
-        
-        default:
-        return false;
+        case UNION:
+            replacement += returnUnion(atd);
+        break;
+
+        case POLYMORPHIC:
+            replacement += returnPolymorphic(atd);
+        break;
     }
+                                        // replace $$ by the semantic value
+    block.replace(atd.pos(), atd.length(), replacement);
+
+    return atd.nr() == numeric_limits<int>::max();  // $$ is used
 }
+
+
+
+

@@ -37,18 +37,9 @@ class Parser: public ParserBase
 
     enum SemTag
     {
-        INVALID_AUTO,       // %type specification invalid: error
-        INVALID_EXPLICIT,   // invalid explicit semval requested: error
-
-        AUTO,               // use the %type specified semantic value
-
-        RAW,                // use the raw semantic value
-        RAW_NOAUTO,         // raw sem. value, no %type spec. warning
-        RAW_OVERRIDE,       // raw semantic value requested: warn
-
-        EXPLICIT_OVERRIDE,  // override %type, warn
-        EXPLICIT_NOAUTO,    // explicit was requested, warn no %type spec.
-
+        NONE,
+        AUTO,
+        EXPLICIT,
     };
 
             // data members that are self-explanatory are not explicitly
@@ -104,32 +95,34 @@ class Parser: public ParserBase
         void checkFirstType();
 
 
-        void returnValue(Block &block, AtDollar const &atd);
-        std::string returnUnion(Block const &block, 
-                                AtDollar const &atd) const;
-        std::string returnPolymorphic(Block const &block, 
-                                      AtDollar const &atd) const;
+        bool noID(std::string const &) const;
+        bool idOK(std::string const &) const;
+        bool findTag(std::string const &tag) const;
 
-        bool dollarIndex(size_t pos, int nElements, Block &block);
-        std::string dollarIndexUnion(Block const &block, size_t pos,
-                                    size_t nRuleElments, int idx, 
-                                    std::string const &elementType) const;
-        std::string dollarIndexPolymorphic(Block const &block, size_t pos, 
-                                size_t nRuleElments, int idx, 
-                                std::string const &typeTag) const;
+        void returnSingle(AtDollar const &atd) const;
+        std::string returnUnion(AtDollar const &atd) const;
+        std::string returnPolymorphic(AtDollar const &atd) const;
 
-        bool dollarTypedDollar(size_t pos, Block &block);
-        std::string dollarTypedDollarUnion(std::string const &typeSpec) const;
-        std::string dollarTypedDollarPolymorphic(
-                                        std::string const &typeSpec) const;
-
-        bool dollarTypedIndex(size_t pos, int nElements, Block &block);
-        std::string dollarTypedIndexUnion(
-                        size_t nElements, int idx, std::string const &autoField, 
-                        std::string const &unionField) const;
-        std::string dollarTypedIndexPolymorphic(
-                        size_t nElements, int idx, std::string const &autoField, 
-                        std::string const &tagName) const;
+//        bool dollarIndex(size_t pos, int nElements, Block &block);
+//        std::string dollarIndexUnion(Block const &block, size_t pos,
+//                                    size_t nRuleElments, int idx, 
+//                                    std::string const &elementType) const;
+//        std::string dollarIndexPolymorphic(Block const &block, size_t pos, 
+//                                size_t nRuleElments, int idx, 
+//                                std::string const &typeTag) const;
+//
+//        bool dollarTypedDollar(size_t pos, Block &block);
+//        std::string dollarTypedDollarUnion(std::string const &typeSpec) const;
+//        std::string dollarTypedDollarPolymorphic(
+//                                        std::string const &typeSpec) const;
+//
+//        bool dollarTypedIndex(size_t pos, int nElements, Block &block);
+//        std::string dollarTypedIndexUnion(
+//                        size_t nElements, int idx, std::string const &autoField, 
+//                        std::string const &unionField) const;
+//        std::string dollarTypedIndexPolymorphic(
+//                        size_t nElements, int idx, std::string const &autoField, 
+//                        std::string const &tagName) const;
 
                         // warns/true if a member is called (at $$. or $NR.)
         bool callsMember(char const *typeOrField, AtDollar const &atd) const;
@@ -137,20 +130,23 @@ class Parser: public ParserBase
                         // false if idx > nElements
         bool dollarIdx(int idx, size_t nElements) const;
 
-            // Suffixes specify the members calling the semTag function:
-            // D: Dollar, T: Typed, I: Index, U: Union
-        SemTag semTagDDP() const;
-        SemTag semTagDIP(size_t nElements, int idx, 
-                                        std::string const &tagName) const;
-        SemTag semTagDIU(size_t nElements, int idx, 
-                                        std::string const &unionField) const;
-        SemTag semTagDTaux(std::string const &tagName) const;
-        SemTag semTagDTDP(std::string const &specifiedType) const;
-        SemTag semTagDTIP(size_t nElements, std::string const &autoTag, 
-                            int idx, std::string const &tagName) const;
-        SemTag semTagDTDU(std::string const &specifiedType) const;
-        SemTag semTagDTIU(size_t nElements, std::string const &autoField, 
-                            int idx, std::string const &unionField) const;
+        SemTag semTag(char const *label, AtDollar const &atd, 
+                     bool (Parser::*testID)(std::string const &) const) const;
+
+//            // Suffixes specify the members calling the semTag function:
+//            // D: Dollar, T: Typed, I: Index, U: Union
+//        SemTag semTagDDP() const;
+//        SemTag semTagDIP(size_t nElements, int idx, 
+//                                        std::string const &tagName) const;
+//        SemTag semTagDIU(size_t nElements, int idx, 
+//                                        std::string const &unionField) const;
+//        SemTag semTagDTaux(std::string const &tagName) const;
+//        SemTag semTagDTDP(std::string const &specifiedType) const;
+//        SemTag semTagDTIP(size_t nElements, std::string const &autoTag, 
+//                            int idx, std::string const &tagName) const;
+//        SemTag semTagDTDU(std::string const &specifiedType) const;
+//        SemTag semTagDTIU(size_t nElements, std::string const &autoField, 
+//                            int idx, std::string const &unionField) const;
 
 //                    // pos must be the position of the last $-related
 //                    // specification. It can be, e.g., $$, $-1, $3
@@ -203,19 +199,18 @@ class Parser: public ParserBase
 
         std::string nextHiddenName();
 
-        void warnNegativeIndex(int idx) const;
-        bool warnNegativeIndex(char const *typeOrField, 
-                               AtDollar const &atd) const;
+        void negativeIndex(AtDollar const &atd) const;
         void warnNoAuto(char const *typeOrField, AtDollar const &atd) const;
-// OBS        void warnNoAuto(int idx, char const *typeOrField) const; // 2
-        void warnAutoOverride(char const *typeOrField,
-                                std::string const &override) const;
+
+//        void warnAutoOverride(char const *typeOrField,
+//                                std::string const &override) const;
         void warnAutoIgnored(char const *typeOrField, 
                              AtDollar const &atd) const;
 
         // generating emsgs:
         void noSTYPEtypeAssociations() const;
-        void noSemanticTag(std::string const &tag) const;
+        void errNoSemantic(char const *label, std::string const &tag) const;
+//      void errInvalidAuto(AtDollar const &atd) const;
 
         void setStart();
         void setPolymorphicDecl();
@@ -256,36 +251,9 @@ class Parser: public ParserBase
         static size_t nComponents(int nElements);
 };
 
-// $insert lex
-inline int Parser::lex()
-{
-    return d_scanner.lex();
-}
-
-inline void Parser::print()
-{
-    if (d_arg.option('T'))
-        print__();
-}
-
 inline std::map<std::string, std::string> const &Parser::polymorphic() const
 {
     return d_polymorphic;
-}
-
-inline void Parser::setNegativeDollarIndices()
-{
-    d_negativeDollarIndices = true;
-}        
-
-inline void Parser::setExpectedConflicts()
-{
-    Rules::setExpectedConflicts(d_scanner.number());
-}
-
-inline size_t Parser::nComponents(int nElements)
-{
-    return nElements >= 0 ? nElements : -nElements - 1;
 }
 
 #endif

@@ -1,18 +1,25 @@
 #include "parser.ih"
 
-string Parser::returnUnion(Block const &block, AtDollar const &atd) const
+string Parser::returnUnion(AtDollar const &atd) const
 {
     string ret;
 
     if (callsMember("field", atd))
         return ret;
 
-    string const &autoField = d_rules.sType();
+    switch (semTag("field", atd, &Parser::idOK))
+    {
+        case NONE:
+        break;
 
-    if (autoField.empty())          // warn if there is no auto type
-        warnNoAuto("field");
-    else
-        ret = "." + autoField;
+        case AUTO:
+            ret = "." + d_rules.sType();
+        break;
+
+        case EXPLICIT:
+            ret = "." + atd.id();
+        break;
+    }
 
     return ret;
 }

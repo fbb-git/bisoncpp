@@ -3,7 +3,9 @@
 void Parser::warnAutoIgnored(char const *typeOrField, 
                              AtDollar const &atd) const
 {
-    if (not warnNegativeIndex(typeOrField, atd))
+    if (atd.nr() < 0)
+        negativeIndex(atd);
+    else
     {
         string const &autoType = d_rules.sType();
 
