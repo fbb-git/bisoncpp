@@ -1,0 +1,7 @@
+#include "atdollar.h"
+
+#include <ostream>
+#include <limits>
+
+using namespace std;
+
