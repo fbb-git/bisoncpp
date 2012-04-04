@@ -5,6 +5,8 @@
 #include <vector>
 #include <string>
 
+#include "../atdollar/atdollar.h"
+
 class Block: private std::string
 {
     friend std::ostream &operator<<(std::ostream &out, Block const &blk);
@@ -17,36 +19,40 @@ class Block: private std::string
     int     d_count;                    // curly braces nesting count, handled 
                                         // by clear(), close(), and open()
 
-    
-    public:
-        typedef std::pair<size_t, size_t> Range;
+    std::vector<AtDollar> d_atDollar;   // @- and $-specifications
 
-    private:
-        std::vector<Range>  d_skip;     // skip these ranges when processing
-                                        // a block: it contains the begin and
-                                        // end positions of strings and quotes 
-                                        // found inside the matched block
     public:
         Block();
 
         using std::string::empty;
-        using std::string::find_first_of;
-        using std::string::find_first_not_of;
-        using std::string::find_last_of;
-        using std::string::substr;
         using std::string::find;
+        using std::string::find_first_not_of;
+        using std::string::find_first_of;
+        using std::string::find_last_of;
+        using std::string::insert;
         using std::string::length;
-
-        using std::string::replace;
         using std::string::operator[];
+        using std::string::replace;
+        using std::string::substr;
 
         void clear();
                                         // clears the previous block contents
         void open(size_t lineno, std::string const &source);
         bool close();
 
-        void saveDollar1(int offset);   // save $1 in $$ at the beginning
-                                        // of a nested block
+        void dollar(size_t lineNr, std::string const &matched,  // $$ or $$.
+                    bool member); 
+
+        void atIndex(size_t lineNr, std::string const &matched);     // @NR
+
+                                                            // $-?NR or $-?NR.
+        void dollarIndex(size_t lineNr, std::string const &matched, 
+                         bool member);   
+                                        
+        void IDdollar(size_t lineNr, std::string const &matched);   // $<ID>$
+
+                                                            // $<ID>-?NR   
+        void IDindex(size_t lineNr, std::string const &matched);    
 
         void operator+=(std::string const &text);
   
@@ -55,18 +61,12 @@ class Block: private std::string
                                         // add text if a block is active,
         bool operator()(std::string  const &text);  // returns true if active
 
-        std::vector<Range>::const_reverse_iterator skipRbegin() const;
-        std::vector<Range>::const_reverse_iterator skipRend() const;
+        std::vector<AtDollar>::const_reverse_iterator rbeginAtDollar() const;
+        std::vector<AtDollar>::const_reverse_iterator rendAtDollar() const;
+
         size_t line() const;
         std::string const &source() const;  // the block's source file
         std::string const &str() const;     // the block's contents
-
-        void beginSkip();               // begins a new skip-area
-        bool endSkip(std::string const &text); // if a block, text is added 
-                                        // and the current skip-area is ended
-        bool skip(std::string const &text); // if a block, text is added and
-                                        // added to the skip-areas
-
 };
 
 inline Block::Block()
@@ -79,43 +79,36 @@ inline void Block::operator+=(std::string const &text)
     append(text);
 }
 
-inline void Block::beginSkip()
-{
-    d_skip.push_back({length(), 0});
-}
-
 inline Block::operator bool() const
 {
     return d_count;
 }
 
-inline std::vector<Block::Range>::const_reverse_iterator 
-Block::skipRbegin() const
+inline std::vector<AtDollar>::const_reverse_iterator 
+Block::rbeginAtDollar() const
 {
-    return d_skip.rbegin();
+    return d_atDollar.rbegin();
 }
 
-inline std::vector<Block::Range>::const_reverse_iterator 
-Block::skipRend() const
+inline std::vector<AtDollar>::const_reverse_iterator 
+Block::rendAtDollar() const
 {
-    return d_skip.rend();
+    return d_atDollar.rend();
 }
+
 inline size_t Block::line() const
 {
     return d_line;
 }
+
 inline std::string const &Block::source() const
 {
     return d_source;
 }
+
 inline std::string const &Block::str() const
 {
     return *this;
-}
-
-inline std::ostream &operator<<(std::ostream &out, Block const &blk)
-{
-    return out << '`' << static_cast<std::string>(blk) << '\'';
 }
 
 #endif

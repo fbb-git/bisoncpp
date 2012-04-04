@@ -1,8 +1,12 @@
 #include "block.h"
 
 #include <ostream>
+#include <algorithm>
+#include <iterator>
+#include <limits>
 
 #include <bobcat/x2a>
+#include <bobcat/a2x>
 
 using namespace std;
 using namespace FBB;

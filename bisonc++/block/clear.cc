@@ -3,6 +3,6 @@
 void Block::clear()
 {
     erase();
-    d_skip.clear();
+    d_atDollar.clear();
     d_count = 0;
 }
