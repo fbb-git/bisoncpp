@@ -1,8 +1,10 @@
 #include "parser.ih"
 
 void Parser::warnAutoOverride(char const *typeOrField, 
-                                string const &override) const
+                              AtDollar const &atd) const
 {
-    wmsg << &d_rules.lastProduction() << ": forcing `%type <" << override << 
-            ">'" << endl;
+    wmsg.setLineNr(atd.lineNr());
+    wmsg << &d_rules.lastProduction() << ": `" << atd.text() << "' overrides "
+            "auto " << typeOrField << forcing `%type <" << override << 
+            ">' in `" atd.text() << '\'' << endl;
 }

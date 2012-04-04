@@ -1,6 +1,7 @@
 enumsolution
 element
-block
+atdollar
+block           atdollar
 options         
 rmshift
 rmreduction
@@ -27,3 +28,4 @@ srconflict      rmreduction next
 state           srconflict rrconflict lookaheadset
 writer          next lookaheadset state
 generator       writer  options
+

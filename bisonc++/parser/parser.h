@@ -13,6 +13,7 @@ class NonTerminal;
 class Terminal;
 class Symbol;
 class Options;
+class AtDollar;
 
 namespace FBB
 {
@@ -36,11 +37,18 @@ class Parser: public ParserBase
 
     enum SemTag
     {
-        UNTYPED,
-        TYPEIGNORED,
-        STYPED,
-        TYPED,
-        DELTATYPED
+        INVALID_AUTO,       // %type specification invalid: error
+        INVALID_EXPLICIT,   // invalid explicit semval requested: error
+
+        AUTO,               // use the %type specified semantic value
+
+        RAW,                // use the raw semantic value
+        RAW_NOAUTO,         // raw sem. value, no %type spec. warning
+        RAW_OVERRIDE,       // raw semantic value requested: warn
+
+        EXPLICIT_OVERRIDE,  // override %type, warn
+        EXPLICIT_NOAUTO,    // explicit was requested, warn no %type spec.
+
     };
 
             // data members that are self-explanatory are not explicitly
@@ -63,10 +71,6 @@ class Parser: public ParserBase
     bool        d_negativeDollarIndices;
 
     Terminal::Association d_association;
-
-                                // used in processBlock() and sipIgnore()
-    std::vector<Block::Range>::const_reverse_iterator d_skipRbegin;
-    std::vector<Block::Range>::const_reverse_iterator d_skipRend;
 
         // associations between type-identifiers and type-definitions of
         // polymorphic semantic values
@@ -100,10 +104,11 @@ class Parser: public ParserBase
         void checkFirstType();
 
 
-        bool dollarDollar(size_t pos, Block &block);
-        std::string dollarDollarUnion(Block const &block, size_t pos) const;
-        std::string dollarDollarPolymorphic(Block const &block, 
-                                                          size_t pos) const;
+        void returnValue(Block &block, AtDollar const &atd);
+        std::string returnUnion(Block const &block, 
+                                AtDollar const &atd) const;
+        std::string returnPolymorphic(Block const &block, 
+                                      AtDollar const &atd) const;
 
         bool dollarIndex(size_t pos, int nElements, Block &block);
         std::string dollarIndexUnion(Block const &block, size_t pos,
@@ -126,10 +131,8 @@ class Parser: public ParserBase
                         size_t nElements, int idx, std::string const &autoField, 
                         std::string const &tagName) const;
 
-                        // returns true if the char following [pos] == '.'
-        bool callsMember(Block const &block, size_t pos, 
-                         char const *typeOrField, 
-                         int idx = std::numeric_limits<int>::max()) const;
+                        // warns/true if a member is called (at $$. or $NR.)
+        bool callsMember(char const *typeOrField, AtDollar const &atd) const;
 
                         // false if idx > nElements
         bool dollarIdx(int idx, size_t nElements) const;
@@ -175,14 +178,16 @@ class Parser: public ParserBase
         size_t extractIndex(int *idx, size_t pos);
         size_t extractType(std::string *type, size_t pos, Block &block);
 
-        void handleAtSign(size_t idx, int nElements, Block &block);
-                                        // handle a location-value stack
+                                        // handles a location-value stack
                                         // reference (@) in a received action 
                                         // block
-        bool handleDollar(size_t idx, int nElements, Block &block);
-                                        // handle a semantic-value stack
+        void handleAtSign(Block &block, AtDollar const &atd, int nElements);
+
+                                        // handles a semantic-value stack
                                         // reference ($) in a received action 
                                         // block
+        bool handleDollar(Block &block, AtDollar const &atd, int nElements);
+
 
         STYPE__ handleProductionElements(STYPE__ &first, 
                                          STYPE__ const &second);
@@ -199,12 +204,14 @@ class Parser: public ParserBase
         std::string nextHiddenName();
 
         void warnNegativeIndex(int idx) const;
-        bool warnNegativeIndex(int idx, char const *typeOrField) const;
-        void warnNoAuto(char const *typeOrField) const;
-        void warnNoAuto(int idx, char const *typeOrField) const;
+        bool warnNegativeIndex(char const *typeOrField, 
+                               AtDollar const &atd) const;
+        void warnNoAuto(char const *typeOrField, AtDollar const &atd) const;
+// OBS        void warnNoAuto(int idx, char const *typeOrField) const; // 2
         void warnAutoOverride(char const *typeOrField,
                                 std::string const &override) const;
-        void warnAutoIgnored(char const *typeOrField, int idx = 0) const;
+        void warnAutoIgnored(char const *typeOrField, 
+                             AtDollar const &atd) const;
 
         // generating emsgs:
         void noSTYPEtypeAssociations() const;
@@ -221,8 +228,13 @@ class Parser: public ParserBase
 
         NonTerminal *requireNonTerminal(std::string const &name);
 
-        size_t skipIgnore(size_t pos);
         bool substituteBlock(int nElements, Block &block);
+
+                                        // saves the default $1 value
+                                        // at the beginning of a mid-rule
+                                        // action block (in substituteBlock)
+        void saveDollar1(Block &block, int offset);
+
 
         Symbol *useSymbol();
         Terminal *useTerminal();

@@ -1,40 +1,27 @@
 #include "parser.ih"
 
-// We're at a $ character at position pos.
-// The following can be encountered here: $$, $$., $<type>$, $i, $i., $<type>i
-//                                         ^   ^          ^  ^   ^    ^
-// (The ^ marking the `pos' location, searching proceeds from the end, see
-// substuteBlock).  
-//
 // See 'README.dollar' in this directory for a description of the actions
 // involved at these alternatives.
 
 
-bool Parser::handleDollar(size_t pos, int nElements, Block &block) 
+bool Parser::handleDollar(Block &block, AtDollar const &atd, int nElements) 
 {
-//    cerr << "handleDollar " << pos << ", #elems: " << nElements << 
-//            ", block:\n" << block << endl;
-
-    if (pos > 0)            // handle $$, $$. and $<type>$     (pos at 2nd $)
+    switch (atd.action())
     {
-        switch (block[pos - 1])
-        {
-            case '$':                   // '$$' or '$$.' was specified
-            return dollarDollar(pos, block);
+        case AtDollar::RETURN_VALUE:
+            returnValue(block, atd);
+        return true;                        // true if $$ is used
 
-            case '>':                   // '$<type>$' is expected
-            return dollarTypedDollar(pos, block);
-        }
+//        case AtDollar::NUMBERED_ELEMENT:
+//        return dollarIndex(pos, nElements, block); 
+//
+//        case AtDollar::TYPED_RETURN_VALUE:
+//        return dollarTypedDollar(pos, block);
+//
+//        case AtDollar::TYPED_NUMBERED_ELEMENT:
+//        return dollarTypedIndex(pos, nElements, block);
+        
+        default:
+        return false;
     }
-
-    // One dollar: $i, $i., $<type>i 
-    return 
-        block[pos + 1] == '<' ?         // '$<type>i' is expected
-            dollarTypedIndex(pos, nElements, block)
-        :                               // '$i' or '$i.' is expected
-            dollarIndex(pos, nElements, block); 
 }
-
-
-
-

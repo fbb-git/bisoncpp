@@ -4,6 +4,7 @@
 #include "parser.h"
 
 #include <bobcat/mstream>
+#include <bobcat/ranger>
 
 #include "../block/block.h"
 #include "../options/options.h"

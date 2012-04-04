@@ -6,13 +6,13 @@ string Parser::dollarIndexPolymorphic(Block const &block, size_t pos,
 {
     string ret;
 
-    if (callsMember(block, pos, "type", idx))
+//    if (callsMember(block, pos, "type", idx))
         return ret;
 
     switch (semTagDIP(nRuleElements, idx, typeTag))
     {
         case TYPEIGNORED:
-            warnAutoIgnored("type", idx);
+//            warnAutoIgnored("type", idx);
         // FALLING THROUGH
 
         default:

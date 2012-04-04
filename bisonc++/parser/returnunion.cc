@@ -1,12 +1,10 @@
 #include "parser.ih"
 
-string Parser::dollarDollarUnion(Block const &block, size_t pos) const
+string Parser::returnUnion(Block const &block, AtDollar const &atd) const
 {
     string ret;
 
-cerr << "DOLLARDOLLARUNION\n";
-
-    if (callsMember(block, pos, "field"))
+    if (callsMember("field", atd))
         return ret;
 
     string const &autoField = d_rules.sType();

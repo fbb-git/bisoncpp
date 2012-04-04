@@ -1,16 +1,16 @@
 #include "parser.ih"
 
-bool Parser::warnNegativeIndex(int idx, char const *typeOrField) const
+bool Parser::warnNegativeIndex(char const *typeOrField, 
+                               AtDollar const &atd) const
 {
-    if (idx >= 0)
+    if (atd.nr() >= 0)
         return false;
 
     if (not d_negativeDollarIndices)
         wmsg << &d_rules.lastProduction() << ":\n"
             "\tauto " << typeOrField << 
-            " associations of negatively indexed elements ($" << idx << 
-            ")\n"
-            "\tare ignored." << endl;
+            " ignored for negative $-indices (" << atd.text() << ')' <<
+            endl;
 
     return true;
 }

@@ -6,9 +6,7 @@ string Parser::dollarIndexUnion(Block const &block, size_t pos,
 {
     string ret;
 
-cerr << "DOLLARINDEXUNION\n";
-
-    if (callsMember(block, pos, "field", idx))
+//    if (callsMember(block, pos, "field", idx))
         return ret;
 
 cerr << "NO MEMBER CALL\n";
@@ -16,7 +14,7 @@ cerr << "NO MEMBER CALL\n";
     switch (semTagDIU(nRuleElements, idx, elementType))
     {
         case TYPEIGNORED:
-            warnAutoIgnored("field", idx);
+//            warnAutoIgnored("field", idx);
         break;
 
         default:

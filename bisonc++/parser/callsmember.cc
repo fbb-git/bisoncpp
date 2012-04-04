@@ -1,23 +1,11 @@
 #include "parser.ih"
 
-    // callsMember does not recognize constructions like '($$).'
-
-bool Parser::callsMember(Block const &block, size_t pos, 
-                         char const *typeOrField, int idx) const
+bool Parser::callsMember(char const *typeOrField, AtDollar const &atd) const
 {
-    if (block.length() == pos + 1)  // nothing trails the $:  no member called
+    if (not atd.callsMember())
         return false;
 
-                                    // locate the next non-blank char
-    pos = block.find_first_not_of(" \t\n", pos + 1);
-
-    if (pos == string::npos)        // none found, so no member called
-        return false;
-                                    // member is called (replace $$ by
-    if (block[pos] != '.')          // d_val__) if $$. is used
-        return false;
-
-    warnAutoIgnored(typeOrField, idx);
+    warnAutoIgnored(typeOrField, atd);
     return true;
 }
 

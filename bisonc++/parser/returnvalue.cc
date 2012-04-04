@@ -1,12 +1,7 @@
 #include "parser.ih"
 
-// pos is the position of the second $ in '$$'
-// this member always returns true
-
-bool Parser::dollarDollar(size_t pos, Block &block) 
+void Parser::returnValue(Block &block, AtDollar const &atd) 
 {
-    cerr << "dollarDollar\n";
-
     string replacement = s_semanticValue;           // use the semantic value
                                                     // data member
     switch (d_semType)
@@ -15,16 +10,16 @@ bool Parser::dollarDollar(size_t pos, Block &block)
         break;
 
         case UNION:
-            replacement += dollarDollarUnion(block, pos);
+            replacement += returnUnion(block, atd);
         break;
 
         case POLYMORPHIC:
-            replacement += dollarDollarPolymorphic(block, pos);
+            replacement += returnPolymorphic(block, pos);
         break;
     }
-
-    block.replace(pos - 1, 2, replacement);         // replace $$ by semantic
-                                                    // value
-
-    return true;                                    // this block uses $$
+                                        // replace $$ by the semantic value
+    block.replace(atd.pos(), atd.length(), replacement);
 }
+
+
+
