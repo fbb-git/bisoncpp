@@ -7,7 +7,6 @@
 #include "../scanner/scanner.h"
 
 #include <unordered_map>
-#include <limits>
 
 class NonTerminal;
 class Terminal;
@@ -102,61 +101,10 @@ class Parser: public ParserBase
         void returnSingle(AtDollar const &atd) const;
         std::string returnUnion(AtDollar const &atd) const;
         std::string returnPolymorphic(AtDollar const &atd) const;
-
-//        bool dollarIndex(size_t pos, int nElements, Block &block);
-//        std::string dollarIndexUnion(Block const &block, size_t pos,
-//                                    size_t nRuleElments, int idx, 
-//                                    std::string const &elementType) const;
-//        std::string dollarIndexPolymorphic(Block const &block, size_t pos, 
-//                                size_t nRuleElments, int idx, 
-//                                std::string const &typeTag) const;
-//
-//        bool dollarTypedDollar(size_t pos, Block &block);
-//        std::string dollarTypedDollarUnion(std::string const &typeSpec) const;
-//        std::string dollarTypedDollarPolymorphic(
-//                                        std::string const &typeSpec) const;
-//
-//        bool dollarTypedIndex(size_t pos, int nElements, Block &block);
-//        std::string dollarTypedIndexUnion(
-//                        size_t nElements, int idx, std::string const &autoField, 
-//                        std::string const &unionField) const;
-//        std::string dollarTypedIndexPolymorphic(
-//                        size_t nElements, int idx, std::string const &autoField, 
-//                        std::string const &tagName) const;
-
-                        // warns/true if a member is called (at $$. or $NR.)
-        bool callsMember(char const *typeOrField, AtDollar const &atd,
-                     bool (Parser::*testID)(std::string const &) const) const;
-
-                        // false if idx > nElements
-        bool dollarIdx(int idx, size_t nElements) const;
-
+ 
         SemTag semTag(char const *label, AtDollar const &atd, 
                      bool (Parser::*testID)(std::string const &) const) const;
 
-//            // Suffixes specify the members calling the semTag function:
-//            // D: Dollar, T: Typed, I: Index, U: Union
-//        SemTag semTagDDP() const;
-//        SemTag semTagDIP(size_t nElements, int idx, 
-//                                        std::string const &tagName) const;
-//        SemTag semTagDIU(size_t nElements, int idx, 
-//                                        std::string const &unionField) const;
-//        SemTag semTagDTaux(std::string const &tagName) const;
-//        SemTag semTagDTDP(std::string const &specifiedType) const;
-//        SemTag semTagDTIP(size_t nElements, std::string const &autoTag, 
-//                            int idx, std::string const &tagName) const;
-//        SemTag semTagDTDU(std::string const &specifiedType) const;
-//        SemTag semTagDTIU(size_t nElements, std::string const &autoField, 
-//                            int idx, std::string const &unionField) const;
-
-//                    // pos must be the position of the last $-related
-//                    // specification. It can be, e.g., $$, $-1, $3
-//                    // if the next non-blank char equals '.' then a member is
-//                    // called and no replacement should be performed: false is
-//                    // returned. False is also returned when 
-//                    // defaultType == STYPE__ 
-//        bool replaceDollar(Block const &block, size_t pos, 
-//                           std::string const &defaultType);   
 
         Symbol *defineNonTerminal(std::string const &name, 
                                   std::string const &stype);
@@ -200,24 +148,20 @@ class Parser: public ParserBase
 
         std::string nextHiddenName();
 
+            // may generate error or warning:
         void negativeIndex(AtDollar const &atd) const;
-        void warnNoAuto(char const *typeOrField, AtDollar const &atd) const;
 
         void warnAutoOverride(AtDollar const &atd) const;
-
         void warnAutoIgnored(char const *typeOrField, 
                              AtDollar const &atd) const;
 
         // generating emsgs:
-        void noSTYPEtypeAssociations() const;
+        bool errIndexTooLarge(AtDollar const &atd, int nElements) const;
         void errNoSemantic(char const *label, AtDollar const &atd,
                                               std::string const &id) const;
 
-//      void errInvalidAuto(AtDollar const &atd) const;
-
         void setStart();
         void setPolymorphicDecl();
-
 
         void openRule(std::string const &ruleName);
 
@@ -248,10 +192,10 @@ class Parser: public ParserBase
         int lookup(bool recovery);
         void nextToken();
         void print__();
-                                        // used in, e.g., explicitElement()
+                                        // used in, e.g., handleDollar
                                         // to obtain # elements for
                                         // end- or mid-rule actions
-        static size_t nComponents(int nElements);
+        static int nComponents(int nElements);
 };
 
 inline std::map<std::string, std::string> const &Parser::polymorphic() const

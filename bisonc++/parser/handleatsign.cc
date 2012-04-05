@@ -7,6 +7,9 @@
 
 void Parser::handleAtSign(Block &block, AtDollar const &atd, int nElements) 
 {
+    if (errIndexTooLarge(atd, nElements))
+        return;
+
     ostringstream os;
     os << s_locationValueStack << "[" << 
                                 indexToOffset(atd.nr(), nElements) << "]";

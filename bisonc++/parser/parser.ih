@@ -29,7 +29,7 @@ inline bool Parser::findTag(string const &tag) const
     return d_polymorphic.find(tag) != d_polymorphic.end();
 }
 
-inline size_t Parser::nComponents(int nElements)
+inline int Parser::nComponents(int nElements)
 {
     return nElements >= 0 ? nElements : -nElements - 1;
 }

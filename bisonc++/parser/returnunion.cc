@@ -10,7 +10,11 @@ string Parser::returnUnion(AtDollar const &atd) const
         break;
 
         case AUTO:
-            ret = "." + d_rules.sType();
+            ret =   "." + 
+                    (
+                        atd.returnValue() ?
+                            d_rules.sType() : d_rules.sType(atd.nr())
+                    );
         break;
 
         case EXPLICIT:

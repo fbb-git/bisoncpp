@@ -6,8 +6,21 @@
 
 bool Parser::handleDollar(Block &block, AtDollar const &atd, int nElements) 
 {
-    string replacement = s_semanticValue;           // use the semantic value
-                                                    // data member
+    if (errIndexTooLarge(atd, nElements))
+        return atd.returnValue();
+    
+    ostringstream os;
+    string replacement;
+
+    if (atd.returnValue())
+        replacement = s_semanticValue;
+    else
+    {
+        os << s_semanticValueStack << 
+                "[" << indexToOffset(atd.nr(), nElements) << "]";
+        replacement = os.str();
+    }
+
     switch (d_semType)
     {
         case SINGLE:
