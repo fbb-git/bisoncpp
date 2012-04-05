@@ -3,6 +3,7 @@
 
 #include <string>
 #include <utility>
+#include <limits>
 
 class AtDollar
 {
@@ -54,6 +55,7 @@ class AtDollar
         size_t lineNr() const;
         Action action() const;
         bool callsMember() const;
+        bool returnValue() const;   // $$ is being referred to
 };
 
 inline AtDollar::Type AtDollar::type() const
@@ -69,6 +71,11 @@ inline int AtDollar::nr() const
 inline bool AtDollar::callsMember() const
 {
     return d_member;
+}
+        
+inline bool AtDollar::returnValue() const
+{
+    return d_nr == std::numeric_limits<int>::max();
 }
         
 inline size_t AtDollar::pos() const

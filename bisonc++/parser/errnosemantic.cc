@@ -1,7 +1,10 @@
 #include "parser.ih"
 
-void Parser::errNoSemantic(char const *label, std::string const &tag) const
+void Parser::errNoSemantic(char const *label, AtDollar const &atd,
+                           string const &id) const
 {
-    emsg << &d_rules.lastProduction() << ":\n"
-            "\tno semantic " << label << " `" << tag << '\'' << endl;
+    emsg.setLineNr(atd.lineNr());
+    emsg << "rule " << &d_rules.lastProduction() << ":\n"
+            "\t\tsemantic " << label << " `" << id << 
+            "' not defined (" << atd.text() << ')' << endl;
 }

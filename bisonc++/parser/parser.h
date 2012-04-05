@@ -125,7 +125,8 @@ class Parser: public ParserBase
 //                        std::string const &tagName) const;
 
                         // warns/true if a member is called (at $$. or $NR.)
-        bool callsMember(char const *typeOrField, AtDollar const &atd) const;
+        bool callsMember(char const *typeOrField, AtDollar const &atd,
+                     bool (Parser::*testID)(std::string const &) const) const;
 
                         // false if idx > nElements
         bool dollarIdx(int idx, size_t nElements) const;
@@ -202,14 +203,16 @@ class Parser: public ParserBase
         void negativeIndex(AtDollar const &atd) const;
         void warnNoAuto(char const *typeOrField, AtDollar const &atd) const;
 
-//        void warnAutoOverride(char const *typeOrField,
-//                                std::string const &override) const;
+        void warnAutoOverride(AtDollar const &atd) const;
+
         void warnAutoIgnored(char const *typeOrField, 
                              AtDollar const &atd) const;
 
         // generating emsgs:
         void noSTYPEtypeAssociations() const;
-        void errNoSemantic(char const *label, std::string const &tag) const;
+        void errNoSemantic(char const *label, AtDollar const &atd,
+                                              std::string const &id) const;
+
 //      void errInvalidAuto(AtDollar const &atd) const;
 
         void setStart();

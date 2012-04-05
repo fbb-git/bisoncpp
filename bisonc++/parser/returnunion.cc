@@ -4,9 +4,6 @@ string Parser::returnUnion(AtDollar const &atd) const
 {
     string ret;
 
-    if (callsMember("field", atd))
-        return ret;
-
     switch (semTag("field", atd, &Parser::idOK))
     {
         case NONE:

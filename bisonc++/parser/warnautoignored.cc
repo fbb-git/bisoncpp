@@ -12,7 +12,8 @@ void Parser::warnAutoIgnored(char const *typeOrField,
         if (autoType.length())
         {
             wmsg.setLineNr(atd.lineNr());
-            wmsg << &d_rules.lastProduction() << ": `" << atd.text() <<
+            wmsg << "rule " << &d_rules.lastProduction() << ":\n"
+                "\t\t`" << atd.text() <<
                 "' suppresses auto " << typeOrField << " `" << 
                 autoType << "' of `" << d_rules.name() << "'." << endl;
         }

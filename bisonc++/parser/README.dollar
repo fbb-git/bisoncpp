@@ -1,191 +1,75 @@
-handleDollar handles all $-typed variables in blocks.
 
-dollarDollar:
-=============
-    handles two consecutive $s. This can be encountered as $$ or as $$.
+Handling $-specifications: see semtag.cc
 
-    Handling depends on the rule's semantic type (SINGLE, UNION, POLYMORPHIC) 
+-------------------------------------------------------------------------
+Negative $-index e.g,, ($-1, S<type>-1):
+-------------------------------------------------------------------------
+specification:      action:
+-------------------------------------------------------------------------
+    $-1             d_negativeDollarIndices  or SINGLE or no auto assoc: 
+                                                                no action
+                    else: warn STYPE__ is used
 
-        - SINGLE means $$ is used as-is, and is simply replaced by the
-            semantic value variable (d_val__) (UNTYPED replacement)
+    $<type>-1       err: no <type> allowed for neg. indices
+-------------------------------------------------------------------------
 
-        - UNION: processed by dollarDollarUnion:
-
-            '$$':
-
-    ---------------------------------------------------------
-    SemTag:     replacement:        comment:
-    ---------------------------------------------------------
-    UNTYPED     d_val__             warnNoAuto
-    TYPED       d_val__.get<>
-    ---------------------------------------------------------
-
-            '$$.':
-
-    ---------------------------------------------------------
-    SemTag:     replacement:        comment:
-    ---------------------------------------------------------
-    -           d_val__             warnAutoIgnored
-    ---------------------------------------------------------
-
-        - POLYMORPHIC: processed by dollarDollarPolymorphic
-
-            $$:
-
-    ---------------------------------------------------------
-    SemTag:     replacement:        comment:
-    ---------------------------------------------------------
-    UNTYPED     d_val__             warnNoAuto
-    TYPED       d_val__.get<>
-    ---------------------------------------------------------
-
-            '$$.':
-
-    ---------------------------------------------------------
-    SemTag:     replacement:        comment:
-    ---------------------------------------------------------
-    -           d_val__             warnAutoIgnored
-    ---------------------------------------------------------
-
-        
-
-dollarIndex:
-============
-    handles $i constructions. This can be encountered as $i or as $i.
-
-    In all cases: 
-        if i < 0: negativeDollarWarning
-        if i > #elements: indexTooLarge error
-    This is handled by 'dollarIdx', returning false if processing may stop
+-----------------------------------------------------------------------------
+$$. or $i.
+-----------------------------------------------------------------------------
+$$. and $i. are handled like $$ and $1, but the action `AUTO' (auto was
+            specified, but $$. or $i. was used) the warnAutoIgnored warning
+            is issued, and no field substitution takes place
+-----------------------------------------------------------------------------
+  auto:       $<spec>:          action:
+-----------------------------------------------------------------------------
+    id          -               NONE (AUTO fm semTag): warnAutoIgnored
+(all other combinations: as with $$ and $i, below)
+-----------------------------------------------------------------------------
 
 
 
-    Handling depends on the rule's semantic type (SINGLE, UNION, POLYMORPHIC) 
-
-        - SINGLE means $$ is used as-is, and is simply replaced by the
-            semantic value variable (d_val__) (UNTYPED replacement)
-
-        - UNION: processed by dollarDollarUnion:
-
-            '$i':
-
-    ---------------------------------------------------------
-    SemTag:     replacement:        comment:
-    ---------------------------------------------------------
-    TYPEIGNORED d_val__             warnAutoIgnored
-    UNTYPED     d_val__             warnNoAuto
-    TYPED       d_val__.fieldname
-    ---------------------------------------------------------
-
-            '$i.':
-
-    ---------------------------------------------------------
-    SemTag:     replacement:        comment:
-    ---------------------------------------------------------
-    -           d_val__             warnAutoIgnored
-    ---------------------------------------------------------
-
-        - POLYMORPHIC: processed by dollarDollarPolymorphic
-
-            '$i':
-
-    ---------------------------------------------------------
-    SemTag:     replacement:        comment:
-    ---------------------------------------------------------
-    TYPEIGNORED d_val__             warnAutoIgnored
-    UNTYPED     d_val__             warnNoAuto
-    TYPED       d_val__.get<>
-    ---------------------------------------------------------
-
-            '$i.':
-
-    ---------------------------------------------------------
-    SemTag:     replacement:        comment:
-    ---------------------------------------------------------
-    -           d_val__             warnAutoIgnored
-    ---------------------------------------------------------
-
+-----------------------------------------------------------------------------
+$$ or $i specifications (i >= 0):
+-----------------------------------------------------------------------------
+  auto:       $<spec>:          action:
+-----------------------------------------------------------------------------
+    -           -               NONE
+                STYPE__         NONE
+                <xx>            SINGLE: err: <xx> not defined        
+                                semType UNION:  EXPLICIT
+                                        POLYMORPHIC: existing tag: EXPLICIT
+                                                     otherwise: ERR
+                                                        <xx> not defined
+-----------------------------------------------------------------------------
+    STYPE__     -               NONE
+                STYPE__         NONE
+                <xx>            SINGLE: err: <xx> not defined        
+                                semType UNION:  EXPLICIT
+                                        POLYMORPHIC: existing tag: EXPLICIT
+                                                     otherwise: ERR
+                                                        <xx> not defined
+-----------------------------------------------------------------------------
+    id                          OK for UNION, possibly OK for POLYMORHPHIC
+                -               AUTO
+                STYPE__         NONE
+                <xx>            semType UNION:  EXPLICIT
+                                        POLYMORPHIC: existing tag: EXPLICIT
+                                                            + warn
+                                                     otherwise: ERR
+                                                        <xx> not defined
+-----------------------------------------------------------------------------
+    illegal id                  only possible for POLYMORHPHIC
+                -               ERR: <id> not defined
+                STYPE__         NONE
+                <xx>            semType UNION:  EXPLICIT
+                                        POLYMORPHIC: existing tag: EXPLICIT
+                                                     otherwise: ERR
+                                                        <xx> not defined
+-----------------------------------------------------------------------------
+NONE: parse.cc does not use a field specification
+AUTO: replace the $-spec by d_val__.field or d_val__.get<>() from 
+        d_rules.sType()
+EXPLICIT: replace the $-spec by d_val__.field or d_val__.get<>() from 
+          atd.id()
 
 
-
-
-
-
-dollarTypedDollar:
-==================
-    handles '$<text>$' 
-
-    Handling depends on the rule's semantic type (SINGLE, UNION, POLYMORPHIC) 
-
-        - SINGLE results in an emsg: noTypeAssociation
-
-        - UNION: processed by dollarTypedUnion:
-
-            '$<field>$':
-
-    ---------------------------------------------------------
-    SemTag:     replacement:        comment:
-    ---------------------------------------------------------
-    DELTATYPED  d_val__.field       warnAutoOverride
-    UNTYPED     d_val__             warnNoAuto
-    TYPED       d_val__.field
-    ---------------------------------------------------------
-
-
-        - POLYMORPHIC: processed by dollarDollarPolymorphic
-
-            $<tag>$:
-
-    ---------------------------------------------------------
-    SemTag:     replacement:        comment:
-    ---------------------------------------------------------
-    DELTATYPED  d_val__.get<tag>    warnAutoOverride
-    UNTYPED     d_val__             generates emsg
-    TYPED       d_val__.get<tag>
-    STYPED      d_val__.get<tag>
-    ---------------------------------------------------------
-    ---------------------------------------------------------
-    SemTag:     replacement:        comment:
-    ---------------------------------------------------------
-    UNTYPED     d_val__             warnNoAuto
-    TYPED       d_val__.get<>
-    ---------------------------------------------------------
-
-
-
-
-
-
-dollarTypedIndex:
-=================
-    handles '$<text>i' 
-
-    Handling depends on the rule's semantic type (SINGLE, UNION, POLYMORPHIC) 
-
-        - SINGLE results in an emsg: noSTYPEtypeAssociations
-
-        - UNION: processed by dollarTypedIndexUnion:
-
-            '$<field>i':
-
-    ---------------------------------------------------------
-    SemTag:     replacement:        comment:
-    ---------------------------------------------------------
-    DELTATYPED  d_val__.field       warnAutoOverride
-    UNTYPED     d_val__             warnNoAuto
-    TYPED       d_val__.field
-    ---------------------------------------------------------
-
-
-        - POLYMORPHIC: processed by dollarDollarPolymorphic
-
-            $<tag>i:
-
-    ---------------------------------------------------------
-    SemTag:     replacement:        comment:
-    ---------------------------------------------------------
-    DELTATYPED  d_val__.get<tag>    warnAutoOverride
-    UNTYPED     d_val__             generates emsg
-    TYPED       d_val__.get<tag>
-    STYPED      d_val__.get<tag>
-    ---------------------------------------------------------

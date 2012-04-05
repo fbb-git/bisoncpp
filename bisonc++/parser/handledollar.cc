@@ -25,7 +25,7 @@ bool Parser::handleDollar(Block &block, AtDollar const &atd, int nElements)
                                         // replace $$ by the semantic value
     block.replace(atd.pos(), atd.length(), replacement);
 
-    return atd.nr() == numeric_limits<int>::max();  // $$ is used
+    return atd.returnValue();           // $$ is used
 }
 
 

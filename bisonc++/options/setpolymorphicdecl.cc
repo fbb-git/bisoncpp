@@ -5,8 +5,7 @@
 void Options::setPolymorphicDecl()
 {
     if (isFirstStypeDefinition())
-        d_stackDecl = 
-            "    typedef Meta__::SType STYPE__;\n";
+        d_stackDecl = "    typedef Meta__::SType STYPE__;\n";
 
     d_polymorphic = true;
 }

@@ -116,7 +116,7 @@ class Rules
                                         // associated with element idx of
                                         // the currently defined production
 
-        inline Symbol const *symbol(size_t idx) const; 
+        Symbol const *symbol(size_t idx) const; 
                                         // return the symbol
                                         // associated with element idx of
                                         // the currently defined production
