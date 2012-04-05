@@ -46,72 +46,59 @@ itt($<tag>-1): error: tt(<tag>) specifications are not allowed for negative
     dollar indices. 
 )
 
+center(
 table(5)(cccll)(
-rowline()
-row(cells(5)(tt($$) or tt($1) specifications))
-rowline()
-tr(%type<TAG>)($<tag>)(action:)
-rowline()
+    rowline()
+    row(cells(5)(tt($$) or tt($1) specifications))
+
+    rowline()
+    tr(%type<TAG>)($<tag>)(action:)
+
+    rowline()
+
+    tr(empty or STYPE__) (-)       (STYPE__ is used)
+        columnline(3)(5)
+    tr()        (STYPE__) (STYPE__ is used)
+        columnline(3)(5)
+    tr()        (id)      (if tt(id) is a defined tag:nl()
+                                tt($<tag>$) or tt($<tag>1) represents 
+                                the tag's type+nl() 
+                            otherwise error (using undefined tag tt(id)))
+    rowline()
+
+    tr((existing) tag)
+                (-)       (tt($<tag>$) or tt($<tag>1) represents 
+                                the tag's type+nl() )
+        columnline(3)(5)
+    tr()        (STYPE__) (STYPE__ is used)
+        columnline(3)(5)
+    tr()        (id)      (if tt(id) is a defined tag:nl()
+                                tt($<tag>$) or tt($<tag>1) represents 
+                                the tag's type+nl() 
+                            otherwise error (using undefined tag tt(id)))
+    rowline()
+
+    tr((undefined) tag)
+                (-)       (error: tt(tag) undefined)
+        columnline(3)(5)
+    tr()        (STYPE__) (STYPE__ is used)
+        columnline(3)(5)
+    tr()        (id)      (if tt(id) is a defined tag:nl()
+                                tt($<tag>$) or tt($<tag>1) represents 
+                                the tag's type+nl() 
+                            otherwise error (using undefined tag tt(id)))
+
+    rowline()
+
 )
-    
+)
 
+When using `tt($$).' or `tt($1).' default tags are not used. Instead, a
+warning is issued that the default tag is ignored. This allows members of the
+semantic value type (tt(STYPE__)) to be called explicitly. The default tag is
+only ignored if there are no additional characters (e.g., blanks, closing
+parentheses) between the dollar-expressions and the member selector
+operator. Note that the opposite, ignoring default tag associations, is
+accomplished using the tt($<STYPE__>$) and tt($<STYPE__>1) constructions.
 
------------------------------------------------------------------------------
-$$ or $i specifications (i >= 0):
------------------------------------------------------------------------------
-  auto:       $<spec>:          action:
------------------------------------------------------------------------------
-    -           -               NONE
-                STYPE__         NONE
-                <xx>            SINGLE: err: <xx> not defined        
-                                semType UNION:  EXPLICIT
-                                        POLYMORPHIC: existing tag: EXPLICIT
-                                                     otherwise: ERR
-                                                        <xx> not defined
------------------------------------------------------------------------------
-    STYPE__     -               NONE
-                STYPE__         NONE
-                <xx>            SINGLE: err: <xx> not defined        
-                                semType UNION:  EXPLICIT
-                                        POLYMORPHIC: existing tag: EXPLICIT
-                                                     otherwise: ERR
-                                                        <xx> not defined
------------------------------------------------------------------------------
-    id                          OK for UNION, possibly OK for POLYMORHPHIC
-                -               AUTO
-                STYPE__         NONE
-                <xx>            semType UNION:  EXPLICIT
-                                        POLYMORPHIC: existing tag: EXPLICIT
-                                                            + warn
-                                                     otherwise: ERR
-                                                        <xx> not defined
------------------------------------------------------------------------------
-    illegal id                  only possible for POLYMORHPHIC
-                -               ERR: <id> not defined
-                STYPE__         NONE
-                <xx>            semType UNION:  EXPLICIT
-                                        POLYMORPHIC: existing tag: EXPLICIT
-                                                     otherwise: ERR
-                                                        <xx> not defined
------------------------------------------------------------------------------
-NONE: parse.cc does not use a field specification
-AUTO: replace the $-spec by d_val__.field or d_val__.get<>() from 
-        d_rules.sType()
-EXPLICIT: replace the $-spec by d_val__.field or d_val__.get<>() from 
-          atd.id()
-
-
-
-
-$$. or $i.
------------------------------------------------------------------------------
-$$. and $i. are handled like $$ and $1, but the action `AUTO' (auto was
-            specified, but $$. or $i. was used) the warnAutoIgnored warning
-            is issued, and no field substitution takes place
------------------------------------------------------------------------------
-  auto:       $<spec>:          action:
------------------------------------------------------------------------------
-    id          -               NONE (AUTO fm semTag): warnAutoIgnored
-(all other combinations: as with $$ and $i, below)
------------------------------------------------------------------------------
 
