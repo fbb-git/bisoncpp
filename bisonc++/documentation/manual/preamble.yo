@@ -37,6 +37,9 @@ IFDEF(latex)
     latexlayoutcmds(\pagestyle{headings})\
 )()
 
+DEFINEMACRO(tr)(3)(\
+    row(cell(tt(ARG1))cell( )cell(tt(ARG2))cell(  )cell(ARG3)))
+
 DEFINEMACRO(turl)(2)(\
     IFDEF(html)\
         (htmlcommand(<a target=_top href="ARG2">)ARG1+htmlcommand(</a>))\

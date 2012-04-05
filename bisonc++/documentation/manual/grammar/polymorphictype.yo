@@ -1,20 +1,18 @@
-    The tt(%type) directive is used to associate (non-)terminals with 
-particular semantic value types. 
+    The tt(%type) directive associates (non-)terminals with semantic value
+types.
 
-Semantic values assigned to terminal tokens
-is the responsibility of the lexical scanner, assigning the proper value to
-the parser's tt(STYPE__ d_val__) data member. 
+When semantic values are associated with terminal tokens then it is the
+responsibility of the lexical scanner to assign a properly typed value to the
+parser's tt(STYPE__ d_val__) data member.
 
-Non-terminals may or may not be associated with polymorphic semantic values.
-
-
-For  using the type-identifiers identifying these
-type-definitions. E.g., after
+Non-terminals may be associated with polymorphic semantic values using 
+tt(%type) directives. E.g., following
         verb(
+    %polymorphic INT: int
     %type <INT> expr
         )
-    the tt(expr) non-terminal returns tt(int) semantic values. So, after the
-above tt(%type) specification a rule like
+    the tt(expr) non-terminal returns tt(int) semantic values. In this case,
+a rule like
         verb(
     expr:
         '-' expr
@@ -23,14 +21,97 @@ above tt(%type) specification a rule like
         }
         )
     automatically associates tt($$) and tt($2) with tt(int) values. tt($$)
-represents an lvalue (i.e. the semantic value associated with the tt(expr:)
-rule), while tt($2) represents the tt(int) semantic value associated with the
-tt(expr) non-terminal in the production rule tt('-' expr) (an rvalue).
+represents an lvalue (representing the semantic value associated with the
+tt(expr:) rule), while tt($2) represents the tt(int) semantic value associated
+with the tt(expr) non-terminal in the production rule tt('-' expr) (an
+rvalue).
 
-    As with the tt(%union) specification, semantic value types cannot be
-pre-associated with negative dollar indices. However, semantic value types can
-be specified (or tt(%type) associations can be overruled) using the common
+    Semantic value types cannot be pre-associated with negative dollar indices
+(like tt($-1)). However, semantic value types can explicitly be specified (or
+provided tt(%type) associations can be overruled) using the common
 tt($<type-identifier>$) or tt($<type-identifier>nr) syntax. In this syntax
-tt(nr) is a (positive or negative) number (like tt($2, $-1)). No blanks can be
-used here.
+tt(nr) is a (positive or negative) number (like tt($2, $-1)). In this
+type-overruling syntax blanks cannot be used (so tt($<INT>$) is OK, tt($< INT
+>$) isn't.
+
+Several combinations of type-associations and type specifications may be
+encountered (index values are used as examples, they are non-negative unless
+explicitly shown as negative values): 
+
+itemization(
+itt($-1): tt(%type) associations are ignored, and the semantic value type
+    tt(STYPE__) is used instead. A warning is issued unless the
+    tt(%negative-dollar-indices) directive was specified.
+itt($<tag>-1): error: tt(<tag>) specifications are not allowed for negative
+    dollar indices. 
+)
+
+table(5)(cccll)(
+rowline()
+row(cells(5)(tt($$) or tt($1) specifications))
+rowline()
+tr(%type<TAG>)($<tag>)(action:)
+rowline()
+)
+    
+
+
+-----------------------------------------------------------------------------
+$$ or $i specifications (i >= 0):
+-----------------------------------------------------------------------------
+  auto:       $<spec>:          action:
+-----------------------------------------------------------------------------
+    -           -               NONE
+                STYPE__         NONE
+                <xx>            SINGLE: err: <xx> not defined        
+                                semType UNION:  EXPLICIT
+                                        POLYMORPHIC: existing tag: EXPLICIT
+                                                     otherwise: ERR
+                                                        <xx> not defined
+-----------------------------------------------------------------------------
+    STYPE__     -               NONE
+                STYPE__         NONE
+                <xx>            SINGLE: err: <xx> not defined        
+                                semType UNION:  EXPLICIT
+                                        POLYMORPHIC: existing tag: EXPLICIT
+                                                     otherwise: ERR
+                                                        <xx> not defined
+-----------------------------------------------------------------------------
+    id                          OK for UNION, possibly OK for POLYMORHPHIC
+                -               AUTO
+                STYPE__         NONE
+                <xx>            semType UNION:  EXPLICIT
+                                        POLYMORPHIC: existing tag: EXPLICIT
+                                                            + warn
+                                                     otherwise: ERR
+                                                        <xx> not defined
+-----------------------------------------------------------------------------
+    illegal id                  only possible for POLYMORHPHIC
+                -               ERR: <id> not defined
+                STYPE__         NONE
+                <xx>            semType UNION:  EXPLICIT
+                                        POLYMORPHIC: existing tag: EXPLICIT
+                                                     otherwise: ERR
+                                                        <xx> not defined
+-----------------------------------------------------------------------------
+NONE: parse.cc does not use a field specification
+AUTO: replace the $-spec by d_val__.field or d_val__.get<>() from 
+        d_rules.sType()
+EXPLICIT: replace the $-spec by d_val__.field or d_val__.get<>() from 
+          atd.id()
+
+
+
+
+$$. or $i.
+-----------------------------------------------------------------------------
+$$. and $i. are handled like $$ and $1, but the action `AUTO' (auto was
+            specified, but $$. or $i. was used) the warnAutoIgnored warning
+            is issued, and no field substitution takes place
+-----------------------------------------------------------------------------
+  auto:       $<spec>:          action:
+-----------------------------------------------------------------------------
+    id          -               NONE (AUTO fm semTag): warnAutoIgnored
+(all other combinations: as with $$ and $i, below)
+-----------------------------------------------------------------------------
 
