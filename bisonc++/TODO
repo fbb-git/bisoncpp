@@ -20,12 +20,4 @@ With %polymorphic:
 $$. is recognized as calling a member for $$.  ($$). and comparable
 constructions do not recognize a member call.
 
-parser/replacedollar.cc is obsolete and can be removed
-
-INSTALL.im: tmp doesn't use -g
-
-           
-build up the parser starting at substituteblock.cc
-
-edit:
-    scanner/returnquoted.cc
+INSTALL.im: temporarily NOT using '-g'

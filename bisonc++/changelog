@@ -1,4 +1,6 @@
-bisonc++ (3.02.00)
+bisonc++ (3.02.00) 
+
+  * Or shall I make this 4.00.00? Read on...
 
   * Implemented the %polymorphic directive. Bisonc++ itself uses %polymorphic
     to implement its own polymorphic semantic values; man-page and manual
@@ -7,6 +9,12 @@ bisonc++ (3.02.00)
   * The previously used class spSemBase and derivatives (e.g., SemBase,
     Semantic) are now obsolete and the directory sembase implementing these
     classes was removed.
+
+  * The Parser's inline functions are all private and were moved to the
+    parser's .ih file. This doesn't affect current implementations, as
+    parser.h and parser.ih are only generated once, but newly generated
+    parsers no longer define the Parser's inline members (error, print__, and
+    lex) in parser.h but in parser.ih
 
 TO DO: Adapt the manual/manpage
 

@@ -28,18 +28,6 @@ $insert 4 scannerobject
         void print__();
 };
 
-inline void \@::error(char const *msg)
-{
-    std::cerr << msg << '\n';
-}
-
-$insert lex
-
-inline void Parser::print()         
-{
-    print__();           // displays tokens if --print was specified
-}
-
 $insert namespace-close
 
 #endif

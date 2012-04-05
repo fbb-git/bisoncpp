@@ -4,7 +4,7 @@ void Generator::lex(ostream &out) const
 {
     key(out);
 
-    if (!d_printTokens && d_options.scannerInclude().empty())
+    if (!d_printTokens && d_options.implementationHeader().empty())
         return;
 
     out << "inline int " << d_options.className() << "::lex()\n"
