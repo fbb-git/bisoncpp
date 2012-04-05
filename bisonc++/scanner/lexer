@@ -292,7 +292,7 @@ NR      [[:digit:]]+
     // parser/inc/directives. Escape characters are interpreted
 <typespec>{
     \\.             |
-    [^;]            more();
+    [^;%]           more();
 
-    ;               returnTypeSpec();   // back to INITIAL, returns IDENTIFIER
+    [;%]            returnTypeSpec();   // back to INITIAL, returns IDENTIFIER
 }

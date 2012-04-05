@@ -4,7 +4,7 @@ void Scanner::returnTypeSpec()
 {
     string trimmed = String::trim(matched());
     
-    push(trimmed.back());       // return ';' for renewed scanning
+    push(trimmed.back());       // return '%' or ';' for renewed scanning
 
     trimmed.resize(trimmed.length() - 1);
     

@@ -236,7 +236,7 @@ _typespec:
 ;
 
 _polyspec:
-    identifier _typespec identifier ';' // identifier holds the typespec
+    identifier _typespec identifier     // identifier holds the typespec
     {
         addPolymorphic($1, $3);
     }
@@ -244,7 +244,7 @@ _polyspec:
 
 
 _polyspecs:
-    _polyspecs _polyspec
+    _polyspecs ';' _polyspec
 |
     _polyspec
 ;
@@ -430,6 +430,7 @@ _directiveSpec:
 |
     _polymorphic
     _polyspecs
+    optSemiCol
 |
     error
 ;
