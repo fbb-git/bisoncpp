@@ -1,0 +1,79 @@
+The parser using polymorphic semantic values adds several classes to the
+generated files. The majority of these are class templates, defined in
+tt(parserbase.h). In addition, some of the additionally implemented code is
+added to the tt(parse.cc) source file.
+
+To minimize namespace pollution most of the additional code is contained in a
+namespace of its own: tt(Meta__). If the tt(%namespace) directive was used
+then tt(Meta__) is nested under the namespace declared by that directive. The
+name tt(Meta__) hints at the fact that much of the code implementing
+polymorphic semantic values uses template meta programming.
+
+bf(The enumeration Tag__)
+
+One notable exception is the enumeration tt(Tag__). It is declared outside of
+tt(Meta__) (but inside the tt(%namespace) namespace, if provided) to simplify
+its use. Its identifiers are the tags declared by the tt(%polymorphic)
+directive. Note that this is not a strongly typed enumeration, allowing the
+mere use of the tag labels in constructions like $<tag>$. The drawback of this
+is that tt(Tag__)'s identifiers may clash with other identifiers. These
+problems are usually resolved by either renaming the tags to unique
+identifiers or by prefixing tt(Tag__::) to the tag's identifiers.  If you
+consider this too much of a kludge, then provide the directive
+tt(%strongly-typed-tags) after which tag-identifiers must be preceded by
+tt(Tag__::).
+
+bf(The namespace Meta__)
+
+Below, tt(DataType) refers to the semantic value's data type that is
+associated with a tt(Tag__) identifier; tt(ReturnType) equals tt(DataType) if
+tt(DataType) is a built-in type (like tt(int, double,) etc.), while it is
+equal to tt(DataType const &) otherwise (for, e.g., class-type data types).
+
+The important elements of the namespace tt(Meta__) are:
+    itemization(
+    it() The polymorphic semantic value's base class tt(Base).nl()
+        Its public interface offers the following members:nl()
+        itemization(
+        itt(Tag__ tag() const:)  returns the semantic value type's tag.
+        itt(ReturnType get<Tag__>() const:) accesses the (non-modifiable) data
+            element of the type matching the tag.  the data element of the
+            type matching the tag.
+        itt(DataType &get<Tag__>() const:) accesses the (modifiable) data
+            element of the type matching the tag.
+        )
+    )
+    it() The semantic value classes tt(Semantic<ID>: public Base).nl()
+         tt(Semantic<ID>) classes are derived for each of the tag identifiers
+         tt(ID) declared at the tt(%polymorphic) directive. tt(Semantic<ID>)
+         classes contain a tt(mutable DataType) data member. Their public
+         interfaces offer the following members:
+        itemization(
+        it() A default constructor;
+        it() A tt(Semantic(DataType const &)) constructor; 
+        it() A tt(Semantic(DataType &&)) constructor; 
+        it() An tt(operator ReturnType() const) conversion operator;
+        it() An tt(operator DataType &()t) conversion operator.
+        )
+        tt(Semantic<ID>) objects are usually not explicitly used. Rather,
+         their use is implied by the actual semantic value class tt(SType) and
+         by several support functions (see below).
+    it() De semantic value class tt(SType: public std::shared_ptr<Base>)
+         provides access to the various semantic value types. The tt(SType__)
+         class becomes the parser's tt(STYPE__) type, and explicitly accessing
+         tt(Semantic<ID>) should never be necessary.nl()
+        tt(SType)'s public interface offers the following members:
+        itemization(
+        it() Constructors: default, copy and move constructors.nl() 
+        Since the parser's semantic value and semantic value stack is
+         completely controlled by the parser, and since the actual semantic
+         data values are unknown at construction time of the semantic value
+         (tt(d_val__) and of the semantic value stack, no constructors
+         expecting tt(DataType) values are provided.
+        it() Assignment operators.nl()
+        The standard overloaded assignment operator
+
+
+
+
+

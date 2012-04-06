@@ -38,7 +38,9 @@ IFDEF(latex)
 )()
 
 DEFINEMACRO(tr)(3)(\
-    row(cell(tt(ARG1))cell(verb(   ))cell(tt(ARG2))cell(verb(   ))cell(ARG3)))
+    row(cell(ARG1)cell(verb(   ))\
+        htmlcommand(<td valign="top">)ARG2+htmlcommand(</td>)cell(verb(   ))\
+        cell(ARG3)))
 
 DEFINEMACRO(turl)(2)(\
     IFDEF(html)\

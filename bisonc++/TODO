@@ -16,8 +16,6 @@ of confusing tokens with Tags. When they occur simple solutions exist:
     - prefix the offending tags by their enum-name (Parser::STRING,
                                  Tag__::STRING) 
 
-With %polymorphic:
-$$. is recognized as calling a member for $$.  ($$). and comparable
-constructions do not recognize a member call.
+Add %stongly-typed-tags to the set f directives.
 
 INSTALL.im: temporarily NOT using '-g'

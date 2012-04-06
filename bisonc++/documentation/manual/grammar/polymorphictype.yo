@@ -20,36 +20,35 @@ a rule like
             $$ = -$2;
         }
         )
-    automatically associates tt($$) and tt($2) with tt(int) values. tt($$)
+    automatically associates $$ and $2 with tt(int) values. $$
 represents an lvalue (representing the semantic value associated with the
-tt(expr:) rule), while tt($2) represents the tt(int) semantic value associated
+tt(expr:) rule), while $2 represents the tt(int) semantic value associated
 with the tt(expr) non-terminal in the production rule tt('-' expr) (an
 rvalue).
 
     Semantic value types cannot be pre-associated with negative dollar indices
-(like tt($-1)). However, semantic value types can explicitly be specified (or
+(like $-1). However, semantic value types can explicitly be specified (or
 provided tt(%type) associations can be overruled) using the common
-tt($<type-identifier>$) or tt($<type-identifier>nr) syntax. In this syntax
-tt(nr) is a (positive or negative) number (like tt($2, $-1)). In this
-type-overruling syntax blanks cannot be used (so tt($<INT>$) is OK, tt($< INT
->$) isn't.
+`$<type-identifier>$' or `$<type-identifier>nr' syntax. In this syntax tt(nr)
+is a (positive or negative) number (like $2, $-1). In this type-overruling
+syntax blanks cannot be used (so $<INT>$ is OK, $< INT >$ isn't.
 
 Several combinations of type-associations and type specifications may be
 encountered (index values are used as examples, they are non-negative unless
 explicitly shown as negative values): 
 
 itemization(
-itt($-1): tt(%type) associations are ignored, and the semantic value type
+it() $-1: tt(%type) associations are ignored, and the semantic value type
     tt(STYPE__) is used instead. A warning is issued unless the
     tt(%negative-dollar-indices) directive was specified.
-itt($<tag>-1): error: tt(<tag>) specifications are not allowed for negative
+it() $<tag>-1: em(error): tt(<tag>) specifications are not allowed for negative
     dollar indices. 
 )
 
 center(
 table(5)(cccll)(
     rowline()
-    row(cells(5)(tt($$) or tt($1) specifications))
+    row(cells(5)($$ or $1 specifications (- indicates: not provided)))
 
     rowline()
     tr(%type<TAG>)($<tag>)(action:)
@@ -61,44 +60,44 @@ table(5)(cccll)(
     tr()        (STYPE__) (STYPE__ is used)
         columnline(3)(5)
     tr()        (id)      (if tt(id) is a defined tag:nl()
-                                tt($<tag>$) or tt($<tag>1) represents 
+                                $<tag>$ or $<tag>1 represents 
                                 the tag's type+nl() 
-                            otherwise error (using undefined tag tt(id)))
+                            otherwise em(error) (using undefined tag tt(id)))
     rowline()
 
     tr((existing) tag)
-                (-)       (tt($<tag>$) or tt($<tag>1) represents 
+                (-)       ($<tag>$ or $<tag>1 represents 
                                 the tag's type+nl() )
         columnline(3)(5)
     tr()        (STYPE__) (STYPE__ is used)
         columnline(3)(5)
     tr()        (id)      (if tt(id) is a defined tag:nl()
-                                tt($<tag>$) or tt($<tag>1) represents 
+                                $<tag>$ or $<tag>1 represents 
                                 the tag's type+nl() 
-                            otherwise error (using undefined tag tt(id)))
+                            otherwise em(error) (using undefined tag tt(id)))
     rowline()
 
     tr((undefined) tag)
-                (-)       (error: tt(tag) undefined)
+                (-)       (em(error): tt(tag) undefined)
         columnline(3)(5)
     tr()        (STYPE__) (STYPE__ is used)
         columnline(3)(5)
     tr()        (id)      (if tt(id) is a defined tag:nl()
-                                tt($<tag>$) or tt($<tag>1) represents 
+                                $<tag>$ or $<tag>1 represents 
                                 the tag's type+nl() 
-                            otherwise error (using undefined tag tt(id)))
+                            otherwise em(error) (using undefined tag tt(id)))
 
     rowline()
 
 )
 )
 
-When using `tt($$).' or `tt($1).' default tags are not used. Instead, a
+When using `$$.' or `$1.' default tags are not used. Instead, a
 warning is issued that the default tag is ignored. This allows members of the
 semantic value type (tt(STYPE__)) to be called explicitly. The default tag is
 only ignored if there are no additional characters (e.g., blanks, closing
 parentheses) between the dollar-expressions and the member selector
 operator. Note that the opposite, ignoring default tag associations, is
-accomplished using the tt($<STYPE__>$) and tt($<STYPE__>1) constructions.
+accomplished using the $<STYPE__>$ and $<STYPE__>1 constructions.
 
 
