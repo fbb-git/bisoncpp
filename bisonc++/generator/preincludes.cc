@@ -12,7 +12,8 @@ void Generator::preIncludes(std::ostream &out) const
 
     if (polymorphic)
         out << "#include <memory>\n"
-               "#include <stdexcept>\n";
+               "#include <stdexcept>\n"
+               "#include <type_traits>\n";
  
     if (preInclude)    
         out << "#include " << d_options.preInclude() << '\n';
