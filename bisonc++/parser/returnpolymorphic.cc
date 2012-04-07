@@ -7,7 +7,7 @@ string Parser::returnPolymorphic(AtDollar const &atd) const
     switch (semTag("tag", atd, &Parser::findTag))
     {
         case AUTO:          // use the %type specified semantic value
-            ret =   ".get<" + 
+            ret =   ".get<Tag__::" + 
                     (
                         atd.returnValue() ?
                             d_rules.sType() : d_rules.sType(atd.nr())
@@ -16,7 +16,7 @@ string Parser::returnPolymorphic(AtDollar const &atd) const
         break;
 
         case EXPLICIT:
-            ret = ".get<" + atd.id() + ">()";
+            ret = ".get<Tag__::" + atd.id() + ">()";
         break;
 
         case NONE:

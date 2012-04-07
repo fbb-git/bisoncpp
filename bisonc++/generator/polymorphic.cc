@@ -7,8 +7,8 @@ void Generator::polymorphic(ostream &out) const
 
     key(out);
 
-    out << 
-        "enum Tag__\n"                            // Tags
+    out <<                                        // Tags
+        "enum " << (d_options.strongTags() ? "class " : "") << "Tag__\n"
         "{\n";
 
     for (auto &poly: d_polymorphic)

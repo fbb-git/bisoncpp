@@ -25,6 +25,7 @@ class Options
     bool        d_lspNeeded;
     bool        d_printTokens;
     bool        d_polymorphic;
+    bool        d_strongTags;
 
     size_t      d_requiredTokens;
 
@@ -51,7 +52,6 @@ class Options
     std::string d_stackDecl;
     std::string d_targetDirectory;
     std::string d_verboseName;
-
 
     static char s_defaultBaseClassSkeleton[];
     static char s_defaultPolymorphicInlineSkeleton[];
@@ -108,6 +108,7 @@ class Options
         void setUnionDecl(std::string const &block);
         void setVerbosity();            // Prepare Msg for verbose output
         void unsetLines();
+        void unsetStrongTags();
 
         void showFilenames() const;
 
@@ -118,6 +119,7 @@ class Options
         bool lines() const;
         bool lspNeeded() const;
         bool polymorphic() const;
+        bool strongTags() const;
 
         size_t requiredTokens() const;
 
@@ -396,7 +398,6 @@ inline void Options::setSkeletonDirectory()
     assign(&d_skeletonDirectory, "skeleton-directory (-S)");
 }
 
-
 inline void Options::setTargetDirectory()
 {
     assign(&d_targetDirectory, "target-directory");
@@ -407,9 +408,14 @@ inline std::string const &Options::stype() const
     return d_stackDecl;
 }
 
+inline bool Options::strongTags() const
+{
+    return d_strongTags;
+}
+
+inline void Options::unsetStrongTags()
+{
+    d_strongTags = false;
+}
+
 #endif
-
-
-
-
-

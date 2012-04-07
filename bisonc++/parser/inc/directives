@@ -432,6 +432,11 @@ _directiveSpec:
     _polyspecs
     optSemiCol
 |
+    WEAK_TAGS
+    {
+        d_options.unsetStrongTags();
+    }
+|
     error
 ;
 

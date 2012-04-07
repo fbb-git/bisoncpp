@@ -1,21 +1,8 @@
 - %nonassoc should probably produce an error when %nonassoc operators are used
   repeatedly. 
 
-block.h: skip should expect std::string const &, see also skip-calls in
-e.g. lexer.  Same for Block constructor
-
 Replace #include <map> by #include <unordered_map> in parser (?)
 
 To initialize $$ with %polymorphic assign a permittable value.
-
-NOTE in the manual/manpage that Tag__ is not a strongly type enum, which
-allows simple references to the tags by their identifiers, but runs the risk
-of confusing tokens with Tags. When they occur simple solutions exist:
-    - rename the offending tags (e.g., STRING -> TEXT if there's also a STRING
-                                 Token)
-    - prefix the offending tags by their enum-name (Parser::STRING,
-                                 Tag__::STRING) 
-
-Add %stongly-typed-tags to the set f directives.
 
 INSTALL.im: temporarily NOT using '-g'

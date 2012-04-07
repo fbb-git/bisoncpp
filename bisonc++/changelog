@@ -1,10 +1,14 @@
-bisonc++ (3.02.00) 
-
-  * Or shall I make this 4.00.00? Read on...
+bisonc++ (4.00.00) 
 
   * Implemented the %polymorphic directive. Bisonc++ itself uses %polymorphic
     to implement its own polymorphic semantic values; man-page and manual
     extended with sections about polymorphic semantic values.
+
+  * Implemented the %weak-tags directive. By default %polymorphic declares 
+    an `enum class Tag__', resulting in strongly typed polymorphic tags. If
+    the traditional tag declaration is preferred, the %weak-tags directive can
+    be specified in addition to %polymorphic, resulting in the declaration
+    `enum Tag__'.
 
   * The previously used class spSemBase and derivatives (e.g., SemBase,
     Semantic) are now obsolete and the directory sembase implementing these
@@ -15,8 +19,6 @@ bisonc++ (3.02.00)
     parser.h and parser.ih are only generated once, but newly generated
     parsers no longer define the Parser's inline members (error, print__, and
     lex) in parser.h but in parser.ih
-
-TO DO: Adapt the manual/manpage
 
 bisonc++ (3.01.00)
 

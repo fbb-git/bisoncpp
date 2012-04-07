@@ -164,6 +164,7 @@ NR      [[:digit:]]+
 %token                          return Parser::TOKEN;
 %type                           return Parser::TYPE;
 %union                          return Parser::UNION;
+%weak-tags                      return Parser::WEAK_TAGS;
 "%%"                            return Parser::TWO_PERCENTS;
 
 "'"                             {

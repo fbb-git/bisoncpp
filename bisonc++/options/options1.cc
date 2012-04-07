@@ -10,6 +10,7 @@ Options::Options()
     d_lspNeeded(false),
     d_printTokens(false),
     d_polymorphic(false),
+    d_strongTags(true),
     d_requiredTokens(0),
     d_verboseName("(not requested)")
 {}
