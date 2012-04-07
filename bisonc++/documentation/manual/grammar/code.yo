@@ -38,11 +38,11 @@ The important elements of the namespace tt(Meta__) are:
         itt(Tag__ tag() const:)  returns the semantic value type's tag.
         itt(ReturnType get<Tag__>() const:) accesses the (non-modifiable) data
             element of the type matching the tag.  the data element of the
-            type matching the tag.
+            type matching the tag.nl()
         itt(DataType &get<Tag__>() const:) accesses the (modifiable) data
             element of the type matching the tag.
         )
-    )
+
     it() The semantic value classes tt(Semantic<ID>: public Base).nl()
          tt(Semantic<ID>) classes are derived for each of the tag identifiers
          tt(ID) declared at the tt(%polymorphic) directive. tt(Semantic<ID>)
@@ -58,6 +58,7 @@ The important elements of the namespace tt(Meta__) are:
         tt(Semantic<ID>) objects are usually not explicitly used. Rather,
          their use is implied by the actual semantic value class tt(SType) and
          by several support functions (see below).
+
     it() De semantic value class tt(SType: public std::shared_ptr<Base>)
          provides access to the various semantic value types. The tt(SType__)
          class becomes the parser's tt(STYPE__) type, and explicitly accessing
@@ -68,12 +69,102 @@ The important elements of the namespace tt(Meta__) are:
         Since the parser's semantic value and semantic value stack is
          completely controlled by the parser, and since the actual semantic
          data values are unknown at construction time of the semantic value
-         (tt(d_val__) and of the semantic value stack, no constructors
+         (tt(d_val__)) and of the semantic value stack, no constructors
          expecting tt(DataType) values are provided.
         it() Assignment operators.nl()
-        The standard overloaded assignment operator
+        The standard overloaded assignment operator (copy and move variants)
+         as well as copy and move assignment operators for the types declared
+         at the tt(%polymorphic) directive are provided. Assigning a value
+         using tt(operator=) allocates a tt(Semantic<tag>) object for the tag
+         matching the right-hand side's data type, and resets the tt(SType)'s
+         tt(shared_pointer) to this new tt(Semantic<tag>) object. Be aware
+         that this may break the default association of the semantic value 
+         as declared by a tt(%type) directive. When breaking the default
+         association make sure that explicit tags are used (as in $<tag>1),
+         overriding the default association with the currently active
+         association. In most cases, however, the assignment is not used
+         to break the default association but simply to assign a value to
+         $$. By default the tt(SType)'s shared pointer is zero, and the
+         assignment initializes the semantic value to a value of the proper
+         type. Assuming a lexical scanner may return a tt(NR) token, offering
+         an tt(int number() const) accessor, then part of tt(expr) rule could
+         be: 
+            verb(
+        expr:
+            NR
+            {
+                $$ = d_scanner.number();
+            }
+        ...
+            )
+        after which tt(expr)'s semantic value has been initialized to a
+         tt(Semantic<INT>). 
+        it() tt(ReturnType get<tag>() const), like the tt(Base::get) member
+         having the same signature, offers direct, but non-modifiable access
+         to the semantic value stored in the tt(SType) object.nl()
+        When tt(get<tag>() const) is called, but the tt(shared_ptr) holds a
+         0-pointer then a tt(std::logic_error("undefined semantic value
+         requested")) exception is thrown.
+        it() tt(DataType get<tag>()), like the tt(Base::get) member
+         having the same signature, offers direct, and modifiable access
+         to the semantic value stored in the tt(SType) object.nl()
+        When tt(get<tag>()) is called, but the tt(shared_ptr) still holds a
+         0-pointer then the tt(shared_ptr) is first initialized with a pointer
+         to a tt(Semantic<tag>) object initialized with the default value of
+         the type matching the tag.
+        )
+    When an incorrect tag is specified (e.g., with tt(get<tag>(), $<tag>$), or
+tt($<tag>1)), the generated code correctly copiles, but the program will throw
+a tt(std::bad_cast) exception once the offending code is
+executed. 
 
+bf(Support functions)
 
+Outside of the namespace tt(Meta__) (but within the namespace declared by the
+tt(%namespace) directive, if used) two simple free support function templates
+are defined:  
+        itemization(
+        itt(Meta__::Semantic<tag> *semantic__(Type const &init)) returns a
+            newly allocated tt(Semantic<tag>) object, initialized with the
+            value tt(init) of the data type matching the tag. Since this is a
+            function template the tt(tag) is inferred from tt(Type), and
+            compilation only succeeds  if tt(Type) has been specified at the
+            tt(%polymorphhic) directive.nl()
+           This function uses tt(Type)'s copy constructor to initialize the
+            tt(Semantic) object. It could be used to `hand-implement' the
+            tt($$) assignment shown in the previous section:
+           verb(
+        expr:
+            NR
+            {
+                int x = d_scanner.number();
+                $$.reset(semantic__(x));
+            }
+        ...
+            )
+        itt(Meta__::Semantic<tag> *semantic__(Type &&tmp)) returns a newly
+            allocated tt(Semantic<tag>) object, initialized using tt(Type)'s
+            move constructor. Again: compilation  only succeeds if tt(Type)
+            has been specified at the tt(%polymorphhic) directive.nl() 
+           Here is the `hand-implementation' of the previous example using
+            tt(Type)'s move constructor:
+          verb(
+        expr:
+            NR
+            {
+                $$.reset(semantic__(d_scanner.number()));
+            }
+        ...
+            )
+        )
 
+bf(Additional Headers)
 
-
+When using tt(%polymorphic) three additional header files are included by
+tt(parserbase.h):
+    itemization(
+    itt(memory,) required for tt(std::shared_ptr);
+    itt(stdexcept,) required for tt(std::logic_error);
+    itt(type_traits,) required for the implementation of one of tt(SType)'s
+         overloaded assignment operators.
+    )
