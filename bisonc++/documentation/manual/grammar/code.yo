@@ -14,14 +14,9 @@ bf(The enumeration Tag__)
 One notable exception is the enumeration tt(Tag__). It is declared outside of
 tt(Meta__) (but inside the tt(%namespace) namespace, if provided) to simplify
 its use. Its identifiers are the tags declared by the tt(%polymorphic)
-directive. Note that this is not a strongly typed enumeration, allowing the
-mere use of the tag labels in constructions like $<tag>$. The drawback of this
-is that tt(Tag__)'s identifiers may clash with other identifiers. These
-problems are usually resolved by either renaming the tags to unique
-identifiers or by prefixing tt(Tag__::) to the tag's identifiers.  If you
-consider this too much of a kludge, then provide the directive
-tt(%strongly-typed-tags) after which tag-identifiers must be preceded by
-tt(Tag__::).
+directive. This is a strongly typed enumeration. The tt(%weak-tags) directive
+can be used if the tt(Tag__) enum should be declared without tt(class) (i.e.,
+using tt(enum Tag__).
 
 bf(The namespace Meta__)
 
@@ -38,16 +33,18 @@ The important elements of the namespace tt(Meta__) are:
         itt(Tag__ tag() const:)  returns the semantic value type's tag.
         itt(ReturnType get<Tag__>() const:) accesses the (non-modifiable) data
             element of the type matching the tag.  the data element of the
-            type matching the tag.nl()
+            type matching the tag (also see below at the description of the
+            class tt(SType)).
         itt(DataType &get<Tag__>() const:) accesses the (modifiable) data
             element of the type matching the tag.
         )
 
-    it() The semantic value classes tt(Semantic<ID>: public Base).nl()
-         tt(Semantic<ID>) classes are derived for each of the tag identifiers
-         tt(ID) declared at the tt(%polymorphic) directive. tt(Semantic<ID>)
-         classes contain a tt(mutable DataType) data member. Their public
-         interfaces offer the following members:
+    it() The semantic value classes tt(Semantic<Tag__::ID>: public Base).nl()
+         tt(Semantic<Tag__::ID>) classes are derived for each of the tag
+         identifiers tt(ID) declared at the tt(%polymorphic)
+         directive. tt(Semantic<Tag__::ID>) classes contain a tt(mutable
+         DataType) data member. Their public interfaces offer the following
+         members:
         itemization(
         it() A default constructor;
         it() A tt(Semantic(DataType const &)) constructor; 
@@ -55,14 +52,14 @@ The important elements of the namespace tt(Meta__) are:
         it() An tt(operator ReturnType() const) conversion operator;
         it() An tt(operator DataType &()t) conversion operator.
         )
-        tt(Semantic<ID>) objects are usually not explicitly used. Rather,
+        tt(Semantic<Tag__::ID>) objects are usually not explicitly used. Rather,
          their use is implied by the actual semantic value class tt(SType) and
          by several support functions (see below).
 
     it() De semantic value class tt(SType: public std::shared_ptr<Base>)
          provides access to the various semantic value types. The tt(SType__)
          class becomes the parser's tt(STYPE__) type, and explicitly accessing
-         tt(Semantic<ID>) should never be necessary.nl()
+         tt(Semantic<Tag__::ID>) should never be necessary.nl()
         tt(SType)'s public interface offers the following members:
         itemization(
         it() Constructors: default, copy and move constructors.nl() 
@@ -75,21 +72,20 @@ The important elements of the namespace tt(Meta__) are:
         The standard overloaded assignment operator (copy and move variants)
          as well as copy and move assignment operators for the types declared
          at the tt(%polymorphic) directive are provided. Assigning a value
-         using tt(operator=) allocates a tt(Semantic<tag>) object for the tag
-         matching the right-hand side's data type, and resets the tt(SType)'s
-         tt(shared_pointer) to this new tt(Semantic<tag>) object. Be aware
-         that this may break the default association of the semantic value 
-         as declared by a tt(%type) directive. When breaking the default
-         association make sure that explicit tags are used (as in $<tag>1),
-         overriding the default association with the currently active
-         association. In most cases, however, the assignment is not used
-         to break the default association but simply to assign a value to
-         $$. By default the tt(SType)'s shared pointer is zero, and the
-         assignment initializes the semantic value to a value of the proper
-         type. Assuming a lexical scanner may return a tt(NR) token, offering
-         an tt(int number() const) accessor, then part of tt(expr) rule could
-         be: 
-            verb(
+         using tt(operator=) allocates a tt(Semantic<Tag__::tag>) object for
+         the tag matching the right-hand side's data type, and resets the
+         tt(SType)'s tt(shared_pointer) to this new tt(Semantic<Tag__::tag>)
+         object. Be aware that this may break the default association of the
+         semantic value as declared by a tt(%type) directive. When breaking
+         the default association make sure that explicit tags are used (as in
+         $<Tag__::tag>1), overriding the default association with the
+         currently active association. In most cases, however, the assignment
+         is not used to break the default association but simply to assign a
+         value to $$. By default the tt(SType)'s shared pointer is zero, and
+         the assignment initializes the semantic value to a value of the
+         proper type. Assuming a lexical scanner may return a tt(NR) token,
+         offering an tt(int number() const) accessor, then part of tt(expr)
+         rule could be: verb(
         expr:
             NR
             {
@@ -98,25 +94,25 @@ The important elements of the namespace tt(Meta__) are:
         ...
             )
         after which tt(expr)'s semantic value has been initialized to a
-         tt(Semantic<INT>). 
-        it() tt(ReturnType get<tag>() const), like the tt(Base::get) member
-         having the same signature, offers direct, but non-modifiable access
-         to the semantic value stored in the tt(SType) object.nl()
-        When tt(get<tag>() const) is called, but the tt(shared_ptr) holds a
-         0-pointer then a tt(std::logic_error("undefined semantic value
-         requested")) exception is thrown.
-        it() tt(DataType get<tag>()), like the tt(Base::get) member
+         tt(Semantic<Tag__::INT>). 
+        it() tt(ReturnType get<Tag__::tag>() const), like the tt(Base::get)
+         member having the same signature, offers direct, but non-modifiable
+         access to the semantic value stored in the tt(SType) object.nl()
+        When tt(get<Tag__::tag>() const) is called, but the tt(shared_ptr)
+         holds a 0-pointer then a tt(std::logic_error("undefined semantic
+         value requested")) exception is thrown.
+        it() tt(DataType get<Tag__::tag>()), like the tt(Base::get) member
          having the same signature, offers direct, and modifiable access
          to the semantic value stored in the tt(SType) object.nl()
-        When tt(get<tag>()) is called, but the tt(shared_ptr) still holds a
-         0-pointer then the tt(shared_ptr) is first initialized with a pointer
-         to a tt(Semantic<tag>) object initialized with the default value of
-         the type matching the tag.
+        When tt(get<Tag__::tag>()) is called, but the tt(shared_ptr) still
+         holds a 0-pointer then the tt(shared_ptr) is first initialized with a
+         pointer to a tt(Semantic<Tag__::tag>) object initialized with the
+         default value of the type matching the tag.
         )
-    When an incorrect tag is specified (e.g., with tt(get<tag>(), $<tag>$), or
-tt($<tag>1)), the generated code correctly copiles, but the program will throw
-a tt(std::bad_cast) exception once the offending code is
-executed. 
+    When an incorrect tag is specified (e.g., with tt(get<Tag__::tag>(),
+$<Tag__::tag>$), or tt($<Tag__::tag>1)), the generated code correctly copiles,
+but the program will throw a tt(std::bad_cast) exception once the offending
+code is executed.
 
 bf(Support functions)
 
@@ -124,38 +120,38 @@ Outside of the namespace tt(Meta__) (but within the namespace declared by the
 tt(%namespace) directive, if used) two simple free support function templates
 are defined:  
         itemization(
-        itt(Meta__::Semantic<tag> *semantic__(Type const &init)) returns a
-            newly allocated tt(Semantic<tag>) object, initialized with the
-            value tt(init) of the data type matching the tag. Since this is a
-            function template the tt(tag) is inferred from tt(Type), and
-            compilation only succeeds  if tt(Type) has been specified at the
-            tt(%polymorphhic) directive.nl()
-           This function uses tt(Type)'s copy constructor to initialize the
-            tt(Semantic) object. It could be used to `hand-implement' the
-            tt($$) assignment shown in the previous section:
-           verb(
-        expr:
-            NR
-            {
-                int x = d_scanner.number();
-                $$.reset(semantic__(x));
-            }
-        ...
-            )
-        itt(Meta__::Semantic<tag> *semantic__(Type &&tmp)) returns a newly
-            allocated tt(Semantic<tag>) object, initialized using tt(Type)'s
-            move constructor. Again: compilation  only succeeds if tt(Type)
-            has been specified at the tt(%polymorphhic) directive.nl() 
-           Here is the `hand-implementation' of the previous example using
-            tt(Type)'s move constructor:
-          verb(
-        expr:
-            NR
-            {
-                $$.reset(semantic__(d_scanner.number()));
-            }
-        ...
-            )
+        itt(Meta__::Semantic<Tag__::tag> *semantic__(Type const &init))
+         returns a newly allocated tt(Semantic<Tag__::tag>) object,
+         initialized with the value tt(init) of the data type matching the
+         tag. Since this is a function template the tt(tag) is inferred from
+         tt(Type), and compilation only succeeds if tt(Type) has been
+         specified at the tt(%polymorphhic) directive.nl() This function uses
+         tt(Type)'s copy constructor to initialize the tt(Semantic) object. It
+         could be used to `hand-implement' the tt($$) assignment shown in the
+         previous section: 
+        verb(
+    expr:
+        NR
+        {
+            int x = d_scanner.number();
+            $$.reset(semantic__(x));
+        }
+    ...
+        )
+        itt(Meta__::Semantic<Tag__::tag> *semantic__(Type &&tmp)) returns a
+         newly allocated tt(Semantic<Tag__::tag>) object, initialized using
+         tt(Type)'s move constructor. Again: compilation only succeeds if
+         tt(Type) has been specified at the tt(%polymorphhic) directive.nl()
+         Here is the `hand-implementation' of the previous example using
+         tt(Type)'s move constructor: 
+        verb(
+    expr:
+        NR
+        {
+            $$.reset(semantic__(d_scanner.number()));
+        }
+    ...
+        )
         )
 
 bf(Additional Headers)

@@ -89,6 +89,9 @@ includefile(directives/intro.yo)
     subsect(%start: defining the start rule)
     includefile(directives/start.yo)
 
+    subsect(%weak-tags: using 'enum Tag__' with %polymorphic)
+    includefile(directives/weaktags.yo)
+
     subsect(%stype: specifying the semantic stack type)
     includefile(directives/stype.yo)
 
