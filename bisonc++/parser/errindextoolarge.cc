@@ -12,7 +12,7 @@ bool Parser::errIndexTooLarge(AtDollar const &atd, int elements) const
 
     emsg << "rule " << &d_rules.lastProduction() << ":\n"
                 "\t\t" << atd.text() << ": index exceeds # components before "
-                "the action block (" << nElements << ')' << endl;
+                "the action block (" << nElements << ")." << endl;
 
     return true;
 }

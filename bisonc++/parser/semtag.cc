@@ -27,12 +27,12 @@ Parser::SemTag Parser::semTag(char const *label, AtDollar const &atd,
         warnUntaggedValue(atd);
 
 
-    if (stype.empty() || stype == "STYPE__")    // no rule stype
+    if (stype.empty() || stype == s_stype__)    // no rule stype
     {
         if (atd.id().empty())                   // no explicit tag either
             return NONE;
         
-        if (atd.id() == "STYPE__")              // no explicit tag requested
+        if (atd.id() == s_stype__)              // no explicit tag requested
             return NONE;
         
         if ((this->*testID)(atd.id()))
@@ -50,7 +50,7 @@ Parser::SemTag Parser::semTag(char const *label, AtDollar const &atd,
             return AUTO;
         }
         
-        if (atd.id() == "STYPE__")              // ignoring auto tag/field
+        if (atd.id() == s_stype__)              // ignoring auto tag/field
             return NONE;
         
         if ((this->*testID)(atd.id()))          // tag/field override
@@ -61,13 +61,13 @@ Parser::SemTag Parser::semTag(char const *label, AtDollar const &atd,
             return EXPLICIT;
         }
     }
-    else    // stype is illegal
+    else    // illegal stype
     {
         if (atd.id().empty())                   // no explicit type, but 
             id = &stype;                        // auto is illegal: set ptr.
         else
         {
-            if (atd.id() == "STYPE__")          // no explicit tag requested
+            if (atd.id() == s_stype__)          // no explicit tag requested
                 return NONE;
             
             if ((this->*testID)(atd.id()))

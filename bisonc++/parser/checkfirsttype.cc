@@ -1,24 +1,18 @@
 #include "parser.ih"
 
-void Parser::checkFirstType() 
-{
-    static string const STYPE("STYPE__");
-
-    string const &stype = d_rules.sType();
-
     // the production has elements, but no action. 
     // Now check if the production's FIRST element's stype is equal
     // to the rule's stype or whether the rule's stype is empty (default)
-
     
-    string const *firstStype = &d_rules.sType(1);
+void Parser::checkFirstType() 
+{
+    string const &stype = d_rules.sType();
 
-//    if (firstStype->empty())
-//        firstStype = &STYPE;
+    string const *firstStype = &d_rules.sType(1);
 
     if (d_semType == POLYMORPHIC)
     {
-        if (stype == STYPE && firstStype->empty())
+        if (stype == s_stype__ && firstStype->empty())
             wmsg << 
                 "rule `" << &d_rules.lastProduction() << ":\n"
                 "\t\texplicitly tagged or `STYPE__' semantic value "

@@ -14,6 +14,8 @@ char Parser::s_locationValueStack[] = "d_lsp__";
                                     // name of the location value stack
                                     // used by the generated parser
 
+char const Parser::s_stype__[] = "STYPE__";
+                                    // generic semantic value for POLYMORPHIC
 
 
 

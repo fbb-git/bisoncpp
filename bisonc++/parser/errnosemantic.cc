@@ -6,5 +6,5 @@ void Parser::errNoSemantic(char const *label, AtDollar const &atd,
     emsg.setLineNr(atd.lineNr());
     emsg << "rule " << &d_rules.lastProduction() << ":\n"
             "\t\tsemantic " << label << " `" << id << 
-            "' not defined (" << atd.text() << ')' << endl;
+            "' not defined (" << atd.text() << ")." << endl;
 }

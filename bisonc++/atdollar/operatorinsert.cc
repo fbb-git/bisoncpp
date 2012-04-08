@@ -14,6 +14,7 @@ std::ostream &operator<<(std::ostream &out, AtDollar const &atd)
     else
         out << atd.d_nr;
 
+    
     if (atd.d_member)
         out << ". (member call)";
 

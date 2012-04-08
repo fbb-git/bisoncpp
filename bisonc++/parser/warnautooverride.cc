@@ -11,5 +11,5 @@ void Parser::warnAutoOverride(AtDollar const &atd) const
                     d_rules.name()
                 :
                     d_rules.symbol(atd.nr())->name()
-            ) << '\'' << endl;
+            ) << "'." << endl;
 }

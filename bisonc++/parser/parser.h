@@ -78,6 +78,8 @@ class Parser: public ParserBase
                                     // name of the location value stack
                                     // used by the generated parser
 
+    static char const s_stype__[];  // generic semantic value for POLYMORPHIC
+                                    
     public:
         Parser(Rules &rules);
         int parse();

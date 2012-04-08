@@ -9,7 +9,7 @@ void Parser::error(char const *msg)
     {
         if (not repeated)
             emsg << "unrecognized input (`" << d_matched << 
-                         "') encountered" << endl;
+                         "') encountered." << endl;
         repeated = true;
     }
     else
