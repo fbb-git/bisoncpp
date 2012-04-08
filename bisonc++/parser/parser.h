@@ -154,6 +154,7 @@ class Parser: public ParserBase
         void warnAutoOverride(AtDollar const &atd) const;
         void warnAutoIgnored(char const *typeOrField, 
                              AtDollar const &atd) const;
+        void warnUntaggedValue(AtDollar const &atd) const;
 
         // generating emsgs:
         bool errIndexTooLarge(AtDollar const &atd, int nElements) const;
