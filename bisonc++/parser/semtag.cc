@@ -17,6 +17,16 @@ Parser::SemTag Parser::semTag(char const *label, AtDollar const &atd,
         return NONE;
     }
 
+        
+    if  // with polymorphic: warn if an untyped $-value is used
+    (
+        d_semType == POLYMORPHIC
+        &&
+        not atd.returnValue() && stype.empty() && id->empty()
+    )
+        warnUntaggedValue(atd);
+
+
     if (stype.empty() || stype == "STYPE__")    // no rule stype
     {
         if (atd.id().empty())                   // no explicit tag either
