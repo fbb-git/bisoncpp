@@ -21,6 +21,12 @@ DEFINEMACRO(soption)(1)(\
     bf(-ARG1)\
 )
 
+DEFINEMACRO(tr)(3)(\
+    row(cell(ARG1)cell(verb(   ))\
+        htmlcommand(<td valign="top">)ARG2+htmlcommand(</td>)cell(verb(   ))\
+        cell(ARG3)))
+
+
 DEFINEMACRO(bic)(0)(bf(bisonc++))
 DEFINEMACRO(Bic)(0)(bf(Bisonc++))
 DEFINEMACRO(Cpp)(0)(bf(C++))
@@ -200,7 +206,7 @@ is the name of the file containing the grammar definition.
         )
 
 manpageoptions()
-    include(../manual/invoking/options.yo)
+    includefile(../manual/invoking/options.yo)
 
 manpagesection(DIRECTIVES)
 
@@ -480,7 +486,7 @@ ignored if these files already exist.
             In combination with tt(%polymorphic): associate the semantic value
             of a non-terminal symbol with the type indicated by the identifier
             specified at the tt(%polymorphic) directive (see section
-            bf(POLYMORPHIC SEMANTIC VALUES), below.
+            bf(POLYMORPHIC SEMANTIC VALUES), below).
 
     it() bf(%union) tt(union-definition) nl()    
             Acts identically to the bf(bison) and bf(bison++) declaration. 
@@ -489,6 +495,12 @@ ignored if these files already exist.
             declared, a simple stack-type may be defined using the tt(%stype)
             directive. If no tt(%stype) directive is used, the default
             stacktype (bf(int)) is used.
+
+    it() bf(%weak-tags) nl()
+           This directive is ignored unless the tt(%polymorphic)
+            directive was specified. It results in the declaration of tt(enum
+            Tag__) rather than tt(enum class Tag__). When in doubt, this
+            directive should not be used.
     )
 
 manpagesection(POLYMORPHIC SEMANTIC VALUES)
@@ -505,16 +517,16 @@ tt(std::string) and a tt(std::vector<double>):
     %polymorphic INT: int; STRING: std::string; 
                  VECT: std::vector<double>
         )
-    The identifier to the left of the colon is called the em(type-identifier),
-and the type definition to the right of the colon is called the
-em(type-definition). The types specified at the tt(%polymorphic)
+    The identifier to the left of the colon is called the em(tag-identifier)
+(or simply em(tag)), and the type definition to the right of the colon is
+called the em(type-definition). The types specified at the tt(%polymorphic)
 type-definitions must be built-in types or must offer default constructors.
 
     If type definitions refer to types declared in header files that were
 not already included by the parser's base class header, then these header
 file(s) must be inserted using the tt(%baseclass-preinclude) directive.
 
-    includefile((../manual/grammar/polymorphictype.yo)
+    includefile(../manual/grammar/polymorphictype.yo)
 
 
     The tt(%polymorphic) directive results in the following definitions and
@@ -522,18 +534,20 @@ declarations being added to the generated base class header and parser source
 file (if the tt(%namespace) directive was used then all declared/defined
 elements are placed in the name space specified by that directive):
     itemization(
-    it() Two additional headers are included by the parser's base class
+    it() Three additional headers are included by the parser's base class
 header: 
             verb(
     #include <memory>
-    #include <sstream>
+    #include <stdexcept>
+    #include <type_traits>
             )
     )
 
-    it() All semantic value type identifiers are collected in an
-enumeration tt(Tag__), nested under the parser's base class. E.g.,
+    it() All semantic value type identifiers are collected in a strongy typed
+enumeration tt(Tag__), which is nested under the name space surrounding the
+parser's elements (if defined). E.g.,
         verb(
-    enum Tag__
+    enum class Tag__
     {
         INT,
         STRING,
@@ -542,9 +556,9 @@ enumeration tt(Tag__), nested under the parser's base class. E.g.,
         )
     )
 
-    Nested under the name space surrounding the parser's elements (if defined)
-the name space tt(Meta__) is opened. The following elements are
-declared/defined in this nested name space:
+    Also nested under this name space (if defined), the name space tt(Meta__)
+is opened. The following elements are declared/defined in this nested name
+space:
 
     itemization(
     it() A polymorphic base class tt(Base). This class defines an empty
@@ -562,7 +576,7 @@ semantic value when called from a non-const pointer or reference, and returns
 a tt(const) reference (or a copy of the semantic value if it is of a built-in
 type) when called from a const pointer or reference.
 
-    it() For each of the type-identifiers specified with the tt(%polymorphic)
+    it() For each of the tag-identifiers specified with the tt(%polymorphic)
 directive: 
 
     a class template tt(Semantic<Tag__>) containing a data member of
@@ -577,67 +591,22 @@ member;nl()
 data member (or a copy of its value if it is of a built-in type);
 
     it() A class tt(SType), derived from tt(std::shared_ptr<Base>) which
-becomes the parser's semantic value type, offering three members:nl()
-        tt(Tag__ tag() const), returning the base class's tag;nl()
-    Two tt(get) member templates returning, respectively, a non-const
-reference to the derived class's semantic value when called from a non-const
-tt(SType) object, and returning a tt(const) reference (or a copy of the
-semantic value if it is of a built-in type) when called from a constant
-tt(SType) object.
+becomes the parser's semantic value type. This class  offers the following
+members:nl()
+        tt(Constructors:) default, copy and move constructors;nl()
+        tt(Assignment operators:) copy and move assignment operators are
+available having tt(SType) or any of the tt(%polymorphic) data types as their
+right-hand side operands;nl()
+        tt(Tag__ tag() const), returning tt(Base::tag());nl()
+        tt(ReturnType get<Tag__>() const), returning a tt(const) reference (or
+a copy of the semantic value if it is of a built-in type);nl()
+        tt(DataType &get<Tag__>()) returning a non-const reference to the
+derived class's semantic value.
     )
 
-    Finally, three protected member templates are declared in the the parser's
-base class. These members simplify the assignment of a value to a rule's
-semantic value (i.e., it assigns a value to tt(d_val__)):
-    itemization(
-    it() The member template tt(extract__) extracts a value of the type that
-is associated with its tt(Tag__) parameter:
-        verb(
-    template <Tag__ tag>
-    void extract__(std::string const &txt);
+Two free functions tt(semantic__) are declared nested under the name space
+surrounding the parser's elements (if defined).
 
-    // example:
-    extract__<INT>("123");
-        )
-    it() Member templates tt(setSemantic__) expecting either a constant
-reference or an anonymous temporary value (rvalue reference) to a type
-declared at the tt(%polymorphic) directive. E.g.,
-        verb(
-    template <typename Tp_>
-    void ParserBase::setSemantic__(Tp const &value);
-    template <typename Tp_>
-    void ParserBase::setSemantic__(Tp &tmp);
-
-    // example:
-    setSemantic(123);   // assigns to an INT representing d_val__
-        )
-    )
-
-    Using these members the action block of the tt(expr) rule shown before
-could also have been implemented like this:
-        verb(
-    expr:
-        '-' expr
-        {
-            extract<INT>(d_scanner.matched());
-        }
-        )
-    or:
-        verb(
-    expr:
-        '-' expr
-        {
-            setSemantic__(-$2);
-        }
-        )
-    or even as:
-        verb(
-    expr:
-        '-' expr
-        {
-            $$->get<INT>() = -$2->get<INT>();
-        }
-        )
 
 
 manpagesection(PUBLIC MEMBERS AND -TYPES)
@@ -832,7 +801,11 @@ manpagefiles()
     it() bf(bisonc++base.h): skeleton of the parser's base class;
     it() bf(bisonc++.h): skeleton of the parser class;
     it() bf(bisonc++.ih): skeleton of the implementation header;
-    it() bf(bisonc++.cc): skeleton of the member tt(parse).
+    it() bf(bisonc++.cc): skeleton of the member tt(parse);
+    it() bf(bisonc++polymorphic): skeleton of the declarations used by
+        tt(%polymorphic);
+    it() bf(bisonc++polymorphic.inline): skeleton of the inline
+        implementations of the members declared in bf(bisonc++polymorphic).
     )
 manpageseealso()
     bf(bison)(1), bf(bison++)(1), bf(bison.info) (using texinfo),
@@ -874,7 +847,7 @@ file.
     The em(Semantic) parser, mentioned in bf(bison++)(1) is not implemented in
 bf(bisonc++)(1). According to bf(bison++)(1) the semantic parser was not
 available in bf(bison++) either. It is possible that the em(Pure) parser is
-now available via the tt(--thread-safe) option.
+now available through the tt(--thread-safe) option.
 
 manpagesection(ABOUT bisonc++)
 
@@ -888,8 +861,6 @@ Sethi and Ullman's (1986) book bf(Compilers) (i.e., the em(Dragon book)).  It
 the uses same grammar specification as bf(bison) and bf(bison++), and it uses
 practically the same options and directives as bic() versions earlier than
 0.98. Variables, declarations and macros that are obsolete were removed. 
-Since bic() is a completely new program, it will most likely contain
-bugs. Please report bugs to the author:
     
 manpageauthor()
 

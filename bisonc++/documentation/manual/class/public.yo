@@ -43,7 +43,7 @@ When the tt(%polymorphic) directive is used:
             polymorphic semantic values are all declared in the tt(Meta__)
             namespace. The tt(Meta__) namespace itself is nested under the
             namespace that may have been declared by the tt(%namespace)
-            directive. See also section ref(META).
+            directive.
     
     it() bf(Tag__):nl()
            The (strongly typed) tt(enum class Tag__) contains all the
