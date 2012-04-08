@@ -1,6 +1,6 @@
-The parser's tt(%stype) is tt(Semantic). For this illustrative
-example the parser's grammar is a simple one expecting input according to the
-following two rules:
+In this section a parser is developed using polymorphic semantic values.  For
+this illustrative example a simple grammar is used expecting input according
+to the following two rules:
         verb(
     rule:
         identifier '(' identifier ')' '\n'
@@ -9,7 +9,8 @@ following two rules:
     ;
         )
     
-    The rules for tt(identifier) and tt(int) simply pass the text matched by
+    The rules for tt(identifier) and tt(int) assign, respectively, text and a
+number to merely pass the text matched by
 the scanner on to tt(Semantic::assign):
         verb(
     identifier:
