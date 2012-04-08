@@ -1,47 +1,102 @@
-In this section a parser is developed using polymorphic semantic values.  For
-this illustrative example a simple grammar is used expecting input according
-to the following two rules:
+In this section a parser is developed using polymorphic semantic values.  Its
+tt(%polymorphic) directive looks like this:
+        verb(
+    %polymorphic INT: int; TEXT: std::string;
+        )
+    Furthermore, the grammar declares tokens tt(INT) and tt(IDENTIFIER), and
+pre-associates the tt(TEXT) tag with the tt(identifier) non-terminal,
+associates the tt(INT) tag with the tt(int) non-terminal, and associates
+tt(STYPE__), the generic polymorphic value with the non=terminal tt(combi):
+        verb(
+    %type <TEXT>    identifier
+    %type <INT>     int
+    %type <STYPE__> combi
+        )
+    For this example a simple grammar was developed, expecting an optional
+number of input lines, formatted according to the following tt(rule)
+production rules:
         verb(
     rule:
         identifier '(' identifier ')' '\n'
     |
         identifier '=' int '\n'
+    |
+        combi '\n'
     ;
         )
     
-    The rules for tt(identifier) and tt(int) assign, respectively, text and a
-number to merely pass the text matched by
-the scanner on to tt(Semantic::assign):
+    The rules for tt(identifier) and tt(int) assign, respectively, text and an
+tt(int) value to the parser's semantic value stack:
         verb(
     identifier:
         IDENTIFIER
         {
-            $$.assign<TagType<Tag::TEXT>>(d_scanner.matched());
+            $$ = d_scanner.matched();
         }
     ;
     int:
         INT
         {
-            $$.assign<TagType<Tag::INT>>(d_scanner.matched());
+            $$ = d_scanner.intValue();
         }
     ;
         )
 
-The rule's actions are also simple, echoing the received identifiers and
-tt(int) values to tt(cout). Here is an example of such an action block:
+These simple assignments can be used as tt(int) is pre-associated with the
+tt(INT) tag and tt(identifier) is asociated with the tt(TEXT) tag. 
+
+As the tt(combi) rule is not associated with a specific semantic value, its
+semantic value could be either tt(INT) or tt(TEXT). Irrespective of what is
+actually returned by tt(combi), its semantic value can be passed on to a
+function (tt(process(STYPE__ const &)), responsible for the semantic value's
+further processing. Here are the definition of the tt(combi) non-terminal and
+action blocks for the tt(rule) non-terminal:
         verb(
-    identifier '(' identifier ')' '\n'
+    combi:
+        int
+    |
+        identifier;
+    ;
+        
+    rule:
+        identifier '(' identifier ')' '\n'
+        {
+            cout << $1 << " " << $3 << '\n';
+        }
+    |
+        identifier '=' int '\n'
+        {
+            cout << $1 << " " << $3 << '\n';
+        }
+    |
+        combi '\n'
+        {
+            process($1);
+        }
+    ;
+        )
+
+Since tt(identifier) has been associated with tt(TEXT) and tt(int) 
+with tt(INT), the $-references to these elements in the production
+rules already return, respectively, a tt(std::string const &) and an tt(int).
+
+For tt(combi) the situation is slightly more complex, as tt(combi) could
+either return an tt(int) (via its tt(int) production rule) or a tt(std::string
+const &) (via its tt(identifier) production rule). 
+
+Fortunately, tt(process) can find out by inspecting the semantic value's
+tt(Tag__):
+        verb(
+    void process(SSTYPE__ const &semVal)
     {
-          cout << $1 << " " << $3 << '\n';
+        if (semVal.tag() == Tag__::INT)
+            cout << "Saw an int-value: " << semVal.get<Tag__::INT>() << '\n';
+        else
+            cout << "Saw text: " << semVal.get<Tag__::TEXT>() << '\n';
     }
         )
 
-So, in this example Bisonc++'s parser stores em(all) semantic values on its
-semantic values stack, even though different tokens were returned by different
-rules. At any time em(all) semantic values associated with previously
-recognized tokens are available in the action block. Once the semantic value
-stack is reduced, the tt(Semantic) class takes care of the proper destruction
-of the objects pointed to by tt(Semantic)'s tt(shard_ptr) base class.
+
 
 
 

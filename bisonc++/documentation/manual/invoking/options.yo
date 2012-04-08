@@ -19,7 +19,7 @@ files already exist.
             tt(--no-baseclass-header) and tt(--dont-rewrite-baseclass-header)
             below).
 
-    it() lsoption(baseclass-preinclude)(H)(header)nl()
+    it() label(PREINCLUDE) lsoption(baseclass-preinclude)(H)(header)nl()
            Use tt(header) as the pathname to the file preincluded in the
             parser's base-class header. This option is useful in situations
             where the base class header file refers to types which might not
@@ -72,7 +72,7 @@ files already exist.
             bic(). Rerun bic() without the tt(--debug) option to remove the
             debugging code.
 
-    it() loption(error-verbose)nl()
+    it() label(ERRORVERBOSE)loption(error-verbose)nl()
            When a syntactic error is reported, the generated parse function
             will dump the parser's state stack to the standard output
             stream. The stack dump shows on separate lines a stack index
@@ -134,7 +134,7 @@ files already exist.
             tt(STYPE__) can be inserted into tt(ostreams).
 
 
-    it() laoption(max-inclusion-depth)(value)nl()
+    it() label(MAXDEPTH) laoption(max-inclusion-depth)(value)nl()
            Set the maximum number of nested grammar files. Defaults to 10.
 
     it() lsoption(namespace)(n)(namespace)nl()
@@ -209,12 +209,12 @@ files already exist.
             by bic() itself when reading its input file(s). If that is what
             you want, use the tt(--own-tokens) option.
 
-    it() laoption(required-tokens)(number)nl()
+    it() label(REQUIRED) laoption(required-tokens)(number)nl()
            Following a syntactic error, require at least tt(number)
             successfully processed tokens before another syntactic error can
             be reported. By default tt(number) is zero.
 
-    it() lsoption(scanner)(s)(header)nl()
+    it() label(SCANOPT) lsoption(scanner)(s)(header)nl()
            Use tt(header) as the pathname to the file defining a class
             tt(Scanner). When this option is used the parser's member tt(int
             lex()) is predefined as 

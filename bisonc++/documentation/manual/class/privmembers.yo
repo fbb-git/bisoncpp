@@ -57,10 +57,8 @@ internally'' is used should not be called by user-defined code.
         interpreted as `end of input'.
     it() bf(int lookup+nop()()):nl()
        Used internally.
-       otherwise. See also below, section bf(BUGS).
     it() bf(void nextToken+nop()()):nl()
        Used internally.
-       otherwise. See also below, section bf(BUGS).
     it() bf(void Base::pop__+nop()()):nl()
        Used internally.
     it() bf(void Base::popToken__+nop()()):nl()

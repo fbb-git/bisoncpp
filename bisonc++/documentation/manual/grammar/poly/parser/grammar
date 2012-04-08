@@ -7,7 +7,7 @@
 
 %type <TEXT>    identifier
 %type <INT>     int
-%type <STYPE__> either
+%type <STYPE__> combi
 
 %%
 
@@ -36,7 +36,7 @@ int:
     }
 ;
 
-either:
+combi:
     int
 |
     identifier
@@ -53,7 +53,7 @@ rule:
           cout << $1 << " " << $3 << '\n';
     }
 |
-    either '\n'
+    combi '\n'
     {
         process($1);
     }

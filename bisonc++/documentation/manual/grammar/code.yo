@@ -9,14 +9,13 @@ then tt(Meta__) is nested under the namespace declared by that directive. The
 name tt(Meta__) hints at the fact that much of the code implementing
 polymorphic semantic values uses template meta programming.
 
-bf(The enumeration Tag__)
+bf(The enumeration 'enum class Tag__')
 
 One notable exception is the enumeration tt(Tag__). It is declared outside of
 tt(Meta__) (but inside the tt(%namespace) namespace, if provided) to simplify
 its use. Its identifiers are the tags declared by the tt(%polymorphic)
 directive. This is a strongly typed enumeration. The tt(%weak-tags) directive
-can be used if the tt(Tag__) enum should be declared without tt(class) (i.e.,
-using tt(enum Tag__).
+can be used to declare a pre C++-11 standard tt(enum Tag__).
 
 bf(The namespace Meta__)
 
@@ -109,6 +108,7 @@ The important elements of the namespace tt(Meta__) are:
          pointer to a tt(Semantic<Tag__::tag>) object initialized with the
          default value of the type matching the tag.
         )
+    )
     When an incorrect tag is specified (e.g., with tt(get<Tag__::tag>(),
 $<Tag__::tag>$), or tt($<Tag__::tag>1)), the generated code correctly copiles,
 but the program will throw a tt(std::bad_cast) exception once the offending
@@ -120,15 +120,15 @@ Outside of the namespace tt(Meta__) (but within the namespace declared by the
 tt(%namespace) directive, if used) two simple free support function templates
 are defined:  
         itemization(
-        itt(Meta__::Semantic<Tag__::tag> *semantic__(Type const &init))
-         returns a newly allocated tt(Semantic<Tag__::tag>) object,
+        itt(Meta__::Semantic<Tag__::tag> *semantic__(Type const &init)) The
+         address of a newly allocated tt(Semantic<Tag__::tag>) object,
          initialized with the value tt(init) of the data type matching the
          tag. Since this is a function template the tt(tag) is inferred from
          tt(Type), and compilation only succeeds if tt(Type) has been
          specified at the tt(%polymorphhic) directive.nl() This function uses
          tt(Type)'s copy constructor to initialize the tt(Semantic) object. It
          could be used to `hand-implement' the tt($$) assignment shown in the
-         previous section: 
+         previous section:
         verb(
     expr:
         NR
@@ -138,12 +138,12 @@ are defined:
         }
     ...
         )
-        itt(Meta__::Semantic<Tag__::tag> *semantic__(Type &&tmp)) returns a
-         newly allocated tt(Semantic<Tag__::tag>) object, initialized using
-         tt(Type)'s move constructor. Again: compilation only succeeds if
-         tt(Type) has been specified at the tt(%polymorphhic) directive.nl()
-         Here is the `hand-implementation' of the previous example using
-         tt(Type)'s move constructor: 
+        itt(Meta__::Semantic<Tag__::tag> *semantic__(Type &&tmp)) The address
+         of a newly allocated tt(Semantic<Tag__::tag>) object, initialized
+         using tt(Type)'s move constructor. Again: compilation only succeeds
+         if tt(Type) has been specified at the tt(%polymorphhic)
+         directive.nl() Here is the `hand-implementation' of the previous
+         example using tt(Type)'s move constructor:
         verb(
     expr:
         NR

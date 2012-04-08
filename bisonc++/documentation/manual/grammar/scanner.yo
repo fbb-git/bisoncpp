@@ -1,7 +1,8 @@
-The scanner (as implemented by, e.g., bf(flexc++)(1)) recognizes input
-patterns, and returns Parser tokens (e.g., Parser::INT) matching the
-recognized input. It is easily created by tt(flexc++) from the following
-simple specification file.
+The scanner recognizes input patterns, and returns Parser tokens (e.g.,
+Parser::INT) matching the recognized input. 
+
+It is easily created by
+bf(flexc++)(1) processing the following simple specification file.
         verbinclude(poly/scanner/lexer)
 
 The reader may refer to bf(flexc++)(1) documentation for details about
