@@ -14,12 +14,12 @@ void Parser::handleProductionElement(STYPE__ &last)
 
     switch (last->tag())
     {
-        case TERMINAL:
-            d_rules.addElement(last->get<TERMINAL>());
+        case Tag__::TERMINAL:
+            d_rules.addElement(last->get<Tag__::TERMINAL>());
             checkFirstType();
         break;
-        case SYMBOL:
-            d_rules.addElement(last->get<SYMBOL>());
+        case Tag__::SYMBOL:
+            d_rules.addElement(last->get<Tag__::SYMBOL>());
             checkFirstType();
         break;
         case Tag__::BLOCK:

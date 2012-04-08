@@ -29,7 +29,7 @@ class Transition
     public:
         Transition()
         :
-            d_next(UINT_MAX),
+            d_next(std::numeric_limits<size_t>::max()),
             d_productionsEntered(false)
         {}
 
@@ -60,7 +60,7 @@ class Transition
         }
         void shutOff()
         {
-            d_next = UINT_MAX;
+            d_next = std::numeric_limits<size_t>::max();
         }        
         size_tblock/block.h next() const
         {
@@ -72,7 +72,7 @@ class Transition
         }
         bool hasDestination() const
         {
-            return d_next != UINT_MAX;
+            return d_next != std::numeric_limits<size_t>::max();
         }
         bool productionsEntered() const
         {

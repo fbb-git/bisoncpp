@@ -14,11 +14,11 @@ Parser::STYPE__ Parser::handleProductionElements(STYPE__ &first,
 
     switch (first->tag())
     {
-        case TERMINAL:
-            d_rules.addElement(first.get<TERMINAL>());
+        case Tag__::TERMINAL:
+            d_rules.addElement(first.get<Tag__::TERMINAL>());
         break;
-        case SYMBOL:
-            d_rules.addElement(first.get<SYMBOL>());
+        case Tag__::SYMBOL:
+            d_rules.addElement(first.get<Tag__::SYMBOL>());
         break;
         case Tag__::BLOCK:
             nestedBlock(first.get<Tag__::BLOCK>());

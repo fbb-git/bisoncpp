@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include <set>
-#include <climits>
+#include <limits>
 
 #include "../symbol/symbol.h"
 
@@ -20,7 +20,8 @@ class Terminal: public Symbol
             INITIAL_SYMBOLIC_VALUE = 257,   // See rules/data.cc for Terminals
                                         // defined by default.
 
-            DEFAULT = UINT_MAX          // results in the next symbolic
+            DEFAULT = std::numeric_limits<size_t>::max()
+                                        // results in the next symbolic
                                         // terminal value to be assigned.
         };
         enum Association                // adapt s_association[] in data.cc 
