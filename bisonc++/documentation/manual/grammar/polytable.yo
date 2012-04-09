@@ -1,0 +1,30 @@
+table(5)(cccll)(
+    whenman(rowline())
+    row(setmanalign(lssss)\
+        cells(5)($$ or $1 specifications (- indicates: not provided)))
+    rowline()
+    \
+    tr(%type<TAG>)($<tag>)(action:)
+    rowline()
+    \
+    tr(empty or STYPE__) (-)        (STYPE__ is used)
+    columnline(3)(5)
+    tr()                (STYPE__)   (STYPE__ is used)
+    columnline(3)(5)
+    tr()                (id)        (tag-override)
+    rowline()
+    \
+    tr((existing) tag)  (-)         (auto-tag)
+    columnline(3)(5)
+    tr()                (STYPE__)   (STYPE__ is used)
+    columnline(3)(5)
+    tr()                (id)        (tag-override)
+    rowline()
+    \
+    tr((undefined) tag) (-)         (tag-error)
+        columnline(3)(5)
+    tr()                (STYPE__)   (STYPE__ is used)
+        columnline(3)(5)
+    tr()                (id)        (tag-override)
+    rowline()
+)

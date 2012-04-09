@@ -1,0 +1,10 @@
+itemlist(
+    itx() auto-tag: $$ and $1 represent, respectively, tt($$.get<tag>()) and
+            tt($1.get<tag>());
+
+    itx() tag-error: em(error:) tag undefined;
+
+    itx() tag-override: if tt(id) is a defined tag, then $<tag>$ and $<tag>1
+            represent the tag's type. Otherwise: em(error) (using undefined
+            tag tt(id)).
+)

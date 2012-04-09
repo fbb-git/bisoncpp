@@ -21,9 +21,11 @@ DEFINEMACRO(soption)(1)(\
     bf(-ARG1)\
 )
 
+DEFINEMACRO(itx)(0)()
+DEFINEMACRO(itemlist)(1)(ARG1)
 DEFINEMACRO(tr)(3)(\
-    row(cell(ARG1)cell(verb(   ))\
-        htmlcommand(<td valign="top">)ARG2+htmlcommand(</td>)cell(verb(   ))\
+    row(cell(ARG1)cell()\
+        cell(ARG2)cell()\
         cell(ARG3)))
 
 

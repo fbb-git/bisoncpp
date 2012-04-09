@@ -37,6 +37,8 @@ IFDEF(latex)
     latexlayoutcmds(\pagestyle{headings})\
 )()
 
+DEFINEMACRO(itx)(0)(it())
+DEFINEMACRO(itemlist)(1)(ARG1)
 DEFINEMACRO(tr)(3)(\
     row(cell(ARG1)cell(verb(   ))\
         htmlcommand(<td valign="top">)ARG2+htmlcommand(</td>)cell(verb(   ))\

@@ -31,7 +31,7 @@ rvalue).
 provided tt(%type) associations can be overruled) using the common
 `$<type-identifier>$' or `$<type-identifier>nr' syntax. In this syntax tt(nr)
 is a (positive or negative) number (like $2, $-1). In this type-overruling
-syntax blanks cannot be used (so $<INT>$ is OK, $< INT >$ isn't.
+syntax blanks cannot be used (so $<INT>$ is OK, $< INT >$ isn't).
 
 Several combinations of type-associations and type specifications may be
 encountered (index values are used as examples, they are non-negative unless
@@ -45,53 +45,23 @@ it() $<tag>-1: em(error): tt(<tag>) specifications are not allowed for negative
     dollar indices. 
 )
 
+whenhtml(
 center(
-table(5)(cccll)(
-    rowline()
-    row(cells(5)($$ or $1 specifications (- indicates: not provided)))
-
-    rowline()
-    tr(%type<TAG>)($<tag>)(action:)
-
-    rowline()
-
-    tr(empty or STYPE__) (-)       (STYPE__ is used)
-        columnline(3)(5)
-    tr()        (STYPE__) (STYPE__ is used)
-        columnline(3)(5)
-    tr()        (id)      (if tt(id) is a defined tag:nl()
-                                $<tag>$ or $<tag>1 represents 
-                                the tag's type+nl() 
-                            otherwise em(error) (using undefined tag tt(id)))
-    rowline()
-
-    tr((existing) tag)
-                (-)       ($<tag>$ or $<tag>1 represents 
-                                the tag's type+nl() )
-        columnline(3)(5)
-    tr()        (STYPE__) (STYPE__ is used)
-        columnline(3)(5)
-    tr()        (id)      (if tt(id) is a defined tag:nl()
-                                $<tag>$ or $<tag>1 represents 
-                                the tag's type+nl() 
-                            otherwise em(error) (using undefined tag tt(id)))
-    rowline()
-
-    tr((undefined) tag)
-                (-)       (em(error): tt(tag) undefined)
-        columnline(3)(5)
-    tr()        (STYPE__) (STYPE__ is used)
-        columnline(3)(5)
-    tr()        (id)      (if tt(id) is a defined tag:nl()
-                                $<tag>$ or $<tag>1 represents 
-                                the tag's type+nl() 
-                            otherwise em(error) (using undefined tag tt(id)))
-
-    rowline()
-
+table(1)(l)(
+rowline()
+row(cell(center(includefile(polytable))))
+row(cell(includefile(polytablenotes)))
+rowline()
 )
 )
+)
+whenman(
+bf(%type<TAG> and $$ or $1 specifications:)
+includefile(polytable)
+includefile(polytablenotes)
 
+bf(Member calls (`$$.', `$1.'):)
+)
 When using `$$.' or `$1.' default tags are not used. Instead, a
 warning is issued that the default tag is ignored. This allows members of the
 semantic value type (tt(STYPE__)) to be called explicitly. The default tag is
