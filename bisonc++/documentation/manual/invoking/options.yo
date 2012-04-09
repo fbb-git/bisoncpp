@@ -21,17 +21,17 @@ files already exist.
 
     it() label(PREINCLUDE) lsoption(baseclass-preinclude)(H)(header)nl()
            Use tt(header) as the pathname to the file preincluded in the
-            parser's base-class header. This option is useful in situations
+            parser's base-class header. This option is needed in situations
             where the base class header file refers to types which might not
-            yet be known. E.g., with tt(%union) a tt(std::string *) field
-            might be used. Since the class tt(std::string) might not yet be
-            known to the compiler once it processes the base class header file
-            we need a way to inform the compiler about these classes and
-            types. The suggested procedure is to use a pre-include header file
-            declaring the required types. By default tt(header) is
-            surrounded by double quotes (using, e.g., tt(#include "header")).
-            When the argument is surrounded by pointed brackets
-            tt(#include <header>) is included. In the latter case,
+            yet be known. E.g., with tt(%polymorphic) a tt(std::string) value
+            type might be used. Since the tt(string) header file is not by
+            default included in tt(parserbase.h) we need a way to inform the
+            compiler about this and possibly other headers. The suggested
+            procedure is to use a pre-include header file declaring the
+            required types. By default `tt(header)' is surrounded by double
+            quotes: tt(#include "header") is used when the option tt(-H
+            header) is specified.  When the argument is surrounded by pointed
+            brackets tt(#include <header>) is included. In the latter case,
             quotes might be required to escape interpretation by the shell
             (e.g., using tt(-H '<header>')).
 
@@ -68,7 +68,7 @@ files already exist.
             showing the actual parsing process on the standard output
             stream. When included, the debugging output is active by default,
             but its activity may be controlled using the tt(setDebug(bool
-            on-off)) member. A tt(#ifdef DEBUG) macro is not supported by
+            on-off)) member. An tt(#ifdef DEBUG) macro is not supported by
             bic(). Rerun bic() without the tt(--debug) option to remove the
             debugging code.
 
@@ -86,11 +86,11 @@ files already exist.
             option).
 
     it() loption(flex)nl() 
-           Bic() generates code calling tt(d_scanner.yylex()) for the next
-            lexical token, and tt(d_scanner.YYText()) for the matched text,
-            unless overruled by options or directives explicitly defining
-            these functions. By default, the interface defined by
-            bf(flexc++)(1) is used. This option is unly interpreted if the
+           Bic() generates code calling tt(d_scanner.yylex()) to obtain the
+            next lexical token, and calling tt(d_scanner.YYText()) for the
+            matched text, unless overruled by options or directives explicitly
+            defining these functions. By default, the interface defined by
+            bf(flexc++)(1) is used. This option is only interpreted if the
             tt(--scanner) option or tt(%scanner) directive is also used.
 
     it() loption(force-class-header)nl()
@@ -194,6 +194,17 @@ files already exist.
            Define tt(source) as the name of the source file to contain the
             parser member function tt(parse). Defaults to tt(parse.cc).
 
+    it() lsoption(polymorphic-skeleton)(M)(skeleton)nl()
+           Use tt(skeleton) as the pathname of the file containing the
+            skeleton of the polymorphic template classes. Its filename
+            defaults to tt(bisonc++polymorphic).
+
+    it() lsoption(polymorphic-inline-skeleton)(m)(skeleton)nl()
+           Use tt(skeleton) as the pathname of the file containing the
+            skeleton of the inline implementations of the members of the 
+            polymorphic template classes. Its filename defaults to
+            tt(bisonc++polymorphic).
+
     it() loption(print-tokens) (soption(t))nl()
            The generated parsing function implements a function tt(print__)
             displaying (on the standard output stream) the tokens returned by
@@ -274,7 +285,7 @@ files already exist.
     it() lsoption(skeleton-directory)(S)(directory)nl() 
            Specifies the directory containing the skeleton files to use. This
             option can be overridden by the specific skeleton-specifying
-            options (tt(-B -C, -H,) and tt(-I)).
+            options (tt(-B -C, -H, -I, -M) and tt(-m)).
 
     it() laoption(target-directory)(directory) nl() 
            Specifies the directory where generated files should be written.
