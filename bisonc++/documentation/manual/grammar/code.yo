@@ -114,46 +114,6 @@ $<Tag__::tag>$), or tt($<Tag__::tag>1)), the generated code correctly copiles,
 but the program will throw a tt(std::bad_cast) exception once the offending
 code is executed.
 
-bf(Support functions)
-
-Outside of the namespace tt(Meta__) (but within the namespace declared by the
-tt(%namespace) directive, if used) two simple free support function templates
-are defined:  
-        itemization(
-        itt(Meta__::Semantic<Tag__::tag> *semantic__(Type const &init)) The
-         address of a newly allocated tt(Semantic<Tag__::tag>) object,
-         initialized with the value tt(init) of the data type matching the
-         tag. Since this is a function template the tt(tag) is inferred from
-         tt(Type), and compilation only succeeds if tt(Type) has been
-         specified at the tt(%polymorphhic) directive.nl() This function uses
-         tt(Type)'s copy constructor to initialize the tt(Semantic) object. It
-         could be used to `hand-implement' the tt($$) assignment shown in the
-         previous section:
-        verb(
-    expr:
-        NR
-        {
-            int x = d_scanner.number();
-            $$.reset(semantic__(x));
-        }
-    ...
-        )
-        itt(Meta__::Semantic<Tag__::tag> *semantic__(Type &&tmp)) The address
-         of a newly allocated tt(Semantic<Tag__::tag>) object, initialized
-         using tt(Type)'s move constructor. Again: compilation only succeeds
-         if tt(Type) has been specified at the tt(%polymorphhic)
-         directive.nl() Here is the `hand-implementation' of the previous
-         example using tt(Type)'s move constructor:
-        verb(
-    expr:
-        NR
-        {
-            $$.reset(semantic__(d_scanner.number()));
-        }
-    ...
-        )
-        )
-
 bf(Additional Headers)
 
 When using tt(%polymorphic) three additional header files are included by

@@ -1,42 +1,43 @@
-    The tt(%type) directive associates (non-)terminals with semantic value
-types.
+    The tt(%type) directive is used to associate (non-)terminals with semantic
+value types.
 
-When semantic values are associated with terminal tokens then it is the
-responsibility of the lexical scanner to assign a properly typed value to the
-parser's tt(STYPE__ d_val__) data member.
+Semantic values may also be associated with terminal tokens. In that case it
+is the lexical scanner's responsibility to assign a properly typed value to
+the parser's tt(STYPE__ d_val__) data member.
 
-Non-terminals may be associated with polymorphic semantic values using 
-tt(%type) directives. E.g., following
+Non-terminals may be automatically be associated with polymorphic semantic
+values using tt(%type) directives. E.g., following
         verb(
-    %polymorphic INT: int
+    %polymorphic INT: int; TEXT: std::string
     %type <INT> expr
         )
     the tt(expr) non-terminal returns tt(int) semantic values. In this case,
 a rule like
         verb(
     expr:
-        '-' expr
+        expr '+' expr
         {
-            $$ = -$2;
+            $$ = $1 + $3;
         }
         )
-    automatically associates $$ and $2 with tt(int) values. $$
-represents an lvalue (representing the semantic value associated with the
-tt(expr:) rule), while $2 represents the tt(int) semantic value associated
-with the tt(expr) non-terminal in the production rule tt('-' expr) (an
-rvalue).
+    automatically associates $$, $1 and $3 with tt(int) values. $$ is an
+lvalue (representing the semantic value associated with the tt(expr:) rule),
+while $1 and $3 represent the tt(int) semantic value associated with the
+tt(expr) non-terminal in the production rule tt('-' expr) (rvalues).
 
-    Semantic value types cannot be pre-associated with negative dollar indices
-(like $-1). However, semantic value types can explicitly be specified (or
-provided tt(%type) associations can be overruled) using the common
-`$<type-identifier>$' or `$<type-identifier>nr' syntax. In this syntax tt(nr)
-is a (positive or negative) number (like $2, $-1). In this type-overruling
-syntax blanks cannot be used (so $<INT>$ is OK, $< INT >$ isn't).
+    When negative dollar indices (like $-1) are used, any pre-defined
+associations between non-terminals and semantic types are ignored.  However,
+semantic value types can explicitly be specified (or provided tt(%type)
+associations can be overruled) using the common `$<type>$' or `$<type>1'
+syntax (in this and following examples index number 1 represents any
+valid positive index (i.e., not exceeding the number of production rule
+elements seen so far); -1 represents any valid negative index). 
 
-Several combinations of type-associations and type specifications may be
-encountered (index values are used as examples, they are non-negative unless
-explicitly shown as negative values): 
+The type-overruling syntax does not allow blanks to be used (so $<INT>$ is OK,
+$< INT >$ isn't).
 
+Various combinations of type-associations and type specifications may be
+encountered:
 itemization(
 it() $-1: tt(%type) associations are ignored, and the semantic value type
     tt(STYPE__) is used instead. A warning is issued unless the
@@ -60,14 +61,13 @@ bf(%type<TAG> and $$ or $1 specifications:)
 includefile(polytable)
 includefile(polytablenotes)
 
-bf(Member calls (`$$.', `$1.'):)
-)
-When using `$$.' or `$1.' default tags are not used. Instead, a
-warning is issued that the default tag is ignored. This allows members of the
-semantic value type (tt(STYPE__)) to be called explicitly. The default tag is
-only ignored if there are no additional characters (e.g., blanks, closing
-parentheses) between the dollar-expressions and the member selector
-operator. Note that the opposite, ignoring default tag associations, is
-accomplished using the $<STYPE__>$ and $<STYPE__>1 constructions.
+bf(Member calls (`$$.', `$1.'):) ) When using `$$.' or `$1.' default tags are
+ignored. Instead, a warning is issued that the default tag is ignored. This
+syntax allows members of the semantic value type (tt(STYPE__)) to be called
+explicitly. The default tag is only ignored if there are no additional
+characters (e.g., blanks, closing parentheses) between the dollar-expressions
+and the member selector operator. The opposite, ignoring default tag
+associations, is accomplished using tconstructions like $<STYPE__>$ and
+$<STYPE__>1.
 
 
