@@ -20,6 +20,11 @@ bisonc++ (4.00.00)
     parsers no longer define the Parser's inline members (error, print__, and
     lex) in parser.h but in parser.ih
 
+  * @@ can be used (instead of d_loc__) to refer to a rule's location stack
+    value. 
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 10 Apr 2012 11:39:36 +0200
+
 bisonc++ (3.01.00)
 
   * The `%print-tokens' directive was accidentally omitted from
