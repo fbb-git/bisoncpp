@@ -77,6 +77,9 @@ class Parser: public ParserBase
     static char s_locationValueStack[];  
                                     // name of the location value stack
                                     // used by the generated parser
+    static char s_locationValue[];
+                                    // name of the location value variable
+                                    // used by the generated parser (@0)
 
     static char const s_stype__[];  // generic semantic value for POLYMORPHIC
                                     

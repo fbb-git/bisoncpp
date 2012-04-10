@@ -76,7 +76,8 @@ NR      [[:digit:]]+
                     more();
                 }
 
-    "$$"                    d_block.dollar(lineNr(), d_matched, false);
+    "$$"                    |
+    "@@"                    d_block.dollar(lineNr(), d_matched, false);
                             
     "$$."                   d_block.dollar(lineNr(), d_matched, true);
                             

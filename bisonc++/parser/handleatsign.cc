@@ -2,8 +2,8 @@
 
 // We're at a @ character, followed by a number, @1, @2, ... etc. @<x>. 
 // The number is the element number  of a production rule
-// The @-return value is not specified in bison's documentation. Is it not
-// used? Using the @ feature implies lsp-needed, which is set by implication
+// The @-return value is not specified in bison's documentation. Is is
+// d_loc__. @@ is replaced by d_loc__
 
 void Parser::handleAtSign(Block &block, AtDollar const &atd, int nElements) 
 {
@@ -11,7 +11,10 @@ void Parser::handleAtSign(Block &block, AtDollar const &atd, int nElements)
         return;
 
     ostringstream os;
-    os << s_locationValueStack << "[" << 
+    if (atd.returnValue())
+        os << s_locationValue;
+    else
+        os << s_locationValueStack << "[" << 
                                 indexToOffset(atd.nr(), nElements) << "]";
 
     block.replace(atd.pos(), atd.length(), os.str());
