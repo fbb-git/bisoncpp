@@ -74,81 +74,61 @@ template <Tag__ tg_>
 inline typename TypeOf<tg_>::DataType &SType::get()
 {
                     // if we're not yet holding a value, initialize to 
-                    // a semantic__ holding a default value
+                    // a Semantic<tg> holding a default value
     if (std::shared_ptr<Base>::get() == 0)
         reset(new Semantic<tg_>());
 
     return std::shared_ptr<Base>::get()->get<tg_>();
 }
- 
-} // namespace Meta__
 
+template <bool, typename Tp_>
+struct Assign;
 
-template <typename Tp_> 
-inline Meta__::Semantic<Meta__::TagOf<Tp_>::tag> *semantic__(Tp_ const &init)
+template <typename Tp_>
+struct Assign<true, Tp_>
 {
-    return new Meta__::Semantic<Meta__::TagOf<Tp_>::tag>(init);
+    static SType &assign(SType *lhs, Tp_ &&tp);
+};
+
+template <typename Tp_>
+struct Assign<false, Tp_>
+{
+    static SType &assign(SType *lhs, Tp_ const &tp);
+};
+
+template <>
+struct Assign<false, SType>
+{
+    static SType &assign(SType *lhs, SType const &tp);
+};
+
+template <typename Tp_>
+inline SType &Assign<true, Tp_>::assign(SType *lhs, Tp_ &&tp)
+{
+    lhs->reset(new Semantic<TagOf<Tp_>::tag>(std::move(tp)));
+    return *lhs;
 }
 
-template <typename Tp_> 
-inline Meta__::Semantic<Meta__::TagOf<Tp_>::tag> *semantic__(Tp_ &&tmp)
+template <typename Tp_>
+inline SType &Assign<false, Tp_>::assign(SType *lhs, Tp_ const &tp)
 {
-    return new Meta__::Semantic<Meta__::TagOf<Tp_>::tag>(std::move(tmp));
+    lhs->reset(new Semantic<TagOf<Tp_>::tag>(tp));
+    return *lhs;
 }
 
-namespace Meta__
+inline SType &Assign<false, SType>::assign(SType *lhs, SType const &tp)
 {
-    template <bool, typename Tp_>
-    struct Assign;
-    
-    template <typename Tp_>
-    struct Assign<true, Tp_>
-    {
-        static SType &assign(SType *lhs, Tp_ &&tp);
-    };
-    
-    template <typename Tp_>
-    struct Assign<false, Tp_>
-    {
-        static SType &assign(SType *lhs, Tp_ const &tp);
-    };
+    return lhs->operator=(tp);
+}
 
-    template <>
-    struct Assign<false, SType>
-    {
-        static SType &assign(SType *lhs, SType const &tp);
-    };
-
-    
-
-    template <typename Tp_>
-    inline SType &Assign<true, Tp_>::assign(SType *lhs, Tp_ &&tp)
-    {
-        lhs->reset(semantic__(std::move(tp)));
-        return *lhs;
-    }
-    
-    template <typename Tp_>
-    inline SType &Assign<false, Tp_>::assign(SType *lhs, Tp_ const &tp)
-    {
-        lhs->reset(semantic__(tp));
-        return *lhs;
-    }
-
-    inline SType &Assign<false, SType>::assign(SType *lhs, SType const &tp)
-    {
-        return lhs->operator=(tp);
-    }
-    
-
-    template <typename Tp_>
-    inline SType &SType::operator=(Tp_ &&rhs) 
-    {
-        return Assign<
-                    std::is_rvalue_reference<Tp_ &&>::value, 
-                    typename std::remove_reference<Tp_>::type
-               >::assign(this, std::forward<Tp_>(rhs));
-    }
+template <typename Tp_>
+inline SType &SType::operator=(Tp_ &&rhs) 
+{
+    return Assign<
+                std::is_rvalue_reference<Tp_ &&>::value, 
+                typename std::remove_reference<Tp_>::type
+           >::assign(this, std::forward<Tp_>(rhs));
+}
 
 } // namespace Meta__
 
