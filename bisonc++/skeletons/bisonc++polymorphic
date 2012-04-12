@@ -117,10 +117,13 @@ $insert polymorphicSpecializations
             Tag__ tag() const;
 
             template <Tag__ tg_>
-            typename TypeOf<tg_>::ReturnType get() const;
+            typename TypeOf<tg_>::ReturnType get() const;   // rhs
     
             template <Tag__ tg_>
-            typename TypeOf<tg_>::DataType &get();
+            typename TypeOf<tg_>::DataType &get();          // lhs, checked
+
+            template <Tag__ tg_>
+            typename TypeOf<tg_>::DataType &data();         // lhs, unchecked
     };
 
 }  // namespace Meta__

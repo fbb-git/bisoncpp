@@ -81,6 +81,12 @@ inline typename TypeOf<tg_>::DataType &SType::get()
     return std::shared_ptr<Base>::get()->get<tg_>();
 }
 
+template <Tag__ tg_>
+inline typename TypeOf<tg_>::DataType &SType::data()
+{
+    return std::shared_ptr<Base>::get()->get<tg_>();
+}
+
 template <bool, typename Tp_>
 struct Assign;
 
