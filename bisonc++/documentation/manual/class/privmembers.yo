@@ -46,7 +46,7 @@ internally'' is used should not be called by user-defined code.
        Used internally.
     it() bf(void Base::errorVerbose__+nop()()):nl()
        Used internally.
-    it() bf(void executeAction+nop()()):nl()
+    it() bf(void executeAction+nop()(int)):nl()
        Used internally.
     it() bf(int lex()):nl()
       By default implemented inline in the tt(parser.ih) internal header file,
@@ -57,7 +57,7 @@ internally'' is used should not be called by user-defined code.
        or as one of the symbolic tokens defined in the tt(Parser::Tokens__)
        enumeration. Zero or negative token values are interpreted as `end of
        input'.
-    it() bf(int lookup+nop()()):nl()
+    it() bf(int lookup+nop()(bool)):nl()
        Used internally.
     it() bf(void nextToken+nop()()):nl()
        Used internally.
