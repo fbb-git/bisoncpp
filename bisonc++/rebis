@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# See also: http://www.alchemylab.com/dictionary.htm#sectH:
+#   The Hermaphrodite represents Sulfur and Mercury after their
+#   Conjunction. Rebis (something double in characteristics) is another
+#   designation for this point in the alchemy of transformation.  
+
+prompt()
+{
+    echo "$*"
+    read A
+    [ "$A" == "y" ] && return 1
+    return 0
+}
+
+echo Press enter to execute commands ending in ...
+echo
+
+prompt "    0. Cleaning up ./self ..."
+mkdir -p self | exit 1
+rm -rf self/*
+
+prompt "    1. Copying the grammar to self..."
+cp  -r parser/grammar parser/inc self
+
+prompt "    2. Run (in ./self) ../tmp/bin/bisonc++ on the grammar"
+cd self && ../tmp/bin/bisonc++ -S ../skeletons grammar
+cd ..
+
+prompt "    3. Copy the generated parserbase.h and parse.cc to ./parser"
+cp ./self/parse.cc ./self/parserbase.h ./parser
+
+
+prompt "    4. Rebuild: rebuilding the program ('build program')"
+touch ./scanner/a
+build program || exit 1
+echo
+
+prompt "    5. Again: run '../tmp/bin/bisonc++' on grammar"
+cd self && ../tmp/bin/bisonc++ -S ../skeletons grammar
+cd ..
+
+echo "    6. Diffs should show differences in timestamps only:"
+for file in parserbase.h parse.cc
+do
+    prompt "       RUN: 'diff self/$file parser' ..."
+    diff self/$file parser
+    echo
+done
