@@ -1,7 +1,7 @@
 #include "generator.ih"
 
 Generator::Generator(Rules const &rules, 
-                     map<string, string> const &polymorphic)
+                     unordered_map<string, string> const &polymorphic)
 :
     d_arg(Arg::instance()),
     d_rules(rules),

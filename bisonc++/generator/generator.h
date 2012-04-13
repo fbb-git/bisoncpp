@@ -2,7 +2,7 @@
 #define _INCLUDED_GENERATOR_
 
 #include <vector>
-#include <map>
+#include <unordered_map>
 #include <string>
 #include <iosfwd>
 
@@ -17,7 +17,7 @@ class Options;
 class Generator
 {
     typedef void (Generator::*Inserter)(std::ostream &) const;
-    typedef std::map<std::string, Inserter>     Map;
+    typedef std::unordered_map<std::string, Inserter>     Map;
     typedef Map::value_type                     MapValue;
     typedef Map::const_iterator                 MapConstIter;
 
@@ -37,7 +37,7 @@ class Generator
     bool d_debug;
     bool d_printTokens;
     
-    std::map<std::string, std::string> const &d_polymorphic; 
+    std::unordered_map<std::string, std::string> const &d_polymorphic; 
 
     mutable Writer d_writer;                // maintains its own const-ness
 
@@ -49,7 +49,7 @@ class Generator
 
     public:
         Generator(Rules const &rules, 
-                  std::map<std::string, std::string> const &polymorphic); 
+             std::unordered_map<std::string, std::string> const &polymorphic); 
 
         void baseClassHeader() const;
         void classHeader() const;

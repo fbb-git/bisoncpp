@@ -64,7 +64,7 @@ class Parser: public ParserBase
 
         // associations between type-identifiers and type-definitions of
         // polymorphic semantic values
-    std::map<std::string, std::string> d_polymorphic;
+    std::unordered_map<std::string, std::string> d_polymorphic;
 
     static size_t s_nHidden;          // number of hidden nonterminals
     static std::ostringstream s_hiddenName;
@@ -87,7 +87,7 @@ class Parser: public ParserBase
         Parser(Rules &rules);
         int parse();
         void cleanup();             // do cleanup following parse();
-        std::map<std::string, std::string> const &polymorphic() const;
+        std::unordered_map<std::string, std::string> const &polymorphic() const;
 
     private:
         void addPolymorphic(std::string const &tag, 
@@ -204,7 +204,7 @@ class Parser: public ParserBase
         static int nComponents(int nElements);
 };
 
-inline std::map<std::string, std::string> const &Parser::polymorphic() const
+inline std::unordered_map<std::string, std::string> const &Parser::polymorphic() const
 {
     return d_polymorphic;
 }

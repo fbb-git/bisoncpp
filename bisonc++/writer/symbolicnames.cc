@@ -3,7 +3,7 @@
 void Writer::symbolicNames() const
 {
     *d_out <<  
-        "typedef std::map<int, char const *> SMap;\n"
+        "typedef std::unordered_map<int, char const *> SMap;\n"
         "typedef SMap::value_type SMapVal;\n"
         "\n"
         "SMapVal s_symArr[] =\n"
