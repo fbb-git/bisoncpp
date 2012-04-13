@@ -42,7 +42,7 @@ whole rule. Of course, the default rule is valid only if the two data types
 match. There is no meaningful default action for an empty rule; every empty
 rule must have an explicit action unless the rule's value does not
 matter. Note that the default tt($$) value is assigned at the em(beginning) of
-an action block. Any changes to tt($1) will therefore em(not) automatically be
+an action block. Any changes to tt($1) are therefore em(not) automatically 
 propagated to tt($$). E.g., assuming that tt($1 == 3) at the beginning of the
 following action block, then tt($$) will still be equal to 3 after executing
 the statement in the action block:
@@ -87,3 +87,8 @@ always refers to the tt(expr) which precedes bar in the definition of tt(foo).
 But as mentioned: it's a risky practice, which should be avoided if at all
 possible. See also section ref(SPECIAL).
 
+    All tt($)-type variables used in action blocks can be modified. All
+numbered tt($)-variables are deleted when a production rule has been
+recognized. Unless an action explicitly assigns a value to tt($$), the
+(possibly modified) tt($1) value is assigned to tt($$) when a production rule
+has been recognized.

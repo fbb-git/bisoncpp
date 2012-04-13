@@ -1,7 +1,7 @@
-B() may generate code using polymorphic semantic values. The approach
-discussed here is a direct result of a suggestion by Dallas A. Clement in
-September 2007. All sources of the example discussed in this section can be
-retrieved from  the lurl(poly) directory.
+Bic() may generate code using polymorphic semantic values. The approach
+discussed here is a direct result of a suggestion originally made by Dallas
+A. Clement in September 2007. All sources of the example discussed in this
+section can be retrieved from the lurl(poly) directory.
 
 One may wonder why a tt(union) is still used by b() as bf(C++) offers
 inherently superior approaches to combine multiple types in one type. The

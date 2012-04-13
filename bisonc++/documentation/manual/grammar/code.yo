@@ -94,19 +94,35 @@ The important elements of the namespace tt(Meta__) are:
             )
         after which tt(expr)'s semantic value has been initialized to a
          tt(Semantic<Tag__::INT>). 
-        it() tt(ReturnType get<Tag__::tag>() const), like the tt(Base::get)
-         member having the same signature, offers direct, but non-modifiable
-         access to the semantic value stored in the tt(SType) object.nl()
-        When tt(get<Tag__::tag>() const) is called, but the tt(shared_ptr)
-         holds a 0-pointer then a tt(std::logic_error("undefined semantic
-         value requested")) exception is thrown.
-        it() tt(DataType get<Tag__::tag>()), like the tt(Base::get) member
-         having the same signature, offers direct, and modifiable access
-         to the semantic value stored in the tt(SType) object.nl()
-        When tt(get<Tag__::tag>()) is called, but the tt(shared_ptr) still
-         holds a 0-pointer then the tt(shared_ptr) is first initialized with a
-         pointer to a tt(Semantic<Tag__::tag>) object initialized with the
-         default value of the type matching the tag.
+        it(ReturnType get<Tag__>() const) returns the semantic
+             value stored inside tt(Semantic<Tag__>). If the type-name is a
+             built-in type a copy of the value is returned, otherwise a
+             reference to a constant object is returned;nl()
+            This member checks for 0-pointers and for tt(Tag__) mismatches
+             between the requested and actual tt(Tag__), throwing a
+             tt(std::logic_error) if found.
+        it(DataType &get<Tag__>()) returns a reference to the (modifiable)
+             semantic value stored inside tt(Semantic<Tag__>).nl()
+            This member checks for 0-pointers and for tt(Tag__) mismatches
+             between the requested and actual tt(Tag__), in that case
+             replacing the current tt(Semantic) object pointed to by a new
+             tt(Semantic<Tag__>) object of the requested tt(Tag__).
+        it(ReturnType data<Tag__>() const. ReturnType) refers to the semantic
+             value stored inside tt(Semantic<Tag__>). If the type-name is a
+             built-in type a copy of the value is returned, otherwise a
+             reference to a constant object is returned;nl()
+            This is a (partially) em(unchecking) variant of the corresponing
+             tt(get) member, resulting in a em(Segfault) if used when the
+             tt(shared_ptr) holds a 0-pointer, and throwing a
+             tt(std::bad_cast) in case of a mismatch between the requested and
+             actual tt(Tag__).
+        it(DataType &data<Tag__>()) returns a reference to the (modifiable)
+             semantic value stored inside tt(Semantic<Tag__>).nl()
+            This is a (partially) em(unchecking) variant of the corresponing
+             tt(get) member, resulting in a em(Segfault) if used when the
+             tt(shared_ptr) holds a 0-pointer, and throwing a
+             tt(std::bad_cast) in case of a mismatch between the requested and
+             actual tt(Tag__).
         )
     )
     When an incorrect tag is specified (e.g., with tt(get<Tag__::tag>(),
