@@ -56,6 +56,7 @@ class AtDollar
         Action action() const;
         bool callsMember() const;
         bool returnValue() const;   // $$ is being referred to
+        bool stype() const;         // id == STYPE__
 };
 
 inline AtDollar::Type AtDollar::type() const
@@ -76,6 +77,11 @@ inline bool AtDollar::callsMember() const
 inline bool AtDollar::returnValue() const
 {
     return d_nr == std::numeric_limits<int>::max();
+}
+        
+inline bool AtDollar::stype() const
+{
+    return d_stype;
 }
         
 inline size_t AtDollar::pos() const

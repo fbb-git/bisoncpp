@@ -21,8 +21,8 @@ Parser::SemTag Parser::semTag(char const *label, AtDollar const &atd,
     if  // with polymorphic: warn if an untyped $-value is used
     (
         d_semType == POLYMORPHIC
-        &&
-        not atd.returnValue() && stype.empty() && id->empty()
+        &&                                       //id->empty()
+        not atd.returnValue() && stype.empty() && not atd.stype() 
     )
         warnUntaggedValue(atd);
 
@@ -32,7 +32,7 @@ Parser::SemTag Parser::semTag(char const *label, AtDollar const &atd,
         if (atd.id().empty())                   // no explicit tag either
             return NONE;
         
-        if (atd.id() == s_stype__)              // no explicit tag requested
+        if (atd.stype())                        // STYPE__ requested
             return NONE;
         
         if ((this->*testID)(atd.id()))
@@ -50,7 +50,7 @@ Parser::SemTag Parser::semTag(char const *label, AtDollar const &atd,
             return AUTO;
         }
         
-        if (atd.id() == s_stype__)              // ignoring auto tag/field
+        if (atd.stype())                        // ignoring auto tag/field
             return NONE;
         
         if ((this->*testID)(atd.id()))          // tag/field override
@@ -67,7 +67,7 @@ Parser::SemTag Parser::semTag(char const *label, AtDollar const &atd,
             id = &stype;                        // auto is illegal: set ptr.
         else
         {
-            if (atd.id() == s_stype__)          // no explicit tag requested
+            if (atd.stype())                    // no explicit tag requested
                 return NONE;
             
             if ((this->*testID)(atd.id()))

@@ -10,8 +10,8 @@ AtDollar::AtDollar(Type type, size_t blockPos, size_t lineNr,
     d_pos(blockPos),
     d_length(text.length()),
     d_text(text),
-    d_id(id),
+    d_id(id.empty() ? "STYPE__" : id),
     d_nr(nr),
     d_member(false),
-    d_stype(id.empty() || id == "STYPE__")
+    d_stype(d_id == "STYPE__")
 {}
