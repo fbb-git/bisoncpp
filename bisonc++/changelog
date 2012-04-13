@@ -11,8 +11,8 @@ bisonc++ (4.00.00)
     `enum Tag__'.
 
   * The previously used class spSemBase and derivatives (e.g., SemBase,
-    Semantic) are now obsolete and the directory sembase implementing these
-    classes was removed.
+    Semantic) are now obsolete and the directories sembase and spsembase
+    implementing these classes were removed.
 
   * The Parser's inline functions are all private and were moved to the
     parser's .ih file. This doesn't affect current implementations, as
@@ -23,7 +23,9 @@ bisonc++ (4.00.00)
   * @@ can be used (instead of d_loc__) to refer to a rule's location stack
     value. 
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 10 Apr 2012 11:39:36 +0200
+  * The generated parser now uses unordered_maps instead of maps.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri, 13 Apr 2012 14:10:12 +0200
 
 bisonc++ (3.01.00)
 
