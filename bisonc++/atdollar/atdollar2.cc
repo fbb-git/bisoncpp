@@ -13,5 +13,5 @@ AtDollar::AtDollar(Type type, size_t blockPos, size_t lineNr,
     d_id(id),
     d_nr(nr),
     d_member(false),
-    d_stype(id == "STYPE__")
+    d_stype(id.empty() || id == "STYPE__")
 {}

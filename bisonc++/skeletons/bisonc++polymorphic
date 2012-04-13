@@ -116,14 +116,25 @@ $insert polymorphicSpecializations
 
             Tag__ tag() const;
 
-            template <Tag__ tg_>
-            typename TypeOf<tg_>::ReturnType get() const;   // rhs
+                // this get()-member checks for 0-pointer and correct tag 
+                // in shared_ptr<Base>, and may throw a logic_error
+            template <Tag__ tg_>                    
+            typename TypeOf<tg_>::ReturnType get() const;
     
+                // this get()-member checks for 0-pointer and correct tag 
+                // in shared_ptr<Base>, and resets the shared_ptr's Base * 
+                // to point to Meta::__Semantic<tg_>() if not
             template <Tag__ tg_>
-            typename TypeOf<tg_>::DataType &get();          // lhs, checked
+            typename TypeOf<tg_>::DataType &get();
+
+                // the data()-members do not check, and may result in a 
+                // bad_cast exception or segfault if used incorrectly
 
             template <Tag__ tg_>
-            typename TypeOf<tg_>::DataType &data();         // lhs, unchecked
+            typename TypeOf<tg_>::ReturnType data() const;
+
+            template <Tag__ tg_>
+            typename TypeOf<tg_>::DataType &data();
     };
 
 }  // namespace Meta__

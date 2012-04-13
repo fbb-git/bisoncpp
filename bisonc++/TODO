@@ -3,6 +3,3 @@
 
 Replace #include <map> by #include <unordered_map> in parser (?)
 
-To initialize $$ with %polymorphic assign a permittable value.
-
-INSTALL.im: temporarily NOT using '-g'

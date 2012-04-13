@@ -87,8 +87,10 @@ NR      [[:digit:]]+
 
     \$-?{NR}\.              d_block.dollarIndex(lineNr(), d_matched, true);
 
+    "$<>$"                  |
     "$<"{IDENT}">$"         d_block.IDdollar(lineNr(), d_matched);
 
+    "$<>"-?{NR}             |
     "$<"{IDENT}">"-?{NR}    d_block.IDindex(lineNr(), d_matched);
 
     .           d_block(d_matched);

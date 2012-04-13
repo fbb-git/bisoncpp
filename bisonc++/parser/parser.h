@@ -23,9 +23,9 @@ namespace FBB
 class Parser: public ParserBase
 {
             // actions to taken given tokens returned by the lexical scanner
-    typedef std::map<size_t, void (Parser::*)()>    ActionMap;
-    typedef ActionMap::iterator                     Iterator;
-    typedef ActionMap::value_type                   Value;
+    typedef std::unordered_map<size_t, void (Parser::*)()>  ActionMap;
+    typedef ActionMap::iterator                             Iterator;
+    typedef ActionMap::value_type                           Value;
 
     enum SemType
     {
