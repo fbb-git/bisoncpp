@@ -7,6 +7,11 @@ void Parser::cleanup()
     if (!d_rules.hasRules() || !d_rules.nProductions())
         fmsg << "No production rules" << endl;
 
+    emsg.noLineNr();
+    emsg.setLineTag("");
+    wmsg.noLineNr();
+    wmsg.setLineTag("");
+
     if (emsg.count())       // Terminate if parsing produced errors. 
         throw 1;
 

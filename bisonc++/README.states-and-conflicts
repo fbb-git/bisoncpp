@@ -101,90 +101,101 @@ Defining states proceeds as follows:
     and/or RRConflict::Vector. Conflicts are identified and resolved by the
     member: 
 
-         (static)checkConflicts();
+         State::checkConflicts();
 
 5.  S/R conflicts are handled by the d_srConflict object. This object received
-    at construction time a context consisting of the state's
-    d_itemVector vector and d_nextVector vector as well as d_reducible
-    containing all indices of reducible items. Each of these indices 
+    at construction time a context consisting of the state's d_itemVector and
+    d_nextVector as well as d_reducible containing all indices of reducible
+    items. Each of these indices is the index of a reducible item which is,
+    together with a context consisting of the state's d_itemVector and
+    d_nextVector, passed to Next::checkShiftReduceConflict(), which solves the
+    observed shift-reduce conflicts. 
 
+    Here is how this is done:
 
-    reducible item index together with the context consisting of the state's
-    d_itemVector vector and d_nextVector vector is passed to Next's
-    checkShiftReduceConflict() member. Here observed shift-reduce conflicts
-    are solved. Here is how this is done:
+    Assume a state's itemVector holds the following StateItems:
 
-	Assume a state's itemVector holds the following StateItems:
+        0:    [P11 3] expression -> expression '-' expression  .   
+                        { EOLN '+' '-' '*' '/' ')' }  0, 1, () -1 
+        1:    [P10 1] expression -> expression  . '+' expression   
+                        { EOLN '+' '-' '*' '/' ')' }  0, 0, () 0 
+        2:    [P11 1] expression -> expression  . '-' expression   
+                        { EOLN '+' '-' '*' '/' ')' }  0, 0, () 1 
+        3:    [P12 1] expression -> expression  . '*' expression   
+                        { EOLN '+' '-' '*' '/' ')' }  0, 0, () 2 
+        4:    [P13 1] expression -> expression  . '/' expression   
+                        { EOLN '+' '-' '*' '/' ')' }  0, 0, () 3 
+    
+    and the associated nextVector is:
+    
+        0:    On '+' to state 15 with (1 )
+        1:    On '-' to state 16 with (2 )
+        2:    On '*' to state 17 with (3 )
+        3:    On '/' to state 18 with (4 )
+    
+    
+    Conflicts are inspected for all reducible items. Here the reducible item
+    is the item having index 0. 
 
-	    0:    [P11 3] expression -> expression '-' expression  .   
-	                    { EOLN '+' '-' '*' '/' ')' }  0, 1, () -1 
-	    1:    [P10 1] expression -> expression  . '+' expression   
-	                    { EOLN '+' '-' '*' '/' ')' }  0, 0, () 0 
-	    2:    [P11 1] expression -> expression  . '-' expression   
-	                    { EOLN '+' '-' '*' '/' ')' }  0, 0, () 1 
-	    3:    [P12 1] expression -> expression  . '*' expression   
-	                    { EOLN '+' '-' '*' '/' ')' }  0, 0, () 2 
-	    4:    [P13 1] expression -> expression  . '/' expression   
-	                    { EOLN '+' '-' '*' '/' ')' }  0, 0, () 3 
-	
-	and the associated nextVector is:
-	
-	    0:    On '+' to state 15 with (1 )
-	    1:    On '-' to state 16 with (2 )
-	    2:    On '*' to state 17 with (3 )
-	    3:    On '/' to state 18 with (4 )
-	
-	
-	Conflicts are inspected for all reducible elements. Here this is the
-    element having index 0. Inspection involves (but see below for an
-    extension of this process when the LHS of a reducible item differs from
-    the LHS of a non-reducible item):
-	
-	    1. The nextVector's symbols are searched for in the LA set of the
-	       reduction item (so, subsequently '+', '-', '*' and '/' are searched
-	       for in the LA set of itemVector[0]).
-	    2. In this case, all are found and depending on the token's priority
-	       and the rule's priority either a shift or a reduce is selected. 
-	 
-	 Production rules received their priority setting either explicitly (using
-	 %prec) or from their first terminal token. See also 
-	 rules/updateprecedences.cc
-	
+    Inspection involves (but see below for an extension of this process when
+    the LHS of a reducible item differs from the LHS of a non-reducible item):
+    
+        1. The nextVector's symbols are searched for in the LA set of the
+           reduction item (so, subsequently '+', '-', '*' and '/' are searched
+           for in the LA set of itemVector[0]).
+        2. In this case, all are found and depending on the token's priority
+           and the rule's priority either a shift or a reduce is selected. 
+     
+     Production rules received their priority setting either explicitly (using
+     %prec) or from their first terminal token. See also
+     rules/updateprecedences.cc
+    
+
+    What happens if neither occurs? In a rule like 'expr: term' there is no
+    first terminal token and there is no %prec being used. 
+    In these cases the rule is removed, by default using a shift instead of a
+    reduce (until 4.00.00 this was handled incorrectly by giving the reduction
+    rule the highest precedence, using a reduce rather than a shift) 
+    The problem with rules without precedence was originally brought to my
+    attention by Ramanand Mandayam.
+
     Different LHS elements of items:
 
-	As pointed out by Ramanand Mandayam, S/R conflicts may be observed when
-	reducible rules merely consist of non-terminals. Here is an example:
-	
-	%left  '*'                                
-	%token ID
-	%%
-	expr: 
-	    term 
-	;
-	term:
-	    term '*' primary
-	| 
-	    ID
-	;
-	primary:
-	    '-' expr
-	| 
-	    ID
-	;
-	
-	This grammar contains the following state
-	
-	State 2:
-	0: [P1 1] expr -> term  .   { <EOF> }  1, () -1
-	1: [P2 1] term -> term  . '*' primary   { '*' <EOF> }  0, () 0
-	  0: On '*' to state 4 with (1 )
-	  Reduce item(s): 0 
-	
-	Here, item 0 reduces to N 'expr' and item 1 requires a shift in a
-	production rule of the N 'term'.
-	
-	In these cases the rule 'expr -> term .' has no precedence that can be
+    As pointed out by Ramanand Mandayam, S/R conflicts may be observed when
+    reducible rules merely consist of non-terminals. Here is an example:
+    
+    %left  '*'                                
+    %token ID
+    %%
+    expr: 
+        term 
+    ;
+    term:
+        term '*' primary
+    | 
+        ID
+    ;
+    primary:
+        '-' expr
+    | 
+        ID
+    ;
+    
+    This grammar contains the following state
+    
+    State 2:
+    0: [P1 1] expr -> term  .   { <EOF> }  1, () -1
+    1: [P2 1] term -> term  . '*' primary   { '*' <EOF> }  0, () 0
+      0: On '*' to state 4 with (1 )
+      Reduce item(s): 0 
+    
+    Here, item 0 reduces to N 'expr' and item 1 requires a shift in a
+    production rule of the N 'term'.
+    
+    In these cases the rule 'expr -> term .' has no precedence that can be
     derived from either %prec or an initial terminal. Such reductions
     automatically receive the highest possible precedence and 'reduce' is
     used, rather than 'shift'. Since there is no explicit basis for this
     choice the choice between shift and reduce is flagged as a conflict.
+
+

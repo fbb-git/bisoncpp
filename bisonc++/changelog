@@ -1,3 +1,12 @@
+bisonc++ (4.01.00) 
+
+  * Repaired a long-existing bug due to which some S/R conflicts are solved by
+    a reduce, where a shift should have been used. See
+    README.states-and-conflicts for details.
+
+  * Removed line-numbers from final warning/error messages
+
+
 bisonc++ (4.00.00) 
 
   * Implemented the %polymorphic directive. Bisonc++ itself uses %polymorphic

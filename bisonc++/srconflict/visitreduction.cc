@@ -20,7 +20,7 @@
 //     3:    On '/' to state 18 with (4 )
 // 
 // 
-// Conflicts are inspected for all reduction elements, so for index element 0
+// Conflicts are inspected for all reducible elements, so for index element 0
 // in the above example, as follows:
 // 
 //     1. The nextVector's symbols are searched in the LA set of the reduction
@@ -36,7 +36,7 @@
 //  What happens if neither occurs? In a rule like 'expr: term' there is no
 //  first terminal token and there is no %prec being used. 
 //  In these cases the rule automatically receives the highest precedence and 
-//  a shift/reduce conflict is rapported (as pointed out by Ramanand
+//  a shift/reduce conflict is reported (as pointed out by Ramanand
 //  Mandayam).
 
     // idx is the index of a reducible item. That item can be reached as
@@ -50,8 +50,8 @@ void SRConflict::visitReduction(size_t reducibleIdx)
     {
         nextIter =                  // check whether a nextVector symbol
             find_if(                // is in the reduction item's LA set.
-                nextIter, d_nextVector.end(), 
-                [&](Next const &next)
+                nextIter, d_nextVector.end(),   // if so, there is a S/R
+                [&](Next const &next)           // conflict, solved below
                 {
                     return next.inLAset(reducibleLAset);
                 }

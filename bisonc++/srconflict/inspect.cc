@@ -1,9 +1,10 @@
 #include "srconflict.ih"
 
-// Each reducible item index is passed to visitReduction() which will handle
-// any observed S/R conflict. See visitreduction.cc or
-// READEM.states-and-conflicts for a description of the conflict resolution
-// process. 
+// Each reducible item index is passed to visitReduction() which handles an
+// observed S/R conflict. See README.states-and-conflicts for a description of
+// the conflict resolution process.
+
+// called fm: State::checkConflicts
 
 void SRConflict::inspect()
 {

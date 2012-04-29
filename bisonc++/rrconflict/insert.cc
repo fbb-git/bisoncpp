@@ -11,8 +11,9 @@ ostream &RRConflict::insert(ostream &out) const
 
         out << "Solved RR CONFLICT for rules " << 
                 d_itemVector[iter->keepIdx()].nr() << " and " <<
-                reduced.nr() << ": removed " <<
-                iter->lookaheadSet() << " from the LA set of " <<
+                reduced.nr() << ":\n"
+                "\tremoved " << iter->lookaheadSet() << 
+                " from the LA set of " <<
                     (reduced.lookaheadSetSize() == 0 ? "(removed) " : "") <<
                 "rule " << reduced.nr() << '\n';
         ++iter;

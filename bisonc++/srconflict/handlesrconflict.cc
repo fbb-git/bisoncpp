@@ -1,5 +1,10 @@
 #include "srconflict.ih"
 
+    // called fm processshiftreduceconflict.cc
+
+    // A conflict was observed as item 'reducibleItemIdx' and
+    // 'shiftableItemIdx' have identical LA symbols
+    //
 void SRConflict::handleSRconflict(
         size_t shiftableItemIdx,
         Next::ConstIter const &next, 
@@ -8,26 +13,27 @@ void SRConflict::handleSRconflict(
     typedef Enum::Solution Solution;
 
     StateItem::Vector const &itemVector = d_itemVector;
-    Symbol const *productionSymbol = 
-                                itemVector[reducibleItemIdx].precedence();
+    Symbol const *precedence = itemVector[reducibleItemIdx].precedence();
     bool forced = false;
 
     Solution solution;
-
-    if (productionSymbol == 0)              // no production rule precedence
+                                            // the reducible item does not
+    if (precedence == 0)                    // have an explicit precedence
     {
-        solution = Solution::REDUCE;        // force a reduction
+        // solution = Solution::REDUCE;        // force a reduction
+        solution = Solution::SHIFT;         // force a shift
         forced = true;
         ++s_nConflicts;                     // and a conflict
     }
     else                                    // otherwise try to solve by 
     {                                       // precedence or association
-        solution = next->solveByPrecedence(productionSymbol);
+        solution = next->solveByPrecedence(precedence);
 
         if (solution == Solution::UNDECIDED)
             solution = next->solveByAssociation();
     }
     
+
     switch (solution)                       // perform SHIFT or REDUCE
     {
         case Solution::REDUCE:
