@@ -19,8 +19,8 @@ void Generator::insert(ostream &out) const
     if (iter != s_insert.end())
         (this->*iter->second)(out);
     else
-        cerr << "Ignoring unsupported `$insert " << d_key << 
-                " ...' in skeleton file\n";
+        wmsg << "Ignoring unsupported `$insert " << d_key << 
+                " ...' in skeleton file" << endl;
 }
 
 

@@ -7,6 +7,7 @@
 #include <iosfwd>
 
 #include <bobcat/arg>
+#include <bobcat/stat>
 
 #include "../writer/writer.h"
 
@@ -21,7 +22,10 @@ class Generator
     typedef Map::value_type                     MapValue;
     typedef Map::const_iterator                 MapConstIter;
 
-    FBB::Arg &d_arg;
+    FBB::Arg   &d_arg;
+
+    mutable FBB::Stat   d_stat;
+
     Rules const &d_rules;
     Options &d_options;
 

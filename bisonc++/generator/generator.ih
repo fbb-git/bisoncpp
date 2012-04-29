@@ -6,11 +6,10 @@
 
 #include <bobcat/errno>
 #include <bobcat/datetime>
-#include <bobcat/stat>
+#include <bobcat/mstream>
 
 #include "../options/options.h"
 #include "../rules/rules.h"
-//#include "../parser/parser.h"
 #include "../terminal/terminal.h"
 #include "../production/production.h"
 

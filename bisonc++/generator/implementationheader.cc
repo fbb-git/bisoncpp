@@ -15,7 +15,7 @@ void Generator::implementationHeader() const
     (
         not d_arg.option(0, "force-implementation-header")
         &&
-        Stat(d_options.implementationHeader())
+        d_stat.set(d_options.implementationHeader())
     )
         return;
 
