@@ -1,4 +1,4 @@
-#include "bisonc++.h"
+#include "bisonc++.ih"
 
 void usage(string const &program_name)
 {

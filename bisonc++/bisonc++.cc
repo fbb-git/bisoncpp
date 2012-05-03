@@ -2,7 +2,7 @@
                               bisonc++.cc
 */
 
-#include "bisonc++.h"
+#include "bisonc++.ih"
 
 using namespace std;
 using namespace FBB;
@@ -134,7 +134,7 @@ try
     Grammar grammar;
     grammar.deriveSentence();
 
-    if (Msg::errors())
+    if (emsg.count())
         return 1;
 
     if (arg.option('A'))    // Analyze only
