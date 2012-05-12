@@ -12,5 +12,7 @@ yodl2html index.yo || exit 1
 scp ../bisonc++/tmp/man*/*.html index.html \
     fbb,bisoncpp@web.sourceforge.net:htdocs/
 
+rm index.html
+
 cd ../bisonc++ 
     build distclean
