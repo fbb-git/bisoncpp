@@ -6,9 +6,9 @@ bisonc++ (4.01.00)
 
   * Removed line-numbers from final warning/error messages
 
-  * This version expects Bobcat >= 3.00.02.
+  * This version requires Bobcat >= 3.00.00
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 12 May 2012 11:53:48 +0200
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Thu, 03 May 2012 21:21:47 +0200
 
 bisonc++ (4.00.00) 
 
