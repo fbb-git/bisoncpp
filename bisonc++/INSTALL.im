@@ -1,7 +1,17 @@
-#define EXTENSION ""
-    // EXTENSION should be changed to ".exe" when compiling Bisonc++ for 
-    // Cygwin environments. Don't forget the initial dot (.)
-    // See also README.CYGWIN
+#define BINARY  "bin/bisonc++"
+
+#define GXX            "g++"
+    // The compiler to use for compilation and linking
+
+#define CXXFLAGS    "-Wall --std=c++0x -O2 -g"
+    // Specify compiler options that should be used. Overruled by the CXXFLAGS
+    // environment variables. 
+    // For profiling use the  -pg flags, and don't strip
+
+#define LDFLAGS     ""
+    // Specify linker options. None by default. Do not specify -s (strip) here
+    // as strip is handled by adding a command to the build call.
+
 
 string BASE;
 
@@ -25,26 +35,6 @@ string MAN;
 string DOC;
     // DOC is the directory in which all other documentation will be stored
 
-string COMPILER;
-    // COMPILER specifies the compiler to use. Bisonc++ is coined as
-    // belonging to the Debian `unstable' distribution, which may use a
-    // different version of the compiler you currently have in your
-    // system. E.g., in july 2006 the Debian `testing' version of the compiler
-    // was 4.0.4, but the `unstable' version's compiler was 4.1.2. By defining
-    // COMPILER with a specific version (e.g., COMPILER=g++-4.1) that
-    // particular version can be used. The distributed definition uses the
-    // `default' compiler version.
-
-#define CXXFLAGS    "-O2 -g"
-    // Specify compiler options that should be used. Overruled by the CXXFLAGS
-    // environment variables. 
-    // The option "-Wall" is always used.
-    // For profiling use the  -pg flags, and don't strip
-
-#define LDFLAGS     ""
-    // Specify linker options. None by default. Do not specify -s (strip) here
-    // as strip is handled by adding a command to the build call.
-
 void setLocations()
 {
     // Recompile options/data.cc if the skeleton locations change
@@ -54,8 +44,9 @@ void setLocations()
     SKEL = BASE + "/share/bisonc++";
     MAN  = BASE + "/share/man/man1";    
     DOC  = BASE + "/share/doc/bisonc++";
-
-    COMPILER = "g++";
-//    COMPILER = "g++-4.6";
 }
+
+
+
+
 

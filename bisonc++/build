@@ -2,8 +2,6 @@
 
 #include "INSTALL.im"
 
-#define BINARY              "bisonc++" 
-#define COMPILER            "g++ -Wall --std=c++0x "
 #define LIBRARY             "bisonc++"       // NO lib, NO .a
 #define LIBS                "-lbobcat"      // -l required
 #define MAIN                "bisonc++.cc"
