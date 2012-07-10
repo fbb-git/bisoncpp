@@ -1,6 +1,6 @@
 #define BINARY  "bin/bisonc++"
 
-#define GXX            "g++"
+#define CXX            "g++"
     // The compiler to use for compilation and linking
 
 #define CXXFLAGS    "-Wall --std=c++0x -O2 -g"

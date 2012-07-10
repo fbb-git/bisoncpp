@@ -4,7 +4,7 @@ bisonc++ (4.01.02)
     identically named environment variables: 
         BINARY   defines the name (or path) of the generated binray program. 
                  By default `bin/bisonc++' under ./tmp
-        GXX      defines the name of the compiler to use. By default `g++'
+        CXX      defines the name of the compiler to use. By default `g++'
         CXXFLAGS the options passed to the compiler. 
                  By default `-Wall --std=c++0x -O2 -g'
         LDFLAGS  the options passed to the linker. By default no options are

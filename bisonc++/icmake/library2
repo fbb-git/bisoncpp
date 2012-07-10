@@ -289,7 +289,7 @@ void build_library()
     setClasses();
     special();
 
-    g_compiler = setOpt(GXX, "GXX") + " " + setOpt(CXXFLAGS, "CXXFLAGS");
+    g_compiler = setOpt(CXX, "CXX") + " " + setOpt(CXXFLAGS, "CXXFLAGS");
 
     md(TMP_DIR);
 

@@ -6,7 +6,7 @@ void link(string maino, string strip)
     chdir(TMP_DIR);
 
     binary = setOpt(BINARY, "BINARY");
-    compiler = setOpt(GXX, "GXX") + " -o " + binary + " " + maino +
+    compiler = setOpt(CXX, "CXX") + " -o " + binary + " " + maino +
                         " -L. -l" LIBRARY " " LIBS;
 
 //    if 
