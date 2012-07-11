@@ -1,6 +1,3 @@
-int g_dryrun;       // set to 1 if envvar DRYRUN was set in main()
-
-
 void runP(int testValue, string cmd)
 {
     if (g_dryrun)

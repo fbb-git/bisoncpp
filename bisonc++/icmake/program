@@ -1,28 +1,15 @@
 void link(string maino, string strip)
 {
-    string binary;
-    string compiler;
+    chdir("tmp");
 
-    chdir(TMP_DIR);
+    showCd("tmp");
+    if (g_binPath != "")
+        md(g_binPath);
 
-    binary = setOpt(BINARY, "BINARY");
-    compiler = setOpt(CXX, "CXX") + " -o " + binary + " " + maino +
-                        " -L. -l" LIBRARY " " LIBS;
-
-//    if 
-//    (
-//        maino younger "bin/" + binary
-//        || 
-//        "lib" LIBRARY ".a" younger "bin/" + binary
-//        ||
-//        g_compiled
-//    )
-    {
-        showCd(TMP_DIR);
-        md("bin");
-        printf("LINKING:\n");
-        system(compiler + " " + strip + setOpt(LDFLAGS, "LDFLAGS"));
-    }
+    printf("LINKING:\n");
+    system(g_compiler + " -o " + g_binary + " " + maino +
+                        " -L. -l" LIBRARY " " LIBS " " + 
+                        strip + " " + g_ldflags);
 
     chdir("");
 }
@@ -34,14 +21,14 @@ void program(string strip)
 
     build_library();
 
-    lopt = strip + setOpt(LDFLAGS, "LDFLAGS");
+    lopt = strip + " " + g_ldflags;
 
-    if (g_base || MAIN younger TMP_DIR "/" + maino)
+    if (g_compBase || MAIN younger "tmp/" + maino)
     {
         printf("\n"
                 "chdir .\n"
                 "RECOMPILE: " MAIN "\n");
-        system(g_compiler + " -c -o " TMP_DIR "/" + maino + " " MAIN);
+        system(g_compiler + " -c -o tmp/" + maino + " " MAIN);
     }
 
     link(maino, strip);

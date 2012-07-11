@@ -1,37 +1,24 @@
-string remove1;
-string remove2;
-string remove3;
-
-void setRemovals()
-{
-    // always:
-        remove1 = 
-            "build-stamp configure-stamp options/SKEL "
-            "tmp/bisonc++.o o */o release.yo tmp/libbisonc++.a "    
-            "parser/grammar.output "
-            ;
-
-    // dist:
-        remove2 =
-            "tmp";
-
-    // in ./documentation:
-        remove3 = "man/*.1 man/*.3bisonc++ man/*.html manual/manual-stamp "
-                  "manual/*.html manual/invoking/usage bisonc++ usage/usage "
-                  "manual/invoking/usage.txt";
-}
-
 void clean(int dist)
 {
-    setRemovals();
+    run("rm -rf "
+            "build-stamp configure-stamp options/SKEL "
+            "tmp/" + change_ext(MAIN, "o") + 
+            " o */o release.yo tmp/lib" LIBRARY ".a "    
+            "parser/grammar.output");
 
-    run("rm -rf " + remove1);
 
-    if (dist)
-        run("rm -rf " + remove2);
+    if (dist && exists("tmp"))
+    {
+        chdir("tmp");
+        run("rm -f " + g_binary);
+        chdir("..");
+        run("rm -rf tmp");
+    }
 
     chdir("documentation");
-    run("rm -rf " + remove3);
+    run("rm -rf man/*.1 man/*.3bisonc++ man/*.html manual/manual-stamp "
+                "manual/*.html manual/invoking/usage bisonc++ usage/usage "
+                "manual/invoking/usage.txt");
 
     exit(0);
 }

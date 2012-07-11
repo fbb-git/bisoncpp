@@ -4,21 +4,6 @@ void showCd(string dir)
             "chdir ", dir, "\n");
 }
 
-string setOpt(string install_im, string envvar)
-{
-    list optvar;
-    string ret;
-
-    optvar = getenv(envvar);    
-
-    if (optvar[0] == "1")
-        ret = optvar[1];
-    else 
-        ret = install_im;
-
-    return ret;
-}
-
 list patternList(string pattern)
 {
     list in;
@@ -86,7 +71,7 @@ void dependendenciesOf(string thisClass)
     if (find(thisClass, g_inspected) != -1) // this class already inspected
         return;                             // then done with this class
 
-    g_base = 1;                             // recompile the base's files
+    g_compBase = 1;                         // recompile the base's files
 
     printf("RECOMPILE: ", thisClass, "\n");
     g_inspected += (list)thisClass;         // now inspected
@@ -118,7 +103,7 @@ void checkALL()
             dependendenciesOf(g_classes[idx]);
     }
 
-    if (g_base)
+    if (g_compBase)
         touch(".");     // touches ./a
 }
     
@@ -212,7 +197,7 @@ list inspect(string destDir,
 void c_compile(int prefix, string destDir, string srcDir, list cfiles)
 {
     int idx;
-    string compiler;
+    string cxx;
     string file;
 
     showCd(srcDir);
@@ -220,12 +205,13 @@ void c_compile(int prefix, string destDir, string srcDir, list cfiles)
     if (srcDir != "")
         srcDir += "/";
 
-    compiler = g_compiler + " -c -o " + destDir + "/" + (string)prefix;
+    cxx = g_cxx + " " + g_cxxflags + 
+                " -c -o " + destDir + "/" + (string)prefix;
 
     for (idx = sizeof(cfiles); idx--; )
     {
         file = cfiles[idx];
-        system(compiler + change_ext(file, ".o") + " " + srcDir + file);
+        system(cxx + change_ext(file, ".o") + " " + srcDir + file);
         g_compiled = 1;
     }
 }
@@ -253,11 +239,11 @@ void std_cpp(int ignoreMain, string destDir,
 
 void static_library()
 {
-    chdir(TMP_DIR "/o");
+    chdir("tmp/o");
 
     if (sizeof(makelist("*" ".o")))
     {
-        showCd(TMP_DIR "/o");
+        showCd("tmp/o");
 
         system("ar cru ../libbisonc++.a *" ".o");
         system("ranlib ../libbisonc++.a");
@@ -289,11 +275,9 @@ void build_library()
     setClasses();
     special();
 
-    g_compiler = setOpt(CXX, "CXX") + " " + setOpt(CXXFLAGS, "CXXFLAGS");
+    md("tmp");
 
-    md(TMP_DIR);
-
-    staticLib = g_cwd + TMP_DIR "/lib" LIBRARY ".a";
+    staticLib = g_cwd + "tmp/lib" LIBRARY ".a";
 
     parser();
 
@@ -304,10 +288,10 @@ void build_library()
 
                                             // compile all files in subdirs
     for (idx = g_nClasses; idx--; )
-        std_cpp(0, TMP_DIR "/o", idx + 1, g_classes[idx], staticLib);
+        std_cpp(0, "tmp/o", idx + 1, g_classes[idx], staticLib);
         
                                             // compile all files in g_cwd
-    std_cpp(1, TMP_DIR "/o", 0, ".", staticLib);  
+    std_cpp(1, "tmp/o", 0, ".", staticLib);  
 
     static_library();                       // make the library
 
