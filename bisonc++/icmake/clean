@@ -1,24 +1,29 @@
 void clean(int dist)
 {
     run("rm -rf "
-            "build-stamp configure-stamp options/SKEL "
-            "tmp/" + change_ext(MAIN, "o") + 
-            " o */o release.yo tmp/lib" LIBRARY ".a "    
-            "parser/grammar.output");
+            "build-stamp configure-stamp "
+            "options/SKEL "
+            "tmp/*.o" + 
+            " o */o release.yo tmp/lib*.a "    
+            "parser/grammar.output"
+    );
 
 
-    if (dist && exists("tmp"))
-    {
-        chdir("tmp");
-        run("rm -f " + g_binary);
-        chdir("..");
+    if (dist)
         run("rm -rf tmp");
-    }
 
     chdir("documentation");
-    run("rm -rf man/*.1 man/*.3bisonc++ man/*.html manual/manual-stamp "
-                "manual/*.html manual/invoking/usage bisonc++ usage/usage "
-                "manual/invoking/usage.txt");
+
+    run("rm -rf "
+            "man/*.1 "
+            "man/*.3* "
+            "man/*.html "
+            "manual/manual-stamp "
+            "manual/*.html "
+            "manual/invoking/usage "
+            "manual/invoking/usage.txt "
+            "usage/usage "
+    );
 
     exit(0);
 }

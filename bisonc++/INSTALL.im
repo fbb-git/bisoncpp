@@ -1,44 +1,42 @@
-#include "icmake/setopt"
+#define PROGRAM             "bisonc++"
 
-#define D_BINARY    "bin/bisonc++"
-    // The name (relative to TMP, absolute paths are OK) of the built program
+    // When defined, these overrule COMPILER and COMPILER_OPTIONS
+    // COMPILER and COMPILER_OPTIONS are now obsolete
+    // Instead of CXX and CXXFLAGS, CC and CFLAGS can be used.
+    // Their #define values are overruled by identically named environment
+    // variables. 
 
-#define  D_CXX      "g++"
-    // The compiler to use for compilation and linking
+#define CXX                 "g++"
+    // the compiler to use. 
 
-#define D_CXXFLAGS  "-Wall --std=c++0x -O2 -g"
-    // Compiler options to use. 
-    // For profiling add the  -pg flags, and don't strip
+#define CXXFLAGS            "--std=c++0x -Wall -O2 -g"
+    // the compiler options to use.
 
-#define D_LDFLAGS   ""
-    // Specify linker options. None by default. Do not specify -s (strip) here
-    // as strip is handled by adding a command to the build call.
+#define LDFLAGS             ""
+    // flags passed to the linker
 
-#define D_BASE      "/usr"
-    // BASE is the directory below which ALL bisonc++ files will be installed.
-
-    // For an operational non-Debian installation, you probably must be
-    // `root', and BASE "/usr" or BASE "/usr/local" is suggested (see
-    // below). `BASE' itself is not used outside of this file, so feel free to
-    // define BIN, SKEL, MAN and DOC (below) in any which way you like.
-
-// To apply hard-coded changes to the following locations their values can be
-// changed below. Alternatively, use the environment variables BIN, SKEL, MAN
-// and DOC to define specific absolute path names
-
-#define D_BIN   "/bin"
-    // the directory under g_base in which bisonc++ will be installed
-
-#define D_SKEL  "/share/bisonc++"
-    // the directory under g_base in which the skeleton files will be stored
+#define SKEL    "/usr/share/bisonc++"
+    // the directory where the skeleton files are installed
     // Recompile options/data.cc if the skeleton location changes
 
-#define D_MAN   "/share/man/man1"
-    // the directory under g_base in which the manual page will be stored
 
-#define D_DOC   "/share/doc/bisonc++"
-    // the directory under g_base in which all other documentation will be
-    // stored 
+// =========================================================================
+// The following locations are overruled by `build' arguments
+
+#define BINARY     "/usr/bin/"${PROGRAM}
+    // the full path of the final program
+
+#define MAN     "/usr/share/man/man1"
+    // the directory whre the manual page is stored
+
+#define MANUAL   "/usr/share/doc/"${PROGRAM}"-doc/manual"
+    // the directory whre the manual page is stored
+
+#define STD     "/usr/share/doc/"${PROGRAM}
+    // the directory where the standard documentation is stored 
+
+#define EXTRA   "/usr/share/doc/"${PROGRAM}"-doc"
+    // the directory where the extra documentation is stored 
 
 
 

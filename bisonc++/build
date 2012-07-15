@@ -1,72 +1,26 @@
 #!/usr/bin/icmake -qt/tmp/bisonc++
 
-#include "INSTALL.im"
+#include "icmconf"
 
-#define LIBRARY             "bisonc++"       // NO lib, NO .a
-#define LIBS                "-lbobcat"      // -l required
-#define MAIN                "bisonc++.cc"
-#define SOURCES             "*.cc"
-
-list    g_classes;          // all class-directories
-int     g_nClasses;         // number of class-directories
-int     g_compiled;         // any source compiled (but main)?
-list    g_classLines;       // list of all lines in CLASSES
-list    g_inspected;        // list of classes whose dependencies have been 
-                            // inspected (used with USE_ALL)
-int     g_compBase;         // compile the sources in the base directory
-int     g_chdir;            // display chdirs to directories without sources
-                            // to compile
-
-string g_binary     = setOpt(D_BINARY,      "BINARY");
-string g_cxx        = setOpt(D_CXX,         "CXX");
-string g_cxxflags   = setOpt(D_CXXFLAGS,    "CXXFLAGS");
-string g_ldflags    = setOpt(D_LDFLAGS,     "LDFLAGS");
-string g_base       = setOpt(D_BASE,        "BASE");
-
-string g_binPath;
-string  g_cwd = chdir("");  // initial working directory
-string  g_compiler;
-string  g_bin;
-string  g_skel;
-string  g_man;
-string  g_doc;
-
-
-int g_dryrun = setOpt("", "DRYRUN") != "";
-
+#include "icmake/setopt"
 #include "icmake/run"
 #include "icmake/md"
 #include "icmake/special"
+
 #include "icmake/clean"
 #include "icmake/manpage"
 #include "icmake/manual"
-#include "icmake/library2"
-#include "icmake/program"
-
-// #include "icmake/rebuild"
-
 #include "icmake/install"
+
+string  g_cwd = chdir("");  // initial working directory
 
 void main(int argc, list argv)
 {
     string option;
-    string option2;
     string strip;
-
-    g_binPath = get_path(g_binary);
-
-    g_bin = setOpt(g_base + D_BIN, "BIN");
-    g_skel = setOpt(g_base + D_SKEL, "SKEL");
-    g_man = setOpt(g_base + D_MAN, "MAN");
-    g_doc = setOpt(g_base + D_DOC, "DOC");
-
-    g_compiler = g_cxx + " " + g_cxxflags;
 
     option = argv[1];
 
-    if (argv[2] == "strip")
-        strip = "-s";
-    
     if (option == "clean")
         clean(0);
 
@@ -76,6 +30,12 @@ void main(int argc, list argv)
     if (option == "install")
         install(argv[2], argv[3]);
 
+    if (option != "")
+        special();
+
+    if (option == "sourceforge")
+        exit(0);
+
     if (option == "man")
         manpage();
 
@@ -84,57 +44,60 @@ void main(int argc, list argv)
 
     if (option == "library")
     {
-        build_library();
+        system("icmbuild library");
         exit(0);
     }
 
+    if (argv[2] == "strip")
+        strip = "strip";
+    
     if (option == "program")
-        program(strip);
+    {
+        system("icmbuild program " + strip);
+        exit(0);
+    }
 
-//    if (option == "rebuild")
-//        rebuild(strip);
+    if (option == "oxref")
+    {
+        system("icmbuild program " + strip);
+        run("oxref -fxs tmp/lib" LIBRARY ".a > " PROGRAM ".xref");
+        exit(0);
+    }
 
     if (option == "scanner")
     {
         chdir("scanner");
         system("flexc++ lexer");
         chdir("..");
-        program(strip);
-    }
-
-    if (option == "sourceforge")
-    {
-        special();
+        system("icmbuild program " + strip);
         exit(0);
     }
 
-
     printf("Usage: build [-p] what\n"
         "Where `what' is one of:\n"
-        "   clean              - clean up remnants of previous compilations\n"
-        "   distclean          - clean + fully remove tmp/\n"
-        "   library            - build bisonc++'s library\n"
-        "   man                - build the man-page (requires Yodl)\n"
-        "   manual             - build the manual (requires Yodl)\n"
-        "   program [strip]    - build bisonc++ (optionally strip the\n"
-        "                        executable)\n"
-        "   scanner [strip]    - build new scanner, then 'build program'\n"
-        "   rebuild [strip]    - recreate the parser using bisonc++ created\n"
-        "                        by `build program' (optionally strip the\n"
-        "                        executable)\n"
-        "   install program <base> - install the program in the locations "
-                                                        "defined\n"
-        "                        in the INSTALL.cf file, optionally "
-                                                            "below <base>\n"
-        "   install man <base> - install the man pages in the location "
-                                                        "defined\n"
-        "                        in the INSTALL.cf file, optionally "
-                                                            "below <base>\n"
-        "   install manual <base> - install the manual in the location "
-                                                        "defined\n"
-        "                        in the INSTALL.cf file, optionally "
-                                                            "below <base>\n"
-        "   sourceforge        - create files for sourceforge index update\n"
+        "   clean                - clean up remnants of previous "
+                                                            "compilations\n"
+        "   distclean            - clean + fully remove tmp/\n"
+        "   library              - build " PROGRAM "'s library\n"
+        "   man                  - build the man-page (requires Yodl)\n"
+        "   manual               - build the manual (requires Yodl)\n"
+        "   program [strip]      - build " PROGRAM " (optionally strip the\n"
+        "                          executable)\n"
+        "   oxref [strip]        - same a `program', also builds xref file\n"
+        "                          using oxref\n"
+        "   scanner [strip]      - build new scanner, then 'build program'\n"
+        "   install program [path] - install the program at `path'\n"
+        "                          (by default below `" PROGRAM "')\n"
+        "   install skel [base]  - install the skeleton files below `base'\n"
+        "                          (by default below `" SKEL "')\n"
+        "   install man [base]   - install the man pages below `base'\n"
+        "                          (by default below `" MAN "')\n"
+        "   install manual [base]- install the manual below `base'\n"
+        "                          (by default below `" MANUAL "')\n"
+        "   install std [base]   - install standard docs below `base'\n"
+        "                          (by default below `" STD "')\n"
+        "   install extra [base] - install extra docs below `base'\n"
+        "   sourceforge          - prepare sourceforge's index update\n"
         "\n"
         "If the environment variable DRYRUN is defined, no commands are\n"
         "actually executed\n"

@@ -1,14 +1,16 @@
-bisonc++ (4.01.02) 
+bisonc++ (4.01.01) 
+
+  * ISN until icmake is at version >= 7.19.00
 
   * The following #defines in INSTALL.im can be overruled by defining
     identically named environment variables: 
-        BINARY   defines the name (or path) of the generated binray program. 
-                 By default `bin/bisonc++' under ./tmp
         CXX      defines the name of the compiler to use. By default `g++'
         CXXFLAGS the options passed to the compiler. 
                  By default `-Wall --std=c++0x -O2 -g'
         LDFLAGS  the options passed to the linker. By default no options are
                  passed to the linker.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 15 Jul 2012 14:44:46 +0200
         
 bisonc++ (4.01.00) 
 

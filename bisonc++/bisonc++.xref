@@ -1,0 +1,2230 @@
+oxref by Frank B. Brokken (f.b.brokken@rug.nl)
+oxref V0.90.10 2012
+
+CREATED Sun, 15 Jul 2012 11:47:33 +0000
+CROSS REFERENCE FOR: -fxs tmp/libmodules.a 
+----------------------------------------------------------------------
+
+actionCases(std::ostream&) const
+  Full name: Generator::actionCases(std::ostream&) const
+  Source:    actioncases.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 30data.o
+
+addDependents(Next const&, Symbol const*, unsigned int)
+  Full name: State::addDependents(Next const&, Symbol const*, unsigned int)
+  Source:    adddependents.cc 
+  Used By:
+    notreducible.cc: State::notReducible(unsigned int)
+
+addElement(Symbol*)
+  Full name: Rules::addElement(Symbol*)
+  Source:    addelement.cc 
+  Used By:
+    augmentgrammar.cc: Rules::augmentGrammar(Symbol*)
+    handleproductionelement.cc: Parser::handleProductionElement(Meta__::SType&)
+    handleproductionelements.cc: Parser::handleProductionElements(Meta__::SType&, Meta__::SType const&)
+    nestedblock.cc: Parser::nestedBlock(Block&)
+
+addFollowFromFirst(Production*)
+  Full name: Rules::addFollowFromFirst(Production*)
+  Source:    addfollowfromfirst.cc 
+  Used By:
+    determinefollow.cc: Rules::determineFollow()
+
+addFollowToFollow()
+  Full name: Rules::addFollowToFollow()
+  Source:    addfollowtofollow.cc 
+  Used By:
+    determinefollow.cc: Rules::determineFollow()
+
+addIncludeQuotes(std::string&)
+  Full name: Options::addIncludeQuotes(std::string&)
+  Source:    addincludequotes.cc 
+  Used By:
+    setquotedstrings.cc: Options::setQuotedStrings()
+
+addKernelItem(StateItem const&)
+  Full name: State::addKernelItem(StateItem const&)
+  Source:    addkernelitem.cc 
+  Used By:
+    addstate.cc: State::addState(std::vector<Item, std::allocator<Item> > const&)
+    initialstate.cc: State::initialState()
+
+addNext(Symbol const*, unsigned int)
+  Full name: State::addNext(Symbol const*, unsigned int)
+  Source:    addnext.cc 
+  Used By:
+    notreducible.cc: State::notReducible(unsigned int)
+
+addPolymorphic(std::string const&, std::string const&)
+  Full name: Parser::addPolymorphic(std::string const&, std::string const&)
+  Source:    addpolymorphic.cc 
+  Used By:
+    parse.cc: Parser::executeAction(int)
+
+addProduction()
+  Full name: Rules::addProduction()
+  Source:    addproduction.cc 
+  Used By:
+    augmentgrammar.cc: Rules::augmentGrammar(Symbol*)
+    openrule.cc: Parser::openRule(std::string const&)
+    parse.cc: Parser::executeAction(int)
+
+addProduction(Production const*, std::vector<StateItem, std::allocator<StateItem> >&, unsigned int)
+  Full name: StateItem::addProduction(Production const*, std::vector<StateItem, std::allocator<StateItem> >&, unsigned int)
+  Source:    addproduction.cc 
+  Used By:
+    addproductions.cc: State::addProductions(Symbol const*, unsigned int)
+
+addProductions(Symbol const*, unsigned int)
+  Full name: State::addProductions(Symbol const*, unsigned int)
+  Source:    addproductions.cc 
+  Used By:
+    addnext.cc: State::addNext(Symbol const*, unsigned int)
+
+addState(std::vector<Item, std::allocator<Item> > const&)
+  Full name: State::addState(std::vector<Item, std::allocator<Item> > const&)
+  Source:    addstate.cc 
+  Used By:
+    nextstate.cc: State::nextState(Next&)
+
+addToKernel(std::vector<Next, std::allocator<Next> >&, Symbol const*, unsigned int)
+  Full name: Next::addToKernel(std::vector<Next, std::allocator<Next> >&, Symbol const*, unsigned int)
+  Source:    addtokernel.cc 
+  Used By:
+    adddependents.cc: State::addDependents(Next const&, Symbol const*, unsigned int)
+
+assign(std::string*, char const*)
+  Full name: Options::assign(std::string*, char const*)
+  Source:    assign.cc 
+  Used By:
+    parse.cc: Parser::executeAction(int)
+
+AtDollar(AtDollar::Type, unsigned int, unsigned int, std::string const&, int, bool)
+  Full name: AtDollar::AtDollar(AtDollar::Type, unsigned int, unsigned int, std::string const&, int, bool)
+  Source:    atdollar1.cc 
+  Used By:
+    atindex.cc: Block::atIndex(unsigned int, std::string const&)
+    dollar.cc: Block::dollar(unsigned int, std::string const&, bool)
+    dollarindex.cc: Block::dollarIndex(unsigned int, std::string const&, bool)
+
+AtDollar(AtDollar::Type, unsigned int, unsigned int, std::string const&, std::string const&, int)
+  Full name: AtDollar::AtDollar(AtDollar::Type, unsigned int, unsigned int, std::string const&, std::string const&, int)
+  Source:    atdollar2.cc 
+  Used By:
+    iddollar.cc: Block::IDdollar(unsigned int, std::string const&)
+    idindex.cc: Block::IDindex(unsigned int, std::string const&)
+
+atIndex(unsigned int, std::string const&)
+  Full name: Block::atIndex(unsigned int, std::string const&)
+  Source:    atindex.cc 
+  Used By:
+    lex.cc: Scanner::executeAction__(unsigned int)
+
+augmentGrammar(Symbol*)
+  Full name: Rules::augmentGrammar(Symbol*)
+  Source:    augmentgrammar.cc 
+  Used By:
+    cleanup.cc: Parser::cleanup()
+
+baseClass(std::ostream&) const
+  Full name: Generator::baseClass(std::ostream&) const
+  Source:    baseclass.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 30data.o
+
+becomesDerivable(Production const*)
+  Full name: Grammar::becomesDerivable(Production const*)
+  Source:    becomesderivable.cc 
+  Used By:
+    derivable.cc: Grammar::derivable(Symbol const*)
+
+buildKernel(std::vector<Item, std::allocator<Item> >*, std::vector<StateItem, std::allocator<StateItem> > const&)
+  Full name: Next::buildKernel(std::vector<Item, std::allocator<Item> >*, std::vector<StateItem, std::allocator<StateItem> > const&)
+  Source:    buildkernel.cc 
+  Used By:
+    nextstate.cc: State::nextState(Next&)
+
+canonicalQuote()
+  Full name: Scanner::canonicalQuote()
+  Source:    canonicalquote.cc 
+  Used By:
+    parse.cc: Parser::executeAction(int)
+    setprecedence.cc: Parser::setPrecedence(int)
+    useterminal.cc: Parser::useTerminal()
+
+checkConflicts()
+  Full name: State::checkConflicts()
+  Source:    checkconflicts.cc 
+  Used By:
+    define.cc: State::define()
+
+checkEmptyBlocktype()
+  Full name: Parser::checkEmptyBlocktype()
+  Source:    checkemptyblocktype.cc 
+  Used By:
+    parse.cc: Parser::executeAction(int)
+
+checkFirstType()
+  Full name: Parser::checkFirstType()
+  Source:    checkfirsttype.cc 
+  Used By:
+    handleproductionelement.cc: Parser::handleProductionElement(Meta__::SType&)
+    installaction.cc: Parser::installAction(Block&)
+
+checkRemoved(std::ostream&) const
+  Full name: Next::checkRemoved(std::ostream&) const
+  Source:    checkremoved.cc 
+  Used By:
+    transition.cc: Next::transition(std::ostream&) const
+    transitionkernel.cc: Next::transitionKernel(std::ostream&) const
+
+checkZeroNumber()
+  Full name: Scanner::checkZeroNumber()
+  Source:    checkzeronumber.cc 
+  Used By:
+    hexadecimal.cc: Scanner::hexadecimal()
+    octal.cc: Scanner::octal()
+
+classH(std::ostream&) const
+  Full name: Generator::classH(std::ostream&) const
+  Source:    classh.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 30data.o
+
+classIH(std::ostream&) const
+  Full name: Generator::classIH(std::ostream&) const
+  Source:    classih.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 30data.o
+
+cleanDir(std::string&)
+  Full name: Options::cleanDir(std::string&)
+  Source:    cleandir.cc 
+  Used By:
+    setbasicstrings.cc: Options::setBasicStrings()
+
+clear()
+  Full name: Block::clear()
+  Source:    clear.cc 
+  Used By:
+    expectrules.cc: Parser::expectRules()
+    open.cc: Block::open(unsigned int, std::string const&)
+
+close()
+  Full name: Block::close()
+  Source:    close.cc 
+  Used By:
+    lex.cc: Scanner::executeAction__(unsigned int)
+
+comparePrecedence(Symbol const*, Symbol const*)
+  Full name: Terminal::comparePrecedence(Symbol const*, Symbol const*)
+  Source:    compareprecedence.cc 
+  Used By:
+    comparereductions.cc: RRConflict::compareReductions(unsigned int)
+    solvebyprecedence.cc: Next::solveByPrecedence(Symbol const*) const
+
+compareReductions(unsigned int)
+  Full name: RRConflict::compareReductions(unsigned int)
+  Source:    comparereductions.cc 
+  Used By:
+    visitreduction.cc: RRConflict::visitReduction(unsigned int)
+
+construct()
+  Full name: State::construct()
+  Source:    construct.cc 
+  Used By:
+    define.cc: State::define()
+
+containsKernelItem(Item const&, unsigned int, std::vector<StateItem, std::allocator<StateItem> > const&)
+  Full name: StateItem::containsKernelItem(Item const&, unsigned int, std::vector<StateItem, std::allocator<StateItem> > const&)
+  Source:    containskernelitem.cc 
+  Used By:
+    haskernel.cc: State::hasKernel(std::vector<Item, std::allocator<Item> > const&) const
+
+debug(std::ostream&) const
+  Full name: Generator::debug(std::ostream&) const
+  Source:    debug.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 30data.o
+
+debugDecl(std::ostream&) const
+  Full name: Generator::debugDecl(std::ostream&) const
+  Source:    debugdecl.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 30data.o
+
+debugFunctions(std::ostream&) const
+  Full name: Generator::debugFunctions(std::ostream&) const
+  Source:    debugfunctions.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 30data.o
+
+debugIncludes(std::ostream&) const
+  Full name: Generator::debugIncludes(std::ostream&) const
+  Source:    debugincludes.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 30data.o
+
+debugInit(std::ostream&) const
+  Full name: Generator::debugInit(std::ostream&) const
+  Source:    debuginit.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 30data.o
+
+debugLookup(std::ostream&) const
+  Full name: Generator::debugLookup(std::ostream&) const
+  Source:    debuglookup.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 30data.o
+
+defineNonTerminal(std::string const&, std::string const&)
+  Full name: Parser::defineNonTerminal(std::string const&, std::string const&)
+  Source:    definenonterminal.cc 
+  Used By:
+    nestedblock.cc: Parser::nestedBlock(Block&)
+
+defineTerminal(std::string const&, Symbol::Type)
+  Full name: Parser::defineTerminal(std::string const&, Symbol::Type)
+  Source:    defineterminal.cc 
+  Used By:
+    definetokenname.cc: Parser::defineTokenName(std::string const&, bool)
+    parse.cc: Parser::executeAction(int)
+
+defineTokenName(std::string const&, bool)
+  Full name: Parser::defineTokenName(std::string const&, bool)
+  Source:    definetokenname.cc 
+  Used By:
+    parse.cc: Parser::executeAction(int)
+
+derivable(Symbol const*)
+  Full name: Grammar::derivable(Symbol const*)
+  Source:    derivable.cc 
+  Used By:
+    becomesderivable.cc: Grammar::becomesDerivable(Production const*)
+    derivesentence.cc: Grammar::deriveSentence()
+
+distributeLA(Next&, State::LookaheadContext&)
+  Full name: State::distributeLA(Next&, State::LookaheadContext&)
+  Source:    distributela.cc 
+  Used By:
+    propagatela.cc: State::propagateLA()
+
+dollar(unsigned int, std::string const&, bool)
+  Full name: Block::dollar(unsigned int, std::string const&, bool)
+  Source:    dollar.cc 
+  Used By:
+    lex.cc: Scanner::executeAction__(unsigned int)
+
+dollarIndex(unsigned int, std::string const&, bool)
+  Full name: Block::dollarIndex(unsigned int, std::string const&, bool)
+  Source:    dollarindex.cc 
+  Used By:
+    lex.cc: Scanner::executeAction__(unsigned int)
+
+enlargeLA(LookaheadSet const&)
+  Full name: StateItem::enlargeLA(LookaheadSet const&)
+  Source:    enlargela.cc 
+  Used By:
+    updatela.cc: State::updateLA(unsigned int, State::LookaheadContext&)
+
+eoln()
+  Full name: Scanner::eoln()
+  Source:    eoln.cc 
+  Used By:
+    lex.cc: Scanner::executeAction__(unsigned int)
+
+errIndexTooLarge(AtDollar const&, int) const
+  Full name: Parser::errIndexTooLarge(AtDollar const&, int) const
+  Source:    errindextoolarge.cc 
+  Used By:
+    handleatsign.cc: Parser::handleAtSign(Block&, AtDollar const&, int)
+    handledollar.cc: Parser::handleDollar(Block&, AtDollar const&, int)
+
+errNoSemantic(char const*, AtDollar const&, std::string const&) const
+  Full name: Parser::errNoSemantic(char const*, AtDollar const&, std::string const&) const
+  Source:    errnosemantic.cc 
+  Used By:
+    semtag.cc: Parser::semTag(char const*, AtDollar const&, bool (Parser::*)(std::string const&) const) const
+
+error(char const*)
+  Full name: Parser::error(char const*)
+  Source:    error.cc 
+  Used By:
+    parse.cc: Parser::errorRecovery()
+
+errorVerbose(std::ostream&) const
+  Full name: Generator::errorVerbose(std::ostream&) const
+  Source:    errorverbose.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 30data.o
+
+escape()
+  Full name: Scanner::escape()
+  Source:    escape.cc 
+  Used By:
+    lex.cc: Scanner::executeAction__(unsigned int)
+
+expandFollow(Production*)
+  Full name: Rules::expandFollow(Production*)
+  Source:    expandfollow.cc 
+  Used By:
+    addfollowtofollow.cc: Rules::addFollowToFollow()
+
+expectRules()
+  Full name: Parser::expectRules()
+  Source:    expectrules.cc 
+  Used By:
+    parse.cc: Parser::executeAction(int)
+
+filter(std::istream&, std::ostream&, bool) const
+  Full name: Generator::filter(std::istream&, std::ostream&, bool) const
+  Source:    filter.cc 
+  Used By:
+    baseclassheader.cc: Generator::baseClassHeader() const
+    classheader.cc: Generator::classHeader() const
+    implementationheader.cc: Generator::implementationHeader() const
+    parsefunction.cc: Generator::parseFunction() const
+    polymorphic.cc: Generator::polymorphic(std::ostream&) const
+    polymorphicinline.cc: Generator::polymorphicInline(std::ostream&) const
+
+findKernel(std::vector<Item, std::allocator<Item> > const&) const
+  Full name: State::findKernel(std::vector<Item, std::allocator<Item> > const&) const
+  Source:    findkernel.cc 
+  Used By:
+    nextstate.cc: State::nextState(Next&)
+
+firstBeyondDot(FirstSet*) const
+  Full name: Item::firstBeyondDot(FirstSet*) const
+  Source:    firstbeyonddot.cc 
+  Used By:
+    propagatela.cc: StateItem::propagateLA(StateItem&, std::vector<StateItem, std::allocator<StateItem> >&)
+
+FirstSet(Element const*)
+  Full name: FirstSet::FirstSet(Element const*)
+  Source:    firstset1.cc 
+  Used By:
+    terminal1.cc: Terminal::Terminal(std::string const&, Symbol::Type, unsigned int, Terminal::Association, std::string const&)
+    terminal2.cc: Terminal::Terminal(std::string const&, std::string const&, Symbol::Type)
+
+handleAtSign(Block&, AtDollar const&, int)
+  Full name: Parser::handleAtSign(Block&, AtDollar const&, int)
+  Source:    handleatsign.cc 
+  Used By:
+    substituteblock.cc: Parser::substituteBlock(int, Block&)
+
+handleDollar(Block&, AtDollar const&, int)
+  Full name: Parser::handleDollar(Block&, AtDollar const&, int)
+  Source:    handledollar.cc 
+  Used By:
+    substituteblock.cc: Parser::substituteBlock(int, Block&)
+
+handleProductionElement(Meta__::SType&)
+  Full name: Parser::handleProductionElement(Meta__::SType&)
+  Source:    handleproductionelement.cc 
+  Used By:
+    parse.cc: Parser::executeAction(int)
+
+handleProductionElements(Meta__::SType&, Meta__::SType const&)
+  Full name: Parser::handleProductionElements(Meta__::SType&, Meta__::SType const&)
+  Source:    handleproductionelements.cc 
+  Used By:
+    parse.cc: Parser::executeAction(int)
+
+handleSRconflict(unsigned int, __gnu_cxx::__normal_iterator<Next const*, std::vector<Next, std::allocator<Next> > > const&, unsigned int)
+  Full name: SRConflict::handleSRconflict(unsigned int, __gnu_cxx::__normal_iterator<Next const*, std::vector<Next, std::allocator<Next> > > const&, unsigned int)
+  Source:    handlesrconflict.cc 
+  Used By:
+    processshiftreduceconflict.cc: SRConflict::processShiftReduceConflict(__gnu_cxx::__normal_iterator<Next const*, std::vector<Next, std::allocator<Next> > > const&, unsigned int)
+
+handleXstring(unsigned int)
+  Full name: Scanner::handleXstring(unsigned int)
+  Source:    handlexstring.cc 
+  Used By:
+    lex.cc: Scanner::executeAction__(unsigned int)
+
+hasKernel(std::vector<Item, std::allocator<Item> > const&) const
+  Full name: State::hasKernel(std::vector<Item, std::allocator<Item> > const&) const
+  Source:    haskernel.cc 
+  Used By:
+    findkernel.cc: State::findKernel(std::vector<Item, std::allocator<Item> > const&) const
+
+hexadecimal()
+  Full name: Scanner::hexadecimal()
+  Source:    hexadecimal.cc 
+  Used By:
+    lex.cc: Scanner::executeAction__(unsigned int)
+
+IDdollar(unsigned int, std::string const&)
+  Full name: Block::IDdollar(unsigned int, std::string const&)
+  Source:    iddollar.cc 
+  Used By:
+    lex.cc: Scanner::executeAction__(unsigned int)
+
+IDindex(unsigned int, std::string const&)
+  Full name: Block::IDindex(unsigned int, std::string const&)
+  Source:    idindex.cc 
+  Used By:
+    lex.cc: Scanner::executeAction__(unsigned int)
+
+indexToOffset(int, int) const
+  Full name: Parser::indexToOffset(int, int) const
+  Source:    indextooffset.cc 
+  Used By:
+    handleatsign.cc: Parser::handleAtSign(Block&, AtDollar const&, int)
+    handledollar.cc: Parser::handleDollar(Block&, AtDollar const&, int)
+    substituteblock.cc: Parser::substituteBlock(int, Block&)
+
+initialState()
+  Full name: State::initialState()
+  Source:    initialstate.cc 
+  Used By:
+    define.cc: State::define()
+
+insert(NonTerminal*)
+  Full name: Rules::insert(NonTerminal*)
+  Source:    insert2.cc 
+  Used By:
+    augmentgrammar.cc: Rules::augmentGrammar(Symbol*)
+    definenonterminal.cc: Parser::defineNonTerminal(std::string const&, std::string const&)
+    requirenonterminal.cc: Parser::requireNonTerminal(std::string const&)
+    usesymbol.cc: Parser::useSymbol()
+
+insert(std::ostream&) const
+  Full name: LookaheadSet::insert(std::ostream&) const
+  Source:    insert.cc 
+  Used By:
+    operatorinsert.cc: operator<<(std::ostream&, LookaheadSet const&)
+
+insert(std::ostream&) const
+  Full name: SRConflict::insert(std::ostream&) const
+  Source:    insert.cc 
+  Used By:
+    insertext.cc: State::insertExt(std::ostream&) const
+    insertstd.cc: State::insertStd(std::ostream&) const
+
+insert(std::ostream&) const
+  Full name: RRConflict::insert(std::ostream&) const
+  Source:    insert.cc 
+  Used By:
+    insertext.cc: State::insertExt(std::ostream&) const
+    insertstd.cc: State::insertStd(std::ostream&) const
+
+insert(std::ostream&) const
+  Full name: NonTerminal::insert(std::ostream&) const
+  Source:    v.cc 
+  Used By:
+    destructor.cc: NonTerminal::~NonTerminal()
+
+insert(std::ostream&) const
+  Full name: FirstSet::insert(std::ostream&) const
+  Source:    oinsert.cc 
+  Used By:
+    showfirst.cc: GLOBALS showfirst.cc 18showfirst.o
+    insertext.cc: GLOBALS insertext.cc 28insertext.o
+
+insert(std::ostream&) const
+  Full name: Generator::insert(std::ostream&) const
+  Source:    insert.cc 
+  Used By:
+    filter.cc: Generator::filter(std::istream&, std::ostream&, bool) const
+
+insert(std::ostream&, Production const*) const
+  Full name: Item::insert(std::ostream&, Production const*) const
+  Source:    insert.cc 
+  Used By:
+    plainitem.cc: Item::plainItem(std::ostream&) const
+    pnrdotitem.cc: Item::pNrDotItem(std::ostream&) const
+
+insert(std::vector<Terminal const*, std::allocator<Terminal const*> > const&) const
+  Full name: Writer::insert(std::vector<Terminal const*, std::allocator<Terminal const*> > const&) const
+  Source:    insert.cc 
+  Used By:
+    tokens.cc: Generator::tokens(std::ostream&) const
+
+insert(Terminal*, std::string const&)
+  Full name: Rules::insert(Terminal*, std::string const&)
+  Source:    insert1.cc 
+  Used By:
+    defineterminal.cc: Parser::defineTerminal(std::string const&, Symbol::Type)
+    predefine.cc: Parser::predefine(Terminal const*)
+    useterminal.cc: Parser::useTerminal()
+
+insertAction(Production const*, std::ostream&, bool, unsigned int)
+  Full name: Production::insertAction(Production const*, std::ostream&, bool, unsigned int)
+  Source:    insertaction.cc 
+  Used By:
+    actioncases.cc: Generator::actionCases(std::ostream&) const
+
+insertExt(std::ostream&) const
+  Full name: State::insertExt(std::ostream&) const
+  Source:    insertext.cc 
+  Used By:
+    allstates.cc: State::allStates()
+    define.cc: State::define()
+
+insertStd(std::ostream&) const
+  Full name: State::insertStd(std::ostream&) const
+  Source:    insertstd.cc 
+  Used By:
+    define.cc: State::define()
+
+insertToken(Terminal const*, unsigned int&, std::ostream&)
+  Full name: Writer::insertToken(Terminal const*, unsigned int&, std::ostream&)
+  Source:    inserttoken.cc 
+  Used By:
+    insert.cc: Writer::insert(std::vector<Terminal const*, std::allocator<Terminal const*> > const&) const
+
+insName(std::ostream&) const
+  Full name: NonTerminal::insName(std::ostream&) const
+  Source:    insname.cc 
+  Used By:
+    showfirst.cc: GLOBALS showfirst.cc 18showfirst.o
+    showfollow.cc: GLOBALS showfollow.cc 18showfollow.o
+    insertext.cc: GLOBALS insertext.cc 28insertext.o
+
+inspect()
+  Full name: SRConflict::inspect()
+  Source:    inspect.cc 
+  Used By:
+    checkconflicts.cc: State::checkConflicts()
+
+inspect()
+  Full name: RRConflict::inspect()
+  Source:    inspect.cc 
+  Used By:
+    checkconflicts.cc: State::checkConflicts()
+
+installAction(Block&)
+  Full name: Parser::installAction(Block&)
+  Source:    installaction.cc 
+  Used By:
+    handleproductionelement.cc: Parser::handleProductionElement(Meta__::SType&)
+
+instance()
+  Full name: Options::instance()
+  Source:    instance.cc 
+  Used By:
+    parser1.cc: Parser::Parser(Rules&)
+    generator1.cc: Generator::Generator(Rules const&, std::unordered_map<std::string, std::string, std::hash<std::string>, std::equal_to<std::string>, std::allocator<std::pair<std::string const, std::string> > > const&)
+
+intersection(LookaheadSet const&) const
+  Full name: LookaheadSet::intersection(LookaheadSet const&) const
+  Source:    intersection.cc 
+  Used By:
+    comparereductions.cc: RRConflict::compareReductions(unsigned int)
+
+isDerivable(Production const*)
+  Full name: Grammar::isDerivable(Production const*)
+  Source:    isderivable.cc 
+  Used By:
+    derivable.cc: Grammar::derivable(Symbol const*)
+
+isFirstStypeDefinition() const
+  Full name: Options::isFirstStypeDefinition() const
+  Source:    isfirststypedef.cc 
+  Used By:
+    setpolymorphicdecl.cc: Options::setPolymorphicDecl()
+    setstype.cc: Options::setStype()
+    setuniondecl.cc: Options::setUnionDecl(std::string const&)
+
+Item()
+  Full name: Item::Item()
+  Source:    item0.cc 
+  Used By:
+    stateitem1.cc: StateItem::StateItem()
+
+Item(Item const*, unsigned int)
+  Full name: Item::Item(Item const*, unsigned int)
+  Source:    item2.cc 
+  Used By:
+    buildkernel.cc: Next::buildKernel(std::vector<Item, std::allocator<Item> >*, std::vector<StateItem, std::allocator<StateItem> > const&)
+
+Item(Production const*)
+  Full name: Item::Item(Production const*)
+  Source:    item1.cc 
+  Used By:
+    addproduction.cc: StateItem::addProduction(Production const*, std::vector<StateItem, std::allocator<StateItem> >&, unsigned int)
+    initialstate.cc: State::initialState()
+
+itemContext(std::ostream&) const
+  Full name: StateItem::itemContext(std::ostream&) const
+  Source:    itemcontext.cc 
+  Used By:
+    insertext.cc: State::insertExt(std::ostream&) const
+
+key(std::ostream&) const
+  Full name: Generator::key(std::ostream&) const
+  Source:    key.cc 
+  Used By:
+    actioncases.cc: Generator::actionCases(std::ostream&) const
+    baseclass.cc: Generator::baseClass(std::ostream&) const
+    classh.cc: Generator::classH(std::ostream&) const
+    classih.cc: Generator::classIH(std::ostream&) const
+    debug.cc: Generator::debug(std::ostream&) const
+    debugdecl.cc: Generator::debugDecl(std::ostream&) const
+    debugfunctions.cc: Generator::debugFunctions(std::ostream&) const
+    debugincludes.cc: Generator::debugIncludes(std::ostream&) const
+    debuginit.cc: Generator::debugInit(std::ostream&) const
+    debuglookup.cc: Generator::debugLookup(std::ostream&) const
+    errorverbose.cc: Generator::errorVerbose(std::ostream&) const
+    lex.cc: Generator::lex(std::ostream&) const
+    ltype.cc: Generator::ltype(std::ostream&) const
+    ltypedata.cc: Generator::ltypeData(std::ostream&) const
+    ltypepop.cc: Generator::ltypePop(std::ostream&) const
+    ltypepush.cc: Generator::ltypePush(std::ostream&) const
+    ltyperesize.cc: Generator::ltypeResize(std::ostream&) const
+    ltypestack.cc: Generator::ltypeStack(std::ostream&) const
+    namespaceclose.cc: Generator::namespaceClose(std::ostream&) const
+    namespaceopen.cc: Generator::namespaceOpen(std::ostream&) const
+    namespaceuse.cc: Generator::namespaceUse(std::ostream&) const
+    polymorphic.cc: Generator::polymorphic(std::ostream&) const
+    polymorphicimpl.cc: Generator::polymorphicImpl(std::ostream&) const
+    polymorphicinline.cc: Generator::polymorphicInline(std::ostream&) const
+    polymorphicspecializations.cc: Generator::polymorphicSpecializations(std::ostream&) const
+    preincludes.cc: Generator::preIncludes(std::ostream&) const
+    print.cc: Generator::print(std::ostream&) const
+    requiredtokens.cc: Generator::requiredTokens(std::ostream&) const
+    scannerh.cc: Generator::scannerH(std::ostream&) const
+    scannerobject.cc: Generator::scannerObject(std::ostream&) const
+    staticdata.cc: Generator::staticData(std::ostream&) const
+    stype.cc: Generator::stype(std::ostream&) const
+    threading.cc: Generator::threading(std::ostream&) const
+    tokens.cc: Generator::tokens(std::ostream&) const
+
+lex(std::ostream&) const
+  Full name: Generator::lex(std::ostream&) const
+  Source:    lex.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 30data.o
+
+lex__()
+  Full name: Scanner::lex__()
+  Source:    lex.cc 
+  Used By:
+    parse.cc: Parser::nextToken()
+
+LookaheadSet(LookaheadSet const&)
+  Full name: LookaheadSet::LookaheadSet(LookaheadSet const&)
+  Source:    lookaheadset3.cc 
+  Used By:
+    rrdata1.cc: RRData::RRData(LookaheadSet)
+    addproduction.cc: GLOBALS addproduction.cc 24addproduction.o
+    comparereductions.cc: GLOBALS comparereductions.cc 25comparereductions.o
+    visitreduction.cc: SRConflict::visitReduction(unsigned int)
+    addkernelitem.cc: GLOBALS addkernelitem.cc 28addkernelitem.o
+
+LookaheadSet(LookaheadSet::EndStatus)
+  Full name: LookaheadSet::LookaheadSet(LookaheadSet::EndStatus)
+  Source:    lookaheadset1.cc 
+  Used By:
+    propagatela.cc: StateItem::propagateLA(StateItem&, std::vector<StateItem, std::allocator<StateItem> >&)
+    stateitem1.cc: StateItem::StateItem()
+    stateitem2.cc: StateItem::StateItem(Item const&)
+    initialstate.cc: State::initialState()
+
+lookup(std::string const&)
+  Full name: Symtab::lookup(std::string const&)
+  Source:    lookup.cc 
+  Used By:
+    cleanup.cc: Parser::cleanup()
+    definenonterminal.cc: Parser::defineNonTerminal(std::string const&, std::string const&)
+    defineterminal.cc: Parser::defineTerminal(std::string const&, Symbol::Type)
+    requirenonterminal.cc: Parser::requireNonTerminal(std::string const&)
+    setprecedence.cc: Parser::setPrecedence(int)
+    usesymbol.cc: Parser::useSymbol()
+    useterminal.cc: Parser::useTerminal()
+
+ltype(std::ostream&) const
+  Full name: Generator::ltype(std::ostream&) const
+  Source:    ltype.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 30data.o
+
+ltypeData(std::ostream&) const
+  Full name: Generator::ltypeData(std::ostream&) const
+  Source:    ltypedata.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 30data.o
+
+ltypePop(std::ostream&) const
+  Full name: Generator::ltypePop(std::ostream&) const
+  Source:    ltypepop.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 30data.o
+
+ltypePush(std::ostream&) const
+  Full name: Generator::ltypePush(std::ostream&) const
+  Source:    ltypepush.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 30data.o
+
+ltypeResize(std::ostream&) const
+  Full name: Generator::ltypeResize(std::ostream&) const
+  Source:    ltyperesize.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 30data.o
+
+ltypeStack(std::ostream&) const
+  Full name: Generator::ltypeStack(std::ostream&) const
+  Source:    ltypestack.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 30data.o
+
+multiCharQuote()
+  Full name: Scanner::multiCharQuote()
+  Source:    multicharquote.cc 
+  Used By:
+    lex.cc: Scanner::executeAction__(unsigned int)
+
+multiplyDefined(Symbol const*)
+  Full name: Parser::multiplyDefined(Symbol const*)
+  Source:    multiplydefined.cc 
+  Used By:
+    definenonterminal.cc: Parser::defineNonTerminal(std::string const&, std::string const&)
+    defineterminal.cc: Parser::defineTerminal(std::string const&, Symbol::Type)
+    requirenonterminal.cc: Parser::requireNonTerminal(std::string const&)
+    useterminal.cc: Parser::useTerminal()
+
+nameOrValue(std::ostream&) const
+  Full name: Terminal::nameOrValue(std::ostream&) const
+  Source:    nameorvalue.cc 
+  Used By:
+    reductionsymbol.cc: Writer::reductionSymbol(Element const*, unsigned int, FBB::Table&)
+    transition.cc: Writer::transition(Next const&, FBB::Table&)
+
+namespaceClose(std::ostream&) const
+  Full name: Generator::namespaceClose(std::ostream&) const
+  Source:    namespaceclose.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 30data.o
+
+namespaceOpen(std::ostream&) const
+  Full name: Generator::namespaceOpen(std::ostream&) const
+  Source:    namespaceopen.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 30data.o
+
+namespaceUse(std::ostream&) const
+  Full name: Generator::namespaceUse(std::ostream&) const
+  Source:    namespaceuse.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 30data.o
+
+negativeIndex(AtDollar const&) const
+  Full name: Parser::negativeIndex(AtDollar const&) const
+  Source:    negativeindex.cc 
+  Used By:
+    semtag.cc: Parser::semTag(char const*, AtDollar const&, bool (Parser::*)(std::string const&) const) const
+    warnautoignored.cc: Parser::warnAutoIgnored(char const*, AtDollar const&) const
+
+nestedBlock(Block&)
+  Full name: Parser::nestedBlock(Block&)
+  Source:    nestedblock.cc 
+  Used By:
+    handleproductionelements.cc: Parser::handleProductionElements(Meta__::SType&, Meta__::SType const&)
+
+newRule(NonTerminal*, std::string const&, unsigned int)
+  Full name: Rules::newRule(NonTerminal*, std::string const&, unsigned int)
+  Source:    newrule.cc 
+  Used By:
+    augmentgrammar.cc: Rules::augmentGrammar(Symbol*)
+    openrule.cc: Parser::openRule(std::string const&)
+
+newState()
+  Full name: State::newState()
+  Source:    newstate.cc 
+  Used By:
+    addstate.cc: State::addState(std::vector<Item, std::allocator<Item> > const&)
+    initialstate.cc: State::initialState()
+
+Next(Symbol const*, unsigned int)
+  Full name: Next::Next(Symbol const*, unsigned int)
+  Source:    next2.cc 
+  Used By:
+    addnext.cc: State::addNext(Symbol const*, unsigned int)
+
+nextFind(Symbol const*) const
+  Full name: State::nextFind(Symbol const*) const
+  Source:    nextfindfrom.cc 
+  Used By:
+    nexton.cc: State::nextOn(Symbol const*) const
+    notreducible.cc: State::notReducible(unsigned int)
+
+nextHiddenName()
+  Full name: Parser::nextHiddenName()
+  Source:    nexthiddenname.cc 
+  Used By:
+    nestedblock.cc: Parser::nestedBlock(Block&)
+
+nextState(Next&)
+  Full name: State::nextState(Next&)
+  Source:    nextstate.cc 
+  Used By:
+    construct.cc: State::construct()
+
+NonTerminal(std::string const&, std::string const&, Symbol::Type)
+  Full name: NonTerminal::NonTerminal(std::string const&, std::string const&, Symbol::Type)
+  Source:    nonterminal1.cc 
+  Used By:
+    augmentgrammar.cc: Rules::augmentGrammar(Symbol*)
+    definenonterminal.cc: Parser::defineNonTerminal(std::string const&, std::string const&)
+    requirenonterminal.cc: Parser::requireNonTerminal(std::string const&)
+    usesymbol.cc: Parser::useSymbol()
+
+nonTerminalSymbol(NonTerminal const*, std::ostream&)
+  Full name: Writer::nonTerminalSymbol(NonTerminal const*, std::ostream&)
+  Source:    nonterminalsymbol.cc 
+  Used By:
+    symbolicnames.cc: Writer::symbolicNames() const
+
+notReducible(unsigned int)
+  Full name: State::notReducible(unsigned int)
+  Source:    notreducible.cc 
+  Used By:
+    setitems.cc: State::setItems()
+
+octal()
+  Full name: Scanner::octal()
+  Source:    octal.cc 
+  Used By:
+    lex.cc: Scanner::executeAction__(unsigned int)
+
+oInsert(std::ostream&) const
+  Full name: FollowSet::oInsert(std::ostream&) const
+  Source:    oinsert.cc 
+  Used By:
+    showfollow.cc: GLOBALS showfollow.cc 18showfollow.o
+
+open(unsigned int, std::string const&)
+  Full name: Block::open(unsigned int, std::string const&)
+  Source:    open.cc 
+  Used By:
+    lex.cc: Scanner::executeAction__(unsigned int)
+
+openRule(std::string const&)
+  Full name: Parser::openRule(std::string const&)
+  Source:    openrule.cc 
+  Used By:
+    parse.cc: Parser::executeAction(int)
+
+operator()(std::string const&)
+  Full name: Block::operator()(std::string const&)
+  Source:    opfuncharp.cc 
+  Used By:
+    lex.cc: Scanner::executeAction__(unsigned int)
+
+operator+=(FirstSet const&)
+  Full name: FirstSet::operator+=(FirstSet const&)
+  Source:    operatorplusis1.cc 
+  Used By:
+    setfirst.cc: NonTerminal::setFirst(NonTerminal*)
+    addfollowfromfirst.cc: Rules::addFollowFromFirst(Production*)
+    operatorplusis.cc: LookaheadSet::operator+=(LookaheadSet const&)
+    operatorplusis2.cc: LookaheadSet::operator+=(FirstSet const&)
+    firstbeyonddot.cc: Item::firstBeyondDot(FirstSet*) const
+
+operator+=(FirstSet const&)
+  Full name: FollowSet::operator+=(FirstSet const&)
+  Source:    operatorplusis2.cc 
+  Used By:
+    addfollowfromfirst.cc: Rules::addFollowFromFirst(Production*)
+
+operator+=(FollowSet const&)
+  Full name: FollowSet::operator+=(FollowSet const&)
+  Source:    operatorplusis1.cc 
+  Used By:
+    expandfollow.cc: Rules::expandFollow(Production*)
+
+operator+=(LookaheadSet const&)
+  Full name: LookaheadSet::operator+=(LookaheadSet const&)
+  Source:    operatorplusis.cc 
+  Used By:
+    enlargela.cc: StateItem::enlargeLA(LookaheadSet const&)
+    propagate.cc: StateItem::propagate(unsigned int, std::vector<StateItem, std::allocator<StateItem> >&, LookaheadSet const&)
+    propagatela.cc: StateItem::propagateLA(StateItem&, std::vector<StateItem, std::allocator<StateItem> >&)
+
+operator+=(std::set<Element const*, std::less<Element const*>, std::allocator<Element const*> > const&)
+  Full name: FirstSet::operator+=(std::set<Element const*, std::less<Element const*>, std::allocator<Element const*> > const&)
+  Source:    operatorplusis2.cc 
+  Used By:
+    operatorplusis1.cc: FirstSet::operator+=(FirstSet const&)
+
+operator-=(LookaheadSet const&)
+  Full name: LookaheadSet::operator-=(LookaheadSet const&)
+  Source:    operatorsubis.cc 
+  Used By:
+    removeconflicts.cc: RRConflict::removeConflicts(std::vector<StateItem, std::allocator<StateItem> >&)
+
+operator-=(Symbol const*)
+  Full name: LookaheadSet::operator-=(Symbol const*)
+  Source:    operatorsubis2.cc 
+  Used By:
+    removereductions.cc: SRConflict::removeReductions(std::vector<StateItem, std::allocator<StateItem> >&)
+
+operator<<(std::ostream&, AtDollar const&)
+  Full name: operator<<(std::ostream&, AtDollar const&)
+  Source:    operatorinsert.cc 
+  Used By:
+    operatorinsert.cc: operator<<(std::ostream&, Block const&)
+
+operator<<(std::ostream&, LookaheadSet const&)
+  Full name: operator<<(std::ostream&, LookaheadSet const&)
+  Source:    operatorinsert.cc 
+  Used By:
+    itemcontext.cc: StateItem::itemContext(std::ostream&) const
+    insert.cc: RRConflict::insert(std::ostream&) const
+
+operator==(Item const&) const
+  Full name: Item::operator==(Item const&) const
+  Source:    operatorequal.cc 
+  Used By:
+    containskernelitem.cc: StateItem::containsKernelItem(Item const&, unsigned int, std::vector<StateItem, std::allocator<StateItem> > const&)
+
+operator>=(LookaheadSet const&) const
+  Full name: LookaheadSet::operator>=(LookaheadSet const&) const
+  Source:    operatorgreaterequal.cc 
+  Used By:
+    enlargela.cc: StateItem::enlargeLA(LookaheadSet const&)
+    propagate.cc: StateItem::propagate(unsigned int, std::vector<StateItem, std::allocator<StateItem> >&, LookaheadSet const&)
+
+Options()
+  Full name: Options::Options()
+  Source:    options1.cc 
+  Used By:
+    instance.cc: Options::instance()
+
+ParserBase()
+  Full name: ParserBase::ParserBase()
+  Source:    parse.cc 
+  Used By:
+    parser1.cc: Parser::Parser(Rules&)
+
+plainItem(std::ostream&) const
+  Full name: Item::plainItem(std::ostream&) const
+  Source:    plainitem.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 22data.o
+
+plainItem(std::ostream&) const
+  Full name: StateItem::plainItem(std::ostream&) const
+  Source:    plainitem.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 24data.o
+
+pNrDotItem(std::ostream&) const
+  Full name: Item::pNrDotItem(std::ostream&) const
+  Source:    pnrdotitem.cc 
+  Used By:
+    insertext.cc: State::insertExt(std::ostream&) const
+
+polymorphic(std::ostream&) const
+  Full name: Generator::polymorphic(std::ostream&) const
+  Source:    polymorphic.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 30data.o
+
+polymorphicImpl(std::ostream&) const
+  Full name: Generator::polymorphicImpl(std::ostream&) const
+  Source:    polymorphicimpl.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 30data.o
+
+polymorphicInline(std::ostream&) const
+  Full name: Generator::polymorphicInline(std::ostream&) const
+  Source:    polymorphicinline.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 30data.o
+
+polymorphicSpecializations(std::ostream&) const
+  Full name: Generator::polymorphicSpecializations(std::ostream&) const
+  Source:    polymorphicspecializations.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 30data.o
+
+popStream()
+  Full name: Scanner::popStream()
+  Source:    popstream.cc 
+  Used By:
+    lex.cc: Scanner::lex__()
+
+popStream()
+  Full name: ScannerBase::popStream()
+  Source:    lex.cc 
+  Used By:
+    popstream.cc: Scanner::popStream()
+
+predefine(Terminal const*)
+  Full name: Parser::predefine(Terminal const*)
+  Source:    predefine.cc 
+  Used By:
+    parser1.cc: Parser::Parser(Rules&)
+
+preIncludes(std::ostream&) const
+  Full name: Generator::preIncludes(std::ostream&) const
+  Source:    preincludes.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 30data.o
+
+print(std::ostream&) const
+  Full name: Generator::print(std::ostream&) const
+  Source:    print.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 30data.o
+
+processShiftReduceConflict(__gnu_cxx::__normal_iterator<Next const*, std::vector<Next, std::allocator<Next> > > const&, unsigned int)
+  Full name: SRConflict::processShiftReduceConflict(__gnu_cxx::__normal_iterator<Next const*, std::vector<Next, std::allocator<Next> > > const&, unsigned int)
+  Source:    processshiftreduceconflict.cc 
+  Used By:
+    visitreduction.cc: SRConflict::visitReduction(unsigned int)
+
+Production(Symbol const*)
+  Full name: Production::Production(Symbol const*)
+  Source:    production1.cc 
+  Used By:
+    addproduction.cc: Rules::addProduction()
+    sethiddenaction.cc: Rules::setHiddenAction(Block const&)
+
+productionInfo(Production const*, std::ostream&)
+  Full name: Writer::productionInfo(Production const*, std::ostream&)
+  Source:    productioninfo.cc 
+  Used By:
+    productions.cc: Writer::productions() const
+
+productions() const
+  Full name: Writer::productions() const
+  Source:    productions.cc 
+  Used By:
+    staticdata.cc: Generator::staticData(std::ostream&) const
+
+propagate(unsigned int, std::vector<StateItem, std::allocator<StateItem> >&, LookaheadSet const&)
+  Full name: StateItem::propagate(unsigned int, std::vector<StateItem, std::allocator<StateItem> >&, LookaheadSet const&)
+  Source:    propagate.cc 
+  Used By:
+    propagatela.cc: StateItem::propagateLA(StateItem&, std::vector<StateItem, std::allocator<StateItem> >&)
+
+propagateLA()
+  Full name: State::propagateLA()
+  Source:    propagatela.cc 
+  Used By:
+    define.cc: State::define()
+
+propagateLA(StateItem&, std::vector<StateItem, std::allocator<StateItem> >&)
+  Full name: StateItem::propagateLA(StateItem&, std::vector<StateItem, std::allocator<StateItem> >&)
+  Source:    propagatela.cc 
+  Used By:
+    propagatela.cc: State::propagateLA()
+
+pushStream(std::string const&)
+  Full name: ScannerBase::pushStream(std::string const&)
+  Source:    lex.cc 
+  Used By:
+    handlexstring.cc: Scanner::handleXstring(unsigned int)
+
+quotedName(std::ostream&) const
+  Full name: Terminal::quotedName(std::ostream&) const
+  Source:    quotedname.cc 
+  Used By:
+    setprecedence.cc: Rules::setPrecedence(Terminal const*)
+
+redo(unsigned int)
+  Full name: ScannerBase::redo(unsigned int)
+  Source:    lex.cc 
+  Used By:
+    handlexstring.cc: Scanner::handleXstring(unsigned int)
+
+reduction(FBB::Table&, StateItem const&)
+  Full name: Writer::reduction(FBB::Table&, StateItem const&)
+  Source:    reduction.cc 
+  Used By:
+    reductions.cc: Writer::reductions(FBB::Table&, State const&)
+
+reductions(FBB::Table&, State const&)
+  Full name: Writer::reductions(FBB::Table&, State const&)
+  Source:    reductions.cc 
+  Used By:
+    srtable.cc: Writer::srTable(State const*, std::string const&, FBB::Table&, std::ostream&)
+
+reductionSymbol(Element const*, unsigned int, FBB::Table&)
+  Full name: Writer::reductionSymbol(Element const*, unsigned int, FBB::Table&)
+  Source:    reductionsymbol.cc 
+  Used By:
+    reduction.cc: Writer::reduction(FBB::Table&, StateItem const&)
+
+removeConflicts(std::vector<StateItem, std::allocator<StateItem> >&)
+  Full name: RRConflict::removeConflicts(std::vector<StateItem, std::allocator<StateItem> >&)
+  Source:    removeconflicts.cc 
+  Used By:
+    checkconflicts.cc: State::checkConflicts()
+
+removeReductions(std::vector<StateItem, std::allocator<StateItem> >&)
+  Full name: SRConflict::removeReductions(std::vector<StateItem, std::allocator<StateItem> >&)
+  Source:    removereductions.cc 
+  Used By:
+    checkconflicts.cc: State::checkConflicts()
+
+removeShift(RmShift const&, std::vector<Next, std::allocator<Next> >&, unsigned int*)
+  Full name: Next::removeShift(RmShift const&, std::vector<Next, std::allocator<Next> >&, unsigned int*)
+  Source:    removeshift.cc 
+  Used By:
+    removeshifts.cc: SRConflict::removeShifts(std::vector<Next, std::allocator<Next> >&)
+
+removeShifts(std::vector<Next, std::allocator<Next> >&)
+  Full name: SRConflict::removeShifts(std::vector<Next, std::allocator<Next> >&)
+  Source:    removeshifts.cc 
+  Used By:
+    checkconflicts.cc: State::checkConflicts()
+
+requiredTokens(std::ostream&) const
+  Full name: Generator::requiredTokens(std::ostream&) const
+  Source:    requiredtokens.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 30data.o
+
+requireNonTerminal(std::string const&)
+  Full name: Parser::requireNonTerminal(std::string const&)
+  Source:    requirenonterminal.cc 
+  Used By:
+    openrule.cc: Parser::openRule(std::string const&)
+
+reRead(unsigned int)
+  Full name: ScannerBase::Input::reRead(unsigned int)
+  Source:    lex.cc 
+  Used By:
+    returntypespec.cc: Scanner::returnTypeSpec()
+
+returnPolymorphic(AtDollar const&) const
+  Full name: Parser::returnPolymorphic(AtDollar const&) const
+  Source:    returnpolymorphic.cc 
+  Used By:
+    handledollar.cc: Parser::handleDollar(Block&, AtDollar const&, int)
+
+returnQuoted(void (Scanner::*)())
+  Full name: Scanner::returnQuoted(void (Scanner::*)())
+  Source:    returnquoted.cc 
+  Used By:
+    lex.cc: Scanner::executeAction__(unsigned int)
+
+returnSingle(AtDollar const&) const
+  Full name: Parser::returnSingle(AtDollar const&) const
+  Source:    returnsingle.cc 
+  Used By:
+    handledollar.cc: Parser::handleDollar(Block&, AtDollar const&, int)
+
+returnTypeSpec()
+  Full name: Scanner::returnTypeSpec()
+  Source:    returntypespec.cc 
+  Used By:
+    lex.cc: Scanner::executeAction__(unsigned int)
+
+returnUnion(AtDollar const&) const
+  Full name: Parser::returnUnion(AtDollar const&) const
+  Source:    returnunion.cc 
+  Used By:
+    handledollar.cc: Parser::handleDollar(Block&, AtDollar const&, int)
+
+RmReduction(unsigned int, unsigned int, Symbol const*, bool)
+  Full name: RmReduction::RmReduction(unsigned int, unsigned int, Symbol const*, bool)
+  Source:    rmreduction1.cc 
+  Used By:
+    handlesrconflict.cc: SRConflict::handleSRconflict(unsigned int, __gnu_cxx::__normal_iterator<Next const*, std::vector<Next, std::allocator<Next> > > const&, unsigned int)
+
+RmShift(unsigned int, bool)
+  Full name: RmShift::RmShift(unsigned int, bool)
+  Source:    rmshift1.cc 
+  Used By:
+    handlesrconflict.cc: SRConflict::handleSRconflict(unsigned int, __gnu_cxx::__normal_iterator<Next const*, std::vector<Next, std::allocator<Next> > > const&, unsigned int)
+
+RRConflict(std::vector<StateItem, std::allocator<StateItem> > const&, std::vector<unsigned int, std::allocator<unsigned int> > const&)
+  Full name: RRConflict::RRConflict(std::vector<StateItem, std::allocator<StateItem> > const&, std::vector<unsigned int, std::allocator<unsigned int> > const&)
+  Source:    rrconflict1.cc 
+  Used By:
+    state1.cc: State::State(unsigned int)
+
+RRData(LookaheadSet)
+  Full name: RRData::RRData(LookaheadSet)
+  Source:    rrdata1.cc 
+  Used By:
+    comparereductions.cc: RRConflict::compareReductions(unsigned int)
+
+s_acceptProductionNr
+  Full name: Rules::s_acceptProductionNr
+  Source:    data.cc 
+  Used By:
+    augmentgrammar.cc: Rules::augmentGrammar(Symbol*)
+
+s_acceptState
+  Full name: State::s_acceptState
+  Source:    data.cc 
+  Used By:
+    define.cc: State::define()
+    srtable.cc: Writer::srTable(State const*, std::string const&, FBB::Table&, std::ostream&)
+
+s_baseFlag
+  Full name: Generator::s_baseFlag
+  Source:    data.cc 
+  Used By:
+    filter.cc: Generator::filter(std::istream&, std::ostream&, bool) const
+
+s_baseFlagSize
+  Full name: Generator::s_baseFlagSize
+  Source:    data.cc 
+  Used By:
+    filter.cc: Generator::filter(std::istream&, std::ostream&, bool) const
+
+s_counter
+  Full name: NonTerminal::s_counter
+  Source:    data.cc 
+  Used By:
+    setfirst.cc: NonTerminal::setFirst(NonTerminal*)
+    addfollowtofollow.cc: Rules::addFollowToFollow()
+    determinefirst.cc: Rules::determineFirst()
+
+s_defaultBaseClassSkeleton
+  Full name: Options::s_defaultBaseClassSkeleton
+  Source:    data.cc 
+  Used By:
+    setskeletons.cc: Options::setSkeletons()
+
+s_defaultClassName
+  Full name: Options::s_defaultClassName
+  Source:    data.cc 
+  Used By:
+    setbasicstrings.cc: Options::setBasicStrings()
+
+s_defaultClassSkeleton
+  Full name: Options::s_defaultClassSkeleton
+  Source:    data.cc 
+  Used By:
+    setskeletons.cc: Options::setSkeletons()
+
+s_defaultImplementationSkeleton
+  Full name: Options::s_defaultImplementationSkeleton
+  Source:    data.cc 
+  Used By:
+    setskeletons.cc: Options::setSkeletons()
+
+s_defaultParsefunSkeleton
+  Full name: Options::s_defaultParsefunSkeleton
+  Source:    data.cc 
+  Used By:
+    setskeletons.cc: Options::setSkeletons()
+
+s_defaultParsefunSource
+  Full name: Options::s_defaultParsefunSource
+  Source:    data.cc 
+  Used By:
+    setpathstrings.cc: Options::setPathStrings(bool)
+
+s_defaultPolymorphicInlineSkeleton
+  Full name: Options::s_defaultPolymorphicInlineSkeleton
+  Source:    data.cc 
+  Used By:
+    setskeletons.cc: Options::setSkeletons()
+
+s_defaultPolymorphicSkeleton
+  Full name: Options::s_defaultPolymorphicSkeleton
+  Source:    data.cc 
+  Used By:
+    setskeletons.cc: Options::setSkeletons()
+
+s_defaultScannerMatchedTextFunction
+  Full name: Options::s_defaultScannerMatchedTextFunction
+  Source:    data.cc 
+  Used By:
+    setbasicstrings.cc: Options::setBasicStrings()
+
+s_defaultScannerTokenFunction
+  Full name: Options::s_defaultScannerTokenFunction
+  Source:    data.cc 
+  Used By:
+    setbasicstrings.cc: Options::setBasicStrings()
+
+s_defaultSkeletonDirectory
+  Full name: Options::s_defaultSkeletonDirectory
+  Source:    data.cc 
+  Used By:
+    setbasicstrings.cc: Options::setBasicStrings()
+
+s_defaultTargetDirectory
+  Full name: Options::s_defaultTargetDirectory
+  Source:    data.cc 
+  Used By:
+    setbasicstrings.cc: Options::setBasicStrings()
+
+s_dfaBase__
+  Full name: ScannerBase::s_dfaBase__
+  Source:    lex.cc 
+  Used By:
+    eoln.cc: Scanner::eoln()
+    handlexstring.cc: Scanner::handleXstring(unsigned int)
+    returnquoted.cc: Scanner::returnQuoted(void (Scanner::*)())
+    returntypespec.cc: Scanner::returnTypeSpec()
+    parse.cc: Parser::executeAction(int)
+
+s_eofTerminal
+  Full name: Rules::s_eofTerminal
+  Source:    data.cc 
+  Used By:
+    operatorsubis2.cc: LookaheadSet::operator-=(Symbol const*)
+    reduction.cc: Writer::reduction(FBB::Table&, StateItem const&)
+    srtable.cc: Writer::srTable(State const*, std::string const&, FBB::Table&, std::ostream&)
+    parser1.cc: Parser::Parser(Rules&)
+    selectsymbolic.cc: Generator::selectSymbolic(Terminal const*, std::vector<Terminal const*, std::allocator<Terminal const*> >&)
+
+s_errorTerminal
+  Full name: Rules::s_errorTerminal
+  Source:    data.cc 
+  Used By:
+    notreducible.cc: State::notReducible(unsigned int)
+    parser1.cc: Parser::Parser(Rules&)
+
+s_hiddenName
+  Full name: Parser::s_hiddenName
+  Source:    data.cc 
+  Used By:
+    nexthiddenname.cc: Parser::nextHiddenName()
+
+s_insert
+  Full name: Generator::s_insert
+  Source:    data.cc 
+  Used By:
+    insert.cc: Generator::insert(std::ostream&) const
+
+s_insert
+  Full name: State::s_insert
+  Source:    data.cc 
+  Used By:
+    allstates.cc: State::allStates()
+    define.cc: State::define()
+
+s_insertPtr
+  Full name: NonTerminal::s_insertPtr
+  Source:    data.cc 
+  Used By:
+    v.cc: NonTerminal::insert(std::ostream&) const
+    showfirst.cc: GLOBALS showfirst.cc 18showfirst.o
+    showfollow.cc: GLOBALS showfollow.cc 18showfollow.o
+    insert.cc: GLOBALS insert.cc 22insert.o
+    transitionkernel.cc: GLOBALS transitionkernel.cc 26transitionkernel.o
+    insertext.cc: GLOBALS insertext.cc 28insertext.o
+    reductionsymbol.cc: GLOBALS reductionsymbol.cc 29reductionsymbol.o
+    transition.cc: GLOBALS transition.cc 29transition.o
+    multiplydefined.cc: GLOBALS multiplydefined.cc 2multiplydefined.o
+
+s_insertPtr
+  Full name: Item::s_insertPtr
+  Source:    data.cc 
+  Used By:
+    itemcontext.cc: StateItem::itemContext(std::ostream&) const
+    plainitem.cc: StateItem::plainItem(std::ostream&) const
+    insertext.cc: GLOBALS insertext.cc 28insertext.o
+
+s_insertPtr
+  Full name: Next::s_insertPtr
+  Source:    data.cc 
+  Used By:
+    insertext.cc: GLOBALS insertext.cc 28insertext.o
+    insertstd.cc: State::insertStd(std::ostream&) const
+
+s_insertPtr
+  Full name: Terminal::s_insertPtr
+  Source:    data.cc 
+  Used By:
+    destructor.cc: GLOBALS destructor.cc 13destructor.o
+    oinsert.cc: GLOBALS oinsert.cc 15oinsert.o
+    setprecedence.cc: GLOBALS setprecedence.cc 18setprecedence.o
+    showfirst.cc: GLOBALS showfirst.cc 18showfirst.o
+    showterminals.cc: GLOBALS showterminals.cc 18showterminals.o
+    showunusedrules.cc: GLOBALS showunusedrules.cc 18showunusedrules.o
+    showunusedterminals.cc: GLOBALS showunusedterminals.cc 18showunusedterminals.o
+    insert.cc: GLOBALS insert.cc 22insert.o
+    transitionkernel.cc: GLOBALS transitionkernel.cc 26transitionkernel.o
+    insertext.cc: GLOBALS insertext.cc 28insertext.o
+    reductionsymbol.cc: GLOBALS reductionsymbol.cc 29reductionsymbol.o
+    transition.cc: GLOBALS transition.cc 29transition.o
+    multiplydefined.cc: GLOBALS multiplydefined.cc 2multiplydefined.o
+    filter.cc: GLOBALS filter.cc 30filter.o
+
+s_insertPtr
+  Full name: StateItem::s_insertPtr
+  Source:    data.cc 
+  Used By:
+    insertext.cc: GLOBALS insertext.cc 28insertext.o
+    insertstd.cc: State::insertStd(std::ostream&) const
+
+s_locationValue
+  Full name: Parser::s_locationValue
+  Source:    data.cc 
+  Used By:
+    handleatsign.cc: Parser::handleAtSign(Block&, AtDollar const&, int)
+
+s_locationValueStack
+  Full name: Parser::s_locationValueStack
+  Source:    data.cc 
+  Used By:
+    handleatsign.cc: Parser::handleAtSign(Block&, AtDollar const&, int)
+
+s_maxValue
+  Full name: Terminal::s_maxValue
+  Source:    data.cc 
+  Used By:
+    terminal1.cc: Terminal::Terminal(std::string const&, Symbol::Type, unsigned int, Terminal::Association, std::string const&)
+    assignnonterminalnumbers.cc: Rules::assignNonTerminalNumbers()
+
+s_nConflicts
+  Full name: SRConflict::s_nConflicts
+  Source:    data.cc 
+  Used By:
+    handlesrconflict.cc: SRConflict::handleSRconflict(unsigned int, __gnu_cxx::__normal_iterator<Next const*, std::vector<Next, std::allocator<Next> > > const&, unsigned int)
+    define.cc: State::define()
+
+s_nConflicts
+  Full name: RRConflict::s_nConflicts
+  Source:    data.cc 
+  Used By:
+    comparereductions.cc: RRConflict::compareReductions(unsigned int)
+    define.cc: State::define()
+
+s_nExpectedConflicts
+  Full name: Rules::s_nExpectedConflicts
+  Source:    data.cc 
+  Used By:
+    define.cc: State::define()
+    parse.cc: Parser::executeAction(int)
+
+s_nHidden
+  Full name: Parser::s_nHidden
+  Source:    data.cc 
+  Used By:
+    nexthiddenname.cc: Parser::nextHiddenName()
+
+s_nr
+  Full name: Production::s_nr
+  Source:    data.cc 
+  Used By:
+    production1.cc: Production::Production(Symbol const*)
+
+s_number
+  Full name: NonTerminal::s_number
+  Source:    data.cc 
+  Used By:
+    assignnonterminalnumbers.cc: Rules::assignNonTerminalNumbers()
+
+s_options
+  Full name: Options::s_options
+  Source:    data.cc 
+  Used By:
+    instance.cc: Options::instance()
+
+s_precedence
+  Full name: Terminal::s_precedence
+  Source:    data.cc 
+  Used By:
+    terminal1.cc: Terminal::Terminal(std::string const&, Symbol::Type, unsigned int, Terminal::Association, std::string const&)
+    terminal2.cc: Terminal::Terminal(std::string const&, std::string const&, Symbol::Type)
+    expectrules.cc: Parser::expectRules()
+    parse.cc: Parser::executeAction(int)
+
+s_semanticValue
+  Full name: Parser::s_semanticValue
+  Source:    data.cc 
+  Used By:
+    handledollar.cc: Parser::handleDollar(Block&, AtDollar const&, int)
+    savedollar1.cc: Parser::saveDollar1(Block&, int)
+
+s_semanticValueStack
+  Full name: Parser::s_semanticValueStack
+  Source:    data.cc 
+  Used By:
+    handledollar.cc: Parser::handleDollar(Block&, AtDollar const&, int)
+    savedollar1.cc: Parser::saveDollar1(Block&, int)
+
+s_startProduction
+  Full name: Production::s_startProduction
+  Source:    data.cc 
+  Used By:
+    initialstate.cc: State::initialState()
+
+s_startSymbol
+  Full name: Rules::s_startSymbol
+  Source:    data.cc 
+  Used By:
+    augmentgrammar.cc: Rules::augmentGrammar(Symbol*)
+    derivesentence.cc: Grammar::deriveSentence()
+
+s_state
+  Full name: State::s_state
+  Source:    data.cc 
+  Used By:
+    allstates.cc: State::allStates()
+    define.cc: State::define()
+    distributela.cc: State::distributeLA(Next&, State::LookaheadContext&)
+    findkernel.cc: State::findKernel(std::vector<Item, std::allocator<Item> > const&) const
+    newstate.cc: State::newState()
+    nextstate.cc: State::nextState(Next&)
+    srtables.cc: Writer::srTables() const
+    statesarray.cc: Writer::statesArray() const
+
+s_stateName
+  Full name: StateType::s_stateName
+  Source:    data.cc 
+  Used By:
+    srtable.cc: Writer::srTable(State const*, std::string const&, FBB::Table&, std::ostream&)
+
+s_stype__
+  Full name: Parser::s_stype__
+  Source:    data.cc 
+  Used By:
+    checkfirsttype.cc: Parser::checkFirstType()
+    semtag.cc: Parser::semTag(char const*, AtDollar const&, bool (Parser::*)(std::string const&) const) const
+
+s_threadConst
+  Full name: Writer::s_threadConst
+  Source:    data.cc 
+  Used By:
+    srtable.cc: Writer::srTable(State const*, std::string const&, FBB::Table&, std::ostream&)
+    statesarray.cc: Writer::statesArray() const
+    writer0.cc: Writer::Writer(std::string const&, Rules const&)
+
+s_undefined
+  Full name: NonTerminal::s_undefined
+  Source:    data.cc 
+  Used By:
+    undefined.cc: NonTerminal::undefined(NonTerminal const*)
+    showunusednonterminals.cc: Rules::showUnusedNonTerminals() const
+
+s_unused
+  Full name: NonTerminal::s_unused
+  Source:    data.cc 
+  Used By:
+    unused.cc: NonTerminal::unused(NonTerminal const*)
+    showunusednonterminals.cc: Rules::showUnusedNonTerminals() const
+
+s_unused
+  Full name: Production::s_unused
+  Source:    data.cc 
+  Used By:
+    unused.cc: Production::unused(Production const*)
+    showunusedrules.cc: Rules::showUnusedRules() const
+
+s_value
+  Full name: Terminal::s_value
+  Source:    data.cc 
+  Used By:
+    setvalue.cc: Terminal::setValue(unsigned int)
+    terminal1.cc: Terminal::Terminal(std::string const&, Symbol::Type, unsigned int, Terminal::Association, std::string const&)
+
+s_valueSet
+  Full name: Terminal::s_valueSet
+  Source:    data.cc 
+  Used By:
+    setunique.cc: Terminal::setUnique(unsigned int)
+    setvalue.cc: Terminal::setValue(unsigned int)
+
+s_yylex
+  Full name: Options::s_yylex
+  Source:    data.cc 
+  Used By:
+    setbasicstrings.cc: Options::setBasicStrings()
+
+s_YYText
+  Full name: Options::s_YYText
+  Source:    data.cc 
+  Used By:
+    setbasicstrings.cc: Options::setBasicStrings()
+
+saveDollar1(Block&, int)
+  Full name: Parser::saveDollar1(Block&, int)
+  Source:    savedollar1.cc 
+  Used By:
+    substituteblock.cc: Parser::substituteBlock(int, Block&)
+
+Scanner(std::string const&)
+  Full name: Scanner::Scanner(std::string const&)
+  Source:    scanner1.cc 
+  Used By:
+    parser1.cc: Parser::Parser(Rules&)
+
+ScannerBase(std::string const&, std::string const&)
+  Full name: ScannerBase::ScannerBase(std::string const&, std::string const&)
+  Source:    lex.cc 
+  Used By:
+    scanner1.cc: Scanner::Scanner(std::string const&)
+
+scannerH(std::ostream&) const
+  Full name: Generator::scannerH(std::ostream&) const
+  Source:    scannerh.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 30data.o
+
+scannerObject(std::ostream&) const
+  Full name: Generator::scannerObject(std::ostream&) const
+  Source:    scannerobject.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 30data.o
+
+selectSymbolic(Terminal const*, std::vector<Terminal const*, std::allocator<Terminal const*> >&)
+  Full name: Generator::selectSymbolic(Terminal const*, std::vector<Terminal const*, std::allocator<Terminal const*> >&)
+  Source:    selectsymbolic.cc 
+  Used By:
+    tokens.cc: Generator::tokens(std::ostream&) const
+
+semTag(char const*, AtDollar const&, bool (Parser::*)(std::string const&) const) const
+  Full name: Parser::semTag(char const*, AtDollar const&, bool (Parser::*)(std::string const&) const) const
+  Source:    semtag.cc 
+  Used By:
+    returnpolymorphic.cc: Parser::returnPolymorphic(AtDollar const&) const
+    returnsingle.cc: Parser::returnSingle(AtDollar const&) const
+    returnunion.cc: Parser::returnUnion(AtDollar const&) const
+
+setAccessorVariables()
+  Full name: Options::setAccessorVariables()
+  Source:    setaccessorvariables.cc 
+  Used By:
+    cleanup.cc: Parser::cleanup()
+
+setBasicStrings()
+  Full name: Options::setBasicStrings()
+  Source:    setbasicstrings.cc 
+  Used By:
+    setaccessorvariables.cc: Options::setAccessorVariables()
+
+setBooleans()
+  Full name: Options::setBooleans()
+  Source:    setbooleans.cc 
+  Used By:
+    setaccessorvariables.cc: Options::setAccessorVariables()
+
+setChildren(std::vector<unsigned int, std::allocator<unsigned int> > const&)
+  Full name: StateItem::setChildren(std::vector<unsigned int, std::allocator<unsigned int> > const&)
+  Source:    setchildren.cc 
+  Used By:
+    adddependents.cc: State::addDependents(Next const&, Symbol const*, unsigned int)
+
+setDebug(bool)
+  Full name: ScannerBase::setDebug(bool)
+  Source:    lex.cc 
+  Used By:
+    parser1.cc: Parser::Parser(Rules&)
+
+setFirst(NonTerminal*)
+  Full name: NonTerminal::setFirst(NonTerminal*)
+  Source:    setfirst.cc 
+  Used By:
+    determinefirst.cc: Rules::determineFirst()
+
+setHiddenAction(Block const&)
+  Full name: Rules::setHiddenAction(Block const&)
+  Source:    sethiddenaction.cc 
+  Used By:
+    nestedblock.cc: Parser::nestedBlock(Block&)
+
+setIdx(RRData::Keep, unsigned int, unsigned int)
+  Full name: RRData::setIdx(RRData::Keep, unsigned int, unsigned int)
+  Source:    setidx.cc 
+  Used By:
+    comparereductions.cc: RRConflict::compareReductions(unsigned int)
+
+setItems()
+  Full name: State::setItems()
+  Source:    setitems.cc 
+  Used By:
+    construct.cc: State::construct()
+
+setLA(LookaheadSet const&)
+  Full name: StateItem::setLA(LookaheadSet const&)
+  Source:    setla.cc 
+  Used By:
+    initialstate.cc: State::initialState()
+
+setLineNrs() const
+  Full name: Scanner::setLineNrs() const
+  Source:    setlinenrs.cc 
+  Used By:
+    eoln.cc: Scanner::eoln()
+    handlexstring.cc: Scanner::handleXstring(unsigned int)
+    lex.cc: Scanner::executeAction__(unsigned int)
+    settags.cc: Scanner::setTags() const
+
+setLocationDecl(std::string const&)
+  Full name: Options::setLocationDecl(std::string const&)
+  Source:    setlocationdecl.cc 
+  Used By:
+    parse.cc: Parser::executeAction(int)
+
+setLtype()
+  Full name: Options::setLtype()
+  Source:    setltype.cc 
+  Used By:
+    parse.cc: Parser::executeAction(int)
+
+setNonTerminalTypes()
+  Full name: Rules::setNonTerminalTypes()
+  Source:    setnonterminaltypes.cc 
+  Used By:
+    expectrules.cc: Parser::expectRules()
+
+setOpt(char const*, std::string const&)
+  Full name: Options::setOpt(char const*, std::string const&)
+  Source:    setopt.cc 
+  Used By:
+    setbasicstrings.cc: Options::setBasicStrings()
+
+setPath(std::string*, int, bool, char const*, std::string const&, char const*)
+  Full name: Options::setPath(std::string*, int, bool, char const*, std::string const&, char const*)
+  Source:    setpath2.cc 
+  Used By:
+    setpathstrings.cc: Options::setPathStrings(bool)
+
+setPathStrings(bool)
+  Full name: Options::setPathStrings(bool)
+  Source:    setpathstrings.cc 
+  Used By:
+    setaccessorvariables.cc: Options::setAccessorVariables()
+
+setPolymorphicDecl()
+  Full name: Options::setPolymorphicDecl()
+  Source:    setpolymorphicdecl.cc 
+  Used By:
+    setpolymorphicdecl.cc: Parser::setPolymorphicDecl()
+
+setPolymorphicDecl()
+  Full name: Parser::setPolymorphicDecl()
+  Source:    setpolymorphicdecl.cc 
+  Used By:
+    parse.cc: Parser::executeAction(int)
+
+setPrecedence(int)
+  Full name: Parser::setPrecedence(int)
+  Source:    setprecedence.cc 
+  Used By:
+    parse.cc: Parser::executeAction(int)
+
+setPrecedence(Terminal const*)
+  Full name: Rules::setPrecedence(Terminal const*)
+  Source:    setprecedence.cc 
+  Used By:
+    setprecedence.cc: Parser::setPrecedence(int)
+
+setPrecedence(Terminal const*)
+  Full name: Production::setPrecedence(Terminal const*)
+  Source:    setprecedence.cc 
+  Used By:
+    setprecedence.cc: Rules::setPrecedence(Terminal const*)
+    updateprecedence.cc: Rules::updatePrecedence(Production*, std::vector<Terminal*, std::allocator<Terminal*> > const&)
+
+setQuotedStrings()
+  Full name: Options::setQuotedStrings()
+  Source:    setquotedstrings.cc 
+  Used By:
+    setaccessorvariables.cc: Options::setAccessorVariables()
+
+setRequiredTokens(unsigned int)
+  Full name: Options::setRequiredTokens(unsigned int)
+  Source:    setrequiredtokens.cc 
+  Used By:
+    parse.cc: Parser::executeAction(int)
+
+setSkeletons()
+  Full name: Options::setSkeletons()
+  Source:    setskeletons.cc 
+  Used By:
+    setaccessorvariables.cc: Options::setAccessorVariables()
+
+setStart()
+  Full name: Parser::setStart()
+  Source:    setstart.cc 
+  Used By:
+    parse.cc: Parser::executeAction(int)
+
+setStype()
+  Full name: Options::setStype()
+  Source:    setstype.cc 
+  Used By:
+    parse.cc: Parser::executeAction(int)
+
+setTags() const
+  Full name: Scanner::setTags() const
+  Source:    settags.cc 
+  Used By:
+    handlexstring.cc: Scanner::handleXstring(unsigned int)
+    popstream.cc: Scanner::popStream()
+    scanner1.cc: Scanner::Scanner(std::string const&)
+
+setUnionDecl()
+  Full name: Parser::setUnionDecl()
+  Source:    setuniondecl.cc 
+  Used By:
+    parse.cc: Parser::executeAction(int)
+
+setUnionDecl(std::string const&)
+  Full name: Options::setUnionDecl(std::string const&)
+  Source:    setuniondecl.cc 
+  Used By:
+    setuniondecl.cc: Parser::setUnionDecl()
+
+setUnique(unsigned int)
+  Full name: Terminal::setUnique(unsigned int)
+  Source:    setunique.cc 
+  Used By:
+    setvalue.cc: Terminal::setValue(unsigned int)
+
+setValue(unsigned int)
+  Full name: Terminal::setValue(unsigned int)
+  Source:    setvalue.cc 
+  Used By:
+    definetokenname.cc: Parser::defineTokenName(std::string const&, bool)
+
+setVerbosity()
+  Full name: Options::setVerbosity()
+  Source:    setverbosity.cc 
+  Used By:
+    cleanup.cc: Parser::cleanup()
+
+showFilenames() const
+  Full name: Options::showFilenames() const
+  Source:    showfilenames.cc 
+  Used By:
+    cleanup.cc: Parser::cleanup()
+
+solveByAssociation() const
+  Full name: Next::solveByAssociation() const
+  Source:    solvebyassociation.cc 
+  Used By:
+    handlesrconflict.cc: SRConflict::handleSRconflict(unsigned int, __gnu_cxx::__normal_iterator<Next const*, std::vector<Next, std::allocator<Next> > > const&, unsigned int)
+
+solveByPrecedence(Symbol const*) const
+  Full name: Next::solveByPrecedence(Symbol const*) const
+  Source:    solvebyprecedence.cc 
+  Used By:
+    handlesrconflict.cc: SRConflict::handleSRconflict(unsigned int, __gnu_cxx::__normal_iterator<Next const*, std::vector<Next, std::allocator<Next> > > const&, unsigned int)
+
+SRConflict(std::vector<Next, std::allocator<Next> > const&, std::vector<StateItem, std::allocator<StateItem> > const&, std::vector<unsigned int, std::allocator<unsigned int> > const&)
+  Full name: SRConflict::SRConflict(std::vector<Next, std::allocator<Next> > const&, std::vector<StateItem, std::allocator<StateItem> > const&, std::vector<unsigned int, std::allocator<unsigned int> > const&)
+  Source:    srconflict1.cc 
+  Used By:
+    state1.cc: State::State(unsigned int)
+
+srTable(State const*, std::string const&, FBB::Table&, std::ostream&)
+  Full name: Writer::srTable(State const*, std::string const&, FBB::Table&, std::ostream&)
+  Source:    srtable.cc 
+  Used By:
+    srtables.cc: Writer::srTables() const
+
+srTables() const
+  Full name: Writer::srTables() const
+  Source:    srtables.cc 
+  Used By:
+    staticdata.cc: Generator::staticData(std::ostream&) const
+
+standard(std::ostream&) const
+  Full name: Production::standard(std::ostream&) const
+  Source:    standard.cc 
+  Used By:
+    unused.cc: Production::unused(Production const*)
+    showrules.cc: Rules::showRules() const
+    productioninfo.cc: Writer::productionInfo(Production const*, std::ostream&)
+    checkfirsttype.cc: Parser::checkFirstType()
+    errindextoolarge.cc: Parser::errIndexTooLarge(AtDollar const&, int) const
+    errnosemantic.cc: Parser::errNoSemantic(char const*, AtDollar const&, std::string const&) const
+    negativeindex.cc: Parser::negativeIndex(AtDollar const&) const
+    warnautoignored.cc: Parser::warnAutoIgnored(char const*, AtDollar const&) const
+    warnautooverride.cc: Parser::warnAutoOverride(AtDollar const&) const
+    warnuntaggedvalue.cc: Parser::warnUntaggedValue(AtDollar const&) const
+
+State(unsigned int)
+  Full name: State::State(unsigned int)
+  Source:    state1.cc 
+  Used By:
+    newstate.cc: State::newState()
+
+StateItem(Item const&)
+  Full name: StateItem::StateItem(Item const&)
+  Source:    stateitem2.cc 
+  Used By:
+    addproduction.cc: StateItem::addProduction(Production const*, std::vector<StateItem, std::allocator<StateItem> >&, unsigned int)
+    addstate.cc: State::addState(std::vector<Item, std::allocator<Item> > const&)
+    initialstate.cc: State::initialState()
+
+statesArray() const
+  Full name: Writer::statesArray() const
+  Source:    statesarray.cc 
+  Used By:
+    staticdata.cc: Generator::staticData(std::ostream&) const
+
+staticData(std::ostream&) const
+  Full name: Generator::staticData(std::ostream&) const
+  Source:    staticdata.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 30data.o
+
+stype(std::ostream&) const
+  Full name: Generator::stype(std::ostream&) const
+  Source:    stype.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 30data.o
+
+sType(unsigned int) const
+  Full name: Rules::sType(unsigned int) const
+  Source:    stype.cc 
+  Used By:
+    checkfirsttype.cc: Parser::checkFirstType()
+    returnpolymorphic.cc: Parser::returnPolymorphic(AtDollar const&) const
+    returnunion.cc: Parser::returnUnion(AtDollar const&) const
+    semtag.cc: Parser::semTag(char const*, AtDollar const&, bool (Parser::*)(std::string const&) const) const
+
+substituteBlock(int, Block&)
+  Full name: Parser::substituteBlock(int, Block&)
+  Source:    substituteblock.cc 
+  Used By:
+    installaction.cc: Parser::installAction(Block&)
+    nestedblock.cc: Parser::nestedBlock(Block&)
+
+summarizeActions()
+  Full name: State::summarizeActions()
+  Source:    summarizeactions.cc 
+  Used By:
+    define.cc: State::define()
+
+Symbol(std::string const&, Symbol::Type, std::string const&)
+  Full name: Symbol::Symbol(std::string const&, Symbol::Type, std::string const&)
+  Source:    symbol1.cc 
+  Used By:
+    terminal1.cc: Terminal::Terminal(std::string const&, Symbol::Type, unsigned int, Terminal::Association, std::string const&)
+    terminal2.cc: Terminal::Terminal(std::string const&, std::string const&, Symbol::Type)
+    nonterminal1.cc: NonTerminal::NonTerminal(std::string const&, std::string const&, Symbol::Type)
+
+symbolicNames() const
+  Full name: Writer::symbolicNames() const
+  Source:    symbolicnames.cc 
+  Used By:
+    staticdata.cc: Generator::staticData(std::ostream&) const
+
+Terminal(std::string const&, std::string const&, Symbol::Type)
+  Full name: Terminal::Terminal(std::string const&, std::string const&, Symbol::Type)
+  Source:    terminal2.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 18data.o
+
+Terminal(std::string const&, Symbol::Type, unsigned int, Terminal::Association, std::string const&)
+  Full name: Terminal::Terminal(std::string const&, Symbol::Type, unsigned int, Terminal::Association, std::string const&)
+  Source:    terminal1.cc 
+  Used By:
+    defineterminal.cc: Parser::defineTerminal(std::string const&, Symbol::Type)
+    useterminal.cc: Parser::useTerminal()
+
+terminalSymbol(Terminal const*, std::ostream&)
+  Full name: Writer::terminalSymbol(Terminal const*, std::ostream&)
+  Source:    terminalsymbol.cc 
+  Used By:
+    symbolicnames.cc: Writer::symbolicNames() const
+
+termToNonterm(Symbol*, Symbol*)
+  Full name: Rules::termToNonterm(Symbol*, Symbol*)
+  Source:    termtononterm.cc 
+  Used By:
+    requirenonterminal.cc: Parser::requireNonTerminal(std::string const&)
+
+threading(std::ostream&) const
+  Full name: Generator::threading(std::ostream&) const
+  Source:    threading.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 30data.o
+
+tokens(std::ostream&) const
+  Full name: Generator::tokens(std::ostream&) const
+  Source:    tokens.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 30data.o
+
+transition(Next const&, FBB::Table&)
+  Full name: Writer::transition(Next const&, FBB::Table&)
+  Source:    transition.cc 
+  Used By:
+    transitions.cc: Writer::transitions(FBB::Table&, std::vector<Next, std::allocator<Next> > const&)
+
+transition(std::ostream&) const
+  Full name: Next::transition(std::ostream&) const
+  Source:    transition.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 26data.o
+
+transitionKernel(std::ostream&) const
+  Full name: Next::transitionKernel(std::ostream&) const
+  Source:    transitionkernel.cc 
+  Used By:
+    insertext.cc: State::insertExt(std::ostream&) const
+
+transitions(FBB::Table&, std::vector<Next, std::allocator<Next> > const&)
+  Full name: Writer::transitions(FBB::Table&, std::vector<Next, std::allocator<Next> > const&)
+  Source:    transitions.cc 
+  Used By:
+    srtable.cc: Writer::srTable(State const*, std::string const&, FBB::Table&, std::ostream&)
+
+undefined(NonTerminal const*)
+  Full name: NonTerminal::undefined(NonTerminal const*)
+  Source:    undefined.cc 
+  Used By:
+    showunusednonterminals.cc: Rules::showUnusedNonTerminals() const
+
+undelimit(std::string const&)
+  Full name: Options::undelimit(std::string const&)
+  Source:    undelimit.cc 
+  Used By:
+    handlexstring.cc: Scanner::handleXstring(unsigned int)
+    definepathname.cc: Parser::definePathname(std::string*)
+    cleandir.cc: Options::cleanDir(std::string&)
+    setopt.cc: Options::setOpt(char const*, std::string const&)
+
+unused(NonTerminal const*)
+  Full name: NonTerminal::unused(NonTerminal const*)
+  Source:    unused.cc 
+  Used By:
+    showunusednonterminals.cc: Rules::showUnusedNonTerminals() const
+
+unused(Production const*)
+  Full name: Production::unused(Production const*)
+  Source:    unused.cc 
+  Used By:
+    showunusedrules.cc: Rules::showUnusedRules() const
+
+unused(Terminal const*)
+  Full name: Terminal::unused(Terminal const*)
+  Source:    unused.cc 
+  Used By:
+    showunusedterminals.cc: Rules::showUnusedTerminals() const
+
+updateLA(unsigned int, State::LookaheadContext&)
+  Full name: State::updateLA(unsigned int, State::LookaheadContext&)
+  Source:    updatela.cc 
+  Used By:
+    distributela.cc: State::distributeLA(Next&, State::LookaheadContext&)
+
+updatePrecedence(Production*, std::vector<Terminal*, std::allocator<Terminal*> > const&)
+  Full name: Rules::updatePrecedence(Production*, std::vector<Terminal*, std::allocator<Terminal*> > const&)
+  Source:    updateprecedence.cc 
+  Used By:
+    updateprecedences.cc: Rules::updatePrecedences()
+
+useSymbol()
+  Full name: Parser::useSymbol()
+  Source:    usesymbol.cc 
+  Used By:
+    parse.cc: Parser::executeAction(int)
+
+useTerminal()
+  Full name: Parser::useTerminal()
+  Source:    useterminal.cc 
+  Used By:
+    parse.cc: Parser::executeAction(int)
+
+v_firstSet() const
+  Full name: NonTerminal::v_firstSet() const
+  Source:    v.cc 
+  Used By:
+    destructor.cc: NonTerminal::~NonTerminal()
+
+v_value() const
+  Full name: NonTerminal::v_value() const
+  Source:    v.cc 
+  Used By:
+    destructor.cc: NonTerminal::~NonTerminal()
+
+valueQuotedName(std::ostream&) const
+  Full name: Terminal::valueQuotedName(std::ostream&) const
+  Source:    valuequotedname.cc 
+  Used By:
+    oinsert.cc: FollowSet::oInsert(std::ostream&) const
+    showterminals.cc: Rules::showTerminals() const
+    showunusedterminals.cc: Rules::showUnusedTerminals() const
+
+vectorIdx(unsigned int) const
+  Full name: Production::vectorIdx(unsigned int) const
+  Source:    vectoridx.cc 
+  Used By:
+    stype.cc: Rules::sType(unsigned int) const
+    firstbeyonddot.cc: Item::firstBeyondDot(FirstSet*) const
+    hasrightofdot.cc: Item::hasRightOfDot(Symbol const&) const
+    notreducible.cc: State::notReducible(unsigned int)
+    warnautooverride.cc: Parser::warnAutoOverride(AtDollar const&) const
+
+version
+  Full name: version
+  Source:    version.cc 
+  Used By:
+    usage.cc: usage(std::string const&)
+    filter.cc: Generator::filter(std::istream&, std::ostream&, bool) const
+
+visitReduction(unsigned int)
+  Full name: SRConflict::visitReduction(unsigned int)
+  Source:    visitreduction.cc 
+  Used By:
+    inspect.cc: SRConflict::inspect()
+
+visitReduction(unsigned int)
+  Full name: RRConflict::visitReduction(unsigned int)
+  Source:    visitreduction.cc 
+  Used By:
+    inspect.cc: RRConflict::inspect()
+
+warnAutoIgnored(char const*, AtDollar const&) const
+  Full name: Parser::warnAutoIgnored(char const*, AtDollar const&) const
+  Source:    warnautoignored.cc 
+  Used By:
+    semtag.cc: Parser::semTag(char const*, AtDollar const&, bool (Parser::*)(std::string const&) const) const
+
+warnAutoOverride(AtDollar const&) const
+  Full name: Parser::warnAutoOverride(AtDollar const&) const
+  Source:    warnautooverride.cc 
+  Used By:
+    semtag.cc: Parser::semTag(char const*, AtDollar const&, bool (Parser::*)(std::string const&) const) const
+
+warnUntaggedValue(AtDollar const&) const
+  Full name: Parser::warnUntaggedValue(AtDollar const&) const
+  Source:    warnuntaggedvalue.cc 
+  Used By:
+    semtag.cc: Parser::semTag(char const*, AtDollar const&, bool (Parser::*)(std::string const&) const) const
+
+Writer(std::string const&, Rules const&)
+  Full name: Writer::Writer(std::string const&, Rules const&)
+  Source:    writer0.cc 
+  Used By:
+    generator1.cc: Generator::Generator(Rules const&, std::unordered_map<std::string, std::string, std::hash<std::string>, std::equal_to<std::string>, std::allocator<std::pair<std::string const, std::string> > > const&)
+
+year
+  Full name: year
+  Source:    version.cc 
+  Used By:
+    usage.cc: usage(std::string const&)
+
+~Base()
+  Full name: Meta__::Base::~Base()
+  Source:    parse.cc 
+  Used By:
+    handleproductionelements.cc: GLOBALS handleproductionelements.cc 2handleproductionelements.o
+
+~Element()
+  Full name: Element::~Element()
+  Source:    destructor.cc 
+  Used By:
+    destructor.cc: Symbol::~Symbol()
+    symbol1.cc: Symbol::Symbol(std::string const&, Symbol::Type, std::string const&)
+
+~Symbol()
+  Full name: Symbol::~Symbol()
+  Source:    destructor.cc 
+  Used By:
+    destructor.cc: Terminal::~Terminal()
+    terminal1.cc: Terminal::Terminal(std::string const&, Symbol::Type, unsigned int, Terminal::Association, std::string const&)
+    terminal2.cc: Terminal::Terminal(std::string const&, std::string const&, Symbol::Type)
+    destructor.cc: NonTerminal::~NonTerminal()
+
+~Terminal()
+  Full name: Terminal::~Terminal()
+  Source:    destructor.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 18data.o
+
+

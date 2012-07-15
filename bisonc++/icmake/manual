@@ -7,19 +7,20 @@ void manual()
     string file;
     string cwd;
     int idx;
+    string compiler;
+
+    compiler = setOpt(CXX, "CXX");
 
     cwd = chdir(".");
 
     md("tmp/manual");
-
-    special();
 
     chdir("documentation");
 
     if (!exists("usage/usage"))
     {
         chdir("usage");
-        run("g++ -o usage usage.cc");
+        run(compiler + " -o usage usage.cc");
         run("./usage > ../manual/invoking/usage.txt");
         chdir("..");
     }

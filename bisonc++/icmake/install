@@ -1,63 +1,87 @@
+string setWhere(string where, string defaultWhere)
+{
+    if (where == "")
+        where = defaultWhere;
+
+    md(where);
+    return where;
+}
+
 void install(string what, string where)
 {
-    string docdoc;
-    docdoc = g_doc + "-doc";
+    string path;
 
     if (what == "program")
     {
-        printf("  installing the executable\n");
-        md(where + g_bin);
-        chdir("tmp");
-        run("cp " + g_binary + " " + where + g_bin);
-        chdir("..");
+        if (where == "")
+            where = BINARY;
 
-        printf("  installing the skeleton files\n");
-        md(where + g_skel);
-        run("cp skeletons/* " + where + g_skel);
+        path = get_path(where);
+        if (path != "")
+            md(path);
 
-        printf("  installing the information directly in and under $g_doc\n");
-        md(where + g_doc);
-        run("gzip -9 < changelog > " + where + g_doc + "/changelog.gz");
+        printf("  INSTALLING the executable `", where, "'\n");
+        run("icmbuild install program " + where);
+        exit(0);
+    }
+
+    if (what == "skel")
+    {
+        where = setWhere(where, SKEL);
+
+        printf("  INSTALLING skeleton files at `" + where + "'\n");
+        md(where);
+        run("cp skeletons/* " + where);
+        exit(0);
     }
 
     if (what == "man")
     {
-        printf("  installing the manual page bisonc++.1\n");
-        md(where + g_man);
-        run("gzip -9 < tmp/man/bisonc++.1 > " + 
-                                        where + g_man + "/bisonc++.1.gz");
+        where = setWhere(where, MAN);
 
-        printf("  installing the manual page bisonc++man.html\n");
-        md(where + g_doc + "/man");
-        run("cp tmp/manhtml/bisonc++man.html " + where + g_doc + "/man");
+        printf("  INSTALLING the manual page at `", where, "'\n");
+        run("gzip -9 < tmp/man/" PROGRAM ".1 > " + where + "/" PROGRAM ".1.gz");
+        exit(0);
     }
 
     if (what == "manual")
     {
-        printf("  installing bison's docs\n");
-        md(where + docdoc + "/bison-docs");
+        where = setWhere(where, MANUAL);
 
-        printf(
-            "  installing the information directly in and under $g_doc-doc\n");
-        run("gzip -9 < changelog > " + where + docdoc + "/changelog.gz");
-    
-
-        run("cp -r documentation/html documentation/bison.ps.org " + 
-                                        where + docdoc + "/bison-docs");
-    
-        printf("  installing examples\n");
-        md(where + docdoc + "/examples");
-        run("cp -r documentation/examples " + where + g_doc);
-        run("cp -r documentation/man/calculator " + 
-                                        where + docdoc + "/examples");
-
-        run("cp -r documentation/regression " + where + docdoc);
-    
-        printf("  installing manual\n");
-        run("cp -r tmp/manual " + where + docdoc);
+        printf("  INSTALLING the manual at `", where, "'\n");
+        run("cp -r tmp/manual " + where);
+        exit(0);
     }
 
-    printf("  Installation completed\n");
+    if (what == "std")
+    {
+        where = setWhere(where, STD);
+
+        printf("  INSTALLING the changelog at `", where, "\n");
+        run("gzip -9 < changelog > " + where + "/changelog.gz");
+    
+        printf("  INSTALLING the html-manual page at `", where, "\n");
+        run("cp tmp/manhtml/" PROGRAM "man.html " + where);
+        exit(0);
+    }
+
+    if (what == "extra")
+    {
+        where = setWhere(where, EXTRA);
+
+        printf("  INSTALLING original bison's docs at `", where + "'\n");
+        md(where + "/bison-docs");
+        run("cp -r documentation/html "
+                  "documentation/bison.ps.org " + where + "/bison-docs");
+
+        printf("  INSTALLING examples at `", where + "'\n");
+        run("cp -r documentation/examples " + where);
+        run("cp -r documentation/man/calculator " + where + "/examples");
+
+        printf("  INSTALLING regression tests at `", where + "'\n");
+        run("cp -r documentation/regression " + where);
+        exit(0);
+    }
 
     exit(0);
 }

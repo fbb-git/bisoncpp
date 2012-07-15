@@ -1,3 +1,5 @@
+int g_dryrun = setOpt("", "DRYRUN") != "";
+
 void runP(int testValue, string cmd)
 {
     if (g_dryrun)
