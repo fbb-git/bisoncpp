@@ -1,3 +1,12 @@
+bisonc++ (4.01.02) 
+
+  * Bisonc++ returns 0 for options --help and --version
+
+  * Catching Errno exceptions is replaced by catching std::exception
+    exceptions 
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Thu, 24 Jan 2013 08:14:59 +0100
+
 bisonc++ (4.01.01) 
 
   * The following #defines in INSTALL.im can be overruled by defining

@@ -148,12 +148,12 @@ try
 
     generator.parseFunction();
 }
-catch(Errno const &err)
+catch(exception  const &err)
 {
-    cerr << err.why() << '\n';
-    return err.which();
+    cerr << err.what() << '\n';
+    return 1;
 }
 catch(int x)
 {
-    return x;
+    return Arg::instance().option("hv") ? 0 : x;
 }

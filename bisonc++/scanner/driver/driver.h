@@ -3,13 +3,15 @@
 
 #include <iostream>
 #include <string>
+#include <exception>
+
+#include "../scanner.h"
 
 namespace FBB
-{
-
-}
+{}
 
 using namespace std;
 using namespace FBB;
+
 
 #endif

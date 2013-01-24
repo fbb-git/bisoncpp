@@ -4,12 +4,6 @@
 
 #include "driver.h"
 
-using namespace std;
-using namespace FBB;
-
-#include "../scanner.h"
-#include "../../errno/errno.h"
-
 int main(int argc, char **argv)
 try
 {
@@ -25,8 +19,8 @@ try
         cout << "Token " << t << ": " << scanner.text() << endl;
     }
 }
-catch (Errno const &err)
+catch (exception const &err)
 {
-    cout << err.why() << " (" << err.which() << ")" << endl;
+    cout << err.what() << " (" << errno << ")" << endl;
     return 1;
 }
