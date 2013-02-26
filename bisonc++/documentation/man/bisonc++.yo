@@ -1,6 +1,6 @@
 NOUSERMACRO(yyparse parse lex yylex error setDebug ParserBase throw ACCEPT
-        ABORT errok RECOVERING print done prompt Parse yyrestart
-        debug setSval setLoc)
+        ABORT errok RECOVERING print done prompt Parse yyrestart YYText
+        debug setSval setLoc matched specification tag files)
 
 includefile(../../release.yo)
 
@@ -535,16 +535,18 @@ tt(std::string) and a tt(std::vector<double>):
 em(type-name). The type-names must be built-in types or must offer default
 constructors.
 
-    If type-names refer to types declared in header files that were
-not already included by the parser's base class header, then these header
-file(s) must be inserted using the tt(%baseclass-preinclude) directive.
+    If type-names refer to types declared in header files that were not
+already included by the parser's base class header, then these header
+file+CHAR(40)s) must be inserted using the tt(%baseclass-preinclude)
+directive.
 
     includefile(../manual/grammar/polymorphictype.yo)
 
     The tt(%polymorphic) directive adds the following definitions and
 declarations to the generated base class header and parser source
 file (if the tt(%namespace) directive was used then all declared/defined
-elements are placed within the name space specified by that directive):
+elements are placed inside the name space that is specified by the
+tt(%namespace) directive):
     itemization(
     it() Three additional headers are included by the parser's base class
 header: 
@@ -572,34 +574,42 @@ polymorphic values.
     it() A polymorphic base class tt(Base). This class is normally not
      explicitly referred to by user-defined code. Refer to by bic()'s
      user manual for a detailed description of this class.
+
     it() For each of the tag-identifiers specified with the tt(%polymorphic)
      directive a class template tt(Semantic<Tag__>) is defined, containing a
      data element of the type-name matching the tt(Tag__) for which
      tt(Semantic<Tag__>) was derived. The tt(Semantic<Tag__>) classes are
      normally not explicitly referred to by user-defined code. Refer to by
      bic()'s user manual for a detailed description of these classes.
+
     it() A class tt(SType), derived from tt(std::shared_ptr<Base>). This class
-     becomes the parser's semantic value type. It offers the following
+     becomes the parser's semantic value type, offering the following
     members:nl()
+
         tt(Constructors:) default, copy and move constructors;nl()
+
         tt(Assignment operators:) copy and move assignment operators declaring 
             tt(SType) or any of the tt(%polymorphic) type-names as their
             right-hand side operands;nl()
+
         tt(Tag__ tag() const), returning tt(Semantic<Tag__>)'s tt(Tag__)
              value;nl()
+
         tt(ReturnType get<Tag__>() const. ReturnType) refers to the semantic
              value stored inside tt(Semantic<Tag__>). If the type-name is a
              built-in type a copy of the value is returned, otherwise a
              reference to a constant object is returned;nl()
             This member checks for 0-pointers and for tt(Tag__) mismatches
              between the requested and actual tt(Tag__), throwing a
-             tt(std::logic_error) if found.
+             tt(std::logic_error) if found.nl()
+
         tt(DataType &get<Tag__>()) returns a reference to the (modifiable)
              semantic value stored inside tt(Semantic<Tag__>).nl()
             This member checks for 0-pointers and for tt(Tag__) mismatches
              between the requested and actual tt(Tag__), in that case
              replacing the current tt(Semantic) object pointed to by a new
-             tt(Semantic<Tag__>) object of the requested tt(Tag__).
+             tt(Semantic<Tag__>) object of the requested tt(Tag__).nl()
+
         tt(ReturnType data<Tag__>() const. ReturnType) refers to the semantic
              value stored inside tt(Semantic<Tag__>). If the type-name is a
              built-in type a copy of the value is returned, otherwise a
@@ -608,7 +618,8 @@ polymorphic values.
              tt(get) member, resulting in a em(Segfault) if used when the
              tt(shared_ptr) holds a 0-pointer, and throwing a
              tt(std::bad_cast) in case of a mismatch between the requested and
-             actual tt(Tag__).
+             actual tt(Tag__).nl()
+
         tt(DataType &data<Tag__>()) returns a reference to the (modifiable)
              semantic value stored inside tt(Semantic<Tag__>).nl()
             This is a (partially) em(unchecking) variant of the corresponing
@@ -617,6 +628,7 @@ polymorphic values.
              tt(std::bad_cast) in case of a mismatch between the requested and
              actual tt(Tag__).
     )
+
     Since bic() declares tt(typedef Meta__::SType STYPE__), polymorphic
 semantic values can be used without referring to the name space tt(Meta__). 
 
@@ -869,7 +881,7 @@ who based his work on bf(bison), GNU version 1.21.
     Bic() version 0.98 and beyond is a complete rewrite of an LALR-1 parser
 generator, closely following the construction process as described in Aho,
 Sethi and Ullman's (1986) book bf(Compilers) (i.e., the em(Dragon book)).  It
-the uses same grammar specification as bf(bison) and bf(bison++), and it uses
+uses the same grammar specification as bf(bison) and bf(bison++), and it uses
 practically the same options and directives as bic() versions earlier than
 0.98. Variables, declarations and macros that are obsolete were removed. 
     

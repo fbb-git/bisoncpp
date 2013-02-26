@@ -1,3 +1,10 @@
+bisonc++ (4.01.03) 
+
+  * Textual corrections of the man-page and manual.
+
+
+
+
 bisonc++ (4.01.02) 
 
   * Bisonc++ returns 0 for options --help and --version

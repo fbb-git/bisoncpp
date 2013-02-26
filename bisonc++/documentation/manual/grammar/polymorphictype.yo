@@ -5,14 +5,14 @@ Semantic values may also be associated with terminal tokens. In that case it
 is the lexical scanner's responsibility to assign a properly typed value to
 the parser's tt(STYPE__ d_val__) data member.
 
-Non-terminals may be automatically be associated with polymorphic semantic
-values using tt(%type) directives. E.g., following
+Non-terminals may automatically be associated with polymorphic semantic
+values using tt(%type) directives. E.g., after:
         verb(
     %polymorphic INT: int; TEXT: std::string
     %type <INT> expr
         )
     the tt(expr) non-terminal returns tt(int) semantic values. In this case,
-a rule like
+a rule like:
         verb(
     expr:
         expr '+' expr
