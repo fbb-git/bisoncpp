@@ -11,7 +11,7 @@ inline void \@::error(char const *msg)
 
 $insert lex
 
-inline void Parser::print()         
+inline void \@::print()         
 {
     print__();           // displays tokens if --print was specified
 }

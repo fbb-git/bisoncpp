@@ -2,7 +2,8 @@ bisonc++ (4.01.03)
 
   * Textual corrections of the man-page and manual.
 
-
+  * Provided print()'s implementation in the bisonc++.ih with a correct
+    class-prifix (was a fixed Parser::)
 
 
 bisonc++ (4.01.02) 
