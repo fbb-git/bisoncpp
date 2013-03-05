@@ -16,6 +16,11 @@ inline void \@::print()
     print__();           // displays tokens if --print was specified
 }
 
+inline void \@::exceptionHandler__(std::exception const &exc)         
+{
+    throw;              // re-implement to handle exceptions thrown by actions
+}
+
 $insert namespace-close
 
     // Add here includes that are only required for the compilation 

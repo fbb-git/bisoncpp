@@ -26,6 +26,7 @@ $insert 4 scannerobject
         int lookup(bool recovery);
         void nextToken();
         void print__();
+        void exceptionHandler__(std::exception const &exc);
 };
 
 $insert namespace-close

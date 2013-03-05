@@ -1,9 +1,15 @@
-bisonc++ (4.01.03) 
+bisonc++ (4.02.00) 
+
+  * Added member Parser::exceptionHandler(std::exception const &exc), handling
+    std::exceptions thrown from the parser's action blocks.
 
   * Textual corrections of the man-page and manual.
 
   * Provided print()'s implementation in the bisonc++.ih with a correct
     class-prifix (was a fixed Parser::)
+
+
+
 
 
 bisonc++ (4.01.02) 

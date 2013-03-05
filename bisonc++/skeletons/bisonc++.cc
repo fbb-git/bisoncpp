@@ -196,6 +196,7 @@ inline size_t \@Base::top__() const
 }
 
 void \@::executeAction(int production)
+try
 {
     if (d_token__ != _UNDETERMINED_)
         pushToken__(d_token__);     // save an already available token
@@ -212,6 +213,10 @@ $insert 8 actioncases
     }
 $insert 4 debug "... action of rule " << production << " completed" +
 $insert 4 debug  stype__(", semantic: ", d_val__)
+}
+catch (std::exception const &exc)
+{
+    exceptionHandler__(exc);
 }
 
 inline void \@Base::reduce__(PI__ const &pi)
