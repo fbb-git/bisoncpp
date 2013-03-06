@@ -1,6 +1,6 @@
-    If available, single letter options are listed between parentheses
-following their associated long-option variants. Single letter options require
-arguments if their associated long options require arguments as well. Options
+    Where available, single letter options are listed between parentheses
+beyond their associated long-option variants. Single letter options require
+arguments if their associated long options require arguments. Options
 affecting the class header or implementation header file are ignored if these
 files already exist.
     itemization(
@@ -23,17 +23,17 @@ files already exist.
            Use tt(header) as the pathname to the file preincluded in the
             parser's base-class header. This option is needed in situations
             where the base class header file refers to types which might not
-            yet be known. E.g., with tt(%polymorphic) a tt(std::string) value
-            type might be used. Since the tt(string) header file is not by
-            default included in tt(parserbase.h) we need a way to inform the
-            compiler about this and possibly other headers. The suggested
-            procedure is to use a pre-include header file declaring the
-            required types. By default `tt(header)' is surrounded by double
-            quotes: tt(#include "header") is used when the option tt(-H
-            header) is specified.  When the argument is surrounded by pointed
-            brackets tt(#include <header>) is included. In the latter case,
-            quotes might be required to escape interpretation by the shell
-            (e.g., using tt(-H '<header>')).
+            yet be known. E.g., with polymorphic semantic values a
+            tt(std::string) value type might be used. Since the tt(string)
+            header file is not by default included in tt(parserbase.h) we
+            somehow need to inform the compiler about this and possibly other
+            headers. The suggested procedure is to use a pre-include header
+            file declaring the required types. By default `tt(header)' is
+            surrounded by double quotes: tt(#include "header") is used when
+            the option tt(-H header) is specified.  When the argument is
+            surrounded by pointed brackets tt(#include <header>) is
+            included. In the latter case, quotes might be required to escape
+            interpretation by the shell (e.g., using tt(-H '<header>')).
 
     it() lsoption(baseclass-skeleton)(B)(skeleton)nl() 
            Use tt(skeleton) as the pathname of the file containing the
@@ -74,7 +74,7 @@ files already exist.
 
     it() label(ERRORVERBOSE)loption(error-verbose)nl()
            When a syntactic error is reported, the generated parse function
-            will dump the parser's state stack to the standard output
+            dumps the parser's state stack to the standard output
             stream. The stack dump shows on separate lines a stack index
             followed by the state stored at the indicated stack element. The
             first stack element is the stack's top element.
@@ -114,7 +114,7 @@ files already exist.
             should contain all directives and declarations em(only) used by
             the implementations of the parser's member functions. It is the
             only header file that is included by the source file containing
-            tt(parse)'s implementation . User defined implementation of
+            tt(parse)'s implementation. User defined implementation of
             other class members may use the same convention, thus
             concentrating all directives and declarations that are required
             for the compilation of other source files belonging to the parser
@@ -129,20 +129,12 @@ files already exist.
            This option is only effective if the tt(debug) option (or
             tt(%debug) directive) has also been specified. When
             tt(insert-stype) has been specified the parsing function's debug
-            output will also show selected semantic values. It should only be
-            used if objects or variables of the semantic value type
-            tt(STYPE__) can be inserted into tt(ostreams).
-
+            output also shows selected semantic values. It should only be used
+            if objects or variables of the semantic value type tt(STYPE__) can
+            be inserted into tt(ostreams).
 
     it() label(MAXDEPTH) laoption(max-inclusion-depth)(value)nl()
            Set the maximum number of nested grammar files. Defaults to 10.
-
-    it() lsoption(namespace)(n)(namespace)nl()
-           Define the parser base class, the paser class and the parser
-            implentations in the namespace tt(namespace). By default
-            no namespace is defined. If this options is used the
-            implementation header will contain a commented out tt(using
-            namespace) declaration for the requested namespace. 
 
     it() loption(no-baseclass-header)nl()
            Do not write the file containing the parser class' base class, even
@@ -156,12 +148,12 @@ files already exist.
 
     it() loption(no-lines)nl() 
            Do not put tt(#line) preprocessor directives in the file containing
-            the parser's tt(parse) function. By default tt(#line) preprocessor
-            directives are placed in the file containing the parser's
-            tt(parse) function. This option allows the compiler and debuggers
-            to associate errors with lines in your grammar specification file,
-            rather than with the source file containing the tt(parse) function
-            itself.
+            the parser's tt(parse) function. By default the file containing
+            the parser's tt(parse) function also contains tt(#line)
+            preprocessor directives. This option allows the compiler and
+            debuggers to associate errors with lines in your grammar
+            specification file, rather than with the source file containing
+            the tt(parse) function itself.
 
     it() loption(no-parse-member)nl()
            Do not write the file containing the parser's predefined parser
@@ -212,13 +204,13 @@ files already exist.
             text. This implementation is suppressed when the parsing function
             is generated without using this option. The member tt(print__)) is
             called from tt(Parser::print), which is defined in-line in the the
-            parser's class header. Calling tt(Parser::print__), therefore, can
-            also easily be controlled by an option controlled by the program
-            using the parser generated by bic().
+            parser's class header. Calling tt(Parser::print__) can thus easily
+            be controlled from tt(print), using, e.g., a variable that set by
+            the program using the parser generated by bic().
 
            This option does em(not) show the tokens returned and text matched
-            by bic() itself when reading its input file(s). If that is what
-            you want, use the tt(--own-tokens) option.
+            by bic() itself when it is reading its input file(s). If
+            that is what you want, use the tt(--own-tokens) option.
 
     it() label(REQUIRED) laoption(required-tokens)(number)nl()
            Following a syntactic error, require at least tt(number)
@@ -283,9 +275,9 @@ files already exist.
             stream.
 
     it() lsoption(skeleton-directory)(S)(directory)nl() 
-           Specifies the directory containing the skeleton files to use. This
-            option can be overridden by the specific skeleton-specifying
-            options (tt(-B -C, -H, -I, -M) and tt(-m)).
+           Specifies the directory containing the skeleton files. This option
+            can be overridden by the specific skeleton-specifying options
+            (tt(-B -C, -H, -I, -M) and tt(-m)).
 
     it() laoption(target-directory)(directory) nl() 
            Specifies the directory where generated files should be written.

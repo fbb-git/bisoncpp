@@ -4,7 +4,7 @@ inherited from the parser's base class.  Members for which the phrase ``Used
 internally'' is used should not be called by user-defined code.
     itemization(
     it() bf(Base::ParserBase()):nl()
-        The default base-class constructor. Used internally.
+       Used internally.
     it() bf(void Base::ABORT() const throw(Return__)):nl()
        This member can be called from any member function (called from any of
         the parser's action blocks) to indicate a failure while parsing thus
@@ -25,16 +25,14 @@ internally'' is used should not be called by user-defined code.
         even if the current token has not yet been processed. It is a useful
         member when the parser should be reset to its initial state, e.g.,
         between successive calls of tt(parse). In this situation the scanner
-        will probably be reloaded with new information too (in the context of
-        a tt(flex)-generated scanner by, e.g., calling the scanner's
-        tt(yyrestart) member.
+        will probably be reloaded with new information too.
     it() bf(bool Base::debug() const):nl()
        This member returns the current value of the debug variable.
     it() bf(void Base::ERROR+nop()() const throw(ErrorRecovery__)):nl()
        This member can be called from any member function (called from any of
-        the parser's action blocks) to generate an error, and thus initiate
-        the parser's error recovery code. Note that this offers a marked
-        extension and improvement of the macro tt(YYERROR) defined by
+        the parser's action blocks) to generate an error, and results in the
+        parser executing its error recovery code. Note that this offers a
+        marked extension and improvement of the macro tt(YYERROR) defined by
         bf(bison++) in that tt(YYERROR) could not be called from outside of
         the parsing member function.
     it() bf(void error(char const *msg)):nl()
@@ -46,38 +44,36 @@ internally'' is used should not be called by user-defined code.
        Used internally.
     it() bf(void Base::errorVerbose__+nop()()):nl()
        Used internally.
-
     it() bf(void exceptionHandler__(std::exception const &exc)):nl()
-        
        This member's default implementation is provided inline in the
         tt(parser.ih) internal header file. It consists of a mere tt(throw)
         statement, rethrowing a caught exception.
 
-       The tt(parse) member's body essentially consists of a tt(while)
-        statement, in which the next token is obtained via the parser's
-        tt(lex) member. This token then is processed according to the current
-        state of the parsing process. This may result in executing actions
-        over which the parsing process has no control and which may result in
-        exceptions being thrown.
+       The tt(parse) member function's body essentially consists of a
+        tt(while) statement, in which the next token is obtained via the
+        parser's tt(lex) member. This token is then processed according to the
+        current state of the parsing process. This may result in executing
+        actions over which the parsing process has no control and which may
+        result in exceptions being thrown.
 
        Such exceptions do not necessarily have to terminate the parsing
         process: they could be thrown by code, linked to the parser, that
-        simply checks for semantic errors (like division by zero) and
-        throws an exception if the error is observed.
+        simply checks for semantic errors (like divisions by zero) 
+        throwing exceptions if such errors are observed.
 
-       The member tt(exceptionHandler__) is used to handle such exceptions
-        without necessarily ending the parsing process. It receives any
-        tt(std::exception) thrown by the parser's actions, as though the
+       The member tt(exceptionHandler__) receives and may handle such
+        exceptions without necessarily ending the parsing process. It receives
+        any tt(std::exception) thrown by the parser's actions, as though the
         action block itself was surrounded by a tt(try ... catch) statement.
         It is of course still possible to use an explicit tt(try ... catch)
-        statement within an action block. However, tt(exceptionHandler__) can be
-        used to factor out code that is common to various action blocks.
+        statement within action blocks. However, tt(exceptionHandler__) can
+        be used to factor out code that is common to various action blocks.
 
         The next example shows an explicit implementation of
         tt(exceptionHandler__): any tt(std::exception) thrown by the parser's
         action blocks is caught, showing the exception's message, and
         increasing the parser's error count. After this parsing continues as
-        though no exception had been thrown:
+        if no exception had been thrown:
         verb(
     void Parser::exceptionHandler__(std::exception const &exc)
     {
@@ -85,9 +81,6 @@ internally'' is used should not be called by user-defined code.
         ++d_nErrors__;
     }
             )
-           
-
-
     it() bf(void executeAction+nop()(int)):nl()
        Used internally.
     it() bf(int lex()):nl()

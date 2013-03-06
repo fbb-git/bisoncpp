@@ -2,15 +2,15 @@
 
 case $1 in
     (clean)
-        rm -rf scanner/yylex.cc calculator parser/{calculatorbase.h,parse.*}
+        rm -rf scanner/lex.cc scanner/scannerbase.h calculator parser/parse.*
     ;;
     (demo)
         cd parser
-        bisonc++ -V -l grammar
+        bisonc++ grammar
         cd ../scanner
-        flex lexer
+        flexc++ lexer
         cd ..
-        g++ -Wall -o calculator *.cc */*.cc
+        g++ --std=c++11 -Wall -o calculator *.cc */*.cc
     ;;
     (*)
         echo "$0 [clean|demo] to clean or build the demo program"

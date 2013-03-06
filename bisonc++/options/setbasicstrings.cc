@@ -2,9 +2,12 @@
 
 bool Options::setBasicStrings()
 {
-        // classname and namespace can only be followed by IDENTIFIERs, so
-        // no undelimit is required.
-    d_arg.option(&d_nameSpace, 'n');
+    if (d_arg.option(0, 'n'))
+        fmsg << "Option --namespace discontinued. "
+                                    "Use the %namespace directive instead";
+
+        // classname can only be followed by IDENTIFIERs, so no undelimit is 
+        // required.
 
     d_arg.option(&d_className, "class-name");
     if (d_className.empty())

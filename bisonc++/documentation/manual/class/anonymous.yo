@@ -34,11 +34,12 @@ the parser.
        These tokens are used by the parser to define the types of the various
         states of the analyzed grammar.
     it() bf(PI__) (Production Info):nl()
-       The type defines a struct containing information about the production
-        rules that were used by a grammar.nl()
-       Its first field contains the identification number of a production's
-        defining non-terminal;nl()
-       Its second field defines the number of elements of a production
+       This tt(struct) provides information about production rules. It has two
+        fields: tt(d_nonTerm) is the identification number of the production's
+        non-terminal, tt(d_size) represents the number of elements of the
+        productin rule.
+    it() bf(static PI__ s_productionInfo):nl()
+       Used internally by the parsing function.
     it() bf(SR__) (Shift-Reduce Info):nl()
        This tt(struct) provides the shift/reduce information for the various
         grammatic states. tt(SR__) values are collected in arrays, one array
@@ -62,13 +63,6 @@ the parser.
     it() bf(STACK_EXPANSION):nl()
        An enumeration value specifying the number of additional elements that
         are added to the state- and semantic value stacks when full.
-    it() bf(PI__) (Production Info):nl()
-       This tt(struct) provides information about production rules. It has two
-        fields: tt(d_nonTerm) is the identification number of the production's
-        non-terminal, tt(d_size) represents the number of elements of the
-        productin rule.
-    it() bf(static PI__ s_productionInfo):nl()
-       Used internally by the parsing function.
     it() bf(static SR__ s_<nr>[]):nl()
        Here, tt(<nr>) is a numerical value representing a state number.
        Used internally by the parsing function.

@@ -3,5 +3,8 @@ Syntax:     bf(%namespace) tt(namespace) nl()
 namespace is defined. 
 
     If this options is used the implementation header will contain a commented
-out tt(using namespace) directive for the requested namespace.  This directive
-is overruled by the bf(--namespace) command-line option.
+out tt(using namespace) directive for the requested namespace.
+
+In addition, the parser and parser base class header files also use the
+specified namespace to define their include guard directives.
+

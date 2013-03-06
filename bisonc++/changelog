@@ -3,10 +3,17 @@ bisonc++ (4.02.00)
   * Added member Parser::exceptionHandler(std::exception const &exc), handling
     std::exceptions thrown from the parser's action blocks.
 
-  * Textual corrections of the man-page and manual.
+  * The --namespace option was removed, since it does not affect once
+    generated parser.h files, resulting in inconsistent namespace
+    definitions. 
+
+  * Include guards of parser.h and parserbase.h include the namespace
+    identifier, if %namespace has been used.
 
   * Provided print()'s implementation in the bisonc++.ih with a correct
     class-prifix (was a fixed Parser::)
+
+  * Textual corrections of the man-page and manual.
 
 
 

@@ -13,15 +13,13 @@
 %%
 
 expressions:
-    expressions 
-    evaluate
+    expressions  evaluate
 |
     prompt
 ;
 
 evaluate:
-    alternative
-    prompt
+    alternative prompt
 ;
 
 prompt:
@@ -31,19 +29,16 @@ prompt:
 ;
 
 alternative:
-    expression
-    EOLN
+    expression EOLN
     {
         cout << $1 << endl;
     }
 |
-    'q'
-    done
+    'q' done
 |
     EOLN
 |
-    error
-    EOLN
+    error EOLN
 ;
 
 done:
@@ -54,55 +49,43 @@ done:
 ;
 
 expression:
-    expression 
-    '+'
-    expression
+    expression '+' expression
     {
         $$ = $1 + $3;
     }
 |
-    expression 
-    '-'
-    expression
+    expression '-' expression
     {
         $$ = $1 - $3;
     }
 |
-    expression 
-    '*'
-    expression
+    expression '*' expression
     {
         $$ = $1 * $3;
     }
 |
-    expression 
-    '/'
-    expression
+    expression '/' expression
     {
         $$ = $1 / $3;
     }
 |
-    '-'             
-    expression      %prec UNARY
+    '-' expression      %prec UNARY
     {
         $$ = -$2;
     }
 |
-    '+'             
-    expression      %prec UNARY
+    '+' expression      %prec UNARY
     {
         $$ = $2;
     }
 |
-    '('
-    expression
-    ')'
+    '(' expression ')'
     {
         $$ = $2;
     }
 |
     NUMBER
     {
-        $$ = atoi(d_scanner.YYText());
+        $$ = stoul(d_scanner.matched());
     }
 ;

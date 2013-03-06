@@ -1,6 +1,6 @@
     Syntax: bf(%polymorphic) tt(polymorphic-specification(s))
 
-            The tt(%polymorphic) directive causes bic() to defines and use a
+            The tt(%polymorphic) directive results in defining and using a
             polymorphic semantic value class, which can be used as a
             (preferred) alternative to the (traditional) a tt(union)
             specification. 

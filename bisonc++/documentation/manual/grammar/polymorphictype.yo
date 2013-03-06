@@ -25,13 +25,12 @@ lvalue (representing the semantic value associated with the tt(expr:) rule),
 while $1 and $3 represent the tt(int) semantic value associated with the
 tt(expr) non-terminal in the production rule tt('-' expr) (rvalues).
 
-    When negative dollar indices (like $-1) are used, any pre-defined
-associations between non-terminals and semantic types are ignored.  However,
-semantic value types can explicitly be specified (or provided tt(%type)
-associations can be overruled) using the common `$<type>$' or `$<type>1'
-syntax (in this and following examples index number 1 represents any
-valid positive index (i.e., not exceeding the number of production rule
-elements seen so far); -1 represents any valid negative index). 
+    When negative dollar indices (like $-1) are used, pre-defined associations
+between non-terminals and semantic types are ignored.  With positive indices
+or in combination with the production rule's return value tt($$), however,
+semantic value types can explicitly be specified using the common `$<type>$'
+or `$<type>1' syntax. (In this and following examples index number 1 represents
+any valid positive index; -1 represents any valid negative index).
 
 The type-overruling syntax does not allow blanks to be used (so $<INT>$ is OK,
 $< INT >$ isn't).
@@ -42,8 +41,8 @@ itemization(
 it() $-1: tt(%type) associations are ignored, and the semantic value type
     tt(STYPE__) is used instead. A warning is issued unless the
     tt(%negative-dollar-indices) directive was specified.
-it() $<tag>-1: em(error): tt(<tag>) specifications are not allowed for negative
-    dollar indices. 
+it() $<tag>-1: em(error): tt(<tag>) specifications are not allowed for
+    negative dollar indices. 
 )
 
 whenhtml(
@@ -61,13 +60,58 @@ bf(%type<TAG> and $$ or $1 specifications:)
 includefile(polytable)
 includefile(polytablenotes)
 
-bf(Member calls (`$$.', `$1.'):) ) When using `$$.' or `$1.' default tags are
-ignored. Instead, a warning is issued that the default tag is ignored. This
-syntax allows members of the semantic value type (tt(STYPE__)) to be called
-explicitly. The default tag is only ignored if there are no additional
-characters (e.g., blanks, closing parentheses) between the dollar-expressions
-and the member selector operator. The opposite, ignoring default tag
-associations, is accomplished using tconstructions like $<STYPE__>$ and
-$<STYPE__>1.
+bf(Member calls) (`$$.', `$1.', etc.):)
 
+    When using `$$.' or `$1.' default tags are ignored. A warning is issued
+that the default tag is ignored. This syntax allows members of the semantic
+value type (tt(STYPE__)) to be called explicitly. The default tag is only
+ignored if there are no additional characters (e.g., blanks, closing
+parentheses) between the dollar-expressions and the member selector operator
+(e.g., no tags are used with $1.member(), but tags are used with
+($1).member()). The opposite, overriding default tag associations, is
+accomplished using constructions like $<STYPE__>$ and $<STYPE__>1.
 
+When negative dollar indices are used, the appropriate tag must explicitly be
+specified. The next example shows how this is realized in the grammar
+specification file itself:
+        verb(
+    %polymorphic INT: int
+    %type <INT> ident
+    %%
+    
+    type:
+        ident arg
+    ;
+    
+    arg:
+        {
+            call($-1->get<Tag__::INT>());
+        }
+    ;
+        )
+    In this example tt(call) may define an tt(int) or tt(int &) parameter. 
+
+It is also possible to delegate specification of the semantic value to the
+function tt(call) itself, as shown next:
+        verb(
+    %polymorphic INT: int
+    %type <INT> ident
+    %%
+    
+    type:
+        ident arg
+    ;
+    
+    arg:
+        {
+            call($-1);
+        }
+    ;
+        )
+    Here, the function tt(call) could be implemented like this:
+        verb(
+    void call(STYPE__ &st)
+    {
+        st->get<Tag__::INT>() = 5;
+    }
+        )

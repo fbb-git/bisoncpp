@@ -17,11 +17,10 @@ class Parser: public ParserBase
         int parse();
 
     private:
-        void error(char const *msg);    // called on (syntax) errors
-        int lex();                      // returns the next token from the
-                                        // lexical scanner. 
-        void print();                   // use, e.g., d_token, d_loc
-
+        void error(char const *msg);
+        int lex();                  
+                                    
+        void print();               
         void prompt();
         void done();
 
@@ -30,21 +29,8 @@ class Parser: public ParserBase
         void errorRecovery();
         int lookup(bool recovery);
         void nextToken();
+        void print__();
 };
-
-inline void Parser::error(char const *msg)
-{
-    std::cerr << msg << '\n';
-}
-
-// $insert lex
-inline int Parser::lex()
-{
-    return d_scanner.yylex();
-}
-
-inline void Parser::print()      // use d_token, d_loc
-{}
 
 inline void Parser::prompt()
 {
