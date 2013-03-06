@@ -1,5 +1,5 @@
-#ifndef \@Base_h_included
-#define \@Base_h_included
+#ifndef \@$Base_h_included
+#define \@$Base_h_included
 
 #include <exception>
 #include <vector>

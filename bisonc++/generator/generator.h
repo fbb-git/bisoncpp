@@ -50,6 +50,10 @@ class Generator
                                             // name
     static size_t const s_baseFlagSize;     // # of characters in s_baseFlag
 
+    static char const *s_namespaceBaseFlag; // text to change to the 
+                                            // namespace + class name
+    static size_t const s_namespaceBaseFlagSize;    // # of characters 
+
 
     public:
         Generator(Rules const &rules, 

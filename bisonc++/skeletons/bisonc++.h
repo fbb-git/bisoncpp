@@ -1,5 +1,5 @@
-#ifndef \@_h_included
-#define \@_h_included
+#ifndef \@$_h_included
+#define \@$_h_included
 
 $insert baseclass
 $insert scanner.h
