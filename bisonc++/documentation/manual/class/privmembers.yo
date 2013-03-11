@@ -81,6 +81,29 @@ internally'' is used should not be called by user-defined code.
         ++d_nErrors__;
     }
             )
+
+        bf(Note:) Parser-class header files (e.g., Parser.h) and parser-class
+    internal header files (e.g., Parser.ih) generated with bic() < 4.02.00
+    require two hand-modifications when using bic() >= 4.02.00:
+
+    In Parser.h, just below the declaration 
+        verb(
+    void print__();
+        )
+    add:
+        verb(
+    void exceptionHandler__(std::exception const &exc);
+        )
+
+    In Parser.ih, assuming the name of the generated class is `Parser', add the
+    following member definition (if a namespace is used: within the
+    namespace's scope):
+        verb(
+    inline void Parser::exceptionHandler__(std::exception const &exc)
+    {
+        throw;  // re-implement to handle exceptions thrown by actions
+    }
+        )
     it() bf(void executeAction+nop()(int)):nl()
        Used internally.
     it() bf(int lex()):nl()

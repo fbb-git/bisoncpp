@@ -1,3 +1,25 @@
+bisonc++ (4.02.01) 
+
+  * Parser-class header files (e.g., Parser.h) and parser-class internal
+    header files (e.g., Parser.ih) generated with bisonc++ < 4.02.00 require
+    two hand-modifications when used in combination with bisonc++ >= 4.02.00:
+
+    In Parser.h, just below the declaration 
+        void print__();
+    add:
+        void exceptionHandler__(std::exception const &exc);
+
+    In Parser.ih, assuming the name of the generated class is `Parser', add
+    the following member definition (if a namespace is used: within the
+    namespace's scope):
+        inline void Parser::exceptionHandler__(std::exception const &exc)
+        {
+            throw;  // re-implement to handle exceptions thrown by actions
+        }
+    This function may be re-implemented, see the man-page for further details.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 11 Mar 2013 16:50:26 +0100
+
 bisonc++ (4.02.00) 
 
   * Added member Parser::exceptionHandler(std::exception const &exc), handling

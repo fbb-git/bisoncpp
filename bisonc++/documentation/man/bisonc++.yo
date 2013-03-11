@@ -857,6 +857,11 @@ manpagesection(16. SEE ALSO)
 
 manpagesection(17. BUGS)
 
+    Parser-class header files (e.g., Parser.h) and parser-class internal
+    header files (e.g., Parser.ih) generated with bisonc++ < 4.02.00 require
+    two hand-modifications when used in combination with bisonc++ >=
+    4.02.00. See the description of tt(exceptionHandler__) for details.
+
     Discontinued options:
     itemization(
         it() loption(include-only)

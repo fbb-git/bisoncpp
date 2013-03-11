@@ -198,6 +198,8 @@ class Parser: public ParserBase
         int lookup(bool recovery);
         void nextToken();
         void print__();
+        void exceptionHandler__(std::exception const &exc);
+
                                         // used in, e.g., handleDollar
                                         // to obtain # elements for
                                         // end- or mid-rule actions
