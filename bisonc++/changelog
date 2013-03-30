@@ -1,3 +1,19 @@
+bisonc++ (4.03.00) 
+
+  * Bisonc++ before 4.03.00 failed to notice the --debug option. Now repaired.
+
+  * Added the rpn example to the manual, and repaired several typos found in
+    the manual.
+
+
+
+
+
+
+
+
+
+
 bisonc++ (4.02.01) 
 
   * Parser-class header files (e.g., Parser.h) and parser-class internal

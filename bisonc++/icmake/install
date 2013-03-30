@@ -50,6 +50,7 @@ void install(string what, string where)
 
         printf("  INSTALLING the manual at `", where, "'\n");
         run("cp -r tmp/manual " + where);
+
         exit(0);
     }
 

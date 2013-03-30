@@ -16,7 +16,7 @@ of that manual were copied straight into this manual. With b() distributions
 (both the full source distribution and the binary tt(.deb) distributions)
 bf(bison)'s orginal manual is included in both em(PostScript) and (converted
 from the tt(texi) format) tt(HTML) format. Where necessary sections of the
-orginical manual were adapted to b()'s characteristics. Some sections were
+original manual were adapted to b()'s characteristics. Some sections were
 removed, some new sections were added to the current manual. Expect upgrades
 of the manual to appear without further notice. Upgrades will be announced in
 the manual's title.

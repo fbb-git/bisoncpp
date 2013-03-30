@@ -13,7 +13,7 @@ void manual()
 
     cwd = chdir(".");
 
-    md("tmp/manual");
+    md("tmp/manual/examples");
 
     chdir("documentation");
 
@@ -37,6 +37,9 @@ void manual()
             run("touch " STAMP);
             run("mv *.html " HTMLDEST);
             run("cp -r grammar/poly " HTMLDEST"/poly");
+
+            run("cp -r examples/rpn " HTMLDEST"/examples");
+
             break;
         }
     }

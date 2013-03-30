@@ -2,7 +2,7 @@
 
 void Options::setBooleans()
 {
-    if (d_arg.option('d'))
+    if (d_arg.option(0, "debug"))
         d_debug = true;
 
     if (d_arg.option('t'))
