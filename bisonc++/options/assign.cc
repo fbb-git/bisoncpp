@@ -1,10 +1,11 @@
 #include "options.ih"
 
-void Options::assign(std::string *target, char const *declTxt)
+void Options::assign(std::string *target, PathType pathType, 
+                                          char const *declTxt)
 {
     if (target->empty())
-        *target = *d_matched;
+        *target = accept(pathType, declTxt);
     else
-        emsg << "%" << declTxt << " multiply specified " << endl;
+        emsg << "%" << declTxt << " multiply specified" << endl;
 }
         

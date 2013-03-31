@@ -2,17 +2,12 @@ bisonc++ (4.03.00)
 
   * Bisonc++ before 4.03.00 failed to notice the --debug option. Now repaired.
 
-  * Added the rpn example to the manual, and repaired several typos found in
-    the manual.
+  * Added the rpn example to the manual, and repaired typos in the manual.
 
+  * Options/directives that can only accept file names (like
+    --baseclass-header) no longer accept path names.
 
-
-
-
-
-
-
-
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 31 Mar 2013 11:25:49 +0200
 
 bisonc++ (4.02.01) 
 
@@ -48,7 +43,7 @@ bisonc++ (4.02.00)
   * Include guards of parser.h and parserbase.h include the namespace
     identifier, if %namespace has been used.
 
-  * Provided print()'s implementation in the bisonc++.ih with a correct
+  * Provided print()'s implementation in bisonc++.ih with a correct
     class-prifix (was a fixed Parser::)
 
   * Textual corrections of the man-page and manual.

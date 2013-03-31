@@ -1,8 +1,8 @@
-     Syntax: bf(%baseclass-preinclude) tt(header)nl()
-           Use tt(header) as the pathname to the file pre-included in the
-            parser's base-class header. See the description of the
+     Syntax: bf(%baseclass-preinclude) tt(filename)nl()
+           tt(Filename) defines the name to the file preincluded in the
+            parser's base-class header.  See the description of the
             link(--baseclass-preinclude)(PREINCLUDE) option for details about
-            this directive. The filename tt(header) will by default be
-            surrounded by double quotes; it's OK, however, to provide them
-            yourself.  When the argument is surrounded by em(pointed brackets)
-            tt(#include <header>) will be included.
+            this directive. By default `filename' is surrounded by double
+            quotes; it's OK, however, to provide them yourself.  When the
+            argument is surrounded by em(pointed brackets) tt(#include
+            <header>) is used.

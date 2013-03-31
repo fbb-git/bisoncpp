@@ -1,4 +1,14 @@
-Syntax:    bf(%implementation-header) tt(header) nl()
-           Defines the pathname of the file containing the implementation
-            header.  This directive is overruled by the
+Syntax:    bf(%implementation-header) tt(filename) nl()
+           tt(Filename) defines the name of the file to contain the
+            implementation header. It defaults to the name of the generated
+            parser class plus the suffix tt(.ih). nl()
+           The implementation header should contain all directives and
+            declarations em(only) used by the implementations of the parser's
+            member functions. It is the only header file that is included by
+            the source file containing tt(parse)'s implementation. User
+            defined implementation of other class members may use the same
+            convention, thus concentrating all directives and declarations
+            that are required for the compilation of other source files
+            belonging to the parser class in one header file.nl()
+           This directive is overruled by the
             bf(--implementation-header) (bf(-i)) command-line option.

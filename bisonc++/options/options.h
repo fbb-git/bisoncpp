@@ -11,6 +11,12 @@ namespace FBB
 
 class Options
 {
+    enum PathType
+    {
+        FILENAME,
+        PATHNAME
+    };
+
     FBB::Arg &d_arg;
 
     std::string const *d_matched;
@@ -159,7 +165,9 @@ class Options
         void cleanDir(std::string &dir); // undelimit and append / if missing
         void addIncludeQuotes(std::string &target);
 
-        void assign(std::string *target, char const *declTxt);
+        std::string const &accept(PathType pathType, char const *declTxt);
+        void assign(std::string *target, PathType pathType, 
+                    char const *declTxt);
 
         void setPath(std::string *dest, int optChar, bool targetDirOption, 
                       char const *optionName, std::string const &className, 
@@ -290,22 +298,22 @@ inline std::string const &Options::scannerTokenFunction() const
 
 inline void Options::setBaseClassHeader()
 {
-    assign(&d_baseClassHeader, "baseclass-header");
+    assign(&d_baseClassHeader, FILENAME, "baseclass-header");
 }
 
 inline void Options::setBaseClassSkeleton()
 {
-    assign(&d_baseClassSkeleton, "baseclass-skeleton");
+    assign(&d_baseClassSkeleton, PATHNAME, "baseclass-skeleton");
 }
 
 inline void Options::setClassHeader()
 {
-    assign(&d_classHeader, "class-header");
+    assign(&d_classHeader, FILENAME, "class-header");
 }
 
 inline void Options::setClassName()
 {
-    assign(&d_className, "class-name");
+    assign(&d_className, FILENAME, "class-name");
 }
 
 inline void Options::setErrorVerbose()
@@ -320,7 +328,7 @@ inline void Options::setDebug()
 
 inline void Options::setGenericFilename()
 {
-    assign(&d_genericFilename, "filenames");
+    assign(&d_genericFilename, FILENAME, "filenames");
 }
 
 inline void Options::setFlex()
@@ -330,7 +338,7 @@ inline void Options::setFlex()
 
 inline void Options::setImplementationHeader()
 {
-    assign(&d_implementationHeader, "implementation-header");
+    assign(&d_implementationHeader, FILENAME, "implementation-header");
 }
 
 inline void Options::unsetLines()
@@ -350,37 +358,39 @@ inline void Options::setMatched(std::string const &matched)
 
 inline void Options::setNamespace()
 {
-    assign(&d_nameSpace, "namespace");
+    assign(&d_nameSpace, FILENAME, "namespace");
 }
 
 inline void Options::setParsefunSource()
 {
-    assign(&d_parsefunSource, "parsefun-source");
+    assign(&d_parsefunSource, FILENAME, "parsefun-source");
 }
 
 inline void Options::setPolymorphicInlineSkeleton()
 {
-    assign(&d_polymorphicInlineSkeleton, "polymorphic-inline-skeleton");
+    assign(&d_polymorphicInlineSkeleton, 
+                            PATHNAME, "polymorphic-inline-skeleton");
 }
 
 inline void Options::setPolymorphicSkeleton()
 {
-    assign(&d_polymorphicSkeleton, "polymorphic-skeleton");
+    assign(&d_polymorphicSkeleton, PATHNAME, "polymorphic-skeleton");
 }
 
 inline void Options::setPreInclude()
 {
-    assign(&d_preInclude, "baseclass-preinclude");
+    assign(&d_preInclude, FILENAME, "baseclass-preinclude");
 }
 
 inline void Options::setScannerInclude()
 {
-    assign(&d_scannerInclude, "scanner");
+    assign(&d_scannerInclude, PATHNAME, "scanner");
 }
 
 inline void Options::setScannerMatchedTextFunction()
 {
-    assign(&d_scannerMatchedTextFunction, "scanner-matched-text-function");
+    assign(&d_scannerMatchedTextFunction, 
+                                FILENAME, "scanner-matched-text-function");
 }
 
 inline void Options::setPrintTokens()
@@ -390,17 +400,17 @@ inline void Options::setPrintTokens()
 
 inline void Options::setScannerTokenFunction()
 {
-    assign(&d_scannerTokenFunction, "scanner-token-function");
+    assign(&d_scannerTokenFunction, FILENAME, "scanner-token-function");
 }
 
 inline void Options::setSkeletonDirectory()
 {
-    assign(&d_skeletonDirectory, "skeleton-directory (-S)");
+    assign(&d_skeletonDirectory, PATHNAME, "skeleton-directory (-S)");
 }
 
 inline void Options::setTargetDirectory()
 {
-    assign(&d_targetDirectory, "target-directory");
+    assign(&d_targetDirectory, PATHNAME, "target-directory");
 }
 
 inline std::string const &Options::stype() const

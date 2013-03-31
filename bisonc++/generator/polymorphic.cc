@@ -20,7 +20,7 @@ void Generator::polymorphic(ostream &out) const
 
 
     ifstream in;
-    Errno::open(in,  d_options.polymorphicSkeleton()); 
+    Exception::open(in,  d_options.polymorphicSkeleton()); 
 
     filter(in, out, false);
 }

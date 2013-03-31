@@ -23,18 +23,24 @@ section thoroughly, since b()'s directives are more extensive and
 different from the `declarations' offered by Bison, and the macros offered by
 Bison++. 
 
-Several directives expect filename arguments. Filenames must be specified on
-the same line as the directive itself, and they start at the first non-blank
-character following the directive. Filenames may contain escape sequences
-(e.g., if you must: use `tt(\ )' to include a blank in a filename) and
-continue until the first blank character thereafter. Alternatively, filenames
-may be surrounded by double quotes (tt("...")) or pointed brackets
-(tt(<...>)). Pointed brackets surrounding filenames merely function to delimit
-filenames. They do not refer to, e.g., bf(C++)'s include path. No escape
-sequences are required for blanks within delimited filenames.
+Several directives expect file- or path-name arguments. File- or path-names
+must be specified on the same line as the directive itself, and they start at
+the first non-blank character following the directive. File- or path-names may
+contain escape sequences (e.g., if you must: use `tt(\ )' to include a blank
+in a filename) and continue until the first blank character
+thereafter. Alternatively, file- or path-names may be surrounded by double
+quotes (tt("...")) or pointed brackets (tt(<...>)). Pointed brackets
+surrounding file- or path-names merely function to delimit filenames. They do
+not refer to, e.g., bf(C++)'s include path. No escape sequences are required
+for blanks within delimited file- or path-names.
 
-Sometimes directives are parallelled by analogous options. In those cases
-options take priority over directives.
+Directives accepting a `filename' do not accept path names, i.e., they cannot
+contain directory separators (tt(/)); options accepting a 'pathname' may
+contain directory separators.
+
+
+Sometimes directives have analogous command-line options. In those cases
+command-line options take priority over directives.
 
 
 

@@ -4,7 +4,7 @@
 #include <iomanip>
 #include <fstream>
 
-#include <bobcat/errno>
+#include <bobcat/exception>
 #include <bobcat/datetime>
 #include <bobcat/mstream>
 

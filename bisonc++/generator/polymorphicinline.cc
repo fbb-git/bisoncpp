@@ -8,7 +8,7 @@ void Generator::polymorphicInline(ostream &out) const
     key(out);
 
     ifstream in;
-    Errno::open(in,  d_options.polymorphicInlineSkeleton()); 
+    Exception::open(in,  d_options.polymorphicInlineSkeleton()); 
     filter(in, out, false);
 }
 
