@@ -19,7 +19,8 @@ tgz()
 
 case "$1" in 
     (d)
-        tgz ${HOME}/debian/${PROJECT}/tarballs/${PROJECT}_${VERSION}.orig.tar.gz
+        mkdir -p ../tarballs
+        tgz ../tarballs/${PROJECT}_${VERSION}.orig.tar.gz
     ;;
 
     (l|u)
@@ -37,7 +38,7 @@ case "$1" in
         echo "
 Provide arg:
     d (debian)  to create a local .orig.tar.gz archive in 
-                ../debian/${PROJECT}/tarballs
+                ../tarballs/${PROJECT}/tarballs
     l (local)   to create ${PROJECT}_${VERSION}.tar.gz in this directory
     u (upload)  same as 'l', but upload to oosix and show MD5 hash
 "
