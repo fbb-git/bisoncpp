@@ -1,9 +1,9 @@
 #include "options.ih"
 
-void Options::cleanDir(string &dir)
+void Options::cleanDir(string &dir, bool append)
 {
     dir = undelimit(dir);
 
-    if (*dir.rbegin() != '/')
+    if (append && *dir.rbegin() != '/')
         dir += '/';
 }

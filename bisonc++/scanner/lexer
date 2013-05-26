@@ -163,7 +163,10 @@ NR      [[:digit:]]+
                                     begin(StartCondition__::xstring);
                                     return Parser::STYPE;
                                 }
-%target-directory               return Parser::TARGET_DIRECTORY;
+%target-directory[ \t]+         {
+                                    begin(StartCondition__::pxstring);
+                                    return Parser::TARGET_DIRECTORY;
+                                }
 %token                          return Parser::TOKEN;
 %type                           return Parser::TYPE;
 %union                          return Parser::UNION;

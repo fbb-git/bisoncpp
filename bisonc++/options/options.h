@@ -161,8 +161,8 @@ class Options
         void setPathStrings(bool targetDirOption);
         void setSkeletons();
         
-
-        void cleanDir(std::string &dir); // undelimit and append / if missing
+                             // undelimit and if append append / if missing
+        void cleanDir(std::string &dir, bool append); 
         void addIncludeQuotes(std::string &target);
 
         std::string const &accept(PathType pathType, char const *declTxt);
@@ -298,7 +298,7 @@ inline std::string const &Options::scannerTokenFunction() const
 
 inline void Options::setBaseClassHeader()
 {
-    assign(&d_baseClassHeader, FILENAME, "baseclass-header");
+    assign(&d_baseClassHeader, PATHNAME, "baseclass-header");
 }
 
 inline void Options::setBaseClassSkeleton()
@@ -308,7 +308,7 @@ inline void Options::setBaseClassSkeleton()
 
 inline void Options::setClassHeader()
 {
-    assign(&d_classHeader, FILENAME, "class-header");
+    assign(&d_classHeader, PATHNAME, "class-header");
 }
 
 inline void Options::setClassName()
@@ -338,7 +338,7 @@ inline void Options::setFlex()
 
 inline void Options::setImplementationHeader()
 {
-    assign(&d_implementationHeader, FILENAME, "implementation-header");
+    assign(&d_implementationHeader, PATHNAME, "implementation-header");
 }
 
 inline void Options::unsetLines()
@@ -363,7 +363,7 @@ inline void Options::setNamespace()
 
 inline void Options::setParsefunSource()
 {
-    assign(&d_parsefunSource, FILENAME, "parsefun-source");
+    assign(&d_parsefunSource, PATHNAME, "parsefun-source");
 }
 
 inline void Options::setPolymorphicInlineSkeleton()

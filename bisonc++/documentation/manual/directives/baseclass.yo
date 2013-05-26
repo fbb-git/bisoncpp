@@ -1,5 +1,5 @@
-    Syntax: bf(%baseclass-header) tt(filename) nl()
-           tt(Filename) defines the name of the file to contain the parser's
+    Syntax: bf(%baseclass-header) tt(pathname) nl()
+           tt(Pathname) defines the name of the path to contain the parser's
             base class. This class defines, e.g., the parser's symbolic
             tokens. Defaults to the name of the parser class plus the suffix
             tt(base.h). It is always generated, unless (re)writing is

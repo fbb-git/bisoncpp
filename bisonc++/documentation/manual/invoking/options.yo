@@ -13,16 +13,16 @@ i.e., they cannot contain directory separators (tt(/)); options accepting a
             grammar contains syntactic errors only syntax analysis is 
             performed.
 
-    it() lsoption(baseclass-header)(b)(filename)nl()
-           tt(Filename) defines the name of the file to contain the parser's
+    it() lsoption(baseclass-header)(b)(pathname)nl()
+           tt(Pathname) defines the path to the file to contain the parser's
             base class. This class defines, e.g., the parser's symbolic
             tokens. Defaults to the name of the parser class plus the suffix
             tt(base.h). It is generated, unless otherwise indicated (see
             tt(--no-baseclass-header) and tt(--dont-rewrite-baseclass-header)
             below).
 
-    it() label(PREINCLUDE) lsoption(baseclass-preinclude)(H)(filename)nl()
-           tt(Filename) defines  the name to the file preincluded in the
+    it() label(PREINCLUDE) lsoption(baseclass-preinclude)(H)(pathname)nl()
+           tt(Pathname) defines  the path to the file preincluded in the
             parser's base-class header. This option is needed in situations
             where the base class header file refers to types which might not
             yet be known. E.g., with polymorphic semantic values a
@@ -43,8 +43,8 @@ i.e., they cannot contain directory separators (tt(/)); options accepting a
             installation-defined default path name (e.g.,
             tt(/usr/share/bisonc++/) plus tt(bisonc++base.h)).
 
-    it() lsoption(class-header)(c)(filename)nl()
-           tt(Filename) defines the name of the file to contain the parser
+    it() lsoption(class-header)(c)(pathname)nl()
+           tt(Pathname) defines the path to the file to contain the parser
             class. Defaults to the name of the parser class plus the suffix
             tt(.h)
 
@@ -293,7 +293,14 @@ i.e., they cannot contain directory separators (tt(/)); options accepting a
             written.  By default this is the directory of bic()'s input file.
             The tt(--target-directory) option does not affect files whose
             locations were explicitly defined (either using options or
-            directives).
+            directives). To determine final path names bic() uses the 
+            following rules:nl()
+            1. options overrule directives;nl()
+            2. path specifications (using /) overrule
+                                                target-specifications;nl() 
+            3. a tt(--target-directory) option and a path-specification in a
+                directive generates a warning and keeps the
+                path-specification. 
 
     it() loption(thread-safe)nl() 
            No static data are modified, making bic() thread-safe.

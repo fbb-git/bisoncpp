@@ -1,5 +1,5 @@
-     Syntax: bf(%baseclass-preinclude) tt(filename)nl()
-           tt(Filename) defines the name to the file preincluded in the
+     Syntax: bf(%baseclass-preinclude) tt(pathname)nl()
+           tt(Pathname) defines the path to the file preincluded in the
             parser's base-class header.  See the description of the
             link(--baseclass-preinclude)(PREINCLUDE) option for details about
             this directive. By default `filename' is surrounded by double

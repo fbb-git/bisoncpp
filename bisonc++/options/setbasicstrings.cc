@@ -38,7 +38,7 @@ bool Options::setBasicStrings()
      d_arg.option(&d_skeletonDirectory, 'S');
     if (d_skeletonDirectory.empty())
         d_skeletonDirectory = s_defaultSkeletonDirectory;
-    cleanDir(d_skeletonDirectory);
+    cleanDir(d_skeletonDirectory, true);
 
     bool targetDirOption =      // true if --target-directory was specified
        d_arg.option(&d_targetDirectory, "target-directory");
@@ -46,7 +46,7 @@ bool Options::setBasicStrings()
     if (d_targetDirectory.empty())
         d_targetDirectory = s_defaultTargetDirectory;
     else
-        cleanDir(d_targetDirectory);
+        cleanDir(d_targetDirectory, true);
 
     return targetDirOption;
 }

@@ -1,3 +1,16 @@
+bisonc++ (4.04.00) 
+
+  * Repaired %target-directory not recognizing path-characters and not
+    removing surrounding "-delimiters.
+
+  * The --baseclass-header, --class-header, --implementation-header, and
+    --parsefun-source options (and corresponding directives) now also accept
+    path-specifications. 
+
+  * The man-page and manual have been updated accordingly.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 26 May 2013 14:22:50 +0200
+
 bisonc++ (4.03.00) 
 
   * Bisonc++ before 4.03.00 failed to notice the --debug option. Now repaired.
