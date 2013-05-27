@@ -248,21 +248,21 @@ cannot contain directory separators (tt(/)); options accepting a 'pathname'
 may contain directory separators. A 'pathname' using blank characters should
 be surrounded by double quotes.
     itemization(
-    it() bf(%baseclass-header) tt(pathname) nl()
-           tt(Pathname) defines the name of the path to contain the parser's
+    it() bf(%baseclass-header) tt(filename) nl()
+           tt(Filename) defines the name of the file to contain the parser's
             base class. This class defines, e.g., the parser's symbolic
             tokens. Defaults to the name of the parser class plus the suffix
             tt(base.h). This directive is overruled by the
             bf(--baseclass-header) (bf(-b)) command-line option.
     it() bf(%baseclass-preinclude) tt(pathname)nl()
-           tt(Pathname) defines the path to the file preincluded in the
+           tt(Pathname) defines the path to the file preincluded by the
             parser's base-class header.  See the description of the
             tt(--baseclass-preinclude) option for details about this
             directive.  By default, bic() surrounds tt(header) by double
             quotes.  However, when tt(header) itself is surrounded by pointed
             brackets tt(#include <header>) is included.
-    it() bf(%class-header) tt(pathname) nl()
-           tt(Pathname) defines the path to the file to contain the parser
+    it() bf(%class-header) tt(filename) nl()
+           tt(Filename) defines the name of the file to contain the parser
             class. Defaults to the name of the parser class plus the suffix
             tt(.h) This directive is overruled by the bf(--class-header)
             (bf(-c)) command-line option.
@@ -303,18 +303,18 @@ be surrounded by double quotes.
             the next lexical token is called as tt(d_scanner.yylex()). This
             directive is only interpreted if the tt(%scanner) directive is
             also provided.
-    it() bf(%implementation-header) tt(pathname) nl()
-           tt(Pathname) defines the path to the file to contain the
+    it() bf(%implementation-header) tt(filename) nl()
+           tt(Filename) defines the name of the file to contain the
             implementation header. It defaults to the name of the generated
             parser class plus the suffix tt(.ih). nl()
            The implementation header should contain all directives and
-            declarations em(only) used by the implementations of the parser's
-            member functions. It is the only header file that is included by
-            the source file containing tt(parse)'s implementation. User
-            defined implementation of other class members may use the same
-            convention, thus concentrating all directives and declarations
-            that are required for the compilation of other source files
-            belonging to the parser class in one header file.nl()
+            declarations that are em(only) used by the parser's member
+            functions. It is the only header file that is included by the
+            source file containing tt(parse)'s implementation. User defined
+            implementation of other class members may use the same convention,
+            thus concentrating all directives and declarations that are
+            required for the compilation of other source files belonging to
+            the parser class in one header file.nl()
            This directive is overruled by the
             bf(--implementation-header) (bf(-i)) command-line option.
     it() bf(%include) tt(pathname) nl() 
@@ -402,9 +402,9 @@ be surrounded by double quotes.
             expressions, the first used directive defines the tokens having
             the lowest precedence, the last used defines the tokens having the
             highest priority. See also tt(%token) below.
-    it() bf(%parsefun-source) tt(pathname) nl()
-           tt(Pathname) defines the path to the source file to contain the
-            parser member function tt(parse). Defaults to tt(parse.cc).  This
+    it() bf(%parsefun-source) tt(filename) nl()
+           tt(Filename) defines the name of the file to contain the parser
+            member function tt(parse). Defaults to tt(parse.cc).  This
             directive is overruled by the bf(--parse-source) (bf(-p))
             command-line option.
     it() bf(%polymorphic) tt(polymorphic-specification(s))nl()
@@ -509,18 +509,9 @@ be surrounded by double quotes.
             the actual type definition.
     it() bf(%target-directory pathname) nl() 
            tt(Pathname) defines the directory where generated files should be
-            written.  By default this is the directory of bic()'s input file.
-            This directive does not affect files whose locations were
-            explicitly defined (either using options or directives). This
-            directive is overruled by the tt(--target-directory) command-line
-            option. To determine final path names bic() uses the following
-            rules:nl()
-            1. options overrule directives;nl()
-            2. path specifications (using /) overrule
-                                                target-specifications;nl() 
-            3. a tt(--target-directory) option and a path-specification in a
-                directive generates a warning and keeps the
-                path-specification. 
+            written.  By default this is the directory where bic() is
+            called. This directive is overruled by the tt(--target-directory)
+            command-line option.
     it() bf(%token) tt(terminal ...) nl()    
            Defines the names of symbolic terminal tokens.  Sequences of
             tt(%left, %nonassoc, %right) and tt(%token) directives may be used

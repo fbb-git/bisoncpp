@@ -1,6 +1,6 @@
 #include "options.ih"
 
-bool Options::setBasicStrings()
+void Options::setBasicStrings()
 {
     if (d_arg.option(0, 'n'))
         fmsg << "Option --namespace discontinued. "
@@ -40,13 +40,8 @@ bool Options::setBasicStrings()
         d_skeletonDirectory = s_defaultSkeletonDirectory;
     cleanDir(d_skeletonDirectory, true);
 
-    bool targetDirOption =      // true if --target-directory was specified
-       d_arg.option(&d_targetDirectory, "target-directory");
+    d_arg.option(&d_targetDirectory, "target-directory");
 
-    if (d_targetDirectory.empty())
-        d_targetDirectory = s_defaultTargetDirectory;
-    else
+    if (not d_targetDirectory.empty())
         cleanDir(d_targetDirectory, true);
-
-    return targetDirOption;
 }

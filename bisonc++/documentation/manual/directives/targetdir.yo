@@ -1,8 +1,6 @@
 Syntax: bf(%target-directory) tt(pathname) nl()
            tt(Pathname) defines the directory where generated files should be
-            written.  By default this is the directory of bic()'s input file.
-            The tt(%target-directory) directive does not affect files whose
-            locations were explicitly defined (either using options or
-            directives). This directive is overruled by the
+            written.  By default this is the directory where bic() is called.
+            This directive is overruled by the
             tt(--target-directory) command-line option.
 

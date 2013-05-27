@@ -13,8 +13,8 @@ i.e., they cannot contain directory separators (tt(/)); options accepting a
             grammar contains syntactic errors only syntax analysis is 
             performed.
 
-    it() lsoption(baseclass-header)(b)(pathname)nl()
-           tt(Pathname) defines the path to the file to contain the parser's
+    it() lsoption(baseclass-header)(b)(filename)nl()
+           tt(Filename) defines the name of the file to contain the parser's
             base class. This class defines, e.g., the parser's symbolic
             tokens. Defaults to the name of the parser class plus the suffix
             tt(base.h). It is generated, unless otherwise indicated (see
@@ -43,8 +43,8 @@ i.e., they cannot contain directory separators (tt(/)); options accepting a
             installation-defined default path name (e.g.,
             tt(/usr/share/bisonc++/) plus tt(bisonc++base.h)).
 
-    it() lsoption(class-header)(c)(pathname)nl()
-           tt(Pathname) defines the path to the file to contain the parser
+    it() lsoption(class-header)(c)(filename)nl()
+           tt(Filename) defines the name of the file to contain the parser
             class. Defaults to the name of the parser class plus the suffix
             tt(.h)
 
@@ -290,17 +290,9 @@ i.e., they cannot contain directory separators (tt(/)); options accepting a
 
     it() laoption(target-directory)(pathname) nl() 
            tt(Pathname) defines the directory where generated files should be
-            written.  By default this is the directory of bic()'s input file.
-            The tt(--target-directory) option does not affect files whose
-            locations were explicitly defined (either using options or
-            directives). To determine final path names bic() uses the 
-            following rules:nl()
-            1. options overrule directives;nl()
-            2. path specifications (using /) overrule
-                                                target-specifications;nl() 
-            3. a tt(--target-directory) option and a path-specification in a
-                directive generates a warning and keeps the
-                path-specification. 
+            written.  By default this is the directory where bic() is
+            called. This directive is overruled by the tt(--target-directory)
+            command-line option.
 
     it() loption(thread-safe)nl() 
            No static data are modified, making bic() thread-safe.

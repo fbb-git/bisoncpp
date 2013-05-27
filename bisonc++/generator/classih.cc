@@ -3,5 +3,6 @@
 void Generator::classIH(ostream &out) const
 {
     key(out);
-    out << "#include \"" << d_options.implementationHeader() << "\"\n";
+    out << "#include \"" << 
+                filename(d_options.implementationHeader()) << "\"\n";
 }

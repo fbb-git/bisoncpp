@@ -2,8 +2,10 @@ bisonc++ (4.04.01)
 
   * Removed the possibility to specify path names for the --baseclass-header,
     --class-header, --implementation-header, and --parsefun-source options
-    (and corresponding directives)   
+    (and corresponding directives). Path names for generated files should be
+    specified using the target-directory option or directive.
 
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 27 May 2013 12:12:58 +0200
 
 bisonc++ (4.04.00) 
 

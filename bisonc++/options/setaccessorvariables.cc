@@ -4,10 +4,9 @@ void Options::setAccessorVariables()
 {
     setBooleans();
 
-                    // true if --target-directory was specified
-    bool targetDirOption = setBasicStrings();
+    setBasicStrings();
 
-    setPathStrings(targetDirOption);
+    setPathStrings();
 
     setQuotedStrings();
     setSkeletons();

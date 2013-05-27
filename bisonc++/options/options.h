@@ -155,10 +155,10 @@ class Options
 
             // called by setAccessorVariables()
         void setBooleans();
-        bool setBasicStrings();
+        void setBasicStrings();
         std::string setOpt(char const *opt, std::string const &defaultSpec);
         void setQuotedStrings();
-        void setPathStrings(bool targetDirOption);
+        void setPathStrings();
         void setSkeletons();
         
                              // undelimit and if append append / if missing
@@ -169,9 +169,9 @@ class Options
         void assign(std::string *target, PathType pathType, 
                     char const *declTxt);
 
-        void setPath(std::string *dest, int optChar, bool targetDirOption, 
-                      char const *optionName, std::string const &className, 
-                      char const *suffix);
+        void setPath(std::string *dest, int optChar, 
+                      std::string const &defaultFilename, 
+                      char const *defaultSuffix);
 
         bool isFirstStypeDefinition() const;
 };

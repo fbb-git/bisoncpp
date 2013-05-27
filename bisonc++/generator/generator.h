@@ -65,6 +65,8 @@ class Generator
         void parseFunction() const;
 
     private:
+        static std::string filename(std::string const &path);
+
         void filter(std::istream &in, std::ostream &out, 
                                         bool header = true) const;
 

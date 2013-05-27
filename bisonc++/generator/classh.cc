@@ -3,5 +3,5 @@
 void Generator::classH(ostream &out) const
 {
     key(out);
-    out << "#include \"" << d_options.classHeader() << "\"\n";
+    out << "#include \"" << filename(d_options.classHeader()) << "\"\n";
 }

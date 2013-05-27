@@ -3,5 +3,5 @@
 void Generator::baseClass(ostream &out) const
 {
     key(out);
-    out << "#include \"" << d_options.baseClassHeader() << "\"\n";
+    out << "#include \"" << filename(d_options.baseClassHeader()) << "\"\n";
 }

@@ -4,7 +4,6 @@
 #include "SKEL"
 
 char Options::s_defaultSkeletonDirectory[]      = _Skel_;
-char Options::s_defaultTargetDirectory[]        = "";
 char Options::s_defaultClassName[]              = "Parser";
 char Options::s_defaultParsefunSource[]         = "parse.cc";
 char Options::s_defaultBaseClassSkeleton[]      = "bisonc++base.h";
