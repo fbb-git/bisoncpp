@@ -298,7 +298,7 @@ inline std::string const &Options::scannerTokenFunction() const
 
 inline void Options::setBaseClassHeader()
 {
-    assign(&d_baseClassHeader, PATHNAME, "baseclass-header");
+    assign(&d_baseClassHeader, FILENAME, "baseclass-header");
 }
 
 inline void Options::setBaseClassSkeleton()
@@ -308,7 +308,7 @@ inline void Options::setBaseClassSkeleton()
 
 inline void Options::setClassHeader()
 {
-    assign(&d_classHeader, PATHNAME, "class-header");
+    assign(&d_classHeader, FILENAME, "class-header");
 }
 
 inline void Options::setClassName()
@@ -338,7 +338,7 @@ inline void Options::setFlex()
 
 inline void Options::setImplementationHeader()
 {
-    assign(&d_implementationHeader, PATHNAME, "implementation-header");
+    assign(&d_implementationHeader, FILENAME, "implementation-header");
 }
 
 inline void Options::unsetLines()
@@ -363,7 +363,7 @@ inline void Options::setNamespace()
 
 inline void Options::setParsefunSource()
 {
-    assign(&d_parsefunSource, PATHNAME, "parsefun-source");
+    assign(&d_parsefunSource, FILENAME, "parsefun-source");
 }
 
 inline void Options::setPolymorphicInlineSkeleton()

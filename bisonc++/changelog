@@ -1,3 +1,10 @@
+bisonc++ (4.04.01) 
+
+  * Removed the possibility to specify path names for the --baseclass-header,
+    --class-header, --implementation-header, and --parsefun-source options
+    (and corresponding directives)   
+
+
 bisonc++ (4.04.00) 
 
   * Repaired %target-directory not recognizing path-characters and not
