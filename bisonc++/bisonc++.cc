@@ -68,6 +68,7 @@ namespace
         Arg::LongOption("scanner-debug"),
         {"scanner-matched-text-function", Arg::Required},
         {"scanner-token-function", Arg::Required},
+        {"scanner-class-name", Arg::Required},
 
         Arg::LongOption("show-filenames"),  // option only
         {"skeleton-directory", 'S'},        // option only

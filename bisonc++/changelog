@@ -1,3 +1,11 @@
+bisonc++ (4.05.00) 
+
+  * Added the directive %scanner-class-name specifying the class name of the
+    scanner to use in combination with the %scanner directive
+
+
+
+
 bisonc++ (4.04.01) 
 
   * Removed the possibility to specify path names for the --baseclass-header,

@@ -116,6 +116,10 @@ void usage(string const &program_name)
     "           include `header-file' declaring the class Scanner, and call\n"
     "           d_scanner.yylex() from Parser::lex().\n"
 
+    "   --scanner-class-name=<scanner class name>:\n"
+    "           specifies the name of the scanner class: this option is\n"
+    "           only interpreted if --scanner (or %scanner) is also used.\n"
+
     "   --scanner-debug: extensive display of the actions of bisonc++'s "
                                                                 "scanner\n"
 

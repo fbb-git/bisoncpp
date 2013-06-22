@@ -54,6 +54,7 @@ class Options
     std::string d_scannerInclude;
     std::string d_scannerMatchedTextFunction;
     std::string d_scannerTokenFunction;
+    std::string d_scannerClassName;
     std::string d_skeletonDirectory;
     std::string d_stackDecl;
     std::string d_targetDirectory;
@@ -69,6 +70,7 @@ class Options
     static char s_defaultParsefunSource[];
     static char s_defaultSkeletonDirectory[];
     static char s_defaultTargetDirectory[];
+    static char s_defaultScannerClassName[];
     static char s_defaultScannerMatchedTextFunction[];
     static char s_defaultScannerTokenFunction[];
     static char s_YYText[];
@@ -105,6 +107,7 @@ class Options
         void setPrintTokens();
         void setPreInclude();
         void setRequiredTokens(size_t nRequiredTokens);
+        void setScannerClassName();
         void setScannerInclude();
         void setScannerMatchedTextFunction();
         void setScannerTokenFunction();
@@ -143,6 +146,7 @@ class Options
         std::string const &preInclude() const;
         std::string const &polymorphicInlineSkeleton() const;
         std::string const &polymorphicSkeleton() const;
+        std::string const &scannerClassName() const;
         std::string const &scannerInclude() const;
         std::string const &scannerMatchedTextFunction() const;
         std::string const &scannerTokenFunction() const;
@@ -281,6 +285,11 @@ inline size_t Options::requiredTokens() const
     return d_requiredTokens;
 }
 
+inline std::string const &Options::scannerClassName() const
+{
+    return d_scannerClassName;
+}
+
 inline std::string const &Options::scannerInclude() const
 {
     return d_scannerInclude;
@@ -380,6 +389,11 @@ inline void Options::setPolymorphicSkeleton()
 inline void Options::setPreInclude()
 {
     assign(&d_preInclude, FILENAME, "baseclass-preinclude");
+}
+
+inline void Options::setScannerClassName()
+{
+    assign(&d_scannerClassName, FILENAME, "scanner-class-name");
 }
 
 inline void Options::setScannerInclude()

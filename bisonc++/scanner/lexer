@@ -149,6 +149,10 @@ NR      [[:digit:]]+
                                     begin(StartCondition__::pxstring);
                                     return Parser::SCANNER;
                                 }
+%scanner-class-name[ \t]+       {
+                                    begin(StartCondition__::pxstring);
+                                    return Parser::SCANNER_CLASS_NAME;
+                                }
 %scanner-token-function[ \t]+   {
                                     begin(StartCondition__::pxstring);
                                     return Parser::SCANNER_TOKEN_FUNCTION;

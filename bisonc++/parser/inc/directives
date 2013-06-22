@@ -126,6 +126,13 @@ _scanner:
     }
 ;
 
+_scanner_class_name:
+    SCANNER_CLASS_NAME
+    {
+        d_expect = "Name of the Scanner class";
+    }
+;
+
 _scanner_token_function:
     SCANNER_TOKEN_FUNCTION
     {
@@ -377,6 +384,12 @@ _directiveSpec:
     STRING
     {
         d_options.setScannerInclude();
+    }
+|
+    _scanner_class_name
+    STRING
+    {
+        d_options.setScannerClassName();
     }
 |
     _scanner_token_function

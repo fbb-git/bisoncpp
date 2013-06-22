@@ -6,5 +6,5 @@ void Generator::scannerObject(ostream &out) const
         return;
 
     key(out);
-    out <<  "Scanner d_scanner;\n";
+    out <<  d_options.scannerClassName() << "Scanner d_scanner;\n";
 }

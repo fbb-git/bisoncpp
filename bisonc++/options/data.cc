@@ -17,6 +17,7 @@ char Options::s_defaultPolymorphicInlineSkeleton[]
     // the defaults are flexc++-defaults.
     // use --flex or %flex or explicit options to use  flex defaults
 
+char Options::s_defaultScannerClassName[]           = "Scanner";
 char Options::s_defaultScannerMatchedTextFunction[] = "d_scanner.matched()";
 char Options::s_YYText[]                        = "d_scanner.YYText()";
 

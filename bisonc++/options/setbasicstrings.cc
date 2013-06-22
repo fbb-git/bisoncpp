@@ -14,6 +14,11 @@ void Options::setBasicStrings()
         d_className = s_defaultClassName;
 
 
+    d_arg.option(&d_scannerClassName, "scanner-class-name");
+    if (d_scannerClassName.empty())
+        d_scannerClassName = s_defaultScannerClassName;
+
+
 
     d_scannerTokenFunction = setOpt("scanner-token-function",
                                     d_flex ?
