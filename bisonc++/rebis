@@ -23,8 +23,8 @@ rm -rf self/*
 prompt "    1. Copying the grammar to self..."
 cp  -r parser/grammar parser/inc self
 
-prompt "    2. Run (in ./self) ../tmp/bin/bisonc++ on the grammar"
-cd self && ../tmp/bin/bisonc++ -S ../skeletons grammar
+prompt "    2. Run (in ./self) ../tmp/bin/binary on the grammar"
+cd self && ../tmp/bin/binary -S ../skeletons grammar
 cd ..
 
 prompt "    3. Copy the generated parserbase.h and parse.cc to ./parser"
@@ -32,12 +32,12 @@ cp ./self/parse.cc ./self/parserbase.h ./parser
 
 
 prompt "    4. Rebuild: rebuilding the program ('build program')"
-touch ./scanner/a
+# touch ./scanner/a
 build program || exit 1
 echo
 
-prompt "    5. Again: run '../tmp/bin/bisonc++' on grammar"
-cd self && ../tmp/bin/bisonc++ -S ../skeletons grammar
+prompt "    5. Again: run '../tmp/bin/binary' on grammar"
+cd self && ../tmp/bin/binary -S ../skeletons grammar
 cd ..
 
 echo "    6. Diffs should show differences in timestamps only:"
