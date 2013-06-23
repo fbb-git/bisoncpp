@@ -8,13 +8,22 @@
 
 void Generator::classHeader() const
 {
+    string const &classHeader = d_options.classHeader();
+
     if 
     (
         not d_arg.option(0, "force-class-header")
         &&
-        d_stat.set(d_options.classHeader())
+        d_stat.set(classHeader)
     )
+    {
+        warnExisting(classHeader, "namespace");
+        warnExisting(classHeader, "class-name");
+        warnExisting(classHeader, "scanner");
+        warnExisting(classHeader, "scanner-class-name");
+        
         return;
+    }
 
     ofstream out;
     ifstream in;

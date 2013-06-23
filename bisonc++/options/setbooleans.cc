@@ -6,7 +6,10 @@ void Options::setBooleans()
         d_debug = true;
 
     if (d_arg.option('t'))
+    {
+        d_warnOptions.insert("print-tokens");
         d_printTokens = true;
+    }
 
     if (d_arg.option(0, "error-verbose"))
         d_errorVerbose = true;

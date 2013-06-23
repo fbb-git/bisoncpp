@@ -6,12 +6,13 @@ string Options::setOpt(char const *option, string const &defaultSpec)
 
     d_arg.option(&ret, option);
 
-    ret = ret.size() ? undelimit(ret) : defaultSpec;
+    if (ret.empty())
+        ret = defaultSpec;
+    else
+    {
+        d_warnOptions.insert(option);
+        ret = undelimit(ret);
+    }
         
-    // if (ret.size())
-    //     ret = undelimit(ret);
-    // else //if (d_scannerInclude.size())
-    //     ret = defaultSpec;
-
     return ret;
 }

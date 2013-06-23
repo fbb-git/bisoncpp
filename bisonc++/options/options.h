@@ -2,7 +2,7 @@
 #define INCLUDED_OPTIONS_
 
 #include <string>
-#include <bobcat/a2x>
+#include <set>
 
 namespace FBB
 {
@@ -34,6 +34,11 @@ class Options
     bool        d_strongTags;
 
     size_t      d_requiredTokens;
+
+    std::set<std::string> d_warnOptions;    // contains the names of options 
+                                            // for which Generator may warn
+                                            // if specified for already
+                                            // existing .h or .ih files
 
     std::string d_baseClassHeader;
     std::string d_baseClassSkeleton;
@@ -129,6 +134,8 @@ class Options
         bool lspNeeded() const;
         bool polymorphic() const;
         bool strongTags() const;
+
+        bool specified(std::string const &option) const;
 
         size_t requiredTokens() const;
 
@@ -407,11 +414,6 @@ inline void Options::setScannerMatchedTextFunction()
                                 FILENAME, "scanner-matched-text-function");
 }
 
-inline void Options::setPrintTokens()
-{
-    d_printTokens = true;
-}
-
 inline void Options::setScannerTokenFunction()
 {
     assign(&d_scannerTokenFunction, FILENAME, "scanner-token-function");
@@ -440,6 +442,11 @@ inline bool Options::strongTags() const
 inline void Options::unsetStrongTags()
 {
     d_strongTags = false;
+}
+
+inline bool Options::specified(std::string const &option) const
+{
+    return d_warnOptions.find(option) != d_warnOptions.end();
 }
 
 #endif

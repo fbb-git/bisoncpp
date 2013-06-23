@@ -11,13 +11,22 @@
 
 void Generator::implementationHeader() const
 {
+    string const &implementationHeader = d_options.implementationHeader();
     if 
     (
         not d_arg.option(0, "force-implementation-header")
         &&
-        d_stat.set(d_options.implementationHeader())
+        d_stat.set(implementationHeader)
     )
+    {
+        warnExisting(implementationHeader, "namespace");
+        warnExisting(implementationHeader, "class-header");
+        warnExisting(implementationHeader, "class-name");
+        warnExisting(implementationHeader, "print-tokens");
+        warnExisting(implementationHeader, "scanner-token-function");
+
         return;
+    }
 
     ofstream out;
     ifstream in;

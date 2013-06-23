@@ -190,7 +190,7 @@ NR      [[:digit:]]+
 {IDENT}                         return Parser::IDENTIFIER;
 
 [[:digit:]]+                    {
-                                    d_number = A2x(d_matched);
+                                    d_number = stoul(d_matched);
                                     return Parser::NUMBER;
                                 }
 

@@ -14,7 +14,6 @@
 #include <bobcat/arg>
 #include <bobcat/mstream>
 #include <bobcat/string>
-#include <bobcat/a2x>
 
 #include "../parser/parserbase.h"   
 #include "../options/options.h"

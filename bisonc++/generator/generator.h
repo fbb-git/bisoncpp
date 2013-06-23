@@ -74,6 +74,10 @@ class Generator
         void key(std::ostream &out) const;          // show which $insert is
                                                     // called, just before the
                                                     // generated code 
+
+        void warnExisting(std::string const &fileName, 
+                          std::string const &option) const;
+
         void actionCases(std::ostream &out) const;
         void baseClass(std::ostream &out) const;
         void classH(std::ostream &out) const;

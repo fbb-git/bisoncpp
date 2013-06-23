@@ -1,31 +1,30 @@
-enumsolution
-element
 atdollar
 block           atdollar
-options         
-rmshift
-rmreduction
-statetype
-scanner         block options
+element
+enumsolution
 firstset        element
-symbol          firstset
-terminal        symbol
-production      block terminal 
-followset       terminal
-nonterminal     production  firstset followset
-symtab          nonterminal
-rules           nonterminal
-grammar         rules
-lookaheadset    rules
-rrdata          lookaheadset
-item            lookaheadset 
+followset       firstset terminal
+generator       writer
+grammar         symbol production
+item            lookaheadset production
+lookaheadset    firstset terminal
+next            enumsolution  statetype  stateitem  symbol item
+nonterminal     production  firstset followset symbol
+options         
 parser          scanner rules symtab
-transition      item
-stateitem       item rmshift rmreduction rrdata 
-rrconflict      stateitem 
-next            enumsolution  statetype  stateitem 
+production      block terminal symbol
+rmreduction
+rmshift
+rrconflict      stateitem lookaheadset rrdata
+rrdata          lookaheadset
+rules           nonterminal block terminal production symbol
+scanner         block
 srconflict      rmreduction next
-state           srconflict rrconflict lookaheadset
-writer          next lookaheadset state
-generator       writer  options
-
+state           statetype next srconflict rrconflict 
+stateitem       symbol item lookaheadset rmshift rmreduction rrdata 
+statetype
+symbol          firstset element
+symtab          nonterminal symbol terminal
+terminal        symbol
+transition      item lookaheadset
+writer          next

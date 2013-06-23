@@ -2,20 +2,21 @@
 
 void Options::setBasicStrings()
 {
-    if (d_arg.option(0, 'n'))
-        fmsg << "Option --namespace discontinued. "
-                                    "Use the %namespace directive instead";
+        // classname/namespace can only be followed by IDENTIFIERs, 
+        // so no undelimit is required.
 
-        // classname can only be followed by IDENTIFIERs, so no undelimit is 
-        // required.
+    if (d_arg.option(&d_nameSpace, 'n'))
+        d_warnOptions.insert("namespace");
 
-    d_arg.option(&d_className, "class-name");
-    if (d_className.empty())
+    if (d_arg.option(&d_className, "class-name"))
+        d_warnOptions.insert("class-name");
+    else
         d_className = s_defaultClassName;
 
 
-    d_arg.option(&d_scannerClassName, "scanner-class-name");
-    if (d_scannerClassName.empty())
+    if (d_arg.option(&d_scannerClassName, "scanner-class-name"))
+        d_warnOptions.insert("scanner-class-name");
+    else
         d_scannerClassName = s_defaultScannerClassName;
 
 
@@ -34,7 +35,7 @@ void Options::setBasicStrings()
 
     string nTokens;
     if (d_arg.option(&nTokens, "required-tokens"))
-        d_requiredTokens = A2x(nTokens);
+        d_requiredTokens = stoul(nTokens);
     
     d_arg.option(&d_genericFilename, 'f');
     if (d_genericFilename.empty())

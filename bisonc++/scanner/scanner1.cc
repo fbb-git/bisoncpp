@@ -15,7 +15,7 @@ Scanner::Scanner(std::string const &infile)
 
     string value;
     if (arg.option(&value, "max-inclusion-depth"))
-        d_maxDepth = A2x(value);
+        d_maxDepth = stoul(value);
     else
         d_maxDepth = 10;
 }
