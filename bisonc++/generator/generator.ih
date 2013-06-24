@@ -7,6 +7,7 @@
 #include <bobcat/exception>
 #include <bobcat/datetime>
 #include <bobcat/mstream>
+#include <bobcat/pattern>
 
 #include "../options/options.h"
 #include "../rules/rules.h"

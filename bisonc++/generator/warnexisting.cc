@@ -1,9 +1,13 @@
 #include "generator.ih"
 
-void Generator::warnExisting(string const &fileName, string const &option) 
-                                                                        const
+void Generator::warnExisting(string const &fileName, string const &option,
+                             string const &expectedOptionValue,
+                            string const &pattern) const
 {
-    if (d_options.specified(option))
+    if (not grep(fileName, pattern))
         wmsg << '`' << fileName << 
-            "' exists, ignoring option/directive " << option << endl;
+            "' exists, option/directive `" << option << ' ' <<
+            expectedOptionValue << "' ignored" << 
+            "\npattern = `" << pattern << '\'' <<
+            endl;
 }

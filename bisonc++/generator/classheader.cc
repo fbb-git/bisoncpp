@@ -17,11 +17,23 @@ void Generator::classHeader() const
         d_stat.set(classHeader)
     )
     {
-        warnExisting(classHeader, "namespace");
-        warnExisting(classHeader, "class-name");
-        warnExisting(classHeader, "scanner");
-        warnExisting(classHeader, "scanner-class-name");
-        
+        if (not d_options.nameSpace().empty())
+            warnExisting(classHeader, "namespace", d_options.nameSpace(),
+                            "^namespace " + d_options.nameSpace() + "\\b");
+
+        warnExisting(classHeader, "class-name", d_options.className(),
+                                "^class " + d_options.className() + "\\b");
+
+
+        warnExisting(classHeader, "scanner", d_options.scannerInclude(), 
+                                "^#include " + d_options.scannerInclude());
+
+        if (d_options.specified("scanner"))
+            warnExisting(classHeader, "scanner-class-name",
+                                d_options.scannerClassName(), 
+                                "^[[:space:]]*" + 
+                                    d_options.scannerClassName() + 
+                                    " d_scanner;");
         return;
     }
 

@@ -10,13 +10,13 @@ void Options::setBasicStrings()
 
     if (d_arg.option(&d_className, "class-name"))
         d_warnOptions.insert("class-name");
-    else
+    else if (d_className.empty())           
         d_className = s_defaultClassName;
 
 
     if (d_arg.option(&d_scannerClassName, "scanner-class-name"))
         d_warnOptions.insert("scanner-class-name");
-    else
+    else if (d_scannerClassName.empty()) 
         d_scannerClassName = s_defaultScannerClassName;
 
 

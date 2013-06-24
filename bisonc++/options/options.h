@@ -92,6 +92,8 @@ class Options
 
         void setAccessorVariables();
 
+        bool specified(std::string const &option) const;
+
         void setBaseClassHeader();
         void setBaseClassSkeleton();
         void setClassHeader();
@@ -134,8 +136,6 @@ class Options
         bool lspNeeded() const;
         bool polymorphic() const;
         bool strongTags() const;
-
-        bool specified(std::string const &option) const;
 
         size_t requiredTokens() const;
 

@@ -76,7 +76,12 @@ class Generator
                                                     // generated code 
 
         void warnExisting(std::string const &fileName, 
-                          std::string const &option) const;
+                          std::string const &option,
+                          std::string const &expectedOptionValue,
+                          std::string const &regex) const;
+        bool grep(std::string const &fileName, std::string const &regex) 
+                                                                        const;
+
 
         void actionCases(std::ostream &out) const;
         void baseClass(std::ostream &out) const;
@@ -115,6 +120,8 @@ class Generator
 
         static void selectSymbolic(Terminal const *terminal, 
                                    Terminal::ConstVector &symbolicTokens);
+        static void replace(std::string &str, char ch, 
+                       std::string const &replacement);
 };
 
 #endif
