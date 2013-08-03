@@ -266,10 +266,21 @@ be surrounded by double quotes.
             class. Defaults to the name of the parser class plus the suffix
             tt(.h) This directive is overruled by the bf(--class-header)
             (bf(-c)) command-line option.
+
+           A warning is issued if this option is used and an already
+            existing implementation header file does not contain tt(#include
+            "filename").
+
     it() bf(%class-name) tt(parser-class-name) nl()
            Declares the name of the parser class. It defines the name of the
             bf(C++) class that is generated. If no tt(%class-name) is
             specified the default class name tt(Parser) is used.
+
+           A warning is issued if this directive is used and an already
+            existing parser-class header file does not define tt(class
+            `className') and/or if an already existing implementation header
+            file does not define members of the class tt(`className').
+
     it() bf(%debug) nl() 
            Provide tt(parse) and its support functions with debugging code,
             showing the actual parsing process on the standard output
@@ -454,21 +465,38 @@ be surrounded by double quotes.
             used directive defines the tokens having the lowest precedence,
             the last used defines the tokens having the highest priority. See
             also tt(%token) below.
-    it() bf(%scanner) tt(header)nl()
-           Use tt(header) as the pathname to the file pre-included in the
+    it() bf(%scanner) tt(pathname)nl()
+           Use tt(pathname) as the path name to the file pre-included in the
             parser's class header. See the description of the tt(--scanner)
             option for details about this option.  Similar to the convention
-            adopted for this argument, tt(header) by default is surrounded by
-            double quotes.  However, when the argument is surrounded by
-            pointed brackets tt(#include <header>) is included. This directive
-            results in the definition of a composed tt(Scanner d_scanner) data
-            member into the generated parser, and in the definition of a
-            tt(int lex()) member, returning tt(d_scanner.lex()).
+            adopted for this argument, tt(pathname) by default is surrounded
+            by double quotes.  However, when the argument is surrounded by
+            pointed brackets tt(#include <pathname>) is included. This
+            directive results in the definition of a composed tt(Scanner
+            d_scanner) data member into the generated parser, and in the
+            definition of a tt(int lex()) member, returning
+            tt(d_scanner.lex()).
 
             By specifying the tt(%flex) directive the function
             tt(d_scanner.yylex()) is called. Any other function to call can be
             specified using the tt(--scanner-token-function) option (or
             tt(%scanner-token-function) directive).
+
+           A warning is issued if this directive is used and an already
+            existing parser class header file does not include tt(`pathname').
+
+
+    it() bf(%scanner-class-name) tt(scannerClassName) nl() 
+           Defines the name of the scanner class, declared by the tt(pathname)
+            header file that is specified at the tt(scanner) option or 
+            directive. By default the class name ttt(Scanner) is used.
+
+            If no tt(scanner) option or directive was specified,
+            then tt(scanner-class-name) is ignored and a warning is
+            issued. A warning is also issued if the tt(scanner) option or
+            directive was specified, but the parser class does not
+            declare a tt(scannerClassName d_scanner) data member.
+            
     it() bf(%scanner-matched-text-function) tt(function-call) nl() 
            The scanner function returning the text that was matched by the
             lexical scanner after its token function (see below) has

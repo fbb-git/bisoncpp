@@ -3,3 +3,7 @@
             class. Defaults to the name of the parser class plus the suffix
             tt(.h) This directive is overruled by the bf(--class-header)
             (bf(-c)) command-line option.
+
+           A warning is issued if this directive is used and an already
+            existing implementation header file does not contain tt(#include
+            "filename").

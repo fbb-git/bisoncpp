@@ -19,18 +19,18 @@ void Generator::implementationHeader() const
         d_stat.set(implementationHeader)
     )
     {
-        if (not d_options.nameSpace().empty())
-            warnExisting(implementationHeader, 
-                            "namespace", d_options.nameSpace(),
-                            "^namespace " + d_options.nameSpace() + "\\b");
+        warnExisting(implementationHeader, "class-header", 
+                            d_options.classHeader(),
+                            "^#include \"" + d_options.classHeader() + '"');
 
         warnExisting(implementationHeader, "class-name", 
                             d_options.className(),
                             "\\b" + d_options.className() + "::");
 
-        warnExisting(implementationHeader, "class-header", 
-                            d_options.classHeader(),
-                            "^#include \"" + d_options.classHeader() + '"');
+        if (not d_options.nameSpace().empty())
+            warnExisting(implementationHeader, 
+                            "namespace", d_options.nameSpace(),
+                            "^namespace " + d_options.nameSpace() + "\\b");
 
         string pattern = "\\b" + d_options.scannerTokenFunction() + "\\b";
         replace(pattern, '(', "\\(");

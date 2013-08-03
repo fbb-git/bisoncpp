@@ -1,4 +1,4 @@
- bf(%scanner) tt(header)nl()
+Syntax: bf(%scanner) tt(header)nl()
     Use tt(header) as the pathname of a file to include in the parser's class
 header. See the description of the link(--scanner)(SCANOPT) option for details
 about this option.  This directive also implies the automatic definition of a
@@ -11,4 +11,7 @@ called.
 The specfied tt(header) file will be surrounded by double quotes if no
 delimiters were provided. If pointed brackets (tt(<...>)) are used, they are
 kept. 
+
+A warning is issued if this directive is used and an already existing parser
+class header file does not include tt(`pathname').
 
