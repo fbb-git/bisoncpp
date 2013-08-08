@@ -8,7 +8,9 @@ bisonc++ (4.05.00)
   * Warnings are issued when options or directives are specified wchich are
     ignored because the target file (e.g., parser.h, parser.ih) already
     exists. These warnings are not issued for parse.cc and parserbase.h, which
-    are by default rewritten at each bisonc++ run.
+    are by default rewritten at each bisonc++ run. These warnings are issued
+    for the `class-header', `class-name', `namespace', `scanner', and
+    `scanner-token-function' options/directives.
 
   * man and manual...
 

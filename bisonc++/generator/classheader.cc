@@ -17,22 +17,33 @@ void Generator::classHeader() const
         d_stat.set(classHeader)
     )
     {
+                // class-name must match
         warnExisting(classHeader, "class-name", d_options.className(),
                                 "^class " + d_options.className() + "\\b");
 
+        warnExisting(classHeader, "baseclass-header", 
+                    d_options.baseclassHeaderName(), 
+                    "^#include \"" + d_options.baseclassHeaderName() + '"');
+
+                // if a namespace was provided: it must be present
         if (not d_options.nameSpace().empty())
             warnExisting(classHeader, "namespace", d_options.nameSpace(),
                             "^namespace " + d_options.nameSpace() + "\\b");
 
-        warnExisting(classHeader, "scanner", d_options.scannerInclude(), 
+        if (d_options.specified("scanner"))
+        {
+                // the 'scanner' include spec. must be present
+            warnExisting(classHeader, "scanner", d_options.scannerInclude(), 
                                 "^#include " + d_options.scannerInclude());
 
-        if (d_options.specified("scanner"))
+                // the 'scanner-class-name must be present
             warnExisting(classHeader, "scanner-class-name",
-                                d_options.scannerClassName(), 
-                                "^[[:space:]]*" + 
-                                    d_options.scannerClassName() + 
-                                    " d_scanner;");
+                            d_options.scannerClassName(), 
+                            "^[[:space:]]*" + 
+                                d_options.scannerClassName() + 
+                                " d_scanner;");
+        }
+
         return;
     }
 

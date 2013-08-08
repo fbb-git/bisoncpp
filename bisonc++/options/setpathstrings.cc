@@ -2,7 +2,8 @@
 
 void Options::setPathStrings()
 {
-    setPath(&d_baseClassHeader, 'b', d_genericFilename, "base.h");
+    setPath(&d_baseClassHeader, 'b', d_genericFilename, "base.h",
+            "baseclass-header");
 
     setPath(&d_classHeader, 'c', d_genericFilename, ".h");
 

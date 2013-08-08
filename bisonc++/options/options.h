@@ -141,6 +141,7 @@ class Options
 
         std::string const &baseClassSkeleton() const;
         std::string const &baseClassHeader() const;
+        std::string baseclassHeaderName() const
         std::string const &classHeader() const;
         std::string const &className() const;
         std::string const &classSkeleton() const;
@@ -169,7 +170,10 @@ class Options
         void setBasicStrings();
         std::string setOpt(char const *opt, std::string const &defaultSpec);
         void setQuotedStrings();
-        void setPathStrings();
+        void setPathStrings();  // called by setAccessorVariables,
+                                // called by parser.cleanup(). 
+                                // inspected Option values
+                                // may NOT have directory separators.
         void setSkeletons();
         
                              // undelimit and if append append / if missing

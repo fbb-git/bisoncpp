@@ -27,13 +27,21 @@
 void Options::setPath(string *dest, 
                       int optChar, 
                       string const &defaultFilename, 
-                      char const *defaultSuffix)
+                      char const *defaultSuffix,
+                      char const *optionName)
 {
-    d_arg.option(dest, optChar);        // try to get the option
+    if 
+    (
+        d_arg.option(dest, optChar)             // try to get the option
+        &&
+        dest->find('/') != string::npos
+    )
+        emsg << '`--' << optionName << "' option: no path names" << endl;
+
     if (dest->empty())                  // no value in dest then use a default
         *dest = defaultFilename + defaultSuffix;  // filename and suffix
 
-     *dest = d_targetDirectory + *dest; // prefix the target (may be empty)
+    *dest = d_targetDirectory + *dest; // prefix the target (may be empty)
 }
         
 
