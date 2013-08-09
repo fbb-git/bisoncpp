@@ -42,6 +42,12 @@ contain directory separators.
 Sometimes directives have analogous command-line options. In those cases
 command-line options take priority over directives.
 
+Some directives may generate warnings. This happens when an directive
+conflicts with the contents of a file which bic() cannot modify (e.g., a
+parser class header file exists, but doesn't define a name space, but a
+tt(%namespace) directive was provided). In those cases the directive is
+ignored, and hand-editing may then be required to effectuate the directive.
+
 
 
 

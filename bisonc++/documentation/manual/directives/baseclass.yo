@@ -7,3 +7,7 @@
             tt(--dont-rewrite-baseclass-header) options. This directive is
             overruled by the bf(--baseclass-header) (bf(-b)) command-line
             option.
+
+           A warning is issued if this directive is used and an already
+            existing parser class header file does not contain tt(#include
+            "filename").

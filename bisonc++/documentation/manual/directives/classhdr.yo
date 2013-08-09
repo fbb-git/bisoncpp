@@ -5,5 +5,6 @@
             (bf(-c)) command-line option.
 
            A warning is issued if this directive is used and an already
-            existing implementation header file does not contain tt(#include
-            "filename").
+            existing parser-class header file does not define tt(class
+            `className') and/or if an already existing implementation header
+            file does not define members of the class tt(`className').

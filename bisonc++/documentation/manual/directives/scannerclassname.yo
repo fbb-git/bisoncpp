@@ -3,8 +3,8 @@ Syntax: bf(%scanner-class-name) tt(scannerClassName) nl()
             header file that is specified at the tt(scanner) option or 
             directive. By default the class name ttt(Scanner) is used.
 
-            If no tt(scanner) option or directive was specified,
-            then tt(scanner-class-name) is ignored and a warning is
-            issued. A warning is also issued if the tt(scanner) option or
-            directive was specified, but the parser class does not
-            declare a tt(scannerClassName d_scanner) data member.
+           A warning is issued if this directive is used and either the
+            tt(scanner) directive was not provided, or the parser class
+            interface in an already existing parser class header file does not
+            declare a scanner class tt(d_scanner) object.
+

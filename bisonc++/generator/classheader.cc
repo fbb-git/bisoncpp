@@ -43,6 +43,10 @@ void Generator::classHeader() const
                                 d_options.scannerClassName() + 
                                 " d_scanner;");
         }
+        else if (d_options.specified("scanner-class-name"))
+            wmsg << '`' << classHeader << 
+            "': option/directive `scanner-class-name' ignored: "
+            " option `scanner' not specified" << endl;
 
         return;
     }

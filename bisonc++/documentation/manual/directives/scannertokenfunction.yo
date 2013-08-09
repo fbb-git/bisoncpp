@@ -10,3 +10,6 @@ Syntax: bf(%scanner-token-function) tt(function-call) nl()
            If the function call contains white space
             tt(scanner-token-function) should be surrounded by double quotes.
 
+           A warning is issued if this directive is used and the scanner token
+            function is not called from the code in an already
+            existing implementation header.

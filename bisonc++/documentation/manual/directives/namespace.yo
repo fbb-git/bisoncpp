@@ -9,6 +9,5 @@ In addition, the parser and parser base class header files also use the
 specified namespace to define their include guard directives.
 
 A warning is issued if this directive is used and an already existing
-parser-class header file does not define tt(class `className') and/or if an
-already existing implementation header file does not define members of the
-class tt(`className').
+parser-class header file and/or implementation header file does not define
+tt(namespace identifier).

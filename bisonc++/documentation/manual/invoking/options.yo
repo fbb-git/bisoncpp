@@ -20,9 +20,9 @@ COMMENT(
                                 warn for missing "scanner" include-spec
                                 warn for missing Scanner d_scanner spec.
 
-    implementation header:  warn for not including the class header
-                            warn for class-name mismatch in inline defined
-                                     members
+    implementation header:  warn for class-name mismatch 
+                                (in inline defined members)
+                            warn for not including the class header
                             warn for namespace mismatch
                             warn for a mismatch in the scanner-token-function
                                      name
@@ -44,6 +44,10 @@ END)
             tt(base.h). It is generated, unless otherwise indicated (see
             tt(--no-baseclass-header) and tt(--dont-rewrite-baseclass-header)
             below).
+
+           A warning is issued if this option is used and an already
+            existing parser class header file does not contain tt(#include
+            "filename").
 
     it() label(PREINCLUDE) lsoption(baseclass-preinclude)(H)(pathname)nl()
            tt(Pathname) defines  the path to the file preincluded in the
@@ -185,8 +189,8 @@ END)
             include guard directives.
 
            A warning is issued if this option is used and an already existing
-            parser-class header file or implementation header file does not
-            define tt(namespace identifier).
+            parser-class header file and/or implementation header file does
+            not define tt(namespace identifier).
 
     it() loption(no-baseclass-header)nl()
            Do not write the file containing the parser class' base class, even
@@ -303,12 +307,11 @@ END)
             header file that is specified at the tt(scanner) option or 
             directive. By default the class name ttt(Scanner) is used.
 
-            If no tt(scanner) option or directive was specified,
-            then tt(scanner-class-name) is ignored and a warning is
-            issued. A warning is also issued if the tt(scanner) option or
-            directive was specified, but the parser class does not
-            declare a tt(scannerClassName d_scanner) data member.
-            
+           A warning is issued if this option is used and either the
+            tt(scanner) option was not provided, or the parser class interface
+            in an already existing parser class header file does not declare a
+            scanner class tt(d_scanner) object.
+
     it() loption(scanner-debug)nl() 
            Show de scanner's matched rules and returned tokens. This offers an
             extensive display of the rules and tokens matched and returned by
@@ -339,6 +342,10 @@ END)
            verb(
     --scanner-token-function "myScanner.nextToken()"
                 )
+
+           A warning is issued if this option is used and the scanner token
+            function is not called from the code in an already
+            existing implementation header.
 
     it() loption(show-filenames)nl() 
            Writes the names of the generated files to the standard error
@@ -372,4 +379,5 @@ END)
 
     it() loption(version) (soption(v))nl()
             Display bic()'s version number and terminate.
+
     )
