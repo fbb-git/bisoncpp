@@ -305,7 +305,7 @@ END)
     it() loption(scanner-class-name) tt(scannerClassName) nl() 
            Defines the name of the scanner class, declared by the tt(pathname)
             header file that is specified at the tt(scanner) option or 
-            directive. By default the class name ttt(Scanner) is used.
+            directive. By default the class name tt(Scanner) is used.
 
            A warning is issued if this option is used and either the
             tt(scanner) option was not provided, or the parser class interface

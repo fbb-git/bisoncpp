@@ -141,7 +141,7 @@ class Options
 
         std::string const &baseClassSkeleton() const;
         std::string const &baseClassHeader() const;
-        std::string baseclassHeaderName() const
+        std::string baseclassHeaderName() const;
         std::string const &classHeader() const;
         std::string const &className() const;
         std::string const &classSkeleton() const;
@@ -186,7 +186,8 @@ class Options
 
         void setPath(std::string *dest, int optChar, 
                       std::string const &defaultFilename, 
-                      char const *defaultSuffix);
+                      char const *defaultSuffix,
+                      char const *optionName);
 
         bool isFirstStypeDefinition() const;
 };

@@ -36,7 +36,7 @@ void Options::setPath(string *dest,
         &&
         dest->find('/') != string::npos
     )
-        emsg << '`--' << optionName << "' option: no path names" << endl;
+        emsg << "`--" << optionName << "' option: no path names" << endl;
 
     if (dest->empty())                  // no value in dest then use a default
         *dest = defaultFilename + defaultSuffix;  // filename and suffix
