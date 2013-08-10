@@ -3,19 +3,13 @@
 // New members and other facilites may be added to the parser's class header
 // after its initial generation. 
 
-// Writing a base class header may be forced by the --force-class-header
-// option. Otherwise, it's not rewritten by bisonc++ once it's available
+// A class header is not rewritten by bisonc++ once it's available
 
 void Generator::classHeader() const
 {
     string const &classHeader = d_options.classHeader();
 
-    if 
-    (
-        not d_arg.option(0, "force-class-header")
-        &&
-        d_stat.set(classHeader)
-    )
+    if (d_stat.set(classHeader))
     {
                 // class-name must match
         warnExisting(classHeader, "class-name", d_options.className(),
@@ -37,7 +31,8 @@ void Generator::classHeader() const
                                 "^#include " + d_options.scannerInclude());
 
                 // the 'scanner-class-name must be present
-            warnExisting(classHeader, "scanner-class-name",
+            if (d_options.specified("scanner-class-name"))
+                warnExisting(classHeader, "scanner-class-name",
                             d_options.scannerClassName(), 
                             "^[[:space:]]*" + 
                                 d_options.scannerClassName() + 

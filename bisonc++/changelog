@@ -3,18 +3,24 @@ bisonc++ (4.05.00)
   * Added the directive %scanner-class-name specifying the class name of the
     scanner to use in combination with the %scanner directive
 
-  * re-installed the --namespace option (see the next *)
+  * re-installed the --namespace option (see the next item)
 
   * Warnings are issued when options or directives are specified wchich are
     ignored because the target file (e.g., parser.h, parser.ih) already
     exists. These warnings are not issued for parse.cc and parserbase.h, which
     are by default rewritten at each bisonc++ run. These warnings are issued
-    for the `class-header', `class-name', `namespace', `scanner', and
-    `scanner-token-function' options/directives.
+    for the `class-header', `class-name', `baseclass-header', `namespace', 
+    `scanner', `scanner-class-name' and `scanner-token-function' 
+    options/directives.
 
-  * man and manual...
+  * The --force-class-header and --force-implementation header options were 
+    removed: 'rm ...' should be used instead.
+
+  * man-page and manual updated
 
   * CLASSES class dependencies updated, icmconf's USE_ALL activated
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 10 Aug 2013 10:16:17 +0200
 
 bisonc++ (4.04.01) 
 

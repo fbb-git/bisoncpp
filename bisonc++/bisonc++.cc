@@ -34,9 +34,6 @@ namespace
         Arg::LongOption("error-verbose"),
         {"filenames", 'f'},
         Arg::LongOption("flex"),
-                                            // options only
-        Arg::LongOption("force-class-header"),
-        Arg::LongOption("force-implementation-header"),
 
         {"help", 'h'},                      // option only
 
@@ -78,7 +75,7 @@ namespace
         Arg::LongOption("thread-safe"),     // options only
         {"usage", 'h'},                     
         {"verbose", 'V'},
-                // shows rules, tkoens, final states and kernel items, 
+                // shows rules, tokens, final states and kernel items, 
                 // and describes conflicts when found
         {"version", 'v'},
     };
@@ -146,7 +143,6 @@ try
     generator.baseClassHeader();
     generator.classHeader();
     generator.implementationHeader();
-
     generator.parseFunction();
 }
 catch(exception  const &err)

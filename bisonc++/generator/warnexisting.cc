@@ -8,6 +8,6 @@ void Generator::warnExisting(string const &fileName, string const &option,
         wmsg << '`' << fileName << 
             "' exists, option/directive `" << option << ' ' <<
             expectedOptionValue << "' ignored" << 
-            "\npattern = `" << pattern << '\'' <<
+//            "\npattern = `" << pattern << '\'' <<
             endl;
 }

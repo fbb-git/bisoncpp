@@ -16,4 +16,6 @@ Generator::Generator(Rules const &rules,
     d_polymorphic(polymorphic),
 
     d_writer(d_baseClassScope, rules)
-{}
+{
+    Global::plainWarnings();
+}

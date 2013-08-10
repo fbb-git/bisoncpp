@@ -48,11 +48,6 @@ void usage(string const &program_name)
     "   --filenames=<filename> (-f):\n"
     "           filename of output files (overruling the default filename).\n"
 
-    "   --force-class-header: overwrite an existing class header file.\n"
-
-    "   --force-implementation-header: overwrite an existing implementation\n"
-    "           header file.\n"
-
     "   --help (-h): produce this information (and terminate).\n"
 
     "   --implementation-header=<header> (-i):\n"

@@ -6,9 +6,8 @@ void NonTerminal::unused(NonTerminal const *nonTerminal)
     {
         if (!s_unused)
         {
+            Global::plainWarnings();
             wmsg << "Non-terminal symbol(s) not used in productions:" << endl;
-
-            wmsg.setTag("");
             s_unused = true;
         }
         wmsg << "  " << nonTerminal << endl;

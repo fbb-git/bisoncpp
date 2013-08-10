@@ -8,6 +8,4 @@ void Rules::showUnusedRules() const
 
     if (Production::notUsed())
         imsg << endl;
-
-    wmsg.setTag("Warning");
 }
