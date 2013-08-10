@@ -13,7 +13,7 @@ bisonc++ (4.05.00)
     `scanner', `scanner-class-name' and `scanner-token-function' 
     options/directives.
 
-  * The --force-class-header and --force-implementation header options were 
+  * The --force-class-header and --force-implementation-header options were 
     removed: 'rm ...' should be used instead.
 
   * man-page and manual updated
