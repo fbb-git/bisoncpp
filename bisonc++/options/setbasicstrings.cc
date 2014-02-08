@@ -20,14 +20,13 @@ void Options::setBasicStrings()
         d_scannerClassName = s_defaultScannerClassName;
 
 
-
-    d_scannerTokenFunction = setOpt("scanner-token-function",
+    setOpt(&d_scannerTokenFunction, "scanner-token-function",
                                     d_flex ?
                                         s_yylex
                                     :
                                         s_defaultScannerTokenFunction); 
 
-    d_scannerMatchedTextFunction = setOpt("scanner-matched-text-function",
+    setOpt(&d_scannerMatchedTextFunction, "scanner-matched-text-function",
                                     d_flex ?
                                         s_YYText
                                     :

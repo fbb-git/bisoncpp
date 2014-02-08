@@ -41,7 +41,7 @@ void Options::setPath(string *dest,
     if (dest->empty())                  // no value in dest then use a default
         *dest = defaultFilename + defaultSuffix;  // filename and suffix
 
-    d_warnOptions.insert(optionName);
+//    d_warnOptions.insert(optionName);
 
     *dest = d_targetDirectory + *dest; // prefix the target (may be empty)
 }

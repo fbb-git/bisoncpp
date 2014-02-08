@@ -77,7 +77,6 @@ class Generator
 
         void warnExisting(std::string const &fileName, 
                           std::string const &option,
-                          std::string const &expectedOptionValue,
                           std::string const &regex) const;
         bool grep(std::string const &fileName, std::string const &regex) 
                                                                         const;

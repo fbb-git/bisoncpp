@@ -1,3 +1,12 @@
+bisonc++ (4.06.00) 
+
+  * Repaired buggy handling of some options/directives
+
+  * Prevented spurious option warnings sometimes generated when options aren't
+    specified 
+
+WIP
+
 bisonc++ (4.05.00) 
 
   * Added the directive %scanner-class-name specifying the class name of the

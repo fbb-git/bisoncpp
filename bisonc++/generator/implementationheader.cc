@@ -14,16 +14,13 @@ void Generator::implementationHeader() const
     if (d_stat.set(implementationHeader))
     {
         warnExisting(implementationHeader, "class-header", 
-                            d_options.classHeader(),
                             "^#include \"" + d_options.classHeader() + '"');
 
         warnExisting(implementationHeader, "class-name", 
-                            d_options.className(),
                             "\\b" + d_options.className() + "::");
 
         if (not d_options.nameSpace().empty())
-            warnExisting(implementationHeader, 
-                            "namespace", d_options.nameSpace(),
+            warnExisting(implementationHeader, "namespace", 
                             "^namespace " + d_options.nameSpace() + "\\b");
 
         string pattern = "\\b" + d_options.scannerTokenFunction() + "\\b";
@@ -31,7 +28,6 @@ void Generator::implementationHeader() const
         replace(pattern, ')', "\\)");
 
         warnExisting(implementationHeader, "scanner-token-function",
-                        d_options.scannerTokenFunction(), 
                         pattern);
                                 
         return;

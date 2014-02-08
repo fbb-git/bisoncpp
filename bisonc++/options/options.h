@@ -168,7 +168,9 @@ class Options
             // called by setAccessorVariables()
         void setBooleans();
         void setBasicStrings();
-        std::string setOpt(char const *opt, std::string const &defaultSpec);
+        void setOpt(std::string *destVar, char const *opt, 
+                    std::string const &defaultSpec);
+
         void setQuotedStrings();
         void setPathStrings();  // called by setAccessorVariables,
                                 // called by parser.cleanup(). 

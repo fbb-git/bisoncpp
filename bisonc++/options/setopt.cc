@@ -1,18 +1,17 @@
 #include "options.ih"
 
-string Options::setOpt(char const *option, string const &defaultSpec)
+void Options::setOpt(string *destVar, 
+                       char const *option, string const &defaultSpec)
 {
-    string ret;
+    string str;
 
-    d_arg.option(&ret, option);
+    d_arg.option(&str, option);
 
-    if (ret.empty())
-        ret = defaultSpec;
-    else
+    if (not str.empty())
     {
         d_warnOptions.insert(option);
-        ret = undelimit(ret);
+        *destVar = undelimit(str);
     }
-        
-    return ret;
+    else if (destVar->empty())
+        *destVar = defaultSpec;
 }
