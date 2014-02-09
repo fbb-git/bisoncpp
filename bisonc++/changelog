@@ -5,7 +5,9 @@ bisonc++ (4.06.00)
   * Prevented spurious option warnings sometimes generated when options aren't
     specified 
 
-WIP
+  * Action blocks associated with rules may contain raw string literals.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 09 Feb 2014 11:31:14 +0100
 
 bisonc++ (4.05.00) 
 
