@@ -36,6 +36,7 @@ class Scanner: public ScannerBase
 
     Block       d_block;            // action block retrieved fm the input
 
+    std::string d_rawString;        // Raw-string sentinel
     std::string d_canonicalQuote;   // canonical quoted ident.
     std::string const &d_matched;
 
@@ -63,6 +64,8 @@ class Scanner: public ScannerBase
         void preCode();     // re-implement this function for code that must 
                             // be exec'ed before the patternmatching starts
 
+        void postCode(PostEnum__  type);
+
         bool handleXstring(size_t nRedo);   // performs pushStream
         int eoln();
 
@@ -77,6 +80,9 @@ class Scanner: public ScannerBase
         void matched1();
         void multiCharQuote();
 
+        void rawString();
+        void checkEndOfRawString();
+
         void setTags() const;
         void setLineNrs() const;
 
@@ -90,6 +96,10 @@ inline int Scanner::lex()
 }
 
 inline void Scanner::preCode() 
+{
+}
+
+inline void Scanner::postCode(PostEnum__  type)
 {
 }
 

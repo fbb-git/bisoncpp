@@ -4,7 +4,7 @@
 %debug
 // %print-tokens
 
-%x xstring pstring pxstring string comment quote block typespec
+%x xstring pstring pxstring string rawstring comment quote block typespec
 
 OCTAL   [0-7]
 OCT3    {OCTAL}{3}
@@ -56,6 +56,8 @@ NR      [[:digit:]]+
     //  newlines. All STRING and QUOTE constants are kept as-is, and are
     //  registered as skip-ranges for $-checks
 <block>{
+    R\"{IDENT}?\(   rawString();
+
     "}"         {
                     if (d_block.close())    // close a block
                     {
@@ -252,6 +254,12 @@ NR      [[:digit:]]+
                     }
 
     .           more();
+}
+
+<rawstring>{
+    \){IDENT}?\"    checkEndOfRawString();
+
+    .|\n            more();
 }
 
 <comment>{
