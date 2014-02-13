@@ -4,7 +4,7 @@
             tt(.h) This directive is overruled by the bf(--class-header)
             (bf(-c)) command-line option.
 
-           A warning is issued if this directive is used and an already
-            existing parser-class header file does not define tt(class
-            `className') and/or if an already existing implementation header
-            file does not define members of the class tt(`className').
+It is an error if this directive is used and an already existing parser-class
+header file does not define tt(class `className') and/or if an already
+existing implementation header file does not define members of the class
+tt(`className').

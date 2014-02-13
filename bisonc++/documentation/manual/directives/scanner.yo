@@ -12,6 +12,7 @@ The specfied tt(header) file will be surrounded by double quotes if no
 delimiters were provided. If pointed brackets (tt(<...>)) are used, they are
 kept. 
 
-A warning is issued if this directive is used and an already existing parser
-class header file does not include tt(`pathname').
+It is an error if this directive is used and an already existing parser-class
+header file does not include `tt(header)'.
+
 

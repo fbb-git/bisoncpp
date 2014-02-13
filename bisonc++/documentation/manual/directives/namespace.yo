@@ -8,6 +8,6 @@ out tt(using namespace) directive for the requested namespace.
 In addition, the parser and parser base class header files also use the
 specified namespace to define their include guard directives.
 
-A warning is issued if this directive is used and an already existing
-parser-class header file and/or implementation header file does not define
-tt(namespace identifier).
+It is an error if this directive is used and an already existing parser-class
+header file and/or implementation header file does not define tt(namespace
+identifier).

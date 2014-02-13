@@ -6,11 +6,17 @@ files already exist. Options accepting a `filename' do not accept path names,
 i.e., they cannot contain directory separators (tt(/)); options accepting a
 'pathname' may contain directory separators. 
 
-Some options may generate warnings. This happens when an option conflicts with
+Some options may generate errors. This happens when an option conflicts with
 the contents of a file which bic() cannot modify (e.g., a parser
 class header file exists, but doesn't define a name space, but a
-tt(--namespace) option was provided). In those cases the option is
-ignored, and hand-editing may then be required to effectuate the option.
+tt(--namespace) option was provided). 
+
+To solve the error the offending option could be omitted, the existing file
+could be removed, or the existing file could be hand-edited according to the
+option's specification. Note that bic() currently does not handle the opposite
+error condition: if a previously used option is omitted, then flc() does not
+detect the inconsistency. In those cases compilation errors may be generated.
+
 
 COMMENT(
     class header:           warn for class-name mismatch
@@ -45,7 +51,7 @@ END)
             tt(--no-baseclass-header) and tt(--dont-rewrite-baseclass-header)
             below).
 
-           A warning is issued if this option is used and an already
+           It is an error if this option is used and an already
             existing parser class header file does not contain tt(#include
             "filename").
 
@@ -76,7 +82,7 @@ END)
             class. Defaults to the name of the parser class plus the suffix
             tt(.h)
 
-           A warning is issued if this option is used and an already
+           It is an error if this option is used and an already
             existing implementation header file does not contain tt(#include
             "filename").
 
@@ -85,7 +91,7 @@ END)
             neither this option, nor the tt(%class-name) directory is
             specified, then the default class name (tt(Parser)) is used.
 
-           A warning is issued if this option is used and an already
+           It is an error if this option is used and an already
             existing parser-class header file does not define tt(class
             `className') and/or if an already existing implementation header
             file does not define members of the class tt(`className').
@@ -178,7 +184,7 @@ END)
             header files also use the specified namespace to define their
             include guard directives.
 
-           A warning is issued if this option is used and an already existing
+           It is an error if this option is used and an already existing
             parser-class header file and/or implementation header file does
             not define tt(namespace identifier).
 
@@ -289,7 +295,7 @@ END)
             e.g., tt(#include "pathname")).  When tt(pathname) is surrounded
             by pointed brackets tt(#include <pathname>) is included.
 
-           A warning is issued if this option is used and an already existing
+           It is an error if this option is used and an already existing
             parser class header file does not include tt(`pathname').
 
     it() loption(scanner-class-name) tt(scannerClassName) nl() 
@@ -297,7 +303,7 @@ END)
             header file that is specified at the tt(scanner) option or 
             directive. By default the class name tt(Scanner) is used.
 
-           A warning is issued if this option is used and either the
+           It is an error if this option is used and either the
             tt(scanner) option was not provided, or the parser class interface
             in an already existing parser class header file does not declare a
             scanner class tt(d_scanner) object.
@@ -333,7 +339,7 @@ END)
     --scanner-token-function "myScanner.nextToken()"
                 )
 
-           A warning is issued if this option is used and the scanner token
+           It is an error if this option is used and the scanner token
             function is not called from the code in an already
             existing implementation header.
 
