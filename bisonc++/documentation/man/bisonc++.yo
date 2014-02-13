@@ -248,11 +248,15 @@ cannot contain directory separators (tt(/)); directives accepting a 'pathname'
 may contain directory separators. A 'pathname' using blank characters should
 be surrounded by double quotes.
 
-Some directives may generate warnings. This happens when an directive
+Some directives may generate errors. This happens when a directive
 conflicts with the contents of a file which bic() cannot modify (e.g., a
 parser class header file exists, but doesn't define a name space, but a
-tt(%namespace) directive was provided). In those cases the directive is
-ignored, and hand-editing may then be required to effectuate the directive.
+tt(%namespace) directive was provided). 
+
+To solve such errore the offending directive could be omitted, the existing
+file could be removed, or the existing file could be hand-edited according to
+the directive's specification.
+
 
     itemization(
     it() bf(%baseclass-header) tt(filename) nl()
@@ -262,7 +266,7 @@ ignored, and hand-editing may then be required to effectuate the directive.
             tt(base.h). This directive is overruled by the
             bf(--baseclass-header) (bf(-b)) command-line option.
 
-           A warning is issued if this directive is used and an already
+           It is an error if this directive is used and an already
             existing parser class header file does not contain tt(#include
             "filename").
     it() bf(%baseclass-preinclude) tt(pathname)nl()
@@ -278,7 +282,7 @@ ignored, and hand-editing may then be required to effectuate the directive.
             tt(.h) This directive is overruled by the bf(--class-header)
             (bf(-c)) command-line option.
 
-           A warning is issued if this directive is used and an already
+           It is an error if this directive is used and an already
             existing implementation header file does not contain tt(#include
             "filename").
     it() bf(%class-name) tt(parser-class-name) nl()
@@ -286,7 +290,7 @@ ignored, and hand-editing may then be required to effectuate the directive.
             bf(C++) class that is generated. If no tt(%class-name) is
             specified the default class name tt(Parser) is used.
 
-           A warning is issued if this directive is used and an already
+           It is an error if this directive is used and an already
             existing parser-class header file does not define tt(class
             `className') and/or if an already existing implementation header
             file does not define members of the class tt(`className').
@@ -401,7 +405,7 @@ ignored, and hand-editing may then be required to effectuate the directive.
             header files also use the specified namespace to define their
             include guard directives.
 
-           A warning is issued if this directive is used and an already
+           It is an error if this directive is used and an already
             existing parser-class header file and/or implementation header
             file does not define tt(namespace identifier).
     it() bf(%negative-dollar-indices) nl()
@@ -495,14 +499,14 @@ ignored, and hand-editing may then be required to effectuate the directive.
             specified using the tt(--scanner-token-function) option (or
             tt(%scanner-token-function) directive).
 
-           A warning is issued if this directive is used and an already
+           It is an error if this directive is used and an already
             existing parser class header file does not include tt(`pathname').
     it() bf(%scanner-class-name) tt(scannerClassName) nl() 
            Defines the name of the scanner class, declared by the tt(pathname)
             header file that is specified at the tt(scanner) option or 
             directive. By default the class name tt(Scanner) is used.
 
-           A warning is issued if this directive is used and either the
+           It is an error if this directive is used and either the
             tt(scanner) directive was not provided, or the parser class
             interface in an already existing parser class header file does not
             declare a scanner class tt(d_scanner) object.
@@ -530,7 +534,7 @@ ignored, and hand-editing may then be required to effectuate the directive.
            If the function call contains white space
             tt(scanner-token-function) should be surrounded by double quotes.
 
-           A warning is issued if this directive is used and the scanner token
+           It is an error if this directive is used and the scanner token
             function is not called from the code in an already
             existing implementation header.
     it() bf(%start) tt(non-terminal) nl()    
