@@ -9,7 +9,7 @@ void Writer::statesArray() const
             "SR__ " << s_threadConst << "*s_state[] =\n"
             "{\n";
 
-    for (size_t idx = 0; idx < State::nStates(); ++idx)
+    for (size_t idx = 0; idx != State::nStates(); ++idx)
         *d_out << "  s_" << idx << "," << 
                         ((idx + 1) % nPerLine == 0 ? "\n" : "");
 

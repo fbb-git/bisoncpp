@@ -2,7 +2,7 @@
 
 bool Item::firstBeyondDot(FirstSet *firstSet) const
 {
-    for (size_t dot = d_dot + 1, size = productionSize(); dot < size; ++dot)
+    for (size_t dot = d_dot + 1, size = productionSize(); dot != size; ++dot)
     {
         *firstSet += (*d_production)[dot].firstSet();
 

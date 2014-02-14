@@ -12,11 +12,11 @@ ostream &State::insertExt(ostream &out) const
     Next::inserter(&Next::transitionKernel);
 
         // display the items
-    for (size_t idx = 0; idx < d_itemVector.size(); ++idx)
+    for (size_t idx = 0; idx != d_itemVector.size(); ++idx)
         out <<  idx << ": " << d_itemVector[idx] << '\n';
 
         // Next elements
-    for (size_t idx = 0; idx < d_nextVector.size(); ++idx)
+    for (size_t idx = 0; idx != d_nextVector.size(); ++idx)
         out << "  " << idx << d_nextVector[idx] << '\n';
 
     if (d_reducible.size())

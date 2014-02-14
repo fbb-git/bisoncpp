@@ -4,7 +4,7 @@ void State::summarizeActions()
 {
     if ((d_nReductions = d_reducible.size()) != 0)
     {
-        for (size_t idx = 0; idx < d_nReductions; ++idx)
+        for (size_t idx = 0; idx != d_nReductions; ++idx)
         {
             StateItem const &stateItem = d_itemVector[idx];
 
