@@ -140,6 +140,9 @@ try
 
     Generator generator(rules, parser.polymorphic());
 
+    if (generator.conflicts())
+        return 1;
+
     generator.baseClassHeader();
     generator.classHeader();
     generator.implementationHeader();

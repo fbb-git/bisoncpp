@@ -1,3 +1,12 @@
+bisonc++ (4.07.00) 
+
+  * Generating files is prevented when errors in option/declaration
+    specifications are encountered. All errors in option/declaration
+    specifications (instead of just the first error that is encountered) 
+    are now reported.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri, 14 Feb 2014 14:53:33 +0100
+
 bisonc++ (4.06.00) 
 
   * Repaired buggy handling of some options/directives
