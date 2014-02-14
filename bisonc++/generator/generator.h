@@ -59,6 +59,7 @@ class Generator
         Generator(Rules const &rules, 
              std::unordered_map<std::string, std::string> const &polymorphic); 
 
+        bool conflicts() const;
         void baseClassHeader() const;
         void classHeader() const;
         void implementationHeader() const;
@@ -75,9 +76,9 @@ class Generator
                                                     // called, just before the
                                                     // generated code 
 
-        void warnExisting(std::string const &fileName, 
-                          std::string const &option,
-                          std::string const &regex) const;
+        bool errExisting(std::string const &fileName, 
+                         std::string const &option,
+                         std::string const &regex) const;
         bool grep(std::string const &fileName, std::string const &regex) 
                                                                         const;
 

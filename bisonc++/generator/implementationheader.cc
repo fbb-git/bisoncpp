@@ -10,29 +10,6 @@
 
 void Generator::implementationHeader() const
 {
-    string const &implementationHeader = d_options.implementationHeader();
-    if (d_stat.set(implementationHeader))
-    {
-        warnExisting(implementationHeader, "class-header", 
-                            "^#include \"" + d_options.classHeader() + '"');
-
-        warnExisting(implementationHeader, "class-name", 
-                            "\\b" + d_options.className() + "::");
-
-        if (not d_options.nameSpace().empty())
-            warnExisting(implementationHeader, "namespace", 
-                            "^namespace " + d_options.nameSpace() + "\\b");
-
-        string pattern = "\\b" + d_options.scannerTokenFunction() + "\\b";
-        replace(pattern, '(', "\\(");
-        replace(pattern, ')', "\\)");
-
-        warnExisting(implementationHeader, "scanner-token-function",
-                        pattern);
-                                
-        return;
-    }
-
     ofstream out;
     ifstream in;
 
