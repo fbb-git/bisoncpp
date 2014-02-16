@@ -1,3 +1,10 @@
+bisonc++ (4.07.01) 
+
+  * Fixed segfaults (encountered with 4.07.00) caused by for-statement range
+    specification errors. 
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 16 Feb 2014 15:46:45 +0100
+
 bisonc++ (4.07.00) 
 
   * Generating files is prevented when errors in option/declaration
