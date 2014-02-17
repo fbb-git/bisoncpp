@@ -1,7 +1,7 @@
 oxref by Frank B. Brokken (f.b.brokken@rug.nl)
 oxref V1.00.01 2012-2013
 
-CREATED Sat, 15 Feb 2014 14:22:37 +0000
+CREATED Mon, 17 Feb 2014 12:53:24 +0000
 CROSS REFERENCE FOR: -fxs tmp/libmodules.a 
 ----------------------------------------------------------------------
 
@@ -323,6 +323,18 @@ derivable(Symbol const*)
     becomesderivable.cc: Grammar::becomesDerivable(Production const*)
     derivesentence.cc: Grammar::deriveSentence()
 
+dflush__(std::ostream&)
+  Full name: ScannerBase::dflush__(std::ostream&)
+  Source:    lex.cc 
+  Used By:
+    checkendofrawstring.cc: Scanner::checkEndOfRawString()
+    eoln.cc: Scanner::eoln()
+    handlerawstring.cc: Scanner::rawString()
+    handlexstring.cc: Scanner::handleXstring(unsigned int)
+    returnquoted.cc: Scanner::returnQuoted(void (Scanner::*)())
+    returntypespec.cc: Scanner::returnTypeSpec()
+    parse.cc: Parser::executeAction(int)
+
 distributeLA(Next&, State::LookaheadContext&)
   Full name: State::distributeLA(Next&, State::LookaheadContext&)
   Source:    distributela.cc 
@@ -536,11 +548,24 @@ insert(std::ostream&) const
     operatorinsert.cc: operator<<(std::ostream&, LookaheadSet const&)
 
 insert(std::ostream&) const
+  Full name: RRConflict::insert(std::ostream&) const
+  Source:    insert.cc 
+  Used By:
+    insertext.cc: State::insertExt(std::ostream&) const
+    insertstd.cc: State::insertStd(std::ostream&) const
+
+insert(std::ostream&) const
   Full name: FirstSet::insert(std::ostream&) const
   Source:    oinsert.cc 
   Used By:
     showfirst.cc: GLOBALS showfirst.cc 21showfirst.o
     insertext.cc: GLOBALS insertext.cc 23insertext.o
+
+insert(std::ostream&) const
+  Full name: NonTerminal::insert(std::ostream&) const
+  Source:    v.cc 
+  Used By:
+    destructor.cc: NonTerminal::~NonTerminal()
 
 insert(std::ostream&) const
   Full name: Generator::insert(std::ostream&) const
@@ -554,19 +579,6 @@ insert(std::ostream&) const
   Used By:
     insertext.cc: State::insertExt(std::ostream&) const
     insertstd.cc: State::insertStd(std::ostream&) const
-
-insert(std::ostream&) const
-  Full name: RRConflict::insert(std::ostream&) const
-  Source:    insert.cc 
-  Used By:
-    insertext.cc: State::insertExt(std::ostream&) const
-    insertstd.cc: State::insertStd(std::ostream&) const
-
-insert(std::ostream&) const
-  Full name: NonTerminal::insert(std::ostream&) const
-  Source:    v.cc 
-  Used By:
-    destructor.cc: NonTerminal::~NonTerminal()
 
 insert(std::ostream&, Production const*) const
   Full name: Item::insert(std::ostream&, Production const*) const
@@ -623,13 +635,13 @@ insName(std::ostream&) const
     insertext.cc: GLOBALS insertext.cc 23insertext.o
 
 inspect()
-  Full name: SRConflict::inspect()
+  Full name: RRConflict::inspect()
   Source:    inspect.cc 
   Used By:
     checkconflicts.cc: State::checkConflicts()
 
 inspect()
-  Full name: RRConflict::inspect()
+  Full name: SRConflict::inspect()
   Source:    inspect.cc 
   Used By:
     checkconflicts.cc: State::checkConflicts()
@@ -1092,16 +1104,16 @@ polymorphicSpecializations(std::ostream&) const
     data.cc: GLOBALS data.cc 9data.o
 
 popStream()
-  Full name: ScannerBase::popStream()
-  Source:    lex.cc 
-  Used By:
-    popstream.cc: Scanner::popStream()
-
-popStream()
   Full name: Scanner::popStream()
   Source:    popstream.cc 
   Used By:
     lex.cc: Scanner::lex__()
+
+popStream()
+  Full name: ScannerBase::popStream()
+  Source:    lex.cc 
+  Used By:
+    popstream.cc: Scanner::popStream()
 
 predefine(Terminal const*)
   Full name: Parser::predefine(Terminal const*)
@@ -1341,6 +1353,18 @@ s_counter
     addfollowtofollow.cc: Rules::addFollowToFollow()
     determinefirst.cc: Rules::determineFirst()
 
+s_debug__
+  Full name: ScannerBase::s_debug__
+  Source:    lex.cc 
+  Used By:
+    checkendofrawstring.cc: Scanner::checkEndOfRawString()
+    eoln.cc: Scanner::eoln()
+    handlerawstring.cc: Scanner::rawString()
+    handlexstring.cc: Scanner::handleXstring(unsigned int)
+    returnquoted.cc: Scanner::returnQuoted(void (Scanner::*)())
+    returntypespec.cc: Scanner::returnTypeSpec()
+    parse.cc: Parser::executeAction(int)
+
 s_defaultBaseClassSkeleton
   Full name: Options::s_defaultBaseClassSkeleton
   Source:    data.cc 
@@ -1449,17 +1473,17 @@ s_hiddenName
     nexthiddenname.cc: Parser::nextHiddenName()
 
 s_insert
+  Full name: Generator::s_insert
+  Source:    data.cc 
+  Used By:
+    insert.cc: Generator::insert(std::ostream&) const
+
+s_insert
   Full name: State::s_insert
   Source:    data.cc 
   Used By:
     allstates.cc: State::allStates()
     define.cc: State::define()
-
-s_insert
-  Full name: Generator::s_insert
-  Source:    data.cc 
-  Used By:
-    insert.cc: Generator::insert(std::ostream&) const
 
 s_insertPtr
   Full name: Terminal::s_insertPtr
@@ -1481,14 +1505,22 @@ s_insertPtr
     filter.cc: Generator::filter(std::istream&, std::ostream&, bool) const
 
 s_insertPtr
-  Full name: StateItem::s_insertPtr
+  Full name: Item::s_insertPtr
+  Source:    data.cc 
+  Used By:
+    insertext.cc: State::insertExt(std::ostream&) const
+    itemcontext.cc: StateItem::itemContext(std::ostream&) const
+    plainitem.cc: StateItem::plainItem(std::ostream&) const
+
+s_insertPtr
+  Full name: Next::s_insertPtr
   Source:    data.cc 
   Used By:
     insertext.cc: State::insertExt(std::ostream&) const
     insertstd.cc: State::insertStd(std::ostream&) const
 
 s_insertPtr
-  Full name: Next::s_insertPtr
+  Full name: StateItem::s_insertPtr
   Source:    data.cc 
   Used By:
     insertext.cc: State::insertExt(std::ostream&) const
@@ -1507,14 +1539,6 @@ s_insertPtr
     multiplydefined.cc: Parser::multiplyDefined(Symbol const*)
     reductionsymbol.cc: Writer::reductionSymbol(Element const*, unsigned int, FBB::Table&)
     transition.cc: Writer::transition(Next const&, FBB::Table&)
-
-s_insertPtr
-  Full name: Item::s_insertPtr
-  Source:    data.cc 
-  Used By:
-    insertext.cc: State::insertExt(std::ostream&) const
-    itemcontext.cc: StateItem::itemContext(std::ostream&) const
-    plainitem.cc: StateItem::plainItem(std::ostream&) const
 
 s_locationValue
   Full name: Parser::s_locationValue
@@ -1591,6 +1615,18 @@ s_options
   Source:    data.cc 
   Used By:
     instance.cc: Options::instance()
+
+s_out__
+  Full name: ScannerBase::s_out__
+  Source:    lex.cc 
+  Used By:
+    checkendofrawstring.cc: Scanner::checkEndOfRawString()
+    eoln.cc: Scanner::eoln()
+    handlerawstring.cc: Scanner::rawString()
+    handlexstring.cc: Scanner::handleXstring(unsigned int)
+    returnquoted.cc: Scanner::returnQuoted(void (Scanner::*)())
+    returntypespec.cc: Scanner::returnTypeSpec()
+    parse.cc: Parser::executeAction(int)
 
 s_precedence
   Full name: Terminal::s_precedence
@@ -1859,16 +1895,16 @@ setPathStrings()
     setaccessorvariables.cc: Options::setAccessorVariables()
 
 setPolymorphicDecl()
-  Full name: Options::setPolymorphicDecl()
-  Source:    setpolymorphicdecl.cc 
-  Used By:
-    setpolymorphicdecl.cc: Parser::setPolymorphicDecl()
-
-setPolymorphicDecl()
   Full name: Parser::setPolymorphicDecl()
   Source:    setpolymorphicdecl.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
+
+setPolymorphicDecl()
+  Full name: Options::setPolymorphicDecl()
+  Source:    setpolymorphicdecl.cc 
+  Used By:
+    setpolymorphicdecl.cc: Parser::setPolymorphicDecl()
 
 setPrecedence(int)
   Full name: Parser::setPrecedence(int)
@@ -1877,17 +1913,17 @@ setPrecedence(int)
     parse.cc: Parser::executeAction(int)
 
 setPrecedence(Terminal const*)
+  Full name: Rules::setPrecedence(Terminal const*)
+  Source:    setprecedence.cc 
+  Used By:
+    setprecedence.cc: Parser::setPrecedence(int)
+
+setPrecedence(Terminal const*)
   Full name: Production::setPrecedence(Terminal const*)
   Source:    setprecedence.cc 
   Used By:
     setprecedence.cc: Rules::setPrecedence(Terminal const*)
     updateprecedence.cc: Rules::updatePrecedence(Production*, std::vector<Terminal*, std::allocator<Terminal*> > const&)
-
-setPrecedence(Terminal const*)
-  Full name: Rules::setPrecedence(Terminal const*)
-  Source:    setprecedence.cc 
-  Used By:
-    setprecedence.cc: Parser::setPrecedence(int)
 
 setPrintTokens()
   Full name: Options::setPrintTokens()
@@ -2238,16 +2274,16 @@ version
     filter.cc: Generator::filter(std::istream&, std::ostream&, bool) const
 
 visitReduction(unsigned int)
-  Full name: RRConflict::visitReduction(unsigned int)
-  Source:    visitreduction.cc 
-  Used By:
-    inspect.cc: RRConflict::inspect()
-
-visitReduction(unsigned int)
   Full name: SRConflict::visitReduction(unsigned int)
   Source:    visitreduction.cc 
   Used By:
     inspect.cc: SRConflict::inspect()
+
+visitReduction(unsigned int)
+  Full name: RRConflict::visitReduction(unsigned int)
+  Source:    visitreduction.cc 
+  Used By:
+    inspect.cc: RRConflict::inspect()
 
 warnAutoIgnored(char const*, AtDollar const&) const
   Full name: Parser::warnAutoIgnored(char const*, AtDollar const&) const

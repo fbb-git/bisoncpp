@@ -1,3 +1,15 @@
+bisonc++ (4.07.02) 
+
+  * Changed 'class SType into struct SType in skeletons/polymorphic, since all
+    its members are public anyway.
+
+  * Class header and class implementation header files are no longer
+    overwritten at bisonc++ runs.
+
+  * Running './build program' no longer by default uses -g (see INSTALL.im)
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 17 Feb 2014 13:43:16 +0100
+
 bisonc++ (4.07.01) 
 
   * Fixed segfaults (encountered with 4.07.00) caused by for-statement range

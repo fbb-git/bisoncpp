@@ -10,11 +10,16 @@
 
 void Generator::implementationHeader() const
 {
+    string const &implementationHeader = d_options.implementationHeader();
+
+    if (d_stat.set(implementationHeader))   // do not overwrite an existing
+        return;                             // implementation header
+
     ofstream out;
     ifstream in;
 
     Exception::open(in,  d_options.implementationSkeleton()); 
-    Exception::open(out, d_options.implementationHeader()); 
+    Exception::open(out, implementationHeader); 
 
     filter(in, out);    
 }

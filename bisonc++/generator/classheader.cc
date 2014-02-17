@@ -7,11 +7,16 @@
 
 void Generator::classHeader() const
 {
+    string const &classHeader = d_options.classHeader();
+
+    if (d_stat.set(classHeader))        // do not overwrite an existing 
+        return;                         // class header file
+
     ofstream out;
     ifstream in;
 
     Exception::open(in,  d_options.classSkeleton()); 
-    Exception::open(out, d_options.classHeader()); 
+    Exception::open(out, classHeader); 
 
     filter(in, out);    
 }
