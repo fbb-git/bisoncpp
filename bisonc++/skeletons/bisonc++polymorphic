@@ -56,7 +56,6 @@ $insert polymorphicSpecializations
 
         public:
             Base(Base const &other) = delete;
-            virtual ~Base();
 
             Tag__ tag() const;
     

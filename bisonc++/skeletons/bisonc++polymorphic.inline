@@ -47,13 +47,13 @@ inline Semantic<tg_>::operator typename Semantic<tg_>::DataType &()
 template <Tag__ tg_>
 inline typename TypeOf<tg_>::ReturnType Base::get() const
 {
-    return dynamic_cast<Semantic<tg_> const &>(*this);
+    return static_cast<Semantic<tg_> const &>(*this);
 }
 
 template <Tag__ tg_>
 inline typename TypeOf<tg_>::DataType &Base::get()
 {
-    return dynamic_cast<Semantic<tg_> &>(*this);
+    return static_cast<Semantic<tg_> &>(*this);
 }
 
 inline Tag__ SType::tag() const
