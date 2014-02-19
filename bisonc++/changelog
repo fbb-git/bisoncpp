@@ -3,7 +3,8 @@ bisonc++ (4.08.00)
   * std::shared_ptr doesn't slice: virtual ~Base() and dynamic_casts removed
     from the generated parserbase.h files
 
-
+  * %polymorphicimpl removed from skeleton/bisonc++, matching files from
+    Generator 
 
 
 bisonc++ (4.07.02) 
