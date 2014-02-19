@@ -21,7 +21,6 @@ Generator::Map Generator::s_insert =
     {"namespace-use",               &Generator::namespaceUse},
     {"polymorphic",                 &Generator::polymorphic},
     {"polymorphicInline",           &Generator::polymorphicInline},
-    {"polymorphicImpl",             &Generator::polymorphicImpl},
     {"polymorphicSpecializations",  &Generator::polymorphicSpecializations},
     {"preincludes",                 &Generator::preIncludes},
     {"print",                       &Generator::print},

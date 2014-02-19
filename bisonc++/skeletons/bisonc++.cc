@@ -462,8 +462,6 @@ $insert 4 debug "parse(): returns " << retValue
     return retValue;
 }
 
-$insert polymorphicImpl
-
 $insert namespace-close
 
 
