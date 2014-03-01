@@ -617,12 +617,10 @@ file (if the tt(%namespace) directive was used then all declared/defined
 elements are placed inside the name space that is specified by the
 tt(%namespace) directive):
     itemization(
-    it() Three additional headers are included by the parser's base class
+    it() An additional header is included in the parser's base class
 header: 
             verb(
     #include <memory>
-    #include <stdexcept>
-    #include <type_traits>
             )
     it() All semantic value type identifiers are collected in a strongly typed
 `tt(Tag__)' enumeration. E.g.,
@@ -666,41 +664,21 @@ implementing polymorphic values.
         tt(Tag__ tag() const), returning tt(Semantic<Tag__>)'s tt(Tag__)
              value;nl()
 
-        tt(ReturnType get<Tag__>() const. ReturnType) refers to the semantic
-             value stored inside tt(Semantic<Tag__>). If the type-name is a
-             built-in type a copy of the value is returned, otherwise a
-             reference to a constant object is returned;nl()
-            This member checks for 0-pointers and for tt(Tag__) mismatches
-             between the requested and actual tt(Tag__), throwing a
-             tt(std::logic_error) if so.nl()
-
-        tt(DataType &get<Tag__>()) returns a reference to the (modifiable)
-             semantic value stored inside tt(Semantic<Tag__>).
+        tt(DataType &get<Tag__>()) returns a reference to the semantic value
+             stored inside tt(Semantic<Tag__>).
 
             This member checks for 0-pointers and for tt(Tag__) mismatches
              between the requested and actual tt(Tag__), in that case
              replacing the current tt(Semantic) object pointed to by a new
              tt(Semantic<Tag__>) object of the requested tt(Tag__).
 
-        tt(ReturnType data<Tag__>() const. ReturnType) refers to the semantic
-             value stored inside tt(Semantic<Tag__>). If the type-name is a
-             built-in type a copy of the value is returned, otherwise a
-             reference to a constant object is returned;
+        tt(DataType &data<Tag__>()) returns a reference to the semantic value
+             stored inside tt(Semantic<Tag__>).
 
             This is a (partially) em(unchecking) variant of the corresponing
              tt(get) member, resulting in a em(Segfault) if used when the
-             tt(shared_ptr) holds a 0-pointer, and throwing a
-             tt(std::bad_cast) in case of a mismatch between the requested and
-             actual tt(Tag__).
-
-        tt(DataType &data<Tag__>()) returns a reference to the (modifiable)
-             semantic value stored inside tt(Semantic<Tag__>).
-
-            This is a (partially) em(unchecking) variant of the corresponing
-             tt(get) member, resulting in a em(Segfault) if used when the
-             tt(shared_ptr) holds a 0-pointer, and throwing a
-             tt(std::bad_cast) in case of a mismatch between the requested and
-             actual tt(Tag__).
+             tt(shared_ptr) holds a 0-pointer, compilation may fail in case of
+             a mismatch between the requested and actual tt(Tag__).
     )
 
     Since bic() declares tt(typedef Meta__::SType STYPE__), polymorphic

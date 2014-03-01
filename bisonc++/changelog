@@ -6,6 +6,10 @@ bisonc++ (4.08.00)
   * %polymorphicimpl removed from skeleton/bisonc++, matching files from
     Generator 
 
+  * Removed const members from polymorphic semantic value classes:
+        ReturnType get<Tag__>() const and ReturnType data<Tag__>() const were
+        removed. 
+
 
 bisonc++ (4.07.02) 
 
