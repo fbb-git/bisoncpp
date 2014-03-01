@@ -33,13 +33,7 @@ inline Semantic<tg_>::Semantic(typename TypeOf<tg_>::DataType &&tmp)
 {}
 
 template <Tag__ tg_>
-inline Semantic<tg_>::operator ReturnType() const
-{
-    return d_data;
-}
-
-template <Tag__ tg_>
-inline Semantic<tg_>::operator typename Semantic<tg_>::DataType &()
+inline typename TypeOf<tg_>::DataType &Semantic<tg_>::data()
 {
     return d_data;
 }
@@ -47,13 +41,13 @@ inline Semantic<tg_>::operator typename Semantic<tg_>::DataType &()
 template <Tag__ tg_>
 inline typename TypeOf<tg_>::ReturnType Base::get() const
 {
-    return static_cast<Semantic<tg_> const &>(*this);
+    return static_cast<Semantic<tg_> const *>(this)->data();
 }
 
 template <Tag__ tg_>
 inline typename TypeOf<tg_>::DataType &Base::get()
 {
-    return static_cast<Semantic<tg_> &>(*this);
+    return static_cast<Semantic<tg_> *>(this)->data();
 }
 
 inline Tag__ SType::tag() const

@@ -32,13 +32,9 @@ $insert polymorphicSpecializations
     struct TypeOf: public TypeOfBase<tg_>
     {
         typedef typename TypeOfBase<tg_>::DataType DataType;
-        enum: bool 
-        { 
-            isBuiltinType = sizeof(test<DataType>(0)) == sizeof(BuiltinType)
-        };
-
         typedef typename std::conditional<
-                    isBuiltinType, DataType, DataType const &
+                    sizeof(test<DataType>(0)) == sizeof(BuiltinType), 
+                    DataType, DataType const &
                 >::type ReturnType;
     };
 
@@ -67,15 +63,13 @@ $insert polymorphicSpecializations
     };
     
         // The class Semantic is derived from Base. It stores a particular
-        // semantic value type. The stored data are declared 'mutable' to
-        // allow the definitions of a const and non-const conversion operator.
-        // This way, const objects continue to offer non-modifiable data
+        // semantic value type. 
     template <Tag__ tg_>
     class Semantic: public Base
     {
         typedef typename TypeOf<tg_>::DataType DataType;
     
-        mutable DataType d_data;
+        DataType d_data;
     
         public:
             typedef typename TypeOf<tg_>::ReturnType ReturnType;
@@ -86,9 +80,7 @@ $insert polymorphicSpecializations
             Semantic(DataType const &data);
             Semantic(DataType &&tmp);
 
-                // Conversion operators allow const/non-const access to d_data
-            operator ReturnType() const;
-            operator DataType &();
+            DataType &data();
     };
 
         // The class Stype wraps the shared_ptr holding a pointer to Base.
