@@ -85,22 +85,14 @@ $insert polymorphicSpecializations
 
         // The class Stype wraps the shared_ptr holding a pointer to Base.
         // It becomes the polymorphic STYPE__
-        // Constructors expect (l/r-value) references to defined semantic
-        // value types.
         // It also wraps Base's get members, allowing constructions like
         // $$.get<INT> to be used, rather than $$->get<INT>.
-        // Furthermore, its operator= can be used to assign a Semantic *
+        // Its operator= can be used to assign a Semantic *
         // directly to the SType object. The free functions (in the parser's
         // namespace (if defined)) semantic__ can be used to obtain a 
         // Semantic *. 
     struct SType: public std::shared_ptr<Base>
     {
-        SType() = default;
-        SType(SType const &other) = default;
-        SType(SType &&tmp) = default;
-    
-        SType &operator=(SType const &rhs) = default;
-        SType &operator=(SType &&tmp) = default;
         template <typename Tp_>
         SType &operator=(Tp_ &&value);
 
@@ -118,8 +110,7 @@ $insert polymorphicSpecializations
         typename TypeOf<tg_>::DataType &get();
 
             // the data()-members do not check, and may result in a 
-            // bad_cast exception or segfault if used incorrectly
-
+            // segfault if used incorrectly
         template <Tag__ tg_>
         typename TypeOf<tg_>::ReturnType data() const;
 
