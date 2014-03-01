@@ -16,9 +16,9 @@ void Generator::polymorphicSpecializations(ostream &out) const
     for (auto &poly: d_polymorphic)
         out << 
         "    template <>\n"
-        "    struct TypeOfBase<Tag__::" << poly.first << ">\n"
+        "    struct TypeOf<Tag__::" << poly.first << ">\n"
         "    {\n"
-        "        typedef " << poly.second << " DataType;\n"
+        "        typedef " << poly.second << " type;\n"
         "    };\n"
         "\n";
 }

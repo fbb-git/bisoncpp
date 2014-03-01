@@ -15,31 +15,31 @@ template <Tag__ tg_>
 inline Semantic<tg_>::Semantic()
 :
     Base(tg_),
-    d_data(typename TypeOf<tg_>::DataType())
+    d_data(typename TypeOf<tg_>::type())
 {}
 
 template <Tag__ tg_>
-inline Semantic<tg_>::Semantic(typename TypeOf<tg_>::DataType const &data)
+inline Semantic<tg_>::Semantic(typename TypeOf<tg_>::type const &data)
 :
     Base(tg_),
     d_data(data)
 {}
 
 template <Tag__ tg_>
-inline Semantic<tg_>::Semantic(typename TypeOf<tg_>::DataType &&tmp)
+inline Semantic<tg_>::Semantic(typename TypeOf<tg_>::type &&tmp)
 :
     Base(tg_),
     d_data(std::move(tmp))
 {}
 
 template <Tag__ tg_>
-inline typename TypeOf<tg_>::DataType &Semantic<tg_>::data()
+inline typename TypeOf<tg_>::type &Semantic<tg_>::data()
 {
     return d_data;
 }
 
 template <Tag__ tg_>
-inline typename TypeOf<tg_>::DataType &Base::get()
+inline typename TypeOf<tg_>::type &Base::get()
 {
     return static_cast<Semantic<tg_> *>(this)->data();
 }
@@ -50,7 +50,7 @@ inline Tag__ SType::tag() const
 }
     
 template <Tag__ tg_>
-inline typename TypeOf<tg_>::DataType &SType::get()
+inline typename TypeOf<tg_>::type &SType::get()
 {
                     // if we're not yet holding a (tg_) value, initialize to 
                     // a Semantic<tg_> holding a default value
@@ -61,7 +61,7 @@ inline typename TypeOf<tg_>::DataType &SType::get()
 }
 
 template <Tag__ tg_>
-inline typename TypeOf<tg_>::DataType &SType::data()
+inline typename TypeOf<tg_>::type &SType::data()
 {
     return std::shared_ptr<Base>::get()->get<tg_>();
 }

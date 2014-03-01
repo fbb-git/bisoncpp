@@ -1,38 +1,12 @@
 namespace Meta__
 {
     template <Tag__ tag>
-    struct TypeOfBase;
+    struct TypeOf;
 
     template <typename Tp_>
     struct TagOf;
 
 $insert polymorphicSpecializations
-
-        // determining the nature of a polymorphic semantic value:
-        // if it's a class-type, use 'Type const &' as returntype of const
-        // functions; if it's a built-in type (like 'int') use Type:
-
-    struct ClassType
-    {
-        char _[2];
-    };
-    
-    struct BuiltinType
-    {
-        char _;
-    };
-
-    template <typename T>
-    BuiltinType test(...);
-
-    template <typename T>
-    ClassType test(void (T::*)());
-
-    template <Tag__ tg_>
-    struct TypeOf: public TypeOfBase<tg_>
-    {
-        typedef typename TypeOfBase<tg_>::DataType DataType;
-    };
 
         // The Base class: 
         // Individual semantic value classes are derived from this class.
@@ -52,7 +26,7 @@ $insert polymorphicSpecializations
             Tag__ tag() const;
     
             template <Tag__ tg_>
-            typename TypeOf<tg_>::DataType &get();
+            typename TypeOf<tg_>::type &get();
     };
     
         // The class Semantic is derived from Base. It stores a particular
@@ -60,7 +34,7 @@ $insert polymorphicSpecializations
     template <Tag__ tg_>
     class Semantic: public Base
     {
-        typedef typename TypeOf<tg_>::DataType DataType;
+        typedef typename TypeOf<tg_>::type DataType;
     
         DataType d_data;
     
@@ -93,12 +67,12 @@ $insert polymorphicSpecializations
             // in shared_ptr<Base>, and resets the shared_ptr's Base * 
             // to point to Meta::__Semantic<tg_>() if not
         template <Tag__ tg_>
-        typename TypeOf<tg_>::DataType &get();
+        typename TypeOf<tg_>::type &get();
 
             // the data()-member does not check, and may result in a 
             // segfault if used incorrectly
         template <Tag__ tg_>
-        typename TypeOf<tg_>::DataType &data();
+        typename TypeOf<tg_>::type &data();
     };
 
 }  // namespace Meta__
