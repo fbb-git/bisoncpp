@@ -32,10 +32,6 @@ $insert polymorphicSpecializations
     struct TypeOf: public TypeOfBase<tg_>
     {
         typedef typename TypeOfBase<tg_>::DataType DataType;
-        typedef typename std::conditional<
-                    sizeof(test<DataType>(0)) == sizeof(BuiltinType), 
-                    DataType, DataType const &
-                >::type ReturnType;
     };
 
         // The Base class: 
@@ -56,9 +52,6 @@ $insert polymorphicSpecializations
             Tag__ tag() const;
     
             template <Tag__ tg_>
-            typename TypeOf<tg_>::ReturnType get() const;
-    
-            template <Tag__ tg_>
             typename TypeOf<tg_>::DataType &get();
     };
     
@@ -72,8 +65,6 @@ $insert polymorphicSpecializations
         DataType d_data;
     
         public:
-            typedef typename TypeOf<tg_>::ReturnType ReturnType;
-    
                 // The default constructor and constructors for 
                 // defined data types are available
             Semantic();
@@ -99,21 +90,13 @@ $insert polymorphicSpecializations
         Tag__ tag() const;
 
             // this get()-member checks for 0-pointer and correct tag 
-            // in shared_ptr<Base>, and may throw a logic_error
-        template <Tag__ tg_>                    
-        typename TypeOf<tg_>::ReturnType get() const;
-
-            // this get()-member checks for 0-pointer and correct tag 
             // in shared_ptr<Base>, and resets the shared_ptr's Base * 
             // to point to Meta::__Semantic<tg_>() if not
         template <Tag__ tg_>
         typename TypeOf<tg_>::DataType &get();
 
-            // the data()-members do not check, and may result in a 
+            // the data()-member does not check, and may result in a 
             // segfault if used incorrectly
-        template <Tag__ tg_>
-        typename TypeOf<tg_>::ReturnType data() const;
-
         template <Tag__ tg_>
         typename TypeOf<tg_>::DataType &data();
     };

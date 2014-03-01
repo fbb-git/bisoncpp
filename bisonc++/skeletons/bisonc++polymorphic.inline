@@ -39,12 +39,6 @@ inline typename TypeOf<tg_>::DataType &Semantic<tg_>::data()
 }
 
 template <Tag__ tg_>
-inline typename TypeOf<tg_>::ReturnType Base::get() const
-{
-    return static_cast<Semantic<tg_> const *>(this)->data();
-}
-
-template <Tag__ tg_>
 inline typename TypeOf<tg_>::DataType &Base::get()
 {
     return static_cast<Semantic<tg_> *>(this)->data();
@@ -56,15 +50,6 @@ inline Tag__ SType::tag() const
 }
     
 template <Tag__ tg_>
-inline typename TypeOf<tg_>::ReturnType SType::get() const
-{
-    if (std::shared_ptr<Base>::get() == 0  || tag() != tg_)
-        throw std::logic_error("undefined semantic value requested");
-
-    return std::shared_ptr<Base>::get()->get<tg_>();
-}
-
-template <Tag__ tg_>
 inline typename TypeOf<tg_>::DataType &SType::get()
 {
                     // if we're not yet holding a (tg_) value, initialize to 
@@ -72,12 +57,6 @@ inline typename TypeOf<tg_>::DataType &SType::get()
     if (std::shared_ptr<Base>::get() == 0 || tag() != tg_)
         reset(new Semantic<tg_>());
 
-    return std::shared_ptr<Base>::get()->get<tg_>();
-}
-
-template <Tag__ tg_>
-inline typename TypeOf<tg_>::ReturnType SType::data() const
-{
     return std::shared_ptr<Base>::get()->get<tg_>();
 }
 
