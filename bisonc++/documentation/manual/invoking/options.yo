@@ -14,7 +14,7 @@ tt(--namespace) option was provided).
 To solve the error the offending option could be omitted, the existing file
 could be removed, or the existing file could be hand-edited according to the
 option's specification. Note that bic() currently does not handle the opposite
-error condition: if a previously used option is omitted, then flc() does not
+error condition: if a previously used option is omitted, then bic() does not
 detect the inconsistency. In those cases compilation errors may be generated.
 
 
