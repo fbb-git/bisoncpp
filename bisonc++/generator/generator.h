@@ -19,6 +19,10 @@ class Generator
 {
     typedef void (Generator::*Inserter)(std::ostream &) const;
     typedef std::unordered_map<std::string, Inserter>     Map;
+
+    typedef bool (Generator::*Condition)() const;
+    typedef FBB::LinearMap<std::string, Condition>     BMap;
+
     typedef Map::value_type                     MapValue;
     typedef Map::const_iterator                 MapConstIter;
 
@@ -117,10 +121,18 @@ class Generator
         void threading(std::ostream &out) const;
         void tokens(std::ostream &out) const;
 
+        bool ifInsertType() const;
+        bool ifPrintTokens() const;
+        bool ifLtype() const;
+        bool ifThreadSafe() const;
+
         static void selectSymbolic(Terminal const *terminal, 
                                    Terminal::ConstVector &symbolicTokens);
         static void replace(std::string &str, char ch, 
                        std::string const &replacement);
+        void insert(std::ostream &out, size_t indent, char const *skel) const;
+        void bolAt(std::ostream &out, std::string &line, std::istream &in) 
+                                                                        const;
 };
 
 #endif

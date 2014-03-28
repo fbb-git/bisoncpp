@@ -37,6 +37,14 @@ Generator::Map Generator::s_insert =
     {"STYPE",                       &Generator::stype},
 };
 
+Generator::BMap Generator::s_atBol =
+{
+    {"@insert-stype",               &Generator::ifInsertStype},
+    {"@printtokens",                &Generator::ifPrintTokens},
+    {"@ltype",                      &Generator::ifLtype},
+    {"@lthread-safe",               &Generator::ifThreadSafe},
+};
+
 char const *Generator::s_baseFlag = "\\@";
 size_t const Generator::s_baseFlagSize = 2; // backslash and @
 

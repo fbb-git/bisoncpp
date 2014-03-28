@@ -158,6 +158,7 @@ class Options
         std::string const &scannerInclude() const;
         std::string const &scannerMatchedTextFunction() const;
         std::string const &scannerTokenFunction() const;
+        std::string const &skeletonDirectory() const;
         std::string const &stype() const;
 
         static std::string undelimit(std::string const &str);
@@ -202,6 +203,11 @@ inline bool Options::debug() const
 inline std::string const &Options::baseClassHeader() const
 {
     return d_baseClassHeader;
+}
+
+inline std::string const &Options::skeletonDirectory() const
+{
+    return d_skeletonDirectory;
 }
 
 inline std::string const &Options::baseClassSkeleton() const

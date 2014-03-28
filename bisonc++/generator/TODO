@@ -1,0 +1,16 @@
+\@tokenfunction     d_tokenFunction;
+\@matchedtextfunction   d_matchedTextFunction
+\@ltype             d_options.ltype()
+
+@printtokens        if (d_printTokens)
+@ltype              if (not d_options.ltype().empty())
+@indent             setw(d_indent) << ""
+@thread-safe        if (d_arg.option(0, "thread-safe"))
+
+@else
+@
+
+
+
+
+Replace unordered_map by linear_map

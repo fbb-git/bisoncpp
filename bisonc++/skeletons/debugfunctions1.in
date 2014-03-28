@@ -1,5 +1,5 @@
 std::ostringstream \@Base::s_out__;
-std::ostream & \@Base::dflush__(std::ostream &out)
+std::ostream &\@Base::dflush__(std::ostream &out)
 {
     std::ostringstream &s_out__ = dynamic_cast<std::ostringstream &>(out);
 
@@ -12,7 +12,7 @@ std::ostream & \@Base::dflush__(std::ostream &out)
 std::string \@Base::stype__(char const *pre, 
                  STYPE__ const &semVal, char const *post) const
 {
-@insert-type
+@insert-stype
     using namespace std;
     ostringstream ostr;
     ostr << pre << semVal << post;
