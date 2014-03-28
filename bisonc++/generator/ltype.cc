@@ -7,19 +7,7 @@ void Generator::ltype(ostream &out) const
 
     key(out);
 
-    if (!d_options.ltype().empty())
-        out << d_options.ltype() << '\n';
-    else
-        out <<  
-            "    struct LTYPE__\n"
-            "    {\n"
-            "        int timestamp;\n"
-            "        int first_line;\n"
-            "        int first_column;\n"
-            "        int last_line;\n"
-            "        int last_column;\n"
-            "        char *text;\n"
-            "    };\n";
+    insert(out, 4, "ltype.in");
 }
 
 

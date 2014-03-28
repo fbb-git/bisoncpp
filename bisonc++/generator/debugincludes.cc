@@ -9,9 +9,5 @@ void Generator::debugIncludes(ostream &out) const
 
     key(out);
 
-    out <<  "#include <iostream>\n"
-            "#include <sstream>\n"
-            "#include <string>\n"
-            "#include <unordered_map>\n"
-            "#include <iomanip>\n";
+    insert(out, 0, "debugincludes.in");
 }

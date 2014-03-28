@@ -1,0 +1,7 @@
+inline int \@::lex()
+"{
+@printtokens
+    print();
+@
+    return \@tokenfunction
+}
