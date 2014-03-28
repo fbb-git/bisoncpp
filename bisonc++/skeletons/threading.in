@@ -1,36 +1,20 @@
 @thread-safe
-SR__ const *sr = s_state[d_state__]; // get the appropriate state-table
+SR__ const *sr = s_state[d_state__];    // get the appropriate state-table
+int lastIdx = sr->d_lastIdx;            // sentinel-index in the SR_ array
 
-@indent
-int lastIdx = sr->d_lastIdx;        // sentinel-index in the SR_ array
-
-@indent
 SR__ const *lastElementPtr = sr + lastIdx;
+SR__ const *elementPtr = sr + 1;        // start the search at s_xx[1]
 
-@indent
-SR__ const *elementPtr = sr + 1;    // start the search at s_xx[1]
-
-@indent
 while (elementPtr != lastElementPtr && elementPtr->d_token != d_token__)
-@indent
     ++elementPtr;
 @else
-SR__ *sr = s_state[d_state__];      // get the appropriate state-table
+SR__ *sr = s_state[d_state__];          // get the appropriate state-table
+int lastIdx = sr->d_lastIdx;            // sentinel-index in the SR__ array
 
-@indent
-int lastIdx = sr->d_lastIdx;        // sentinel-index in the SR__ array
-
-@indent
 SR__ *lastElementPtr = sr + lastIdx;
+lastElementPtr->d_token = d_token__;    // set search-token
 
-@indent
-SR__ *elementPtr = sr + 1;          // start the search at s_xx[1]
-
-@indent
-lastElementPtr->d_token = d_token__;// set search-token
-
-@indent
+SR__ *elementPtr = sr + 1;              // start the search at s_xx[1]
 while (elementPtr->d_token != d_token__)
-@indent
     ++elementPtr;
 @
