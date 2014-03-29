@@ -24,7 +24,22 @@ extern char version[];
 using namespace std;
 using namespace FBB;
 
+template <typename Param>
 struct Generator::At
+{
+    char const *key;
+    size_t size;
+    void (Generator::*function)(Param &param);
+
+    At(char const *keyArg = "", void (Generator::*fun)(Param &) = 0)
+    :
+        key(keyArg),
+        function(fun)
+    {}
+};
+
+template <>
+struct Generator::At<void>
 {
     char const *key;
     size_t size;
@@ -38,7 +53,22 @@ struct Generator::At
     {}
 };
 
+template <typename ReturnType> 
+vector<Generator::At<ReturnType>>::const_iterator Generator::find(
+    string const &line, 
+    size_t pos, 
+    vector<At<ReturnType>> const &atVector
+)
+{
+    for (auto &at: atVector)
+    {
+        if (line.find(at.key, pos) == pos)
+            return at;
+    }
+    return atVector::end();
+}
 
+                            
 
 
 

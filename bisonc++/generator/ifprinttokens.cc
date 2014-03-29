@@ -1,6 +1,6 @@
 #include "generator.ih"
 
-bool Generator::ifPrintTokens() const
+void Generator::ifPrintTokens(bool &accept) const
 {
-    return d_arg.option(0, "printtokens");
+    accept = d_arg.option(0, "printtokens");
 }

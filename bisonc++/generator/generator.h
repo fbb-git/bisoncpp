@@ -8,7 +8,6 @@
 
 #include <bobcat/arg>
 #include <bobcat/stat>
-#include <bobcat/linearmap>
 
 #include "../writer/writer.h"
 
@@ -20,9 +19,6 @@ class Generator
 {
     typedef void (Generator::*Inserter)(std::ostream &) const;
     typedef std::unordered_map<std::string, Inserter>     Map;
-
-    typedef bool (Generator::*Condition)() const;
-    typedef FBB::LinearMap<std::string, Condition>     BMap;
 
     typedef Map::value_type                     MapValue;
     typedef Map::const_iterator                 MapConstIter;
@@ -61,10 +57,18 @@ class Generator
 //    static size_t const s_namespaceBaseFlagSize;    // # of characters 
 //FBB
 
-    static BMap s_atBol;
-
+    template <typename ReturnType>
     struct At;
-    static std::vector<At> s_at;
+
+    typedef At<void> AtVoid;
+    tyepdef std::vector<AtVoid> AtVoidVector;
+
+    typedef At<bool> AtBool;
+    tyepdef std::vector<AtBool> AtBoolVector;
+
+
+    static AtBoolVector s_atBol;     // no typo: Bol = Begin of line
+    static AtVoidVector s_at;
 
     public:
         Generator(Rules const &rules, 
@@ -146,6 +150,12 @@ class Generator
         void insert(std::ostream &out, size_t indent, char const *skel) const;
         void bolAt(std::ostream &out, std::string &line, std::istream &in) 
                                                                         const;
+
+        template <typename ReturnType> 
+        std::vector<At<ReturnType>>::const_iterator find(
+            std::string const &line, size_t pos, 
+            std::vector<At<ReturnType>> const &atVector
+        );        
 };
 
 #endif

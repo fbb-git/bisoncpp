@@ -1,6 +1,6 @@
 #include "generator.ih"
 
-bool Generator::ifLtype() const
+void Generator::ifLtype(bool &accept) const
 {
-    return not d_options.ltype().empty();
+    accept = not d_options.ltype().empty();
 }

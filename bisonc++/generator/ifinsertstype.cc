@@ -1,6 +1,6 @@
 #include "generator.ih"
 
-bool Generator::ifInsertStype() const
+void Generator::ifInsertStype(bool &accept) const
 {
-    return d_arg.option(0, "insert-stype");
+    accept = d_arg.option(0, "insert-stype");
 }

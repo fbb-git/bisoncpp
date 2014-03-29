@@ -37,25 +37,25 @@ Generator::Map Generator::s_insert =
     {"STYPE",                       &Generator::stype},
 };
 
-Generator::BMap Generator::s_atBol =
+vector<Generator::At<bool>> Generator::s_atBol =
 {
-    {"@insert-stype",               &Generator::ifInsertStype},
-    {"@printtokens",                &Generator::ifPrintTokens},
-    {"@ltype",                      &Generator::ifLtype},
-    {"@lthread-safe",               &Generator::ifThreadSafe},
-
-//    {"@else",                       &Generator::ifElse},
+    At<bool>("@insert-stype",   &Generator::ifInsertStypeOpt),
+    At<bool>("@printtokens",    &Generator::ifPrintTokens),
+    At<bool>("@ltype",          &Generator::ifLtype),
+    At<bool>("@lthread-safe",   &Generator::ifThreadSafe),
+    At<bool>("@else",           &Generator::atElse),
+    At<bool>("@",               &Generator::at),
 };
 
 char const *Generator::s_atFlag = "\\@";
 
-vector<Generator::At> Generator::s_at =
+vector<Generator::At<void>> Generator::s_at =
 {
-    At("\\@tokenfunction",          &Generator::atTokenFunction),
-    At("\\@matchedtextfunction",    &Generator::atMatchedTextFunction),
-    At("\\@ltype",                  &Generator::atLtype),
-    At("\\@$",                      &Generator::atNameSpacedClassname),
-    At("\\@",                       &Generator::atClassname),
+    At<void>("\\@tokenfunction",        &Generator::atTokenFunction),
+    At<void>("\\@matchedtextfunction",  &Generator::atMatchedTextFunction),
+    At<void>("\\@ltype",                &Generator::atLtype),
+    At<void>("\\@$",                    &Generator::atNameSpacedClassname),
+    At<void>("\\@",                     &Generator::atClassname),
 };
   
 //size_t const Generator::s_baseFlagSize = 2; // backslash and @

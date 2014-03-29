@@ -8,14 +8,8 @@ void Generator::replaceBaseFlag(string &line) const
 
     while ((pos = line.rfind(s_atFlag, pos) != string::npos)    // found \@
     {
-        for (auto &at: s_at)                            // find the one to use
-        {
-            if (line.find(at.key, pos) == pos)          // got it
-            {                                           // apply replacement
-                line.replace(pos, at.size, (this->*at.function)());
-                break;
-            }
-        }
+        if (find(line, pos, at) != at.end())
+            line.replace(pos, at.size, (this->*at.function)());
     }
 
 //        if (line.find(s_namespaceBaseFlag) == pos)
