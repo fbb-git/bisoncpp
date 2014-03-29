@@ -24,3 +24,25 @@ extern char version[];
 using namespace std;
 using namespace FBB;
 
+struct Generator::At
+{
+    char const *key;
+    size_t size;
+    void (Generator::*function)();
+
+    At(char const *keyArg = "", void (Generator::*fun)() = 0)
+    :
+        key(keyArg),
+        size(sizeof(keyArg) - 1),
+        function(fun)
+    {}
+};
+
+
+
+
+
+
+
+
+

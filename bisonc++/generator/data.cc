@@ -43,13 +43,28 @@ Generator::BMap Generator::s_atBol =
     {"@printtokens",                &Generator::ifPrintTokens},
     {"@ltype",                      &Generator::ifLtype},
     {"@lthread-safe",               &Generator::ifThreadSafe},
+
+//    {"@else",                       &Generator::ifElse},
 };
 
-char const *Generator::s_baseFlag = "\\@";
-size_t const Generator::s_baseFlagSize = 2; // backslash and @
+char const *Generator::s_atFlag = "\\@";
 
-char const *Generator::s_namespaceBaseFlag = "\\@$";
-size_t const Generator::s_namespaceBaseFlagSize = 3; // backslash, $ and @
+vector<Generator::At> Generator::s_at =
+{
+    At("\\@tokenfunction",          &Generator::atTokenFunction),
+    At("\\@matchedtextfunction",    &Generator::atMatchedTextFunction),
+    At("\\@ltype",                  &Generator::atLtype),
+    At("\\@$",                      &Generator::atNameSpacedClassname),
+    At("\\@",                       &Generator::atClassname),
+};
+  
+//size_t const Generator::s_baseFlagSize = 2; // backslash and @
+//
+//char const *Generator::s_namespaceBaseFlag = "\\@$";
+//size_t const Generator::s_namespaceBaseFlagSize = 3; // backslash, $ and @
+//FBB
+
+
 
 
 

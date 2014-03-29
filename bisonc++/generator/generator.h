@@ -8,6 +8,7 @@
 
 #include <bobcat/arg>
 #include <bobcat/stat>
+#include <bobcat/linearmap>
 
 #include "../writer/writer.h"
 
@@ -37,6 +38,7 @@ class Generator
     std::string const &d_nameSpace;
     std::string const &d_matchedTextFunction;
     std::string const &d_tokenFunction;
+    std::string d_nameSpacedClassname;
 
     mutable std::string d_key;          // extracted at $insert statements
     mutable size_t d_indent;
@@ -50,14 +52,19 @@ class Generator
     mutable Writer d_writer;                // maintains its own const-ness
 
     static Map s_insert;
-    static char const *s_baseFlag;          // text to change to the class 
-                                            // name
-    static size_t const s_baseFlagSize;     // # of characters in s_baseFlag
+    static char const *s_atFlag;            // \@ flag in skeletons
 
-    static char const *s_namespaceBaseFlag; // text to change to the 
-                                            // namespace + class name
-    static size_t const s_namespaceBaseFlagSize;    // # of characters 
+//    static size_t const s_baseFlagSize;     // # of characters in s_baseFlag
+//
+//    static char const *s_namespaceBaseFlag; // text to change to the 
+//                                            // namespace + class name
+//    static size_t const s_namespaceBaseFlagSize;    // # of characters 
+//FBB
 
+    static BMap s_atBol;
+
+    struct At;
+    static std::vector<At> s_at;
 
     public:
         Generator(Rules const &rules, 
@@ -121,10 +128,16 @@ class Generator
         void threading(std::ostream &out) const;
         void tokens(std::ostream &out) const;
 
-        bool ifInsertType() const;
+        bool ifInsertStype() const;
         bool ifPrintTokens() const;
         bool ifLtype() const;
         bool ifThreadSafe() const;
+
+        void atTokenFunction() const;
+        void atMatchedTextFunction() const;
+        void atLtype() const;
+        void atNameSpace() const;
+        void atClassname() const;
 
         static void selectSymbolic(Terminal const *terminal, 
                                    Terminal::ConstVector &symbolicTokens);
