@@ -2,5 +2,5 @@
 
 std::string const &Generator::atClassname() const
 {
-    return d_options.className;
+    return d_options.className();
 }

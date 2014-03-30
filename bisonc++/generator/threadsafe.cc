@@ -1,6 +1,6 @@
 #include "generator.ih"
 
-bool Generator::ifThreadSafe() const
+void Generator::ifThreadSafe(bool &accept) const
 {
-    return d_arg.option(0, "thread-safe");
+    accept = d_arg.option(0, "thread-safe");
 }
