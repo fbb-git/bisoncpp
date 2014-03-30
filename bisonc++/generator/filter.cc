@@ -27,3 +27,5 @@ void Generator::filter(istream &in, ostream &out, bool header) const
         out << d_line << '\n';
     }
 }
+
+

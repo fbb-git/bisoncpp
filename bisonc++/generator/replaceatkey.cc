@@ -4,7 +4,7 @@ void Generator::replaceAtKey(string &line, size_t pos) const
 {
     for (auto &atKey: s_at)
     {
-        if (line.find(pos, atKey.key) == 0)
+        if (line.find(atKey.key, pos) == pos)
         {
             line.replace(pos, atKey.size, (this->*atKey.function)());
             return;

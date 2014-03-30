@@ -5,5 +5,5 @@ void Generator::lex(ostream &out) const
     key(out);
 
     if (d_printTokens || not d_options.implementationHeader().empty())
-        insert(out, "lex.in");
+        insert(out, 0, "lex.in");
 }

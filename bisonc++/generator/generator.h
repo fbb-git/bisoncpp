@@ -57,18 +57,16 @@ class Generator
 //    static size_t const s_namespaceBaseFlagSize;    // # of characters 
 //FBB
 
-    template <typename ReturnType>
     struct At;
+    struct AtBool;
 
-    typedef At<void> AtVoid;
-    tyepdef std::vector<AtVoid> AtVoidVector;
+    typedef std::vector<At> AtVector;
 
-    typedef At<bool> AtBool;
-    tyepdef std::vector<AtBool> AtBoolVector;
-
+    struct AtBool;
+    typedef std::vector<AtBool> AtBoolVector;
 
     static AtBoolVector s_atBol;     // no typo: Bol = Begin of line
-    static AtVoidVector s_at;
+    static AtVector s_at;
 
     public:
         Generator(Rules const &rules, 
@@ -132,30 +130,36 @@ class Generator
         void threading(std::ostream &out) const;
         void tokens(std::ostream &out) const;
 
-        bool ifInsertStype() const;
-        bool ifPrintTokens() const;
-        bool ifLtype() const;
-        bool ifThreadSafe() const;
+        void ifInsertStype(bool &accept) const;
+        void ifPrintTokens(bool &accept) const;
+        void ifLtype(bool &accept) const;
+        void ifThreadSafe(bool &accept) const;
+        void atElse(bool &accept) const;
+        void at(bool &accept) const;
 
-        void atTokenFunction() const;
-        void atMatchedTextFunction() const;
-        void atLtype() const;
-        void atNameSpace() const;
-        void atClassname() const;
+        std::string const &atTokenFunction() const;
+        std::string const &atMatchedTextFunction() const;
+        std::string const &atLtype() const;
+        std::string const &atNameSpacedClassname() const;
+        std::string const &atClassname() const;
+
+        void replaceBaseFlag(std::string &line) const;
+        void replaceAtKey(std::string &line, size_t pos) const;
 
         static void selectSymbolic(Terminal const *terminal, 
                                    Terminal::ConstVector &symbolicTokens);
         static void replace(std::string &str, char ch, 
                        std::string const &replacement);
         void insert(std::ostream &out, size_t indent, char const *skel) const;
-        void bolAt(std::ostream &out, std::string &line, std::istream &in) 
-                                                                        const;
+        void bolAt(std::ostream &out, std::string &line, std::istream &in,
+                                                        bool &accept) const;
 
-        template <typename ReturnType> 
-        std::vector<At<ReturnType>>::const_iterator find(
-            std::string const &line, size_t pos, 
-            std::vector<At<ReturnType>> const &atVector
-        );        
+        template <typename AtType> 
+        typename std::vector<AtType>::const_iterator find(
+            std::string const &line, 
+            size_t pos, 
+            std::vector<AtType> const &atVector
+        ) const;
 };
 
 #endif

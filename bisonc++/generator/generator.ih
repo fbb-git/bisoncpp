@@ -8,6 +8,7 @@
 #include <bobcat/datetime>
 #include <bobcat/mstream>
 #include <bobcat/pattern>
+#include <bobcat/indent>
 
 #include "../options/options.h"
 #include "../rules/rules.h"
@@ -24,28 +25,14 @@ extern char version[];
 using namespace std;
 using namespace FBB;
 
-template <typename Param>
 struct Generator::At
 {
     char const *key;
     size_t size;
-    void (Generator::*function)(Param &param);
+    std::string const &(Generator::*function)() const;
 
-    At(char const *keyArg = "", void (Generator::*fun)(Param &) = 0)
-    :
-        key(keyArg),
-        function(fun)
-    {}
-};
-
-template <>
-struct Generator::At<void>
-{
-    char const *key;
-    size_t size;
-    void (Generator::*function)();
-
-    At(char const *keyArg = "", void (Generator::*fun)() = 0)
+    At(char const *keyArg = "", 
+        std::string const &(Generator::*fun)() const = 0)
     :
         key(keyArg),
         size(sizeof(keyArg) - 1),
@@ -53,19 +40,37 @@ struct Generator::At<void>
     {}
 };
 
-template <typename ReturnType> 
-vector<Generator::At<ReturnType>>::const_iterator Generator::find(
+struct Generator::AtBool
+{
+    char const *key;
+    size_t size;
+    void (Generator::*function)(bool &accept) const;
+
+    AtBool(char const *keyArg = "", void (Generator::*fun)(bool &) const = 0)
+    :
+        key(keyArg),
+        size(sizeof(keyArg) - 1),
+        function(fun)
+    {}
+};
+
+template <typename AtType> 
+typename vector<AtType>::const_iterator Generator::find(
     string const &line, 
     size_t pos, 
-    vector<At<ReturnType>> const &atVector
-)
+    vector<AtType> const &atVector
+) const
 {
-    for (auto &at: atVector)
+    for (
+        auto iter = atVector.begin(), end = atVector.end(); 
+            iter != end; 
+                ++iter
+    )
     {
-        if (line.find(at.key, pos) == pos)
-            return at;
+        if (line.find(iter->key, pos) == pos)
+            return iter;
     }
-    return atVector::end();
+    return atVector.end();
 }
 
                             
