@@ -19,6 +19,7 @@ class Generator
 {
     typedef void (Generator::*Inserter)(std::ostream &) const;
     typedef std::unordered_map<std::string, Inserter>     Map;
+
     typedef Map::value_type                     MapValue;
     typedef Map::const_iterator                 MapConstIter;
 
@@ -33,6 +34,7 @@ class Generator
     std::string const &d_nameSpace;
     std::string const &d_matchedTextFunction;
     std::string const &d_tokenFunction;
+    std::string d_nameSpacedClassname;
 
     mutable std::string d_key;          // extracted at $insert statements
     mutable size_t d_indent;
@@ -46,14 +48,18 @@ class Generator
     mutable Writer d_writer;                // maintains its own const-ness
 
     static Map s_insert;
-    static char const *s_baseFlag;          // text to change to the class 
-                                            // name
-    static size_t const s_baseFlagSize;     // # of characters in s_baseFlag
+    static char const *s_atFlag;            // \@ flag in skeletons
 
-    static char const *s_namespaceBaseFlag; // text to change to the 
-                                            // namespace + class name
-    static size_t const s_namespaceBaseFlagSize;    // # of characters 
+    struct At;
+    struct AtBool;
 
+    typedef std::vector<At> AtVector;
+
+    struct AtBool;
+    typedef std::vector<AtBool> AtBoolVector;
+
+    static AtBoolVector s_atBol;     // no typo: Bol = Begin of line
+    static AtVector s_at;
 
     public:
         Generator(Rules const &rules, 
@@ -117,10 +123,36 @@ class Generator
         void threading(std::ostream &out) const;
         void tokens(std::ostream &out) const;
 
+        void ifInsertStype(bool &accept) const;
+        void ifPrintTokens(bool &accept) const;
+        void ifLtype(bool &accept) const;
+        void ifThreadSafe(bool &accept) const;
+        void atElse(bool &accept) const;
+        void atEnd(bool &accept) const;
+
+        std::string const &atTokenFunction() const;
+        std::string const &atMatchedTextFunction() const;
+        std::string const &atLtype() const;
+        std::string const &atNameSpacedClassname() const;
+        std::string const &atClassname() const;
+
+        void replaceBaseFlag(std::string &line) const;
+        void replaceAtKey(std::string &line, size_t pos) const;
+
         static void selectSymbolic(Terminal const *terminal, 
                                    Terminal::ConstVector &symbolicTokens);
         static void replace(std::string &str, char ch, 
                        std::string const &replacement);
+        void insert(std::ostream &out, size_t indent, char const *skel) const;
+        void bolAt(std::ostream &out, std::string &line, std::istream &in,
+                                                        bool &accept) const;
+
+        template <typename AtType> 
+        typename std::vector<AtType>::const_iterator find(
+            std::string const &line, 
+            size_t pos, 
+            std::vector<AtType> const &atVector
+        ) const;
 };
 
 #endif

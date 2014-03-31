@@ -3,11 +3,13 @@
 #include <sstream>
 #include <iomanip>
 #include <fstream>
+#include <cstring>
 
 #include <bobcat/exception>
 #include <bobcat/datetime>
 #include <bobcat/mstream>
 #include <bobcat/pattern>
+#include <bobcat/indent>
 
 #include "../options/options.h"
 #include "../rules/rules.h"
@@ -23,4 +25,60 @@ extern char version[];
 
 using namespace std;
 using namespace FBB;
+
+struct Generator::At
+{
+    char const *key;
+    size_t size;
+    std::string const &(Generator::*function)() const;
+
+    At(char const *keyArg = "", 
+        std::string const &(Generator::*fun)() const = 0)
+    :
+        key(keyArg),
+        size(strlen(keyArg)),
+        function(fun)
+    {}
+};
+
+struct Generator::AtBool
+{
+    char const *key;
+    size_t size;
+    void (Generator::*function)(bool &accept) const;
+
+    AtBool(char const *keyArg = "", void (Generator::*fun)(bool &) const = 0)
+    :
+        key(keyArg),
+        size(strlen(keyArg)),
+        function(fun)
+    {}
+};
+
+template <typename AtType> 
+typename vector<AtType>::const_iterator Generator::find(
+    string const &line, 
+    size_t pos, 
+    vector<AtType> const &atVector
+) const
+{
+    for (
+        auto iter = atVector.begin(), end = atVector.end(); 
+            iter != end; 
+                ++iter
+    )
+    {
+        if (line.find(iter->key, pos) == pos)
+            return iter;
+    }
+    return atVector.end();
+}
+
+                            
+
+
+
+
+
+
 

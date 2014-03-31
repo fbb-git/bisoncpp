@@ -257,7 +257,7 @@ $insert 4 debug "nextToken(): using " << symbol__(d_token__) << stype__(", seman
 // used with the --debug option
 int \@::lookup(bool recovery)
 {
-$insert 4 threading
+$insert 0 threading
 
     if (elementPtr == lastElementPtr)   // reached the last element
     {

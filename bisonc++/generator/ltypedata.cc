@@ -7,7 +7,6 @@ void Generator::ltypeData(ostream &out) const
 
     key(out);
 
-    out << "         LTYPE__   d_loc__;\n"
-           "         LTYPE__  *d_lsp__;\n";
+    insert(out, 8, "ltypedata.in");
 }
 

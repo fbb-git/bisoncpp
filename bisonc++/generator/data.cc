@@ -37,11 +37,23 @@ Generator::Map Generator::s_insert =
     {"STYPE",                       &Generator::stype},
 };
 
-char const *Generator::s_baseFlag = "\\@";
-size_t const Generator::s_baseFlagSize = 2; // backslash and @
+vector<Generator::AtBool> Generator::s_atBol =
+{
+    AtBool("@insert-stype", &Generator::ifInsertStype),
+    AtBool("@printtokens",  &Generator::ifPrintTokens),
+    AtBool("@ltype",        &Generator::ifLtype),
+    AtBool("@thread-safe",  &Generator::ifThreadSafe),
+    AtBool("@else",         &Generator::atElse),
+    AtBool("@end",          &Generator::atEnd),
+};
 
-char const *Generator::s_namespaceBaseFlag = "\\@$";
-size_t const Generator::s_namespaceBaseFlagSize = 3; // backslash, $ and @
+char const *Generator::s_atFlag = "\\@";
 
-
-
+vector<Generator::At> Generator::s_at =
+{
+    At("\\@tokenfunction",          &Generator::atTokenFunction),
+    At("\\@matchedtextfunction",    &Generator::atMatchedTextFunction),
+    At("\\@ltype",                  &Generator::atLtype),
+    At("\\@$",                      &Generator::atNameSpacedClassname),
+    At("\\@",                       &Generator::atClassname),
+};
