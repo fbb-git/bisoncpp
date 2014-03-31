@@ -8,7 +8,7 @@ bisonc++ (4.08.01)
     these skeleton files are identical to the matching filenames in
     generator/, but use extensions `.in'
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 31 Mar 2014 10:28:41 +0200
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 31 Mar 2014 11:45:41 +0200
 
 bisonc++ (4.08.00) 
 
