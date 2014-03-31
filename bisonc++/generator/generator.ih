@@ -3,6 +3,7 @@
 #include <sstream>
 #include <iomanip>
 #include <fstream>
+#include <cstring>
 
 #include <bobcat/exception>
 #include <bobcat/datetime>
@@ -35,7 +36,7 @@ struct Generator::At
         std::string const &(Generator::*fun)() const = 0)
     :
         key(keyArg),
-        size(sizeof(keyArg) - 1),
+        size(strlen(keyArg)),
         function(fun)
     {}
 };
@@ -49,7 +50,7 @@ struct Generator::AtBool
     AtBool(char const *keyArg = "", void (Generator::*fun)(bool &) const = 0)
     :
         key(keyArg),
-        size(sizeof(keyArg) - 1),
+        size(strlen(keyArg)),
         function(fun)
     {}
 };

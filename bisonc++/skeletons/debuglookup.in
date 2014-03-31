@@ -5,7 +5,7 @@ if (d_debug__)
     if (action < 0)             // a reduction was found
         s_out__ << "): reduce by rule " << -action;
     else if (action == 0)
-        s_out__ <<  "): ACCEPT\";
+        s_out__ <<  "): ACCEPT";
     else
         s_out__ <<  "): shift " << action << " (" << symbol__(d_token__) <<
                     " processed)";

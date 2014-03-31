@@ -1,6 +1,6 @@
 #include "generator.ih"
 
-void Generator::at(bool &accept) const
+void Generator::atEnd(bool &accept) const
 {
     accept = true;
 }

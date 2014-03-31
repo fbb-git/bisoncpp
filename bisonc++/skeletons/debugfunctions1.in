@@ -3,9 +3,9 @@ std::ostream &\@Base::dflush__(std::ostream &out)
 {
     std::ostringstream &s_out__ = dynamic_cast<std::ostringstream &>(out);
 
-    s_out__.str() << std::flush;
+    std::cout << "    " << s_out__.str() << std::flush;
     s_out__.clear();
-    s_out__.str(\"\");
+    s_out__.str("");
     return out;
 }
 
@@ -19,5 +19,5 @@ std::string \@Base::stype__(char const *pre,
     return ostr.str();
 @else
     return "";
-@
+@end
 }

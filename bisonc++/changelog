@@ -1,3 +1,15 @@
+bisonc++ (4.08.01) 
+
+  * Members of the class `Generator' generating a substantial amount of code
+    now read skeleton files instead of strings which are defined in these
+    functions' bodies.
+
+  * Added new skeleton files for the abovementioned functions. The names of
+    these skeleton files are identical to the matching filenames in
+    generator/, but use extensions `.in'
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 31 Mar 2014 10:28:41 +0200
+
 bisonc++ (4.08.00) 
 
   * std::shared_ptr doesn't slice: virtual ~Base() and dynamic_casts removed
@@ -10,6 +22,7 @@ bisonc++ (4.08.00)
         ReturnType get<Tag__>() const and ReturnType data<Tag__>() const were
         removed. 
 
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 02 Mar 2014 12:00:00 +0100
 
 bisonc++ (4.07.02) 
 

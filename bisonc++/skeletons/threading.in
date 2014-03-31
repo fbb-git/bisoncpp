@@ -17,4 +17,5 @@ lastElementPtr->d_token = d_token__;    // set search-token
 SR__ *elementPtr = sr + 1;              // start the search at s_xx[1]
 while (elementPtr->d_token != d_token__)
     ++elementPtr;
-@
+@end
+

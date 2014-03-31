@@ -1,5 +1,5 @@
 @ltype
-    \@ltype
+\@ltype
 @else
 struct LTYPE__
 {
@@ -10,5 +10,5 @@ struct LTYPE__
     int last_column;
     char *text;
 };
-@
+@end
 

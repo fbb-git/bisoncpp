@@ -50,13 +50,6 @@ class Generator
     static Map s_insert;
     static char const *s_atFlag;            // \@ flag in skeletons
 
-//    static size_t const s_baseFlagSize;     // # of characters in s_baseFlag
-//
-//    static char const *s_namespaceBaseFlag; // text to change to the 
-//                                            // namespace + class name
-//    static size_t const s_namespaceBaseFlagSize;    // # of characters 
-//FBB
-
     struct At;
     struct AtBool;
 
@@ -135,7 +128,7 @@ class Generator
         void ifLtype(bool &accept) const;
         void ifThreadSafe(bool &accept) const;
         void atElse(bool &accept) const;
-        void at(bool &accept) const;
+        void atEnd(bool &accept) const;
 
         std::string const &atTokenFunction() const;
         std::string const &atMatchedTextFunction() const;

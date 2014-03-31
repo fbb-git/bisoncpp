@@ -4,7 +4,7 @@ void Generator::threading(ostream &out) const
 {
     key(out);
 
-    insert(out, 0, "threading.in");
+    insert(out, 4, "threading.in");
 }
 
 
