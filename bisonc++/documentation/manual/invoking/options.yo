@@ -198,6 +198,18 @@ END)
             modification in these terminal tokens will not be communicated to
             the lexical scanner.
 
+    it() loption(no-decoration) (soption(D))nl()
+           Do not include the user-defined actions when generating the
+            parser's tt(parse) member. This effectively generates a parser
+            which merely performs semantic checks, without performing the
+            actions which are normally executed when rules have been
+            matched. This may be useful in situations where a (partially or
+            completely) decorated grammar is reorganized, and the syntactical
+            correctness of the modified grammar must be verified, or in
+            situations where the grammar has already been decorated, but
+            functions which are called from the rules's actions have not yet
+            been impleemented.
+
     it() loption(no-lines)nl() 
            Do not put tt(#line) preprocessor directives in the file containing
             the parser's tt(parse) function. By default the file containing

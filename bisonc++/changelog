@@ -1,3 +1,17 @@
+bisonc++ (4.09.01) 
+
+  * $#$#@ !! Forgot to update the help-info (bisonc++ --help) to reflect the
+    new -D option. Now fixed.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 11 May 2014 09:05:48 +0200
+
+bisonc++ (4.09.00) 
+
+  * Added option --no-decoration (-D), suppressing the actions that are
+    normally associated with matched rules.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 10 May 2014 11:58:46 +0200
+
 bisonc++ (4.08.01) 
 
   * Members of the class `Generator' generating a substantial amount of code

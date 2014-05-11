@@ -63,15 +63,16 @@ void usage(string const &program_name)
                                                                 "generated\n"
     "           by --debug. Ignored unless --debug was specified.\n"
 
-    "   --no-lines: don't put #line directives in generated output.\n"
-
     "   --max-inclusion-depth=<value>:\n"
     "           sets the maximum number of nested grammar files (default: "
                                                                     "10).\n"
-    "   --namespace=<namespace>, (-n):\n"
+    "   --namespace=<namespace> (-n):\n"
     "           define the parser in the mentioned namespace.\n"
 
     "   --no-baseclass-header: don't create the parser's base class header.\n"
+
+    "   --no-decoration (-D): do not include the user-defined actions when\n"
+    "           generating the parser's tt(parse) member.\n"
 
     "   --no-lines: don't put #line directives in generated output,\n"
     "           overruling the %lines directive.\n"

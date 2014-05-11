@@ -1,7 +1,7 @@
 oxref by Frank B. Brokken (f.b.brokken@rug.nl)
 oxref V1.00.01 2012-2013
 
-CREATED Mon, 17 Feb 2014 12:53:24 +0000
+CREATED Sat, 10 May 2014 09:40:20 +0000
 CROSS REFERENCE FOR: -fxs tmp/libmodules.a 
 ----------------------------------------------------------------------
 
@@ -107,6 +107,12 @@ assign(std::string*, Options::PathType, char const*)
   Used By:
     parse.cc: Parser::executeAction(int)
 
+atClassname() const
+  Full name: Generator::atClassname() const
+  Source:    atclassname.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 9data.o
+
 AtDollar(AtDollar::Type, unsigned int, unsigned int, std::string const&, int, bool)
   Full name: AtDollar::AtDollar(AtDollar::Type, unsigned int, unsigned int, std::string const&, int, bool)
   Source:    atdollar1.cc 
@@ -122,11 +128,47 @@ AtDollar(AtDollar::Type, unsigned int, unsigned int, std::string const&, std::st
     iddollar.cc: Block::IDdollar(unsigned int, std::string const&)
     idindex.cc: Block::IDindex(unsigned int, std::string const&)
 
+atElse(bool&) const
+  Full name: Generator::atElse(bool&) const
+  Source:    atelse.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 9data.o
+
+atEnd(bool&) const
+  Full name: Generator::atEnd(bool&) const
+  Source:    atend.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 9data.o
+
 atIndex(unsigned int, std::string const&)
   Full name: Block::atIndex(unsigned int, std::string const&)
   Source:    atindex.cc 
   Used By:
     lex.cc: Scanner::executeAction__(unsigned int)
+
+atLtype() const
+  Full name: Generator::atLtype() const
+  Source:    atltype.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 9data.o
+
+atMatchedTextFunction() const
+  Full name: Generator::atMatchedTextFunction() const
+  Source:    atmatchedtextfunction.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 9data.o
+
+atNameSpacedClassname() const
+  Full name: Generator::atNameSpacedClassname() const
+  Source:    atnamespacedclassname.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 9data.o
+
+atTokenFunction() const
+  Full name: Generator::atTokenFunction() const
+  Source:    attokenfunction.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 9data.o
 
 augmentGrammar(Symbol*)
   Full name: Rules::augmentGrammar(Symbol*)
@@ -151,6 +193,12 @@ becomesDerivable(Production const*)
   Source:    becomesderivable.cc 
   Used By:
     derivable.cc: Grammar::derivable(Symbol const*)
+
+bolAt(std::ostream&, std::string&, std::istream&, bool&) const
+  Full name: Generator::bolAt(std::ostream&, std::string&, std::istream&, bool&) const
+  Source:    bolat.cc 
+  Used By:
+    insert2.cc: Generator::insert(std::ostream&, unsigned int, char const*) const
 
 buildKernel(std::vector<Item, std::allocator<Item> >*, std::vector<StateItem, std::allocator<StateItem> > const&)
   Full name: Next::buildKernel(std::vector<Item, std::allocator<Item> >*, std::vector<StateItem, std::allocator<StateItem> > const&)
@@ -518,6 +566,30 @@ IDindex(unsigned int, std::string const&)
   Used By:
     lex.cc: Scanner::executeAction__(unsigned int)
 
+ifInsertStype(bool&) const
+  Full name: Generator::ifInsertStype(bool&) const
+  Source:    ifinsertstype.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 9data.o
+
+ifLtype(bool&) const
+  Full name: Generator::ifLtype(bool&) const
+  Source:    ifltype.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 9data.o
+
+ifPrintTokens(bool&) const
+  Full name: Generator::ifPrintTokens(bool&) const
+  Source:    ifprinttokens.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 9data.o
+
+ifThreadSafe(bool&) const
+  Full name: Generator::ifThreadSafe(bool&) const
+  Source:    ifthreadsafe.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 9data.o
+
 indexToOffset(int, int) const
   Full name: Parser::indexToOffset(int, int) const
   Source:    indextooffset.cc 
@@ -542,10 +614,11 @@ insert(NonTerminal*)
     usesymbol.cc: Parser::useSymbol()
 
 insert(std::ostream&) const
-  Full name: LookaheadSet::insert(std::ostream&) const
-  Source:    insert.cc 
+  Full name: FirstSet::insert(std::ostream&) const
+  Source:    oinsert.cc 
   Used By:
-    operatorinsert.cc: operator<<(std::ostream&, LookaheadSet const&)
+    showfirst.cc: GLOBALS showfirst.cc 21showfirst.o
+    insertext.cc: GLOBALS insertext.cc 23insertext.o
 
 insert(std::ostream&) const
   Full name: RRConflict::insert(std::ostream&) const
@@ -555,11 +628,10 @@ insert(std::ostream&) const
     insertstd.cc: State::insertStd(std::ostream&) const
 
 insert(std::ostream&) const
-  Full name: FirstSet::insert(std::ostream&) const
-  Source:    oinsert.cc 
+  Full name: Generator::insert(std::ostream&) const
+  Source:    insert.cc 
   Used By:
-    showfirst.cc: GLOBALS showfirst.cc 21showfirst.o
-    insertext.cc: GLOBALS insertext.cc 23insertext.o
+    filter.cc: Generator::filter(std::istream&, std::ostream&, bool) const
 
 insert(std::ostream&) const
   Full name: NonTerminal::insert(std::ostream&) const
@@ -568,10 +640,10 @@ insert(std::ostream&) const
     destructor.cc: NonTerminal::~NonTerminal()
 
 insert(std::ostream&) const
-  Full name: Generator::insert(std::ostream&) const
+  Full name: LookaheadSet::insert(std::ostream&) const
   Source:    insert.cc 
   Used By:
-    filter.cc: Generator::filter(std::istream&, std::ostream&, bool) const
+    operatorinsert.cc: operator<<(std::ostream&, LookaheadSet const&)
 
 insert(std::ostream&) const
   Full name: SRConflict::insert(std::ostream&) const
@@ -586,6 +658,20 @@ insert(std::ostream&, Production const*) const
   Used By:
     plainitem.cc: Item::plainItem(std::ostream&) const
     pnrdotitem.cc: Item::pNrDotItem(std::ostream&) const
+
+insert(std::ostream&, unsigned int, char const*) const
+  Full name: Generator::insert(std::ostream&, unsigned int, char const*) const
+  Source:    insert2.cc 
+  Used By:
+    debugdecl.cc: Generator::debugDecl(std::ostream&) const
+    debugfunctions.cc: Generator::debugFunctions(std::ostream&) const
+    debugincludes.cc: Generator::debugIncludes(std::ostream&) const
+    debuglookup.cc: Generator::debugLookup(std::ostream&) const
+    lex.cc: Generator::lex(std::ostream&) const
+    ltype.cc: Generator::ltype(std::ostream&) const
+    ltypedata.cc: Generator::ltypeData(std::ostream&) const
+    print.cc: Generator::print(std::ostream&) const
+    threading.cc: Generator::threading(std::ostream&) const
 
 insert(std::vector<Terminal const*, std::allocator<Terminal const*> > const&) const
   Full name: Writer::insert(std::vector<Terminal const*, std::allocator<Terminal const*> > const&) const
@@ -635,13 +721,13 @@ insName(std::ostream&) const
     insertext.cc: GLOBALS insertext.cc 23insertext.o
 
 inspect()
-  Full name: RRConflict::inspect()
+  Full name: SRConflict::inspect()
   Source:    inspect.cc 
   Used By:
     checkconflicts.cc: State::checkConflicts()
 
 inspect()
-  Full name: SRConflict::inspect()
+  Full name: RRConflict::inspect()
   Source:    inspect.cc 
   Used By:
     checkconflicts.cc: State::checkConflicts()
@@ -730,7 +816,6 @@ key(std::ostream&) const
     namespaceopen.cc: Generator::namespaceOpen(std::ostream&) const
     namespaceuse.cc: Generator::namespaceUse(std::ostream&) const
     polymorphic.cc: Generator::polymorphic(std::ostream&) const
-    polymorphicimpl.cc: Generator::polymorphicImpl(std::ostream&) const
     polymorphicinline.cc: Generator::polymorphicInline(std::ostream&) const
     polymorphicspecializations.cc: Generator::polymorphicSpecializations(std::ostream&) const
     preincludes.cc: Generator::preIncludes(std::ostream&) const
@@ -966,12 +1051,6 @@ operator()(std::string const&)
     lex.cc: Scanner::executeAction__(unsigned int)
 
 operator+=(FirstSet const&)
-  Full name: FollowSet::operator+=(FirstSet const&)
-  Source:    operatorplusis2.cc 
-  Used By:
-    addfollowfromfirst.cc: Rules::addFollowFromFirst(Production*)
-
-operator+=(FirstSet const&)
   Full name: FirstSet::operator+=(FirstSet const&)
   Source:    operatorplusis1.cc 
   Used By:
@@ -979,6 +1058,12 @@ operator+=(FirstSet const&)
     operatorplusis.cc: LookaheadSet::operator+=(LookaheadSet const&)
     operatorplusis2.cc: LookaheadSet::operator+=(FirstSet const&)
     setfirst.cc: NonTerminal::setFirst(NonTerminal*)
+    addfollowfromfirst.cc: Rules::addFollowFromFirst(Production*)
+
+operator+=(FirstSet const&)
+  Full name: FollowSet::operator+=(FirstSet const&)
+  Source:    operatorplusis2.cc 
+  Used By:
     addfollowfromfirst.cc: Rules::addFollowFromFirst(Production*)
 
 operator+=(FollowSet const&)
@@ -1052,16 +1137,16 @@ ParserBase()
     parser1.cc: Parser::Parser(Rules&)
 
 plainItem(std::ostream&) const
-  Full name: Item::plainItem(std::ostream&) const
-  Source:    plainitem.cc 
-  Used By:
-    data.cc: GLOBALS data.cc 11data.o
-
-plainItem(std::ostream&) const
   Full name: StateItem::plainItem(std::ostream&) const
   Source:    plainitem.cc 
   Used By:
     data.cc: GLOBALS data.cc 24data.o
+
+plainItem(std::ostream&) const
+  Full name: Item::plainItem(std::ostream&) const
+  Source:    plainitem.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 11data.o
 
 plainWarnings()
   Full name: Global::plainWarnings()
@@ -1085,12 +1170,6 @@ polymorphic(std::ostream&) const
   Used By:
     data.cc: GLOBALS data.cc 9data.o
 
-polymorphicImpl(std::ostream&) const
-  Full name: Generator::polymorphicImpl(std::ostream&) const
-  Source:    polymorphicimpl.cc 
-  Used By:
-    data.cc: GLOBALS data.cc 9data.o
-
 polymorphicInline(std::ostream&) const
   Full name: Generator::polymorphicInline(std::ostream&) const
   Source:    polymorphicinline.cc 
@@ -1104,16 +1183,16 @@ polymorphicSpecializations(std::ostream&) const
     data.cc: GLOBALS data.cc 9data.o
 
 popStream()
-  Full name: Scanner::popStream()
-  Source:    popstream.cc 
-  Used By:
-    lex.cc: Scanner::lex__()
-
-popStream()
   Full name: ScannerBase::popStream()
   Source:    lex.cc 
   Used By:
     popstream.cc: Scanner::popStream()
+
+popStream()
+  Full name: Scanner::popStream()
+  Source:    popstream.cc 
+  Used By:
+    lex.cc: Scanner::lex__()
 
 predefine(Terminal const*)
   Full name: Parser::predefine(Terminal const*)
@@ -1248,6 +1327,13 @@ replace(std::string&, char, std::string const&)
   Used By:
     conflicts.cc: Generator::conflicts() const
 
+replaceBaseFlag(std::string&) const
+  Full name: Generator::replaceBaseFlag(std::string&) const
+  Source:    replacebaseflag.cc 
+  Used By:
+    filter.cc: Generator::filter(std::istream&, std::ostream&, bool) const
+    insert2.cc: Generator::insert(std::ostream&, unsigned int, char const*) const
+
 requiredTokens(std::ostream&) const
   Full name: Generator::requiredTokens(std::ostream&) const
   Source:    requiredtokens.cc 
@@ -1333,17 +1419,24 @@ s_acceptState
     define.cc: State::define()
     srtable.cc: Writer::srTable(State const*, std::string const&, FBB::Table&, std::ostream&)
 
-s_baseFlag
-  Full name: Generator::s_baseFlag
+s_at
+  Full name: Generator::s_at
   Source:    data.cc 
   Used By:
-    filter.cc: Generator::filter(std::istream&, std::ostream&, bool) const
+    replaceatkey.cc: Generator::replaceAtKey(std::string&, unsigned int) const
+    replacebaseflag.cc: Generator::replaceBaseFlag(std::string&) const
 
-s_baseFlagSize
-  Full name: Generator::s_baseFlagSize
+s_atBol
+  Full name: Generator::s_atBol
   Source:    data.cc 
   Used By:
-    filter.cc: Generator::filter(std::istream&, std::ostream&, bool) const
+    bolat.cc: Generator::bolAt(std::ostream&, std::string&, std::istream&, bool&) const
+
+s_atFlag
+  Full name: Generator::s_atFlag
+  Source:    data.cc 
+  Used By:
+    replacebaseflag.cc: Generator::replaceBaseFlag(std::string&) const
 
 s_counter
   Full name: NonTerminal::s_counter
@@ -1473,17 +1566,17 @@ s_hiddenName
     nexthiddenname.cc: Parser::nextHiddenName()
 
 s_insert
-  Full name: Generator::s_insert
-  Source:    data.cc 
-  Used By:
-    insert.cc: Generator::insert(std::ostream&) const
-
-s_insert
   Full name: State::s_insert
   Source:    data.cc 
   Used By:
     allstates.cc: State::allStates()
     define.cc: State::define()
+
+s_insert
+  Full name: Generator::s_insert
+  Source:    data.cc 
+  Used By:
+    insert.cc: Generator::insert(std::ostream&) const
 
 s_insertPtr
   Full name: Terminal::s_insertPtr
@@ -1503,21 +1596,6 @@ s_insertPtr
     transition.cc: Writer::transition(Next const&, FBB::Table&)
     oinsert.cc: FollowSet::oInsert(std::ostream&) const
     filter.cc: Generator::filter(std::istream&, std::ostream&, bool) const
-
-s_insertPtr
-  Full name: Item::s_insertPtr
-  Source:    data.cc 
-  Used By:
-    insertext.cc: State::insertExt(std::ostream&) const
-    itemcontext.cc: StateItem::itemContext(std::ostream&) const
-    plainitem.cc: StateItem::plainItem(std::ostream&) const
-
-s_insertPtr
-  Full name: Next::s_insertPtr
-  Source:    data.cc 
-  Used By:
-    insertext.cc: State::insertExt(std::ostream&) const
-    insertstd.cc: State::insertStd(std::ostream&) const
 
 s_insertPtr
   Full name: StateItem::s_insertPtr
@@ -1540,6 +1618,21 @@ s_insertPtr
     reductionsymbol.cc: Writer::reductionSymbol(Element const*, unsigned int, FBB::Table&)
     transition.cc: Writer::transition(Next const&, FBB::Table&)
 
+s_insertPtr
+  Full name: Next::s_insertPtr
+  Source:    data.cc 
+  Used By:
+    insertext.cc: State::insertExt(std::ostream&) const
+    insertstd.cc: State::insertStd(std::ostream&) const
+
+s_insertPtr
+  Full name: Item::s_insertPtr
+  Source:    data.cc 
+  Used By:
+    insertext.cc: State::insertExt(std::ostream&) const
+    itemcontext.cc: StateItem::itemContext(std::ostream&) const
+    plainitem.cc: StateItem::plainItem(std::ostream&) const
+
 s_locationValue
   Full name: Parser::s_locationValue
   Source:    data.cc 
@@ -1558,18 +1651,6 @@ s_maxValue
   Used By:
     assignnonterminalnumbers.cc: Rules::assignNonTerminalNumbers()
     terminal1.cc: Terminal::Terminal(std::string const&, Symbol::Type, unsigned int, Terminal::Association, std::string const&)
-
-s_namespaceBaseFlag
-  Full name: Generator::s_namespaceBaseFlag
-  Source:    data.cc 
-  Used By:
-    filter.cc: Generator::filter(std::istream&, std::ostream&, bool) const
-
-s_namespaceBaseFlagSize
-  Full name: Generator::s_namespaceBaseFlagSize
-  Source:    data.cc 
-  Used By:
-    filter.cc: Generator::filter(std::istream&, std::ostream&, bool) const
 
 s_nConflicts
   Full name: SRConflict::s_nConflicts
@@ -1895,16 +1976,16 @@ setPathStrings()
     setaccessorvariables.cc: Options::setAccessorVariables()
 
 setPolymorphicDecl()
-  Full name: Parser::setPolymorphicDecl()
-  Source:    setpolymorphicdecl.cc 
-  Used By:
-    parse.cc: Parser::executeAction(int)
-
-setPolymorphicDecl()
   Full name: Options::setPolymorphicDecl()
   Source:    setpolymorphicdecl.cc 
   Used By:
     setpolymorphicdecl.cc: Parser::setPolymorphicDecl()
+
+setPolymorphicDecl()
+  Full name: Parser::setPolymorphicDecl()
+  Source:    setpolymorphicdecl.cc 
+  Used By:
+    parse.cc: Parser::executeAction(int)
 
 setPrecedence(int)
   Full name: Parser::setPrecedence(int)
@@ -2314,12 +2395,6 @@ year
   Source:    version.cc 
   Used By:
     usage.cc: usage(std::string const&)
-
-~Base()
-  Full name: Meta__::Base::~Base()
-  Source:    parse.cc 
-  Used By:
-    handleproductionelements.cc: GLOBALS handleproductionelements.cc 2handleproductionelements.o
 
 ~Element()
   Full name: Element::~Element()
