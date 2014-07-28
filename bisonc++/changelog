@@ -1,3 +1,10 @@
+bisonc++ (4.09.02) 
+
+  * Wilko Kuiper reported an annoying bug in the skeleton lex.in, causing the
+    compilation of parser.ih to fail. This release fixes that bug.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 28 Jul 2014 16:46:35 +0200
+
 bisonc++ (4.09.01) 
 
   * $#$#@ !! Forgot to update the help-info (bisonc++ --help) to reflect the
