@@ -3,7 +3,7 @@ htmlbodyopt(bgcolor)(#FFFAF0)
 
 includefile(../bisonc++/release.yo)
 
-mailto(fbbrokken@users.sourceforge.net)
+mailto(f.b.brokken@rug.nl)
 
 affiliation(Center for Information Technology, University of Groningen)
 
