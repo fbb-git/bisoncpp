@@ -8,7 +8,7 @@ calculator program to exit. Now we show how to rectify this deficiency.
 The b() language itself includes the reserved word tt(error), which may
 be included in the grammar rules. In the example below it has been added as
 one more alternatives for line:
-        verbinsert(LINE)(errorcalc/parser/grammar)
+        verbinsert(//LINE)(errorcalc/parser/grammar)
     This addition to the grammar allows for simple error recovery in the event
 of a parse error. If an expression that cannot be evaluated is read, the error
 will be recognized by the third rule for line, and parsing will continue (The
