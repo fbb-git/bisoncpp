@@ -11,6 +11,8 @@ bool Rules::newRule(NonTerminal *np, string const &source, size_t line)
 //  imsg.setLineNr(lineNr);
 //  imsg << "Adding production rule for `" << np->name() << "'" << endl;
 
+    Production::storeFilename(source);
+
     if (!d_startRule.length())
         d_startRule = np->name();
 

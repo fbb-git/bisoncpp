@@ -7,6 +7,8 @@
 #include "../rmreduction/rmreduction.h"
 #include "../next/next.h"
 
+class Rules;
+
 class SRConflict
 {
     friend std::ostream &operator<<(std::ostream &out, 
@@ -44,6 +46,8 @@ class SRConflict
         void removeReductions(StateItem::Vector &itemVector);
 
         static size_t nConflicts();
+
+        void showConflicts(Rules const &rules) const;
 
     private:
         std::ostream &insert(std::ostream &out) const;

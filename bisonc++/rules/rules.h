@@ -1,6 +1,8 @@
 #ifndef _INCLUDED_RULES_
 #define _INCLUDED_RULES_
 
+#include <iostream>
+
 #include <vector>
 #include <set>
 #include <map>
@@ -85,7 +87,7 @@ class Rules
                 // add the symbol as the next element of the 
                 // rule-production that's currently being defined. 
 
-        void addProduction();
+        void addProduction(size_t lineNr);
                 // add a new production to the set of productions of the
                 // rule currently being defined
 

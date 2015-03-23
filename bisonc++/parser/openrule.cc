@@ -21,6 +21,6 @@ void Parser::openRule(string const &ruleName)
                     "', first defined in `" << fileInfo.first << 
                     "' (" << fileInfo.second << ")" << endl;
         }
-        d_rules.addProduction();
+        d_rules.addProduction(d_scanner.lineNr());
     }
 }

@@ -121,7 +121,7 @@ try
                             // define the startproduction
     Production::setStart(rules.startProduction());
 
-    State::define();        // define all states
+    State::define(rules);        // define all states
 
     rules.assignNonTerminalNumbers();
 

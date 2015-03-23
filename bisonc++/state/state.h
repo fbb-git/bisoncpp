@@ -12,6 +12,7 @@
 class Item;
 class Production;
 class StateItem;
+class Rules;
 
 class State
 {
@@ -98,7 +99,8 @@ class State
 
         static void allStates();
 
-        static void define();   // define all the grammar-states and
+        static void define(Rules const &rules);   
+                                // define all the grammar-states and
                                 // lookaheads 
 
         static ConstIter begin();       // iterator to the first State *
@@ -151,6 +153,8 @@ class State
         bool hasKernel(Item::Vector const &kernel) const;
         void checkConflicts();
         void summarizeActions();
+
+        void showSRConflicts(Rules const &rules) const;
 
         struct LookaheadContext 
         {
@@ -239,6 +243,12 @@ inline bool State::nextContains(Next::ConstIter *iter,
 {
     return (*iter = nextFind(symbol)) != d_nextVector.end();
 }
+
+inline void State::showSRConflicts(Rules const &rules) const
+{
+    d_srConflict.showConflicts(rules);
+}
+
 
 inline std::ostream &operator<<(std::ostream &out, State const *state)
 {

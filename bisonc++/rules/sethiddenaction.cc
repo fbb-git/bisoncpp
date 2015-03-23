@@ -2,8 +2,8 @@
 
 void Rules::setHiddenAction(Block const &block) 
 {
-    Production *pp = new Production(d_nonTerminal.back());  // create 
-                                                            // production 
+    Production *pp = new Production(d_nonTerminal.back(), 0);   // create 
+                                                                // production 
 
     d_production.push_back(pp);             // put production in production 
                                             // vector

@@ -37,6 +37,11 @@ class Production: private std::vector<Symbol *>
     mutable bool d_used;                // true once this production has been
                                         // used.
 
+    size_t d_lineNr;                    // line in the grammar file where the
+                                        // production is defined.
+    size_t d_nameIdx;                   // index in s_filename of the name of
+                                        // the file in which this production 
+                                        // is defined.
 
     static size_t s_nr;                 // incremented at each new production
 
@@ -45,6 +50,8 @@ class Production: private std::vector<Symbol *>
 
     static Production const *s_startProduction; // a pointer to the start
                                         // production rule.
+
+    static std::vector<std::string> s_fileName;
     
     public:
         using Inherit::size;
@@ -58,7 +65,7 @@ class Production: private std::vector<Symbol *>
         typedef std::vector<Production const*>  ConstVector;
         typedef ConstVector::const_iterator     ConstIter;
 
-        Production(Symbol const *nonTerminal);
+        Production(Symbol const *nonTerminal, size_t lineNr);
 
         Block const &action() const;
         Symbol const &operator[](size_t idx) const;
@@ -73,6 +80,9 @@ class Production: private std::vector<Symbol *>
         void setAction(Block const &block);
         void setPrecedence(Terminal const *terminal);
 
+        std::string const &fileName() const;
+        size_t lineNr() const;
+
         static Production const *start();
         static void insertAction(Production const *prod, std::ostream &out,
                                  bool lineDirectives, size_t indent);
@@ -85,10 +95,22 @@ class Production: private std::vector<Symbol *>
         static bool notUsed();
         static bool isTerminal();
 
+        static void storeFilename(std::string const &filename);
+
     private:
         Symbol *vectorIdx(size_t idx) const;
         std::ostream &standard(std::ostream &out) const;
 };
+
+std::string const &Production::fileName() const
+{
+    return s_fileName[d_nameIdx];
+}
+
+size_t Production::lineNr() const
+{
+    return d_lineNr;
+}
 
 inline bool Production::notUsed()
 {

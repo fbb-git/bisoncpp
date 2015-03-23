@@ -1,6 +1,6 @@
 #include "rules.ih"
 
-void Rules::addProduction()
+void Rules::addProduction(size_t lineNr)
 {
     if (d_currentRule == 0)                             // there may be no 
         return;                                         // rule (cf. Justin
@@ -9,7 +9,8 @@ void Rules::addProduction()
                                                         // that case there's
                                                         // also no production.
 
-    d_currentProduction = new Production(d_currentRule);// create production
+                                                        // create production
+    d_currentProduction = new Production(d_currentRule, lineNr);
 
     d_production.push_back(d_currentProduction);        // put production in
                                                         // production  vector
@@ -26,5 +27,3 @@ void Rules::addProduction()
 //              " (" << d_production.size() << " productions in total)" << 
 //              endl;
 }
-
-

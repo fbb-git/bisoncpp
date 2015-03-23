@@ -104,7 +104,7 @@
 //     See README.states-and-conflicts for a description of the actions taken
 // by checkConflicts().
 
-void State::define()
+void State::define(Rules const &rules)
 {
     Arg &arg = Arg::instance();
 
@@ -163,8 +163,13 @@ void State::define()
     )
     {
         if (SRConflict::nConflicts())
+        {
             wmsg << SRConflict::nConflicts() << 
-                    " Shift/Reduce conflict(s)" << endl;
+                    " Shift/Reduce conflict(s)\n";
+            for (auto state: s_state)
+                state->showSRConflicts(rules);       // inserts into wmsg
+            wmsg << flush;
+        }
 
         if (RRConflict::nConflicts())
             wmsg << RRConflict::nConflicts() << 

@@ -1,6 +1,11 @@
 #include "srconflict.h"
 
+#include <bobcat/mstream>
+#include <bobcat/linearmap>
+
 #include "../enumsolution/enumsolution.h"
+#include "../rules/rules.h"
 
 using namespace std;
+using namespace FBB;
 
