@@ -7,6 +7,8 @@
 #include "../lookaheadset/lookaheadset.h"
 #include "../rrdata/rrdata.h"
 
+class Rules;
+
 class RRConflict
 {
     friend std::ostream &operator<<(std::ostream &out, 
@@ -36,6 +38,8 @@ class RRConflict
         void removeConflicts(StateItem::Vector &itemVector);
 
         static size_t nConflicts();
+
+        void showConflicts(Rules const &rules) const;
 
     private:
         std::ostream &insert(std::ostream &out) const;

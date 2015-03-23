@@ -1,4 +1,10 @@
 #include "rrconflict.h"
 
+#include <bobcat/mstream>
+#include <bobcat/linearmap>
+
+#include "../rules/rules.h"
+
 using namespace std;
+using namespace FBB;
 

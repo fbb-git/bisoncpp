@@ -87,7 +87,9 @@ class Rules
                 // add the symbol as the next element of the 
                 // rule-production that's currently being defined. 
 
-        void addProduction(size_t lineNr);
+        void setProductionLineNr(size_t lineNr);
+
+        void addProduction();
                 // add a new production to the set of productions of the
                 // rule currently being defined
 
@@ -189,6 +191,10 @@ class Rules
                                      Terminal::Vector const &tv);
 };
 
+inline void Rules::setProductionLineNr(size_t lineNr)
+{
+    d_currentProduction->setLineNr(lineNr);
+}
 
 inline Rules::Rules()
 :

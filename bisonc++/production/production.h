@@ -37,7 +37,7 @@ class Production: private std::vector<Symbol *>
     mutable bool d_used;                // true once this production has been
                                         // used.
 
-    size_t d_lineNr;                    // line in the grammar file where the
+    size_t d_lineNr = 0;                // line in the grammar file where the
                                         // production is defined.
     size_t d_nameIdx;                   // index in s_filename of the name of
                                         // the file in which this production 
@@ -65,7 +65,7 @@ class Production: private std::vector<Symbol *>
         typedef std::vector<Production const*>  ConstVector;
         typedef ConstVector::const_iterator     ConstIter;
 
-        Production(Symbol const *nonTerminal, size_t lineNr);
+        Production(Symbol const *nonTerminal);
 
         Block const &action() const;
         Symbol const &operator[](size_t idx) const;
@@ -97,17 +97,24 @@ class Production: private std::vector<Symbol *>
 
         static void storeFilename(std::string const &filename);
 
+        void setLineNr(size_t lineNr);
+
     private:
         Symbol *vectorIdx(size_t idx) const;
         std::ostream &standard(std::ostream &out) const;
 };
 
-std::string const &Production::fileName() const
+inline void Production::setLineNr(size_t lineNr)
+{
+    d_lineNr = lineNr;
+}
+
+inline std::string const &Production::fileName() const
 {
     return s_fileName[d_nameIdx];
 }
 
-size_t Production::lineNr() const
+inline size_t Production::lineNr() const
 {
     return d_lineNr;
 }

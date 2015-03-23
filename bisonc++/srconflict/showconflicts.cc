@@ -22,7 +22,7 @@ void SRConflict::showConflicts(Rules const &rules) const
 
         wmsg << "   rule " << rule.first << 
                      " (" << prodPtr->fileName() << ", line " <<
-                             prodPtr->lineNr() << "): shift at ";
+                             prodPtr->lineNr() << "): shifts at ";
 
          for (Symbol const *symbol: rule.second)
              wmsg << symbol << ", ";

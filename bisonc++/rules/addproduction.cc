@@ -1,6 +1,6 @@
 #include "rules.ih"
 
-void Rules::addProduction(size_t lineNr)
+void Rules::addProduction()
 {
     if (d_currentRule == 0)                             // there may be no 
         return;                                         // rule (cf. Justin
@@ -10,7 +10,7 @@ void Rules::addProduction(size_t lineNr)
                                                         // also no production.
 
                                                         // create production
-    d_currentProduction = new Production(d_currentRule, lineNr);
+    d_currentProduction = new Production(d_currentRule);
 
     d_production.push_back(d_currentProduction);        // put production in
                                                         // production  vector

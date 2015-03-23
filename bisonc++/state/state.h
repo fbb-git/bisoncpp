@@ -155,6 +155,7 @@ class State
         void summarizeActions();
 
         void showSRConflicts(Rules const &rules) const;
+        void showRRConflicts(Rules const &rules) const;
 
         struct LookaheadContext 
         {
@@ -249,6 +250,10 @@ inline void State::showSRConflicts(Rules const &rules) const
     d_srConflict.showConflicts(rules);
 }
 
+inline void State::showRRConflicts(Rules const &rules) const
+{
+    d_rrConflict.showConflicts(rules);
+}
 
 inline std::ostream &operator<<(std::ostream &out, State const *state)
 {

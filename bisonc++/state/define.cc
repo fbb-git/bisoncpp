@@ -172,8 +172,13 @@ void State::define(Rules const &rules)
         }
 
         if (RRConflict::nConflicts())
+        {
             wmsg << RRConflict::nConflicts() << 
-                    " Reduce/Reduce conflict(s)" << endl;
+                    " Reduce/Reduce conflict(s)" << '\n';
+            for (auto state: s_state)
+                state->showRRConflicts(rules);       // inserts into wmsg
+            wmsg << flush;
+        }
     }
 
     for (auto state: s_state)
