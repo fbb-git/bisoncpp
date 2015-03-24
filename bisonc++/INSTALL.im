@@ -9,7 +9,7 @@
 #define CXX                 "g++"
     // the compiler to use. 
 
-#define CXXFLAGS            "--std=c++0x -Wall -O2"
+#define CXXFLAGS            "--std=c++14 -Wall -O2"
     // the compiler options to use.
 
 #define LDFLAGS             ""

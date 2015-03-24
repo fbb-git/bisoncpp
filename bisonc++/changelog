@@ -1,3 +1,12 @@
+bisonc++ (4.10.00) 
+
+  * Rules causing conflicts are briefly mentioned immediately following the
+    SR/RR conflict-counts
+
+  * The class Symtab now uses an unordered_map rather than a mere map.
+
+
+
 bisonc++ (4.09.02) 
 
   * Wilko Kuiper reported an annoying bug in the skeleton lex.in, causing the

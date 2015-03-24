@@ -1,7 +1,7 @@
 #ifndef _INCLUDED_SYMTAB_
 #define _INCLUDED_SYMTAB_
 
-#include <map>
+#include <unordered_map>
 #include <string>
 
 #include "../symbol/symbol.h"
@@ -13,9 +13,9 @@
     // store an element. Elements are strings, produced by the reader,
     // representing terminal or non-terminal symbols.
 
-class Symtab: private std::map<std::string, Symbol *>
+class Symtab: private std::unordered_map<std::string, Symbol *>
 {
-    typedef std::map<std::string, Symbol *> Base;
+    typedef std::unordered_map<std::string, Symbol *> Base;
 
     public:
         typedef Base::value_type value_type;
