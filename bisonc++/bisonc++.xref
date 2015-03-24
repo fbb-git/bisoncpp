@@ -1,7 +1,7 @@
 oxref by Frank B. Brokken (f.b.brokken@rug.nl)
 oxref V1.00.02 2012-2015
 
-CREATED Sat, 21 Mar 2015 20:21:13 +0000
+CREATED Tue, 24 Mar 2015 13:12:54 +0000
 CROSS REFERENCE FOR: -fxs tmp/libmodules.a 
 ----------------------------------------------------------------------
 
@@ -218,7 +218,7 @@ checkConflicts()
   Full name: State::checkConflicts()
   Source:    checkconflicts.cc 
   Used By:
-    define.cc: State::define()
+    define.cc: State::define(Rules const&)
 
 checkEmptyBlocktype()
   Full name: Parser::checkEmptyBlocktype()
@@ -301,7 +301,7 @@ construct()
   Full name: State::construct()
   Source:    construct.cc 
   Used By:
-    define.cc: State::define()
+    define.cc: State::define(Rules const&)
 
 containsKernelItem(Item const&, unsigned int, std::vector<StateItem, std::allocator<StateItem> > const&)
   Full name: StateItem::containsKernelItem(Item const&, unsigned int, std::vector<StateItem, std::allocator<StateItem> > const&)
@@ -602,7 +602,7 @@ initialState()
   Full name: State::initialState()
   Source:    initialstate.cc 
   Used By:
-    define.cc: State::define()
+    define.cc: State::define(Rules const&)
 
 insert(NonTerminal*)
   Full name: Rules::insert(NonTerminal*)
@@ -614,18 +614,10 @@ insert(NonTerminal*)
     usesymbol.cc: Parser::useSymbol()
 
 insert(std::ostream&) const
-  Full name: FirstSet::insert(std::ostream&) const
-  Source:    oinsert.cc 
+  Full name: NonTerminal::insert(std::ostream&) const
+  Source:    v.cc 
   Used By:
-    showfirst.cc: GLOBALS showfirst.cc 21showfirst.o
-    insertext.cc: GLOBALS insertext.cc 23insertext.o
-
-insert(std::ostream&) const
-  Full name: RRConflict::insert(std::ostream&) const
-  Source:    insert.cc 
-  Used By:
-    insertext.cc: State::insertExt(std::ostream&) const
-    insertstd.cc: State::insertStd(std::ostream&) const
+    destructor.cc: NonTerminal::~NonTerminal()
 
 insert(std::ostream&) const
   Full name: Generator::insert(std::ostream&) const
@@ -634,19 +626,27 @@ insert(std::ostream&) const
     filter.cc: Generator::filter(std::istream&, std::ostream&, bool) const
 
 insert(std::ostream&) const
-  Full name: NonTerminal::insert(std::ostream&) const
-  Source:    v.cc 
-  Used By:
-    destructor.cc: NonTerminal::~NonTerminal()
-
-insert(std::ostream&) const
   Full name: LookaheadSet::insert(std::ostream&) const
   Source:    insert.cc 
   Used By:
     operatorinsert.cc: operator<<(std::ostream&, LookaheadSet const&)
 
 insert(std::ostream&) const
+  Full name: FirstSet::insert(std::ostream&) const
+  Source:    oinsert.cc 
+  Used By:
+    showfirst.cc: GLOBALS showfirst.cc 21showfirst.o
+    insertext.cc: GLOBALS insertext.cc 23insertext.o
+
+insert(std::ostream&) const
   Full name: SRConflict::insert(std::ostream&) const
+  Source:    insert.cc 
+  Used By:
+    insertext.cc: State::insertExt(std::ostream&) const
+    insertstd.cc: State::insertStd(std::ostream&) const
+
+insert(std::ostream&) const
+  Full name: RRConflict::insert(std::ostream&) const
   Source:    insert.cc 
   Used By:
     insertext.cc: State::insertExt(std::ostream&) const
@@ -698,13 +698,13 @@ insertExt(std::ostream&) const
   Source:    insertext.cc 
   Used By:
     allstates.cc: State::allStates()
-    define.cc: State::define()
+    define.cc: State::define(Rules const&)
 
 insertStd(std::ostream&) const
   Full name: State::insertStd(std::ostream&) const
   Source:    insertstd.cc 
   Used By:
-    define.cc: State::define()
+    define.cc: State::define(Rules const&)
 
 insertToken(Terminal const*, unsigned int&, std::ostream&)
   Full name: Writer::insertToken(Terminal const*, unsigned int&, std::ostream&)
@@ -721,13 +721,13 @@ insName(std::ostream&) const
     insertext.cc: GLOBALS insertext.cc 23insertext.o
 
 inspect()
-  Full name: SRConflict::inspect()
+  Full name: RRConflict::inspect()
   Source:    inspect.cc 
   Used By:
     checkconflicts.cc: State::checkConflicts()
 
 inspect()
-  Full name: RRConflict::inspect()
+  Full name: SRConflict::inspect()
   Source:    inspect.cc 
   Used By:
     checkconflicts.cc: State::checkConflicts()
@@ -1137,16 +1137,16 @@ ParserBase()
     parser1.cc: Parser::Parser(Rules&)
 
 plainItem(std::ostream&) const
-  Full name: StateItem::plainItem(std::ostream&) const
-  Source:    plainitem.cc 
-  Used By:
-    data.cc: GLOBALS data.cc 24data.o
-
-plainItem(std::ostream&) const
   Full name: Item::plainItem(std::ostream&) const
   Source:    plainitem.cc 
   Used By:
     data.cc: GLOBALS data.cc 11data.o
+
+plainItem(std::ostream&) const
+  Full name: StateItem::plainItem(std::ostream&) const
+  Source:    plainitem.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 24data.o
 
 plainWarnings()
   Full name: Global::plainWarnings()
@@ -1247,7 +1247,7 @@ propagateLA()
   Full name: State::propagateLA()
   Source:    propagatela.cc 
   Used By:
-    define.cc: State::define()
+    define.cc: State::define(Rules const&)
 
 propagateLA(StateItem&, std::vector<StateItem, std::allocator<StateItem> >&)
   Full name: StateItem::propagateLA(StateItem&, std::vector<StateItem, std::allocator<StateItem> >&)
@@ -1416,7 +1416,7 @@ s_acceptState
   Full name: State::s_acceptState
   Source:    data.cc 
   Used By:
-    define.cc: State::define()
+    define.cc: State::define(Rules const&)
     srtable.cc: Writer::srTable(State const*, std::string const&, FBB::Table&, std::ostream&)
 
 s_at
@@ -1559,6 +1559,15 @@ s_errorTerminal
     notreducible.cc: State::notReducible(unsigned int)
     parser1.cc: Parser::Parser(Rules&)
 
+s_fileName
+  Full name: Production::s_fileName
+  Source:    data.cc 
+  Used By:
+    production1.cc: Production::Production(Symbol const*)
+    storeFilename.cc: Production::storeFilename(std::string const&)
+    showconflicts.cc: RRConflict::showConflicts(Rules const&) const
+    showconflicts.cc: SRConflict::showConflicts(Rules const&) const
+
 s_hiddenName
   Full name: Parser::s_hiddenName
   Source:    data.cc 
@@ -1570,13 +1579,42 @@ s_insert
   Source:    data.cc 
   Used By:
     allstates.cc: State::allStates()
-    define.cc: State::define()
+    define.cc: State::define(Rules const&)
 
 s_insert
   Full name: Generator::s_insert
   Source:    data.cc 
   Used By:
     insert.cc: Generator::insert(std::ostream&) const
+
+s_insertPtr
+  Full name: NonTerminal::s_insertPtr
+  Source:    data.cc 
+  Used By:
+    insert.cc: Item::insert(std::ostream&, Production const*) const
+    transitionkernel.cc: Next::transitionKernel(std::ostream&) const
+    v.cc: NonTerminal::insert(std::ostream&) const
+    showfirst.cc: Rules::showFirst() const
+    showfollow.cc: Rules::showFollow() const
+    insertext.cc: State::insertExt(std::ostream&) const
+    multiplydefined.cc: Parser::multiplyDefined(Symbol const*)
+    reductionsymbol.cc: Writer::reductionSymbol(Element const*, unsigned int, FBB::Table&)
+    transition.cc: Writer::transition(Next const&, FBB::Table&)
+
+s_insertPtr
+  Full name: Item::s_insertPtr
+  Source:    data.cc 
+  Used By:
+    insertext.cc: State::insertExt(std::ostream&) const
+    itemcontext.cc: StateItem::itemContext(std::ostream&) const
+    plainitem.cc: StateItem::plainItem(std::ostream&) const
+
+s_insertPtr
+  Full name: StateItem::s_insertPtr
+  Source:    data.cc 
+  Used By:
+    insertext.cc: State::insertExt(std::ostream&) const
+    insertstd.cc: State::insertStd(std::ostream&) const
 
 s_insertPtr
   Full name: Terminal::s_insertPtr
@@ -1598,40 +1636,11 @@ s_insertPtr
     filter.cc: Generator::filter(std::istream&, std::ostream&, bool) const
 
 s_insertPtr
-  Full name: StateItem::s_insertPtr
-  Source:    data.cc 
-  Used By:
-    insertext.cc: State::insertExt(std::ostream&) const
-    insertstd.cc: State::insertStd(std::ostream&) const
-
-s_insertPtr
-  Full name: NonTerminal::s_insertPtr
-  Source:    data.cc 
-  Used By:
-    insert.cc: Item::insert(std::ostream&, Production const*) const
-    transitionkernel.cc: Next::transitionKernel(std::ostream&) const
-    v.cc: NonTerminal::insert(std::ostream&) const
-    showfirst.cc: Rules::showFirst() const
-    showfollow.cc: Rules::showFollow() const
-    insertext.cc: State::insertExt(std::ostream&) const
-    multiplydefined.cc: Parser::multiplyDefined(Symbol const*)
-    reductionsymbol.cc: Writer::reductionSymbol(Element const*, unsigned int, FBB::Table&)
-    transition.cc: Writer::transition(Next const&, FBB::Table&)
-
-s_insertPtr
   Full name: Next::s_insertPtr
   Source:    data.cc 
   Used By:
     insertext.cc: State::insertExt(std::ostream&) const
     insertstd.cc: State::insertStd(std::ostream&) const
-
-s_insertPtr
-  Full name: Item::s_insertPtr
-  Source:    data.cc 
-  Used By:
-    insertext.cc: State::insertExt(std::ostream&) const
-    itemcontext.cc: StateItem::itemContext(std::ostream&) const
-    plainitem.cc: StateItem::plainItem(std::ostream&) const
 
 s_locationValue
   Full name: Parser::s_locationValue
@@ -1653,24 +1662,24 @@ s_maxValue
     terminal1.cc: Terminal::Terminal(std::string const&, Symbol::Type, unsigned int, Terminal::Association, std::string const&)
 
 s_nConflicts
-  Full name: SRConflict::s_nConflicts
-  Source:    data.cc 
-  Used By:
-    handlesrconflict.cc: SRConflict::handleSRconflict(unsigned int, __gnu_cxx::__normal_iterator<Next const*, std::vector<Next, std::allocator<Next> > > const&, unsigned int)
-    define.cc: State::define()
-
-s_nConflicts
   Full name: RRConflict::s_nConflicts
   Source:    data.cc 
   Used By:
     comparereductions.cc: RRConflict::compareReductions(unsigned int)
-    define.cc: State::define()
+    define.cc: State::define(Rules const&)
+
+s_nConflicts
+  Full name: SRConflict::s_nConflicts
+  Source:    data.cc 
+  Used By:
+    handlesrconflict.cc: SRConflict::handleSRconflict(unsigned int, __gnu_cxx::__normal_iterator<Next const*, std::vector<Next, std::allocator<Next> > > const&, unsigned int)
+    define.cc: State::define(Rules const&)
 
 s_nExpectedConflicts
   Full name: Rules::s_nExpectedConflicts
   Source:    data.cc 
   Used By:
-    define.cc: State::define()
+    define.cc: State::define(Rules const&)
     parse.cc: Parser::executeAction(int)
 
 s_nHidden
@@ -1750,7 +1759,7 @@ s_state
   Source:    data.cc 
   Used By:
     allstates.cc: State::allStates()
-    define.cc: State::define()
+    define.cc: State::define(Rules const&)
     distributela.cc: State::distributeLA(Next&, State::LookaheadContext&)
     findkernel.cc: State::findKernel(std::vector<Item, std::allocator<Item> > const&) const
     newstate.cc: State::newState()
@@ -1976,16 +1985,16 @@ setPathStrings()
     setaccessorvariables.cc: Options::setAccessorVariables()
 
 setPolymorphicDecl()
-  Full name: Options::setPolymorphicDecl()
-  Source:    setpolymorphicdecl.cc 
-  Used By:
-    setpolymorphicdecl.cc: Parser::setPolymorphicDecl()
-
-setPolymorphicDecl()
   Full name: Parser::setPolymorphicDecl()
   Source:    setpolymorphicdecl.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
+
+setPolymorphicDecl()
+  Full name: Options::setPolymorphicDecl()
+  Source:    setpolymorphicdecl.cc 
+  Used By:
+    setpolymorphicdecl.cc: Parser::setPolymorphicDecl()
 
 setPrecedence(int)
   Full name: Parser::setPrecedence(int)
@@ -2080,6 +2089,18 @@ setVerbosity()
   Used By:
     cleanup.cc: Parser::cleanup()
 
+showConflicts(Rules const&) const
+  Full name: SRConflict::showConflicts(Rules const&) const
+  Source:    showconflicts.cc 
+  Used By:
+    define.cc: State::define(Rules const&)
+
+showConflicts(Rules const&) const
+  Full name: RRConflict::showConflicts(Rules const&) const
+  Source:    showconflicts.cc 
+  Used By:
+    define.cc: State::define(Rules const&)
+
 showFilenames() const
   Full name: Options::showFilenames() const
   Source:    showfilenames.cc 
@@ -2157,6 +2178,12 @@ staticData(std::ostream&) const
   Used By:
     data.cc: GLOBALS data.cc 9data.o
 
+storeFilename(std::string const&)
+  Full name: Production::storeFilename(std::string const&)
+  Source:    storeFilename.cc 
+  Used By:
+    newrule.cc: Rules::newRule(NonTerminal*, std::string const&, unsigned int)
+
 stype(std::ostream&) const
   Full name: Generator::stype(std::ostream&) const
   Source:    stype.cc 
@@ -2183,7 +2210,7 @@ summarizeActions()
   Full name: State::summarizeActions()
   Source:    summarizeactions.cc 
   Used By:
-    define.cc: State::define()
+    define.cc: State::define(Rules const&)
 
 Symbol(std::string const&, Symbol::Type, std::string const&)
   Full name: Symbol::Symbol(std::string const&, Symbol::Type, std::string const&)
@@ -2355,16 +2382,16 @@ version
     filter.cc: Generator::filter(std::istream&, std::ostream&, bool) const
 
 visitReduction(unsigned int)
-  Full name: SRConflict::visitReduction(unsigned int)
-  Source:    visitreduction.cc 
-  Used By:
-    inspect.cc: SRConflict::inspect()
-
-visitReduction(unsigned int)
   Full name: RRConflict::visitReduction(unsigned int)
   Source:    visitreduction.cc 
   Used By:
     inspect.cc: RRConflict::inspect()
+
+visitReduction(unsigned int)
+  Full name: SRConflict::visitReduction(unsigned int)
+  Source:    visitreduction.cc 
+  Used By:
+    inspect.cc: SRConflict::inspect()
 
 warnAutoIgnored(char const*, AtDollar const&) const
   Full name: Parser::warnAutoIgnored(char const*, AtDollar const&) const
