@@ -13,9 +13,9 @@ specification is received. The pointed arrows are part of the type
 specification; the type itself must be a field of a tt(%union) specification
 (see section ref(UNION)).
 
-        b() will convert the symbolic tokens (including those defined by the
-precedence directives (cf. section ref(PRECEDENCE))) into a tt(Parser::Tokens)
-enumeration value (where `tt(Parser)' is the name of the generated parser
+        b() converts symbolic tokens (including those defined by the
+precedence directives (cf. section ref(PRECEDENCE))) into tt(Parser::Tokens)
+enumeration values (where `tt(Parser)' is the name of the generated parser
 class, see section ref(PARSERCLASS)). This allows the lexical scanner member
 function tt(lex()) to return these token values by name directly, and it
 allows externally defined lexical scanners (called by tt(lex())) to return
@@ -29,7 +29,7 @@ use the tt(Parser::Tokens) enumeration type.
     Although it em(is) possible to specify explicitly the numeric code for a
 token type by appending an integer value in the field immediately following
 the token name (as in tt(%token NUM 300)) this practice is deprecated. It is
-generally best to let b() choose the numeric codes for all token types. B()
-will automatically select codes that don't conflict with each other or with
-ASCII characters.
+generally best to let b() choose the numeric values for all token types. B()
+automatically selects values that don't conflict with each other or with ASCII
+character values.
 

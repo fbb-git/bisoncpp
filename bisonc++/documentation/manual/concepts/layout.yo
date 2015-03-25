@@ -6,7 +6,7 @@ two sections. The general form of a b() grammar file is as follows:
     %%
     Grammar rules
         )
-    Readers familiar with Bison will note that there is no em(C declaration
+    Readers familiar with Bison may note that there is no em(C declaration
 section) and no section to define em(Additional C code). With b() these
 sections are superfluous since, due to the fact that a b() parser is a 
 class, all additional code required for the parser's  implementation can be

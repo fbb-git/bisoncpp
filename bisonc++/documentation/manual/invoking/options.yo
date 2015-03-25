@@ -194,9 +194,9 @@ END)
             parser's base class is (re)written each time bic() is called. Note
             that this option should normally be avoided, as the base class
             defines the symbolic terminal tokens that are returned by the
-            lexical scanner. By suppressing the construction of this file any
-            modification in these terminal tokens will not be communicated to
-            the lexical scanner.
+            lexical scanner. When the construction of this file is suppressed,
+            modifications of these terminal tokens are not communicated to the
+            lexical scanner.
 
     it() loption(no-decoration) (soption(D))nl()
            Do not include the user-defined actions when generating the

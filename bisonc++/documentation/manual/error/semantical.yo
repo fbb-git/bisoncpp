@@ -12,7 +12,7 @@ so-called em(rvalue): this may be any value: any expression will do.
     A rule like the above leaves room for many different semantical errors:
     itemization(
     it() Since the rule states tt(expr) at its left-hand side, em(any)
-expression will be accepted by the parser. E.g.,
+expression is accepted by the parser. E.g.,
         verb(
     3 = 12
         )
@@ -28,7 +28,7 @@ they are used (like bf(C++)) the parser should check whether a variable is
 actually defined or declared when it is used in an expression. If not, a
 em(semantical) error should be reported
     )
-    A parser that should be able to detect semantic errors will normally use a
+    A parser that should be able to detect semantic errors normally uses a
 counter counting the number of semantic errors, e.g., tt(size_t
 d_nSemanticErrors). It may be possible to test this counter's value once the
 input has been parsed, calling tt(ABORT()) (see section ref(PRIVMEM)) if the

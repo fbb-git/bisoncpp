@@ -14,8 +14,8 @@ defining the grammar the definition of the associated support members is a
 natural extension of defining the grammar, and can be realized em(in parallel)
 with defining the grammar, in practice not requiring any virtual members. By
 not defining (requiring) virtual members the parser's class organization is
-simplified, and the calling of the non-virtual members will be just a trifle
-faster than when these member functions would have been virtual.
+simplified, and calling non-virtual members will be just a trifle
+faster than calling these member functions as virtual functions.
 
 In this chapter all available members and features of the generated parser
 class are discussed. Having read this chapter you should be able to use the

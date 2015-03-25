@@ -106,6 +106,6 @@ would transit on encountering a tt(NR) token.
         )
 
         With the current grammar it turns out (and the reason why this is so
-        will be discussed in the next section) that the first action will
+        is explained in the next section) that the first action will
         never take place: in this state there will always be a reduction.
     )

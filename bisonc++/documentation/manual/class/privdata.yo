@@ -91,8 +91,8 @@ members inherited from the parser's base class.
             ) 
        Having recognized tt(IDENT) two reductions are possible: to tt(name)
         and to tt(ident). The reduction to tt(ident) is appropriate when the
-        next token is tt(CHAR(40)), otherwise the reduction to tt(name) will
-        be performed. So, the parser asks for the next token, thereby
+        next token is tt(CHAR(40)), otherwise the reduction to tt(name) is
+        performed. So, the parser asks for the next token, thereby
         destroying the text matching tt(IDENT) before tt(ident) or tt(name)'s
         actions are able to save the text themselves. To enure the
         availability of the text matching tt(IDENT) is situations like these

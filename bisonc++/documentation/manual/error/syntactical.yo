@@ -35,7 +35,7 @@ newline. So the rule is not applicable in the ordinary way.
 
     b(), however, can force the situation to fit the rule, by em(discarding)
 part of the semantic context and part of the input. When a (syntactic) error
-occurs the parsing algorithm will try to recover from the error in the
+occurs the parsing algorithm tries to recover from the error in the
 following way: First it discards states from the stack until it encounters a
 state in which the tt(error) token is acceptable (meaning that the
 subexpressions already parsed are discarded, back to the last complete
@@ -55,7 +55,7 @@ current input line or current statement if an error is detected:
         )
     Another useful recovery strategy is to recover to the matching
 close-delimiter of an opening-delimiter that has already been
-parsed. Otherwise the close-delimiter will probably appear to be unmatched,
+parsed. Otherwise the close-delimiter probably appears to be unmatched,
 generating another, spurious error message:
         verb(    
     primary:  
@@ -71,14 +71,14 @@ one syntactic error often leads to another. In the above example, the error
 recovery rule guesses that an error is caused by bad input within one
 statement. Suppose that instead a spurious semicolon is inserted in the middle
 of a valid statement. After the error recovery rule recovers from the first
-error, another syntactic error will be found straightaway, since the text
+error, another syntactic error will immediately be found, since the text
 following the spurious semicolon is also an invalid statement.
 
     To prevent an outpouring of error messages, the parser may be configured
-in such a way that no error message will be generated for another syntactic
-error that happens shortly after the first. E.g., only after three consecutive
-input tokens have been successfully shifted error messages will be generated
-again. This configuration is currently not available in b()'s parsers.
+in such a way that no error message are generated for another syntactic error
+that happens shortly after the first. E.g., only after three consecutive input
+tokens have been successfully shifted error messages may again be
+generated. This configuration is currently not available in b()'s parsers.
 
     Note that rules using the tt(error) token may have actions, just as any
 other rules can.

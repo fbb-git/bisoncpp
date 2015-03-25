@@ -1,7 +1,7 @@
 Syntax: bf(%start) tt(nonterminal symbol)
 
     By default b() uses the the LHS of the first rule in a grammar
-specification file as the start symbol. I.e., the parser will try to recognize
+specification file as the start symbol. I.e., the parser tries to recognize
 that nonterminal when parsing input. 
 
     This default behavior may be overriden using the tt(%start) directive.

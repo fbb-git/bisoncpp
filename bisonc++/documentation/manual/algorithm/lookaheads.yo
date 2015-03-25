@@ -1,22 +1,21 @@
 In the previous section it was stated that although state 5 has two possible
 actions, in fact only one is used. This is a direct consequence of the
-tt(%left '+') specification, as will be discussed in this section.
+tt(%left '+') specification, as explained in this section.
 
 When analyzing a grammar all states that can be reached from the augmented
 start rule are determined. In state 5 b() is confronted with a choice: either
 a shift on tt('+') or a reduction according to the item `tt(expr -> expr '+'
 expr .)'. What choice will b() make?
 
-At this point the fact that b() implements a parser for a 
-em(Look Ahead Left to Right (1)) (LALR(1)) grammar becomes relevant. B() will
-use em(computed lookahead sets) to determine which alternative to select, when
-confronted with a choice. The lookahead set can be used to favor one
-transition over the other when eventually generating the tables for the
-parsing function. 
+At this point the fact that b() implements a parser for a em(Look Ahead Left
+to Right (1)) (LALR(1)) grammar becomes relevant. B() uses em(computed
+lookahead sets) to determine which alternative to select, when confronted with
+a choice. The lookahead set can be used to favor one transition over the other
+when eventually generating the tables for the parsing function.
 
 Sometimes the lookahead sets allow b() simply to remove one action from
 the set of possible actions. When b() is called to process the example grammar
-while specifying the tt(--construction) option state 5 will em(only) show the
+while specifying the tt(--construction) option state 5 em(only) shows the
 reduction and em(not) the shifting action: it has removed that alternative
 from the action set. This is a direct consequence of a hidden shift-reduce 
 conflict in the grammar: in state 5 the choice is between shifting or reducing

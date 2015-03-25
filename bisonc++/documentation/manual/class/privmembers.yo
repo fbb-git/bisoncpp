@@ -25,7 +25,7 @@ internally'' is used should not be called by user-defined code.
         even if the current token has not yet been processed. It is a useful
         member when the parser should be reset to its initial state, e.g.,
         between successive calls of tt(parse). In this situation the scanner
-        will probably be reloaded with new information too.
+        must probably be reloaded with new information as well.
     it() bf(bool Base::debug() const):nl()
        This member returns the current value of the debug variable.
     it() bf(void Base::ERROR+nop()() const throw(ErrorRecovery__)):nl()
