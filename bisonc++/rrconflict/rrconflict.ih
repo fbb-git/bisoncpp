@@ -1,7 +1,8 @@
 #include "rrconflict.h"
 
+#include <unordered_map>
+
 #include <bobcat/mstream>
-#include <bobcat/linearmap>
 
 #include "../rules/rules.h"
 

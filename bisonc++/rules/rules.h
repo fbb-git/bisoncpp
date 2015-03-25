@@ -7,8 +7,7 @@
 #include <set>
 #include <string>
 #include <algorithm>
-
-#include <bobcat/linearmap>
+#include <unordered_map>
 
 #include "../block/block.h"
 #include "../terminal/terminal.h"
@@ -31,7 +30,8 @@ class Rules
         typedef std::pair<std::string, size_t> FileInfo;
 
     private:
-        typedef FBB::LinearMap<NonTerminal const *, FileInfo> NFileInfoMap;
+        typedef std::unordered_map<NonTerminal const *, FileInfo> 
+                                                            NFileInfoMap;
     
         Terminal::Vector d_terminal;        // the vector holding information 
                                             // about defined terminal symbols

@@ -5,7 +5,7 @@ void SRConflict::showConflicts(Rules const &rules) const
     RmReduction::ConstIter iter = d_rmReduction.begin();
     RmReduction::ConstIter end = d_rmReduction.end();
 
-    LinearMap<size_t, vector<Symbol const *>> conflict;
+    unordered_map<size_t, vector<Symbol const *>> conflict;
 
     while ((iter = find_if(iter, end, RmReduction::isForced)) != end)
     {
