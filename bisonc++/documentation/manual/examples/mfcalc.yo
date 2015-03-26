@@ -12,7 +12,7 @@ syntaxis is as follows:
         verb(
     function_name (argument)
         )
-    At the same time, we will add memory to the calculator, by allowing you to
+    At the same time, we add memory to the calculator, thus allowing you to
 create named variables, store values in them, and use them later. Here is a
 sample session with the multi-function calculator:
         verb(

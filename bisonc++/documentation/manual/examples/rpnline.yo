@@ -18,8 +18,8 @@ first symbol in the rule's alternative. The action prints this value, which is
 the result of the computation the user asked for.
 
 This action is unusual because it does not assign a value to tt($$). As a
-consequence, the semantic value associated with the line is uninitialized (its
-value will be unpredictable). This would be a bug if that value were ever
-used, but we don't use it: once tt(rpn) has printed the value of the user's
-input line, that value is no longer needed.
+consequence, the semantic value associated with the line is not initialized
+(so its value will be unpredictable). This would be a bug if that value were
+ever used, but we don't use it: once tt(rpn) has printed the value of the
+user's input line, that value is no longer needed.
 

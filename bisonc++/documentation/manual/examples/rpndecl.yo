@@ -9,7 +9,7 @@ arithmetic operators are designated by single-character literals, so the only
 terminal symbol that needs to be declared is tt(NUM), the token type for
 numeric constants. Since b() uses the type tt(int) as the default
 semantic value type, one additional directive is required to inform b()
-about the fact that we will be using tt(double) values. The tt(%stype)
+about the fact that we are using tt(double) values. The tt(%stype)
 (semantic value type) directive is used to do so.
 
 

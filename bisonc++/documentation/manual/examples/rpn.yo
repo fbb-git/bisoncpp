@@ -1,7 +1,7 @@
 The first example is that of a simple double-precision reverse polish notation
 calculator (a calculator using postfix operators). This example provides a
 good starting point, since operator precedence is not an issue. The second
-example will illustrate how operator precedence is handled.
+example illustrates how operator precedence is handled.
 
 All sources for this calculator are found in the lurl(examples/rpn/)
 directory.

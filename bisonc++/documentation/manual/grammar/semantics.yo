@@ -6,8 +6,8 @@ For example, the calculator calculates properly because the value associated
 with each expression is the proper number; it adds properly because the action
 for the grouping `x + y' is to add the numbers associated with x and y.
 
-In this section defining the semantics of a language will be addressed. The
-following topics will be covered:
+In this section defining the semantics of a language is addressed, covering
+the following topics:
     itemization(
     it() link(Specifying one data type for all semantic values)(SEMANTICTYPES);
     it() link(Specifying several alternative data types)(MORETYPES);

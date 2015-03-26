@@ -37,7 +37,7 @@ section ref(PRECEDENCE)).
       By convention, a character token type is used only to represent a token
 that consists of that particular character. Thus, the token type 'tt(+)' is
 used to represent the character `tt(+)' as a token. Nothing enforces this
-convention, but if you depart from it, your program will confuse other
+convention, but if you depart from it, your program will likely confuse other
 readers.
 
       All the usual escape sequences used in character literals in bf(C++) can

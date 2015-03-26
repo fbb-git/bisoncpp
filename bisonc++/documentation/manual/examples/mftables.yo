@@ -4,7 +4,7 @@ rules (except for the actions) or the b() directives, but it requires
 some additional bf(C++) types for support as well as several additional data
 members for the parser class.
 
-The symbol table itself will vary in size and contents once tt(mfcalc) is
+The symbol table itself varies in size and contents once tt(mfcalc) is
 used, and if a program uses multiple parser objects (well...) each parser will
 require its own symbol table. Therefore it is defined as a em(data member)
 tt(d_symbols) in the Parser's header file. In contrast, the em(function table)

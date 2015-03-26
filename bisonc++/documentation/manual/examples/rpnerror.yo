@@ -9,7 +9,7 @@ Once tt(error()) returns, the b() parser may recover from the error and
 continue parsing if the grammar contains a suitable error rule (see chapter
 ref(RECOVERY)).  Otherwise, the parsing function tt(parse()) returns
 nonzero. Not any error rules were included in this example, so any invalid
-input will cause the calculator program to exit. This is not clean behavior
+input causes the calculator program to exit. This is not clean behavior
 for a real calculator, but it is adequate for this first example.
 
 

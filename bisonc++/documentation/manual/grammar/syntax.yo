@@ -61,7 +61,7 @@ defined as:
         )
     However, this is a potentially dangerous practice, since one of the two
 tt(result) rules could also have used a misspelled rule-name (e.g., the second
-tt(result)) should have been tt(results). Therefore, b() will generate a
+tt(result)) should have been tt(results). Therefore, b() generates a
 warning if the same nonterminal is used repeatedly when defining production
 rules. 
 
