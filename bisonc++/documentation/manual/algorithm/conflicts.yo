@@ -63,7 +63,7 @@ the plain tt(stmnt) rule, consisting of two recursive alternatives will of
 course never be able to match actual input, since there's no way for the
 grammar to eventually derive a sentence this way. Adding one non-recursive
 alternative is enough to convert the grammar into one that em(does) derive
-sentences. Here is a complete b() input file that actually manifests the
+sentences. Here is a complete b() input file that actually shows the
 conflict:
     verbinclude(examples/dangling)
 
