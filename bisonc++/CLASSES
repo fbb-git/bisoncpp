@@ -26,5 +26,4 @@ statetype
 symbol          firstset element
 symtab          nonterminal symbol terminal
 terminal        symbol
-transition      item lookaheadset
 writer          next
