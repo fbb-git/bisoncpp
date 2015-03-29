@@ -1,5 +1,0 @@
-#include "transition.ih"
-
-Transition::() const
-{
-}
