@@ -5,6 +5,9 @@ bisonc++ (4.10.00)
 
   * The class Symtab now uses an unordered_map rather than a mere map.
 
+  * FOLLOW sets are not used when analyzing LALR(1) grammars. The class
+    FollowSet and all operations on follow sets were removed.
+
 
 
 bisonc++ (4.09.02) 

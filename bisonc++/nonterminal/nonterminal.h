@@ -9,7 +9,6 @@
 #include "../symbol/symbol.h"
 #include "../production/production.h"
 #include "../firstset/firstset.h"
-#include "../followset/followset.h"
 
 class NonTerminal: public Symbol
 {
@@ -23,12 +22,9 @@ class NonTerminal: public Symbol
         FirstSet    d_first;        // set of terminals that can be
                                     // encountered at this NonTerminal
 
-        FollowSet   d_follow;       // set of terminals that can follow this
-                                    // NonTerminal 
-
         size_t d_nr;                // the NonTerminal's number
 
-        static size_t s_counter;    // counts the number of symbols in follow
+        static size_t s_counter;    // counts the number of symbols in first
                                     // sets. May be reset to 0 by
                                     // resetCounter()
         static size_t s_number;     // incremented at each call of setNr()
@@ -52,14 +48,10 @@ class NonTerminal: public Symbol
         std::set<Element const *> const &firstTerminals() const;
         void addEpsilon() ;
         void addProduction(Production *next);
-        void addToFollow(FirstSet const &firstSet);
-        void addToFollow(NonTerminal const *nonTerminal);
-        void setEOFinFollow();
 
         static NonTerminal *downcast(Symbol *sp);
         static NonTerminal const *downcast(Symbol const *sp);
         static size_t counter();
-        static void countFollow(NonTerminal *nonTerminal);
         static void resetCounter();
         static void setFirst(NonTerminal *nonTerminal);
         static void setFirstNr(size_t nr);
@@ -76,7 +68,7 @@ class NonTerminal: public Symbol
                                         // plain name
         std::ostream &plainName(std::ostream &out) const;
         std::ostream &nameAndFirstset(std::ostream &out) const;
-        std::ostream &nameAndFollowset(std::ostream &out) const;
+
                                     // the N's value 
         std::ostream &value(std::ostream &out) const;
         using Symbol::value;
@@ -109,11 +101,6 @@ inline std::ostream &NonTerminal::nameAndFirstset(std::ostream &out) const
     return insName(out) << d_first;
 }
 
-inline std::ostream &NonTerminal::nameAndFollowset(std::ostream &out) const
-{
-    return insName(out) << d_follow;
-}
-
 inline std::ostream &NonTerminal::value(std::ostream &out) const
 {
     return out << std::setw(3) << v_value();
@@ -133,11 +120,6 @@ inline void NonTerminal::setNr(NonTerminal *np)
 inline size_t NonTerminal::counter() 
 {
     return s_counter;
-}
-
-inline void NonTerminal::countFollow(NonTerminal *nonTerminal)
-{
-    s_counter += nonTerminal->d_follow.setSize();
 }
 
 inline void NonTerminal::resetCounter()
@@ -175,11 +157,6 @@ inline void NonTerminal::addEpsilon()
     d_first.addEpsilon();
 }
 
-inline void NonTerminal::setEOFinFollow()
-{
-    d_follow.setEOF();
-}
-
 inline Production::Vector &NonTerminal::productions()
 {
     return d_production;
@@ -200,22 +177,11 @@ inline NonTerminal const *NonTerminal::downcast(Symbol const *sp)
     return dynamic_cast<NonTerminal const *>(sp);
 }
 
-inline void NonTerminal::addToFollow(FirstSet const &firstSet)
-{
-    d_follow += firstSet;
-}
-
-inline void NonTerminal::addToFollow(NonTerminal const *nonTerminal)
-{
-    d_follow += nonTerminal->d_follow;
-}
-
 inline void NonTerminal::inserter(std::ostream &(NonTerminal::*insertPtr)
                                            (std::ostream &out) const)
 {
     s_insertPtr = insertPtr;
 }
-
 
 // operator<< is already available through Element
 

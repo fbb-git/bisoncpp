@@ -14,6 +14,5 @@ void Rules::augmentGrammar(Symbol *start)
     s_startSymbol = start;
 
     addElement(start);
-    d_currentRule->setEOFinFollow();
     d_currentRule->used();
 }

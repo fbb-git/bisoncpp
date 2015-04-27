@@ -115,9 +115,6 @@ try
     rules.determineFirst();
     rules.showFirst();
 
-    rules.determineFollow();
-    rules.showFollow();
-
                             // define the startproduction
     Production::setStart(rules.startProduction());
 

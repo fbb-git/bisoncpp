@@ -132,7 +132,6 @@ class Rules
         size_t nElements() const;
 
         void determineFirst();
-        void determineFollow();
 
         bool hasRules() const;
 
@@ -155,7 +154,6 @@ class Rules
                 // production to the precedence of the given terminal.
 
         void showFirst() const;         // show the First-sets
-        void showFollow() const;        // show the Follow-sets
 
         void showTerminals() const;     // show symbolic terminals and their
                                         // values
@@ -180,14 +178,6 @@ class Rules
         void termToNonterm(Symbol *term, Symbol *nonTerm);
 
     private:
-        static void addFollowFromFirst(Production *production);
-        
-            // called by determineFollow() to process each NonTerminal
-            // It will in turn process each of the nonterminal's productions
-        static void addFirstToFollow(NonTerminal *nonTerminal);
-
-        void addFollowToFollow();
-        static void expandFollow(Production *production);
         static void updatePrecedence(Production *production, 
                                      Terminal::Vector const &tv);
 };
@@ -318,13 +308,6 @@ inline std::vector<Production const *> const &Rules::productions() const
     void const *vp = &d_production;
     return *reinterpret_cast<std::vector<Production const *> const *>
            (vp);
-}
-
-inline void Rules::addFirstToFollow(NonTerminal *nonTerminal)
-{
-    for_each(nonTerminal->productions().begin(), 
-             nonTerminal->productions().end(), 
-            &addFollowFromFirst);
 }
 
 inline Rules::FileInfo const &Rules::fileInfo(NonTerminal const *nt) const
