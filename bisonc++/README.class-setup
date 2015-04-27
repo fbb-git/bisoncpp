@@ -13,23 +13,18 @@ the classes used by Grammar; RmReduction does not depend on any other class).
 	|		|               |
 	|   	|               Terminal
 	|   	|               |
-	|   	|     +---------+
-	|   	|     |         |
-	|   	+-----+         FollowSet
-	|   	|               |
-	|   	Production      |
-	|   	|               |
 	|   	+---------------+
-	|       |
+	|   	|               
+	|   	Production      
+	|   	|               
 	|       NonTerminal
 	|       |
 	|       +---------------+
 	|       |               |
 	|       Symtab          Rules
 	|       |               |
-	|       |        +------+
-	|       |        |      |
-	|       +--------+      |
+	|       +--------+------+
+	|                |      |
 	|                |      Grammar
 	|                |      |
 	|                |      LookaheadSet
@@ -42,24 +37,42 @@ the classes used by Grammar; RmReduction does not depend on any other class).
 	|                |                                          |
 	|                |          EnumSolution    StateType       StateItem   
 	|                |          |               |               |
-	|                |          |               |               +---+
-	|                |          |               |               |   |
-	|                |          +---------------+---------------+   SrConflict
-	|                |                          |                   |
-	|                |                          Next                |
-	|      	         |          			    |                   |
-	|   Options      |           			    SrConflict          |
-	|   |         	 |          	            |                   |
-	|   +----------- | --------+		        +-------------------+
+	|                |          |               |               +--+
+	|                |          |               |               |  |
+	|                |          +---------------+---------------+  |
+	|                |                          |                  |
+	|                |                          Next               |
+	|      	         |          			    |                  |
+	|   Options      |           			    SrConflict         RRConflict
+	|   |         	 |          	            |                  |
+	|   |         	 |          	            +------------------+
+	|   |         	 |          	            |                
+	|   +----------- | --------+		        State
 	|   |            |         |                |                    
-	+---+            |         |		        State
+	+---+            |         |		        Writer
 	|   	         |         |			    |
-	Scanner	         |         |			    Writer
-	|                |         |                |
-	+----------------+         +----------------+
+	Scanner	         |         +----------------+      
+	|                |         |
+	+----------------+         |
 	|                          |
 	Parser                     Generator
 	|                          |
 	+--------------------------+
 	|
 	bisonc++
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
