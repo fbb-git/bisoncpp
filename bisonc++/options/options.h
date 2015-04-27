@@ -408,7 +408,7 @@ inline void Options::setPolymorphicSkeleton()
 
 inline void Options::setPreInclude()
 {
-    assign(&d_preInclude, FILENAME, "baseclass-preinclude");
+    assign(&d_preInclude, PATHNAME, "baseclass-preinclude");
 }
 
 inline void Options::setScannerClassName()
