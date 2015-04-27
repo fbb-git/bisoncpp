@@ -7,7 +7,7 @@ COMMAND=/bin/bash
 
     # Assuming bisonc++ is in your computer's search-path. If not, define
     # BISONCPP as the full path to bisconc++:
-BISONCPP=/home/frank/git/bisonc++//bisonc++/tmp/bin/bisonc++
+BISONCPP=/home/frank/git/bisonc++/src/bisonc++/tmp/bin/binary
 BISONCPP=bisonc++
 
     # UNCOMMENT the following variables if you want to run the examples from
@@ -69,24 +69,24 @@ example()
 
         # the doc-test is a safequard agains accidentally removing files
 
-    [ -s doc ]			    &&	\
-    find ./ -type f			\
-	\(				\
-            -name Parser*h	-or	\
-	    -name parserbase.h	-or	\
-	    -name scannerbase.h     	\
-	\)				\
-        -exec rm '{}' ';'	    &&	\
-    find ./ -type f			\
-        -not -regex '.*/_.*'		\
-        -not -name doc			\
-	-not -name demo.cc		\
-        -not -name bgram		\
-        -not -name grammar		\
-	-not -regex '.*/*h'		\
-        -not -regex '.*/dallas.*'	\
-        -not -name input		\
-        -not -name lexer		\
+    [ -s doc ]                      &&  \
+    find ./ -type f                     \
+        \(                              \
+            -name Parser*h      -or     \
+            -name parserbase.h  -or     \
+            -name scannerbase.h         \
+        \)                              \
+        -exec rm '{}' ';'           &&  \
+    find ./ -type f                     \
+        -not -regex '.*/_.*'            \
+        -not -name doc                  \
+        -not -name demo.cc              \
+        -not -name bgram                \
+        -not -name grammar              \
+        -not -regex '.*/*h'             \
+        -not -regex '.*/dallas.*'       \
+        -not -name input                \
+        -not -name lexer                \
         -exec rm '{}' ';'
 
     cd $orgdir

@@ -24,7 +24,12 @@ class Scanner: public ScannerBase
         void print();
         void preCode();     // re-implement this function for code that must 
                             // be exec'ed before the patternmatching starts
+        void postCode(PostEnum__);
 };
+
+inline void Scanner::postCode(PostEnum__)
+{}
+
 
 // $insert scannerConstructors
 inline Scanner::Scanner(std::istream &in, std::ostream &out)
