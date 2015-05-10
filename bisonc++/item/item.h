@@ -73,6 +73,8 @@ class Item
         std::ostream &plainItem(std::ostream &out) const;
         std::ostream &pNrDotItem(std::ostream &out) const;
 
+        Symbol const *beyondDotIsNonTerminal() const;   // 0 if not, otherwise
+                                                        // the N terminal
 
     private:
         std::ostream &insert(std::ostream &out, Production const *prod) const;

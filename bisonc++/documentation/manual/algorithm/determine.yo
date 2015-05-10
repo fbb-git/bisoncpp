@@ -1,0 +1,264 @@
+In this section the way b() determines lookahead (LA) is described. Once the
+items in the various states have been determined the LA sets for the various
+items are computed. Here is the algorithm computing the LA sets of the
+items of all states (initially all LA sets of all items are empty):
+    verb(
+    computeLAsets:
+        the first item in state 0 is given LA set {$}.
+        determine the LA sets of state 0
+    )
+
+Below we'll use function tt(unique(itemIdx, stateIdx)) returning the set of
+elements in the LA set of item tt(itemIdx) which are not already present in
+the LA set of the matching kernel item of state tt(stateIdx) (so, if item
+tt(itemIdx) has the generic form tt(a.Bc), where a and c are (possibly empty)
+sequences of grammatical symbols, and B is matched with the single
+grammatical symbol appearing immediately to the right of the item's dot
+position. then the matching kernel item of state tt(stateIdx) has the form
+tt(aB.c)).
+
+The LA sets of the items of a state (state tt(idx)) are computed using this
+algorithm which first computes the LA sets of its items, and then propagates
+the LA sets of items to the states for which state transitions have been
+defined. Then, the LA sets are computed for all items of all modified states:
+    verb(
+    determineLAsetsOfState(idx):
+        compute the LA sets of state idx's items.
+
+        for each item `src' for which a transition to state `next' 
+        has been defined:
+        {
+            compute u = unique(src, next)
+
+            if u is not empty then add u to the item matching item src in
+            state next, flagging state next as a modified state.
+        }
+
+        for each flagged state `idx':
+            computeLAsetsOfState(idx)
+    )
+
+The next algorithm is used to compute the LA sets of the items of a state:
+    verb(
+    computeLAsetsOfState(stateIdx)
+        for each kernel item idx of state stateIdx:
+            distributeLAsetOfItem(idx) 
+    )
+
+The LA set of an item tt(`idx') is distributed over the items representing
+production rules of the non-terminal to the right of item idx's dot
+position, using the following algorithm:
+    verb(
+    distributeLAsetOfItem(idx):
+        the item's rule specification is matched with the specification
+        a.Bc, where a and c are (possibly empty) sequences of grammatical
+        symbols, and B is a (possibly empty) non-terminal symbol appearing
+        immediately to the right of the item's dot position.
+
+        if B is empty return
+
+        compute the set b = FIRST(c). 
+
+        If b contains e (i.e., the element representing the empty set),
+        then add the item's current LA set to b.
+
+        for each item `itm' containing a production rule for B
+        {
+            if item itm's LA set is unequal to b then
+            {
+                add the unique elements of b to item itm's LA set
+                distributeLAsetOfItem(itm).
+            }
+        }
+    )
+
+
+============================================================================
+
+Once the LA sets of the items in a state A have been
+determined, and a transition on a symbol tt(X) (which may or may not be a
+terminal symbol) takes us to state B, then the elements of the LA set of state
+A are used to initialize or they are appended to the LA set of the kernel
+item(s) of state B. Since transitions may also be defined to earlier states,
+the LA sets of later states may enlarge the LA sets of earlier states. Once
+an LA set is enlarged, the LA sets of all states to which transitions are
+possible from the state that 
+
+    itemization(
+    it() For each item in each state, b() determines the items whose LA sets
+depend on that particular item.
+
+To determine which items have LA set that depend on a particular item the
+symbol following the item's dot position is inspected. If it's a nonterminal,
+then all items whose LHSs are equal to that nonterminal depend on the item
+being considered.
+
+    Inspecting the states of our example grammar, using offsets (0-based) to
+indicate their items, the following dependencies are observed:
+        itemization(
+        it() State 0: items 1 and 2 depend on items 0 and 1.
+        it() State 1: items 2 and 3 depend on items 1 and 3.
+        it() State 2: no dependencies
+        it() State 3: no dependencies
+        it() State 4: items 1 and 2 depend on items 0 and 2.
+        it() State 5: no dependencies
+        )
+
+    it() Then, for each item it is determined what the next state will be if
+that item is actually used in a transition. Items representing a reduction are
+not considered here. This results in the following:
+        itemization(
+        it() State 0: items 0 and 1: transition to state 1
+        it() State 1: items 1 and 3: transition to state 2; item 2: transition
+                        to state 3
+        it() State 2: item 1: transition to state 4
+        it() State 3: no transitions
+        it() State 4: items 1 and 2: transition to state 5; item 1: transition
+                        to state 3
+        it() State 5: item 1: transition to state 4
+        )
+
+    it() Next, LA propagation takes place: 
+            itemization( 
+            it() The LA set of the augmented start rule is initialized to
+                tt($). All other LA sets are initiaized to an empty set.
+
+            it() For each state all items are considered. Dependent items
+                receive their LA sets from the items on which they depend
+                (called their `parent item').
+
+                The LA sets of the dependent items are equal to the tt(FIRST)
+                set of the subrule of their parent items, starting at the
+                symbol following their parent item's dot positions. 
+
+            it() If a subrule's tt(FIRST) set contains tt(e), then that item's
+                LA set is added to the subrule's LA set, removing the tt(e).
+
+            it() If items depend on multiple parents, then the LA sets of
+                those items are the union of the LA sets as determined for
+                each of their parents.
+            it() Once the LA sets of items in a state have been determined,
+                then the LA sets of items transiting to other states are added
+                to the LA sets of the corresponding kernel items in these
+                other states (each item in an originating state only modifies
+                one kernel item in a destination state).
+            it() Since transitions may return to earlier states, determining
+                LA sets is implemented as an iterative process, terminating
+                when all LA sets have stabilized.
+            )
+
+        Applying the above algorithm to the example grammar we get:
+        itemization(
+        it() State 0:
+            itemization(
+            it() item 0: tt(start_$ ->  . start) LA: tt({$})nl()
+                Add the LA set (tt({$})) to the items resulting from 
+                the tt(start) productions nl()
+                Next state from here: 1
+
+            it() item 1: tt(start ->  . start expr) LA: tt({$})nl()
+                Next state from here: 1
+
+            it() item 2: tt(start ->  .) LA: tt({$})nl()
+
+            it() From item 1: once again consider the tt(start) rules, adding
+                fst(expr) tt(= {NR}) to the LA sets of those rules:
+                itemization(
+                it() item 1: tt(start ->  . start expr) LA: tt({$ NR})nl()
+                it() item 2: tt(start ->  .) LA: tt({$ NR})nl()
+                )
+            )
+
+        it() State 1:
+            itemization(
+            it() item 0: tt(start_$ -> start .) inherits LA: tt({$}) from item
+                0, state 0. nl()
+
+            it() item 1: tt(start -> start  . expr) inherits LA: tt({NR $})
+                from item 1, state 0. nl()
+                Add the LA set (tt({NR $})) to the items resulting from 
+                the tt(expr) productions nl()
+                Next state from here: 2
+
+            it() item 2: tt(expr ->  . NR) LA: tt({NR $})nl()
+                Next state from here: 3
+
+            it() item 3: tt(expr ->  . expr '+' expr) LA: tt({NR $})nl()
+                Next state from here: 2
+
+            it() From item 2: once again consider the tt(expr) rules, adding
+                fst('+') tt(= {'+'}) to the LA sets of those rules:
+                itemization(
+                it() item 2: tt(expr ->  . NR) LA: tt({+ NR $})nl()
+                it() item 3: tt(expr ->  . expr '+' expr) LA: tt({+ NR $})nl()
+                )
+            )
+
+        it() State 2:
+            itemization(
+            it() item 0: tt(start -> start expr  .) inherits LA: tt({NR $}) 
+                from item 1, state 1. nl()
+            it() item 1: tt(expr -> expr  . '+' expr) inherits LA: tt(+ NR $)
+                from item 3, state 1.nl()
+                Next state from here: 4
+            )
+
+        it() State 3:
+            itemization(
+            it() item 0: tt(expr -> NR  .) inherits LA: tt({+ NR $}) 
+                from item 2, state 1.
+            )
+
+        it() State 4:
+            itemization(
+            it() item 0: tt(expr -> expr '+'  . expr) inherits LA: tt({+ NR
+                $}) from item 2, state 2. nl()
+                Add the LA set (tt({+ NR $})) to the items resulting from 
+                the tt(expr) productions nl()
+                Next state from here: 5
+            it() item 1: tt(expr ->  . NR) LA: tt({+ NR $})nl()
+                Next state from here: 3. Since item 0 in state 3 already has a
+                LA set containing all elements of the current LA set, no
+                further modifications need to be propagated.
+
+            it() item 2: tt(expr ->  . expr '+' expr) LA: tt(+ NR $)nl()
+                Next state from here: 5
+
+            it() From item 2 all tt(expr) production rules need to be
+                considered again. This time no LA sets change, so the LA sets
+                of all items in this state have been determined.
+            )
+
+        it() State 5:
+            itemization(
+            it() item 0: tt(expr -> expr '+' expr  .) inherits LA: tt(+ NR $)
+                from item 0, state 4
+            it() item 1: tt(expr -> expr  . '+' expr) inherits LA: tt(+ NR $)
+                from item 2, state 4. nl()
+                Next state: 4. Since item 0 in state 4 already has a
+                LA set containing all elements of the current LA set, no
+                further modifications need to be propagated.
+            )
+        )
+    )
+
+    Once again, look at state 5. In this state, item 0 calls for a reduction
+on tokens tt('+', NR) or tt(EOF). However, according to item 1 a em(shift)
+must be performed when the next token is a tt('+'). This choice represents a
+shift-reduce conflict which is reported by b() unless special actions are
+taken. One of the actions is to tell b() what to do. A tt(%left) directive
+tells b() to prefer a reduction over a shift when encountering a shift-reduce
+conflict for the token(s) mentioned with the tt(%left) directive. Analogously,
+a tt(%right) tells b() to perform a shift rather than a reduction. 
+
+Since a tt(%left '+') was specified, b() drops the shift alternative, and a
+listing of the grammar's construction process (using the option
+tt(--construction)) shows for state 5:
+        verb(
+    State 5:
+    0: [P4 3] expr -> expr '+' expr  .   { NR '+' <EOF> }  1, () -1
+    1: [P4 1] expr -> expr  . '+' expr   { NR '+' <EOF> }  0, () 0
+      0: 
+      Reduce item(s): 0 
+        )
+    The shift action (implied by item 1) is not reported.

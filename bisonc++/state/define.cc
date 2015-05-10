@@ -121,7 +121,9 @@ void State::define(Rules const &rules)
         s_state[idx]->construct();  // define all states (starting at state 0)
     while (++idx != s_state.size());
 
-    s_state[0]->propagateLA();      // propagate the LA set
+    // State 0's initial LA set is already set in initialSate.
+//    s_state[0]->propagateLA();      // propagate the LA set
+    s_state[0]->determineLAsets();
 
     // Set the accept-state:
     //

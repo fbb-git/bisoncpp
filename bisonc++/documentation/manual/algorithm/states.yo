@@ -1,37 +1,44 @@
-Having determined the tt(FIRST) and tt(FOLLOW) sets, b() determines the
+Having determined the tt(FIRST) set, b() determines the
 em(states) of the grammar. The analysis starts at the augmented grammar rule
 and proceeds until all possible states have been determined. 
-For this analysis the concept of the em(dot) symbol is used. The em(dot) shows
-the position we are when analyzing production rules defined by a grammar.
+In this analysis the concept of the em(dot) symbol is used. The em(dot) shows
+the position we are at when analyzing production rules defined by a grammar.
 Using the provided example grammar the analysis proceeds as follows:
     itemization(
     it() State 0: tt(start_$ -> . start)nl()
         At this point we haven't seen anything yet. The em(dot) is before the
 grammar's start symbol. The above is called an em(item) and the initial set of
-states is called the set of em(kernel items). In this state there's only one
-kernel item. Items are indexed, so this item receives index 0. Beyond, item
-indices are shown together with the items themselves. To the kernel set all
-production rules of non terminals immediately following the dot are added
-(repeatedly, so if new rules again show nonterminals to the right of the dot,
-then their production rules are added too). These added rules define the
-non-kernel set of items. Except for the augmented grammar rule's state kernel
-items don't have dots at their first positions.
+items of a state is called the set of em(kernel items). Except for the start
+rule, kernel items never have a dot before the very first symbol of a rule. In
+this particular state there's only one kernel item. Items are indexed, so this
+item receives index 0. Beyond, item indices are shown together with the items
+themselves. If a non-terminal follows immediately to the right of the dot,
+then all production rules of that non-terminal are added to the state as
+non-kernel items. Non-kernel items always have their dots at the very first
+position. Adding non-kernel items is a recursive process. If the rules of thus
+added items also show non-terminals to the right of the dot, then the
+production rules of those non-terminals are added too (unless they were
+already added). 
 
-    From the above kernel item the following non-kernel items are derived:
+    The above kernel item results in the addition of the following non-kernel
+items:
         itemization(
         it() item 1: tt(start ->  . start expr)
         it() item 2: tt(start ->  . )
         )
-    From the items new states are derived: each em(transition) moves the dot
-one postition to the right. Once the dot has reached the end of the rule, a
-em(reduction) may take place. Following a reduction a transition based on the
-tt(LHS) of the reduced production rule is performed. This process is discussed
-in more detail in section ref(PARSING). 
+    From each of the items new states may be derived. New states are reached
+when the symbol to the right of the dot has been recognized. In that case a
+em(transition) (a em(goto)) to the next state takes place, where the dot has
+moved one postition to the right, defining a kernel item of the new
+state. Once the dot has reached the end of the rule, a em(reduction) may take
+place. Following a reduction a transition based on the em(Left Hand Side)
+(tt(LHS)) of the reduced production rule is performed. This procedure is
+discussed in more detail in section ref(PARSING).
 
-    Looking at the state's items, two actions are detected:
+    Looking at the current state's items, two actions are possible:
     itemization(
     it() On tt(start), to a state in which tt(start) has been seen (state 1)
-    it() By default, reduce by the rule tt(start ->  . )
+    it() By default, a reduction by the rule tt(start ->  . )
     )
 
     it() State 1: kernel items:
@@ -39,14 +46,16 @@ in more detail in section ref(PARSING).
         it() item 0: tt(start_$ -> start  .)
         it() item 1: tt(start -> start  . expr)
         )
-        Non-kernel items:
+        Since tt(expr) is a non-terminal to the right of the dot, we add
+        all tt(expr) rules as this state's non-kernel items:
         itemization(
         it() item 2: tt(expr ->  . NR)
         it() item 3: tt(expr ->  . expr '+' expr)
         )
-    This state becomes the em(accepting) state: if in this state EOF is
-reached, the tt(start_$) rule has been recognized, and so the input could be
-recognized by the grammar. Other transitions are possible to, though:
+    This state becomes the em(accepting) state: if EOF is reached in this
+state, the tt(start_$) rule has been recognized, and so the input was
+syntactically correct. But in this state  transitions to other states are also
+possible:
         itemization(
         it() On tt(expr) to state 2
         it() On NR to state 3
@@ -57,8 +66,9 @@ recognized by the grammar. Other transitions are possible to, though:
         it() item 0: tt(start -> start expr  .)
         it() item 1: tt(expr -> expr  . '+' expr)
         )
-        No non-kernel items need to be added to this state. It has the
-        following transitions:
+        No non-terminal symbols appear to the right of the dots in these
+items, so no non-kernel items are added to this state. Transitions from this
+state are:
         itemization(
         it() On tt('+') to state 4
         it() Or reduce to tt(start) according to its first item (removing
@@ -77,21 +87,23 @@ recognized by the grammar. Other transitions are possible to, though:
         itemization(
         it() item 0: tt(expr -> expr '+'  . expr)
         )
-        Two non-kernel items are added:
+        Since tt(expr) is a non-terminal to the right of the dot, we add
+        all tt(expr) rules as this state's non-kernel items:
         itemization(
         it() item 1: tt(expr -> . NR)
         it() item 2: tt(expr -> . expr '+'  expr)
         )
-        This state has the following transitions:
+        In this state the following transitions are possible:
         itemization(
         it() On tt(expr) to state 5 
-        it() On tt(NR) to state 3
+        it() On tt(NR) we reach the situation tt(expr -> NR .) which has
+        already been encountered at state 3. That's OK, so on tt(NR) there is
+        a transition to state 3.
         )
-        The last action is interesting in that it returns to a previously
-defined  state. That's OK, but it requires that a state is reached having
-exactly the matching number of kernel items. So, if state 3 would have had yet
-anoher state, a new state would have been constructed to where this state
-would transit on encountering a tt(NR) token.
+        Note that in order to return to a previously defined state that state
+must have exactly the required kernel items. So, if state 3 would contain
+multiple kernel items, a new state would have been required, merely having the
+tt(expr -> NR .) kernel item.
 
     it() State 5: kernel items:
         itemization(
@@ -105,7 +117,8 @@ would transit on encountering a tt(NR) token.
             elements from the parser's stack).
         )
 
-        With the current grammar it turns out (and the reason why this is so
-        is explained in the next section) that the first action will
-        never take place: in this state there will always be a reduction.
+        With the current grammar it turns out (as explained in the next
+        section) that this state's first action 
+        never takes place: in this state there only the reduction will be
+        performed.
     )

@@ -13,6 +13,10 @@
 // NOTE: To obtain all productions of a certain Non-Terminal, use
 //       NonTerminal's `productions()' member
 
+// A Production is a vector of symbols. Its elements specify the RHS elements
+// of the producion LHS -> RHS. Several of the vector's public members are
+// available, see the public: section.
+
 class Production: private std::vector<Symbol *>
 {
     typedef std::vector<Symbol *> Inherit;

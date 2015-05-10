@@ -1,0 +1,5 @@
+instead of State:propagateLA the member State::determineLAsets is used.
+
+determinelasets.cc
+computelasets.cc
+

@@ -169,6 +169,11 @@ class State
         static void updateLA(size_t itemIdx, LookaheadContext &context);
 
         void propagateLA(); // propagate the LA's over the State's items.
+
+
+        void determineLAsets();
+        void computeLAsets();
+        void distributeLAsetsOf(StateItem &item);
 };
 
 inline int State::type() const
