@@ -173,7 +173,7 @@ class State
 
         void determineLAsets();
         void computeLAsets();
-        void distributeLAsetsOf(StateItem &item);
+        void distributeLAsetOf(StateItem &item);
 };
 
 inline int State::type() const

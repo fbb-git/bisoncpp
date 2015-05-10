@@ -64,6 +64,9 @@ class StateItem
         Symbol const *precedence() const;   // a Terminal
         size_t nr() const;                  // the item's production number
 
+        Symbol const *lhs() const;          // the lhs symbol of the
+                                            // production rule of this item.
+
         static void addProduction(Production const *production, 
                                   StateItem::Vector &stateItem,
                                   size_t idx);
@@ -120,6 +123,11 @@ inline std::vector<size_t> const &StateItem::child() const
 inline Symbol const *StateItem::symbolAtDot() const
 {
     return d_item.dotSymbolOr0();
+}
+
+inline Symbol const *StateItem::lhs() const
+{
+    return d_item.lhs();
 }
 
 inline void StateItem::setNext(size_t next)

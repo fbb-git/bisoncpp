@@ -19,14 +19,14 @@
 // 
 //         for each item `itm' containing a production rule for B
 //         {
-//             if item itm's LA set is unequal to b then
+//             if b has unique elements compared to item itm's LA set
 //             {
 //                 add the unique elements of b to item itm's LA set
 //                 distributeLAsetOfItem(itm).
 //             }
 //         }
 
-void State::distributeLAsetsOf(StateItem &stateItem) 
+void State::distributeLAsetOf(StateItem &stateItem) 
 {
     Item const &item = stateItem.item();
 
@@ -39,17 +39,21 @@ void State::distributeLAsetsOf(StateItem &stateItem)
                                             // items.
 
                                             // FIRST(c) of rule a.Bc
-    bool hadEpsilon = item.firstBeyondDot(&candidate.firstSet());
+                                            // if true, FIRST(c) contained
+                                            // epsilon and so also receives 
+                                            // current LA-set 
+    if (item.firstBeyondDot(&candidate.firstSet()))
+        candidate += firstSet();            
     
-    if (hadEpsilon)                         // if true, FIRST(c) contained
-        candidate.firstSet() += item.firstSet();    // epsilon and also
-                                                    // receives the current
-                                                    // LA-set 
-    
-    for(Item &item: d_itemVector)
-    {
-        
-
+    for(StateItem &stItem: d_itemVector)    // inspect all STATEitems of this
+    {                                       // state
+        if (
+            stItem.lhs() == beyondDot       // if item is a productionrule of
+            &&                              // B (= beyondDot)
+            stItem.enlargeLA(candidate);    // and unique elements of
+        )                                   // candidate could be added
+            distributeLAsetOf(stItem);      // then distribute the updated LA
+                                            // set of that state-item.
 }
 
 

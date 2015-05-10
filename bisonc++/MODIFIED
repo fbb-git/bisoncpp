@@ -2,4 +2,8 @@ instead of State:propagateLA the member State::determineLAsets is used.
 
 determinelasets.cc
 computelasets.cc
+distributelaset.cc
 
+NON-CRITICAL: 
+    check why lookaheadset::operatorsubis.cc removes the e_withEOF from the
+    lhs la set 
