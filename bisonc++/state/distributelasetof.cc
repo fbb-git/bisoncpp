@@ -43,17 +43,17 @@ void State::distributeLAsetOf(StateItem &stateItem)
                                             // epsilon and so also receives 
                                             // current LA-set 
     if (item.firstBeyondDot(&candidate.firstSet()))
-        candidate += firstSet();            
+        candidate += candidate.firstSet();            
     
     for(StateItem &stItem: d_itemVector)    // inspect all STATEitems of this
     {                                       // state
         if (
             stItem.lhs() == beyondDot       // if item is a productionrule of
             &&                              // B (= beyondDot)
-            stItem.enlargeLA(candidate);    // and unique elements of
+            stItem.enlargeLA(candidate)     // and unique elements of
         )                                   // candidate could be added
             distributeLAsetOf(stItem);      // then distribute the updated LA
-                                            // set of that state-item.
+    }                                       // set of that state-item.
 }
 
 
