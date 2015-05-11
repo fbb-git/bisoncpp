@@ -26,7 +26,11 @@ void State::inspectTransitions(set<size_t> &todo)
                  dest.d_itemVector.begin() + dest.d_nKernelItems,
                 [&](StateItem &stItem)
                 {
-                    if (stItem.enlargeLA(laSet))
+                    if 
+                    (
+                        item.item().transitsTo(stItem.item())
+                        && stItem.enlargeLA(laSet)
+                    )
                         enlarged = true;
                 }
             );
