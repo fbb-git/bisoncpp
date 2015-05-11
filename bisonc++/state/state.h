@@ -3,6 +3,7 @@
 
 #include <iosfwd>
 #include <vector>
+#include <set>
 
 #include "../statetype/statetype.h"
 #include "../next/next.h"
@@ -171,9 +172,11 @@ class State
         void propagateLA(); // propagate the LA's over the State's items.
 
 
-        void determineLAsets();
+        static void determineLAsets();
+
         void computeLAsets();
         void distributeLAsetOf(StateItem &item);
+        void inspectTransitions(std::set<size_t> &todo);
 };
 
 inline int State::type() const

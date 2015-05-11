@@ -20,23 +20,52 @@ tt(aB.c)).
 The LA sets of the items of a state (state tt(idx)) are computed using this
 algorithm which first computes the LA sets of its items, and then propagates
 the LA sets of items to the states for which state transitions have been
-defined. Then, the LA sets are computed for all items of all modified states:
+defined. To determine the states to where the LA sets must propagate an
+(ordered) set of states is used. When the LA sets of the items of a state have
+been determined, then the transitions to other states (transitions to the
+current state can be ignored as the LA sets of that state's items have already
+been determined). If the LA set of the item from where the transition to the
+destination state's item is realized has unique LA tokens then those tokens
+are added to the target item's LA set, and its state is entered into the
+ordered set of states to update. The LA sets of the items of the states stored
+in the set are computed, and the algorithm terminates once the set is empty.
+
+Here is the pseudo code of the above algorithm:
     verb(
-    determineLAsetsOfState(idx):
-        compute the LA sets of state idx's items.
+    the todo-set is initialized with state 0.
+    while (not todo.empty())
+    {
+        get the first state idx from the todo set and remove it fm the set
 
-        for each item `src' for which a transition to state `next' 
-        has been defined:
-        {
-            compute u = unique(src, next)
+        computeLAsets of state idx
 
-            if u is not empty then add u to the item matching item src in
-            state next, flagging state next as a modified state.
-        }
+        visit all transitions to other states:
+            if the LA set of an item, transiting to another state
+            holds unique items wrt the LA sets of the kernel items of that
+            destination state, then add these unique items to the LA sets of
+            the kernel items of that destination state, and add that state's
+            idx to the todo set 
+    }
+        )
 
-        for each flagged state `idx':
-            computeLAsetsOfState(idx)
-    )
+// OBSOLETE:
+//Then, the LA sets are computed for all items of all modified states:
+//    verb(
+//    determineLAsetsOfState(idx):
+//        compute the LA sets of state idx's items.
+//
+//        for each item `src' for which a transition to state `next' 
+//        has been defined:
+//        {
+//            compute u = unique(src, next)
+//
+//            if u is not empty then add u to the item matching item src in
+//            state next, flagging state next as a modified state.
+//        }
+//
+//        for each flagged state `idx':
+//            computeLAsetsOfState(idx)
+//    )
 
 The next algorithm is used to compute the LA sets of the items of a state:
     verb(

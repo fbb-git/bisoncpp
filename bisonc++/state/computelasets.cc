@@ -8,4 +8,8 @@ void State::computeLAsets()
             distributeLAsetOf(kernelItem);
         }
     );
+
+        cout << "\nFinal LA sets:\n";
+        for (auto const &stItem: d_itemVector)
+            cout << stItem << ", LA set: " << stItem.lookaheadSet() << '\n';
 }
