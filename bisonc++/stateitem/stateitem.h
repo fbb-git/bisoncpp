@@ -54,12 +54,12 @@ class StateItem
         std::vector<size_t> const &child() const;
         LookaheadSet const &lookaheadSet() const;
         size_t lookaheadSetSize() const;
-        bool nextEnlarged() const;
+//        bool nextEnlarged() const;
         Production const *production() const;
 
         void setChildren(std::vector<size_t> const &dep);
         void setNext(size_t next);
-        void clearNextEnlarged();
+//        void clearNextEnlarged();
 
         Symbol const *precedence() const;   // a Terminal
         size_t nr() const;                  // the item's production number
@@ -71,7 +71,7 @@ class StateItem
                                   StateItem::Vector &stateItem,
                                   size_t idx);
 
-        static bool propagateLA(StateItem &stateItem, Vector &vector);
+//        static bool propagateLA(StateItem &stateItem, Vector &vector);
 
         static bool containsKernelItem(Item const &item, 
                                        size_t nKernelItems,
@@ -91,14 +91,14 @@ class StateItem
         std::ostream &itemContext(std::ostream &out) const;
 
     private:
-        static void propagate(size_t idx, 
-                              Vector &vector, LookaheadSet const &proposedLA);
+//        static void propagate(size_t idx, 
+//                              Vector &vector, LookaheadSet const &proposedLA);
 };
 
-inline bool StateItem::nextEnlarged() const
-{
-    return d_nextEnlarged;
-}
+//inline bool StateItem::nextEnlarged() const
+//{
+//    return d_nextEnlarged;
+//}
 
 inline LookaheadSet const &StateItem::lookaheadSet() const
 {
@@ -145,10 +145,10 @@ inline Item const &StateItem::item() const
     return d_item;
 }
 
-inline void StateItem::clearNextEnlarged()
-{
-    d_nextEnlarged = false;
-}
+//inline void StateItem::clearNextEnlarged()
+//{
+//    d_nextEnlarged = false;
+//}
 
 inline Symbol const *StateItem::precedence() const
 {

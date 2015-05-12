@@ -10,24 +10,22 @@
 // augmented with the parent's LA set itself.
 
 
-bool StateItem::propagateLA(StateItem &stateItem, Vector &vector)
-{
-    if (!stateItem.d_LA_enlarged)
-        return false;
-
-    stateItem.d_LA_enlarged = false;
-    stateItem.d_nextEnlarged = true;
-
-    LookaheadSet proposedLA;
-    
-    if (stateItem.d_item.firstBeyondDot(&proposedLA.firstSet()))
-        proposedLA += stateItem.d_LA;
-
-    for (auto idx: stateItem.d_child)
-        propagate(idx,  vector, proposedLA);
-
-    return true;
-}
-
-
+//bool StateItem::propagateLA(StateItem &stateItem, Vector &vector)
+//{
+//    if (!stateItem.d_LA_enlarged)
+//        return false;
+//
+//    stateItem.d_LA_enlarged = false;
+//    stateItem.d_nextEnlarged = true;
+//
+//    LookaheadSet proposedLA;
+//    
+//    if (stateItem.d_item.firstBeyondDot(&proposedLA.firstSet()))
+//        proposedLA += stateItem.d_LA;
+//
+//    for (auto idx: stateItem.d_child)
+//        propagate(idx,  vector, proposedLA);
+//
+//    return true;
+//}
 

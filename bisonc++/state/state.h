@@ -158,18 +158,18 @@ class State
         void showSRConflicts(Rules const &rules) const;
         void showRRConflicts(Rules const &rules) const;
 
-        struct LookaheadContext 
-        {
-            std::vector<State *> child;
+//        struct LookaheadContext 
+//        {
+//            std::vector<State *> child;
+//
+//            StateItem::Vector &parentItem;
+//            bool visitChildState;
+//            StateItem::Vector::iterator childKernel;
+//        };
+//        static void distributeLA(Next &next, LookaheadContext &context);
+//        static void updateLA(size_t itemIdx, LookaheadContext &context);
 
-            StateItem::Vector &parentItem;
-            bool visitChildState;
-            StateItem::Vector::iterator childKernel;
-        };
-        static void distributeLA(Next &next, LookaheadContext &context);
-        static void updateLA(size_t itemIdx, LookaheadContext &context);
-
-        void propagateLA(); // propagate the LA's over the State's items.
+//        void propagateLA(); // propagate the LA's over the State's items.
 
 
         static void determineLAsets();
