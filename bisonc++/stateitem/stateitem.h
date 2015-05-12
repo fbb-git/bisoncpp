@@ -32,6 +32,9 @@ class StateItem
                                     // next state (initialized to npos by
                                     // default)
 
+//    size_t  d_nextItem;             // the kernel item in the next state
+                                    // this StateItem transits to (or npos)
+
     static std::ostream &(StateItem::*s_insertPtr)(std::ostream &out) const;
 
     public:

@@ -10,9 +10,22 @@ Defining states proceeds as follows:
 
          initialState();
 
+    Following this, states are constructed via State::construct, initially
+    called for the initial state (state 0)
+
+    State construction (i.e., State::construct) consists of two steps:
+
+        1. All items are defined in State::setItems as either reducible items
+           (no transitions) or non-reducible items (when the dot is not beyond
+            the last item's symbol). Whenever there are non-reducible items 
+
+        2.
+
  1. From the state's kernel item(s) all implied rules are added as
     additional state items. This results in a vector of (kernel/non-kernel)
-    items, as well as per item the numbers of the items that are affected
+    items,
+ 
+    >>!! as well as per item the numbers of the items that are affected
     by this item. This information is used later on to propagate the
     LA's. This part is realized by the member
          
@@ -28,6 +41,10 @@ Defining states proceeds as follows:
            allowing quick access of the d_nextVector element defining the
            state having the current item as its kernel. A next value 'npos'
            indicates that the item does not belong to a next-kernel.
+
+But which next-state item is this?
+==================================
+
 
     E.g., 
 
@@ -85,9 +102,9 @@ Defining states proceeds as follows:
          constructNext()
 
     A next state is only constructed if it wasn't constructed yet. For a new
-    state, the construct() member is called. Construct() calls setItems()
-    and propagateLA(). Otherwise, propagateLA will also be called for all
-    states having kernels whose next LA-enlarged flag is set.
+    state, the construct() member is called. Construct() calls setItems().
+
+-----------------------------------------------------------------------------
 
  4. Once all states have been constructed, conflicts are located and
     solved. If a state contains conflict, they are resolved and
