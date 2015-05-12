@@ -21,11 +21,10 @@ Defining states proceeds as follows:
     This fills the StateItem::Vector vector. A StateItem contains
 
         1. an item (containing a production rule, dot position, and LA set)
-        2. a LA-enlarged flag, raised when an item's LA set is enlarged
-        3. a size_t vector of indices of `dependent' items, indicating which
+        2. a size_t vector of indices of `dependent' items, indicating which
            items have LA sets that depend on the current item
            (StateItem::d_child).
-        4. The size_t field `next' holds the index in d_nextVector,
+        3. The size_t field `next' holds the index in d_nextVector,
            allowing quick access of the d_nextVector element defining the
            state having the current item as its kernel. A next value 'npos'
            indicates that the item does not belong to a next-kernel.
@@ -33,13 +32,13 @@ Defining states proceeds as follows:
     E.g., 
 
     StateItem:
-    ---------------------------------------------------------------
-    item        LA-enlarged LA-set  dependent   next    next
-                                    stateitems  state   LA-enlarged
-    ---------------------------------------------------------------
-    S* -> . S,  false,      EOF,    (1, 2)      0       true/false
+    -------------------------------------
+    item        LA-set  dependent   next 
+                        stateitems  state
+    -------------------------------------
+    S* -> . S,  EOF,    (1, 2)      0    
     ...
-    ---------------------------------------------------------------
+    -------------------------------------
 
     Also, State::d_nextVector vector is filled.
 
@@ -61,13 +60,8 @@ Defining states proceeds as follows:
      ...
      -------------------------------
 
-    Previously, nextOnSymbol() was called here. It simply removed the
-    production rules where dot appeared at the rule's end, since they will not
-    become part of the next state's kernels.
-     
     Empty production rules don't require special handling as they won't appear
-    in the Next table, since there's no transition on them. Thus, the
-    previously mentioned nextOnSymbol() function is now no longer required.
+    in the Next table, since there's no transition on them.
 
     Next, from these facilities all states are constructed. LA propagation is
     performed after the state construction since LA propagation is an
@@ -75,14 +69,14 @@ Defining states proceeds as follows:
     construction takes place (in the while loop in State::define.cc following
     the initial state construction).
 
- 2. Following the state construction the lookaheads (LAs) will be propagated
-    over the items in the current state. This is where previous bisonc++
-    versions erred. LAs are distributed over and determined for each
-    individual item, and are then inherited by the next states. Also, LAs can
-    be determined during the construction of a state, instead of during a
-    separate cycle. LAs are propagated from the initial state over the
-    dependent StateItems. Lookahead propagation is performed by the member
-                 
+|| 2. Following the state construction the lookaheads (LAs) will be propagated
+||    over the items in the current state. This is where previous bisonc++
+||    versions erred. LAs are distributed over and determined for each
+||    individual item, and are then inherited by the next states. Also, LAs can
+||    be determined during the construction of a state, instead of during a
+||    separate cycle. LAs are propagated from the initial state over the
+||    dependent StateItems. Lookahead propagation is performed by the member
+||                 
          propagateLA()
 
  3. Then, from the Next::Vector constructed at (1) the next states

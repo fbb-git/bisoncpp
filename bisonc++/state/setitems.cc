@@ -31,15 +31,15 @@
 //
 //  StateItems (in d_itemVector):
 //  ------------------------------------------------------------
-//  item            LA-enlarged LA-set  dependent   offet in 
-//                                      stateitems  d_next
-//  ------------------------------------------------------------
-//  S* -> . S,      false,      EOF,    (1, 2)      0
-//  S  -> . L = R                       (3,  )      1
+//  item            LA-set  dependent   offet in 
+//                          stateitems  d_next
+//  ------------------------------------------------
+//  S* -> . S,      EOF,    (1, 2)      0
+//  S  -> . L = R           (3,  )      1
 //  S  -> . R
 //  L  -> . * R
 //  ... (etc)
-//  ------------------------------------------------------------
+//  ------------------------------------------------
 //
 //  Moreover, the Next vector will be adapted:
 //
@@ -58,7 +58,8 @@
 
 void State::setItems()
 {
-    size_t idx = 0;
+    size_t idx = 0;                 // do not use a for stmnt here, as
+                                    // notReducible may extend d_itemVector
 
     while (idx < d_itemVector.size())
     {
