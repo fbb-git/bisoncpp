@@ -35,7 +35,9 @@ class StateItem
     size_t  d_next;                 // offset in a Next array defining the 
                                     // next state (initialized to npos by
                                     // default)
-    bool    d_nextEnlarged;         // true if its d_next item's LA set is 
+
+    bool    TO_REMOVE_2;
+//    bool    d_nextEnlarged;         // true if its d_next item's LA set is 
                                     // enlarged.
 
     static std::ostream &(StateItem::*s_insertPtr)(std::ostream &out) const;
@@ -91,9 +93,9 @@ class StateItem
         static void inserter(std::ostream &(StateItem::*insertPtr)
                                          (std::ostream &out) const);
         std::ostream &plainItem(std::ostream &out) const;
-        std::ostream &itemContext(std::ostream &out) const;
+        std::ostream &itemContext(std::ostream &out) const; // MODIFIED
 
-    private:
+//    private:
 //        static void propagate(size_t idx, 
 //                              Vector &vector, LookaheadSet const &proposedLA);
 };

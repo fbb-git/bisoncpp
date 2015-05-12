@@ -5,7 +5,8 @@
 
 ostream &StateItem::itemContext(ostream &out) const
 {
-    out << d_item << "  "  << d_LA << "  " << d_nextEnlarged << ", (";
+//    out << d_item << "  "  << d_LA << "  " << d_nextEnlarged << ", (";
+    out << d_item << "  "  << d_LA << ", (";
 
     copy(d_child.begin(), d_child.end(), 
         ostream_iterator<size_t>(out, " "));
