@@ -16,7 +16,7 @@
 // A StateItem represents an item in one of the grammar's states. The
 // information of a StateItem is displayed when --construction is used and is
 // of a form like
-//              0: [P1 1] S -> C  . C   { <EOF> }  0, (1 2 ) 0
+//              0: [P1 1] S -> C  . C   { <EOF> }  (1 2 ) 0
 
 class StateItem
 {
@@ -26,19 +26,11 @@ class StateItem
     Item    d_item;                 // The item
     LookaheadSet d_LA;              // its Lookahead set
 
-    bool TO_REMOVE;
-//    bool    d_LA_enlarged;          // true if enlarged (so check its
-                                    // children)
-
     std::vector<size_t> d_child;    // offsets of its children (items added
                                     // because the current item is a N-symbol
     size_t  d_next;                 // offset in a Next array defining the 
                                     // next state (initialized to npos by
                                     // default)
-
-    bool    TO_REMOVE_2;
-//    bool    d_nextEnlarged;         // true if its d_next item's LA set is 
-                                    // enlarged.
 
     static std::ostream &(StateItem::*s_insertPtr)(std::ostream &out) const;
 
@@ -59,12 +51,10 @@ class StateItem
         std::vector<size_t> const &child() const;
         LookaheadSet const &lookaheadSet() const;
         size_t lookaheadSetSize() const;
-//        bool nextEnlarged() const;
         Production const *production() const;
 
         void setChildren(std::vector<size_t> const &dep);
         void setNext(size_t next);
-//        void clearNextEnlarged();
 
         Symbol const *precedence() const;   // a Terminal
         size_t nr() const;                  // the item's production number
@@ -75,8 +65,6 @@ class StateItem
         static void addProduction(Production const *production, 
                                   StateItem::Vector &stateItem,
                                   size_t idx);
-
-//        static bool propagateLA(StateItem &stateItem, Vector &vector);
 
         static bool containsKernelItem(Item const &item, 
                                        size_t nKernelItems,
@@ -94,16 +82,7 @@ class StateItem
                                          (std::ostream &out) const);
         std::ostream &plainItem(std::ostream &out) const;
         std::ostream &itemContext(std::ostream &out) const; // MODIFIED
-
-//    private:
-//        static void propagate(size_t idx, 
-//                              Vector &vector, LookaheadSet const &proposedLA);
 };
-
-//inline bool StateItem::nextEnlarged() const
-//{
-//    return d_nextEnlarged;
-//}
 
 inline LookaheadSet const &StateItem::lookaheadSet() const
 {
@@ -149,11 +128,6 @@ inline Item const &StateItem::item() const
 {
     return d_item;
 }
-
-//inline void StateItem::clearNextEnlarged()
-//{
-//    d_nextEnlarged = false;
-//}
 
 inline Symbol const *StateItem::precedence() const
 {
