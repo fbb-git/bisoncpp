@@ -6,7 +6,7 @@ bool StateItem::enlargeLA(LookaheadSet const &parentLA)
         return false;
 
     d_LA += parentLA;           // enlarge the LA set
-    d_LA_enlarged = true;       // and raise the flag
+//    d_LA_enlarged = true;       // and raise the flag
 
     return true;
 }

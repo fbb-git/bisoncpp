@@ -25,8 +25,11 @@ class StateItem
 
     Item    d_item;                 // The item
     LookaheadSet d_LA;              // its Lookahead set
-    bool    d_LA_enlarged;          // true if enlarged (so check its
+
+    bool TO_REMOVE;
+//    bool    d_LA_enlarged;          // true if enlarged (so check its
                                     // children)
+
     std::vector<size_t> d_child;    // offsets of its children (items added
                                     // because the current item is a N-symbol
     size_t  d_next;                 // offset in a Next array defining the 
@@ -41,10 +44,10 @@ class StateItem
         typedef std::vector<StateItem> Vector;
         typedef Vector::const_iterator ConstIter;
 
-        StateItem();
-        StateItem(Item const &item);
+        StateItem();                                    // MODIFIED
+        StateItem(Item const &item);                    // MODIFIED
 
-        void setLA(LookaheadSet const &laSet);
+        void setLA(LookaheadSet const &laSet);          // MODIFIED
         bool enlargeLA(LookaheadSet const &parentLA);
 
         size_t next() const;
