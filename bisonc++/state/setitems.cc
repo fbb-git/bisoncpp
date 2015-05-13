@@ -2,8 +2,8 @@
 
 //  Walk over all state items. See the tables below for an explanation
 //
-//  An N-symbol at the dot-position (e.g., S, L, R) will have its production
-//  rules added to d_itemVector.
+//  Production rules of N-symbols following the dot-position (e.g., S, L, R) 
+//  are added to d_itemVector.
 //
 //  Each of these N symbols will be added to the state's d_nextVector (unless
 //  it's already there).
