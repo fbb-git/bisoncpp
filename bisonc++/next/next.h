@@ -39,8 +39,15 @@ class Next
                                         // production rule
         size_t d_next;                  // the index of the state to transit 
                                         // to on d_symbol. 
-        std::vector<size_t> d_kernel;   // indices of kernel items from which
-                                        // shifts (transits) are possible
+
+        std::vector<size_t> d_kernel;   // d_kernel[idx] contains the index of
+                                        // an item in the `parent' state
+                                        // (i.e., the state transiting to
+                                        // state d_next on d_symbol) to
+                                        // d_next's (kernel) item idx. So, the
+                                        // number of kernel items in state
+                                        // d_next is equal to d_kernel.size().
+
         StateType d_stateType;          // the type of the state 
     
         static std::ostream &(Next::*s_insertPtr)(std::ostream &out) const;
