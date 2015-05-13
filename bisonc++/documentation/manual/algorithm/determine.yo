@@ -48,25 +48,6 @@ Here is the pseudo code of the above algorithm:
     }
         )
 
-// OBSOLETE:
-//Then, the LA sets are computed for all items of all modified states:
-//    verb(
-//    determineLAsetsOfState(idx):
-//        compute the LA sets of state idx's items.
-//
-//        for each item `src' for which a transition to state `next' 
-//        has been defined:
-//        {
-//            compute u = unique(src, next)
-//
-//            if u is not empty then add u to the item matching item src in
-//            state next, flagging state next as a modified state.
-//        }
-//
-//        for each flagged state `idx':
-//            computeLAsetsOfState(idx)
-//    )
-
 The next algorithm is used to compute the LA sets of the items of a state:
     verb(
     computeLAsetsOfState(stateIdx)
