@@ -26,24 +26,19 @@
 //             }
 //         }
 
-string margin;
-size_t level;
-
 void State::distributeLAsetOf(StateItem &stateItem) 
 {
-//    cout << "\n" << margin << level << ": " <<
-//            "distribute LA set of item " << stateItem << 
-//                 ", LA set: " << stateItem.lookaheadSet() << '\n';
-
     Item const &item = stateItem.item();
 
     Symbol const *beyondDot = item.beyondDotIsNonTerminal();
 
-    if (not beyondDot)
-        return;
+    if (not beyondDot)                      // no additional rules if the item
+        return;                             // byond the dot is not a
+                                            // non-terminal symbol
 
-    LookaheadSet candidate;                 // the candidate LA set for other
-                                            // items.
+    LookaheadSet candidate;                 // the candidate LA set for items
+                                            // representing rules of symbol
+                                            // beyondDot
 
                                             // FIRST(c) of rule a.Bc
                                             // if true, FIRST(c) contained
@@ -52,9 +47,6 @@ void State::distributeLAsetOf(StateItem &stateItem)
     if (item.firstBeyondDot(&candidate.firstSet()))
         candidate += stateItem.lookaheadSet();
 
-//    cout << margin << level << ": " << 
-//            "candidate: " << candidate << ", checking items\n";
-    
     for (StateItem &stItem: d_itemVector)    // inspect all STATEitems of this
     {                                       // state
         if (
@@ -62,17 +54,8 @@ void State::distributeLAsetOf(StateItem &stateItem)
             &&                              // B (= beyondDot)
             stItem.enlargeLA(candidate)     // and unique elements of
         )                                   // candidate could be added
-        {
-//            cout << margin << level << ": "<< "    stItem: " << stItem << " "
-//                        "NEW LA set: " << stItem.lookaheadSet() << '\n';
-//            margin += "  ";
-//            ++level;
             distributeLAsetOf(stItem);      // then distribute the updated LA
-//            margin.resize(margin.size() - 2);
-//            --level;
-        }
     }                                       // set of that state-item.
-//    cout << margin << level << ": all items inspected\n\n";
 }
 
 

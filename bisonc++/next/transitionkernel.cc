@@ -15,10 +15,9 @@ ostream &Next::transitionKernel(ostream &out) const
     else
         out << "????";
 
-    out << " to state " << 
-
-
-           static_cast<int>(d_next) << " with (";
+    out << " to state " <<
+          d_next << " with (";
+//        static_cast<int>(d_next) << " with (";
 
     copy(d_kernel.begin(), d_kernel.end(), 
          ostream_iterator<size_t>(out, " "));
