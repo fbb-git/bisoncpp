@@ -5,44 +5,46 @@ void State::inspectTransitions(set<size_t> &todo)
 {
     for (StateItem const &item: d_itemVector)   // inspect all items
     {
-                                        // obtain item's LA set
-        LookaheadSet const &laSet = item.lookaheadSet();
+        size_t nextIdx = item.next();   // index in d_nextVector 
+                                        // to use with StateItem `item'
+                                // defining 
+                                // the state to transit to
 
-        size_t next = item.next();      // offset in d_nextVector defining 
-                                        // the state to transit to
+        if (nextIdx == string::npos)    // no transition from this StateItem:
+            continue;                   // continue with the next StateItem
 
-        if (next == string::npos)       // no transition from this stateItem:
-            continue;                   // continue with the next stateItem
+        Next const &next = d_nextVector[nextIdx];
 
-        next = d_nextVector[next].next();  // idx of the state to transit to
+        size_t nextState = next.next(); // the index of the state to transit 
+                                        // to
 
-        if (next == d_idx)          // ignore transitions to the current state
+        if (nextState == d_idx)     // ignore transitions to the current state
             continue;               // as that state's LA sets have already
                                     // been determined.
 
-        State &dest = *s_state[next];   // info of the state to transit to
+        State &dest = *s_state[nextState];  // info of the state to transit to
         
                                     // see if the dest state kernel item's LA
                                     // sets can be enlarged
 
-        auto &kernel = d_nextVector[next].kernel();  // vector of item 
-                                    // indices in the current state transiting
-                                    // to kernel items in 'dest'
+        auto &kernel = next.kernel();  // item indices in the 
+                                    // current state transiting to kernel 
+                                    // items in 'dest'
 
-// WIP:
-
+// The Next elements in d_nextvector 
 //    for (auto const &next: d_nextVector)
 //    {
 //        cout << next << '\n';
-//        copy(next.kernel().begin(), next.kernel().end(), 
+//        copy(kernel.begin(), kernel.end(), 
 //             ostream_iterator<size_t>(cout, " "));
 //        cout << "\n\n";        
 //    }
 
-
-
+                                        // obtain current item's LA set
+        LookaheadSet const &laSet = item.lookaheadSet();
 
         bool enlarged = false;
+
         for_each(dest.d_itemVector.begin(), 
                  dest.d_itemVector.begin() + dest.d_nKernelItems,
                 [&](StateItem &stItem)
@@ -57,9 +59,11 @@ void State::inspectTransitions(set<size_t> &todo)
             );
 
         if (enlarged)               // if LA sets of the destination state's
-            todo.insert(next);      // kernel items were enlarged then
+            todo.insert(nextState); // kernel items were enlarged then
                                     // recompute its LA sets
     }       
 }
+
+
 
 
