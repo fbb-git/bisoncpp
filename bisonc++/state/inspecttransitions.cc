@@ -3,8 +3,56 @@
 
 void State::inspectTransitions(set<size_t> &todo)
 {
+cout << "\nState " << d_idx << ": transitions to other states\n";
+
+for (Next const &next: d_nextVector)
+{
+    size_t nextStateIdx = next.next();
+
+    if (nextStateIdx == string::npos)
+        continue;
+
+    for (size_t nextIdx = 0; nextIdx != next.kernel().size(); ++nextIdx)
+    {
+        size_t thisIdx = next.kernel()[nextIdx];
+
+        StateItem const &thisItem = d_itemVector[thisIdx];
+
+        State &nextState = *s_state[nextStateIdx];
+
+        StateItem &nextItem = nextState.d_itemVector[nextIdx];
+
+        cout << "\n       From Item " << thisIdx << 
+                " (" << thisItem << ")\n"
+                " to state " << next.next() << " item " << nextIdx <<
+                " (" << nextItem << ")\n";
+
+//        if (not thisItem.item().transitsTo(nextItem.item()))
+//            cout << "NO TRANSITION!!\n\n";
+
+        if (nextItem.enlargeLA(thisItem.lookaheadSet()))
+        {
+            cout << "   new LA set: " << nextItem.lookaheadSet() << 
+                    "   recompute " << nextStateIdx << '\n';
+            
+            todo.insert(nextStateIdx); // kernel items were enlarged then
+                                    // recompute its LA sets
+        }
+    }
+}
+
+return;
+
+
+cout << '\n';
+
+size_t srcItemIdx = 0;
+
     for (StateItem const &item: d_itemVector)   // inspect all items
     {
+//cout << "\n";
+    //       inspecting item " << srcItemIdx << ": " << item.item() << "\n";
+
         size_t nextIdx = item.next();   // index in d_nextVector 
                                         // to use with StateItem `item'
                                 // defining 
@@ -31,19 +79,10 @@ void State::inspectTransitions(set<size_t> &todo)
                                     // current state transiting to kernel 
                                     // items in 'dest'
 
-// The Next elements in d_nextvector 
-//    for (auto const &next: d_nextVector)
-//    {
-//        cout << next << '\n';
-//        copy(kernel.begin(), kernel.end(), 
-//             ostream_iterator<size_t>(cout, " "));
-//        cout << "\n\n";        
-//    }
-
                                         // obtain current item's LA set
         LookaheadSet const &laSet = item.lookaheadSet();
 
-        bool enlarged = false;
+size_t destItemIdx = 0;
 
         for_each(dest.d_itemVector.begin(), 
                  dest.d_itemVector.begin() + dest.d_nKernelItems,
@@ -54,14 +93,19 @@ void State::inspectTransitions(set<size_t> &todo)
                         item.item().transitsTo(stItem.item())
                         && stItem.enlargeLA(laSet)
                     )
-                        enlarged = true;
+{
+cout << "   from " << srcItemIdx << " to state " << nextState << " item " <<
+            destItemIdx << '\n';
+
+            todo.insert(nextState); // kernel items were enlarged then
+                                    // recompute its LA sets
+}
+                ++destItemIdx;
                 }
             );
 
-        if (enlarged)               // if LA sets of the destination state's
-            todo.insert(nextState); // kernel items were enlarged then
-                                    // recompute its LA sets
-    }       
+    ++srcItemIdx;
+    }
 }
 
 
