@@ -18,8 +18,6 @@ void State::determineLAsets()
     {
         auto iter = todo.begin();
 
-cout << "\nDetermine LA sets of state " << *iter << '\n';
-
         State &state = *s_state[*iter]; // determine LA sets of the items of
                                         // this state.
         todo.erase(iter);
