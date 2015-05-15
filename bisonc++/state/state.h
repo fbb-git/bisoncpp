@@ -99,10 +99,9 @@ class State
         static size_t nStates();
 
         static void allStates();
-
+                                        // defines all grammar-states and
+                                        // lookahead sets
         static void define(Rules const &rules);   
-                                // define all the grammar-states and
-                                // lookaheads 
 
         static ConstIter begin();       // iterator to the first State *
         static ConstIter end();         // and beyond the last

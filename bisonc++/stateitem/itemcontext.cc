@@ -1,11 +1,10 @@
 #include "stateitem.ih"
 
 // Produces:
-//  item - LA - LA-enlarged - next-enlarged - children - next-index
+//  item - LA - children - next-index
 
 ostream &StateItem::itemContext(ostream &out) const
 {
-//    out << d_item << "  "  << d_LA << "  " << d_nextEnlarged << ", (";
     out << d_item << "  "  << d_LA << ", (";
 
     copy(d_child.begin(), d_child.end(), 

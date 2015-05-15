@@ -10,18 +10,18 @@
 //  1. From the state's kernel item(s) all implied rules are added as
 //     additional state items. This results in a vector of (kernel/non-kernel)
 //     items, as well as per item the numbers of the items that are affected
-//     by this item. This information is used later on to propagate the
-//     LA's. This part is realized by the member
+//     by this item. This information is used later to compute the LA sets
+//     of the items. A set's items are determined from its kernel items by the
+//     member
 //          
 //          setItems()
 //
 //     This fills the StateItem::Vector vector. A StateItem contains
 //
 //         1. an item (production rule, dot position, LA set)
-//         2. a LA-enlarged flag, raised when an item's LA set is enlarged
-//         3. a size_t vector of `dependent' items, indicating which items
+//         2. a size_t vector of `dependent' items, indicating which items
 //            have LA sets that depend on the current item.
-//         4. The size_t field `next' holds the index in d_nextVector,
+//         3. The size_t field `next' holds the index in d_nextVector,
 //            allowing quick access of the d_nextVector element defining the
 //            state having the current item as its kernel. a next of npos
 //            indicates that the item does not belong to a next-kernel.
@@ -29,13 +29,13 @@
 //     E.g., 
 //
 //     StateItem:
-//     ---------------------------------------------------------------
-//     item        LA-enlarged LA-set  dependent   next    next
-//                                     stateitems  state   LA-enlarged
-//     ---------------------------------------------------------------
-//     S* -> . S,  false,      EOF,    (1, 2)      0       true/false
+//     ---------------------------------------------------
+//     item        LA-set  dependent   next    next
+//                         stateitems  state   LA-enlarged
+//     ---------------------------------------------------
+//     S* -> . S,  EOF,    (1, 2)      0       true/false
 //     ...
-//     ---------------------------------------------------------------
+//     ---------------------------------------------------
 //
 //     Also, the d_nextVector vector is filled.
 //
@@ -43,9 +43,9 @@
 //
 //          0. The symbol on which the transition takes place
 //          1. The number of the next state
-//          2. The indices of the StateItem::Vector defining the next
-//                 state's kernel 
-//      
+//          2. A StateItem::Vector object (size_t values) holding indices of 
+//    items in the current state. The elements's indices are the indices of 
+//    (kernel) items of the state to transfer to (the destination index).
 //      E.g., 
 //
 //      Next:
@@ -57,52 +57,38 @@
 //      ...
 //      -------------------------------
 //
-//     Also, the nextOnSymbol() is handled here, and nextOnSymbol will simply
-//     remove the production rules where dot is at the rule's end, since
-//     they will not become part of the next state's kernels.
-//      
 //     Empty production rules don't require special handling as they won't
-//     appear in the Next table, since there's no transition on them. Thus,
-//     the previously mentioned nextOnSymbol() function is no longer
-//     required. 
+//     appear in the Next table, since there's no transition on them.
 //
-//     From these facilities all states are now constructed. LA propagation is
-//     performed after the state construction since LA propagation is an
-//     inherently recursive process, and state construction isn't. State
-//     construction takes place below, in the while loop following the initial
-//     state construction.
+//     From these facilities all states are now constructed. LA sets are
+//     computed following the state construction by the member
+//     determineLAsets. 
 //
-//  2. [cancelled: nextOnSymbol()]
+//  2. The LA set of the kernel item of state 0 (the item representing the
+//     augmented grammar's production rule `S_$: . S') is by definition equal
+//     to $, representing EOF. From this by definition assigned LA set all LA
+//     sets of all items are determined. This computation is performed by
+//     state 0's member 'determineLAsets. 
 //
-//  3. Then the lookaheads (LAs)will be propagated over the items in the
-//     current state. This is where previous versions went wrong. LAs are
-//     distributed over and determined for each individual item, and are then
-//     inherited by the next states. Also, LAs can be determined during the
-//     construction of a state, instead of during a separate cycle. LAs are
-//     propagated from the initial state over the dependent StateItems
-//     Lookahead propagation is performed by the member
-//                  
-//          propagateLA()
-//
-//  4. Then, from the Next::Vector constructed at (1) the next states
+//  3. Then, from the Next::Vector constructed at (1) the next states
 //     are constructed. This is realized by the member
 //
 //          constructNext()
 //
 //     A next state will be constructed only if it wasn't constructed yet. For
-//     a new state, the construct() member will be called. Construct() will
-//     call setItems() and propagateLA(). Otherwise, propagateLA will also be
-//     called for all states having kernels whose next LA-enlarged flag is
-//     set. 
+//     a new state, the construct() member is called. Construct() calls
+//     setItems() and nextState()
+//
+//  4. Once all  states have been constructed, the LA sets of the items of all
+//     states are computed by determineLAsets().
 
-//  5. When all states have been constructed, conflicts are located and
-//     solved. If the state contains any conflict, they are resolved and
-//     information about these conflicts is stored in an SRConflict::Vector
-//     and/or RRConflict::Vector. Conflicts are identified and resolved by the
-//     member
-//          (static)checkConflicts();
-//     See README.states-and-conflicts for a description of the actions taken
-// by checkConflicts().
+//  4. When all states have been constructed and LA sets have been determined,
+//     conflicts may be located and solved. If the state contains any conflict,
+//     they are resolved and information about these conflicts is stored in an
+//     SRConflict::Vector and/or RRConflict::Vector. Conflicts are identified
+//     and resolved by the member (static)checkConflicts(); See
+//     README.states-and-conflicts for a description of the actions taken by
+//     checkConflicts().
 
 void State::define(Rules const &rules)
 {
@@ -122,7 +108,6 @@ void State::define(Rules const &rules)
     while (++idx != s_state.size());
 
     // State 0's initial LA set is already set in initialSate.
-//    s_state[0]->propagateLA();      // propagate the LA set
     s_state[0]->determineLAsets();
 
     // Set the accept-state:
