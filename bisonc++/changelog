@@ -1,14 +1,24 @@
 bisonc++ (4.10.00) 
 
-  * Rules causing conflicts are briefly mentioned immediately following the
-    SR/RR conflict-counts
-
-  * The class Symtab now uses an unordered_map rather than a mere map.
-
   * FOLLOW sets are not used when analyzing LALR(1) grammars. The class
     FollowSet and all operations on follow sets were removed.
 
+  * The LA set computation algorithm was reimplemented, a description of the 
+    algorithm is included in the manual and in several source files, in
+    particular state/determinelasets.cc. Both the state items' LA computation
+    and the LA propagation algorithms were completely reimplemented.
 
+  * Rules causing conflicts (after processing %left, %right, %nonassoc and/or
+    %expect) are briefly mentioned immediately following the SR/RR
+    conflict-counts.
+
+  * The class Symtab now uses an unordered_map rather than a mere map.
+
+  * The class-dependency diagram (README.class-setup) was updated to reflect
+    the latest changes. Same for the file CLASSES which is used by the build
+    script. 
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 16 May 2015 14:57:42 +0200
 
 bisonc++ (4.09.02) 
 
