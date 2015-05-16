@@ -1,6 +1,6 @@
-    #include "rules.ih"
+#include "rules.ih"
     
-bool Rules::newRule(NonTerminal *np, string const &source, size_t line)
+bool Rules::newRule(NonTerminal *np, string const &source, size_t lineNr)
 {
 // If the terminal definition is really requested (it isn't shown in bisonc++
 // 2.8.0) then pass yylineno from parser/openrule.cc and
@@ -10,6 +10,8 @@ bool Rules::newRule(NonTerminal *np, string const &source, size_t line)
 //
 //  imsg.setLineNr(lineNr);
 //  imsg << "Adding production rule for `" << np->name() << "'" << endl;
+
+    s_lastLineNr = lineNr;
 
     Production::storeFilename(source);
 
@@ -22,6 +24,6 @@ bool Rules::newRule(NonTerminal *np, string const &source, size_t line)
     if (nfIter != d_location.end())
         return false;                   // extending an existing rulename
 
-    d_location[np] = FileInfo(source, line);
+    d_location[np] = FileInfo(source, lineNr);
     return true;
 }

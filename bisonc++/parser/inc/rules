@@ -45,9 +45,6 @@ _productionElements:
     }
 |
     _productionElement
-    {
-        d_rules.setProductionLineNr(d_scanner.lineNr());
-    }
 ;
 
 _production:
@@ -69,7 +66,7 @@ _production:
 _productionSeparator:
     '|'
     {
-        d_rules.addProduction();
+        d_rules.addProduction(d_scanner.lineNr());
     }
 ;
 

@@ -2,8 +2,12 @@
 
 void Rules::setHiddenAction(Block const &block) 
 {
-    Production *pp = new Production(d_nonTerminal.back());  // create 
-                                                            // production 
+                                            // create (hidden) production 
+                                            // (when shown, 90000 is added to
+                                            // the line nr to flag a hidden
+                                            // action production rule
+    Production *pp = new Production(d_nonTerminal.back(), 
+                                        90000 + s_lastLineNr);  
 
     d_production.push_back(pp);             // put production in production 
                                             // vector

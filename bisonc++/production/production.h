@@ -41,7 +41,7 @@ class Production: private std::vector<Symbol *>
     mutable bool d_used;                // true once this production has been
                                         // used.
 
-    size_t d_lineNr = 0;                // line in the grammar file where the
+    size_t d_lineNr;                    // line in the grammar file where the
                                         // production is defined.
     size_t d_nameIdx;                   // index in s_filename of the name of
                                         // the file in which this production 
@@ -69,7 +69,7 @@ class Production: private std::vector<Symbol *>
         typedef std::vector<Production const*>  ConstVector;
         typedef ConstVector::const_iterator     ConstIter;
 
-        Production(Symbol const *nonTerminal);
+        Production(Symbol const *nonTerminal, size_t lineNr);
 
         Block const &action() const;
         Symbol const &operator[](size_t idx) const;

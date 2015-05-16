@@ -8,7 +8,7 @@ void Rules::augmentGrammar(Symbol *start)
     string augment = start->name() + "_$";
 
     newRule(insert(new NonTerminal(augment)), "-N.A.-", 0);
-    addProduction();
+    addProduction(0);
 
     s_acceptProductionNr = d_currentProduction->nr();
     s_startSymbol = start;

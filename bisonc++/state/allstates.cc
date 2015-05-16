@@ -19,8 +19,6 @@ void State::allStates()
     "   S -> C . C: The item (lhs -> Recognized-symbols . "
                                                   "symbols-to-recognize)\n"
     "   { <EOF> }   The item's lookahead (LA) set\n"
-    "   0,          The next state's LA set is not enlarged (1: "
-                                                        "it is enlarged)\n"
     "   (1 2)       Item indices of items whose LA sets depend on this item\n"
     "   0           The next-element (shown below the items) describing the\n"
     "               action associated with this item (-1 for reducible "

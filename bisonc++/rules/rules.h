@@ -68,7 +68,10 @@ class Rules
         static Symbol *s_startSymbol;       // derived from the initial N or
                                             // from the N defined as the
                                             // star tsymbol by
-                                            // augmentGrammar(). 
+                                            // augmentGrammar().
+
+        static size_t s_lastLineNr;         // last received line nr, used by
+                                            // setHiddenAction()
     
     public:
         Rules();
@@ -88,9 +91,7 @@ class Rules
                 // add the symbol as the next element of the 
                 // rule-production that's currently being defined. 
 
-        void setProductionLineNr(size_t lineNr);
-
-        void addProduction();
+        void addProduction(size_t lineNr);
                 // add a new production to the set of productions of the
                 // rule currently being defined
 
@@ -181,11 +182,6 @@ class Rules
         static void updatePrecedence(Production *production, 
                                      Terminal::Vector const &tv);
 };
-
-inline void Rules::setProductionLineNr(size_t lineNr)
-{
-    d_currentProduction->setLineNr(lineNr);
-}
 
 inline Rules::Rules()
 :
