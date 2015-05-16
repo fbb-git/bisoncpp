@@ -8,12 +8,17 @@ reduce-action. This state contained two items, looking like this:
         )
     Although this state in theory defines two different actions, in practice
 only one will be used. This is a direct consequence of the tt(%left '+')
-specification, as explained in this and the next section.
+specification, which is explained in this and the next section.
 
 When analyzing a grammar all states that can be reached from the augmented
-start rule are determined. In state 5 b() is confronted with a choice: either
-a shift on tt('+') or a reduction according to the item `tt(expr -> expr '+'
-expr .)'. What choice will b() make?
+start rule are determined. In state 5:
+        itemization(
+        it() item 0: tt(expr -> expr '+' expr  .)
+        it() item 1: tt(expr -> expr . '+' expr)
+        )
+ b() must choose which action to take: either a shift on tt('+') or a
+reduction according to the item `tt(expr -> expr '+' expr .)'. What choice
+will b() make?
 
 Here the fact that b() implements a parser for a em(Look Ahead Left to Right
 (1)) (LALR(1)) grammar becomes relevant. B() computes em(lookahead sets) to
@@ -31,8 +36,8 @@ tt('+') token on the stack, or reducing the stack according to the rule
         expr -> expr '+' expr
     ) 
     Here, as we will shortly see, the tt('+') is an element of the
-em(lookahead set) of the reducing item, and therefore b() is faced with a
-conflict: what to do on tt('+')?
+em(lookahead set) of the reducing item, which creates a conflict: what to do
+on tt('+')?
 
 In this case the grammar designer has provided b() with a way out: the
 tt(%left) directive tells b() to favor a reduction over a shift, and so it

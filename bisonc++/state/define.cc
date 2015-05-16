@@ -1,27 +1,32 @@
 #include "state.ih"
 
-// Defining states proceeds as follows:
+// Defining states proceeds like this:
 //
 //  0. The initial state is constructed. It contains the augmented grammar's
 //     production rule. This part is realized by the static member
 //
 //          initialState();
 //
-//  1. From the state's kernel item(s) all implied rules are added as
-//     additional state items. This results in a vector of (kernel/non-kernel)
-//     items, as well as per item the numbers of the items that are affected
-//     by this item. This information is used later to compute the LA sets
-//     of the items. A set's items are determined from its kernel items by the
-//     member
+//     The LA set of the kernel item of state 0 (the item representing the
+//     augmented grammar's production rule `S_$: . S') is by definition equal
+//     to $, representing EOF. This LA set is also initialized by
+//     initialState().
+//
+//  1. Starting from the state's kernel item(s) all implied rules are added as
+//     additional (non-kernel) state items. This results in a vector of
+//     (kernel/non-kernel) items, as well as per item the numbers of the items
+//     that are affected by this item. This information is used later to
+//     compute the LA sets of the items. A set's items are determined from its
+//     kernel items by the member
 //          
 //          setItems()
 //
-//     This fills the StateItem::Vector vector. A StateItem contains
+//     This member fills the StateItem::Vector vector. A StateItem contains
 //
 //         1. an item (production rule, dot position, LA set)
 //         2. a size_t vector of `dependent' items, indicating which items
 //            have LA sets that depend on the current item.
-//         3. The size_t field `next' holds the index in d_nextVector,
+//         3. The size_t field `d_nextIdx' holds the index in d_nextVector,
 //            allowing quick access of the d_nextVector element defining the
 //            state having the current item as its kernel. a next of npos
 //            indicates that the item does not belong to a next-kernel.
@@ -29,13 +34,13 @@
 //     E.g., 
 //
 //     StateItem:
-//     ---------------------------------------------------
-//     item        LA-set  dependent   next    next
-//                         stateitems  state   LA-enlarged
-//     ---------------------------------------------------
-//     S* -> . S,  EOF,    (1, 2)      0       true/false
+//     -------------------------------------
+//     item        LA-set  dependent   next 
+//                         stateitems  state
+//     -------------------------------------
+//     S* -> . S,  EOF,    (1, 2)      0    
 //     ...
-//     ---------------------------------------------------
+//     -------------------------------------
 //
 //     Also, the d_nextVector vector is filled.
 //
@@ -64,25 +69,27 @@
 //     computed following the state construction by the member
 //     determineLAsets. 
 //
-//  2. The LA set of the kernel item of state 0 (the item representing the
-//     augmented grammar's production rule `S_$: . S') is by definition equal
-//     to $, representing EOF. From this by definition assigned LA set all LA
-//     sets of all items are determined. This computation is performed by
-//     state 0's member 'determineLAsets. 
-//
-//  3. Then, from the Next::Vector constructed at (1) the next states
+//  2. Then, from the Next::Vector constructed at (1) new states
 //     are constructed. This is realized by the member
 //
-//          constructNext()
+//          nextState()
 //
-//     A next state will be constructed only if it wasn't constructed yet. For
-//     a new state, the construct() member is called. Construct() calls
-//     setItems() and nextState()
+//     which is called for each of the elements of d_nextVector.  States are
+//     only constructed once. 
 //
-//  4. Once all  states have been constructed, the LA sets of the items of all
-//     states are computed by determineLAsets().
-
-//  4. When all states have been constructed and LA sets have been determined,
+//  3. New states receive their kernel items from the item(s) of the current
+//     state from where a transition is possible. A new state is constructed
+//     by addState, receiving the just constructed set of kernel items from
+//     nextState. 
+//
+//  4. All states are eventually constructed by the loop, shown below, which
+//     ends once the idx loop control variable has reached s_state.size().
+//
+//  5. Once all  states have been constructed, the LA sets of the items of all
+//     states are computed by determineLAsets(). See determinelasets.cc for a
+//     discription of the implemented algorithm.
+//
+//  6. Once all states have been constructed and LA sets have been determined,
 //     conflicts may be located and solved. If the state contains any conflict,
 //     they are resolved and information about these conflicts is stored in an
 //     SRConflict::Vector and/or RRConflict::Vector. Conflicts are identified

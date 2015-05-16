@@ -15,7 +15,7 @@ void State::nextState(Next &next)
                                         // here on Next's symbol
 
     if (idx == s_state.size())
-        addState(kernel);               // add a new state
+        addState(kernel);               // create and add a new state
 }
 
 

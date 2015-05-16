@@ -3,22 +3,14 @@ includefile(algorithm/intro.yo)
     subsect(The FIRST Sets)
     includefile(algorithm/first.yo)
 
-COMMENT(
-    subsect(The FOLLOW Sets)
-    includefile(algorithm/follow.yo)
-END)
-
     subsect(The States)
     includefile(algorithm/states.yo)
 
     lsubsect(LOOKAHEAD)(The Lookahead Sets)
     includefile(algorithm/lookaheads.yo)
 
-        subsubsect(Preamble)
+        subsubsect(The look-ahead token)
         includefile(algorithm/lookahead.yo)
-
-
-COMMENT( SO FAR )
 
         subsubsection(How lookaheads are determined)
         includefile(algorithm/determine.yo)

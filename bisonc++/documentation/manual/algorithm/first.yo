@@ -4,18 +4,18 @@ beginning to recognize a grammatical symbol. For each grammatical symbol
     itemization(
     it() The tt(FIRST) set of a terminal symbol is the symbol itself.
     it() The tt(FIRST) set of an empty alternative is the empty set. The empty
-        set is indicated by tt(e) and is considered an actual element of the
+        set is indicated by epsilon() and is considered an actual element of the
         tt(FIRST) set (So, a tt(FIRST) set could contain two elements: 
-        tt('+') em(and) tt(e)).
+        tt('+') em(and) epsilon()).
     it() If X has a production rule tt(X: X1 X2 X3..., Xi, ...Xn), then
-        initialize fst(X) to empty (i.e., not even holding tt(e)). Then, 
+        initialize fst(X) to empty (i.e., not even holding epsilon()). Then, 
         for each Xi (1..n):
         itemization(
         it() add fst(Xi) to fst(X)
-        it() stop when fst(Xi) does not contain tt(e)
+        it() stop when fst(Xi) does not contain epsilon()
         )
-        If fst(Xn) does not contain tt(e) remove tt(e) from fst(X) (unless
-analyzing another production rule) tt(e) is already part of fst(X).
+        If fst(Xn) does not contain epsilon() remove epsilon() from fst(X) (unless
+analyzing another production rule) epsilon() is already part of fst(X).
     )
 
 When starting this algorithm, only the nonterminals need to be
@@ -30,16 +30,16 @@ Applying the above algorithm to the rules of our grammar we get:
     rowline()
     fstrow(tt(start_$)) (tt(start))         (not yet available)
     fstrow(tt(start))   (tt(start expr))    (not yet available)
-    fstrow(tt(start))   (tt(// empty))      (tt(e))
+    fstrow(tt(start))   (tt(// empty))      (epsilon())
     fstrow(tt(expr))    (tt(NR))            (tt(NR))
     fstrow(tt(expr))    (tt(expr '+' expr)) (tt(NR))
     rowline()
     row(cell(changes in the next cycle:))
-    fstrow(tt(start))   (tt(start expr))    (tt(NR e))
-    fstrow(tt(start))   (tt(// empty))      (tt(NR e))
+    fstrow(tt(start))   (tt(start expr))    (tt(NR) epsilon())
+    fstrow(tt(start))   (tt(// empty))      (tt(NR) epsilon())
     rowline()
     row(cell(changes in the next cycle:))
-    fstrow(tt(start_$)) (tt(start))         (tt(NR e))
+    fstrow(tt(start_$)) (tt(start))         (tt(NR) epsilon())
     rowline()
     row(cell(no further changes))
     )

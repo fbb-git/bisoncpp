@@ -5,10 +5,11 @@
 // position, using the following algorithm:
 
 //     distributeLAsetOfItem(idx):
-//         the item's rule specification is matched with the specification
-//         a.Bc, where a and c are (possibly empty) sequences of grammatical
-//         symbols, and B is a (possibly empty) non-terminal symbol appearing
-//         immediately to the right of the item's dot position.
+//         the item's production rule specification is matched with the
+//         specification a.Bc, where a and c are (possibly empty) sequences of
+//         grammatical symbols, and B is a (possibly empty) non-terminal
+//         symbol appearing immediately to the right of the item's dot
+//         position. 
 // 
 //         if B is empty return
 // 
@@ -47,7 +48,7 @@ void State::distributeLAsetOf(StateItem &stateItem)
     if (item.firstBeyondDot(&candidate.firstSet()))
         candidate += stateItem.lookaheadSet();
 
-    for (StateItem &stItem: d_itemVector)    // inspect all STATEitems of this
+    for (StateItem &stItem: d_itemVector)   // inspect all STATEitems of this
     {                                       // state
         if (
             stItem.lhs() == beyondDot       // if item is a productionrule of

@@ -8,10 +8,10 @@ Whenever a token is read, it is not immediately shifted; first it becomes the
 em(look-ahead) token, which is not yet shifted on the stack. This allows the
 parser to perform one or more reductions, with the look-ahead token still
 waiting to be processed. Only when all available reductions have been
-performed the look-ahead token is shifted on the stack. All em(available)
-reductions does not necessarily mean all em(possible) reductions. Depending on
-the look-ahead token, a shift rather than a reduce may be performed in states
-in which both actions are possible.
+performed the look-ahead token is shifted on the stack. The phrase `all
+em(available) reductions' does not necessarily mean all em(possible)
+reductions. Depending on the look-ahead token, a shift rather than a reduce
+may be performed in states in which both actions are possible.
 
 Here is a simple case where a look-ahead token is required. The production
 rules define expressions which may contain binary addition operators and
@@ -56,3 +56,5 @@ As a technical aside: the current look-ahead token is stored in the parser's
 private data member tt(d_token). This data member is not normally modified by
 user-defined member functions. See section ref(SPECIAL).
 END)
+
+

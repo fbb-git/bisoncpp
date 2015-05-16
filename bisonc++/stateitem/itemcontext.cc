@@ -10,6 +10,6 @@ ostream &StateItem::itemContext(ostream &out) const
     copy(d_child.begin(), d_child.end(), 
         ostream_iterator<size_t>(out, " "));
 
-    return out << ") " << static_cast<int>(d_next);
+    return out << ") " << static_cast<int>(d_nextIdx);
 }
 

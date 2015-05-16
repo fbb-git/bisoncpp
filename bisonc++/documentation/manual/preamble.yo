@@ -182,3 +182,15 @@ DEFINEMACRO(soption)(1)(\
 
 DEFINEMACRO(bic)(0)(bf(bisonc++))
 DEFINEMACRO(Bic)(0)(bf(Bisonc++))
+
+DEFINEMACRO(epsilon)(0)(\
+    IFDEF(html)(\
+        htmlcommand(&epsilon;)
+    )\
+    (\
+        IFDEF(latex)(\
+            latexcommand(\epsilon)\
+        )\
+        (e)\
+    )\
+)
