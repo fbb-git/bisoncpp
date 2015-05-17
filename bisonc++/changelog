@@ -19,7 +19,10 @@ bisonc++ (4.10.00)
     the latest changes. Same for the file CLASSES which is used by the build
     script. 
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 17 May 2015 12:59:02 +0200
+  * Added the file `required' listing the non-standard software that is
+    required to build bisonc++ and its user guide / man-page
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 17 May 2015 13:13:55 +0200
 
 bisonc++ (4.09.02) 
 
