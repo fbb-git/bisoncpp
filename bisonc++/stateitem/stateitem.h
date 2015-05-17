@@ -16,7 +16,7 @@
 // A StateItem represents an item in one of the grammar's states. The
 // information of a StateItem is displayed when --construction is used and is
 // of a form like
-//              0: [P1 1] S -> C  . C   { <EOF> }  (1 2 ) 0
+//              0: [P1 1] S -> C  . C   { <EOF> }  0
 
 class StateItem
 {
@@ -25,9 +25,6 @@ class StateItem
 
     Item    d_item;                 // The item
     LookaheadSet d_LA;              // its Lookahead set
-
-    std::vector<size_t> d_child;    // offsets of its children (items added
-                                    // because the current item is a N-symbol
 
     size_t d_nextIdx;               // offset in a Next array defining the 
                                     // next state (initialized to npos by
@@ -39,22 +36,19 @@ class StateItem
         typedef std::vector<StateItem> Vector;
         typedef Vector::const_iterator ConstIter;
 
-        StateItem();                                    // MODIFIED
-        StateItem(Item const &item);                    // MODIFIED
+        StateItem();
+        StateItem(Item const &item);
 
-        void setLA(LookaheadSet const &laSet);          // MODIFIED
+        void setLA(LookaheadSet const &laSet);
         bool enlargeLA(LookaheadSet const &parentLA);
 
         size_t next() const;
         bool isReducible() const;
         Symbol const *symbolAtDot() const;
         Item const &item() const;
-        std::vector<size_t> const &child() const;
         LookaheadSet const &lookaheadSet() const;
         size_t lookaheadSetSize() const;
         Production const *production() const;
-
-        void setChildren(std::vector<size_t> const &dep);
         void setNext(size_t next);
 
         Symbol const *precedence() const;   // a Terminal
@@ -82,8 +76,19 @@ class StateItem
         static void inserter(std::ostream &(StateItem::*insertPtr)
                                          (std::ostream &out) const);
         std::ostream &plainItem(std::ostream &out) const;
-        std::ostream &itemContext(std::ostream &out) const; // MODIFIED
+        std::ostream &itemContext(std::ostream &out) const;
 };
+
+inline void StateItem::setLA(LookaheadSet const &laSet)
+{
+    d_LA = laSet;
+}
+
+inline void StateItem::addProduction(Production const *production, 
+                              StateItem::Vector &stateItem, size_t idx)
+{
+    stateItem.push_back(StateItem(Item(production)));
+}
 
 inline LookaheadSet const &StateItem::lookaheadSet() const
 {
@@ -98,11 +103,6 @@ inline size_t StateItem::lookaheadSetSize() const
 inline bool StateItem::isReducible() const
 {
     return d_item.isReducible();
-}
-
-inline std::vector<size_t> const &StateItem::child() const
-{
-    return d_child;
 }
 
 inline Symbol const *StateItem::symbolAtDot() const
@@ -174,6 +174,5 @@ inline std::ostream &operator<<(std::ostream &out, StateItem const &stateItem)
 {
     return (stateItem.*StateItem::s_insertPtr)(out);
 }
-
 
 #endif

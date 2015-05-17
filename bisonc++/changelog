@@ -1,3 +1,13 @@
+bisonc++ (4.10.01) 
+
+  * Production rules of non-terminal symbols that immediately follow dot
+    positions of existing items are added as new (implied) items to that
+    state's set of items. The --construction option no longer shows the
+    indices of such newly added items as this information can easily be
+    obtained from the provided construction output.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 17 May 2015 16:54:13 +0200
+
 bisonc++ (4.10.00) 
 
   * FOLLOW sets are not used when analyzing LALR(1) grammars. The class
