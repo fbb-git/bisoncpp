@@ -1,7 +1,7 @@
 oxref by Frank B. Brokken (f.b.brokken@rug.nl)
 oxref V1.00.02 2012-2015
 
-CREATED Sun, 17 May 2015 10:48:31 +0000
+CREATED Sun, 17 May 2015 14:57:34 +0000
 CROSS REFERENCE FOR: -fxs tmp/libmodules.a 
 ----------------------------------------------------------------------
 
@@ -16,12 +16,6 @@ actionCases(std::ostream&) const
   Source:    actioncases.cc 
   Used By:
     data.cc: GLOBALS data.cc 28data.o
-
-addDependents(Next const&, Symbol const*, unsigned int)
-  Full name: State::addDependents(Next const&, Symbol const*, unsigned int)
-  Source:    adddependents.cc 
-  Used By:
-    notreducible.cc: State::notReducible(unsigned int)
 
 addElement(Symbol*)
   Full name: Rules::addElement(Symbol*)
@@ -57,12 +51,6 @@ addPolymorphic(std::string const&, std::string const&)
   Used By:
     parse.cc: Parser::executeAction(int)
 
-addProduction(Production const*, std::vector<StateItem, std::allocator<StateItem> >&, unsigned int)
-  Full name: StateItem::addProduction(Production const*, std::vector<StateItem, std::allocator<StateItem> >&, unsigned int)
-  Source:    addproduction.cc 
-  Used By:
-    addproductions.cc: State::addProductions(Symbol const*, unsigned int)
-
 addProduction(unsigned int)
   Full name: Rules::addProduction(unsigned int)
   Source:    addproduction.cc 
@@ -87,7 +75,7 @@ addToKernel(std::vector<Next, std::allocator<Next> >&, Symbol const*, unsigned i
   Full name: Next::addToKernel(std::vector<Next, std::allocator<Next> >&, Symbol const*, unsigned int)
   Source:    addtokernel.cc 
   Used By:
-    adddependents.cc: State::addDependents(Next const&, Symbol const*, unsigned int)
+    notreducible.cc: State::notReducible(unsigned int)
 
 assign(std::string*, Options::PathType, char const*)
   Full name: Options::assign(std::string*, Options::PathType, char const*)
@@ -621,7 +609,26 @@ insert(std::ostream&) const
     destructor.cc: NonTerminal::~NonTerminal()
 
 insert(std::ostream&) const
+  Full name: LookaheadSet::insert(std::ostream&) const
+  Source:    insert.cc 
+  Used By:
+    operatorinsert.cc: operator<<(std::ostream&, LookaheadSet const&)
+
+insert(std::ostream&) const
+  Full name: Generator::insert(std::ostream&) const
+  Source:    insert.cc 
+  Used By:
+    filter.cc: Generator::filter(std::istream&, std::ostream&, bool) const
+
+insert(std::ostream&) const
   Full name: RRConflict::insert(std::ostream&) const
+  Source:    insert.cc 
+  Used By:
+    insertext.cc: State::insertExt(std::ostream&) const
+    insertstd.cc: State::insertStd(std::ostream&) const
+
+insert(std::ostream&) const
+  Full name: SRConflict::insert(std::ostream&) const
   Source:    insert.cc 
   Used By:
     insertext.cc: State::insertExt(std::ostream&) const
@@ -633,25 +640,6 @@ insert(std::ostream&) const
   Used By:
     showfirst.cc: GLOBALS showfirst.cc 12showfirst.o
     insertext.cc: GLOBALS insertext.cc 25insertext.o
-
-insert(std::ostream&) const
-  Full name: Generator::insert(std::ostream&) const
-  Source:    insert.cc 
-  Used By:
-    filter.cc: Generator::filter(std::istream&, std::ostream&, bool) const
-
-insert(std::ostream&) const
-  Full name: LookaheadSet::insert(std::ostream&) const
-  Source:    insert.cc 
-  Used By:
-    operatorinsert.cc: operator<<(std::ostream&, LookaheadSet const&)
-
-insert(std::ostream&) const
-  Full name: SRConflict::insert(std::ostream&) const
-  Source:    insert.cc 
-  Used By:
-    insertext.cc: State::insertExt(std::ostream&) const
-    insertstd.cc: State::insertStd(std::ostream&) const
 
 insert(std::ostream&, Production const*) const
   Full name: Item::insert(std::ostream&, Production const*) const
@@ -721,13 +709,13 @@ insName(std::ostream&) const
     insertext.cc: GLOBALS insertext.cc 25insertext.o
 
 inspect()
-  Full name: RRConflict::inspect()
+  Full name: SRConflict::inspect()
   Source:    inspect.cc 
   Used By:
     checkconflicts.cc: State::checkConflicts()
 
 inspect()
-  Full name: SRConflict::inspect()
+  Full name: RRConflict::inspect()
   Source:    inspect.cc 
   Used By:
     checkconflicts.cc: State::checkConflicts()
@@ -787,7 +775,7 @@ Item(Production const*)
   Full name: Item::Item(Production const*)
   Source:    item1.cc 
   Used By:
-    addproduction.cc: StateItem::addProduction(Production const*, std::vector<StateItem, std::allocator<StateItem> >&, unsigned int)
+    addproductions.cc: State::addProductions(Symbol const*, unsigned int)
     initialstate.cc: State::initialState()
 
 itemContext(std::ostream&) const
@@ -851,10 +839,10 @@ LookaheadSet(LookaheadSet const&)
   Source:    lookaheadset3.cc 
   Used By:
     rrdata1.cc: RRData::RRData(LookaheadSet)
-    addproduction.cc: GLOBALS addproduction.cc 19addproduction.o
     comparereductions.cc: GLOBALS comparereductions.cc 20comparereductions.o
     visitreduction.cc: SRConflict::visitReduction(unsigned int)
     addkernelitem.cc: GLOBALS addkernelitem.cc 25addkernelitem.o
+    addproductions.cc: GLOBALS addproductions.cc 25addproductions.o
 
 LookaheadSet(LookaheadSet::EndStatus)
   Full name: LookaheadSet::LookaheadSet(LookaheadSet::EndStatus)
@@ -1554,13 +1542,6 @@ s_insert
     define.cc: State::define(Rules const&)
 
 s_insertPtr
-  Full name: StateItem::s_insertPtr
-  Source:    data.cc 
-  Used By:
-    insertext.cc: State::insertExt(std::ostream&) const
-    insertstd.cc: State::insertStd(std::ostream&) const
-
-s_insertPtr
   Full name: NonTerminal::s_insertPtr
   Source:    data.cc 
   Used By:
@@ -1572,6 +1553,13 @@ s_insertPtr
     reductionsymbol.cc: Writer::reductionSymbol(Element const*, unsigned int, FBB::Table&)
     transition.cc: Writer::transition(Next const&, FBB::Table&)
     multiplydefined.cc: Parser::multiplyDefined(Symbol const*)
+
+s_insertPtr
+  Full name: StateItem::s_insertPtr
+  Source:    data.cc 
+  Used By:
+    insertext.cc: State::insertExt(std::ostream&) const
+    insertstd.cc: State::insertStd(std::ostream&) const
 
 s_insertPtr
   Full name: Next::s_insertPtr
@@ -1870,12 +1858,6 @@ setBooleans()
   Used By:
     setaccessorvariables.cc: Options::setAccessorVariables()
 
-setChildren(std::vector<unsigned int, std::allocator<unsigned int> > const&)
-  Full name: StateItem::setChildren(std::vector<unsigned int, std::allocator<unsigned int> > const&)
-  Source:    setchildren.cc 
-  Used By:
-    adddependents.cc: State::addDependents(Next const&, Symbol const*, unsigned int)
-
 setDebug(bool)
   Full name: ScannerBase::setDebug(bool)
   Source:    lex.cc 
@@ -1905,12 +1887,6 @@ setItems()
   Source:    setitems.cc 
   Used By:
     construct.cc: State::construct()
-
-setLA(LookaheadSet const&)
-  Full name: StateItem::setLA(LookaheadSet const&)
-  Source:    setla.cc 
-  Used By:
-    initialstate.cc: State::initialState()
 
 setLineNrs() const
   Full name: Scanner::setLineNrs() const
@@ -2135,7 +2111,7 @@ StateItem(Item const&)
   Full name: StateItem::StateItem(Item const&)
   Source:    stateitem2.cc 
   Used By:
-    addproduction.cc: StateItem::addProduction(Production const*, std::vector<StateItem, std::allocator<StateItem> >&, unsigned int)
+    addproductions.cc: State::addProductions(Symbol const*, unsigned int)
     addstate.cc: State::addState(std::vector<Item, std::allocator<Item> > const&)
     initialstate.cc: State::initialState()
 
