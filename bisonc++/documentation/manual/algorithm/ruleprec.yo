@@ -15,7 +15,7 @@ proceeding with item 0.
 `shiftable' items of these states shift when encountering terminal tokens that
 are also in the follow sets of the reducible items of these states. In the
 above example item 1 shifts when tt('*') is encountered, but tt('*') is also
-an element of the set of lookahead tokens of item 0. B() must now decide what
+an element of the set of look-ahead tokens of item 0. B() must now decide what
 to do. In cases we've seen earlier b() could make the decision because the
 reducible item itself had a well known precedence. The precedence of a
 reducible item is defined as the precedence of the left-hand side

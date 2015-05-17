@@ -6,13 +6,13 @@ includefile(algorithm/intro.yo)
     subsect(The States)
     includefile(algorithm/states.yo)
 
-    lsubsect(LOOKAHEAD)(The Lookahead Sets)
+    lsubsect(LOOKAHEAD)(The Look-ahead Sets)
     includefile(algorithm/lookaheads.yo)
 
         subsubsect(The look-ahead token)
         includefile(algorithm/lookahead.yo)
 
-        subsubsection(How lookaheads are determined)
+        subsubsect(How look-ahead sets are determined)
         includefile(algorithm/determine.yo)
 
     subsect(The Final Transition Tables)

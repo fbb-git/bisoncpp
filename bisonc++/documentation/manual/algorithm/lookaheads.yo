@@ -1,44 +1,39 @@
 In the previous section a grammer was discussed whose fifth state contained
 two items: one resulting in a shift-action, the other resulting in a
-reduce-action. This state contained two items, looking like this:
-
+reduce-action. This state contained these two items:
         itemization(
         it() item 0: tt(expr -> expr '+' expr  .)
         it() item 1: tt(expr -> expr . '+' expr)
         )
     Although this state in theory defines two different actions, in practice
-only one will be used. This is a direct consequence of the tt(%left '+')
+only one is used. This is a direct consequence of the tt(%left '+')
 specification, which is explained in this and the next section.
 
 When analyzing a grammar all states that can be reached from the augmented
-start rule are determined. In state 5:
-        itemization(
-        it() item 0: tt(expr -> expr '+' expr  .)
-        it() item 1: tt(expr -> expr . '+' expr)
-        )
- b() must choose which action to take: either a shift on tt('+') or a
-reduction according to the item `tt(expr -> expr '+' expr .)'. What choice
-will b() make?
+start rule are determined. In the current grammar's fifth state b() must
+decide which action to take: should it shift on tt('+') or should it reduce
+according to the item `tt(expr -> expr '+' expr .)'? What choice will b()
+make?
 
 Here the fact that b() implements a parser for a em(Look Ahead Left to Right
-(1)) (LALR(1)) grammar becomes relevant. B() computes em(lookahead sets) to
+(1)) (LALR(1)) grammar becomes relevant. B() computes em(look-ahead sets) to
 determine which alternative to select when confronted with a choice. The
-lookahead set can be used to favor one transition over the other when
-generating tables for the parsing function.
+look-ahead set can be used to favor one action over another when generating
+tables for the parsing function.
 
-Sometimes the lookahead sets allow b() simply to remove one action from the
+Sometimes the look-ahead sets allow b() simply to remove one action from the
 set of possible actions. When b() is called to process the example grammar
-while specifying the tt(--construction) option state 5 em(only) shows the
-reduction and em(not) the shifting action, a bf() has removed that latter
-action from the action set. In state 5 the choice is between shifting a
+while specifying the tt(--construction) option state five em(only) shows the
+reduction and em(not) the shifting action, as b() has removed that latter
+action from the action set. In state five the choice is between shifting a
 tt('+') token on the stack, or reducing the stack according to the rule
     verb(
         expr -> expr '+' expr
     ) 
-    Here, as we will shortly see, the tt('+') is an element of the
-em(lookahead set) of the reducing item, which creates a conflict: what to do
+    Here, as we will shortly see, the tt('+') is em(also) an element of the
+em(look-ahead set) of the reducible item, creating a conflict: what to do
 on tt('+')?
 
 In this case the grammar designer has provided b() with a way out: the
 tt(%left) directive tells b() to favor a reduction over a shift, and so it
-removed tt(expr -> expr . '+' expr) from its set of actions in state 5.
+removed tt(expr -> expr . '+' expr) from its set of actions in state five.

@@ -26,6 +26,7 @@ items:
         it() item 1: tt(start ->  . start expr)
         it() item 2: tt(start ->  . )
         )
+
     From each of the items new states may be derived. New states are reached
 when the symbol to the right of the dot has been recognized. In that case a
 em(transition) (a em(goto)) to the next state takes place, where the dot has
@@ -116,9 +117,6 @@ tt(expr -> NR .) kernel item.
         it() Or reduce to tt(expr) according to its first item (removing three
             elements from the parser's stack).
         )
-
-        With the current grammar it turns out (as explained in the next
-        section) that this state's first action 
-        never takes place: in this state there only the reduction will be
-        performed.
+        As explained in the next section this state's first action is never
+        selected: in this state only the reduction is selected.
     )

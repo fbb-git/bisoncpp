@@ -1,16 +1,15 @@
 Once the items of all the grammar's states have been determined the LA sets
 for the states' items are computed. Starting from the LA set of the kernel
-item of state 0 (representing the augmented grammar's production rule as
+item of state 0 (representing the augmented grammar's production rule
 tt(S_$: . S), where tt(S) is the grammar's start rule) the LA sets of all
 items of all of the grammar's states are determined. By definition, the LA set
 of state 0's kernel item equals tt($), representing end-of-file. 
 
-Here is the algorithm computing the LA sets of all the states' items. The
-computation starts from function tt(State::determineLAsets), which
-is called for state 0.
+Starting from the function tt(State::determineLAsets), which is called for
+state 0, the LA sets of all items of all states are computed.
 
-The LA sets of the items of a state are computed first. Once they have been
-computed, the LA sets of items from where transitions to other states are
+For each state, the LA sets of its items are computed first. Once they have
+been computed, the LA sets of items from where transitions to other states are
 possible are then propagated to the matching kernel items of those destination
 states. When the LA sets of kernel items of those destination states are
 enlarged then their state indices are added to a set tt(todo). LA sets of the
@@ -20,14 +19,14 @@ which point all LA sets have been computed. Initially tt(todo) only contains
 0, the index of the initial state, representing the augmented grammar's
 production rule.
 
-Starting from the LA sets of its kernel items the LA sets of the state's items
-are computed, . The LA set of each kernel item is distributed (by the member
-tt(State::distributeLAsetOf)) over the items which are implied by the item
-being considered. E.g., for item tt(X: a . Y z), where tt(a) and tt(z) are any
-sequence of grammar symbols and tt(X) and tt(Y) are non-terminal symbols, all
-of tt(Y's) production rules are added as new items to the current state.
+To compute the LA sets of a state's items the LA set of each of its kernel
+items is distributed (by the member tt(State::distributeLAsetOf)) over the
+items which are implied by the item being considered. E.g., for item tt(X: a
+. Y z), where tt(a) and tt(z) are any sequence of grammar symbols and tt(X)
+and tt(Y) are non-terminal symbols, all of tt(Y's) production rules are added
+as new items to the current state.
 
-The member tt(distributeLAsetOfItem(idx)) matches the item's rule
+Then the member tt(distributeLAsetOfItem(idx)) matches the item's rule
 specification with the specification tt(a.Bc), where tt(a) and tt(c) are
 (possibly empty) sequences of grammatical symbols, and tt(B) is a (possibly
 empty) non-terminal symbol appearing immediately to the right of the item's
@@ -38,16 +37,17 @@ epsilon() (i.e., the element representing the empty set), then the currently
 defined LA set of the item can also be observed. In that case epsilon() is
 removed, and the currently defined LA set is added to tt(b). Finally, the LA
 sets of all items representing a production rule for tt(B) are inspected: if
-tt(b) contains unique elements compared to the LA sets of these items, then
-the unique elements of tt(b) are added to those items' LA sets and
+tt(b) contains unique elements compared to the LA sets of those items, then
+the unique elements of tt(b) are added to the LA sets of those items. Finally,
 tt(distributeLAsetOfItem) is recursively called for those items whose LA sets
 were enlarged.
 
-Once the LA sets of the items of a state have been computed,
+Once the LA sets of the items of a state have thus been computed,
 tt(inspectTransitions) is called to propagate the LA sets of items from where
-transitions to other states are possible to the affected items of those other
-(destination) states. The member tt(inspectTransitions) inspects all tt(Next)
-objects of the current state's tt(d_nextVector). Next objects provide
+transitions to other states are possible to the affected (kernel) items of
+those other (destination) states. The member tt(inspectTransitions) inspects
+all tt(Next) objects of the current state's tt(d_nextVector). Next objects
+provide
     itemization(
     it()  the state index of a state to transfer to from the current state;
     it() a size_t vector of item transitions. Each element is the index of an
@@ -55,15 +55,15 @@ objects of the current state's tt(d_nextVector). Next objects provide
         of a (kernel) item of the state to transfer to (the destination
         index). 
     )
-If the LA set of the destination item can be enlarged from the LA set of
-the source item then the LA sets of the destination state's items
-must be recomputed. This is realized by inserting the destation
-state's index into the `todo' set.
+  If the LA set of a destination item can be enlarged from the LA set of the
+source item then the LA sets of the destination state's items must be
+recomputed. This is realized by inserting the destation state's index into the
+`todo' set.
 
 
-As an illustration of an LA-set computation we will now compute the LA sets
-for the items of the states of the grammar introduced at the beginning of this
-chapter. Its augmented grammar defines the following production rules:
+To illustrate an LA-set computation we will now compute the LA sets of (some
+of) the items of the states of the grammar introduced at the beginning of this
+chapter. Its augmented grammar consists of the following production rules:
         verb(
     1.  start:      start expr
     2.  start:      // empty
@@ -122,7 +122,7 @@ distributeLAsetsOfItem(0)
       inspect items 1 and 2 as they refer to production rules of B (start):
 
       1: LA(1): {}: b contains unique elements. Therefore: 
-        LA{1) = {$,NR}
+        LA(1) = {$,NR}
         distributeLAsetsOfItem(1)
           start -> . start expr: LA: {$,NR}, B: start, c: {expr}, so b: {NR}
           inspect items 1 and 2 as they refer to prod. rules of B (start):
@@ -142,7 +142,7 @@ distributeLAsetsOfItem(0)
       2: LA(2): {NR}, so b does not contain unique elements: done
 
   2: LA(2): {NR}: b contains unique elements. Therefore:
-    LA{2) = {$,NR}
+    LA(2) = {$,NR}
     distributeLAsetsOfItem(2)
       start -> .: LA: {$,NR}, B: -, c: {}
       B empty, so return.

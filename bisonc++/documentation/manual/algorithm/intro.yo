@@ -1,6 +1,6 @@
-In this chapter the algorithm used by b() is discussed. Generating grammar
-parsers of course begins with a grammar to be analyzed. The analysis
-consists of several steps:
+This chapter describes the algorithm that is used by b(). Generating parsers
+of course begins with a grammar to be analyzed. The analysis consists of
+these steps:
     itemization(
     it() First, a set of tt(FIRST) tokens is determined. The tt(FIRST) set of
 a nonterminal defines all terminal tokens that can be encountered when
@@ -20,12 +20,12 @@ executed as a side effect of the reduction.
 a choice between a em(shift) or a em(reduce) action must be made. This is
 called a em(shift-reduce) conflict. Sometimes the parser generator is able to
 solve these conflicts itself, by looking at the next available token (the
-em(lookahead) token). If the next token is not a possible continuation for
+em(look-ahead) token). If the next token is not a possible continuation for
 either a shift or a reduce action that particular continuation can be
 discarded. Likewise, two reductions may be encountered in a state (a
 em(reduce-reduce) conflict). Here the same reasoning can be applied, maybe
 resulting in discarding one of the possible reductions. In all other cases
-(i.e., if the lookahead token is possible for both continuations) a true
+(i.e., if the look-ahead token is possible for both continuations) a true
 conflict is observed which somehow is solved by the grammar designer. If the
 designer doesn't select an particular action, the parser generator reports a
 conflict and selects a default action. By default a em(shift) is used, rather
