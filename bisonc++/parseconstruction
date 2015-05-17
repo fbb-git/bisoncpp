@@ -1,0 +1,42 @@
+#!/bin/bash
+
+if [ $# == 0 ] ; then
+    echo
+
+    ls documentation/regression
+
+    echo
+    echo provide directory name under documentation/regression to process
+    echo the parser directory is copied to tmp/bin and parse.cc and 
+    echo Parserbase.h generated with the current bisonc++ are compared to
+    echo those generated with tmp/bin/binary
+    echo
+    exit 0
+fi
+
+rm -rf tmp/bin/parser
+cp -r documentation/regression/$1/parser tmp/bin
+
+cd tmp/bin/parser
+
+echo
+
+bisonc++ grammar
+mv parse.cc p.cc
+mv *base.h base.h
+
+echo
+
+../binary grammar
+
+echo
+echo 'diff of parse.cc < by ./binary, > by bisonc++'
+read
+diff parse.cc p.cc
+
+echo 
+echo 'diff of *base.h < by ./binary, > by bisonc++'
+read
+diff *serbase.h base.h
+
+
