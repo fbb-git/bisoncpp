@@ -37,14 +37,10 @@ Defining states proceeds as follows:
         2. a size_t vector of indices of `dependent' items, indicating which
            items have LA sets that depend on the current item
            (StateItem::d_child).
-        3. The size_t field `next' holds the index in d_nextVector,
+        3. The size_t field `d_nextIdx' holds the index in d_nextVector,
            allowing quick access of the d_nextVector element defining the
            state having the current item as its kernel. A next value 'npos'
            indicates that the item does not belong to a next-kernel.
-
-But which next-state item is this?
-==================================
-
 
     E.g., 
 
@@ -81,32 +77,20 @@ But which next-state item is this?
     in the Next table, since there's no transition on them.
 
     Next, from these facilities all states are constructed. LA propagation is
-    performed after the state construction since LA propagation is an
-    inherently recursive process, and state construction isn't. State
-    construction takes place (in the while loop in State::define.cc following
-    the initial state construction).
+    performed after the state construction State construction takes place (in
+    the while loop in State::define.cc following the initial state
+    construction).
 
-|| 2. Following the state construction the lookaheads (LAs) will be propagated
-||    over the items in the current state. This is where previous bisonc++
-||    versions erred. LAs are distributed over and determined for each
-||    individual item, and are then inherited by the next states. Also, LAs can
-||    be determined during the construction of a state, instead of during a
-||    separate cycle. LAs are propagated from the initial state over the
-||    dependent StateItems. Lookahead propagation is performed by the member
-||                 
-         propagateLA()
+ 2. After the state construction the LA sets of the items are computed. State
+    0's single kernel item is S_$: . S, and represents the augmented grammar's
+    start rule, just before observing the grammar's start symbol. The LA sets
+    are computed by State::determineLAsets. The file state/determinelasets.cc
+    contains a description of the implemented algorithm, as does chapter 7
+    (The Bisonc++ Parser Algorithm) of Bisonc++'s User Guide. The reader is
+    referred to these documentation sources for further information about the
+    LA set computation algorithm.
 
- 3. Then, from the Next::Vector constructed at (1) the next states
-    are constructed. This is realized by the member
-
-         constructNext()
-
-    A next state is only constructed if it wasn't constructed yet. For a new
-    state, the construct() member is called. Construct() calls setItems().
-
------------------------------------------------------------------------------
-
- 4. Once all states have been constructed, conflicts are located and
+ 3. Once all states have been constructed, conflicts are located and
     solved. If a state contains conflict, they are resolved and
     information about these conflicts is stored in an SRConflict::Vector
     and/or RRConflict::Vector. Conflicts are identified and resolved by the
@@ -114,7 +98,7 @@ But which next-state item is this?
 
          State::checkConflicts();
 
-5.  S/R conflicts are handled by the d_srConflict object. This object received
+ 4. S/R conflicts are handled by the d_srConflict object. This object received
     at construction time a context consisting of the state's d_itemVector and
     d_nextVector as well as d_reducible containing all indices of reducible
     items. Each of these indices is the index of a reducible item which is,
