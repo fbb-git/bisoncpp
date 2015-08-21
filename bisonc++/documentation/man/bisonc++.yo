@@ -4,8 +4,8 @@ NOUSERMACRO(yyparse parse lex yylex error setDebug ParserBase throw ACCEPT
 
 includefile(../../release.yo)
 
-htmlbodyopt(text)(#27408B)
-htmlbodyopt(bgcolor)(#FFFAF0)
+htmlstyle(body)(color: #27408B; background: #FFFAF0)
+
 whenhtml(mailto(Frank B. Brokken: f.b.brokken@rug.nl))
 
 DEFINEMACRO(lsoption)(3)(\
