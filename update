@@ -14,7 +14,7 @@ if [ "$yesno" == "y" ] ; then
     git co gh-pages
 fi
 
-cp -r ../wip/bisonc++man.html ../wip/manual/* .
+cp -r ../wip/changelog.txt ../wip/bisonc++man.html ../wip/manual/* .
 
 yodl2html index.yo || exit 1
 
