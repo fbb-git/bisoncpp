@@ -1,0 +1,1273 @@
+bisonc++ (4.10.01) 
+
+  * Production rules of non-terminal symbols that immediately follow dot
+    positions of existing items are added as new (implied) items to that
+    state's set of items. The --construction option no longer shows the
+    indices of such newly added items as this information can easily be
+    obtained from the provided construction output.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 17 May 2015 16:54:13 +0200
+
+bisonc++ (4.10.00) 
+
+  * FOLLOW sets are not used when analyzing LALR(1) grammars. The class
+    FollowSet and all operations on follow sets were removed.
+
+  * The LA set computation algorithm was reimplemented, a description of the 
+    new algorithm is included in the manual and in several source files, in
+    particular state/determinelasets.cc. Both the state items' LA computation
+    and the LA propagation algorithms were completely reimplemented.
+
+  * Rules causing conflicts (i.e., conflict remaining after processing %left,
+    %right, %nonassoc and/or %expect) as wel as the involved LA characters re
+    briefly mentioned immediately following the SR/RR conflict-counts.
+
+  * The class Symtab now uses an unordered_map rather than a mere (ordered)
+    map.
+
+  * The class-dependency diagram (README.class-setup) was updated to reflect
+    the latest changes. Same for the file CLASSES which is used by the build
+    script. 
+
+  * Added the file `required' listing the non-standard software that is
+    required to build bisonc++ and its user guide / man-page
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 17 May 2015 13:13:55 +0200
+
+bisonc++ (4.09.02) 
+
+  * Wilko Kuiper reported an annoying bug in the skeleton lex.in, causing the
+    compilation of parser.ih to fail. This release fixes that bug.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 28 Jul 2014 16:46:35 +0200
+
+bisonc++ (4.09.01) 
+
+  * $#$#@ !! Forgot to update the help-info (bisonc++ --help) to reflect the
+    new -D option. Now fixed.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 11 May 2014 09:05:48 +0200
+
+bisonc++ (4.09.00) 
+
+  * Added option --no-decoration (-D), suppressing the actions that are
+    normally associated with matched rules.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 10 May 2014 11:58:46 +0200
+
+bisonc++ (4.08.01) 
+
+  * Members of the class `Generator' generating a substantial amount of code
+    now read skeleton files instead of strings which are defined in these
+    functions' bodies.
+
+  * Added new skeleton files for the abovementioned functions. The names of
+    these skeleton files are identical to the matching filenames in
+    generator/, but use extensions `.in'
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 31 Mar 2014 11:45:41 +0200
+
+bisonc++ (4.08.00) 
+
+  * std::shared_ptr doesn't slice: virtual ~Base() and dynamic_casts removed
+    from the generated parserbase.h files
+
+  * %polymorphicimpl removed from skeleton/bisonc++, matching files from
+    Generator 
+
+  * The implementation of polymorphic semantic values was simplified.  Const
+    members were removed from polymorphic semantic value classes; ReturnType
+    get<Tag__>() const and ReturnType data<Tag__>() const are no longer
+    required and were removed.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 02 Mar 2014 11:51:38 +0100
+
+bisonc++ (4.07.02) 
+
+  * Changed 'class SType into struct SType in skeletons/polymorphic, since all
+    its members are public anyway.
+
+  * Class header and class implementation header files are no longer
+    overwritten at bisonc++ runs.
+
+  * Running './build program' no longer by default uses -g (see INSTALL.im)
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 17 Feb 2014 13:43:16 +0100
+
+bisonc++ (4.07.01) 
+
+  * Fixed segfaults (encountered with 4.07.00) caused by for-statement range
+    specification errors. 
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 16 Feb 2014 15:46:45 +0100
+
+bisonc++ (4.07.00) 
+
+  * Generating files is prevented when errors in option/declaration
+    specifications are encountered. All errors in option/declaration
+    specifications (instead of just the first error that is encountered) 
+    are now reported.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri, 14 Feb 2014 14:53:33 +0100
+
+bisonc++ (4.06.00) 
+
+  * Repaired buggy handling of some options/directives
+
+  * Prevented spurious option warnings sometimes generated when options aren't
+    specified 
+
+  * Action blocks associated with rules may contain raw string literals.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 09 Feb 2014 11:31:14 +0100
+
+bisonc++ (4.05.00) 
+
+  * Added the directive %scanner-class-name specifying the class name of the
+    scanner to use in combination with the %scanner directive
+
+  * re-installed the --namespace option (see the next item)
+
+  * Warnings are issued when options or directives are specified wchich are
+    ignored because the target file (e.g., parser.h, parser.ih) already
+    exists. These warnings are not issued for parse.cc and parserbase.h, which
+    are by default rewritten at each bisonc++ run. These warnings are issued
+    for the `class-header', `class-name', `baseclass-header', `namespace', 
+    `scanner', `scanner-class-name' and `scanner-token-function' 
+    options/directives.
+
+  * The --force-class-header and --force-implementation-header options were 
+    removed: 'rm ...' should be used instead.
+
+  * man-page and manual updated
+
+  * CLASSES class dependencies updated, icmconf's USE_ALL activated
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 10 Aug 2013 10:16:17 +0200
+
+bisonc++ (4.04.01) 
+
+  * Removed the possibility to specify path names for the --baseclass-header,
+    --class-header, --implementation-header, and --parsefun-source options
+    (and corresponding directives). Path names for generated files should be
+    specified using the target-directory option or directive.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 27 May 2013 12:12:58 +0200
+
+bisonc++ (4.04.00) 
+
+  * Repaired %target-directory not recognizing path-characters and not
+    removing surrounding "-delimiters.
+
+  * The --baseclass-header, --class-header, --implementation-header, and
+    --parsefun-source options (and corresponding directives) now also accept
+    path-specifications. 
+
+  * The man-page and manual have been updated accordingly.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 26 May 2013 14:22:50 +0200
+
+bisonc++ (4.03.00) 
+
+  * Bisonc++ before 4.03.00 failed to notice the --debug option. Now repaired.
+
+  * Added the rpn example to the manual, and repaired typos in the manual.
+
+  * Options/directives that can only accept file names (like
+    --baseclass-header) no longer accept path names.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 31 Mar 2013 11:25:49 +0200
+
+bisonc++ (4.02.01) 
+
+  * Parser-class header files (e.g., Parser.h) and parser-class internal
+    header files (e.g., Parser.ih) generated with bisonc++ < 4.02.00 require
+    two hand-modifications when used in combination with bisonc++ >= 4.02.00:
+
+    In Parser.h, just below the declaration 
+        void print__();
+    add:
+        void exceptionHandler__(std::exception const &exc);
+
+    In Parser.ih, assuming the name of the generated class is `Parser', add
+    the following member definition (if a namespace is used: within the
+    namespace's scope):
+        inline void Parser::exceptionHandler__(std::exception const &exc)
+        {
+            throw;  // re-implement to handle exceptions thrown by actions
+        }
+    This function may be re-implemented, see the man-page for further details.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 11 Mar 2013 16:50:26 +0100
+
+bisonc++ (4.02.00) 
+
+  * Added member Parser::exceptionHandler(std::exception const &exc), handling
+    std::exceptions thrown from the parser's action blocks.
+
+  * The --namespace option was removed, since it does not affect once
+    generated parser.h files, resulting in inconsistent namespace
+    definitions. 
+
+  * Include guards of parser.h and parserbase.h include the namespace
+    identifier, if %namespace has been used.
+
+  * Provided print()'s implementation in bisonc++.ih with a correct
+    class-prifix (was a fixed Parser::)
+
+  * Textual corrections of the man-page and manual.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Thu, 07 Mar 2013 09:57:07 +0100
+
+bisonc++ (4.01.02) 
+
+  * Bisonc++ returns 0 for options --help and --version
+
+  * Catching Errno exceptions is replaced by catching std::exception
+    exceptions 
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Thu, 24 Jan 2013 08:14:59 +0100
+
+bisonc++ (4.01.01) 
+
+  * The following #defines in INSTALL.im can be overruled by defining
+    identically named environment variables: 
+        CXX      defines the name of the compiler to use. By default `g++'
+        CXXFLAGS the options passed to the compiler. 
+                 By default `-Wall --std=c++0x -O2 -g'
+        LDFLAGS  the options passed to the linker. By default no options are
+                 passed to the linker.
+        SKEL     the directory where the skeletons are stored
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 15 Jul 2012 14:44:46 +0200
+        
+bisonc++ (4.01.00) 
+
+  * Repaired a long-existing bug due to which some S/R conflicts are solved by
+    a reduce, where a shift should have been used. See
+    README.states-and-conflicts for details.
+
+  * Removed line-numbers from final warning/error messages
+
+  * This version requires Bobcat >= 3.00.00
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Thu, 03 May 2012 21:21:47 +0200
+
+bisonc++ (4.00.00) 
+
+  * Implemented the %polymorphic directive. Bisonc++ itself uses %polymorphic
+    to implement its own polymorphic semantic values; man-page and manual
+    extended with sections about polymorphic semantic values.
+
+  * Implemented the %weak-tags directive. By default %polymorphic declares 
+    an `enum class Tag__', resulting in strongly typed polymorphic tags. If
+    the traditional tag declaration is preferred, the %weak-tags directive can
+    be specified in addition to %polymorphic, resulting in the declaration
+    `enum Tag__'.
+
+  * The previously used class spSemBase and derivatives (e.g., SemBase,
+    Semantic) are now obsolete and the directories sembase and spsembase
+    implementing these classes were removed.
+
+  * The Parser's inline functions are all private and were moved to the
+    parser's .ih file. This doesn't affect current implementations, as
+    parser.h and parser.ih are only generated once, but newly generated
+    parsers no longer define the Parser's inline members (error, print__, and
+    lex) in parser.h but in parser.ih
+
+  * @@ can be used (instead of d_loc__) to refer to a rule's location stack
+    value. 
+
+  * The generated parser now uses unordered_maps instead of maps.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri, 13 Apr 2012 14:10:12 +0200
+
+bisonc++ (3.01.00)
+
+  * The `%print-tokens' directive was accidentally omitted from
+    3.00.00. Repaired in this release.
+
+  * Starting this release all release tags (using names that are identical to
+    the version number, so for this release the tag is 3.01.00) are signed to
+    allow authentication.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 27 Feb 2012 13:33:20 +0100
+
+bisonc++ (3.00.00)
+
+  * This release's scanner was built by flexc++
+
+  * Option handling was separated from parsing, following the method also used
+    in flexc++: a class Options holds and maintains directives and options
+    that are used in multiple points in bisonc++'s sources. The Parser passes
+    directive specifications to set-functions defined by the class Options.
+
+  * The parser's semantic value handling recevied a complete overhaul. Unions
+    are no longer used; instead a light-weight polymorphic base class in
+    combination with some template meta programming was used to handle the
+    semantic values. See sembase/sembase.h for a description of the appproach.
+
+  * Options and directives were rationalized/standardized. See the man-page
+    for details. Grammar specification files should no longer use %print, but
+    should either use %print-tokens or %own-tokens (or the equivalent
+    command-line options).
+
+  * NOTE: Existing Parser class interfaces (i.e. parser.h) must be
+    (hand-) modified by declaring a private member 
+
+        void print__();
+
+    See the man-page and/or manual for details about print__.
+
+  * All regression tests (in documentation/regression) are now expecting
+    that flexc++ (>= 0.93.00) is available.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 20 Feb 2012 16:32:01 +0100
+  
+bisonc++ (2.09.04)
+    
+  * Replaced many for_each calls and lamda functions by range-based for-loops
+  
+  * Used g++-4.7
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Wed, 04 Jan 2012 12:26:01 +0100
+
+bisonc++ (2.09.03)
+
+  * Replaced all FnWrap* calls by lambda function calls
+
+  * `build' script now recognizes CXXFLAGS and LDFLAGS for, resp. g++ and ld
+     flags. Default values are set in INSTALL.im, as before.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Thu, 23 Jun 2011 10:06:02 +0200
+
+bisonc++ (2.09.02)
+
+  * Repaired flaws that emerged with g++ 4.6
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 02 May 2011 16:30:43 +0200
+
+bisonc++ (2.9.1)
+
+  * Documentation requires >= Yodl 3.00.0
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Wed, 10 Nov 2010 10:30:51 +0100
+
+bisonc++ (2.9.0)
+
+  * Changed Errno::what() call to Errno::why()
+
+  * Removed dependencies on Msg, using Mstreams and Errno::open
+    instead. Consequently, bisonc++ depends on at least Bobcat 2.9.0
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 30 Oct 2010 22:05:30 +0200
+
+bisonc++ (2.8.0)
+
+  * Grammars having states consisting of items in which a reduction from a
+    (series of) non-terminals is indicated have automatically a higher
+    precedence than items in which a shift is required. Therefore, in these
+    cases the shift/reduce conflict is solved by a reduce, rather than a
+    shift.  See README.states-and-conflicts, srconflict/visitreduction.cc and
+    the Bisonc++ manual, section 'Rule precedence' for examples and further
+    information.  These grammars are now showing S/R conflicts, which remained
+    undetected in earlier versions of Bisonc++. The example was brought to my
+    attention by Ramanand Mandayam (thanks, Ramanand!).
+
+  * To the set of regression tests another test was added containing a grammar
+    having two S/R conflicts resulting from automatically selecting reductions
+    rather than shifts. This test was named 'mandayam'.
+
+  * Output generated by --verbose and --construction now shows in more detail
+    how S/R conflicts are handled. The Bisonc++ manual also received an
+    additional section explaining when reduces are used with certain S/R
+    conflicts. 
+
+  * Previously the documentation stated that --construction writes the
+    construction process to stdout, whereas it is written to the same file as
+    used by --verbose. This is now repaired.
+
+  * The meaning/use of the data members of all classes are now described at
+    the data members in all the classes' header files.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 08 Aug 2010 15:15:46 +0200
+
+
+bisonc++ (2.7.0)
+
+  * $-characters appearing in strings or character constants in action blocks 
+    no longer cause warnings about incorrect or negative $-indices
+
+  * Repaired incorrect interpretation of '{' and '}' character constants 
+    in action blocks.
+
+  * Added option --print (directive %print) displaying tokens received by the
+    scanner used by the generated parser.
+
+  * Added option --scanner-token-function (directive %scanner-token-function)
+    specifying the name of the function called from the generated parser's
+    lex() function. 
+
+  * The build script received an additional option: `build parser' can be used
+    to force the reconstruction of parser/parse.cc and parser/parserbase.h
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Wed, 31 Mar 2010 15:54:52 +0200
+
+bisonc++ (2.6.0)
+
+  * Reorganized Bisonc++'s classes: public inheritance changed to private
+    where possible, all virtual members now private. The parser->parserbase
+    inheritance remains as-is (public) because parserbase essentially is a
+    element of parser, defining types and the token-enum that must also be
+    available to the users of the generated parser class. The alternative,
+    defining types and tokens in the parser class would make it impossible to
+    adapt the tokens without rewriting the parser class. Another alternative,
+    defining the types and enum in a separate namespace imposes further
+    restrictions on the users of the parser class, which is also considered
+    undesirable. Public inheritance is now only used by NonTerminal, Terminal,
+    and Symbol as these classes override virtual functions either in Symbol or
+    in Element and the derived classes must all be usable where their base
+    classes are expected (in accordance with the LSP).
+
+bisonc++ (2.5.1)
+
+  * Token values written to parserbase.h are (again) suppressed when their
+    values exceed the previous token's value by 1. All values were shown
+    because writer/insertToken erroneously didn't receive a size_t
+    &lastTokenValue anymore, but a size_t lastTokenValue.
+
+  * Removed Terminal's operator<< from the namespace std
+
+  * Now using initializer_lists to initialize static data (generator/data.cc
+    main.cc)
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 08 Mar 2010 20:51:22 +0100
+
+bisonc++ (2.5.0)
+
+  * Renamed parser/spec/aux to parser/spec/auxiliary to avoid file/device
+    confusion on some systems
+
+  * Removed inclusions of superfluous bobcat/fnwrap1c headers
+
+  * Replaced all FnWrap1c calls by FnWrap::unary
+
+  * Added check for d_currentRule == 0 in rules/addproduction. d_currentRule
+    could be a 0-pointer, in which case addproduction shouldn't do anything.
+    d_currentRule is a 0-pointer in, e.g. the erroneous grammar submitted
+    by Justin Madru about which he rightfully remarked that even though
+    erroneous bisonc++ shouldn't crash on it. This is his stripped-down
+    grammar: 
+        %token X x_list
+        %%
+        x_list:
+            x_list X
+        |
+            X
+        ;
+
+bisonc++ (2.4.8)
+
+  * Recompilation using option --std=c++0x, required because of Bobcat's use
+    of C++0x syntax.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 05 Sep 2009 17:25:56 +0200
+
+bisonc++ (2.4.7)
+
+  * Streams processed by an `#include' directive were not properly closed, 
+    resulting in a memory leak. The Scanner's code was modified to plug that
+    leak. 
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Wed, 06 May 2009 09:36:02 +0200
+
+bisonc++ (2.4.6)
+
+  * Changed the build script to allow finer control over construction and
+    installation of parts of the package
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 24 Mar 2009 19:16:10 +0100
+
+bisonc++ (2.4.5)
+
+  * DateTime (generator/filter.cc) adapted due to change of Bobcat's DateTime 
+    interface
+
+bisonc++ (2.4.4)
+
+  * typed terminal tokens (as used in, e.g., %type<fieldname>) were not
+    included in the parserbase's Tokens__ enum since their symbol type is left
+    at UNDETERMINED. tokens used in type lists can also be non-terminals, in
+    which case their symbol type is changed accordingly. In 2.4.4. a symbol is
+    selected for inclusion in the Tokens__ enum if it's a terminal token but
+    also if it's a symbol that has been used in the grammar although its 
+    symbol type is left at UNDETERMINED (in generator/selectsymbolic.cc)
+
+bisonc++ (2.4.3)
+
+  * repaired segfault generated when the name of a non-existing file was
+    passed to bisonc++
+
+bisonc++ (2.4.2)
+
+  * scanner/yylex.cc removed from the distribution: flex will create a new
+    Scanner::yylex() member at each new distribution to prevent 
+    incompatibilities between earlier yylex.cc and later FlexLexer.h files.
+
+bisonc++ (2.4.1) 
+
+  * Implemented minor changes related to requirements imposed upon the code by
+    g++ 4.3.
+
+  * Generator/filter now uses the Datetime::rfc2822(), implmented since Bobcat
+    1.17.1 
+
+bisonc++ (2.4.0) 
+
+  * Fixed missing entry in multiple reduction state tables:
+
+    State tables of multiple reduction states (e.g., REQ_RED states) were
+    constructed incompletely. E.g., for the grammar:
+
+        expr:
+            name
+        |
+            ident '(' ')'
+        |
+            NR
+        ;
+        name:   
+            IDENT
+        ;
+        ident:
+            IDENT
+        ;
+
+    the state following IDENT is either a reduce to 'name' or 'ident': the
+    corresponding table was filled incompletely, using the number of the next
+    token where the next token for the reduction should have been be
+    mentioned, and an empty field in the table itself.
+
+    NOTE that in these situations d_val__ MUST be set by the scanner, as the
+    reduction requires another token, and only once that token is available
+    the reduction to, e.g., 'ident' can be performed, but at that time
+    YYText() has already gone and is inaccessible in an action block like:
+
+        ident:
+            IDENT
+            {
+                $$ = d_scanner.YYText();
+            }
+        ;
+
+  * The error recovery procedure in skeleton's bisonc++.cc skeleton file was
+    reimplemented. As a side effect the internally used function
+    'ParserBase::checkEOF()' could be removed.
+
+  * #line directives in rule action blocks now correctly identify the grammar
+    specification file in which the action block was defined.
+
+  * Extra empty line at the end of state transition tables were removed
+
+  * Files generated by Bisonc++ report Bisonc++'s version and the file 
+    construction time (conform RFC 2822) as C++ comment in their first line.
+
+bisonc++ (2.3.1)
+
+  * Fixed character returned in escaped constants. E.g., at '\'' the \ was
+    returned instead of the ' character.
+
+  * Implemented the default assignment of $1 to $$ at the begin of action
+    rules. This required another Block member: saveDollar1(), called for
+    nested blocks. The function saveDollar1() prepends the code to save $$
+    from $1 of the rule in which the nested block was defined. In
+    share/bisonc++ the function executeAction() no longer saves the semantic
+    value's TOS value as d_val__ but the rule's $1 value.
+
+  * To allow extraction of the archive under Cygwin (Windows) the directory
+    parser/spec/aux was renamed to parser/spec/auxiliary (as Windows can't
+    handle files or directories named 'aux').
+
+bisonc++ (2.3.0)
+
+  * Dallas A. Clement uncovered a bug in handling semantic values, due to
+    which semantic values of tokens returned by some grammars got lost. He
+    intended to use a polymorphic semantic value class to pass different kinds
+    of semantic values over from the scanner to the parser. This approach was
+    the foundation of another regression test example, now added to the set of
+    regression tests and described in Bisonc++'s manual. It will also appear
+    as an annotated example in the C++ Annotations. Thanks, Dallas, for
+    uncovering and reporting that bug.
+
+  * Dallas also noted that mid-rule actions could not refer to semantic values
+    of rule components that had already been seen by Bisonc++. This has been
+    fixed in this release. Dallas, thanks again!
+
+  * Earlier versions of Bisonc++ used the class OM (Output Mode) to define the
+    way objects like (Non)Terminal tokens and (Non)Kernel Items were inserted
+    into ostreams. Using OM did not result in the clarity of design I
+    originally had in mind. OM is now removed, and instead relevant classes
+    support a function `inserter()' allowing sources to specify (passing
+    `inserter()' a pointer to a member function) what kind of insertion they
+    need. For the Terminal class there is also a manipulator allowing sources
+    to insert a insertion-member directly into the ostream.
+
+  * New option: --insert-stype
+    The generated parser will now also display semantic values when %debug is
+    specified if the new command-line option --insert-stype is provided. Of
+    course, in this case users should make sure that the semantic value is
+    actually insertable (e.g., by providing an overloaded operator
+    std::ostream &std::operator<<(std::ostream &out, STYPE__ const &semVal).
+
+bisonc++ (2.2.0)
+
+  * Repaired a bug in parsing action blocks of rules appearing only in
+    versions 2.1.0 and 2.0.0. In these versions compound statements defined
+    within the action blocks result in bisonc++ erroneously reporting an error
+    caused by bisonc++'s scanner (scanner/lexer) interpreting the closing
+    curly brace as the end of the action block.
+
+  * Repaired a flaw in terminal/terminal1.cc causing a segfault when using
+    bisonc++ compiled with g++ 4.2.1
+
+bisonc++ (2.1.0)
+
+  * In the skeleton bisonc++.cc $insert 4 staticdata is followed by $insert
+    namespace-open. Since `staticdata' defined s_out if %debug is requested,
+    it could be defined outside of the user's namespace (defined by
+    %namespace). Repaired by defining s_out after (if applicable) opening the
+    namespace (in Generator::namespaceOpen(), called from $insert
+    namespace-open). 
+
+bisonc++ (2.0.0)
+
+  * Rebuilt Bisonc++'s parser and scanner, creating Bisonc++'s parser from the
+    file parser/grammar. Initially Bisonc++ 1.6.1 was used to create the
+    Parser class header and parsing function. Once Bisonc++ 2.0.0 was
+    available, the grammar file was split into various subfiles (see below)
+    and Bisonc++ 2.0.0 was used to implement its own parsing function.  As a
+    direct consequence of using a grammar rather than a hand-implemented
+    parsing function quite a few members of the Parser and Scanner class were
+    reimplemented, new members were added and some could be removed.  Parts of
+    other classes (Rules, Block) were significantly modified as well.
+
+  * Minor hand-modifications may be necessary with previously designed code
+    using identifiers that are defined by the parser class generated by
+    Bisonc++. The following names have changed:
+
+    -------------------------------------------------------------------------
+    old name                        change into new name:           Protected
+    -------------------------------------------------------------------------
+    Parser::LTYPE                   Parser::LTYPE__
+    Parser::STYPE                   Parser::STYPE__
+    Parser::Tokens                  Parser::Tokens__
+
+    Parser::DEFAULT_RECOVERY_MODE   Parser::DEFAULT_RECOVERY_MODE__ Yes
+    Parser::ErrorRecovery           Parser::ErrorRecovery__         Yes
+    Parser::Return                  Parser::Return__                Yes
+    Parser::UNEXPECTED_TOKEN        Parser::UNEXPECTED_TOKEN__      Yes
+    Parser::d_debug                 Parser::d_debug__               Yes
+    Parser::d_loc                   Parser::d_loc__                 Yes
+    Parser::d_lsp                   Parser::d_lsp__                 Yes
+    Parser::d_nErrors               Parser::d_nErrors__             Yes
+    Parser::d_nextToken             Parser::d_nextToken__           Yes
+    Parser::d_state                 Parser::d_state__               Yes
+    Parser::d_token                 Parser::d_token__               Yes
+    Parser::d_val                   Parser::d_val__                 Yes
+    Parser::d_vsp                   Parser::d_vsp__                 Yes
+    -------------------------------------------------------------------------
+
+    The symbols marked `Protected' can only occur in classes that were derived
+    from the parser class generated by Bisonc++. Unless you derived a class
+    from the parser class generated by Bisonc++ these changes should not
+    affect your code. The first three symbols may have been used in other
+    classes as well (for an example now using LTYPE__ and STYPE__ see the file 
+    documentation/regression/location/scanner/scanner.h).
+
+    Note that the only required modification in all these cases is to append
+    two underscores to the previously defined identifiers.
+
+  * The grammar file may now be split into several grammar specification
+    files. The directive %include may be specified to include grammar files
+    into other grammar files (much like the way C/C++'s #include preprocessor
+    directive operates). Starting point of the grammar recognized by Bisonc++
+    2.0.0 is the file parser/grammar, using subfiles in the parser/spec
+    directory. The file README.parser documents the grammar specification
+    files in some detail.
+
+  * Previous releases implicitly enforced several restrictions on the
+    identifiers used for the grammar's tokens. These restrictions resulted
+    from name collisions with names defined in the parser's base class. While
+    the restrictions cannot be completely resolved without giving up backward
+    compatibility, they can be relieved greatly. Tokens cannot be ABORT,
+    ACCEPT, ERROR, clearin, debug, error and setDebug. Furthermore, tokens
+    should not end in two underscores (__).
+
+  * Implemented various new options and directives:
+
+    - the option --analyze-only, merely analyzing the provided grammar, not
+      writing any source or header files.
+
+    - the option --error-verbose as well as the directive %error-verbose
+      dumping the state-stack when a syntactic error is reported.
+
+    - the option --include-only, catenating all grammar files in their order
+      of processing to the standard output stream (and terminating).
+
+    - the option --max-inclusion-depth, defining the maximum number of nested
+      grammar files (default: 10).
+
+    - the option --required-tokens (also available as the directive
+      %required-tokens). Error recovery is now configurable in the sense that
+      a configurable number of tokens must have been successfully processed
+      before new error messages can be generated (see
+      documentation/manual/error/intro.yo)
+
+    - the option --scanner-debug writing the contents and locations (in
+      scanner/lexer) of matched regular expresions as well as the names/values
+      of returned tokens to the standard error stream.
+
+    - the option --skeleton-directory. This option overrides the default
+      location of the director containing the skeleton files. In turn it is
+      overridden by the options specifying specific skeleton files (e.g.,
+      --baseclass-skeleton).
+
+    - the option --thread-safe. If specified, Bisonc++ will generate code that
+      is thread-safe. I.e., no static data will be modified by the parse()
+      function. As a consequence, all static data in the file containing the
+      parse() function are defined as const. Manpage and manual adapted
+      accordingly.
+
+  * As a convenience, filenames in the grammar files may optionally be
+    surrounded by double quotes ("...")  or pointed brackets <...>. Delimiting
+    pointed brackets are only kept with the %scanner and %baseclass-preinclude
+    directives, in all other cases they are replaced by double quotes and a
+    warning is displayed.
+
+  * Token Handling in the generated parsing member function was improved: the
+    share/bisonc++.cc skeleton now defines pushToken__() and popToken__() as
+    the standard interface to the tiny two-element token stack. The member
+    nextToken() was redesigned.
+
+  * Documentation was extended and updated. The Bisonc++ manual now contains an
+    extensive description of the grammar-analysis process as implemented in
+    Bisonc++ (see documentation/manual/algorith.yo). All new options and
+    directives, as well as the token-name requirements are covered by the
+    man-page and by the manual.
+
+  * Various other repairs and cosmetic changes: 
+    - The --construction option as implemented in Bisonc++ 1.6.1 showed the
+      FIRST set where the FOLLOW set was labeled. Repaired: now the FOLLOW set
+      is actually displayed.
+    - The --show-filenames option now shows `(not requested)' as default for
+      d_verboseName instead of `-' if no --verbose was requested.
+    - The --construction option no longer displays the `LA expanded' value
+      from the state's descriptions since it's always 0
+    - The --class-name option was not actually mentioned in the set of
+      recognized long options: repaired.
+    - The %type directive now allows you to specify semantic type associations
+      of terminal tokens as well.
+    - The %token, %left, %right and %nonassoc directives now all use the same
+      syntax (as they always should have). These directives all define
+      terminal tokens
+    - Added `rebuild' command to the `build' script to recreate the parser
+
+bisonc++ (1.6.1)
+
+  * Changed the error recovery procedure preventing stack underflows with
+    unrecoverable input errors.
+
+  * Added protected parser base class member checkEOF(), terminating the
+    parse() member's activities (man-page adapted accordingly).
+
+  * Changed small support member functions in the share/bisonc++.cc skeleton
+    file into inline members, some were moved to share/bisonc++base.h
+
+  * The skeleton files now use `\@' as baseclass-flag rather than `@'. The
+    baseclass-flag is now defined as a static data member in Generator. This
+    change prevents the `@' in e-mail addresses from being changed into the
+    parser's class name.
+
+  * Removed the class Support since it is now covered by Bobcat's (1.15.0) 
+    default implementation of FBB::TableSupport
+
+bisonc++ (1.6.0)
+
+  * NOTE: THE PROTOTYPE OF THE PARSER'S lookup() FUNCTION CHANGED. IT IS NOW:
+    int lookup(bool recovery); 
+    OLD parser.h HEADER FILES CAN BE REUSED AFTER ADDING THE PARAMETER 
+    bool recovery
+
+  * Segfaults were caused by some grammars due to an erroneous index in
+    (formerly state/setitems.cc) state/adddependents.cc, where idx,
+    representing an index in d_itemVector was used to index an element in
+    d_nextVector (for which the index variable `nextIdx' should have been
+    used. Repaired.
+
+  * For some unknown reason, priority and association rules were not
+    implemented in earlier versions of bisonc++. Consequently priority and
+    association values of rules were left at their default values. This was
+    repaired by defining the function Rules::updatePrecedences(), which
+    defines priorities of productions as either their values assigned by a
+    %prec specification or as the priority of their first terminal token.
+
+  * The accepting State no longer has default reductions. It doesn't need them
+    since _EOF_ in those states terminates the parser. Accepting States
+    now have search sentinels, allowing the parser to do proper error
+    recovery. 
+
+  * The implementation of the shift/reduce algorithm and error handling in
+    share/bisonc++.cc was modified, now using bitflags indicating
+    state-requirements (e.g., requiring a token, having a default reduction,
+    having an `error' continuation, etc.). Also, the functions nextToken() and
+    lookup() were reimplemented.
+
+  * The share/bisonc++.cc parser function skeleton's initial comment was
+    improved.
+
+  * The function state/state1.cc contained the superfluous intialization 
+    d_itemVector(0). The line has been removed.
+
+  * The class `Rules' lacked facilities to detect properly whether a grammar
+    file without rules was specified. Solved by defining a Rules constructor
+    and an additional member indicating whether there weree any rules at all.
+
+  * In grammar files, rules must now be terminated by a semicolon. Previous
+    versions did not explicitly check this. Also, improperly formed
+    character-tokens are now recognized as errors. 
+
+  * In correspondence with bison, the default verbose grammar output file is
+    now called <grammar filename>.output rather than <parsing function base
+    name>.output
+
+  * The description of the State information shown when --construction is
+    specified was clarified.
+
+  * The debug output generated by parse.cc was improved.
+
+  * The setDebug() member is now a public member. Manual page and
+    documentation changed accordingly. 
+
+  * The description of the setItems() algorithm in state/setItems was
+    improved. 
+
+  * The `build' script was given an additional command (installprog) to 
+    install just the program and the skeletons.
+
+  * Added several missing headers fixing gcc/g++ 4.3 problems
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 09 Apr 2007 14:54:46 +0200
+
+bisonc++ (1.5.3)
+
+  * Using Bobcat's FnWrap* classes instead of Bobcat's Wrap* classes
+
+  * The INSTALL.im file has received a (by default commented out) 
+    #define PROFILE. By activating this define, bisonc++ is compiled with
+    support for the gprof profiler. This define should not be activated for
+    production versions of bisonc++
+
+  * Not released.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 17 Feb 2007 20:44:19 +0100
+
+bisonc++ (1.5.2)
+
+  * It turns out that the modification in 1.5.1. is not necessary. The
+    compilation problems mentioned there were the result of a presumed small
+    g++ compiler bug. A workaround is implemented in Bobcat 1.12.1, preventing
+    the bug from occurring. In fact, this release has the same contents as
+    release 1.5.0. Release 1.5.1. can be considered obsolete. It is available
+    from the svn repository only.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Thu, 30 Nov 2006 17:05:09 +0100
+
+bisonc++ (1.5.1)
+
+  * Building the usage support program failed because of implied dependencies
+    on the bobcat library, resulting from superfluously including bobcat.h in
+    the documentation/usage/usage.cc program source.  This is solved by
+    setting bisonc++.h's include guard identifier just before inserting
+    ../../usage.cc in the documentation/usage/usage.cc program source.
+
+bisonc++ (1.5.0)
+
+  * The algorithms for lookahead propagation and detection of grammars not
+    deriving sentences have been redesigned and rewritten. The previously used
+    algorithm propagating lookaheads suffered from spurious reduce/reduce
+    conflicts for some grammars (e.g., see the one in
+    documentation/regression/icmake1). Also, 1.4.0 choked on a (fairly)
+    complex grammar like the one used by icmake V 7.00. These problems are now
+    solved, and comparable problems should no longer occur.
+    
+    The layout and organization of the output has been changed as well. Now
+    there are basically three forms of verbose output: No verbose output, in
+    which the file *.output is not written, standard verbose output, in which
+    an overview of the essential parts of the grammar is written to the file
+    *.output, and --construction, in which case all lookaheadsets, as well as
+    the first and follow sets are written to *.output.
+
+    Multiple new classes were added, and some previously existing classes were
+    removed. See the file README.class-setup and the file CLASSES for details.
+
+    The man-page and manual were adapted on minor points.
+
+bisonc++ (1.4.0)
+
+  * It turned out that in the previous versions, S/R conflicts were also
+    produced for empty default reductions. Now detectSR() checks whether there
+    is one empty reduction. If so, no S/R conflicts are possible in that
+    state. Instead a SHIFT (which is already the default solution of a S/R
+    conflict) is performed in these situations. So, now for all
+    tokens for which a known continuation state exist the known continuation
+    state is selected; for all other tokens the default reduction (reducing to
+    its associated state) is selected. See state/detectsr.cc for details.
+    
+    Since the above change also represents a change of algorithm, the
+    subversion was incremented. I added a sub-subversion to have a separate
+    level of version-numbers for minor modifications.
+
+    The documentation/regression/run script did not properly return to its
+    initial working directory, and it called a test that no longer
+    existed. Both errors have been repaired.
+
+    Some leftover references to the Academic Free License were replaced by
+    references to the GPL.
+
+    The previously used scripts below make/ are obsolete and were removed from
+    this and future distributions. Icmake should be used instead, for which a
+    top-level script (build) and support scripts in the ./icmake/ directory
+    are available. Icmake is available on a great many architectures. See the
+    file INSTALL (and INSTALL.im, replacing the previously used INSTALL.cf)
+    for further details.
+
+    All plain `unsigned' variables were changed to `size_t'
+
+bisonc++ (1.03-1) unstable; urgency=low
+
+  * License changed to the GNU GENERAL PUBLIC LICENSE. See the file
+    `copyright'. 
+
+    According to the manual page, the debug-output generated by parsers
+    created using the --debug option should be user-controllable through the
+    `setDebug()' member. These feature is now actually implemented.
+
+    The usage info now correctly shows the -V flag as a synonym for the 
+    --verbose option.
+
+    From now on this file will contain the `upstream' changes. The Debian
+    related changes are in changelog.Debian.gz
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Wed, 19 Jul 2006 13:12:39 +0200
+
+bisonc++ (1.02) unstable; urgency=low
+
+  * Following suggestions made by George Danchev, this version was compiled by
+    the unstable's g++ compiler (version >= 4.1), which unveiled several flaws
+    in the library's class header files. These flaws were removed (i.e.,
+    repaired).
+
+    In order to facilitate compiler selection, the compiler to use is defined
+    in the INSTALL.cf file.
+
+    The debian control-files (i.e., all files under the debian subdirectory)
+    were removed from the source distribution, which is now also named in
+    accordance with the Debian policy. A diff.gz file was added.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Thu,  6 Jul 2006 12:41:43 +0200
+
+bisonc++ (1.01) unstable; urgency=low
+
+  * Synchronized the version back to numbers-only, adapted the debian
+    standards and the required bobcat library in the debian/control file.
+    No implementation changes as compared to the previous version, but I felt 
+    the need to join various sub-sub-versions back to just one standard
+    version. 
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 26 Jun 2006 12:11:15 +0200
+
+bisonc++ (1.00a) unstable; urgency=low
+
+  * Debian's Linda and lintian errors, warnings and notes processed. No
+    messages are generated by linda and lintian in this version.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 28 May 2006 14:26:03 +0200
+
+bisonc++ (1.00) unstable; urgency=low
+
+  * Bisonc++ Version 1.00 has changed markedly as compared to its predecessor,
+    bisonc++ 0.98.510.
+    
+    The main reason for upgrading to 1.00 following a year of testing the 0.98
+    series is that the grammar analysis and lookahead propagation algorithms
+    as used in bisonc++ 0.98.510 were either too cumbersome and contained some
+    unfortunate errors.
+    
+    The errors were discovered during my 2005-2006 C++ class, where some
+    students produced grammars which were simple, but were incorrectly
+    analyzed by bisonc++ 0.98. It turned out that the lookahead (LA)
+    propagation contained several flaws. Furthermore, a plain and simple bug
+    assigned the last-used priority to terminal tokens appearing literally in
+    the grammar (i.e., without explicitly defining them in a %token or
+    comparable directive). A simple, but potentially very confusing bug.
+    
+    At the cosmetic level, the information produced with the --construction
+    option was modified, aiming at better legibility of the construction
+    process.
+    
+    The `examples' directory was reduced in size, moving most examples to a
+    new directory `regression', which now contains a script `run' that can be
+    used to try each of the examples below the `regression' directory. Some of
+    the examples call `bison', so in order to run those examples `bison' must
+    be installed as well. It usually is.
+    
+    A minor backward IN-compatibility results from a change in prototype of
+    some private parser member functions. This should only affect exising
+    Parser.h header files. Simply replacing the `support functions for
+    parse()' section shown at the end of the header file by the following
+    lines should make your header file up-to-date again. Note that bisonc++
+    does not by itself rewrite Parser.h to prevent undoing any modifications
+    you may have implemented in the parser-class header file:
+    
+        // support functions for parse():
+            void executeAction(int ruleNr);
+            void errorRecovery();
+            int lookup();
+            void nextToken();
+    
+    Please note that this version depends on bobcat 1.7.1 or beyond. If you
+    compile bobcat yourself, then you may want to know that bobcat's Milter
+    and Xpointer classes are not used by bisonc++, so they could optionally be
+    left out of bobcat's compilation.
+
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun,  7 May 2006 15:10:05 +0200
+
+bisonc++ (0.98.510) unstable; urgency=low
+
+  * When no %union has been declared, no $$ warnings are issued anymore about
+    non-exisiting types;
+    When no %union has been declared a $<type>i or $<type>$ warning is issued
+    about non-exisiting types.
+
+    The State table (in the generated parse.cc file) containing `PARSE_ACCEPT'
+    was created with a `REDUCE' indication for grammars whose start symbol's
+    production rules were non-repetitive. This was repaired in
+    state/writestatearray.cc by setting the (positive) non-reduce indication
+    for states using shifts and/or the accept state.
+
+    The logic in writeStateArray() was modifed: a separate ShiftReduce::Status
+    variable is now used to store the possible actions: SHIFT, REDUCE or
+    ACCEPT. The tables show `SHIFTS' if a state uses shifts; `ACCEPTS' if a
+    state contains PARSE_ACCEPT; and `REDUCE' otherwise.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 21 Mar 2006 20:47:49 +0100
+
+bisonc++ (0.98.500) unstable; urgency=low
+
+  * Handling of $<type>i and $<type>$ repaired, added the 
+    %negative-dollar-indices directive.
+
+    $<type> specifications were not properly parsed. Instead of $<type>i or
+    $<type>$ constructions like $i<type> and $$<type> were parsed, which is
+    contrary to the manual's specification. The function parsing the $-values
+    is defined in parser/handledollar.cc. 
+
+    The handling of negative $-indices is improved. Negative $-indices are
+    used when synthesizing attributes. In that context, $0 is useful, since it
+    refers to the nonterminal matched before the current rule is starting to
+    be used, allowing rules like `vardef: typename varlist ' where `varlist'
+    inherits the type specification defined at `typename'. 
+
+    In most situations indices are positive. Therefore bisonc++ will warn when
+    zero or non-positive $-indices are seen. The %negative-dollar-indices
+    directive may be used to suppress these warnings.
+
+    $-indices exceeding the number of elements continue to cause an error. 
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun,  5 Mar 2006 13:59:08 +0100
+
+bisonc++ (0.98.402) unstable; urgency=low
+
+  * links against bobcat 1.6.0, using bobcat's new Arg:: interface
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 26 Dec 2005 19:25:42 +0100
+
+bisonc++ (0.98.400) unstable; urgency=low
+
+  * state/writestatearray.cc adds {} around individual union values to allow
+    warningless compilation of the generated parse.cc file by g++-4.0.
+
+    bisonc++ is now itself too compiled by g++-4.0.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri, 18 Nov 2005 22:46:06 +0100
+
+bisonc++ (0.98.007) unstable; urgency=low
+
+  * Added a README.flex file giving some background information about the
+    provided implementation of the lexical scanner (bisonc++/scanner/yylex.cc)
+
+    Modified the compilation scripts: bisconc++/flex/FlexLexer.h is now
+    included by default. This FlexLexer.h file is expected by
+    bisonc++/scanner/yylex.cc and by the Scanner class.
+
+    Simplified some compilation scripts.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri,  9 Sep 2005 11:42:24 +0200
+
+bisonc++ (0.98.006) unstable; urgency=low
+
+  * Removed the dependency on `icmake'. No change of functionality
+    See the instructions in the `INSTALL' file when you want to compile and
+    install `bisonc++' yourself, rather than using the binary (.deb)
+    distribution. 
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat,  3 Sep 2005 17:42:29 +0200
+
+bisonc++ (0.98.005) unstable; urgency=low
+
+  * Removed the classes Arg, Errno, Msg and Wrap1, using the Bobcat library's
+    versions of these classes from now on. No feature-changes.
+
+    Added minor modifications to the `build' script.
+
+    Annoying Error: The function `ItemSets::deriveAction()' did not recognize
+    the `ACCEPT' action, so some (most ?) grammars could not be properly
+    recognized. I applied a quick hack: if an action isn't `shift' or
+    `reduce', it can be `accept', resulting in acceptance of the grammar. This
+    solves the actual problem, but I'll have to insepct this in a bit more
+    detail. For now, it should work ok.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 22 Aug 2005 13:05:28 +0200
+
+bisonc++ (0.98.004) unstable; urgency=low
+
+  * When new lookahead set elements are added to existing states,
+    d_recheckState in itemsets/lookaheads.cc (ItemSets::checkLookaheads()) was
+    reassigned to the state index whose lookaheadset was enlarged. However, if
+    that happened for existing state `i' and then, during the same
+    state-inspection, for state `j' where j > i, then the recheck would start
+    at `j' rather than `i'. This problem was solved by giving d_recheckState
+    only a lower value than its current value.
+    
+    With R/R conflicts involving `ACCEPT' reductions (with, e.g., `S_$: S .'),
+    ACCEPT is selected as the chosen alternative. See State::setReduce()
+    (state/setreduce.cc). Since this matches with the `first reduction rule'
+    principle, it should be ok.
+    
+    %stype specifications may consist of multiple elements: the remainder of
+    the line beyond %stype is interpreted as the type definition. The
+    specification should (therefore) not contain comment or other characters
+    that are not part of the actual type definition. The man-page is adapted
+    accordingly. Same holds true for the %ltype directive
+    
+    Added a check whether the grammar derives a sentence
+    (itemsets/derivesentence.cc). If not, a fatal error is issued. This
+    happens at the end of the program's actions, and at this point files
+    etc. have already been generated. They are kept rather than removed for
+    further reference. Grammars not deriving sentences should probably not be
+    used.
+    
+    The original Bison documentation has been converted to a Bisonc++ user
+    guide. Furthermore, a html-converted manual page is now available under
+    /usr/share/doc/bisonc++/man
+
+    The `calculator' example used in the man-page is now under
+    /usr/share/doc/bisonc++/man/calculator 
+
+    Bisonc++ is distributed under the Academic Free License, see the file
+    COPYING in /usr/share/doc/bisonc++
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun,  7 Aug 2005 13:49:07 +0200
+
+bisonc++ (0.98.003) unstable; urgency=low
+
+  * Incomplete default State constructor now explicitly defined, prevents
+    the incidental erroneous rapporting of conflicts for some states.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Thu, 26 May 2005 07:21:20 +0200
+
+bisonc++ (0.98.002) unstable; urgency=low
+
+  * The Wrap1 configurable unary predicate template class replaces various
+    other templates (WrapStatic, Wrap, Pred1Wrap). No further usage or
+    implementation changes/modifications.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 22 May 2005 15:27:19 +0200
+
+bisonc++ (0.98.001) unstable; urgency=low
+
+  * This is a complete rewrite of the former bisonc++ (0.91) version. The
+    program bisonc++ is now a C++ program, producing C++ sources, using the
+    algorithm for creating LALR-1 grammars as outlined by Aho, Sethi and
+    Ullman's (1986) `Dragon' book. The release number will remain 0.98 for a
+    while, and 0.98.001 holds the initial package, new style. Also see the
+    man-page, since some things have been changed (augmented) since the
+    previous version. No dramatic changes in the grammar specification method:
+    Bisonc++ still uses bison's way to specify grammars, but some features,
+    already obsolete in bisonc++ 0.91 were removed.
+
+    Also note my e-mail address: the U. of Groningen's official policy now is
+    to remove department specific information, so it's `@rug.nl' rather than
+    `@rc.rug.nl', as used before.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 16 May 2005 13:39:38 +0200
+
+bisonc++ (0.91) unstable; urgency=low
+
+  * Added several missing short options (like -B etc) to the getopt() function
+    call. I forgot to add them to the previous version(s). Internally, all old
+    C style allocations were changed to C++ style allocations, using operators
+    new and delete. Where it was immediately obvious that a vector could be
+    used, I now use vectors. The internally used types `core' `shifts' and
+    'reductions' (types.h) now use a vector data member rather than an int [1]
+    member, which is then allocated to its proper (I may hope) size when the
+    structs are allocated.
+
+ -- Frank B. Brokken <f.b.brokken@rc.rug.nl>  Sat, 19 Feb 2005 10:21:58 +0100
+
+bisonc++ (0.90) unstable; urgency=low
+
+  * Command-line options now override matching declarations specified in the
+    grammar specification file.
+
+    All %define declarations have been removed. Instead their first arguments
+    are now used to specify declarations. E.g., %parser-skeleton instead of
+    %define parser-skeleton.
+
+    All declarations use lower-case letters, and use only separating hyphens,
+    no underscores. E.g., %lsp-needed rather than %define LSP_NEEDED
+    The declaration %class-name replaces the former %name declaration
+
+    All yy and YY name prefixes of symbols defined by bisonc++ have been
+    removed. The parser-state `yydefault' has been renamed to `defaultstate'.
+
+ -- Frank B. Brokken <f.b.brokken@rc.rug.nl>  Sun,  6 Feb 2005 12:50:40 +0100
+
+bisonc++ (0.82) unstable; urgency=low
+
+  * Added d_nError as protected data member to the base class. Missed it
+    during the initial conversion. d_nErrors counts the number of parsing
+    errors. Replaces yynerrs from bison(++)
+
+ -- Frank B. Brokken <f.b.brokken@rc.rug.nl>  Sat, 29 Jan 2005 18:58:24 +0100
+
+bisonc++ (0.81) unstable; urgency=low
+
+  * Added the option --show-files to display the names of the files that are
+    used or generated by bisonc++.
+
+ -- Frank B. Brokken <f.b.brokken@rc.rug.nl>  Fri, 28 Jan 2005 14:50:48 +0100
+
+bisonc++ (0.80) unstable; urgency=low
+
+  * Completed the initial debian release. No changes in the software.
+
+ -- Frank B. Brokken <f.b.brokken@rc.rug.nl>  Fri, 28 Jan 2005 14:30:05 +0100
+
+bisonc++ (0.70-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Frank B. Brokken <f.b.brokken@rc.rug.nl>  Thu, 27 Jan 2005 22:34:50 +0100
+
