@@ -1,0 +1,67 @@
+includefile(../wip/release.yo)
+
+mailto(f.b.brokken@rug.nl)
+
+affiliation(Center for Information Technology, University of Groningen)
+
+notableofcontents()
+
+htmlstyle(.centered)(margin:0px auto;display:block)
+htmlstyle(body)(color: #27408B; background: #FFFAF0)
+
+report(Bisonc++ V _CurVers_)
+      (Frank B. Brokken (f.b.brokken@rug.nl)nl())
+      (_CurYrs_)
+
+htmlcommand(
+    <img class="centered", src="bison.jpg" border="0" alt="Bisonc++ Image" />
+)
+
+This is the main page of the Bisonc++ project hosted on GitHub.com.
+
+
+The project's repository can be reached at 
+lurl(https://github.com/fbb-git/bisoncpp).
+
+
+The five most recent releases are (to obtain, either check out a release
+by its tag or download the matching tt(.zip) or tt(.tar.gz) from
+lurl(https://github.com/fbb-git/bisoncpp/releases) or direct from its 
+release page):
+
+        itemization(
+        it() url()
+                    (https://github.com/fbb-git/bisoncpp/releases/tag/)
+;
+        it() url()
+                    (https://github.com/fbb-git/bisoncpp/releases/tag/)
+;
+        it() url()
+                    (https://github.com/fbb-git/bisoncpp/releases/tag/)
+;
+        it() url()
+                    (https://github.com/fbb-git/bisoncpp/releases/tag/)
+;
+        it() url()
+                    (https://github.com/fbb-git/bisoncpp/releases/tag/)
+;
+        )
+
+
+    itemization(
+    it() Here is url(the Bisonc++ userguide)(bisonc++.html).
+    it() Here is the url(html-version of the Bisonc++ man-page)
+                (bisonc++man.html).
+    )
+
+Enjoy Bisonc++ !
+
+COMMENT(
+includefile(/home/frank/git/PROJECTS.yo)
+)
+
+Contact the author through url(his e-mail address)(mailto:f.b.brokken@rug.nl)
+
+
+
+

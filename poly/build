@@ -1,0 +1,9 @@
+#!/bin/bash
+
+cd parser
+bisonc++ grammar
+cd ../scanner
+flexc++ lexer
+cd ..
+
+g++ --std=c++0x -Wall -O2 -o poly *.cc */*.cc -lbobcat

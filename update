@@ -1,0 +1,32 @@
+#!/bin/bash
+
+echo -n "Need to (re)create bisoncpp's wip files for gh-pages [y/n] ? "
+read yesno
+
+if [ "$yesno" == "y" ] ; then
+    git co master
+    cd bisonc++
+    ./build man
+    ./build manual
+    ./build github
+    ./build distclean
+    cd ..    
+    git co gh-pages
+fi
+
+cp -r ../wip/bisonc++man.html ../wip/manual/* .
+
+yodl2html index.yo || exit 1
+
+echo -n "ci change to index.html etc., push the result and co master [y/n] ? "
+read yesno
+
+if [ "$yesno" == "y" ] ; then
+    RELEASE=`head -n1 ../wip/release.yo | 
+		sed 's/SUBST(_CurVers_)(\(.*\))/\1/'`
+    git ci -am "updated index.html for gh-pages, release $RELEASE"
+    git push
+    git co master
+fi
+
+

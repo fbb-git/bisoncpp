@@ -1,0 +1,2553 @@
+<!DOCTYPE html><html><head>
+<meta charset="UTF-8">
+<title> <div style="text-align: center"><strong>Bisonc++</strong> (Version 4.10.01) User Guide</div> </title>
+<style type="text/css">
+    figure {text-align: center;}
+    img {vertical-align: center;}
+</style>
+</head>
+<body text="#27408B" bgcolor="#FFFAF0">
+<hr>
+<ul>
+    <li> <a href="bisonc++.html">Table of Contents</a>
+    <li> <a href="bisonc++04.html">Previous Chapter</a>
+    <li> <a href="bisonc++06.html">Next Chapter</a>
+</ul>
+<hr>
+<a name="GRAMMARFILES"></a><a name="l34"></a>
+<h1>Chapter 5: Bisonc++ grammar files</h1>
+<strong>Bisonc++</strong> takes as input a context-free grammar specification and produces a
+<strong>C++</strong> class offering various predefined members, among which the member
+<code>parse()</code>, that recognizes correct instances of the grammar.
+<p>
+In this chapter the organization and specification of such a grammar file is
+discussed in detail.
+<p>
+Having read this chapter you should be able to define a grammar for which
+<strong>Bisonc++</strong> can generate a class, containing a member that will recognize
+correctly formulated (in terms of your grammar) input, using all the features
+and facilities offered by <strong>bisonc++</strong> to specify a grammar. In principle this
+grammar will be in the class of <strong>LALR(1)</strong> grammars (see, e.g., <em>Aho, Sethi
+&amp; Ullman</em>, 2003 (Addison-Wesley)).
+<p>
+<a name="OUTLINE"></a><a name="l35"></a>
+<h2>5.1: Outline of a Bisonc++ Grammar File</h2>
+The input file for the <strong>bisonc++</strong> utility is a <strong>bisonc++</strong> grammar file. Different
+from Bison++ and Bison grammar files, <strong>bisonc++</strong> grammar file consist of only
+two sections. The general form of a <strong>bisonc++</strong> grammar file is as follows:
+        <pre>
+
+    Bisonc++ directives
+    %%
+    Grammar rules
+        
+</pre>
+
+    Readers familiar with Bison may note that there is no <em>C declaration
+section</em> and no section to define <em>Additional C code</em>. With <strong>bisonc++</strong> these
+sections are superfluous since, due to the fact that a <strong>bisonc++</strong> parser is a 
+class, all additional code required for the parser's  implementation can be
+incorporated into the parser class itself. Also, <strong>C++</strong> classes
+normally only require declarations that can be defined in the classes' header
+files, so also the `additional C code' section could be omitted from the
+<strong>Bisonc++</strong> grammar file.
+<p>
+The `%%' is a punctuation that appears in every <strong>bisonc++</strong> grammar file to
+separate the two sections.
+<p>
+The <strong>bisonc++</strong> directives section is used to declare the names of the terminal
+and nonterminal symbols, and may also describe operator precedence and the
+data types of semantic values of various symbols. Furthermore, this section is
+also used to specify <strong>bisonc++</strong> directives. These <strong>bisonc++</strong> directives are used
+to define, e.g., the name of the generated parser class and a namespace in
+which the parser class is defined.  All <strong>bisonc++</strong> directives are covered
+in section <a href="bisonc++05.html#DIRECTIVES">5.5</a>.
+<p>
+The grammar rules define how to construct <em>nonterminal symbols</em> from their
+parts.  The grammar rules section contains one or more <strong>bisonc++</strong> grammar rules,
+and nothing else. See section <a href="bisonc++05.html#RULES">5.3</a>, covering the syntax of grammar
+rules.
+<p>
+There must always be at least one grammar rule, and the first `%%' (which
+precedes the grammar rules) may never be omitted even if it is the first thing
+in the file.
+<p>
+<strong>Bisonc++</strong>'s grammar file may be split into several files. Each file may be given a
+suggestive name. This allows quick identification of where a particular
+section or rule is found, and improves readability of the designed
+grammar. The <a href="bisonc++05.html#INCLUDE">%include</a>-directive (see section <a href="bisonc++05.html#INCLUDE">5.5.7</a>) can
+be used to include a partial grammar specification file into another
+specification file.
+<p>
+<a name="SYMBOLS"></a><a name="l36"></a>
+<h2>5.2: Symbols, Terminal and Nonterminal Symbols</h2>
+<em>Symbols</em> in <strong>bisonc++</strong> grammars represent the grammatical classifications of the
+language.
+<p>
+A <em>terminal symbol</em> (also known as a <em>token type</em>) represents a class of
+syntacticly equivalent tokens. You use the symbol in grammar rules to mean
+that a token in that class is allowed. The symbol is represented in the
+<strong>Bisonc++</strong> parser by a numeric code, and the parser's <code>lex()</code> member function
+returns a token type code to indicate what kind of token has been read. You
+don't need to know what the code value is; you can use the symbol to stand for
+it.
+<p>
+A <em>nonterminal symbol</em> stands for a class of syntactically equivalent
+groupings. The symbol name is used in writing grammar rules. By convention, it
+should be all lower case.
+<p>
+Symbol names can contain letters, digits (not at the beginning), and
+underscores. <strong>Bisonc++</strong> currently does not support periods in symbol names
+(Users familiar with Bison may observe that Bison <em>does</em> support periods in
+symbol names, but the Bison user guide remarks that `Periods make sense only
+in nonterminals'. Even so, it appears that periods in symbols are hardly ever
+used).
+<p>
+There are two ways to write terminal symbols in the grammar:
+    <ul>
+    <li> A <em>named token type</em> is written with an identifier, like an
+identifier in <strong>C++</strong>. By convention, it should be all upper case. Each such
+name must be defined with a <strong>bisonc++</strong> directive such as <code>%token</code>. See
+section <a href="bisonc++05.html#TOKTYPENAMES">5.5.24</a>.
+    <li> A <code>character token type</code> (or <code>literal character token</code>) is
+written in the grammar using the same syntax used in <strong>C++</strong> for character
+constants; for example, '<code>+</code>' is a character token type. A character token
+type doesn't need to be declared unless you need to specify its semantic value
+data type (see section <a href="bisonc++05.html#SEMANTICTYPES">5.6.1</a>), associativity, or precedence (see
+section <a href="bisonc++05.html#PRECEDENCE">5.5.8</a>).
+    </ul>
+<p>
+By convention, a character token type is used only to represent a token
+that consists of that particular character. Thus, the token type '<code>+</code>' is
+used to represent the character `<code>+</code>' as a token. Nothing enforces this
+convention, but if you depart from it, your program will likely confuse other
+readers.
+<p>
+All the usual escape sequences used in character literals in <strong>C++</strong> can
+be used in <strong>bisonc++</strong> as well, but you must not use the <code>0</code> character as a
+character literal because its ASCII code, zero, is the code <code>lex()</code> must
+return for end-of-input (see section <a href="bisonc++06.html#LEX">6.3.1</a>). If your program <em>must</em> be
+able to return 0-byte characters, define a special token (e.g., <code>ZERO_BYTE</code>)
+and return that token instead.
+<p>
+Note that <em>literal string tokens</em>, formally supported in Bison, is 
+<em>not</em> supported by <strong>bisonc++</strong>. Again, such tokens are hardly ever encountered,
+and the dominant lexical scanner generators (like <strong>flex</strong>(1)) do not support
+them. Common practice is to define a symbolic name for a literal string
+token. So, a token like <code>EQ</code> may be defined in the grammar file, with the
+lexical scanner returning <code>EQ</code> when it matches <code>==</code>.
+<p>
+How you choose to write a terminal symbol has no effect on its grammatical
+meaning. That depends only on where it appears in rules and on when the parser
+function returns that symbol.
+<p>
+The value returned by the <code>lex()</code> member is always one of the terminal
+symbols (or 0 for end-of-input). Whichever way you write the token type in the
+grammar rules, you write it the same way in the definition of yylex. The
+numeric code for a character token type is simply the ASCII code for the
+character, so <code>lex()</code> can use the identical character constant to generate
+the requisite code. Each named token type becomes a <strong>C++</strong> enumeration value
+in the parser base-class header file, so <code>lex()</code> can use the corresponding
+enumeration identifiers. When using an externally (to the parser) defined
+lexical scanner, the lexical scanner should include the parser's base class
+header file, returning the required enumeration identifiers as defined in the
+parser class. So, if (%token NUM) is defined in the parser class <code>Parser</code>,
+then the externally defined lexical scanner may return <code>Parser::NUM</code>.
+<p>
+The symbol `<code>error</code>' is a <em>terminal</em> symbol reserved for error recovery
+(see chapter <a href="bisonc++08.html#RECOVERY">8</a>). The <code>error</code> symbol should not be used for any
+other purpose. In particular, the parser's member function <code>lex()</code> should
+never return this value. Several other identifiers should not be used as
+terminal symbols. See section <a href="bisonc++05.html#IMPROPER">5.5.24.1</a> for a description.
+<p>
+<a name="RULES"></a><a name="l37"></a>
+<h2>5.3: Syntax of Grammar Rules</h2>
+A <strong>bisonc++</strong> grammar rule has the following general form:
+        <pre>
+ 
+    result: 
+        components
+        ...
+    ;
+        
+</pre>
+
+    where <em>result</em> is the nonterminal symbol that this rule describes and
+<em>components</em> are various terminal and nonterminal symbols that are put
+together by this rule (see section <a href="bisonc++05.html#SYMBOLS">5.2</a>). With respect to the way
+rules are defined, note the following:
+    <ul>
+    <li> The construction:
+        <pre>
+
+    exp:    
+        exp '+' exp
+    ;
+        
+</pre>
+
+    means that two groupings of type <code>exp</code>, with a `+' token in between, can
+be combined into a larger grouping of type <code>exp</code>.
+<p>
+<li> Whitespace in rules is significant only to separate symbols. You can
+add extra whitespace as you wish.
+<p>
+<li> Scattered among the components can be <em>actions</em> that determine the
+semantics of the rule. An action looks like this:
+        <pre>
+
+    {
+        C++ statements
+    }
+        
+</pre>
+
+    Usually there is only one action and it follows the components. See
+section <a href="bisonc++05.html#ACTIONS">5.6.4</a>.
+<p>
+<li> Multiple rules for the same result can be written separately or can
+be joined with the vertical-bar character `|' as follows:
+        <pre>
+
+    result: 
+        rule1-components
+        ...
+    | 
+        rule2-components...
+        ...
+    ;
+        
+</pre>
+
+    They are still considered distinct rules even when joined in this way.
+<p>
+<li> Alternatively, multiple rules of the same nonterminal can be
+defined. E.g., the previous definition of <code>result:</code> could also have been
+defined as:
+        <pre>
+
+    result: 
+        rule1-components
+        ...
+    ;
+
+    result:
+        rule2-components...
+        ...
+    ;
+        
+</pre>
+
+    However, this is a potentially dangerous practice, since one of the two
+<code>result</code> rules could also have used a misspelled rule-name (e.g., the second
+<code>result</code>) should have been <code>results</code>. Therefore, <strong>bisonc++</strong> generates a
+warning if the same nonterminal is used repeatedly when defining production
+rules. 
+<p>
+<li> If <em>components</em> in a rule is <em>empty</em>, it means that <em>result</em>
+can match the empty string. Such a alternative is called an <em>empty
+production rule</em>. For example, here is how to define a
+comma-separated sequence of zero or more <code>exp</code> groupings:
+        <pre>
+
+    expseq:   
+        expseq1
+    | 
+        // empty 
+    ;
+
+    expseq1:  
+        expseq1 ',' exp
+    | 
+        exp
+    ;
+        
+</pre>
+
+    Convention calls for a comment `<code>// empty</code>' in each empty production
+rule.
+    </ul>
+<p>
+<a name="RECURSIVE"></a><a name="l38"></a>
+<h2>5.4: Writing recursive rules</h2>
+A rule is called <em>recursive</em> when its <em>result</em> nonterminal appears also on
+its right hand side. Nearly all <strong>bisonc++</strong> grammars need to use recursion,
+because that is the only way to define a sequence of any number of
+somethings. Consider this recursive definition of a comma-separated sequence
+of one or more expressions:
+        <pre>
+
+    expseq1:  
+            expseq1 ',' exp
+    | 
+            exp
+    ;
+        
+</pre>
+
+    Since the recursive use of expseq1 is the leftmost symbol in the right
+hand side, we call this <em>left recursion</em>. By contrast, here the same
+construct is defined using <em>right recursion</em>:
+        <pre>
+
+    expseq1:  
+            exp ',' expseq1
+    | 
+            exp
+    ;
+        
+</pre>
+
+    Any kind of sequence can be defined using either left recursion or right
+recursion, but you should always use left recursion, because it can parse a
+sequence of any number of elements with bounded stack space. Right recursion
+uses up space on the <strong>bisonc++</strong> stack in proportion to the number of elements in the
+sequence, because all the elements must be shifted onto the stack before the
+rule can be applied even once. See chapter <a href="bisonc++07.html#ALGORITHM">7</a> for further
+explanation of this.
+<p>
+<em>Indirect</em> or <em>mutual</em> recursion occurs when the result of the rule does
+not appear directly on its right hand side, but does appear in rules for other
+nonterminals which do appear on its right hand side. For example:
+        <pre>
+
+    expr:     
+        primary '+' primary
+    |
+        primary
+        ;
+
+    primary:  
+        constant
+    | 
+        '(' expr ')'
+    ;
+        
+</pre>
+
+    defines two mutually-recursive nonterminals, since each refers to the
+other.
+<p>
+<a name="DIRECTIVES"></a><a name="l39"></a>
+<h2>5.5: Bisonc++ Directives</h2>
+The <strong>bisonc++</strong> declarations section of a <strong>bisonc++</strong> grammar defines the symbols
+used in formulating the grammar and the data types of semantic values. See
+section <a href="bisonc++05.html#SYMBOLS">5.2</a>.
+<p>
+All token type names (but not single-character literal tokens such as '+' and
+'*') must be declared. If you need to specify which data type to use for the
+semantic value (see section <a href="bisonc++05.html#MORETYPES">5.6.2</a>) of nonterminal symbols, these
+symbols must be declared as well.
+<p>
+The first rule in the file by default specifies the <em>start symbol</em>. If you
+want some other symbol to be the start symbol, you must use an explicit
+<code>%start</code> directive (see section <a href="bisonc++03.html#LANGUAGES">3.1</a>).
+<p>
+In this section all of <strong>bisonc++</strong>'s declarations are discussed. Some of the
+declarations have already been mentioned, but several more are available. Some
+declarations define how the grammar parses its input (like <code>%left,
+%right</code>); other declarations are available, defining, e.g., the name of the
+parsing function (by default <code>parse()</code>), or the name(s) of the 
+files generated by <strong>bisonc++</strong>.
+<p>
+In particular readers familiar with Bison (or Bison++) should read this
+section thoroughly, since <strong>bisonc++</strong>'s directives are more extensive and
+different from the `declarations' offered by Bison, and the macros offered by
+Bison++. 
+<p>
+Several directives expect file- or path-name arguments. File- or path-names
+must be specified on the same line as the directive itself, and they start at
+the first non-blank character following the directive. File- or path-names may
+contain escape sequences (e.g., if you must: use `<code>\ </code>' to include a blank
+in a filename) and continue until the first blank character
+thereafter. Alternatively, file- or path-names may be surrounded by double
+quotes (<code>"..."</code>) or pointed brackets (<code>&lt;...&gt;</code>). Pointed brackets
+surrounding file- or path-names merely function to delimit filenames. They do
+not refer to, e.g., <strong>C++</strong>'s include path. No escape sequences are required
+for blanks within delimited file- or path-names.
+<p>
+Directives accepting a `filename' do not accept path names, i.e., they cannot
+contain directory separators (<code>/</code>); options accepting a 'pathname' may
+contain directory separators.
+<p>
+Sometimes directives have analogous command-line options. In those cases
+command-line options take priority over directives.
+<p>
+Some directives may generate errors. This happens when an directive
+conflicts with the contents of a file which <strong>bisonc++</strong> cannot modify (e.g., a
+parser class header file exists, but doesn't define a name space, but a
+<code>%namespace</code> directive was provided). 
+<p>
+To solve such errore the offending directive could be omitted, the existing
+file could be removed, or the existing file could be hand-edited according to
+the directive's specification.
+<p>
+<a name="l40"></a>
+<h3>5.5.1: %baseclass-preinclude: specifying a header included by the
+            baseclass</h3>    
+         Syntax: <strong>%baseclass-preinclude</strong> <code>pathname</code><br>
+           <code>Pathname</code> defines the path to the file preincluded in the
+            parser's base-class header.  See the description of the
+            <a href="bisonc++09.html#PREINCLUDE">--baseclass-preinclude</a> option for details about
+            this directive. By default `filename' is surrounded by double
+            quotes; it's OK, however, to provide them yourself.  When the
+            argument is surrounded by <em>pointed brackets</em> <code>#include
+            &lt;header&gt;</code> is used.
+<p>
+<a name="PARSERCLASS"></a><a name="l41"></a>
+<h3>5.5.2: %class-name: defining the name of the parser class</h3>
+    Syntax: <strong>%class-name</strong> <code>parser-class-name</code> <br> 
+    By default, <strong>bisonc++</strong> generates a parser-class by the name of
+<code>Parser</code>. The default can be changed using this directive which defines the
+name of the <strong>C++</strong> class that will be generated. It may be defined only once
+and <code>parser-class-name</code> must be a <strong>C++</strong> identifier.
+<p>
+If you're familiar with the Bison++ program, please note:
+    <ul>
+    <li> This directive replaces the <strong>%name</strong> directive previously used by
+Bison++. 
+    <li> Contrary to Bison++'s <strong>%name</strong> directive, <strong>%class-name</strong> may
+appear anywhere in the directive section of the grammar specification file.
+    </ul>
+<p>
+It is an error if this directive is used and an already existing parser-class
+header file does not define <code>class `className'</code> and/or if an already
+existing implementation header file does not define members of the class
+<code>`className'</code>.
+<p>
+<a name="l42"></a>
+<h3>5.5.3: %debug: adding debugging code to the `parse()' member</h3>
+    Syntax:  <strong>%debug</strong> <br> 
+           Provide <code>parse()</code> and its support functions with debugging code,
+            showing the actual parsing process on the standard output
+            stream. When included, the debugging output is active by default,
+            but its activity may be controlled using the <strong>setDebug(bool
+            on-off)</strong> member. Note that no <code>#ifdef DEBUG</code> macros are used
+            anymore. Rerun <strong>bisonc++</strong> without the <strong>--debug</strong> option to generate an
+            equivalent parser not containing the debugging code. 
+<p>
+<a name="l43"></a>
+<h3>5.5.4: %error-verbose: dumping the parser's state stack</h3>
+    Syntax:     <strong>%error-verbose</strong> <br>    
+    The parser's state stack is dumped to the standard error stream when an
+error is detected by the <code>parse()</code> member function. Following a call of the
+<code>error()</code> function, the stack is dumped from the top of the stack (highest
+offset) down to its bottom (offset 0). Each stack element is prefixed by the
+stack element's index.
+<p>
+<a name="EXPECT"></a><a name="l44"></a>
+<h3>5.5.5: %expect: suppressing conflict warnings</h3>
+    Syntax: <strong>%expect</strong> <code>number</code> <br>
+    <strong>Bisonc++</strong> normally warns if there are any conflicts in the grammar (see section
+<a href="bisonc++07.html#SHIFTREDUCE">7.1</a>), but many real grammars have harmless <em>shift/reduce
+conflicts</em> which are resolved in a predictable way and would be difficult to
+eliminate. It is desirable to suppress the warning about these conflicts
+unless the number of conflicts changes. You can do this with the <code>%expect</code>
+declaration.
+<p>
+The argument <code>number</code> is a decimal integer. The declaration says there
+should be no warning if there are <code>number</code> shift/reduce conflicts and no
+<em>reduce/reduce conflicts</em>. The usual warning is given if there are either
+<em>more</em> or <em>fewer</em> conflicts, <em>or</em> if there are <em>any</em> reduce/reduce
+conflicts.
+<p>
+In general, using <code>%expect</code> involves these steps:
+    <ul>
+    <li> Compile your grammar without <code>%expect</code>. Use the `<code>-V</code>' option to
+get a verbose list of where the conflicts occur. <strong>Bisonc++</strong> will also print the
+number of conflicts.
+    <li> Check each of the conflicts to make sure that <strong>bisonc++</strong>'s default
+resolution is what you really want. If not, rewrite the grammar and go back to
+the beginning.
+    <li> Add an <code>%expect</code> declaration, copying the number of (shift-reduce)
+conflict printed by <strong>bisonc++</strong>.
+    </ul>
+    Now <strong>bisonc++</strong> will stop annoying you about the conflicts you have checked, but
+it will warn you again if changes in the grammar result in another number or
+type of conflicts.
+<p>
+<a name="l45"></a>
+<h3>5.5.6: %flex: using the traditional `flex++'  interface</h3>
+    Syntax:     <strong>%flex</strong> <br>    
+           When provided, the scanner matched text function is called as
+            <code>d_scanner.YYText()</code>, and the scanner token function is called
+            as <code>d_scanner.yylex()</code>. This directive is only interpreted if
+            the <code>%scanner</code> directive is also provided.
+<p>
+<a name="INCLUDE"></a><a name="l46"></a>
+<h3>5.5.7: %include: splitting the input file</h3>
+    Syntax:     <strong>%include</strong> <code>pathname</code><br>    
+           This directive is used to switch to <code>pathname</code> while processing a
+            grammar specification. Unless <code>pathname</code> defines an absolute
+            file-path, <code>pathname</code> is searched relative to the location of
+            <strong>bisonc++</strong>'s main grammar specification file (i.e., the grammar file
+            that was specified as <strong>bisonc++</strong>'s command-line option). This directive
+            can be used to split long grammar specification files in shorter,
+            meaningful units. After processing <code>pathname</code> processing
+            continues beyond the <code>%include pathname</code> directive.
+<p>
+<strong>Bisonc++</strong>'s main grammar specification file could be:
+        <pre>
+
+    %include spec/declarations.gr
+    %%
+    %include spec/rules.gr
+        
+</pre>
+
+    where <code>spec/declarations.gr</code> contains declarations and <code>spec/rules.gr</code>
+contains the rules. Each of the files included using <code>%include</code> may itself
+use <code>%include</code> directives (which are then processed relative to their
+locations). The default nesting limit for <code>%include</code> directives is 10, but
+the option <a href="bisonc++09.html#MAXDEPTH">--max-inclusion-depth</a> can be used to change this
+default.
+<p>
+<code>%include</code> directives should be specified on a line of their own.
+<p>
+<a name="PRECEDENCE"></a><a name="l47"></a>
+<h3>5.5.8: %left, %right, %nonassoc: defining operator
+        precedence</h3>
+    Syntax: <blockquote>
+    <strong>%left</strong> [ &lt;type&gt; ] terminal(s)    <br>
+    <strong>%nonassoc</strong> [ &lt;type&gt; ] terminal(s)    <br>
+    <strong>%right</strong> [ &lt;type&gt; ] terminal(s) 
+    </blockquote>
+    These directives are called <em>precedence directives</em> (see also section
+<a href="bisonc++05.html#PRECEDENCE">5.5.8</a> for general information on operator precedence).
+<p>
+The <code>%left</code>, <code>%right</code> or <code>%nonassoc</code> directive are used to declare 
+tokens and to specify their precedence and associativity, all at once.
+    <ul>
+    <li> The <em>associativity</em> of an operator <code>op</code> determines how repeated
+uses of the operator <em>nest</em>: whether `<code>x op y op z</code>' is parsed by grouping
+<code>x</code> with <code>y</code> first or by grouping <code>y</code> with <code>z</code> first. <code>%left</code>
+specifies <em>left-associativity</em> (grouping <code>x</code> with <code>y</code> first) and
+<code>%right</code> specifies <em>right-associativity</em> (grouping <code>y</code> with <code>z</code>
+first). <code>%nonassoc</code> specifies <em>no</em> associativity, which means that `<code>x
+op y op z</code>' is not a defined operation, and could be considered an error.
+    <li> The precedence of an operator determines how it nests with other
+operators. All the tokens declared in a single precedence directive have equal
+precedence and nest together according to their associativity. When two tokens
+declared in different precedence directives associate, the one declared
+<em>later</em> has the higher precedence and is grouped <em>first</em>.
+    </ul>
+    The <code>&lt;type&gt;</code> specification is optional, and specifies the type of the
+semantic value when a token specified to the right of a <code>&lt;type&gt;</code>
+specification is received. The pointed arrows are part of the type
+specification; the type itself must be a field of a <code>%union</code> specification
+(see section <a href="bisonc++05.html#UNION">5.5.26</a>).
+<p>
+When multiple tokens are listed they must be separated by whitespace or by
+commas. Note that the precedence directives also serve to define token names:
+symbolic tokens mentioned with these directives should not be defined using
+<code>%token</code> directives.
+<p>
+<a name="LOCSTRUCT"></a><a name="l48"></a>
+<h3>5.5.9: %locationstruct: specifying a dedicated location struct</h3>
+    Syntax: <strong>%locationstruct</strong> <code>struct-definition</code> <br> 
+           Defines the organization of the location-struct data type
+            <strong>LTYPE__</strong>. This struct should be specified analogously to the
+            way the parser's stacktype is defined using <strong>%union</strong> (see
+            below). The location struct type is named <strong>LTYPE__</strong>. If neither
+            <strong>locationstruct</strong> nor <strong>LTYPE__</strong> is specified, the
+            default <a href="bisonc++05.html#LSPNEEDED">LTYPE__</a> struct is used.
+<p>
+<a name="LSPNEEDED"></a><a name="l49"></a>
+<h3>5.5.10: %lsp-needed: using the default location type</h3>
+    Syntax:  <strong>%lsp-needed</strong> <br>    
+           Defining this causes <strong>bisonc++</strong> to include code into the generated
+            parser using the standard location stack.  The token-location type
+            defaults to the following struct, defined in the parser's base
+            class when this directive is specified: 
+           <pre>
+
+    struct LTYPE__
+    {
+        int timestamp;
+        int first_line;
+        int first_column;
+        int last_line;
+        int last_column;
+        char *text;
+    };
+           
+</pre>
+
+    Note that defining this struct type does not imply that its field are also
+assigned. Some form of communication with the lexical scanner is probably
+required to initialize the fields of this struct properly. 
+<p>
+<a name="LTYPE"></a><a name="l50"></a>
+<h3>5.5.11: %ltype: using an existing location type</h3>
+     <strong>%ltype typename</strong> <br>    
+    Specifies a user-defined token location type.  If <strong>%ltype</strong> is used,
+<code>typename</code> should be the name of an alternate (predefined) type (e.g.,
+<strong>size_t</strong>). It should not be used together with a
+<a href="bisonc++05.html#LOCSTRUCT">%locationstruct</a> specification. From within the parser class,
+this type may be used as <strong>LTYPE__</strong>.
+<p>
+Any text following <code>%ltype</code> up to the end of the line, up to the first
+of a series of trailing blanks or tabs or up to a comment-token (<code>//</code> or
+<code>/*</code>) becomes part of the type definition. Be sure <em>not</em> to end a
+<code>%ltype</code> definition in a semicolon.
+<p>
+<a name="l51"></a>
+<h3>5.5.12: %namespace: using a namespace</h3>
+    Syntax:     <strong>%namespace</strong> <code>namespace</code> <br>
+    Defines all of the code generated by <strong>bisonc++</strong> in the namespace
+<code>namespace</code>. By default no namespace is defined.
+<p>
+If this options is used the implementation header will contain a commented
+out <code>using namespace</code> directive for the requested namespace.
+<p>
+In addition, the parser and parser base class header files also use the
+specified namespace to define their include guard directives.
+<p>
+It is an error if this directive is used and an already existing parser-class
+header file and/or implementation header file does not define <code>namespace
+identifier</code>.
+<p>
+<a name="l52"></a>
+<h3>5.5.13: %negative-dollar-indices: using constructions like $-1</h3>
+    Syntax:    <strong>%negative-dollar-indices</strong> <br>
+    Accept (do not generate warnings) zero- or negative dollar-indices in the
+grammar's action blocks. Zero or negative dollar-indices are commonly used to
+implement inherited attributes and should normally be avoided. When used they
+can be specified like <code>$-1</code>, or like <code>$&lt;type&gt;-1</code>, where <code>type</code> is empty;
+an <code>STYPE__</code> tag; or a <code>%union</code> field-name. See also the sections
+<a href="bisonc++05.html#ACTIONS">5.6.4</a> and <a href="bisonc++06.html#SPECIAL">6.6</a>.
+<p>
+In combination with the <code>%polymorphic</code> directive (see below) only
+the <code>$-i</code> format can be used (see also section <a href="bisonc++05.html#POLYMORPHIC">5.6.3</a>).
+<p>
+<a name="l53"></a>
+<h3>5.5.14: %no-lines: suppressing `#line' directives</h3>
+    Syntax:    <strong>%no-lines</strong> <br> 
+           Do not put <strong>#line</strong> preprocessor directives in the file containing
+            the parser's <code>parse()</code> function. By default <code>#line</code>
+            preprocessor directives are inserted just before action blocks in
+            the generated <code>parse.cc</code> file.
+<p>
+The <code>#line</code> directives allow compilers and debuggers to associate
+            errors with lines in your grammar specification file, rather than
+            with the source file containing the <code>parse</code> function itself.
+<p>
+<a name="l54"></a>
+<h3>5.5.15: %prec: overruling default precedences</h3>
+    Syntax: <strong>%prec</strong> <code>token</code> <br>
+    The construction <strong>%prec</strong> <code>token</code> may be used in production rules to
+overrule the actual precendence of an operator in a particular production
+rule. Well known is the construction
+                <pre>
+
+    expression:
+        '-' expression %prec UMINUS
+        {
+            ...
+        }
+                
+</pre>
+ 
+    Here, the default priority and precedence of the <code>`-'</code> token as the
+subtraction operator is overruled by the precedence and priority of the
+<code>UMINUS</code> token, which is frequently defined as:
+                <pre>
+
+    %right UMINUS
+                
+</pre>
+
+    E.g., a list of arithmetic operators could consists of:
+        <pre>
+
+    %left '+' '-'
+    %left '*' '/' '%'
+    %right UMINUS
+        
+</pre>
+
+    giving <code>'*' '/'</code> and <code>'%'</code> a higher priority than <code>'+'</code> and <code>'-'</code>,
+ensuring at the same time that <code>UMINUS</code> is given both the highest priority
+and a right-associativity.
+<p>
+In the above production rule the operator order would cause the
+construction 
+        <pre>
+
+    '-' expression
+        
+</pre>
+
+    to be evaluated from right to left, having a higher precedence than either
+the multiplication or the addition operators.
+<p>
+<a name="l55"></a>
+<h3>5.5.16: %polymorphic: using polymorphism to define multiple semantic
+            values</h3> 
+        Syntax: <strong>%polymorphic</strong> <code>polymorphic-specification(s)</code>
+<p>
+The <code>%polymorphic</code> directive results in defining and using a
+            polymorphic semantic value class, which can be used as a
+            (preferred) alternative to the (traditional) a <code>union</code>
+            specification. 
+<p>
+Refer to section <a href="bisonc++05.html#POLYMORPHIC">5.6.3</a> for a detailed description of
+            the specification, characteristics, and use of polymorphic
+            semantic values as defined by <strong>bisonc++</strong>.
+<p>
+As a quick reference: to define multiple semantic values using a 
+            polymorphic semantic value class offering either an <code>int</code>, a
+            <code>std::string</code> or a <code>std::vector&lt;double&gt;</code> specify:
+                <pre>
+
+    %polymorphic INT: int; STRING: std::string; 
+                 VECT: std::vector&lt;double&gt;
+                
+</pre>
+
+            and use <code>%type</code> specifications (cf. section <a href="bisonc++05.html#TYPE">5.5.25</a>) to
+            associate (non-)terminals with specific semantic values.
+<p>
+<a name="l56"></a>
+<h3>5.5.17: %print-tokens: displaying tokens and matched text</h3> 
+    Syntax: <strong>%print-tokens</strong> <br>
+<p>
+The <code>%print-tokens</code> directive provides an implementation of the Parser
+class's <code>print__</code> function displaying the current token value and the text
+matched by the lexical scanner as received by the generated <code>parse</code>
+function.
+<p>
+The <code>print__</code> function is also implemented if the <code>--print</code>
+command-line option is provided.
+<p>
+<a name="l57"></a>
+<h3>5.5.18: %required-tokens: defining the minimum number of tokens between
+        error reports</h3> 
+    Syntax:    <strong>%required-tokens</strong> <code>ntokens</code> <br> 
+    Whenever a syntactic error is detected during the parsing process the next
+few tokens that are received by the parsing function may easily cause yet
+another (spurious) syntactic error. In this situation error recovery in fact
+produces an avalanche of additional errors. If this happens the recovery
+process may benefit from a slight modification. Rather than reporting every
+syntactic error encountered by the parsing function, the parsing function may
+wait for a series of successfully processed tokens before reporting the next
+error. 
+<p>
+The directive <code>%required-tokens</code> can be used to specify this
+number. E.g., the specification <code>%required-tokens 10</code> requires the parsing
+function to process successfully a series of 10 tokens before another
+syntactic error is reported (and counted). If a syntactic error is encountered
+before processing 10 tokens then the counter counting the number of
+successfully processed tokens is reset to zero, no error is reported, but the
+error recoery procedure continues as usual. The number of required tokens can
+also be set using the option <a href="bisonc++09.html#REQUIRED">--required-tokens</a>. By default the
+number of required tokens is initialized to 0.
+<p>
+<a name="SCANNER"></a><a name="l58"></a>
+<h3>5.5.19: %scanner: using a standard scanner interface</h3>
+    Syntax: <strong>%scanner</strong> <code>header</code><br>
+    Use <code>header</code> as the pathname of a file to include in the parser's class
+header. See the description of the <a href="bisonc++09.html#SCANOPT">--scanner</a> option for details
+about this option.  This directive also implies the automatic definition of a
+composed <code>Scanner d_scanner</code> data member into the generated parser, as well
+as a predefined <strong>int lex()</strong> member, returning <code>d_scanner.lex()</code>. 
+<p>
+By specifying the <code>%flex</code> directive the function <code>d_scanner.YYText()</code> is
+called. 
+<p>
+The specfied <code>header</code> file will be surrounded by double quotes if no
+delimiters were provided. If pointed brackets (<code>&lt;...&gt;</code>) are used, they are
+kept. 
+<p>
+It is an error if this directive is used and an already existing parser-class
+header file does not include `<code>header</code>'.
+<p>
+<a name="l59"></a>
+<h3>5.5.20: %scanner-matched-text-function: define the name of the scanner's
+        member returning the matched texttoken</h3> 
+    Syntax: <strong>%scanner-matched-text-function</strong> <code>function-call</code> <br>
+<p>
+The <code>%scanner-matched-text-function</code> directive defines the scanner function
+returning the text matching the previously returned token. By default this is
+<code>d_scanner.matched()</code>.
+<p>
+A complete function call expression should be provided (including a scanner
+object, if used). This option overrules the <code>d_scanner.matched()</code> call used
+by default when the <code>%scanner</code> directive is specified. Example:
+            <pre>
+
+    %scanner-matched-text-function myScanner.matchedText()
+                
+</pre>
+
+    If the function call expression contains white space then the
+<code>function-call</code> specification should be surrounded by double quotes (<code>"</code>).
+This directive is overruled by the <strong>--scanner-matched-text-function</strong>
+command-line option.
+<p>
+<a name="l60"></a>
+<h3>5.5.21: %scanner-token-function: define the name of the scanner's token
+            function</h3> 
+    Syntax: <strong>%scanner-token-function</strong> <code>function-call</code> <br>
+<p>
+The scanner function returning the next token, called from the
+            generated parser's <code>lex</code> function. A complete function
+            call expression should be provided (including a scanner object, if
+            used). Example: 
+            <pre>
+
+    %scanner-token-function d_scanner.lex()
+                
+</pre>
+
+           If the function call contains white space
+            <code>scanner-token-function</code> should be surrounded by double quotes.
+<p>
+It is an error if this directive is used and the specified scanner token
+function is not called from the code in an already existing implementation
+header.
+<p>
+<a name="l61"></a>
+<h3>5.5.22: %start: defining the start rule</h3>
+    Syntax: <strong>%start</strong> <code>nonterminal symbol</code>
+<p>
+By default <strong>bisonc++</strong> uses the the LHS of the first rule in a grammar
+specification file as the start symbol. I.e., the parser tries to recognize
+that nonterminal when parsing input. 
+<p>
+This default behavior may be overriden using the <code>%start</code> directive.
+    The nonterminal symbol specifies a LHS that may be defined anywhere in
+the rules section of the grammar specification file. This LHS becomes the
+grammar's start symbol.
+<p>
+<a name="l62"></a>
+<h3>5.5.23: %stype: specifying the semantic stack type</h3>
+    Syntax: <strong>%stype typename</strong> <br>    
+           The type of the semantic value of tokens.  The specification
+            <code>typename</code> should be the name of an unstructured type (e.g.,
+            <strong>size_t</strong>). By default it is <strong>int</strong>. See <strong>YYSTYPE</strong> in
+            <strong>bison</strong>.  It should not be used if a <strong>%union</strong> specification is
+            used.  Within the parser class, this type may be used as
+            <strong>STYPE__</strong>.
+<p>
+Any text following <code>%stype</code> up to the end of the line, up to the first
+of a series of trailing blanks or tabs or up to a comment-token (<code>//</code> or
+<code>/*</code>) becomes part of the type definition. Be sure <em>not</em> to end a
+<code>%stype</code> definition in a semicolon.
+<p>
+<a name="TOKTYPENAMES"></a><a name="l63"></a>
+<h3>5.5.24: %token: defining token names</h3>
+    Syntax: <blockquote>
+    <strong>%token</strong> <code>terminal token(s)</code> <br>
+    <strong>%token</strong> [ &lt;type&gt; ] <code>terminal token(s)</code> 
+        </blockquote>
+<p>
+The <strong>%token</strong> directive is used to define one or more symbolic terminal
+tokens.  When multiple tokens are listed they must be separated by whitespace
+or by commas. 
+<p>
+The <code>&lt;type&gt;</code> specification is optional, and specifies the type of the
+semantic value when a token specified to the right of a <code>&lt;type&gt;</code>
+specification is received. The pointed arrows are part of the type
+specification; the type itself must be a field of a <code>%union</code> specification
+(see section <a href="bisonc++05.html#UNION">5.5.26</a>).
+<p>
+<strong>bisonc++</strong> converts symbolic tokens (including those defined by the
+precedence directives (cf. section <a href="bisonc++05.html#PRECEDENCE">5.5.8</a>)) into <code>Parser::Tokens</code>
+enumeration values (where `<code>Parser</code>' is the name of the generated parser
+class, see section <a href="bisonc++05.html#PARSERCLASS">5.5.2</a>). This allows the lexical scanner member
+function <code>lex()</code> to return these token values by name directly, and it
+allows externally defined lexical scanners (called by <code>lex()</code>) to return
+token values as <code>Parser::name</code>.
+<p>
+When an externally defined lexical scanner is used, it should include
+<code>Parserbase.h</code>, the parser's base class header file, in order to be able to
+use the <code>Parser::Tokens</code> enumeration type.
+<p>
+Although it <em>is</em> possible to specify explicitly the numeric code for a
+token type by appending an integer value in the field immediately following
+the token name (as in <code>%token NUM 300</code>) this practice is deprecated. It is
+generally best to let <strong>bisonc++</strong> choose the numeric values for all token types. <strong>Bisonc++</strong>
+automatically selects values that don't conflict with each other or with ASCII
+character values.
+<p>
+<a name="IMPROPER"></a><a name="l64"></a>
+<h4>5.5.24.1: Improper token names</h4>
+        Several identifiers cannot be used as token names as their use would collide
+with identifiers that are defined in the parser's base class. 
+<p>
+In particular, 
+    <ul>
+    <li> no token should end in two underscores (<code>__</code>). 
+    <li> some identifiers are reserved and cannot be used as tokens. They are:
+        <pre>
+
+    ABORT, ACCEPT, ERROR, clearin, debug, error, setDebug
+        
+</pre>
+
+    Except for <code>error</code>, which is a predefined terminal token, these
+identifiers are the names of functions traditionally defined by <strong>bisonc++</strong>. The
+restriction on the above identifers could be lifted, but then the resulting
+generated parser would no longer be backward compatible with versions before
+<strong>Bisonc++</strong> 2.0.0. It appears that imposing minimal restrictions on the names of
+tokens is a small penalty to pay for keeping backward compatibility.
+    </ul>
+<p>
+<a name="TYPE"></a><a name="l65"></a>
+<h3>5.5.25: %type: associating semantic values to (non)terminals</h3>
+    Syntax: <strong>%type</strong> <code>&lt;type&gt; symbol(s)</code><br>
+    When <code>%polymorphic</code> is used to specify multiple semantic value types,
+(non-)terminals can be associated with one of the semantic value types
+specified with the <code>%polymorphic</code> directive.
+<p>
+When <code>%union</code> is used to specify multiple semantic value types,
+(non-)terminals can be associated with one of the <code>union</code> fields specified
+with the <code>%union</code> directive.
+<p>
+To associate (non-)terminals with specific semantic value types
+the <strong>%type</strong> directive is used.
+<p>
+With this directive, <code>symbol(s)</code> represents of one or more blank or
+comma delimited grammatical symbols (i.e., terminal and/or nonterminal
+symbols); <code>type</code> is either a polymorphic type-identifier or a field name
+defined in the <code>%union</code> specification. The
+specified nonterminal(s) are automatically associated with the indicate
+semantic type. The pointed arrows are part of
+the type specification.
+<p>
+When the semantic value type of a terminal symbol is defined the
+<em>lexical scanner</em> rather than the parser's actions must assign the
+appropriate semantic value to <a href="bisonc++06.html#DVAL">d_val__</a> just prior to returning the
+token. To associate terminal symbols with semantic values, terminal symbols
+can also be specified in a <code>%type</code> directive.
+<p>
+<a name="UNION"></a><a name="l66"></a>
+<h3>5.5.26: %union: using a 'union' to define multiple semantic values</h3> 
+        Syntax: <strong>%union</strong> <code>union-definition body</code><br>
+The <code>%union</code> directive specifies the entire collection of possible data
+types for semantic values. The keyword <code>%union</code> is followed by a pair of
+braces containing the same thing that goes inside a union in <strong>C++</strong>.
+For example:
+        <pre>
+
+    %union {
+      double u_val;
+      symrec *u_tptr;
+    };
+        
+</pre>
+
+    This says that the two alternative types are <code>double</code> and <code>symrec
+*</code>. They are given names <code>u_val</code> and <code>u_tptr</code>; these names are used in the
+<code>%token</code> and <code>%type</code> directives to pick one of the types for a terminal or
+nonterminal symbol (see section <a href="bisonc++05.html#TYPE">5.5.25</a>).
+<p>
+Notes:
+    <ul>
+    <li> The semicolon following the closing brace is <em>optional</em>.
+    <li> <strong>C++-11</strong> does allow class types to be used in <code>union</code>
+        definitions, so they can also be used in <code>%union</code>
+        directives. When a class type variant is required, all required
+        constructors, the destructor and other members (like overloaded
+        assignment operators) must be able to handle the actual class type
+        data fields properly. A discussion of how to use unrestricted unions
+        is beyon this manual's scope, but can be found, e.g., in the <a href="http://cppannotations.sf.net">C++
+        Annotations</a>. See also section
+        <a href="bisonc++05.html#MORETYPES">5.6.2</a>. 
+    </ul>
+<p>
+<a name="l67"></a>
+<h3>5.5.27: %weak-tags: %polymorphic declaring 'enum Tag__'</h3>
+    By default, the <code>%polymorphic</code> directive declares a strongly typed enum:
+<code>enum class Tag__</code>, and code generated by <strong>bisonc++</strong> always uses the <code>Tag__</code>
+scope when referring to tag identifiers. It is often possible (by
+pre-associating tokens with tags, using <code>%type</code> directives) to avoid having
+to use tags in user-code.
+<p>
+If tags <em>are</em> explicitly used, then they must be prefixed with the <code>Tag__</code>
+scope. Before the arrival of the C++-11 standard strongly typed enumerations
+didn't exist, and explicit enum-type scope prefixes were usually omitted.
+This works fine, as long as there are no name-conflicts: parser-tokens, other
+enumerations or variables could use identifiers also used by <code>enum
+Tag__</code>. This results in compilation errors that can simply be prevented using
+strongly typed enumerations.
+<p>
+The <code>%weak-tags</code> directive can be specified when the <code>Tag__</code> enum should
+<em>not</em> be declared as a strongly typed enum. When in doubt, don't use this
+directive and stick to using the strongly typed <code>Tag__</code> enum. When using
+<code>%weak-tags</code> be prepared for compilation errors caused by name collisions.
+<p>
+<a name="l68"></a>
+<h3>5.5.28: Directives controlling the names of generated files</h3>
+    Unless otherwise specified, <strong>bisonc++</strong> uses the name of the parser-class to derive
+the names of most of the files it may generate. Below <code>&lt;CLASS&gt;</code> should be
+interpreted as the name of the parser's class, <code>Parser</code> by default, but
+configurable using <code>%class-name</code> (see section <a href="bisonc++05.html#PARSERCLASS">5.5.2</a>).
+    <ul>
+    <li> The parser's base class header: <code>&lt;Class&gt;base.h</code>, configurable using
+        <code>%baseclass-header</code> (see section <a href="bisonc++05.html#BCHEADER">5.5.28.1</a>) or <code>%filenames</code>
+        (see section <a href="bisonc++05.html#FILES">5.5.28.3</a>);
+    <li> The parser's class header: <code>&lt;Class&gt;.h</code>, configurable using
+        <code>%class-header</code> (see section <a href="bisonc++05.html#CHEADER">5.5.28.2</a>) or <code>%filenames</code>
+        (see section <a href="bisonc++05.html#FILES">5.5.28.3</a>);
+    <li> The parser's implementation header file: <code>&lt;Class&gt;.ih</code>, configurable
+        using <code>%implementation-header</code> (see section <a href="bisonc++05.html#IHEADER">5.5.28.4</a>) or
+        <code>%filenames</code> (see section <a href="bisonc++05.html#FILES">5.5.28.3</a>);
+    </ul>
+<p>
+<a name="BCHEADER"></a><a name="l69"></a>
+<h4>5.5.28.1: %baseclass-header: defining the parser's base class header</h4>
+            Syntax: <strong>%baseclass-header</strong> <code>filename</code> <br>
+           <code>Filename</code> defines the name of the file to contain the parser's
+            base class. This class defines, e.g., the parser's symbolic
+            tokens. Defaults to the name of the parser class plus the suffix
+            <code>base.h</code>. It is always generated, unless (re)writing is
+            suppressed by the <code>--no-baseclass-header</code> and
+            <code>--dont-rewrite-baseclass-header</code> options. This directive is
+            overruled by the <strong>--baseclass-header</strong> (<strong>-b</strong>) command-line
+            option.
+<p>
+It is an error if this directive is used and an already existing parser class
+header file does not contain <code>#include "filename"</code>.
+<p>
+<a name="CHEADER"></a><a name="l70"></a>
+<h4>5.5.28.2: %class-header: defining the parser's class header</h4>
+            Syntax: <strong>%class-header</strong> <code>filename</code> <br>
+           <code>Filename</code> defines the name of the file to contain the parser
+            class. Defaults to the name of the parser class plus the suffix
+            <code>.h</code> This directive is overruled by the <strong>--class-header</strong>
+            (<strong>-c</strong>) command-line option.
+<p>
+It is an error if this directive is used and an already existing parser-class
+header file does not define <code>class `className'</code> and/or if an already
+existing implementation header file does not define members of the class
+<code>`className'</code>.
+<p>
+<a name="FILES"></a><a name="l71"></a>
+<h4>5.5.28.3: %filenames: specifying a generic filename</h4>
+        Syntax:     <strong>%filenames</strong> <code>filename</code> <br>
+           <code>Filename</code> is a generic filename that is used for all header
+            files generated by <strong>bisonc++</strong>.  Options defining specific filenames are
+            also available (which then, in turn, overrule the name specified
+            by this option).  This directive is overruled by the
+            <strong>--filenames</strong> (<strong>-f</strong>) command-line option.
+<p>
+<a name="IHEADER"></a><a name="l72"></a>
+<h4>5.5.28.4: %implementation-header: defining the implementation header</h4>
+        Syntax:    <strong>%implementation-header</strong> <code>filename</code> <br>
+           <code>Filename</code> defines the name of the file to contain the
+            implementation header. It defaults to the name of the generated
+            parser class plus the suffix <code>.ih</code>. <br>
+           The implementation header should contain all directives and
+            declarations <em>only</em> used by the implementations of the parser's
+            member functions. It is the only header file that is included by
+            the source file containing <code>parse</code>'s implementation. User
+            defined implementation of other class members may use the same
+            convention, thus concentrating all directives and declarations
+            that are required for the compilation of other source files
+            belonging to the parser class in one header file.<br>
+           This directive is overruled by the
+            <strong>--implementation-header</strong> (<strong>-i</strong>) command-line option.
+<p>
+<a name="PARSESOURCE"></a><a name="l73"></a>
+<h4>5.5.28.5: %parsefun-source: defining the parse() function's sourcefile</h4>
+        Syntax: <strong>%parsefun-source</strong> <code>filename</code> <br>
+           <code>Filename</code> defines the name of the source file to contain the
+            parser member function <code>parse</code>. Defaults to <code>parse.cc</code>.  This
+            directive is overruled by the <strong>--parse-source</strong> (<strong>-p</strong>)
+            command-line option.
+<p>
+<a name="l74"></a>
+<h4>5.5.28.6: %target-directory: defining the directory where files must
+                be written</h4>
+        Syntax: <strong>%target-directory</strong> <code>pathname</code> <br>
+           <code>Pathname</code> defines the directory where generated files should be
+            written.  By default this is the directory where <strong>bisonc++</strong> is called.
+            This directive is overruled by the
+            <code>--target-directory</code> command-line option.
+<p>
+<a name="DEFSEM"></a><a name="l75"></a>
+<h2>5.6: Defining Language Semantics</h2>
+The grammar rules for a language determine only the syntax. The semantics are
+determined by the semantic values associated with various tokens and
+groupings, and by the actions taken when various groupings are recognized.
+<p>
+For example, the calculator calculates properly because the value associated
+with each expression is the proper number; it adds properly because the action
+for the grouping `x + y' is to add the numbers associated with x and y.
+<p>
+In this section defining the semantics of a language is addressed, covering
+the following topics:
+    <ul>
+    <li> <a href="bisonc++05.html#SEMANTICTYPES">Specifying one data type for all semantic values</a>;
+    <li> <a href="bisonc++05.html#MORETYPES">Specifying several alternative data types</a>;
+    <li> <a href="bisonc++05.html#POLYMORPHIC">Using Polymorphism to specify several data types</a>;
+    <li> <a href="bisonc++05.html#ACTIONS">Specifying  Actions</a> (an action is the semantic
+        definition of a grammar rule);
+    <li> <a href="bisonc++05.html#ACTIONTYPES">Specifying data types for actions to operate on</a>;
+    <li> <a href="bisonc++05.html#MIDACTIONS">Specifying when and how to put actions in the middle of a
+rule</a> (most actions go at the end of a rule. In some situations it
+may be desirable to put an action in in the middle of a rule).
+    </ul>
+<p>
+<a name="SEMANTICTYPES"></a><a name="l76"></a>
+<h3>5.6.1: Data Types of Semantic Values</h3>
+    In a simple program it may be sufficient to use the same data type for the
+semantic values of all language constructs. This was true in the <code>rpn</code> and
+<code>infix</code> calculator examples (see, e.g., sections <a href="bisonc++04.html#RPN">4.1</a> and <a href="bisonc++04.html#CALC">4.2</a>).
+<p>
+<strong>Bisonc++</strong>'s default is to use type <code>int</code> for all semantic values. To specify
+some other type, the directive <code>%stype</code> must be used, like this:
+        <pre>
+
+    %stype double
+        
+</pre>
+
+    Any text following <code>%stype</code> up to the end of the line, up to the first
+of a series of trailing blanks or tabs or up to a comment-token (<code>//</code> or
+<code>/*</code>) becomes part of the type definition. Be sure <em>not</em> to end a
+<code>%stype</code> definition in a semicolon.
+<p>
+This directive must go in the directives section of the grammar file (see
+section <a href="bisonc++05.html#OUTLINE">5.1</a>). As a result of this, the parser class defines a
+<em>private type</em> <code>STYPE__</code> as <code>double</code>: Semantic values of language
+constructs always have the type <code>STYPE__</code>, and (assuming the parser class is
+named <code>Parser</code>) an internally used data member <code>d_val</code> that could be used
+by the lexical scanner to associate a semantic value with a returned token is
+defined as:
+        <pre>
+
+    Parser::STYPE__ d_val;
+        
+</pre>
+
+<p>
+<a name="MORETYPES"></a><a name="l77"></a>
+<h3>5.6.2: More Than One Value Type</h3>
+    In many programs, different kinds of data types are used in combination with
+different kinds of terminal and non-terminal tokens. For example, a numeric
+constant may need type <code>int</code> or <code>double</code>, while a string needs type
+<code>std::string</code>, and an identifier might need a pointer to an entry in a
+symbol table.
+<p>
+To use more than one data type for semantic values in one parser, <strong>bisonc++</strong>
+offers the following feature:
+    <ul>
+    <li> Define polymorphic semantic values, associating (non)terminals with
+their proper semantic types (cf section <a href="bisonc++05.html#POLYMORPHIC">5.6.3</a>), and associate
+(non-)terminal tokens with their appropriate semantic values;
+    <li> Specify the entire collection of possible data types, using a
+<code>%union</code> directive (see section <a href="bisonc++05.html#UNION">5.5.26</a>), and associate
+(non-)terminal tokens with their appropriate semantic values;
+    <li> Define your own class handling the various semantic values, 
+and associate that class with the parser's semantic value type using the
+<code>%stype</code> directive. The association of (non-)terminal tokens and specific
+value types is handled by your own class.
+    </ul>
+    The first approach (and to a lesser extent, the second approach) has the
+advantage that <strong>bisonc++</strong> is able to enforce the correct association between semantic
+types and rules and/or tokens, and that <strong>bisonc++</strong> is able to check the
+type-correctness of assignments to rule results.
+<p>
+<a name="POLYMORPHIC"></a><a name="l78"></a>
+<h3>5.6.3: Polymorphism and multiple semantic values:
+                        `%polymorphic'</h3> 
+    <strong>Bisonc++</strong> may generate code using polymorphic semantic values. The approach
+discussed here is a direct result of a suggestion originally made by Dallas
+A. Clement in September 2007. All sources of the example discussed in this
+section can be retrieved from the <a href="poly">poly</a> directory.
+<p>
+One may wonder why a <code>union</code> is still used by <strong>bisonc++</strong> as <strong>C++</strong> offers
+inherently superior approaches to combine multiple types in one type. The
+<strong>C++</strong> way to do so is by defining a polymorphic base class and a series of
+derived classes implementing the various exclusive data types. The <code>union</code>
+approach is still supported by <strong>bisonc++</strong> since it is supported by <strong>bison</strong>(1) and
+<strong>bison++</strong>; dropping the <code>union</code> would needlessly impede backward
+compatibility.
+<p>
+The (preferred) alternative to using a <code>union</code>, however, is using a
+polymorphic base class. Although it is possible to define your own polymorphic
+semantic value classes, <strong>bisonc++</strong> makes life easy by offering the <code>%polymorphic</code>
+directive.
+<p>
+The example program (cf. <a href="poly">poly</a>) implements a polymorphic base class, and
+derived classes containing either an <code>int</code> or a <code>std::string</code> semantic
+value. These types are asociated with tags (resp. <code>INT</code> and <code>TEXT</code> using
+the <code>%polymorphic</code> directive, which is discussed next.
+<p>
+<a name="l79"></a>
+<h4>5.6.3.1: The %polymorphic directive</h4>
+            The <code>%polymorphic</code> directive results in <strong>bisonc++</strong> generating a parser using
+polymorphic semantic values. Each semantic value specification consists of a
+<em>tag</em>, which is a <strong>C++</strong> identifier, and a <strong>C++</strong> type definition.
+<p>
+Tags and type definitions are separated from each other by a colon, and
+multiple semantic values specifications are separated by semicolons. The
+semicolon trailing the final semantic value specification is optional.
+<p>
+A grammar specification file may contain only one <code>%polymorphic</code> directive,
+and the <code>%polymorphic, %stype</code> and <code>%union</code> directives are mutually
+exclusive.
+<p>
+Here is an example, defining three semantic values types: an <code>int</code>, a
+<code>std::string</code> and a <code>std::vector&lt;double&gt;</code>:
+        <pre>
+
+    %polymorphic INT: int; STRING: std::string; 
+                 VECT: std::vector&lt;double&gt;
+        
+</pre>
+
+    The identifier to the left of the colon is called the <em>type-identifier</em>,
+and the type definition to the right of the colon is called the
+<em>type-definition</em>. Types specified at the <code>%polymorphic</code> type-definitions
+must be built-in types or class-type declarations. Class types mentioned at
+the <code>%polymorphic</code> directive must offer default constructors.
+<p>
+If type declarations refer to types declared in header files that were
+not already included by the parser's base class header, then these header
+<strong>s</strong> must be inserted using the <code>%baseclass-preinclude</code> directive as
+these types are referred to in the generated <code>parserbase.h</code> header file.
+<p>
+<a name="l80"></a>
+<h4>5.6.3.2: The %polymorphic and %type: associating semantic values
+        with (non-)terminals</h4> 
+            The <code>%type</code> directive is used to associate (non-)terminals with semantic
+value types.
+<p>
+Semantic values may also be associated with terminal tokens. In that case it
+is the lexical scanner's responsibility to assign a properly typed value to
+the parser's <code>STYPE__ d_val__</code> data member.
+<p>
+Non-terminals may automatically be associated with polymorphic semantic
+values using <code>%type</code> directives. E.g., after:
+        <pre>
+
+    %polymorphic INT: int; TEXT: std::string
+    %type &lt;INT&gt; expr
+        
+</pre>
+
+    the <code>expr</code> non-terminal returns <code>int</code> semantic values. In this case,
+a rule like:
+        <pre>
+
+    expr:
+        expr '+' expr
+        {
+            $$ = $1 + $3;
+        }
+        
+</pre>
+
+    automatically associates $$, $1 and $3 with <code>int</code> values. $$ is an
+lvalue (representing the semantic value associated with the <code>expr:</code> rule),
+while $1 and $3 represent the <code>int</code> semantic value associated with the
+<code>expr</code> non-terminal in the production rule <code>'-' expr</code> (rvalues).
+<p>
+When negative dollar indices (like $-1) are used, pre-defined associations
+between non-terminals and semantic types are ignored.  With positive indices
+or in combination with the production rule's return value <code>$$</code>, however,
+semantic value types can explicitly be specified using the common `$&lt;type&gt;$'
+or `$&lt;type&gt;1' syntax. (In this and following examples index number 1 represents
+any valid positive index; -1 represents any valid negative index).
+<p>
+The type-overruling syntax does not allow blanks to be used (so $&lt;INT&gt;$ is OK,
+$&lt; INT &gt;$ isn't).
+<p>
+Various combinations of type-associations and type specifications may be
+encountered:
+<ul>
+<li> $-1: <code>%type</code> associations are ignored, and the semantic value type
+    <code>STYPE__</code> is used instead. A warning is issued unless the
+    <code>%negative-dollar-indices</code> directive was specified.
+<li> $&lt;tag&gt;-1: <em>error</em>: <code>&lt;tag&gt;</code> specifications are not allowed for
+    negative dollar indices. 
+</ul>
+<p>
+
+<div style="text-align: center">
+<table>
+
+<td colspan=1><hr></td>
+
+
+<tr>
+<td> <div style="text-align: center"><table>
+
+    
+    
+<tr>
+<td colspan=5 style="text-align: center">$$ or $1 specifications</td>
+ 
+</tr>
+
+    <td colspan=5><hr></td>
+
+    
+<tr>
+<td> %type&lt;TAG&gt;</td><td> <pre>
+   
+</pre>
+</td><td valign="top">$&lt;tag&gt;</td><td> <pre>
+   
+</pre>
+</td><td> action:</td> 
+</tr>
+
+    <td colspan=5><hr></td>
+
+    
+<tr>
+<td> absent</td><td> <pre>
+   
+</pre>
+</td><td valign="top">no &lt;tag&gt;</td><td> <pre>
+   
+</pre>
+</td><td> STYPE__ is used</td> 
+</tr>
+
+                        <tr><td colspan=2</td><td colspan=3><hr></td></tr>
+
+                    
+<tr>
+<td> </td><td> <pre>
+   
+</pre>
+</td><td valign="top">$&lt;id&gt;</td><td> <pre>
+   
+</pre>
+</td><td> tag-override</td> 
+</tr>
+
+                        <tr><td colspan=2</td><td colspan=3><hr></td></tr>
+
+                    
+<tr>
+<td> </td><td> <pre>
+   
+</pre>
+</td><td valign="top">$&lt;&gt;</td><td> <pre>
+   
+</pre>
+</td><td> STYPE__ is used</td> 
+</tr>
+
+                        <tr><td colspan=2</td><td colspan=3><hr></td></tr>
+
+                    
+<tr>
+<td> </td><td> <pre>
+   
+</pre>
+</td><td valign="top">$&lt;STYPE__&gt;</td><td> <pre>
+   
+</pre>
+</td><td> STYPE__ is used</td> 
+</tr>
+
+    <td colspan=5><hr></td>
+
+    
+<tr>
+<td> STYPE__</td><td> <pre>
+   
+</pre>
+</td><td valign="top">no &lt;tag&gt;</td><td> <pre>
+   
+</pre>
+</td><td> STYPE__ is used</td> 
+</tr>
+
+                        <tr><td colspan=2</td><td colspan=3><hr></td></tr>
+
+                    
+<tr>
+<td> </td><td> <pre>
+   
+</pre>
+</td><td valign="top">$&lt;id&gt;</td><td> <pre>
+   
+</pre>
+</td><td> tag-override</td> 
+</tr>
+
+                        <tr><td colspan=2</td><td colspan=3><hr></td></tr>
+
+                    
+<tr>
+<td> </td><td> <pre>
+   
+</pre>
+</td><td valign="top">$&lt;&gt;</td><td> <pre>
+   
+</pre>
+</td><td> STYPE__ is used</td> 
+</tr>
+
+                        <tr><td colspan=2</td><td colspan=3><hr></td></tr>
+
+                    
+<tr>
+<td> </td><td> <pre>
+   
+</pre>
+</td><td valign="top">$&lt;STYPE__&gt;</td><td> <pre>
+   
+</pre>
+</td><td> STYPE__ is used</td> 
+</tr>
+
+    <td colspan=5><hr></td>
+
+    
+<tr>
+<td> (existing) tag</td><td> <pre>
+   
+</pre>
+</td><td valign="top">no &lt;tag&gt;</td><td> <pre>
+   
+</pre>
+</td><td> auto-tag</td> 
+</tr>
+
+                        <tr><td colspan=2</td><td colspan=3><hr></td></tr>
+
+                    
+<tr>
+<td> </td><td> <pre>
+   
+</pre>
+</td><td valign="top">$&lt;id&gt;</td><td> <pre>
+   
+</pre>
+</td><td> tag-override</td> 
+</tr>
+
+                        <tr><td colspan=2</td><td colspan=3><hr></td></tr>
+
+                    
+<tr>
+<td> </td><td> <pre>
+   
+</pre>
+</td><td valign="top">$&lt;&gt;</td><td> <pre>
+   
+</pre>
+</td><td> STYPE__ is used</td> 
+</tr>
+
+                        <tr><td colspan=2</td><td colspan=3><hr></td></tr>
+
+                    
+<tr>
+<td> </td><td> <pre>
+   
+</pre>
+</td><td valign="top">$&lt;STYPE__&gt;</td><td> <pre>
+   
+</pre>
+</td><td> STYPE__ is used</td> 
+</tr>
+
+    <td colspan=5><hr></td>
+
+    
+<tr>
+<td> (undefined) tag</td><td> <pre>
+   
+</pre>
+</td><td valign="top">no &lt;tag&gt;</td><td> <pre>
+   
+</pre>
+</td><td> tag-error</td> 
+</tr>
+
+                        <tr><td colspan=2</td><td colspan=3><hr></td></tr>
+
+                    
+<tr>
+<td> </td><td> <pre>
+   
+</pre>
+</td><td valign="top">$&lt;id&gt;</td><td> <pre>
+   
+</pre>
+</td><td> tag-override</td> 
+</tr>
+
+                        <tr><td colspan=2</td><td colspan=3><hr></td></tr>
+
+                    
+<tr>
+<td> </td><td> <pre>
+   
+</pre>
+</td><td valign="top">$&lt;&gt;</td><td> <pre>
+   
+</pre>
+</td><td> STYPE__ is used</td> 
+</tr>
+
+                        <tr><td colspan=2</td><td colspan=3><hr></td></tr>
+
+                    
+<tr>
+<td> </td><td> <pre>
+   
+</pre>
+</td><td valign="top">$&lt;STYPE__&gt;</td><td> <pre>
+   
+</pre>
+</td><td> STYPE__ is used</td> 
+</tr>
+
+    <td colspan=5><hr></td>
+
+
+</table>
+</div></td>
+ 
+</tr>
+
+
+<tr>
+<td> 
+    <li> auto-tag: $$ and $1 represent, respectively, <code>$$.get&lt;tag&gt;()</code> and
+            <code>$1.get&lt;tag&gt;()</code>;
+<p>
+<li> tag-error: <em>error:</em> tag undefined;
+<p>
+<li> tag-override: if <code>id</code> is a defined tag, then $&lt;tag&gt;$ and $&lt;tag&gt;1
+            represent the tag's type. Otherwise: <em>error</em> (using undefined
+            tag <code>id</code>).
+<p>
+</td>
+ 
+</tr>
+
+<td colspan=1><hr></td>
+
+
+</table>
+</div>
+<p>
+When using `$$.' or `$1.' default tags are ignored. A warning is issued
+that the default tag is ignored. This syntax allows members of the semantic
+value type (<code>STYPE__</code>) to be called explicitly. The default tag is only
+ignored if there are no additional characters (e.g., blanks, closing
+parentheses) between the dollar-expressions and the member selector operator
+(e.g., no tags are used with $1.member(), but tags are used with
+($1).member()). The opposite, overriding default tag associations, is
+accomplished using constructions like $&lt;STYPE__&gt;$ and $&lt;STYPE__&gt;1.
+<p>
+When negative dollar indices are used, the appropriate tag must explicitly be
+specified. The next example shows how this is realized in the grammar
+specification file itself:
+        <pre>
+
+    %polymorphic INT: int
+    %type &lt;INT&gt; ident
+    %%
+    
+    type:
+        ident arg
+    ;
+    
+    arg:
+        {
+            call($-1-&gt;get&lt;Tag__::INT&gt;());
+        }
+    ;
+        
+</pre>
+
+    In this example <code>call</code> may define an <code>int</code> or <code>int &amp;</code> parameter. 
+<p>
+It is also possible to delegate specification of the semantic value to the
+function <code>call</code> itself, as shown next:
+        <pre>
+
+    %polymorphic INT: int
+    %type &lt;INT&gt; ident
+    %%
+    
+    type:
+        ident arg
+    ;
+    
+    arg:
+        {
+            call($-1);
+        }
+    ;
+        
+</pre>
+
+    Here, the function <code>call</code> could be implemented like this:
+        <pre>
+
+    void call(STYPE__ &amp;st)
+    {
+        st-&gt;get&lt;Tag__::INT&gt;() = 5;
+    }
+        
+</pre>
+
+<p>
+<a name="l81"></a>
+<h4>5.6.3.3: Code generated by %polymorphic</h4>
+        The parser using polymorphic semantic values adds several classes to the
+generated files. The majority of these are class templates, defined in
+<code>parserbase.h</code>. In addition, some of the additionally implemented code is
+added to the <code>parse.cc</code> source file.
+<p>
+To minimize namespace pollution most of the additional code is contained in a
+namespace of its own: <code>Meta__</code>. If the <code>%namespace</code> directive was used
+then <code>Meta__</code> is nested under the namespace declared by that directive. The
+name <code>Meta__</code> hints at the fact that much of the code implementing
+polymorphic semantic values uses template meta programming.
+<p>
+<strong>The enumeration 'enum class Tag__'</strong>
+<p>
+One notable exception is the enumeration <code>Tag__</code>. It is declared outside of
+<code>Meta__</code> (but inside the <code>%namespace</code> namespace, if provided) to simplify
+its use. Its identifiers are the tags declared by the <code>%polymorphic</code>
+directive. This is a strongly typed enumeration. The <code>%weak-tags</code> directive
+can be used to declare a pre C++-11 standard <code>enum Tag__</code>.
+<p>
+<strong>The namespace Meta__</strong>
+<p>
+Below, <code>DataType</code> refers to the semantic value's data type that is
+associated with a <code>Tag__</code> identifier; <code>ReturnType</code> equals <code>DataType</code> if
+<code>DataType</code> is a built-in type (like <code>int, double,</code> etc.), while it is
+equal to <code>DataType const &amp;</code> otherwise (for, e.g., class-type data types).
+<p>
+The important elements of the namespace <code>Meta__</code> are:
+    <ul>
+    <li> The polymorphic semantic value's base class <code>Base</code>.<br>
+        Its public interface offers the following members:<br>
+        <ul>
+        <li><code>Tag__ tag() const:</code>  returns the semantic value type's tag.
+        <li><code>ReturnType get&lt;Tag__&gt;() const:</code> accesses the (non-modifiable) data
+            element of the type matching the tag.  the data element of the
+            type matching the tag (also see below at the description of the
+            class <code>SType</code>).
+        <li><code>DataType &amp;get&lt;Tag__&gt;() const:</code> accesses the (modifiable) data
+            element of the type matching the tag.
+        </ul>
+<p>
+<li> The semantic value classes <code>Semantic&lt;Tag__::ID&gt;: public Base</code>.<br>
+         <code>Semantic&lt;Tag__::ID&gt;</code> classes are derived for each of the tag
+         identifiers <code>ID</code> declared at the <code>%polymorphic</code>
+         directive. <code>Semantic&lt;Tag__::ID&gt;</code> classes contain a <code>mutable
+         DataType</code> data member. Their public interfaces offer the following
+         members:
+        <ul>
+        <li> A default constructor;
+        <li> A <code>Semantic(DataType const &amp;)</code> constructor; 
+        <li> A <code>Semantic(DataType &amp;&amp;)</code> constructor; 
+        <li> An <code>operator ReturnType() const</code> conversion operator;
+        <li> An <code>operator DataType &amp;()t</code> conversion operator.
+        </ul>
+        <code>Semantic&lt;Tag__::ID&gt;</code> objects are usually not explicitly used. Rather,
+         their use is implied by the actual semantic value class <code>SType</code> and
+         by several support functions (see below).
+<p>
+<li> De semantic value class <code>SType: public std::shared_ptr&lt;Base&gt;</code>
+         provides access to the various semantic value types. The <code>SType__</code>
+         class becomes the parser's <code>STYPE__</code> type, and explicitly accessing
+         <code>Semantic&lt;Tag__::ID&gt;</code> should never be necessary.<br>
+        <code>SType</code>'s public interface offers the following members:
+        <ul>
+        <li> Constructors: default, copy and move constructors.<br> 
+        Since the parser's semantic value and semantic value stack is
+         completely controlled by the parser, and since the actual semantic
+         data values are unknown at construction time of the semantic value
+         (<code>d_val__</code>) and of the semantic value stack, no constructors
+         expecting <code>DataType</code> values are provided.
+        <li> Assignment operators.<br>
+        The standard overloaded assignment operator (copy and move variants)
+         as well as copy and move assignment operators for the types declared
+         at the <code>%polymorphic</code> directive are provided. Assigning a value
+         using <code>operator=</code> allocates a <code>Semantic&lt;Tag__::tag&gt;</code> object for
+         the tag matching the right-hand side's data type, and resets the
+         <code>SType</code>'s <code>shared_pointer</code> to this new <code>Semantic&lt;Tag__::tag&gt;</code>
+         object. Be aware that this may break the default association of the
+         semantic value as declared by a <code>%type</code> directive. When breaking
+         the default association make sure that explicit tags are used (as in
+         $&lt;Tag__::tag&gt;1), overriding the default association with the
+         currently active association. In most cases, however, the assignment
+         is not used to break the default association but simply to assign a
+         value to $$. By default the <code>SType</code>'s shared pointer is zero, and
+         the assignment initializes the semantic value to a value of the
+         proper type. Assuming a lexical scanner may return a <code>NR</code> token,
+         offering an <code>int number() const</code> accessor, then part of <code>expr</code>
+         rule could be: <pre>
+
+        expr:
+            NR
+            {
+                $$ = d_scanner.number();
+            }
+        ...
+            
+</pre>
+
+        after which <code>expr</code>'s semantic value has been initialized to a
+         <code>Semantic&lt;Tag__::INT&gt;</code>. 
+        <li> returns the semantic
+             value stored inside <code>Semantic&lt;Tag__&gt;</code>. If the type-name is a
+             built-in type a copy of the value is returned, otherwise a
+             reference to a constant object is returned;<br>
+            This member checks for 0-pointers and for <code>Tag__</code> mismatches
+             between the requested and actual <code>Tag__</code>, throwing a
+             <code>std::logic_error</code> if found.
+        <li> returns a reference to the (modifiable)
+             semantic value stored inside <code>Semantic&lt;Tag__&gt;</code>.<br>
+            This member checks for 0-pointers and for <code>Tag__</code> mismatches
+             between the requested and actual <code>Tag__</code>, in that case
+             replacing the current <code>Semantic</code> object pointed to by a new
+             <code>Semantic&lt;Tag__&gt;</code> object of the requested <code>Tag__</code>.
+        <li> refers to the semantic
+             value stored inside <code>Semantic&lt;Tag__&gt;</code>. If the type-name is a
+             built-in type a copy of the value is returned, otherwise a
+             reference to a constant object is returned;<br>
+            This is a (partially) <em>unchecking</em> variant of the corresponing
+             <code>get</code> member, resulting in a <em>Segfault</em> if used when the
+             <code>shared_ptr</code> holds a 0-pointer, and throwing a
+             <code>std::bad_cast</code> in case of a mismatch between the requested and
+             actual <code>Tag__</code>.
+        <li> returns a reference to the (modifiable)
+             semantic value stored inside <code>Semantic&lt;Tag__&gt;</code>.<br>
+            This is a (partially) <em>unchecking</em> variant of the corresponing
+             <code>get</code> member, resulting in a <em>Segfault</em> if used when the
+             <code>shared_ptr</code> holds a 0-pointer, and throwing a
+             <code>std::bad_cast</code> in case of a mismatch between the requested and
+             actual <code>Tag__</code>.
+        </ul>
+    </ul>
+    When an incorrect tag is specified (e.g., with <code>get&lt;Tag__::tag&gt;(),
+$&lt;Tag__::tag&gt;$</code>, or <code>$&lt;Tag__::tag&gt;1</code>), the generated code correctly copiles,
+but the program will throw a <code>std::bad_cast</code> exception once the offending
+code is executed.
+<p>
+<strong>Additional Headers</strong>
+<p>
+When using <code>%polymorphic</code> three additional header files are included by
+<code>parserbase.h</code>:
+    <ul>
+    <li><code>memory,</code> required for <code>std::shared_ptr</code>;
+    <li><code>stdexcept,</code> required for <code>std::logic_error</code>;
+    <li><code>type_traits,</code> required for the implementation of one of <code>SType</code>'s
+         overloaded assignment operators.
+    </ul>
+<p>
+<a name="l82"></a>
+<h4>5.6.3.4: A parser using a polymorphic semantic value type</h4>
+        In this section a parser is developed using polymorphic semantic values.  Its
+<code>%polymorphic</code> directive looks like this:
+        <pre>
+
+    %polymorphic INT: int; TEXT: std::string;
+        
+</pre>
+
+    Furthermore, the grammar declares tokens <code>INT</code> and <code>IDENTIFIER</code>, and
+pre-associates the <code>TEXT</code> tag with the <code>identifier</code> non-terminal,
+associates the <code>INT</code> tag with the <code>int</code> non-terminal, and associates
+<code>STYPE__</code>, the generic polymorphic value with the non=terminal <code>combi</code>:
+        <pre>
+
+    %type &lt;TEXT&gt;    identifier
+    %type &lt;INT&gt;     int
+    %type &lt;STYPE__&gt; combi
+        
+</pre>
+
+    For this example a simple grammar was developed, expecting an optional
+number of input lines, formatted according to the following <code>rule</code>
+production rules:
+        <pre>
+
+    rule:
+        identifier '(' identifier ')' '\n'
+    |
+        identifier '=' int '\n'
+    |
+        combi '\n'
+    ;
+        
+</pre>
+
+<p>
+The rules for <code>identifier</code> and <code>int</code> assign, respectively, text and an
+<code>int</code> value to the parser's semantic value stack:
+        <pre>
+
+    identifier:
+        IDENTIFIER
+        {
+            $$ = d_scanner.matched();
+        }
+    ;
+    int:
+        INT
+        {
+            $$ = d_scanner.intValue();
+        }
+    ;
+        
+</pre>
+
+<p>
+These simple assignments can be used as <code>int</code> is pre-associated with the
+<code>INT</code> tag and <code>identifier</code> is asociated with the <code>TEXT</code> tag. 
+<p>
+As the <code>combi</code> rule is not associated with a specific semantic value, its
+semantic value could be either <code>INT</code> or <code>TEXT</code>. Irrespective of what is
+actually returned by <code>combi</code>, its semantic value can be passed on to a
+function (<code>process(STYPE__ const &amp;)</code>, responsible for the semantic value's
+further processing. Here are the definition of the <code>combi</code> non-terminal and
+action blocks for the <code>rule</code> non-terminal:
+        <pre>
+
+    combi:
+        int
+    |
+        identifier;
+    ;
+        
+    rule:
+        identifier '(' identifier ')' '\n'
+        {
+            cout &lt;&lt; $1 &lt;&lt; " " &lt;&lt; $3 &lt;&lt; '\n';
+        }
+    |
+        identifier '=' int '\n'
+        {
+            cout &lt;&lt; $1 &lt;&lt; " " &lt;&lt; $3 &lt;&lt; '\n';
+        }
+    |
+        combi '\n'
+        {
+            process($1);
+        }
+    ;
+        
+</pre>
+
+<p>
+Since <code>identifier</code> has been associated with <code>TEXT</code> and <code>int</code> 
+with <code>INT</code>, the $-references to these elements in the production
+rules already return, respectively, a <code>std::string const &amp;</code> and an <code>int</code>.
+<p>
+For <code>combi</code> the situation is slightly more complex, as <code>combi</code> could
+either return an <code>int</code> (via its <code>int</code> production rule) or a <code>std::string
+const &amp;</code> (via its <code>identifier</code> production rule). 
+<p>
+Fortunately, <code>process</code> can find out by inspecting the semantic value's
+<code>Tag__</code>:
+        <pre>
+
+    void process(SSTYPE__ const &amp;semVal)
+    {
+        if (semVal.tag() == Tag__::INT)
+            cout &lt;&lt; "Saw an int-value: " &lt;&lt; semVal.get&lt;Tag__::INT&gt;() &lt;&lt; '\n';
+        else
+            cout &lt;&lt; "Saw text: " &lt;&lt; semVal.get&lt;Tag__::TEXT&gt;() &lt;&lt; '\n';
+    }
+        
+</pre>
+
+<p>
+<a name="l83"></a>
+<h4>5.6.3.5: A scanner using a polymorphic semantic value type</h4>
+        The scanner recognizes input patterns, and returns Parser tokens (e.g.,
+Parser::INT) matching the recognized input. 
+<p>
+It is easily created by
+<strong>flexc++</strong>(1) processing the following simple specification file.
+        <pre>
+%interactive
+%filenames scanner
+
+%%
+
+[ \t]+                  // skip white space
+
+[0-9]+                  return Parser::NR;
+
+[a-zA-Z_][a-zA-Z0-9_]*  return Parser::IDENTIFIER;
+
+.|\n                    return matched()[0];
+
+
+
+
+
+</pre>
+
+<p>
+The reader may refer to <strong>flexc++</strong>(1) documentation for details about
+<strong>flexc++</strong>(1) specification files.
+<p>
+<a name="ACTIONS"></a><a name="l84"></a>
+<h3>5.6.4: Actions</h3>
+    An action accompanies a syntactic rule and contains <strong>C++</strong> code to be
+executed each time an instance of that rule is recognized. The task of most
+actions is to compute a semantic value for the grouping built by the rule from
+the semantic values associated with tokens or smaller groupings.
+<p>
+An action consists of <strong>C++</strong> statements surrounded by braces, much like a
+compound statement in <strong>C++</strong>. It can be placed at any position in the rule;
+it is executed at that position. Most rules have just one action at the end of
+the rule, following all the components. Actions in the middle of a rule are
+tricky and should be used only for special purposes (see section
+<a href="bisonc++05.html#MIDACTIONS">5.6.6</a>).
+<p>
+The <strong>C++</strong> code in an action can refer to the semantic values of the
+components matched by the rule with the construct <code>$n</code>, which stands for the
+value of the nth component. The semantic value for the grouping being
+constructed is <code>$$</code>. (<strong>Bisonc++</strong> translates both of these constructs into
+array element references when it copies the actions into the parser file.)
+<p>
+Here is a typical example:
+        <pre>
+
+    exp:
+        ...
+    |
+        exp '+' exp
+        { 
+            $$ = $1 + $3; 
+        }
+    |
+        ...    
+        
+</pre>
+
+    This rule constructs an <code>exp</code> from two smaller exp groupings connected
+by a plus-sign token. In the action, <code>$1</code> and <code>$3</code> refer to the semantic
+values of the two component exp groupings, which are the first and third
+symbols on the right hand side of the rule. The sum is stored into <code>$$</code> so
+that it becomes the semantic value of the addition-expression just recognized
+by the rule. If there were a useful semantic value associated with the `+'
+token, it could be referred to as <code>$2</code>.
+<p>
+If you don't specify an action for a rule, <strong>bisonc++</strong> supplies a default: <code>$$ =
+$1</code>. Thus, the value of the first symbol in the rule becomes the value of the
+whole rule. Of course, the default rule is valid only if the two data types
+match. There is no meaningful default action for an empty rule; every empty
+rule must have an explicit action unless the rule's value does not
+matter. Note that the default <code>$$</code> value is assigned at the <em>beginning</em> of
+an action block. Any changes to <code>$1</code> are therefore <em>not</em> automatically 
+propagated to <code>$$</code>. E.g., assuming that <code>$1 == 3</code> at the beginning of the
+following action block, then <code>$$</code> will still be equal to 3 after executing
+the statement in the action block:
+        <pre>
+
+    {               // assume: $1 == 3
+        $1 += 12;   // $1 now is 15, $$ remains 3
+    }
+        
+</pre>
+
+    If <code>$$</code> should receive the value of the modified <code>$1</code>, then <code>$$</code>
+must explicitly be assigned to <code>$$</code>. E.g.,
+        <pre>
+
+    {               // assume: $1 == 3
+        $1 += 12;   // $1 now is 15, $$ remains 3
+        $$ = $1;    // now $$ == 15 as well.
+    }
+        
+</pre>
+
+<p>
+Using <code>$n</code> with n equal to zero or a negative value is allowed for
+reference to tokens and groupings on the stack before those that match the
+current rule. This is a very <em>risky</em> practice, and to use it reliably you
+must be certain of the context in which the rule is applied. Here is a case in
+which you can use this reliably:
+        <pre>
+
+    foo:      
+        expr bar '+' expr  
+        { ... }
+    | 
+        expr bar '-' expr  
+        { ... }
+    ;
+
+    bar:
+        // empty
+    |
+        { 
+            previous_expr = $0; 
+        }
+    ;
+        
+</pre>
+
+    As long as <code>bar</code> is used <em>only</em> in the fashion shown here, <code>$0</code>
+always refers to the <code>expr</code> which precedes bar in the definition of <code>foo</code>.
+But as mentioned: it's a risky practice, which should be avoided if at all
+possible. See also section <a href="bisonc++06.html#SPECIAL">6.6</a>.
+<p>
+All <code>$</code>-type variables used in action blocks can be modified. All
+numbered <code>$</code>-variables are deleted when a production rule has been
+recognized. Unless an action explicitly assigns a value to <code>$$</code>, the
+(possibly modified) <code>$1</code> value is assigned to <code>$$</code> when a production rule
+has been recognized.
+<p>
+<a name="ACTIONTYPES"></a><a name="l85"></a>
+<h3>5.6.5: Data Types of Values in Actions</h3>
+    If you have chosen a single data type for semantic values, the <code>$$</code> and
+<code>$n</code> constructs always have that data type.
+<p>
+If you have used a <code>%union</code> directive to specify a variety of data types,
+then you must declare a choice among these types for each terminal or
+nonterminal symbol that can have a semantic value. Then each time you use
+<code>$$</code> or <code>$n</code>, its data type is determined by which symbol it refers to in
+the rule. In this example,
+        <pre>
+
+    exp:    
+        ...
+    | 
+        exp '+' exp
+        { 
+            $$ = $1 + $3; 
+        }
+        
+</pre>
+
+    <code>$1</code> and <code>$3</code> refer to instances of exp, so they all have the data
+type declared for the nonterminal symbol exp. If <code>$2</code> were used, it would
+have the data type declared for the terminal symbol '<code>+</code>', whatever that
+might be.
+<p>
+Alternatively, you can specify the data type when you refer to the value,
+by inserting `<code>&lt;type&gt;</code>' after the `<code>$</code>' at the beginning of the
+reference. For example, if you have defined types as shown here:
+        <pre>
+
+    %union 
+    {
+        int u_int;
+        double u_double;
+    };
+        
+</pre>
+
+    then you can write <code>$&lt;u_int&gt;1</code> to refer to the first subunit of the rule
+as an integer, or <code>$&lt;u_double&gt;1</code> to refer to it as a double.
+<p>
+<a name="MIDACTIONS"></a><a name="l86"></a>
+<h3>5.6.6: Actions in Mid-Rule</h3>
+    Occasionally it is useful to put an action in the middle of a rule. These
+actions are written just like usual end-of-rule actions, but they are executed
+before the parser recognizes the components that follow them.
+<p>
+A mid-rule action may refer to the components preceding it using <code>$n</code>, but
+it may not (cannot) refer to subsequent components because it is executed
+before they are parsed.
+<p>
+The mid-rule action itself counts as one of the components of the rule. This
+makes a difference when there is another action later in the same rule (and
+usually there is another at the end): you have to count the actions along with
+the symbols when working out which number <code>n</code> to use in <code>$n</code>.
+<p>
+The mid-rule action can also have a semantic value. The action can set its
+value with an assignment to <code>$$</code>, and actions later in the rule can refer to
+the value using <code>$n</code>. Since there is no symbol to name the action, there is
+no way to declare a data type for the value in advance, so you must use the
+`<code>$&lt;...&gt;</code>' construct to specify a data type each time you refer to this
+value.
+<p>
+There is no way to set the value of the entire rule with a mid-rule action,
+because assignments to <code>$$</code> do not have that effect. The only way to set the
+value for the entire rule is with an ordinary action at the end of the rule.
+<p>
+Here is an example from a hypothetical compiler, handling a <code>let</code> statement
+that looks like ``<code>let (variable) statement</code>' and serves to create a
+variable named <code>variable</code> temporarily for the duration of statement. To
+parse this construct, we must put <code>variable</code> into the symbol table while
+statement is parsed, then remove it afterward. Here is how it is done:
+        <pre>
+
+    stmt:   
+        LET '(' var ')'
+        {
+            $&lt;u_context&gt;$ = pushSymtab();
+            temporaryVariable($3); 
+        }
+        stmt    
+        { 
+            $$ = $6;
+            popSymtab($&lt;u_context&gt;5); 
+        }
+        
+</pre>
+
+    As soon as `<code>let (variable)</code>' has been recognized, the first action is
+executed. It saves a copy of the current symbol table as its semantic value,
+using alternative <code>u_context</code> in the data-type union. Then it uses
+<code>temporaryVariable()</code> to add the new variable (using, e.g., a name that
+cannot normally be used in the parsed language) to the current symbol
+table. Once the first action is finished, the embedded statement (<code>stmt</code>)
+can be parsed. Note that the mid-rule action is component number 5, so
+`<code>stmt</code>' is component number 6.
+<p>
+Once the embedded statement is parsed, its semantic value becomes the value of
+the entire <code>let</code>-statement. Then the semantic value from the earlier action
+is used to restore the former symbol table. This removes the temporary
+<code>let</code>-variable from the list so that it won't appear to exist while the rest
+of the program is parsed.
+<p>
+Taking action before a rule is completely recognized often leads to conflicts
+since the parser must commit to a parse in order to execute the action. For
+example, the following two rules, without mid-rule actions, can coexist in a
+working parser because the parser can shift the open-brace token and look at
+what follows before deciding whether there is a declaration or not:
+        <pre>
+
+    compound: 
+        '{' declarations statements '}'
+    | 
+        '{' statements '}'
+    ;
+        
+</pre>
+
+    But when we add a mid-rule action as follows, the rules become
+nonfunctional:
+        <pre>
+
+    compound: 
+        { 
+            prepareForLocalVariables(); 
+        }
+        '{' declarations statements '}'
+    | 
+        '{' statements '}'
+    ;
+        
+</pre>
+
+    Now the parser is forced to decide whether to execute the mid-rule action
+when it has read no farther than the open-brace. In other words, it must
+commit to using one rule or the other, without sufficient information to do it
+correctly. (The open-brace token is what is called the look-ahead token at
+this time, since the parser is still deciding what to do about it. See section
+<a href="bisonc++07.html#LOOKAHEAD">7.0.3</a>.
+<p>
+You might think that the problem can be solved by putting identical actions
+into the two rules, like this:
+        <pre>
+
+        { 
+            prepareForLocalVariables(); 
+        }
+        '{' declarations statements '}'
+    | 
+        { 
+            prepareForLocalVariables(); 
+        }
+        '{' statements '}'
+    ;
+        
+</pre>
+
+    But this does not help, because <strong>bisonc++</strong> <em>never</em> parses the contents of
+actions, and so it does <em>not</em> realize that the two actions are identical.
+<p>
+If the grammar is such that a declaration can be distinguished from a
+statement by the first token (which is true in <strong>C</strong>, but <em>not</em> in <strong>C++</strong>,
+which allows statements and declarations to be mixed)), then one solution
+is to put the action after the open-brace, like this:
+        <pre>
+
+    compound: 
+        '{'
+        { 
+            prepareForLocalVariables(); 
+        }
+        declarations statements '}'
+    | 
+        '{' statements '}'
+    ;
+        
+</pre>
+
+    Now the next token following a recognized <code>'{'</code> token would be either
+the first <code>declarations</code> token or the first <code>statements</code> token, which
+would in any case tell <strong>bisonc++</strong> which rule to use, thus solving the problem.
+<p>
+Another (much used) solution is to bury the action inside a support
+non-terminal symbol which recognizes the first block-open brace and performs
+the required preparations:
+        <pre>
+
+    openblock:
+        '{'
+        { 
+            prepareForLocalVariables(); 
+        }
+    ;
+
+    compound: 
+            openblock declarations statements '}'
+    | 
+            openblock statements '}'
+    ;
+        
+</pre>
+
+    Now <strong>bisonc++</strong> can execute the action in the rule for subroutine without
+deciding which rule for compound it eventually uses. Note that the action
+is now at the end of its rule. Any mid-rule action can be converted to an
+end-of-rule action in this way, and this is what <strong>bisonc++</strong> actually does to
+implement mid-rule actions.
+<p>
+By the way, note that in a language like <strong>C++</strong> the above construction is
+obsolete anyway, since <strong>C++</strong> allows mid-block variable- and object
+declarations. In <strong>C++</strong> a compound statement could be defined, e.g., as
+follows:
+        <pre>
+
+    stmnt_or_decl:
+        declarations
+    |
+        pure_stmnt      // among which: compound_stmnt
+    ;
+
+    statements:
+        // empty
+    |
+        statements stmnt_or_decl
+    ;
+
+    compound_stmnt:                 
+        open_block statements '}'
+    ;
+        
+</pre>
+
+    Here, the <code>compound_stmnt</code> would begin with the necessary preparations
+for local declarations, which would then have been completed by the time they
+would really be needed by <code>declarations</code>.
+<p>
+<a name="l87"></a>
+<h2>5.7: Basic Grammatical Constructions</h2>
+In the following sections several basic grammatical constructions are
+presented in their prototypical and generic forms. When these basic
+constructions are used to construct a grammar, the resulting grammar is
+usually accepted by <strong>bisonc++</strong>. Moreover, these basic constructions are frequently
+encountered in programming languages. When designing your own grammar, try to
+stick as closely as possible to the following basic grammatical constructions.
+<p>
+<a name="l88"></a>
+<h3>5.7.1: Plain Alternatives</h3>
+    Simple alternatives can be specified using the vertical bar (<code>|</code>). Each
+alternative should begin with a unique identifying terminal token. The
+terminal token may actually be hidden in a non-terminal rule, in which case
+that nonterminal can be used as an alias for the non-terminal. In fact
+identical terminal tokens may be used if at some point the terminal tokens
+differ over different alternatives. Here are some examples:
+        <pre>
+
+    // Example 1:  plain terminal distinguishing tokens
+    expr:
+        ID        
+    |
+        NUMBER
+    ;
+
+    // Example 2:  nested terminal distinguishing tokens
+    expr:
+        id
+    |
+        number
+    ;
+
+    id:
+        ID
+    ;
+
+    number:
+        NUMBER
+    ;
+
+    // Example 3:  eventually diverting routes
+    expr:
+        ID
+        id
+    |
+        ID
+        number
+    ;
+
+    id:
+        ID
+    ;
+
+    number:
+        NUMBER
+    ;
+        
+</pre>
+
+<p>
+<a name="l89"></a>
+<h3>5.7.2: One Or More Alternatives, No Separators</h3>
+    A series of elements normally use left-recursion. For example, <strong>C++</strong>
+supports <em>string concatenation</em>: series of double quote delimited <code>ASCII</code>
+characters define a string, and multiple white-space delimited strings are
+handled as one single string:
+        <pre>
+
+    "hello"         // multiple ws-delimited strings
+    " " 
+    "world"
+
+    "hello world"   // same thing
+        
+</pre>
+
+    Usually a parser is responsible for concatenating the individual
+string-parts, receiving one or more <code>STRING</code> tokens from the lexical
+scanner. A <code>string</code> rule handles one or more incoming <code>STRING</code> tokens:
+        <pre>
+
+    string:
+        STRING
+    |
+        string STRING
+        
+</pre>
+
+    The above rule can be used as a prototype for recognizing a series of
+elements. The token <code>STRING</code> may of course be embedded in another rule. The
+generic form of this rule could be formulated as follows:
+        <pre>
+
+    series:
+        unit
+    |
+        series unit
+        
+</pre>
+
+    Note that the single element is <em>first</em> recognized, whereafter the
+left-recursive alternative may be recognized repeatedly.
+<p>
+<a name="OPTSERIES"></a><a name="l90"></a>
+<h3>5.7.3: Zero Or More Alternatives, No Separators</h3>
+    An <em>optional</em> series of elements also use left-recursion, but the single
+element alternative remains empty. For example, in <strong>C++</strong> a compound
+statement may contain statements or declarations, but it may also be empty:
+        <pre>
+
+    opt_statements:
+        // empty
+    |
+        opt_statements statements
+        
+</pre>
+
+    The above rule can be used as a prototype for recognizing a series of
+elements: the generic form of this rule could be formulated as follows:
+        <pre>
+
+    opt_series:
+        // empty
+    |
+        opt_series unit
+        
+</pre>
+
+    Note that the empty element is recognized <em>first</em>, even though it is
+empty, whereafter the left-recursive alternative may be recognized repeatedly.
+In practice this means that an <em>action block</em> may be defined at the empty
+alternative, which is then executed prior to the left-recursive
+alternative. Such an action block could be used to perform initializations
+necessary for the proper handling of the left-recursive alternative.
+<p>
+<a name="l91"></a>
+<h3>5.7.4: One Or More Alternatives, Using Separators</h3>
+    A series of elements which are separated from each other using some delimiter
+again normally uses left-recursion. For example, a <strong>C++</strong> variable definition
+list consists of one or more identifiers, separated by comma's. If there is
+only one identifier no comma is used. Here is the rule defining a list using
+separators: 
+        <pre>
+
+    variables:
+        IDENTIFIER
+    |
+        variables ',' IDENTIFIER
+        
+</pre>
+
+    The above rule can be used as a prototype for recognizing a series of
+delimited elements. The generic form of this rule could be formulated as
+follows:
+        <pre>
+
+    series:
+        unit
+    |
+        series delimiter unit
+        
+</pre>
+
+    Note that the single element is <em>first</em> recognized, whereafter the
+left-recursive alternative may be recognized repeatedly. In fact, this rule is
+not really different from the standard rule for a series, which does not hold
+true for the rule to recognize an <em>optional</em> series of delimited elements,
+covered in the next section.
+<p>
+<a name="l92"></a>
+<h3>5.7.5: Zero Or More Alternatives, Using Separators</h3>
+    An optional series of elements, separated from each other using delimiters
+occurs frequently in programming languages. For example, <strong>C++</strong> functions
+have parameter lists which may or may not require arguments. Since a parameter
+list may be defined empty, an <em>empty</em> alternative is required. However, a
+simple generalization of the optional series construction (section
+<a href="bisonc++05.html#OPTSERIES">5.7.3</a>) won't work, since that would imply that the <em>first</em> argument
+is preceded by a separator, which is clearly not the intention. So, the
+following construction is <em>wrong</em>:
+        <pre>
+
+    opt_parlist:
+        // empty
+    |
+        opt_parlist ',' parameter
+        
+</pre>
+
+    To define an optional series of delimited elements <em>two</em> rules are
+required: one rule handling the optional part, the other the delimited series
+of elements. So, the correct definition is as follows:
+        <pre>
+
+    opt_parlist:
+        // empty
+    |
+        parlist
+    ;
+
+    parlist:
+        parameter
+    |
+        parlist ',' parameter
+    ;
+        
+</pre>
+
+    Again, the above rule pair can be used as a prototype for recognizing an
+optional series of delimited elements. The generic form of these rules could
+be formulated as follows:
+        <pre>
+
+    opt_series:
+        // empty
+    |
+        series
+    ;
+
+    series:
+        element
+    |
+        series delimiter element
+        
+</pre>
+
+    Note that the <code>opt_series</code> rules neatly distinguishes the no-element
+case from the case were elements are present. Usually these two cases need to
+be handled quite differently, and the <code>opt_series</code> rules empty alternative
+easily allows us to recognize the no-elements case.
+<p>
+<a name="l93"></a>
+<h3>5.7.6: Nested Blocks</h3>
+    Finally, we add the <em>nested</em> rule to our bag of rule-tricks. Again, nested
+rules appear frequently: parenthesized expressions and compound statements are
+two very well known examples. These kind of rules are characterized by the
+fact that the nested variant is itself an example of the element appearing in
+the nested variant. The definition of a statement is actually a bit more
+complex than the definition of an expression, since the statement appearing in
+the compound statement is in fact an optional series of elements. Let's first
+have a look at the nested expression rule. Here it is, in a basic form:
+        <pre>
+
+    expr:
+        NUMBER
+    |
+        ID
+    |
+        expr '+' expr
+    |
+        ...
+    |
+        '(' expr ')'
+    ;
+        
+</pre>
+
+    This definition is simply characterized that the non-terminal <code>expr</code>
+appears within a set of parentheses, which is not too complex. 
+<p>
+The definition of <code>opt_statements</code>, however, is a bit more complex. But
+acknowledging the fact that a <code>statement</code> contains among other elements a
+compound statement, and that a compound statement, in turn, contains
+<code>opt_statements</code> an <code>opt_statements</code> construction can be formulated
+accordingly:
+        <pre>
+
+    opt_statements:         // define an optional series
+        // empty
+    |
+        opt_statements statement
+    ;
+        
+    statement:              // define alternatives for `statement'
+        expr_statement
+    |
+        if_statement
+    |
+        ...
+    |
+        compound_statement
+    ;
+
+    compound_statement:     // define the compound statement itself
+        '{' opt_statements '}'
+    ;
+        
+</pre>
+
+<p>
+<a name="l94"></a>
+<h2>5.8: Multiple Parsers in the Same Program</h2>
+Most programs that use <strong>bisonc++</strong> parse only one language and therefore contain
+only one <strong>bisonc++</strong> parser. But what if you want to parse more than one language
+with the same program? Since <strong>bisonc++</strong> constructs <em>class</em> rather than a
+<em>parsing function</em>, this problem can easily be solved: simply define your
+second (third, fourth, ...) parser class, each having its own unique
+class-name, using the <code>%class-name</code> directive, and construct parser objects
+of each of the defined classes.
+<p>
+<hr>
+<ul>
+    <li> <a href="bisonc++.html">Table of Contents</a>
+    <li> <a href="bisonc++04.html">Previous Chapter</a>
+    <li> <a href="bisonc++06.html">Next Chapter</a>
+</ul>
+<hr>
+</body>
+</html>
