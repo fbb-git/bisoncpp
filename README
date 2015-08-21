@@ -1,34 +1,29 @@
+Bisonc++ is a parser generator like bison, but it generates C++ code
 
-    This is the top-level directory of the bisonc++ program source tree.
+Bisonc++ is a general-purpose parser generator that converts a grammar
+description for an LALR(1) context-free grammar into a C++ class to parse that
+grammar. Once you are proficient with bisonc++, you may use it to develop a
+wide range of language parsers, from those used in simple desk calculators to
+complex programming languages. 
 
-    The directory `sourceforge' is probably not useful for anybody but me, but
-since it serves an important role for me in uploading the Bisonc++ docs to
-sourceforge, they belong to this project. The same holds true for the
-bisonc++/debian directory. Since the construction of the Debian package is now
-using the configuration files at
-    https://svn.openfmi.net/debian-addons-bg/bisonc++
-it is likely that the bisonc++/debian directory will at some point in the
-future. 
+Bisonc++ is highly comparable to the program bison++, written by Alain
+Coetmeur: all properly-written bison++ grammars ought to be convertible to
+bisonc++ grammars after very little or no change. Anyone familiar with bison++
+or its precursor, bison, should be able to use bisonc++ with little
+trouble. You need to be fluent in using the C++ programming in order to use
+bisonc++.
 
-    To create a source archive, run
+Bisonc++ expands the concepts initially implemented in bison and bison++,
+offering a cleaner setup of the generated parser class. The parser class is
+derived from a base-class, mainly containing the parser's token- and
+type-definitions as well as several member func- tions which should not be
+modified by the programmer.
 
-        ./sourcetar
+To create the program from its sources, either descend into the bisonc++
+directory, or unpack a created archive, cd into its top-level directory 
+and follow the instructions provided in the INSTALL file found there.
 
-    This will create an archive named like bisonc++_1.45.tar.gz. 
-
-    To create an `upstream debian archive' provide sourcetar with an (any)
-    argument. E.g.,
-
-        ./sourcetar deb
-
-    This will create an archive named like bisonc++_1.45.orig.tar.gz
-
-    The numbers will of course follow bisonc++'s version.
-
-    The `distribution' script is also probably not useful to anybody but me,
-    and it may be removed from new distributions at some future point in time.
-
-    
-    To create the program from its sources, either descend into the bisonc++
-    directory, or unpack a created archive, cd into its top-level directory 
-    and follow the instructions provided in the INSTALL file found there.
+Alternatively, binary ready-to-install versions of the Bisonc++ parser
+generator are available in verious Linux distributions, in particular
+Debian. See, e.g., 
+https://packages.debian.org/search?keywords=bisonc%2B%2B&searchon=names&suite=all&section=all
