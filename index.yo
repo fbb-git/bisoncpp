@@ -17,7 +17,7 @@ htmlcommand(
     <img class="centered", src="bison.jpg" border="0" alt="Bisonc++ Image" />
 )
 
-This is the main page of the Bisonc++ project hosted on GitHub.com.
+This is the main page of the Bisonc++ project hosted at GitHub.com.
 
 
 The project's repository can be reached at 
@@ -44,8 +44,9 @@ Jul 28 2014;
 May 11 2014;
         it() url(4.09.00)
                     (https://github.com/fbb-git/bisoncpp/releases/tag/4.09.00)
-May 11 2014;
+May 11 2014.
         )
+    COMMENT(NOTE: LAST ITEM SHOULD END IN . )
 
     Additional information about bisonc++:
     itemization(
