@@ -10,6 +10,7 @@
 #include "icmake/clean"
 #include "icmake/manpage"
 #include "icmake/manual"
+#include "icmake/github"
 #include "icmake/install"
 
 string  g_cwd = chdir("");  // initial working directory
@@ -33,8 +34,8 @@ void main(int argc, list argv)
     if (option != "")
         special();
 
-    if (option == "sourceforge")
-        exit(0);
+    if (option == "github")
+        github();
 
     if (option == "man")
         manpage();
@@ -98,7 +99,8 @@ void main(int argc, list argv)
         "                          (by default in `" STD "')\n"
         "   install extra [base] - install extra docs in `base'\n"
         "                          (by default in `" EXTRA "')\n"
-        "   sourceforge          - prepare sourceforge's index update\n"
+        "   github               - prepare github's gh-pages update\n"
+        "                          (internal use only)\n"
         "\n"
         "If the environment variable DRYRUN is defined, no commands are\n"
         "actually executed\n"

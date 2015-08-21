@@ -1,0 +1,6 @@
+void github()
+{
+    run("cp -r release.yo tmp/manhtml/bisonc++man.html tmp/manual "
+        "../../wip");
+    exit(0);
+}
