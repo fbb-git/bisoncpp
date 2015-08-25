@@ -18,6 +18,11 @@ cp -r ../wip/changelog.txt ../wip/bisonc++man.html ../wip/manual/* .
 
 yodl2html index.yo || exit 1
 
+echo "Running 'git st': no untracked files or ignorable files should be shown"
+git st
+
+echo
+
 echo -n "ci change to index.html etc., push the result and co master [y/n] ? "
 read yesno
 

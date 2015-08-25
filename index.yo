@@ -58,9 +58,7 @@ May 11 2014.
 
 Enjoy Bisonc++ !
 
-COMMENT(
-includefile(/home/frank/git/PROJECTS.yo)
-)
+includefile(/home/frank/git/GITPROJECTS.yo)
 
 Contact the author through url(his e-mail address)(mailto:f.b.brokken@rug.nl)
 
