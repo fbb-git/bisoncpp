@@ -18,7 +18,6 @@ void clean(int dist)
             "man/*.1 "
             "man/*.3* "
             "man/*.html "
-            "manual/manual-stamp "
             "manual/*.html "
             "manual/invoking/usage "
             "manual/invoking/usage.txt "

@@ -2,6 +2,9 @@
     various values of polymorphic semantic value types (cf. section
     `Polymorphism and multiple semantic values') 
 
+  * The manual-stamp file is no longer used. Calling 'build manual' now always
+    (re)builds the manual. The same holds true for 'build man'.
+
 bisonc++ (4.10.01) 
 
   * Production rules of non-terminal symbols that immediately follow dot
