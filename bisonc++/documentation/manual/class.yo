@@ -12,7 +12,7 @@ includefile(class/privmembers.yo)
     lsubsect(LEX)(`lex()': Interfacing the Lexical Analyzer)
     includefile(class/lex.yo)
 
-sect(Protected Data Members)
+lsect(PRIVDATA)(Protected Data Members)
 includefile(class/privdata.yo)
 
 sect(Types and Variables in the Anonymous Namespace)

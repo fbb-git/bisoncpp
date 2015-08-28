@@ -17,13 +17,12 @@ members inherited from the parser's base class.
         matched token to the parser in parallel with a returned token. It is
         available only when bf(%lsp-needed, %ltype) or bf(%locationstruct) has
         been defined. nl()
-       Lexical scanners may be offered the facility to assign
-        a value to this variable in parallel with a returned
-        token. In order to allow a scanner access to bf(d_loc__), bf(d_loc__)'s
-        address should be passed to the scanner. This can be realized, for
-        example, by defining a member bf(void setLoc(STYPE__ *)) in the lexical
-        scanner, which is then called from the parser's constructor as
-        follows:
+       Lexical scanners may be offered the facility to assign a value to this
+        variable in parallel with a returned token. In order to allow a
+        scanner access to bf(d_loc__), bf(d_loc__)'s address should be passed
+        to the scanner. This can be realized, for example, by defining a
+        member bf(void setLoc(LTYPE__ *loc)) in the lexical scanner, which is
+        then called from the parser's constructor as follows:
        verb(
             d_scanner.setSLoc(&d_loc__);
        )
@@ -51,7 +50,7 @@ members inherited from the parser's base class.
     it() bf(int d_token__):nl()
        The current token. 
         Do not modify.
-    it() label(DVAL) bf(STYPE d_val__):nl()
+    it() label(DVAL) bf(STYPE__ d_val__):nl()
        The semantic value of a returned token or non-terminal symbol. With
         non-terminal tokens it is assigned a value through the action rule's
         symbol bf($$). Lexical scanners may be offered the facility to assign
@@ -99,8 +98,18 @@ members inherited from the parser's base class.
         the em(scanner) must assign the proper semantic value when it
         recognizes a token. Consequently the parser's tt(d_val__) data member
         must be made available to the scanner.
+
+       If tt(STYPE__) is a polymorphic semantic value, direct assignment of
+        values to tt(d_val__) is not possible. In that case em(tagged
+        assignment) must be used, as explained in section ref(POLYTYPE).
+
     it() bf(LTYPE__ d_vsp__):nl()
        The semantic value stack pointer. 
         Do not modify.
     )
+
+
+
+
+
 

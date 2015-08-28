@@ -1,4 +1,4 @@
-itemlist(
+itemization(
     itx() auto-tag: $$ and $1 represent, respectively, tt($$.get<tag>()) and
             tt($1.get<tag>());
 

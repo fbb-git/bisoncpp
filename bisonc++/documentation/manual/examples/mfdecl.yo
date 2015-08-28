@@ -28,8 +28,8 @@ language. These features allow semantic values to have various data types
     The tt(%union) directive given in lines 1 until 6 allow semantic values
 to have various data types (see section ref(MORETYPES)).
     The tt(%union) directive is used instead of tt(%stype), and defines the
-type tt(Parser::STYPE) as the indicated union: all semantic values now
-have this tt(Parser::STYPE) type. As defined here the allowable types are now
+type tt(Parser::STYPE__) as the indicated union: all semantic values now
+have this tt(Parser::STYPE__) type. As defined here the allowable types are now
     itemization(
     itt(double) (for tt(exp) and tt(NUM)); 
     it() a em(pointer) to a tt(double), being a pointer to entries in

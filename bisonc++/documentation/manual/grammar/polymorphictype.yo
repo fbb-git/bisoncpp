@@ -1,10 +1,6 @@
     The tt(%type) directive is used to associate (non-)terminals with semantic
 value types.
 
-Semantic values may also be associated with terminal tokens. In that case it
-is the lexical scanner's responsibility to assign a properly typed value to
-the parser's tt(STYPE__ d_val__) data member.
-
 Non-terminals may automatically be associated with polymorphic semantic
 values using tt(%type) directives. E.g., after:
         verb(
@@ -50,11 +46,11 @@ center(
 table(1)(l)(
 rowline()
 row(cell(center(includefile(polytable))))
-row(cell(includefile(polytablenotes)))
+))
+includefile(polytablenotes)
 rowline()
 )
-)
-)
+
 whenman(
 bf(%type<TAG> and $$ or $1 specifications:)
 includefile(polytable)
@@ -112,6 +108,29 @@ function tt(call) itself, as shown next:
         verb(
     void call(STYPE__ &st)
     {
-        st->get<Tag__::INT>() = 5;
+        st.get<Tag__::INT>() = 5;
     }
         )
+
+Semantic values may also directly be associated with terminal tokens. In that
+case it is the lexical scanner's responsibility to assign a properly typed
+value to the parser's tt(STYPE__ d_val__) data member. When the lexical
+scanner receives a pointer to the parser's tt(d_val__) data member (using,
+e.g., a member tt(setSval(STYPE__ *dval)) (cf. section ref(PRIVDATA))), then
+the lecical scanner must use em(tagged assignment) as shown in the above
+example to reach the different polymorphic types. The lexical scanner, having
+defined a tt(Parser::STYPE__ *d_val) data member could then use statements
+like
+        verb(
+    d_val->get<Tag__::INT>() = stoi(matched());
+        )
+    to assign an tt(int) value to the parser's semantic value, which is then
+immediately available when the lexical scanner's tt(lex) function
+returns. Note, however that this also adds intelligence about the meaning of a
+tt(Parser::INT) token to the scanner. It can be argued that this knowledge
+belongs to the parser, and that the scanner should merely recognize regular
+expressions and return tokens and their corresponding matched text.
+
+
+
+

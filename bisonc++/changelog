@@ -1,3 +1,7 @@
+  * Cleanup of the manual, in particular how lexical scanners can access the
+    various values of polymorphic semantic value types (cf. section
+    `Polymorphism and multiple semantic values') 
+
 bisonc++ (4.10.01) 
 
   * Production rules of non-terminal symbols that immediately follow dot

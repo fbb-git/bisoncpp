@@ -1,4 +1,3 @@
-#define STAMP     "manual-stamp"
 #define HTMLDEST    "../../tmp/manual"
 
 void manual()
@@ -27,22 +26,11 @@ void manual()
 
     chdir("manual");
 
-    files = makelist("*.yo") + makelist("*/*.yo");
-    for (idx = sizeof(files); idx--; )
-    {
-        file = element(idx, files);
-        if (file younger STAMP)
-        {
-            run("yodl2html -l3 bisonc++.yo");
-            run("touch " STAMP);
-            run("mv *.html " HTMLDEST);
-            run("cp -r grammar/poly " HTMLDEST"/poly");
+    run("yodl2html -l3 bisonc++.yo");
+    run("mv *.html " HTMLDEST);
+    run("cp -r grammar/poly " HTMLDEST"/poly");
 
-            run("cp -r examples/rpn " HTMLDEST"/examples");
-
-            break;
-        }
-    }
+    run("cp -r examples/rpn " HTMLDEST"/examples");
 
     exit(0);
 }
