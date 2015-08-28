@@ -4,7 +4,8 @@ scanner.
 If you have icmake installed, simply run 'icmbuild' to create the program
 Otherwise the ./build command should work.
 
-./poly starts an interactive program, each line should either contain
+./tmp/bin/binary starts an interactive program, each line should either
+contain
 
     ident ( ident )
 
@@ -12,7 +13,7 @@ Otherwise the ./build command should work.
 
 or
 
-    ident ( int )
+    ident = int 
 
 (int: any non-negative int-value)
 

@@ -54,9 +54,6 @@ rule:
     }
 |
     combi '\n'
-    {
-        process($1);
-    }
 ;
 
 rulePrompt:

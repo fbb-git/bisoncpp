@@ -1,9 +1,14 @@
 #!/bin/bash
 
+mkdir -p tmp/bin
+
 cd parser
 bisonc++ grammar
+
 cd ../scanner
 flexc++ lexer
-cd ..
 
-g++ --std=c++0x -Wall -O2 -o poly *.cc */*.cc -lbobcat
+cd ../tmp
+
+g++ --std=c++14 -Wall -O2 -o bin/binary \
+    ../parser/*.cc ../scanner/*.cc ../*.cc -lbobcat
