@@ -21,7 +21,7 @@ void uninstall()
 
         if (entry[0] == "dir")
             dir = addDir(dir, entry[1]);
-        else
+        else if (entry[0] == "file")
             remove(entry);
     }
 
