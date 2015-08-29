@@ -9,6 +9,16 @@
     required in situations where, e.g., a function defines an STYPE__ const *
     parameter.
 
+  * Added 'build uninstall'. This command only works if, when calling one of
+    the 'build install' alternatives and when calling 'build uninstall' the
+    environment variable BISONCPP contains the (preferably absolute) filename
+    of a file on which installed files and directories are logged.
+    Note that 'build (dist)clean' does not remove the file pointed at by the
+    BISONCPP environment variable, unless that file happpens to be in a
+    directory removed by 'build (dist)clean'. See also the file INSTALL.
+    Defining the BISONCPP environment variable as ~/.bisoncpp usually works
+    well. 
+
 bisonc++ (4.10.01) 
 
   * Production rules of non-terminal symbols that immediately follow dot

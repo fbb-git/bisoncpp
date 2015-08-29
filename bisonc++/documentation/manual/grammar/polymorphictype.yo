@@ -116,8 +116,9 @@ Semantic values may also directly be associated with terminal tokens. In that
 case it is the lexical scanner's responsibility to assign a properly typed
 value to the parser's tt(STYPE__ d_val__) data member. When the lexical
 scanner receives a pointer to the parser's tt(d_val__) data member (using,
-e.g., a member tt(setSval(STYPE__ *dval)) (cf. section ref(PRIVDATA))), then
-the lecical scanner must use em(tagged assignment) as shown in the above
+e.g., a member tt(setSval(STYPE__ *dval)) 
+    IFDEF(manual)((cf. section ref(PRIVDATA)))(), 
+then the lecical scanner must use em(tagged assignment) as shown in the above
 example to reach the different polymorphic types. The lexical scanner, having
 defined a tt(Parser::STYPE__ *d_val) data member could then use statements
 like

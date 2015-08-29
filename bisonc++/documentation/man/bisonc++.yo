@@ -771,7 +771,8 @@ members inherited from the parser's base class.
         text. 
        If tt(STYPE) is a polymorphic semantic value, direct assignment of
         values to tt(d_val__) is not possible. In that case em(tagged
-        assignment) must be used, as explained in section ref(POLYTYPE)
+        assignment) must be 
+        used+IFDEF(MANUAL)(, as explained in section ref(POLYTYPE))().
 
     it() bf(LTYPE__ d_vsp__):nl()
        The semantic value stack pointer. 

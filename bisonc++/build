@@ -1,11 +1,27 @@
 #!/usr/bin/icmake -qt/tmp/bisonc++
 
+#define LOGENV "BISONCPP"       
+
 #include "icmconf"
+
+list    g_log;
+string  g_logPath = getenv(LOGENV)[1];
 
 #include "icmake/setopt"
 #include "icmake/run"
 #include "icmake/md"
 #include "icmake/special"
+
+#include "icmake/md5sum"
+#include "icmake/log"
+#include "icmake/writelog"
+#include "icmake/logdirs"
+#include "icmake/logfiles"
+#include "icmake/readlog"
+#include "icmake/adddir"
+#include "icmake/removedir"
+#include "icmake/remove"
+#include "icmake/uninstall"
 
 #include "icmake/clean"
 #include "icmake/manpage"
@@ -33,6 +49,9 @@ void main(int argc, list argv)
 
     if (option != "")
         special();
+
+    if (option == "uninstall")
+        uninstall();
 
     if (option == "github")
         github();
@@ -99,6 +118,8 @@ void main(int argc, list argv)
         "                          (by default in `" STD "')\n"
         "   install extra [base] - install extra docs in `base'\n"
         "                          (by default in `" EXTRA "')\n"
+        "   uninstall            - remove installed files and empty "
+                                                            "directories\n"
         "   github               - prepare github's gh-pages update\n"
         "                          (internal use only)\n"
         "\n"

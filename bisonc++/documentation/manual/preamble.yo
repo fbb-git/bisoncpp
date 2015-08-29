@@ -1,5 +1,7 @@
 NOUSERMACRO(terminal nonterminal member token files)
 
+DEFINEMACRO(manual)(0)()
+
 SUBST(BSSP)(\ )
 SUBST(MYEMAIL)(f.b.brokken@rug.nl)
 SUBST(MAILTO)(CHAR(109)ailto:MYEMAIL)
