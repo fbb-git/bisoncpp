@@ -27,6 +27,9 @@ $insert polymorphicSpecializations
     
             template <Tag__ tg_>
             typename TypeOf<tg_>::type &get();
+
+            template <Tag__ tg_>
+            typename TypeOf<tg_>::type const &get() const;
     };
     
         // The class Semantic is derived from Base. It stores a particular
@@ -46,6 +49,7 @@ $insert polymorphicSpecializations
             Semantic(DataType &&tmp);
 
             DataType &data();
+            DataType const &data() const;
     };
 
         // The class Stype wraps the shared_ptr holding a pointer to Base.
@@ -68,11 +72,17 @@ $insert polymorphicSpecializations
             // to point to Meta::__Semantic<tg_>() if not
         template <Tag__ tg_>
         typename TypeOf<tg_>::type &get();
+        template <Tag__ tg_>
+        typename TypeOf<tg_>::type const &get() const;
 
             // the data()-member does not check, and may result in a 
             // segfault if used incorrectly
         template <Tag__ tg_>
         typename TypeOf<tg_>::type &data();
+        template <Tag__ tg_>
+        typename TypeOf<tg_>::type const &data() const;
     };
 
 }  // namespace Meta__
+
+

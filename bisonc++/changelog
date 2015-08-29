@@ -5,6 +5,10 @@
   * The manual-stamp file is no longer used. Calling 'build manual' now always
     (re)builds the manual. The same holds true for 'build man'.
 
+  * The in version 4.08.00 removed const members were reinstalled, as they are
+    required in situations where, e.g., a function defines an STYPE__ const *
+    parameter.
+
 bisonc++ (4.10.01) 
 
   * Production rules of non-terminal symbols that immediately follow dot

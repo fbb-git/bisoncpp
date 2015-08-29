@@ -20,7 +20,7 @@ class Parser: public ParserBase
 
     private:
         int intValue() const;
-        void process(STYPE__ &semVal) const;
+        void process(STYPE__ const &semVal) const;
 
         void error(char const *msg);    // called on (syntax) errors
         int lex();                      // returns the next token from the
