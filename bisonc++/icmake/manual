@@ -13,6 +13,7 @@ void manual()
     cwd = chdir(".");
 
     md("tmp/manual/examples");
+    md("tmp/manual/essence");
 
     chdir("documentation");
 
@@ -28,9 +29,9 @@ void manual()
 
     run("yodl2html -l3 bisonc++.yo");
     run("mv *.html " HTMLDEST);
-    run("cp -r grammar/poly " HTMLDEST"/poly");
-
-    run("cp -r examples/rpn " HTMLDEST"/examples");
+    run("cp -r grammar/poly " HTMLDEST);
+    run("cp -r grammar/essence " HTMLDEST);
+    run("cp -r examples/rpn/* " HTMLDEST "/examples");
 
     exit(0);
 }

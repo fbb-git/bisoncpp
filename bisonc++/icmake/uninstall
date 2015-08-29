@@ -1,0 +1,36 @@
+void uninstall()
+{
+    string key;
+    int idx;
+    list entry;
+    list dir;
+
+    if (g_logPath == "")            // do not store uninstall info
+    {
+        printf(LOGENV " environment variable not available\n");
+        exit(0);
+    }
+
+    readlog();
+
+    echo(OFF);
+
+    for (idx = sizeof(g_log); idx--; ) // separate dir from file
+    {
+        entry = strtok(g_log[idx], " \n");
+
+        if (entry[0] == "dir")
+            dir = addDir(dir, entry[1]);
+        else
+            remove(entry);
+    }
+
+    for (idx = sizeof(dir); idx--; )
+        removeDir(dir[idx]);
+
+    echo(ON);
+    run("rm " + g_logPath);
+
+    exit(0);
+}
+

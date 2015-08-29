@@ -1,0 +1,8 @@
+string md5sum(string file)
+{
+    string ret;
+    echo(OFF);
+    ret = strtok(`"md5sum " + file`[0], " \t")[0];
+    echo(ON);
+}
+

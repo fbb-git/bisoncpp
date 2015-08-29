@@ -14,8 +14,15 @@ void md(string target)
 
     for (idx = sizeof(paths); idx--; )
     {
-        dir = element(idx, paths);
+        dir = paths[idx];
         if (!exists(dir))
+        {
             run("mkdir -p " + dir);
+            echo(OFF);
+            target = `"realpath " + dir`[0];
+            echo(ON);
+            target = substr(target, 0, strlen(target) - 1);
+            g_log += (list)("dir " + target);   // log new dirs
+        }
     }
 }

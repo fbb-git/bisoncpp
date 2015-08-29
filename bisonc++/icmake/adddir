@@ -1,0 +1,27 @@
+list addDir(list dir, string entry)
+{
+    list ret;
+    int idx;
+    int keep = 1;
+    string elem;
+
+    for (idx = sizeof(dir); idx--; )
+    {
+        elem = dir[idx];
+
+        if (strfind(entry, elem) != -1)  // entry contains dir, ignore dir
+            ret += (list)entry;
+        else if (strfind(elem, entry) != -1)  // dir contains entry
+        {
+            ret += (list)elem;
+            keep = 0;
+        }
+        else                                // new unique entry, keep dir[idx]
+            ret += (list)elem;
+    }
+
+    if (keep)
+        ret += (list)entry;
+
+    return ret;
+}

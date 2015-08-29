@@ -1,0 +1,13 @@
+void remove(list entry)
+{
+    int equal;
+
+    equal = md5sum(entry[2]) == entry[1];
+
+    echo(OFF);
+
+    if (equal)
+        run("rm " + entry[2]);
+    else
+        printf("not removing modified file ", entry[2], "\n");
+}

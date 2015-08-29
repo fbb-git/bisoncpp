@@ -9,20 +9,32 @@ string setWhere(string where, string defaultWhere)
 
 void install(string what, string where)
 {
-    string path;
+    list files;                             
+    int idx;
+    string base;
+    string dest;
 
     if (what == "program")
     {
         if (where == "")
             where = BINARY;
 
-        path = get_path(where);
-        if (path != "")
-            md(path);
+                            // 'where' exists, but is no regular file
+        if (exists(where) && ((int)stat(where)[0] & S_IFREG) == 0)
+        {
+                printf("'build install program path': path must be a "
+                        "regular file\n");
+                exit(0);
+        }
+
+        md(get_path(where));
 
         printf("  INSTALLING the executable `", where, "'\n");
         run("icmbuild install program " + where);
-        exit(0);
+
+        log(where);
+
+        writeLog();     // exits
     }
 
     if (what == "skel")
@@ -30,58 +42,95 @@ void install(string what, string where)
         where = setWhere(where, SKEL);
 
         printf("  INSTALLING skeleton files at `" + where + "'\n");
-        md(where);
+
         run("cp skeletons/* " + where);
-        exit(0);
+        logFiles("skeletons", where);
+
+        writeLog();
     }
 
     if (what == "man")
     {
         where = setWhere(where, MAN);
 
-        printf("  INSTALLING the manual page at `", where, "'\n");
-        run("gzip -9 < tmp/man/" PROGRAM ".1 > " + where + "/" PROGRAM ".1.gz");
-        exit(0);
+        printf("  INSTALLING the manual page in `", where, "'\n");
+        dest = where + "/" PROGRAM ".1.gz";
+
+        run("gzip -9 -n < tmp/man/" PROGRAM ".1 > " + dest);
+        log(dest);
+
+        writeLog();
     }
 
     if (what == "manual")
     {
-        where = setWhere(where, MANUAL);
+        base = setWhere(where, MANUAL);
 
-        printf("  INSTALLING the manual at `", where, "'\n");
-        run("cp -r tmp/manual " + where);
+        logDirs("tmp/manual", base);
+        printf("  INSTALLING the manual below `", base, "'\n");
+        run("cp -r tmp/manual/* " + base);
+        logFiles("tmp/manual", base);
 
-        exit(0);
+        writeLog();
     }
 
     if (what == "std")
     {
-        where = setWhere(where, STD);
+        base = setWhere(where, STD);
 
-        printf("  INSTALLING the changelog at `", where, "\n");
-        run("gzip -9 < changelog > " + where + "/changelog.gz");
+        printf("  INSTALLING the changelog at `", base, "\n");
+        dest = base + "/changelog.gz";
+        run("gzip -9 -n < changelog > " + dest);
+        log(dest);
     
-        printf("  INSTALLING the html-manual page at `", where, "\n");
-        run("cp tmp/manhtml/" PROGRAM "man.html " + where);
-        exit(0);
+        printf("  INSTALLING the html-manual page at `", base, "\n");
+        run("cp tmp/manhtml/" PROGRAM "man.html " + base);
+        log(base + "/" PROGRAM "man.html");
+
+        writeLog();
     }
 
     if (what == "extra")
     {
         where = setWhere(where, EXTRA);
 
-        printf("  INSTALLING original bison's docs at `", where + "'\n");
-        md(where + "/bison-docs");
+        base = where + "/bison-docs";
+
+        printf("  INSTALLING original bison's docs below `", base + "'\n");
+
+        logDirs("documentation/html", base + "/html");
+
+        md(base + "/html");
+        md(base + "/bison.ps.org");
+
         run("cp -r documentation/html "
-                  "documentation/bison.ps.org " + where + "/bison-docs");
+                  "documentation/bison.ps.org " + base);
 
-        printf("  INSTALLING examples at `", where + "'\n");
-        run("cp -r documentation/examples " + where);
-        run("cp -r documentation/man/calculator " + where + "/examples");
+        logFiles("documentation/html", base + "/html");
+        logFiles("documentation/bison.ps.org", base + "/bison.ps.org");
 
-        printf("  INSTALLING regression tests at `", where + "'\n");
-        run("cp -r documentation/regression " + where);
-        exit(0);
+
+        where += "/examples";
+
+        printf("  INSTALLING examples below `", where + "'\n");
+        logDirs("documentation/examples", where);
+        run("cp -r documentation/examples/* " + where);
+        logFiles("documentation/examples", where);
+
+        base = where + "/calculator";
+        md(base);
+        logDirs("documentation/man/calculator", base);
+        run("cp -r documentation/man/calculator/* " + base);
+        logFiles("documentation/man/calculator", base);
+
+      base = where + "/regression";
+        printf("  INSTALLING regression tests below `", base + "'\n");
+        md(base);
+        logDirs("documentation/regression", base);
+        run("cp -r documentation/regression/* " + base);
+        logFiles("documentation/regression", base);
+
+        writeLog();
     }
 
     exit(0);
