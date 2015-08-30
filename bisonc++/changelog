@@ -28,6 +28,12 @@ bisonc++ (4.11.00)
     bison. It was nowhere used and I simply couldn't see why it was added to
     the parser's directory at all.
 
+  * Removed the file 'distribution' from this directory's parent directory. It
+    is not used, and was superseded by the file sourcetar (both files are
+    Internal Use Only).
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 30 Aug 2015 11:13:57 +0200
+
 bisonc++ (4.10.01) 
 
   * Production rules of non-terminal symbols that immediately follow dot
