@@ -99,16 +99,8 @@ void install(string what, string where)
         printf("  INSTALLING original bison's docs below `", base + "'\n");
 
         logDirs("documentation/html", base + "/html");
-
-        md(base + "/html");
-        md(base + "/bison.ps.org");
-
-        run("cp -r documentation/html "
-                  "documentation/bison.ps.org " + base);
-
+        run("cp -r documentation/html " + base);
         logFiles("documentation/html", base + "/html");
-        logFiles("documentation/bison.ps.org", base + "/bison.ps.org");
-
 
         where += "/examples";
 

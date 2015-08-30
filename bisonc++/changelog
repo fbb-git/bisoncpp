@@ -32,6 +32,11 @@ bisonc++ (4.11.00)
     is not used, and was superseded by the file sourcetar (both files are
     Internal Use Only).
 
+  * Removed the file documentation/bison.ps.org/bison.ps.gz: it harbored an
+    compression error (already at the very first bisonc++ release), and the
+    bison documentation in html format remains part of the bisonc++
+    distribution. 
+
  -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 30 Aug 2015 11:13:57 +0200
 
 bisonc++ (4.10.01) 
