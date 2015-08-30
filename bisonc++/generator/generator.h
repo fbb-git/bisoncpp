@@ -51,8 +51,6 @@ class Generator
     static char const *s_atFlag;            // \@ flag in skeletons
 
     struct At;
-    struct AtBool;
-
     typedef std::vector<At> AtVector;
 
     struct AtBool;
