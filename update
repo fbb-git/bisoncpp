@@ -22,6 +22,7 @@ if [ "$yesno" == "y" ] ; then
 fi
 
 mv ../wip/changelog.txt ../wip/bisonc++man.html ../wip/manual/* .
+rm -r essence
 
 yodl2html index.yo || exit 1
 

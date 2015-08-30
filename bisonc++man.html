@@ -2,20 +2,22 @@
 <meta charset="UTF-8">
 <title>bisonc++</title>
 <style type="text/css">
+    body {color: #27408B; background: #FFFAF0;}
     figure {text-align: center;}
     img {vertical-align: center;}
 </style>
 <link rev="made" href="mailto:Frank B. Brokken: f.b.brokken@rug.nl">
 </head>
-<body text="#27408B" bgcolor="#FFFAF0">
+<body>
 <hr>
 <h1>bisonc++</h1>
-<h2>bisonc++.4.10.01.tar.gz</h2>
+<h2>bisonc++.4.11.00.tar.gz</h2>
 <h2>2005-2015</h2>
 
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
 <style type="text/css">
+    body {color: #27408B; background: #FFFAF0;}
     figure {text-align: center;}
     img {vertical-align: center;}
     figure {text-align: center;}
@@ -23,7 +25,7 @@
 </style>
 <link rev="made" href="mailto:Frank B. Brokken: f.b.brokken@rug.nl">
 </head>
-<body text="#27408B" bgcolor="#FFFAF0">
+<body>
 <hr>
 <h1></h1>
 
@@ -31,6 +33,7 @@
 <meta charset="UTF-8">
 <title>bisonc++(1)</title>
 <style type="text/css">
+    body {color: #27408B; background: #FFFAF0;}
     figure {text-align: center;}
     img {vertical-align: center;}
     figure {text-align: center;}
@@ -40,10 +43,10 @@
 </style>
 <link rev="made" href="mailto:Frank B. Brokken: f.b.brokken@rug.nl">
 </head>
-<body text="#27408B" bgcolor="#FFFAF0">
+<body>
 <hr>
 <h1>bisonc++(1)</h1>
-<h2>bisonc++.4.10.01.tar.gz bisonc++ parser generator</h2>
+<h2>bisonc++.4.11.00.tar.gz bisonc++ parser generator</h2>
 <h2>2005-2015</h2>
 
 
@@ -1020,10 +1023,6 @@ must be inserted using the <em>%baseclass-preinclude</em> directive.
     The <em>%type</em> directive is used to associate (non-)terminals with semantic
 value types.
 <p>
-Semantic values may also be associated with terminal tokens. In that case it
-is the lexical scanner's responsibility to assign a properly typed value to
-the parser's <em>STYPE__ d_val__</em> data member.
-<p>
 Non-terminals may automatically be associated with polymorphic semantic
 values using <em>%type</em> directives. E.g., after:
         <pre>
@@ -1232,8 +1231,8 @@ encountered:
 </tr>
 
 
-<tr>
-<td> 
+</table></div>
+<ul>
      auto-tag: $$ and $1 represent, respectively, <em>$$.get&lt;tag&gt;()</em> and
             <em>$1.get&lt;tag&gt;()</em>;
 <p>
@@ -1242,16 +1241,10 @@ encountered:
  tag-override: if <em>id</em> is a defined tag, then $&lt;tag&gt;$ and $&lt;tag&gt;1
             represent the tag's type. Otherwise: <em>error</em> (using undefined
             tag <em>id</em>).
+</ul>
 <p>
-</td>
- 
-</tr>
+<td colspan=0><hr></td>
 
-<td colspan=1><hr></td>
-
-
-</table>
-</div>
 <p>
 When using `$$.' or `$1.' default tags are ignored. A warning is issued
 that the default tag is ignored. This syntax allows members of the semantic
@@ -1310,11 +1303,34 @@ function <em>call</em> itself, as shown next:
 
     void call(STYPE__ &amp;st)
     {
-        st-&gt;get&lt;Tag__::INT&gt;() = 5;
+        st.get&lt;Tag__::INT&gt;() = 5;
     }
         
 </pre>
 
+<p>
+Semantic values may also directly be associated with terminal tokens. In that
+case it is the lexical scanner's responsibility to assign a properly typed
+value to the parser's <em>STYPE__ d_val__</em> data member. When the lexical
+scanner receives a pointer to the parser's <em>d_val__</em> data member (using,
+e.g., a member <em>setSval(STYPE__ *dval)</em> 
+    , 
+then the lecical scanner must use <em>tagged assignment</em> as shown in the above
+example to reach the different polymorphic types. The lexical scanner, having
+defined a <em>Parser::STYPE__ *d_val</em> data member could then use statements
+like
+        <pre>
+
+    d_val-&gt;get&lt;Tag__::INT&gt;() = stoi(matched());
+        
+</pre>
+
+    to assign an <em>int</em> value to the parser's semantic value, which is then
+immediately available when the lexical scanner's <em>lex</em> function
+returns. Note, however that this also adds intelligence about the meaning of a
+<em>Parser::INT</em> token to the scanner. It can be argued that this knowledge
+belongs to the parser, and that the scanner should merely recognize regular
+expressions and return tokens and their corresponding matched text.
 <p>
 The <em>%polymorphic</em> directive adds the following definitions and
 declarations to the generated base class header and parser source
@@ -1736,7 +1752,12 @@ members inherited from the parser's base class.
         next token, the reduction's action only takes place following the
         retrieval of the next token, thus losing the initially matched token
         text. 
-    <li> <strong>LTYPE__ d_vsp__</strong>:<br>
+       If <em>STYPE</em> is a polymorphic semantic value, direct assignment of
+        values to <em>d_val__</em> is not possible. In that case <em>tagged
+        assignment</em> must be 
+        used.
+<p>
+<li> <strong>LTYPE__ d_vsp__</strong>:<br>
        The semantic value stack pointer. 
         Do not modify.
     </ul>
