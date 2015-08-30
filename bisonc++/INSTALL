@@ -1,57 +1,92 @@
 To Install bisonc++ by hand instead of using the binary distribution perform
 the following steps:
 
-    0. The previously used scripts below make/ are obsolete and were removed
-        from this and future distributions. Icmake should be used instead, for
-        which a top-level script (build) and support scripts in the ./icmake/
+    0. Bisonc++ and its construction depends, in addition to the normally
+        standard available system software on specific software and versions 
+        which is documented in the file `required'.
+
+       (If you compile the bobcat library yourself, note that bisonc++ does
+        not use the SSL, Milter and Xpointer classes; they may --as far as
+        bisonc++ is concerned-- be left out of the library)
+
+    1. It is expected you use icmake for the package construction. For this a
+        top-level script (build) and support scripts in the ./icmake/
         directory are available. Icmake is available on a great many
-        architectures. See the file INSTALL (and INSTALL.im, replacing the
-        previously used INSTALL.cf) for further details.
-
-    1. Skip this UNLESS you're intending to compile Bisonc++ under
-            CYGWIN under Windows
-
-        When compiling for CYGWIN, do as follows:
-
-        a. Change the #define EXTENSION directive in INSTALL.im to:
-
-            #define EXTENSION ".exe"
-
-        b. The Bobcat library must be available under CYGWIN. As Bisonc++ does
-            not use all classes of the Bobcat library. When compiling Bobcat
-            only for Bisonc++, replace Bobcat's CLASSES file by the file
-            CLASSES.bobcat also found in this directory, then follow the
-            compilation instructions provided with Bobcat.
-
-        c. Note that CYGWIN is not an official target environment for
-            Bisonc++. When encountering problems I may or may not be able to
-            provide assistance.
-
+        architectures. See also the file INSTALL.im for additional details.
 
     2. Inspect the values of the variables in the file INSTALL.im Modify these
        when necessary. The default skeleton filenames are compiled into
-       bisonc++ through the definitions in parser/dataskel.cc
+       bisonc++ through the definitions in options/data.cc
 
-    3. Make sure the bobcat library has been installed. 
-
-       (If you compile the bobcat library yourself, note that bisonc++ does
-        not use the classes Milter and Xpointer; they may --as far as bisonc++
-        is concerned-- be left out of the library)
-
-    4. Run 
+    3. Run 
             ./build program [strip]
-        to compile bisonc++. Optionally provide `strip' to strip the
-        executable (not with PROFILE, see INSTALL.im)
+       to compile bisonc++. The argument `strip' is optional and strips
+       symbolic information from the final executable.
 
-    5. Run (probably as root) 
-            ./build install
-       to install. Optionally add an additional argument as a base directory
-       below which the software should be installed. 
+    4. If you installed Yodl then you can create the documentation:
+            ./build man 
+        builds the man-pages, and
+            ./build manual
+        builds the manual.
 
-    Following the installation nothing in this directory tree is required
-    for the proper functioning of bisonc++, so consider removing it.
+    5. Installation of the software in the default locations probably requires
+        root permissions.
 
-    6.  Uninstalling previously installed components of Bisonc++ (using
+        Before installing the components of Bisonc++, consider defining the
+        environment variable BISONCPP, defining its value as the (preferably
+        absolute) filename of a file on which installed files and directories
+        are logged.
+        Defining the BISONCPP environment variable as ~/.bisoncpp usually
+        works well. 
+
+        To install the program, run:
+
+            ./build install program [fullpath]
+
+        This installs bisonc++ as fullpath. By default the BINARY specification
+        in INSTALL.im is used.
+        
+        To install the skeleton files. run :
+
+            ./build install skel [base]
+
+        This installs the skeleton files under the directory `base'. By
+        default the SKEL specification in INSTALL.im is used.
+        
+    6. If you created the man-pages and manual you can also do:
+
+            ./build man [base]
+
+        This installs the man pages under the directory `base'. By
+        default the MAN specification in INSTALL.im is used.
+
+        To install the manual, do:
+
+            ./build manual [base]
+
+        This installs the manual in the directory `base'. By
+        default the MANUAL specification in INSTALL.im is used.
+
+    7. Optionally you can install some additional documentation by running
+
+            ./build install std [base]
+
+        and
+
+            ./build install extra [base]
+
+        The additional documentation is installed in the `base' directories. 
+        By default the STD and EXTRA specifications in INSTALL.im are used.
+
+
+    8. Following the installation nothing in this directory tree is required
+        for the proper functioning of bisonc++, so consider removing it. If
+        you only want to remove left-over files from the build-process, just
+        run 
+
+            ./build distclean
+
+    9.  Uninstalling previously installed components of Bisonc++ (using
         ./build install ...) is easy if the environment variable BISONCPP was
         defined when issuing the `./build install ...' commands. In that case,
         run the command
@@ -67,16 +102,33 @@ the following steps:
         Defining the BISONCPP environment variable as ~/.bisoncpp usually
         works well. 
 
-NOTE that parser-class header files generated by bisonc++ before version 1.00
-     should modify the prototypes of some of their private members. Simply
-     replacing the `support functions for parse()' section shown at the end of
-     the header file by the following lines should make your header file
-     up-to-date again. Note that bisonc++ does not by itself rewrite the
-     parser class headers to prevent undoing any modifications you may have
-     implemented in parser-class header files:
+NOTE that parser-class header files generated by bisonc++ before version
+     4.02.00 should modify the prototypes of some of their private
+     members. Simply replacing the `support functions for parse()' section
+     shown at the end of the header file by the following lines should make
+     your header file up-to-date again. Note that bisonc++ does not by itself
+     rewrite the parser class headers to prevent undoing any modifications you
+     may have implemented in parser-class header files:
 
     // support functions for parse():
         void executeAction(int ruleNr);
         void errorRecovery();
-        int lookup();
+        int lookup(bool recovery);
         void nextToken();
+        void print__();
+        void exceptionHandler__(std::exception const &exc);
+
+     The function print__) is defined by bisonc++, the default implementation
+     of exceptionHandler__() can be added to the parser's internal header
+     file:
+
+inline void Parser::exceptionHandler__(std::exception const &exc)         
+{
+    throw;              // optionally re-implement to handle exceptions thrown
+                        // by actions 
+}
+
+
+
+
+
