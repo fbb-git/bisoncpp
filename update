@@ -19,10 +19,10 @@ if [ "$yesno" == "y" ] ; then
     ./build distclean
     cd ..    
     git co gh-pages
-fi
 
-mv ../wip/changelog.txt ../wip/bisonc++man.html ../wip/manual/* .
-rm -r essence
+    mv ../wip/changelog.txt ../wip/bisonc++man.html ../wip/manual/* .
+    rm -r essence
+fi
 
 yodl2html index.yo || exit 1
 
@@ -40,7 +40,7 @@ if [ "$yesno" == "y" ] ; then
     read msg;
 
     RELEASE=`head -n1 ../wip/release.yo | 
-		sed 's/SUBST(_CurVers_)(\(.*\))/\1/'`
+                sed 's/SUBST(_CurVers_)(\(.*\))/\1/'`
     git ci -am "$msg"
     git push
     git co master
