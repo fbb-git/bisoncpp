@@ -1,5 +1,12 @@
 #!/bin/bash
 
+echo if any modified or untracked files are shown, handle these first:
+echo
+git st
+echo -n "Continue [y/n] ? "
+read yesno
+[ "$yesno" == "y" ] || exit 0
+
 echo -n "Need to (re)create bisoncpp's wip files for gh-pages [y/n] ? "
 read yesno
 
@@ -14,7 +21,7 @@ if [ "$yesno" == "y" ] ; then
     git co gh-pages
 fi
 
-cp -r ../wip/changelog.txt ../wip/bisonc++man.html ../wip/manual/* .
+mv ../wip/changelog.txt ../wip/bisonc++man.html ../wip/manual/* .
 
 yodl2html index.yo || exit 1
 
