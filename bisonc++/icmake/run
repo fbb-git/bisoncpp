@@ -1,15 +1,8 @@
-int g_dryrun = setOpt("", "DRYRUN") != "";
-
-void runP(int testValue, string cmd)
-{
-    if (g_dryrun)
-        printf(cmd, "\n");
-    else
-        system(testValue, cmd);
-}
-
 void run(string cmd)
 {
-    runP(0, cmd);
+    if (g_echo == OFF)
+        cmd += "> /dev/null 2>&1";
+
+    system(0, cmd);
 }
 

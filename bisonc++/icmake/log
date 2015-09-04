@@ -1,16 +1,5 @@
 void log(string file)
 {
-    string md5;
-
-    if (g_logPath == "")            // do not store uninstall info
-        return;
-
-    echo(OFF);
-    file = `"realpath " + file`[0];
-    file = substr(file, 0, strlen(file) - 1);
-    md5 = md5sum(file);
-    echo(ON);
-
-    g_log += (list)("file " + md5 + " " + file);
+    g_log += (list)(g_logMark + " file " + md5sum(file) + " " + file);
 }
 

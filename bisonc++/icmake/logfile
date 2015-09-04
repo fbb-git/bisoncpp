@@ -1,0 +1,12 @@
+void logFile(string srcdir, string src, string destdir, string dest)
+{
+    mark();
+    
+    chdir(g_cwd);
+    md(destdir);
+
+    run("cp " + srcdir + "/" + src + " " + destdir + "/" + dest);
+
+    chdir(destdir);
+    log(dest);
+}

@@ -1,131 +1,65 @@
-string setWhere(string where, string defaultWhere)
-{
-    if (where == "")
-        where = defaultWhere;
-
-    md(where);
-    return where;
-}
-
-void install(string what, string where)
+void install(string base)
 {
     list files;                             
     int idx;
-    string base;
-    string dest;
+    string target;
 
-    if (what == "program")
-    {
-        if (where == "")
-            where = BINARY;
+    g_installing = 1;
 
-                            // 'where' exists, but is no regular file
-        if (exists(where) && ((int)stat(where)[0] & S_IFREG) == 0)
-        {
-                printf("'build install program path': path must be a "
-                        "regular file\n");
-                exit(0);
-        }
+#ifdef BINARY
+    target = base + BINARY "/";
+    printf("  installing the executable `", target + PROGRAM "'\n");
+    logFile("tmp/bin", "binary", target, PROGRAM);
+#endif
 
-        md(get_path(where));
+#ifdef SKEL
+    target = base + SKEL;
+    printf("  installing skeleton files at `", target + "'\n");
+    logInstall("skeletons", "", target);
+#endif
 
-        printf("  INSTALLING the executable `", where, "'\n");
-        run("icmbuild install program " + where);
-
-        log(where);
-
-        writeLog();     // exits
-    }
-
-    if (what == "skel")
-    {
-        where = setWhere(where, SKEL);
-
-        printf("  INSTALLING skeleton files at `" + where + "'\n");
-
-        run("cp skeletons/* " + where);
-        logFiles("skeletons", where);
-
-        writeLog();
-    }
-
-    if (what == "man")
-    {
-        where = setWhere(where, MAN);
-
-        printf("  INSTALLING the manual page in `", where, "'\n");
-        dest = where + "/" PROGRAM ".1.gz";
-
-        run("gzip -9 -n < tmp/man/" PROGRAM ".1 > " + dest);
-        log(dest);
-
-        writeLog();
-    }
-
-    if (what == "manual")
-    {
-        base = setWhere(where, MANUAL);
-
-        logDirs("tmp/manual", base);
-        printf("  INSTALLING the manual below `", base, "'\n");
-        run("cp -r tmp/manual/* " + base);
-        logFiles("tmp/manual", base);
-
-        writeLog();
-    }
-
-    if (what == "std")
-    {
-        base = setWhere(where, STD);
-
-        printf("  INSTALLING the changelog at `", base, "\n");
-        dest = base + "/changelog.gz";
-        run("gzip -9 -n < changelog > " + dest);
-        log(dest);
+#ifdef MAN
+    target = base + MAN;
+    printf("  installing the manual pages below `", target, "'\n");
     
-        printf("  INSTALLING the html-manual page at `", base, "\n");
-        run("cp tmp/manhtml/" PROGRAM "man.html " + base);
-        log(base + "/" PROGRAM "man.html");
+    logZip("tmp/man", "bisonc++.1", target + "/man1");
+#endif
 
-        writeLog();
-    }
+#ifdef MANUAL
+    target = base + MANUAL;
+    printf("  installing the manual at `", target, "'\n");
+    logInstall("tmp/manual", "", target);
+#endif
 
-    if (what == "extra")
-    {
-        where = setWhere(where, EXTRA);
+#ifdef STD
+    target = base + STD;
+    printf("  installing the changelog at `", target, "\n");
+    logZip("", "changelog", target);
 
-        base = where + "/bison-docs";
+    printf("  installing the html-manual pages at `", target, "\n");
+    logInstall("tmp/manhtml", "", target);
+#endif
 
-        printf("  INSTALLING original bison's docs below `", base + "'\n");
+#ifdef EXTRA
+    target = base + EXTRA + "/bison-docs";
+    printf("  installing original bison's docs below `", target + "'\n");
+    logRecursive("documentation/html", target);
 
-        logDirs("documentation/html", base + "/html");
-        run("cp -r documentation/html " + base);
-        logFiles("documentation/html", base + "/html");
+    target = base + EXTRA + "/examples";
 
-        where += "/examples";
+    printf("  installing examples below `", target + "'\n");
+    logRecursive("documentation/examples", target);
 
-        printf("  INSTALLING examples below `", where + "'\n");
-        logDirs("documentation/examples", where);
-        run("cp -r documentation/examples/* " + where);
-        logFiles("documentation/examples", where);
+    logRecursive("documentation/man/calculator", target + "/calculator");
 
-        base = where + "/calculator";
-        md(base);
-        logDirs("documentation/man/calculator", base);
-        run("cp -r documentation/man/calculator/* " + base);
-        logFiles("documentation/man/calculator", base);
+    printf("  installing regression tests below `", target + "'\n");
+    logRecursive("documentation/regression", target + "/regression");
 
-      base = where + "/regression";
-        printf("  INSTALLING regression tests below `", base + "'\n");
-        md(base);
-        logDirs("documentation/regression", base);
-        run("cp -r documentation/regression/* " + base);
-        logFiles("documentation/regression", base);
+    printf("  installing polymorphic semval demo below `", target + "'\n");
+    logRecursive("documentation/manual/grammar/poly", target + "/poly");
+#endif
 
-        writeLog();
-    }
-
-    exit(0);
+    writeLog();
 }
 
 

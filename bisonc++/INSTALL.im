@@ -1,42 +1,56 @@
 #define PROGRAM             "bisonc++"
 
+    // The following /bin/cp options are used to keep, rather than follow
+    // symbolic references. If your installation doesn't support these flags,
+    // then change them into available ones.
+    //   -P, --no-dereference
+    //            never follow symbolic links in SOURCE
+    //   --preserve[=ATTR_LIST]
+    //          preserve   the   specified   attributes   (default:  
+    //          mode,ownership,timestamps), if possible  additional  
+    //          attributes:  context, links, all
+    //   -d     same as --no-dereference --preserve=links
+#define CPOPTS  "-d"
+
     // When defined, these overrule COMPILER and COMPILER_OPTIONS
     // COMPILER and COMPILER_OPTIONS are now obsolete
     // Instead of CXX and CXXFLAGS, CC and CFLAGS can be used.
     // Their #define values are overruled by identically named environment
     // variables. 
 
-#define CXX                 "g++"
     // the compiler to use. 
+#define CXX                 "g++"
 
-#define CXXFLAGS            "--std=c++14 -Wall -O2"
     // the compiler options to use.
+#define CXXFLAGS            "--std=c++14 -Wall -O2 -fdiagnostics-color=never"
 
 #define LDFLAGS             ""
     // flags passed to the linker
 
-#define SKEL    "/usr/share/bisonc++"
     // the directory where the skeleton files are installed
     // Recompile options/data.cc if the skeleton location changes
-
+#define SKELDIR    "/usr/share/bisonc++"
 
 // =========================================================================
-// The following locations are overruled by `build' arguments
 
-#define BINARY     "/usr/bin/"${PROGRAM}
+
     // the full path of the final program
+#define BINARY     "/usr/bin"
 
+    // define if you want the skeleton files to be installed
+#define SKEL      ${SKELDIR}
+
+    // the directory whre the manual page is stored
 #define MAN     "/usr/share/man/man1"
-    // the directory whre the manual page is stored
 
+    // the directory whre the manual page is stored
 #define MANUAL   "/usr/share/doc/"${PROGRAM}"-doc/manual"
-    // the directory whre the manual page is stored
 
-#define STD     "/usr/share/doc/"${PROGRAM}
     // the directory where the standard documentation is stored 
+#define STD     "/usr/share/doc/"${PROGRAM}
 
-#define EXTRA   "/usr/share/doc/"${PROGRAM}"-doc"
     // the directory where the extra documentation is stored 
+#define EXTRA   "/usr/share/doc/"${PROGRAM}"-doc"
 
 
 

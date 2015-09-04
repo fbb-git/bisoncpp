@@ -1,13 +1,17 @@
 void remove(list entry)
 {
     int equal;
+    string file;
 
-    equal = md5sum(entry[2]) == entry[1];
+    file = entry[3];
 
-    echo(OFF);
+    if (!exists(file))
+        return;
+
+    equal = md5sum(file) == entry[2];
 
     if (equal)
-        run("rm " + entry[2]);
+        run("rm " + file);
     else
-        printf("not removing modified file ", entry[2], "\n");
+        printf("not removing modified file ", file, "\n");
 }

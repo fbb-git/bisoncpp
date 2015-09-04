@@ -6,14 +6,19 @@ void removeDir(string dir)
     list entries;
     int warn = 1;
 
-    parts = strtok(dir, "/");
+    if (!exists(dir))                       // directory was already removed
+        return;
+
+    parts = findAll("d", dir, "");          // if there are still subdirs
+    if (sizeof(parts) != 0)                 // then remove at some later stage
+        return;
+
     chdir(dir);
-
-    echo(OFF);
-
+    parts = strtok(dir, "/");
+    
     for (idx = sizeof(parts); idx--; )
     {
-        entries = `"ls -A"`;
+        entries = backtick("ls -A");
 
         if (sizeof(entries) != 0)
         {

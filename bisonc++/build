@@ -5,22 +5,37 @@
 #include "icmconf"
 
 list    g_log;
-string  g_logPath = getenv(LOGENV)[1];
+string  
+    g_logPath = getenv(LOGENV)[1],
+    g_logMark,          // unique-marker for g_log entries
+    g_cwd = chdir("");  // initial working directory, ends in /
+
+int g_echo = ON;
+
+int g_installing;       // set to 1 by install.
+int g_lognr;            // unique-marker number counter for g_log entries
+
+#include "icmake/cuteoln"
+#include "icmake/backtick"
 
 #include "icmake/setopt"
 #include "icmake/run"
 #include "icmake/md"
 #include "icmake/special"
 
+#include "icmake/mark"
 #include "icmake/md5sum"
+#include "icmake/findall"
 #include "icmake/log"
+#include "icmake/loglink"
+#include "icmake/loginstall"
+#include "icmake/logrecursive"
+#include "icmake/logzip"
+#include "icmake/logfile"
 #include "icmake/writelog"
-#include "icmake/logdirs"
-#include "icmake/logfiles"
 #include "icmake/readlog"
-#include "icmake/adddir"
-#include "icmake/removedir"
 #include "icmake/remove"
+#include "icmake/removedir"
 #include "icmake/uninstall"
 
 #include "icmake/clean"
@@ -29,12 +44,19 @@ string  g_logPath = getenv(LOGENV)[1];
 #include "icmake/github"
 #include "icmake/install"
 
-string  g_cwd = chdir("");  // initial working directory
-
 void main(int argc, list argv)
 {
     string option;
     string strip;
+
+    if (argv[1] == "-q")
+    {
+        g_echo = OFF;
+        argv -= (list)"-q";
+    }
+
+    echo(g_echo);
+
 
     option = argv[1];
 
@@ -45,7 +67,7 @@ void main(int argc, list argv)
         clean(1);
 
     if (option == "install")
-        install(argv[2], argv[3]);
+        install(argv[2]);
 
     if (option != "")
         special();
@@ -93,8 +115,10 @@ void main(int argc, list argv)
         exit(0);
     }
 
-    printf("Usage: build [-p] what\n"
-        "Where `what' is one of:\n"
+    printf("Usage: build [-q] what\n"
+        "Where\n"
+        "   [-q]:   run quietly, do not show executed commands\n"
+        "`what' is one of:\n"
         "   clean                - clean up remnants of previous "
                                                             "compilations\n"
         "   distclean            - clean + fully remove tmp/\n"
@@ -106,26 +130,14 @@ void main(int argc, list argv)
         "   oxref [strip]        - same a `program', also builds xref file\n"
         "                          using oxref\n"
         "   scanner [strip]      - build new scanner, then 'build program'\n"
-        "   install program [path] - install the program at `path'\n"
-        "                          (by default `" BINARY "')\n"
-        "   install skel [base]  - install the skeleton files in `base'\n"
-        "                          (by default in `" SKEL "')\n"
-        "   install man [base]   - install the man pages in `base'\n"
-        "                          (by default in `" MAN "')\n"
-        "   install manual [base]- install the manual in `base'\n"
-        "                          (by default in `" MANUAL "')\n"
-        "   install std [base]   - install standard docs in `base'\n"
-        "                          (by default in `" STD "')\n"
-        "   install extra [base] - install extra docs in `base'\n"
-        "                          (by default in `" EXTRA "')\n"
+        "   install [base]       - install the software in the locations\n"
+        "                          defined in the INSTALL.im file,\n"
+        "                          optionally below [base]\n"
         "   uninstall            - remove installed files and empty "
                                                             "directories\n"
         "   github               - prepare github's gh-pages update\n"
         "                          (internal use only)\n"
         "\n"
-        "If the environment variable DRYRUN is defined, no commands are\n"
-        "actually executed\n"
-        "\n"
     );
-    exit(1);
+    exit(0);
 }
