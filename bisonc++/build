@@ -20,10 +20,10 @@ int g_lognr;            // unique-marker number counter for g_log entries
 
 #include "icmake/setopt"
 #include "icmake/run"
+#include "icmake/mark"
 #include "icmake/md"
 #include "icmake/special"
 
-#include "icmake/mark"
 #include "icmake/md5sum"
 #include "icmake/findall"
 #include "icmake/log"

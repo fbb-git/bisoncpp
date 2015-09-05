@@ -9,8 +9,6 @@ void logInstall(string src, string pattern, string dest)
     list entries;
     int idx;
 
-    mark();
-
     chdir(g_cwd);
 
     md(dest);

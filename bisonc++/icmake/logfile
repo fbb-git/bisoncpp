@@ -1,7 +1,5 @@
 void logFile(string srcdir, string src, string destdir, string dest)
 {
-    mark();
-    
     chdir(g_cwd);
     md(destdir);
 

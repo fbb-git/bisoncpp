@@ -7,6 +7,8 @@
 // if the target directory does not exist it is created and its realpath is
 // logged.
 
+string g_lastLogged;
+
 void md(string target)
 {
     int idx;
@@ -14,22 +16,26 @@ void md(string target)
     string dir;
 
     if (!exists(target))
-    {
         run("mkdir -p " + target);
-//        if (g_installing)
-//            g_log += (list)("dir " + 
-//                            cutEoln(backtick("realpath " + target)[0]));
-    }
     else if (((int)stat(target)[0] & S_IFDIR) == 0)
     {
         printf(target + " exists, but is not a directory\n");
         exit(1);
     }
 
+
     if (g_installing)
-        g_log += (list)(g_logMark + " dir " + 
-                        cutEoln(backtick("realpath " + target)[0]));
+    {
+        target = cutEoln(backtick("realpath " + target)[0]);
+        if (target != g_lastLogged)
+        {
+            g_lastLogged = target;
+            mark();
+            g_log += (list)(g_logMark + " dir " + target);
+        }
+    }
 }
+
 
 
 

@@ -29,7 +29,6 @@ void logZip(string src, string names, string dest)
         run("gzip -n -9 < " + file + " > " + g_cwd + dest + file + ".gz");
     }
 
-    mark();
     chdir(g_cwd + dest);
     for (idx = sizeof(files); idx--; )
         log(files[idx] + ".gz");

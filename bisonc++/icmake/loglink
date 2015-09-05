@@ -1,6 +1,5 @@
 void logLink(string file)
 {
-    mark();
     g_log += (list)(g_logMark + " link " + file);
 }
 
