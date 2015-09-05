@@ -13,7 +13,7 @@ void install(string base)
 #endif
 
 #ifdef SKEL
-    target = base + SKEL;
+    target = base + g_skel;
     printf("  installing skeleton files at `", target + "'\n");
     logInstall("skeletons", "", target);
 #endif
@@ -22,7 +22,7 @@ void install(string base)
     target = base + MAN;
     printf("  installing the manual pages below `", target, "'\n");
     
-    logZip("tmp/man", "bisonc++.1", target + "/man1");
+    logZip("tmp/man", "bisonc++.1", target);
 #endif
 
 #ifdef MANUAL
@@ -55,8 +55,12 @@ void install(string base)
     printf("  installing regression tests below `", target + "'\n");
     logRecursive("documentation/regression", target + "/regression");
 
-    printf("  installing polymorphic semval demo below `", target + "'\n");
-    logRecursive("documentation/manual/grammar/poly", target + "/poly");
+    printf("  installing polymorphic semval demo at `", target + "/poly'\n");
+    logRecursive("tmp/manual/poly", target + "/poly");
+
+    printf("  installing polymorphic impl. demo at `", 
+                                                    target + "/essence'\n");
+    logRecursive("tmp/manual/essence", target + "/essence");
 #endif
 
     writeLog();

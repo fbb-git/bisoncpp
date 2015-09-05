@@ -1,6 +1,9 @@
+    // The name of the program and the support directories as installed by
+    // the 'build install' command. Normally there is no reason for changing
+    // this #define
 #define PROGRAM             "bisonc++"
 
-    // The following /bin/cp options are used to keep, rather than follow
+    // The following /bin/cp option is used to keep, rather than follow
     // symbolic references. If your installation doesn't support these flags,
     // then change them into available ones.
     //   -P, --no-dereference
@@ -12,11 +15,9 @@
     //   -d     same as --no-dereference --preserve=links
 #define CPOPTS  "-d"
 
-    // When defined, these overrule COMPILER and COMPILER_OPTIONS
-    // COMPILER and COMPILER_OPTIONS are now obsolete
-    // Instead of CXX and CXXFLAGS, CC and CFLAGS can be used.
-    // Their #define values are overruled by identically named environment
-    // variables. 
+
+    // The CXX, CXXFLAGS, and LDFLAGS #defines are overruled by identically
+    // named environment variables:
 
     // the compiler to use. 
 #define CXX                 "g++"
@@ -27,18 +28,27 @@
 #define LDFLAGS             ""
     // flags passed to the linker
 
+
     // the directory where the skeleton files are installed
     // Recompile options/data.cc if the skeleton location changes
+    // Before compiling bisonc++ the environment variable SKEL can be defined
+    // to overruled the location specified here
 #define SKELDIR    "/usr/share/bisonc++"
 
-// =========================================================================
 
+// =========================================================================
+// Deactivate (e.g., use //#define ...) the following #defines to prevent
+// installation of the indicated component by 'build install'
+// 'build install base' can be used to specify a base directory below which
+// all components are installed (e.g., the bisonc++ program is then installed
+// in 'base + BINARY')
+// =========================================================================
 
     // the full path of the final program
 #define BINARY     "/usr/bin"
 
-    // define if you want the skeleton files to be installed
-#define SKEL      ${SKELDIR}
+    // define SKEL if the skeleton files must be installed at SKELDIR
+#define SKEL
 
     // the directory whre the manual page is stored
 #define MAN     "/usr/share/man/man1"
