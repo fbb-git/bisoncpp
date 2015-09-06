@@ -1,7 +1,5 @@
 void install(string base)
 {
-    list files;                             
-    int idx;
     string target;
 
     g_installing = 1;
