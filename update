@@ -7,7 +7,7 @@ echo -n "Continue [y/n] ? "
 read yesno
 [ "$yesno" == "y" ] || exit 0
 
-echo -n "Need to (re)create bisoncpp's wip files for gh-pages [y/n] ? "
+echo -n "Need to (re)create bisoncpp's wip files for gh-pages [y/N] ? "
 read yesno
 
 if [ "$yesno" == "y" ] ; then
@@ -31,7 +31,7 @@ git st
 
 echo
 
-echo -n "ci change to index.html etc., push the result and co master [y/n] ? "
+echo -n "ci change to index.html etc., push the result and co master [y/N] ? "
 read yesno
 
 if [ "$yesno" == "y" ] ; then
@@ -45,5 +45,6 @@ if [ "$yesno" == "y" ] ; then
     git push
     git co master
 fi
+
 
 
