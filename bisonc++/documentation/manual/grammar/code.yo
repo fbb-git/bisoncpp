@@ -126,7 +126,7 @@ The important elements of the namespace tt(Meta__) are:
         )
     )
     When an incorrect tag is specified (e.g., with tt(get<Tag__::tag>(),
-$<Tag__::tag>$), or tt($<Tag__::tag>1)), the generated code correctly copiles,
+$<Tag__::tag>$), or tt($<Tag__::tag>1)), the generated code correctly compilers,
 but the program will throw a tt(std::bad_cast) exception once the offending
 code is executed.
 
