@@ -6,8 +6,8 @@ void Parser::checkEmptyBlocktype()
 
     if (stype.size())           // return type is required
         wmsg << 
-            "rule `" << d_rules.name() << 
-            "': no return type for empty production rule of typed "
-                                                    "nonterminal" << endl;
+            "rule `" << &d_rules.lastProduction() <<
+            "': no " << d_rules.sType() << " value is returned from this "
+            "empty production rule" << endl;
 }
 

@@ -33,6 +33,11 @@ bool Parser::substituteBlock(int nElements, Block &block)
     if (nElements < 0)                      // action block
         saveDollar1(block, indexToOffset(1, nElements));
 
+    if (not explicitReturn and d_arg.option('N') and d_rules.sType() != "")
+        wmsg << "rule " << &d_rules.lastProduction() << 
+            ": action block does not assign a(n) " << d_rules.sType() << 
+                    " value to $$." << endl;
+
     return explicitReturn;
 }
 

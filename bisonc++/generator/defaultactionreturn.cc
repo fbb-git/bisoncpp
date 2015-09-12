@@ -9,6 +9,6 @@ void Generator::defaultActionReturn(ostream &out) const
 
     out << 
         "                            // save default non-nested block $$\n"
-        "if (int size = s_productionInfo[production].d_size)\n"
-        "   d_val__ = d_vsp__[1 - size];\n";
+        "    if (int size = s_productionInfo[production].d_size)\n"
+        "        d_val__ = d_vsp__[1 - size];\n";
 }
