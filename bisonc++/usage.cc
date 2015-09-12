@@ -74,6 +74,10 @@ void usage(string const &program_name)
     "   --no-decoration (-D): do not include the user-defined actions when\n"
     "           generating the parser's tt(parse) member.\n"
 
+    "   --no-dafault-action-return (-N): do not use the default $$ = $1\n"
+    "           assignment of semantic values when returning from an action\n"
+    "           block\n"
+
     "   --no-lines: don't put #line directives in generated output,\n"
     "           overruling the %lines directive.\n"
 
