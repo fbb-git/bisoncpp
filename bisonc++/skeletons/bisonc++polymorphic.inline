@@ -106,6 +106,12 @@ inline typename TypeOf<tg_>::type const &SType::data() const
     return std::shared_ptr<Base>::get()->get<tg_>();
 }
 
+template <Tag__ tg_, typename ...Args>
+inline void SType::emplace(Args &&...args)
+{
+    reset(new Semantic<tg_>(std::forward<Args>(args) ...));
+}
+
 template <bool, typename Tp_>
 struct Assign;
 
