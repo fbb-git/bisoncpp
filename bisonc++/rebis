@@ -24,7 +24,7 @@ prompt "    1. Copying the grammar to self..."
 cp  -r parser/grammar parser/inc self
 
 prompt "    2. Run (in ./self) ../tmp/bin/binary on the grammar"
-cd self && ../tmp/bin/binary -S ../skeletons grammar
+cd self && ../tmp/bin/binary -N -S ../skeletons grammar
 cd ..
 
 prompt "    3. Copy the generated parserbase.h and parse.cc to ./parser"
@@ -37,7 +37,7 @@ build program || exit 1
 echo
 
 prompt "    5. Again: run '../tmp/bin/binary' on grammar"
-cd self && ../tmp/bin/binary -S ../skeletons grammar
+cd self && ../tmp/bin/binary -N -S ../skeletons grammar
 cd ..
 
 echo "    6. Diffs should show differences in timestamps only:"
