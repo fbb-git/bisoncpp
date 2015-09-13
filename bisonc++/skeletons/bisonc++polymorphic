@@ -31,12 +31,41 @@ $insert polymorphicSpecializations
             template <Tag__ tg_>
             typename TypeOf<tg_>::type const &get() const;
     };
-    
+
+        // NoDefault and HasDefault are used to handle the initialization of
+        // Semantic below. With NoDefault as base class Semantic's default
+        // constructor won't compile. NoDefault is selected if the Base class
+        // from which Semantic derives has no default constructor.
+    struct HasDefault
+    {
+        HasDefault() = default;
+        HasDefault(int)
+        {}
+    };
+   
+    struct NoDefault
+    {
+        NoDefault() = delete;   // beautifies the error message
+        NoDefault(int)
+        {}
+    };
+        
         // The class Semantic is derived from Base. It stores a particular
         // semantic value type. 
     template <Tag__ tg_>
-    class Semantic: public Base
+    class Semantic: public Base,
+                    private std::conditional<
+                                std::is_default_constructible<
+                                    typename TypeOf<tg_>::type>::value,
+                                    HasDefault, NoDefault
+                            >::type
     {
+        typedef typename std::conditional<
+                            std::is_default_constructible<
+                                typename TypeOf<tg_>::type>::value,
+                                HasDefault, NoDefault
+                            >::type Base2;
+
         typedef typename TypeOf<tg_>::type DataType;
     
         DataType d_data;
@@ -52,6 +81,25 @@ $insert polymorphicSpecializations
             DataType const &data() const;
     };
 
+        // If Type is default constructible, Initializer::value is
+        // initialized to new Type, otherwise it's initialized to 0, allowing
+        // struct SType: public std::shared_ptr<Base> to initialize its
+        // shared_ptr<Base> class whether or not Base is default
+        // constructible.
+    template <bool constructible, typename Type>
+    struct Initializer
+    {
+        static Type *value;
+    };
+    template <bool constructible, typename Type>
+    Type *Initializer<constructible, Type>::value = new Type;
+    
+    template<typename Type>
+    struct Initializer<false, Type>
+    {
+        static constexpr Type *value = 0;
+    };
+
         // The class Stype wraps the shared_ptr holding a pointer to Base.
         // It becomes the polymorphic STYPE__
         // It also wraps Base's get members, allowing constructions like
@@ -62,6 +110,8 @@ $insert polymorphicSpecializations
         // Semantic *. 
     struct SType: public std::shared_ptr<Base>
     {
+        SType();
+
         template <typename Tp_>
         SType &operator=(Tp_ &&value);
 
@@ -81,6 +131,9 @@ $insert polymorphicSpecializations
         typename TypeOf<tg_>::type &data();
         template <Tag__ tg_>
         typename TypeOf<tg_>::type const &data() const;
+
+        template <Tag__ tg_, typename ...Args>
+        void emplace(Args &&...args);
     };
 
 }  // namespace Meta__
