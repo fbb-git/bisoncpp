@@ -81,9 +81,12 @@ inline typename TypeOf<tg_>::type &SType::get()
     {
         typedef Semantic<tg_> SemType;
 
-        bool constructible =  std::is_default_constructible<
-                            typename TypeOf<tg_>::type
-                         >::value;
+        if (not std::is_default_constructible<
+                    typename TypeOf<tg_>::type
+                >::value
+        )
+            throw std::runtime_error(
+                "STYPE::get<tag>: no default constructor available");
 
         reset(new SemType);
     }
