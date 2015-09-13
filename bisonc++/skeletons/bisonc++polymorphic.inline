@@ -81,6 +81,10 @@ inline typename TypeOf<tg_>::type &SType::get()
     {
         typedef Semantic<tg_> SemType;
 
+        bool constructible =  std::is_default_constructible<
+                            typename TypeOf<tg_>::type
+                         >::value;
+
         reset(new SemType);
     }
 
