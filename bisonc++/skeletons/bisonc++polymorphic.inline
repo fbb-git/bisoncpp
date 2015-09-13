@@ -78,7 +78,11 @@ inline typename TypeOf<tg_>::type &SType::get()
                     // if we're not yet holding a (tg_) value, initialize to 
                     // a Semantic<tg_> holding a default value
     if (std::shared_ptr<Base>::get() == 0 || tag() != tg_)
-        reset(new Semantic<tg_>());
+    {
+        typedef Semantic<tg_> SemType;
+
+        reset(new SemType);
+    }
 
     return std::shared_ptr<Base>::get()->get<tg_>();
 }
