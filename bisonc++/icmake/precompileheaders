@@ -1,0 +1,37 @@
+string g_compiler;
+
+void _precompile(string class)
+{
+    string classHH;
+
+    classHH = class + ".hh";
+    if (classHH younger class + ".hh.gch")
+        run(g_compiler + " " + classHH);
+}
+
+void precompileHeaders()
+{
+    int idx;
+    list classes;
+    string class;
+
+    classes = makelist(O_SUBDIR, "*");
+
+
+    g_compiler = setOpt(CXX, "CXX") + " " + 
+                                    setOpt(CXXFLAGS, "CXXFLAGS") + " ";
+
+    _precompile("bisonc++");
+
+    for (idx = sizeof(classes); idx--; )
+    {
+        class = classes[idx];
+
+        chdir(class);
+
+        _precompile(class);        
+
+        chdir(g_cwd);
+    }
+}
+

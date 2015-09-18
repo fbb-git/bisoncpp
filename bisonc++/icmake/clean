@@ -10,7 +10,7 @@ void clean(int dist)
 
 
     if (dist)
-        run("rm -rf tmp");
+        run("rm -rf tmp bisonc++.hh.gch */*.hh.gch" );
 
     chdir("documentation");
 

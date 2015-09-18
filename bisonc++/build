@@ -23,6 +23,7 @@ int g_lognr;            // unique-marker number counter for g_log entries
 #include "icmake/mark"
 #include "icmake/md"
 #include "icmake/special"
+#include "icmake/precompileheaders"
 
 #include "icmake/md5sum"
 #include "icmake/findall"
@@ -86,6 +87,7 @@ void main(int argc, list argv)
 
     if (option == "library")
     {
+        precompileHeaders();
         system("icmbuild library");
         exit(0);
     }
@@ -95,6 +97,7 @@ void main(int argc, list argv)
     
     if (option == "program")
     {
+        precompileHeaders();
         system("icmbuild program " + strip);
         exit(0);
     }
