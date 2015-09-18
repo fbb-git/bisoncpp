@@ -6,6 +6,6 @@ void \@Base::errorVerbose__()
                                     "by the value of that stack element\n";
     for (size_t idx = d_stackIdx__ + 1; idx--; )
        std::cout << std::setw(2) << idx << ": "
-                    std::setw(3) << d_stateStack__[idx] << '\n';
+                 << std::setw(3) << d_stateStack__[idx] << '\n';
 }
 
