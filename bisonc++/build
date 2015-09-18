@@ -112,7 +112,7 @@ void main(int argc, list argv)
     if (option == "scanner")
     {
         chdir("scanner");
-        system("flexc++ lexer");
+        system("flexc++ -i scanner.hh lexer");
         chdir("..");
         system("icmbuild program " + strip);
         exit(0);

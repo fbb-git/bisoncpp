@@ -21,7 +21,7 @@ cd tmp/bin/parser
 
 echo
 
-bisonc++ grammar
+bisonc++ -i parser.hh grammar
 mv parse.cc p.cc
 mv *base.h base.h
 
