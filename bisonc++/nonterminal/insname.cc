@@ -1,4 +1,4 @@
-#include "nonterminal.ih"
+#include "nonterminal.hh"
 
 std::ostream &NonTerminal::insName(std::ostream &out) const
 {

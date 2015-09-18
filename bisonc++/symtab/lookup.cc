@@ -1,4 +1,4 @@
-#include "symtab.ih"
+#include "symtab.hh"
 
 Symbol *Symtab::lookup(std::string const &symbol)
 {

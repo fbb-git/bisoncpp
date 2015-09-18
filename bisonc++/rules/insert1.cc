@@ -1,4 +1,4 @@
-#include "rules.ih"
+#include "rules.hh"
 
 Terminal *Rules::insert(Terminal *terminal, std::string const &literal)
 {

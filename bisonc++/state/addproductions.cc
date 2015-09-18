@@ -1,4 +1,4 @@
-#include "state.ih"
+#include "state.hh"
 
 // d_nextVector.back() is the entry containing the symbol whose production
 // rules are added to d_itemVector. 

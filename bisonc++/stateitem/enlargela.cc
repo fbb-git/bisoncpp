@@ -1,4 +1,4 @@
-#include "stateitem.ih"
+#include "stateitem.hh"
 
 bool StateItem::enlargeLA(LookaheadSet const &parentLA)
 {

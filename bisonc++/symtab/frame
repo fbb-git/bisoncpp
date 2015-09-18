@@ -1,4 +1,4 @@
-#include "symtab.ih"
+#include "symtab.hh"
 
 Symtab::() const
 {

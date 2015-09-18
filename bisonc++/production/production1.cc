@@ -1,4 +1,4 @@
-#include "production.ih"
+#include "production.hh"
 
 Production::Production(Symbol const *nonTerminal, size_t lineNr)
 :

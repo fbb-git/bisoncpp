@@ -1,4 +1,4 @@
-#include "options.ih"
+#include "options.hh"
 
 std::string Options::baseclassHeaderName() const
 {

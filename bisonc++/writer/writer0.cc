@@ -1,4 +1,4 @@
-#include "writer.ih"
+#include "writer.hh"
 
 Writer::Writer(std::string const &baseclass, Rules const &rules)
 :

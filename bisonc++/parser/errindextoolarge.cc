@@ -1,4 +1,4 @@
-#include "parser.ih"
+#include "parser.hh"
 
 bool Parser::errIndexTooLarge(AtDollar const &atd, int elements) const
 {

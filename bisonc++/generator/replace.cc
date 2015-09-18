@@ -1,4 +1,4 @@
-#include "generator.ih"
+#include "generator.hh"
 
 void Generator::replace(string &str, char ch, string const &replacement)
 {

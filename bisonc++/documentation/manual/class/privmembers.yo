@@ -36,7 +36,7 @@ internally'' is used should not be called by user-defined code.
         bf(bison++) in that tt(YYERROR) could not be called from outside of
         the parsing member function.
     it() bf(void error(char const *msg)):nl()
-      By default implemented inline in the tt(parser.ih) internal header file,
+      By default implemented inline in the tt(parser.hh) internal header file,
        it writes a simple message to the standard error stream. It is called
        when a syntactic error is encountered, and its default implementation
        may safely be altered.
@@ -46,7 +46,7 @@ internally'' is used should not be called by user-defined code.
        Used internally.
     it() bf(void exceptionHandler__(std::exception const &exc)):nl()
        This member's default implementation is provided inline in the
-        tt(parser.ih) internal header file. It consists of a mere tt(throw)
+        tt(parser.hh) internal header file. It consists of a mere tt(throw)
         statement, rethrowing a caught exception.
 
        The tt(parse) member function's body essentially consists of a
@@ -83,7 +83,7 @@ internally'' is used should not be called by user-defined code.
             )
 
         bf(Note:) Parser-class header files (e.g., Parser.h) and parser-class
-    internal header files (e.g., Parser.ih) generated with bic() < 4.02.00
+    internal header files (e.g., Parser.hh) generated with bic() < 4.02.00
     require two hand-modifications when using bic() >= 4.02.00:
 
     In Parser.h, just below the declaration 
@@ -95,7 +95,7 @@ internally'' is used should not be called by user-defined code.
     void exceptionHandler__(std::exception const &exc);
         )
 
-    In Parser.ih, assuming the name of the generated class is `Parser', add the
+    In Parser.hh, assuming the name of the generated class is `Parser', add the
     following member definition (if a namespace is used: within the
     namespace's scope):
         verb(
@@ -107,7 +107,7 @@ internally'' is used should not be called by user-defined code.
     it() bf(void executeAction+nop()(int)):nl()
        Used internally.
     it() bf(int lex()):nl()
-      By default implemented inline in the tt(parser.ih) internal header file,
+      By default implemented inline in the tt(parser.hh) internal header file,
        it can be pre-implemented by bic() using the tt(scanner) option or
        directive (see above); alternatively it em(must) be implemented by the
        programmer. It interfaces to the lexical scanner, and should return the
@@ -126,7 +126,7 @@ internally'' is used should not be called by user-defined code.
     it() bf(void print__()()):nl()
        Used internally.
     it() bf(void print())):nl()
-      By default implemented inline in the tt(parser.ih) internal header file,
+      By default implemented inline in the tt(parser.hh) internal header file,
        this member calls tt(print__) to display the last received token and
        corrseponding matched text. The tt(print__) member is only implemented
        if the tt(--print-tokens) option or tt(%print-tokens) directive was

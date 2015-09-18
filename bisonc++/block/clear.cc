@@ -1,4 +1,4 @@
-#include "block.ih"
+#include "block.hh"
 
 void Block::clear()
 {

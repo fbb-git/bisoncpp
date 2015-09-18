@@ -1,4 +1,4 @@
-#include "stateitem.ih"
+#include "stateitem.hh"
 
 bool StateItem::containsKernelItem(Item const &searchItem, 
                                    size_t nKernelItems, Vector const &vector)

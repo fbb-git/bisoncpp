@@ -1,4 +1,4 @@
-#include "statetype.ih"
+#include "statetype.hh"
 
 char const *StateType::s_stateName[] = 
     {

@@ -8,10 +8,10 @@ In order to construct tt(mfcalc), the following steps are suggested:
         it() First, construct b()'s input file as indicated above. Name
             this file tt(grammar);
         it() Run tt(bisonc++ grammar) to produce the files tt(Parser.h),
-            tt(Parserbase.h), tt(Parser.ih) and tt(parse.cc);
+            tt(Parserbase.h), tt(Parser.hh) and tt(parse.cc);
         it() Modify tt(Parser.h) so as to include tt(FunctionPair, 
             s_functions, s_funTab) and tt(d_symbols);
-        it() Modify tt(Parser.ih) so as to include tt(cmath) and optionally
+        it() Modify tt(Parser.hh) so as to include tt(cmath) and optionally
             `tt(using namespace std)', which is commented out by default;
         it() Implement tt(data.cc) and tt(lex.cc) to initialize the static
             data and to contain the lexical scanner, respectively.

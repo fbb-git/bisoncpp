@@ -1,4 +1,4 @@
-#include "atdollar.ih"
+#include "atdollar.hh"
 
 std::ostream &operator<<(std::ostream &out, AtDollar const &atd)
 {

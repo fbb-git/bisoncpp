@@ -1,4 +1,4 @@
-#include "options.ih"
+#include "options.hh"
 
 string Options::undelimit(std::string const &str)
 {

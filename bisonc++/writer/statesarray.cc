@@ -1,4 +1,4 @@
-#include "writer.ih"
+#include "writer.hh"
 
 void Writer::statesArray() const
 {

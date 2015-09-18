@@ -1,4 +1,4 @@
-#include "state.ih"
+#include "state.hh"
 
 Symbol const *State::nextTerminal(size_t *idxPtr) const
 {

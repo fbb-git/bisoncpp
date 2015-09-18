@@ -1,4 +1,4 @@
-#include "production.ih"
+#include "production.hh"
 
 size_t Production::s_nr;
 bool Production::s_unused;

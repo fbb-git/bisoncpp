@@ -1,4 +1,4 @@
-#include "parser.ih"
+#include "parser.hh"
 
 void Parser::error(bool ifTrue, char const *msg)
 {

@@ -1,4 +1,4 @@
-#include "generator.ih"
+#include "generator.hh"
 
 void Generator::insert(ostream &out, size_t indent, char const *skel) const
 {

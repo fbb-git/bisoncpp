@@ -1,4 +1,4 @@
-#include "writer.ih"
+#include "writer.hh"
 
 void Writer::reductions(Table &table, State const &state)
 {

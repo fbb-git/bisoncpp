@@ -84,7 +84,7 @@ bisonc++ (4.10.00)
 bisonc++ (4.09.02) 
 
   * Wilko Kuiper reported an annoying bug in the skeleton lex.in, causing the
-    compilation of parser.ih to fail. This release fixes that bug.
+    compilation of parser.hh to fail. This release fixes that bug.
 
  -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 28 Jul 2014 16:46:35 +0200
 
@@ -176,7 +176,7 @@ bisonc++ (4.05.00)
   * re-installed the --namespace option (see the next item)
 
   * Warnings are issued when options or directives are specified wchich are
-    ignored because the target file (e.g., parser.h, parser.ih) already
+    ignored because the target file (e.g., parser.h, parser.hh) already
     exists. These warnings are not issued for parse.cc and parserbase.h, which
     are by default rewritten at each bisonc++ run. These warnings are issued
     for the `class-header', `class-name', `baseclass-header', `namespace', 
@@ -228,7 +228,7 @@ bisonc++ (4.03.00)
 bisonc++ (4.02.01) 
 
   * Parser-class header files (e.g., Parser.h) and parser-class internal
-    header files (e.g., Parser.ih) generated with bisonc++ < 4.02.00 require
+    header files (e.g., Parser.hh) generated with bisonc++ < 4.02.00 require
     two hand-modifications when used in combination with bisonc++ >= 4.02.00:
 
     In Parser.h, just below the declaration 
@@ -236,7 +236,7 @@ bisonc++ (4.02.01)
     add:
         void exceptionHandler__(std::exception const &exc);
 
-    In Parser.ih, assuming the name of the generated class is `Parser', add
+    In Parser.hh, assuming the name of the generated class is `Parser', add
     the following member definition (if a namespace is used: within the
     namespace's scope):
         inline void Parser::exceptionHandler__(std::exception const &exc)
@@ -259,7 +259,7 @@ bisonc++ (4.02.00)
   * Include guards of parser.h and parserbase.h include the namespace
     identifier, if %namespace has been used.
 
-  * Provided print()'s implementation in bisonc++.ih with a correct
+  * Provided print()'s implementation in bisonc++.hh with a correct
     class-prifix (was a fixed Parser::)
 
   * Textual corrections of the man-page and manual.
@@ -317,10 +317,10 @@ bisonc++ (4.00.00)
     implementing these classes were removed.
 
   * The Parser's inline functions are all private and were moved to the
-    parser's .ih file. This doesn't affect current implementations, as
-    parser.h and parser.ih are only generated once, but newly generated
+    parser's .hh file. This doesn't affect current implementations, as
+    parser.h and parser.hh are only generated once, but newly generated
     parsers no longer define the Parser's inline members (error, print__, and
-    lex) in parser.h but in parser.ih
+    lex) in parser.h but in parser.hh
 
   * @@ can be used (instead of d_loc__) to refer to a rule's location stack
     value. 

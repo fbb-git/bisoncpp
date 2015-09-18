@@ -6,7 +6,7 @@
 #include <stdexcept>
 
 // $insert class_ih
-#include "scanner.ih"
+#include "scanner.hh"
 
 
     // s_ranges__: use (unsigned) characters as index to obtain

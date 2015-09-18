@@ -1,4 +1,4 @@
-#include "item.ih"
+#include "item.hh"
 
     // `smaller' for the rule ptr means: pointing to an earlier
     // element in the rules-map.

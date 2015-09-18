@@ -1,4 +1,4 @@
-#include "item.ih"
+#include "item.hh"
 
     // return true if the current item is the predecessor of 
     // the next item. So, their rules are identical, but

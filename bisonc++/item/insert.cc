@@ -1,4 +1,4 @@
-#include "item.ih"
+#include "item.hh"
 
 ostream &Item::insert(ostream &out, Production const *prod) const
 {

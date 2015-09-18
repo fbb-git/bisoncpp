@@ -1,4 +1,4 @@
-#include "bisonc++.ih"
+#include "bisonc++.hh"
 #include "VERSION"
 
 char version[] = VERSION;

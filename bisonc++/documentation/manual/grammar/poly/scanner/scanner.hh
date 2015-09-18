@@ -1,8 +1,7 @@
 #include "scanner.h"
-
 #include "../parser/parserbase.h"
 
-// end of scanner.ih
+// end of scanner.hh
 
 
 

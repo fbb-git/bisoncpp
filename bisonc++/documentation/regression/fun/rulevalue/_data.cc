@@ -1,4 +1,4 @@
-#include "_rulevalue.ih"
+#include "_rulevalue.hh"
 
 char const *RuleValue::s_tagName[] =
 {

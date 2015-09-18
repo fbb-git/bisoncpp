@@ -1,4 +1,4 @@
-#include "state.ih"
+#include "state.hh"
 
 void State::notReducible(size_t idx)        // idx: item index in d_itemVector
 {

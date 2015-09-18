@@ -1,4 +1,4 @@
-#include "next.ih"
+#include "next.hh"
 
 ostream &Next::transitionKernel(ostream &out) const
 {

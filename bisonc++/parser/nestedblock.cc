@@ -1,4 +1,4 @@
-#include "parser.ih"
+#include "parser.hh"
 
 // Add a hidden rule consisting of one action block. 
 

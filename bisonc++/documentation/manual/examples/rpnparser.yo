@@ -18,12 +18,12 @@ parsing member function from this file after issuing the command:
     itt(Parserbase.h), the parser's em(base) class definition, defining, among
 other, the grammatical tokens to be used by externally defined lexical
 scanners;
-    itt(Parser.ih), the em(internal header file), to be included by all
+    itt(Parser.hh), the em(internal header file), to be included by all
 implementations of the parser class' members;
     itt(parse.cc), the parsing member function.
     )
     By default, tt(Parserbase.h) and tt(parse.cc) will be em(re-created) each
-time b() is re-run. tt(Parser.h) and tt(Parser.ih) may safely be modified
+time b() is re-run. tt(Parser.h) and tt(Parser.hh) may safely be modified
 by the programmer, e.g., to add new members to to the parser class. These two
 files will not be overwritten by b(), unless explicitly instructed to do
 so. 

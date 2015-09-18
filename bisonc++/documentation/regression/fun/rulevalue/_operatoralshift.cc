@@ -1,4 +1,4 @@
-#include "_rulevalue.ih"
+#include "_rulevalue.hh"
 
 //    Here, the parser makes sure that we're already using integral values
 

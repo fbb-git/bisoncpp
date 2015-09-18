@@ -1,4 +1,4 @@
-#include "terminal.ih"
+#include "terminal.hh"
 
 void Terminal::unused(Terminal const *terminal)
 {

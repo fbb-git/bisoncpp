@@ -1,4 +1,4 @@
-#include "parser.ih"
+#include "parser.hh"
 
     // I've seen the begin of a rule. If not yet defined, do so
     // now, and prepare for productions.

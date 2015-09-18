@@ -1,4 +1,4 @@
-#include "options.ih"
+#include "options.hh"
 
 // copy the union declaration into ostringstream `union_decl' as the
 // definition of LSTYPE.

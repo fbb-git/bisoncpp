@@ -1,4 +1,4 @@
-#include "nonterminal.ih"
+#include "nonterminal.hh"
 
 void NonTerminal::undefined(NonTerminal const *nonTerminal) 
 {

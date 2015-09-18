@@ -1,4 +1,4 @@
-#include "firstset.ih"
+#include "firstset.hh"
 
 
 ostream &FirstSet::insert(ostream &out) const

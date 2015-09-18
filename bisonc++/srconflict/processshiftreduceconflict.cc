@@ -1,4 +1,4 @@
-#include "srconflict.ih"
+#include "srconflict.hh"
 
     // called by visitreduction.cc
     //

@@ -1,4 +1,4 @@
-#include "terminal.ih"
+#include "terminal.hh"
 
 size_t        Terminal::s_precedence;
 set<size_t>   Terminal::s_valueSet;

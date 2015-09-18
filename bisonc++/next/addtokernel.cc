@@ -1,4 +1,4 @@
-#include "next.ih"
+#include "next.hh"
 
 size_t Next::addToKernel(Next::Vector &next,
                         Symbol const *symbol, size_t stateItemOffset)

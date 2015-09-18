@@ -1,4 +1,4 @@
-#include "rrconflict.ih"
+#include "rrconflict.hh"
 
 void RRConflict::visitReduction(size_t first)
 {

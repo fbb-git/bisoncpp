@@ -1,4 +1,4 @@
-#include "parser.ih"
+#include "parser.hh"
 
 void Parser::errNoSemantic(char const *label, AtDollar const &atd,
                            string const &id) const

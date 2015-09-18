@@ -1,4 +1,4 @@
-#include "terminal.ih"
+#include "terminal.hh"
 
 bool Terminal::setUnique(size_t value) 
 {

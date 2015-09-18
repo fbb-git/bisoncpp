@@ -1,4 +1,4 @@
-#include "_rulevalue.ih"
+#include "_rulevalue.hh"
 
 RuleValue &RuleValue::operator-=(RuleValue const &other)
 {

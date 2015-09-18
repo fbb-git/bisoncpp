@@ -1,4 +1,4 @@
-#include "state.ih"
+#include "state.hh"
 
 vector<State *> State::s_state;
 

@@ -1,4 +1,4 @@
-#include "grammar.ih"
+#include "grammar.hh"
 
 bool Grammar::derivable(Symbol const *symbol)
 {

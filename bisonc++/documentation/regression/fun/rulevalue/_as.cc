@@ -1,4 +1,4 @@
-#include "_rulevalue.ih"
+#include "_rulevalue.hh"
 
 char RuleValue::asChar() const
 {

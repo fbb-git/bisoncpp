@@ -1,4 +1,4 @@
-#include "rmreduction.ih"
+#include "rmreduction.hh"
 
 RmReduction::RmReduction(size_t idx, size_t next, Symbol const *symbol,
                                 bool forced)

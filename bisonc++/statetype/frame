@@ -1,4 +1,4 @@
-#include "statetype.ih"
+#include "statetype.hh"
 
 StateType::() const
 {

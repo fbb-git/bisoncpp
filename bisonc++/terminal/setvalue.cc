@@ -1,4 +1,4 @@
-#include "terminal.ih"
+#include "terminal.hh"
 
 void Terminal::setValue(size_t value)
 {

@@ -1,4 +1,4 @@
-#include "generator.ih"
+#include "generator.hh"
 
 // All members of the parser class should include the implementation header as
 // the only #included file. The implementation header should perform all

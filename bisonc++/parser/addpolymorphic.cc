@@ -1,4 +1,4 @@
-#include "parser.ih"
+#include "parser.hh"
 
 void Parser::addPolymorphic(string const &tag, string const &typeSpec) 
 {

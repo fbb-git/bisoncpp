@@ -1,4 +1,4 @@
-#include "writer.ih"
+#include "writer.hh"
 
 // Writes an SR element:
 //

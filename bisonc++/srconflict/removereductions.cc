@@ -1,4 +1,4 @@
-#include "srconflict.ih"
+#include "srconflict.hh"
 
 void SRConflict::removeReductions(StateItem::Vector &itemVector)
 {

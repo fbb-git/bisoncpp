@@ -1,4 +1,4 @@
-#include "generator.ih"
+#include "generator.hh"
 
 void Generator::replaceAtKey(string &line, size_t pos) const
 {

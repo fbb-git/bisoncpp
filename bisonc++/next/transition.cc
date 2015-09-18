@@ -1,4 +1,4 @@
-#include "next.ih"
+#include "next.hh"
 
 // -----------------------------------------
 //                 d_removed

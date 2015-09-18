@@ -1,4 +1,4 @@
-#include "state.ih"
+#include "state.hh"
 
 // the kernel item of the first state has already been set bij initialState().
 

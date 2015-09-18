@@ -1,4 +1,4 @@
-#include "writer.ih"
+#include "writer.hh"
 
 void Writer::reductionSymbol(Element const *symb, size_t ruleNr,
                              FBB::Table &table)

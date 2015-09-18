@@ -1,4 +1,4 @@
-#include "writer.ih"
+#include "writer.hh"
 
 void Writer::insertToken(Terminal const *token, size_t &lastTokenValue, 
                          std::ostream &out)

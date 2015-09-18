@@ -1,4 +1,4 @@
-#include "generator.ih"
+#include "generator.hh"
 
 // The parser's parse() member defines the S/R parsing algorithm as well as
 // the parsing tables. 

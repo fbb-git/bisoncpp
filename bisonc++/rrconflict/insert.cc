@@ -1,4 +1,4 @@
-#include "rrconflict.ih"
+#include "rrconflict.hh"
 
 ostream &RRConflict::insert(ostream &out) const
 {

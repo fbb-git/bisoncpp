@@ -1,4 +1,4 @@
-#include "options.ih"
+#include "options.hh"
 
 // options overrule directives
 // path specifications overrule target specifications

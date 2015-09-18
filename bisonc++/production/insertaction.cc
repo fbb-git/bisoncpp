@@ -1,4 +1,4 @@
-#include "production.ih"
+#include "production.hh"
 
 void Production::insertAction(Production const *prod, std::ostream &out,
             bool lineDirectives, size_t indent)

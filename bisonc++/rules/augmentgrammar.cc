@@ -1,4 +1,4 @@
-#include "rules.ih"
+#include "rules.hh"
 
     // following this call, d_currentRule points to the augmented grammar's 
     // startrule, which derives the startrule and has EOF in its FOLLOW set.

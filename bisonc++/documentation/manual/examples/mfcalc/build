@@ -3,7 +3,7 @@
 case $1 in
     (clean)
         rm -f parser/[pP]arse* mfcalc
-        cp parser/internalheader.ih parser/Parser.ih
+        cp parser/internalheader.hh parser/Parser.ih
         cp parser/parser.header parser/Parser.h
     ;;
     (mfcalc)

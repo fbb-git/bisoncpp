@@ -1,4 +1,4 @@
-#include "lookaheadset.ih"
+#include "lookaheadset.hh"
 
 ostream &operator<<(ostream &out, LookaheadSet const &lookaheadSet)
 {

@@ -1,4 +1,4 @@
-#include "state.ih"
+#include "state.hh"
 
 void State::addNext(Symbol const *symbol, size_t idx)
 {

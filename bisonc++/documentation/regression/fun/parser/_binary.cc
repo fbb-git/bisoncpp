@@ -1,4 +1,4 @@
-#include "parser.ih"
+#include "parser.hh"
 
 RuleValue Parser::binary(RuleValue v1, int operation, RuleValue const &v2)
 {

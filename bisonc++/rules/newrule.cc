@@ -1,4 +1,4 @@
-#include "rules.ih"
+#include "rules.hh"
     
 bool Rules::newRule(NonTerminal *np, string const &source, size_t lineNr)
 {

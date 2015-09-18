@@ -1,4 +1,4 @@
-#include "next.ih"
+#include "next.hh"
 
 void Next::buildKernel(Item::Vector *kernel, 
                        StateItem::Vector const &stateItem) 

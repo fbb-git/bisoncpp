@@ -1,4 +1,4 @@
-#include "scanner.ih"
+#include "scanner.hh"
 
 void Scanner::returnQuoted(void (Scanner::*handler)())
 {

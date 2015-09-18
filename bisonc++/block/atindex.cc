@@ -1,4 +1,4 @@
-#include "block.ih"
+#include "block.hh"
 
     // @NR
 void Block::atIndex(size_t lineNr, string const &text)

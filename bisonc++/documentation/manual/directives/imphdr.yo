@@ -1,7 +1,7 @@
 Syntax:    bf(%implementation-header) tt(filename) nl()
            tt(Filename) defines the name of the file to contain the
             implementation header. It defaults to the name of the generated
-            parser class plus the suffix tt(.ih). nl()
+            parser class plus the suffix tt(.hh). nl()
            The implementation header should contain all directives and
             declarations em(only) used by the implementations of the parser's
             member functions. It is the only header file that is included by

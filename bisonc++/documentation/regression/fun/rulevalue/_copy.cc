@@ -1,4 +1,4 @@
-#include "_rulevalue.ih"
+#include "_rulevalue.hh"
 
 void RuleValue::copy(RuleValue const &other)
 {

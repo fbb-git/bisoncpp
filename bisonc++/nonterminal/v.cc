@@ -1,4 +1,4 @@
-#include "nonterminal.ih"
+#include "nonterminal.hh"
 
 size_t NonTerminal::v_value() const
 {

@@ -1,4 +1,4 @@
-#include "options.ih"
+#include "options.hh"
 
 std::string const &Options::accept(PathType pathType, char const *declTxt)
 {

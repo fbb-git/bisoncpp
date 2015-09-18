@@ -1,4 +1,4 @@
-#include "generator.ih"
+#include "generator.hh"
 
 bool Generator::grep(string const &fileName, string const &regex) const
 {

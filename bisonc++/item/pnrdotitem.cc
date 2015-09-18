@@ -1,4 +1,4 @@
-#include "item.ih"
+#include "item.hh"
 
 std::ostream &Item::pNrDotItem(std::ostream &out) const
 {

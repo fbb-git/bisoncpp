@@ -147,7 +147,7 @@ END)
     it() lsoption(implementation-header)(i)(filename)nl()
            tt(Filename) defines the name of the file to contain the
             implementation header. It defaults to the name of the generated
-            parser class plus the suffix tt(.ih).
+            parser class plus the suffix tt(.hh).
 
            The implementation header should contain all directives and
             declarations em(only) used by the implementations of the parser's
@@ -162,7 +162,7 @@ END)
            tt(Pathname) defines the path name to the file containing the
             skeleton of the implementation header. t defaults to the
             installation-defined default path name (e.g.,
-            tt(/usr/share/bisonc++/) plus tt(bisonc++.ih)).
+            tt(/usr/share/bisonc++/) plus tt(bisonc++.hh)).
 
     it() loption(insert-stype)nl()
            This option is only effective if the tt(debug) option (or

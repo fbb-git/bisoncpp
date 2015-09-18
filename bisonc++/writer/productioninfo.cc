@@ -1,4 +1,4 @@
-#include "writer.ih"
+#include "writer.hh"
 
 void Writer::productionInfo(Production const *production, ostream &out) 
 {

@@ -1,4 +1,4 @@
-$insert class.ih
+$insert class.hh
 
 // The FIRST element of SR arrays shown below uses `d_type', defining the
 // state's type, and `d_lastIdx' containing the last element's index. If

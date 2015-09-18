@@ -1,4 +1,4 @@
-#include "next.ih"
+#include "next.hh"
 
 void Next::removeShift(RmShift const &rmShift, Vector &nextVector, 
                         size_t *nRemoved)

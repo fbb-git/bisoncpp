@@ -1,4 +1,4 @@
-#include "next.ih"
+#include "next.hh"
 
 Next::Solution Next::solveByPrecedence(Symbol const *productionSymbol) const
 {

@@ -1,4 +1,4 @@
-#include "generator.ih"
+#include "generator.hh"
 
 std::string const &Generator::atNameSpacedClassname() const
 {

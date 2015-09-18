@@ -1,4 +1,4 @@
-#include "terminal.ih"
+#include "terminal.hh"
 
 std::ostream &Terminal::valueQuotedName(std::ostream &out) const
 {

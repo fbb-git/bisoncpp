@@ -1,4 +1,4 @@
-#include "lookaheadset.ih"
+#include "lookaheadset.hh"
 
 ostream &LookaheadSet::insert(ostream &out) const
 {

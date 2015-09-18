@@ -1,4 +1,4 @@
-#include "parser.ih"
+#include "parser.hh"
 
 Symbol *Parser::defineNonTerminal(string const &name, string const &stype)
 {

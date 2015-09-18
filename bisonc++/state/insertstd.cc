@@ -1,4 +1,4 @@
-#include "state.ih"
+#include "state.hh"
 
 ostream &State::insertStd(ostream &out) const
 {

@@ -1,7 +1,7 @@
 /*
                                  Declare here
                     what's only used in the Scanner class
-                and let Scanner's sources include "scanner.ih"
+                and let Scanner's sources include "scanner.hh"
 */
 
 #include "scanner.h"

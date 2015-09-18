@@ -1,4 +1,4 @@
-#include "rules.ih"
+#include "rules.hh"
 
 size_t Rules::s_lastLineNr;
 size_t Rules::s_nExpectedConflicts;

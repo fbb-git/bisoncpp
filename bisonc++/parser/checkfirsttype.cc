@@ -1,4 +1,4 @@
-#include "parser.ih"
+#include "parser.hh"
 
     // the production has elements, but no action. 
     // Now check if the production's FIRST element's stype is equal

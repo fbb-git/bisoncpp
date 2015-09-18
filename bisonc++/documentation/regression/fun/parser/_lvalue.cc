@@ -1,4 +1,4 @@
-#include "parser.ih"
+#include "parser.hh"
 
 RuleValue &Parser::lvalue(RuleValue &e)
 {

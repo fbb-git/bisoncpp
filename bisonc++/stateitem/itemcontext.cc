@@ -1,4 +1,4 @@
-#include "stateitem.ih"
+#include "stateitem.hh"
 
 // Produces:
 //  item - LA - next-index

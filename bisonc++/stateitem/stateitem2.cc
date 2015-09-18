@@ -1,4 +1,4 @@
-#include "stateitem.ih"
+#include "stateitem.hh"
 
 StateItem::StateItem(Item const &item)
 :

@@ -1,4 +1,4 @@
-#include "rules.ih"
+#include "rules.hh"
 
 NonTerminal *Rules::insert(NonTerminal *nonTerminal)
 {

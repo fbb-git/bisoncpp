@@ -1,4 +1,4 @@
-#include "state.ih"
+#include "state.hh"
 
 // The LA sets of the items of a state (state tt(idx)) are computed by first
 // computing the LA sets of its items, followed by propagating the LA sets of

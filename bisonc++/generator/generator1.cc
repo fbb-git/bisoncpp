@@ -1,4 +1,4 @@
-#include "generator.ih"
+#include "generator.hh"
 
 Generator::Generator(Rules const &rules, 
                      unordered_map<string, string> const &polymorphic)
