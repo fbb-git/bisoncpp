@@ -48,7 +48,7 @@ tt(INT) tag and tt(identifier) is asociated with the tt(TEXT) tag.
 As the tt(combi) rule is not associated with a specific semantic value, its
 semantic value could be either tt(INT) or tt(TEXT). Irrespective of what is
 actually returned by tt(combi), its semantic value can be passed on to a
-function (tt(process(STYPE__ const &)), responsible for the semantic value's
+function (tt(process(STYPE__ const &))), responsible for the semantic value's
 further processing. Here are the definition of the tt(combi) non-terminal and
 action blocks for the tt(rule) non-terminal:
         verb(

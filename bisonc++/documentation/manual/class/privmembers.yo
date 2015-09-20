@@ -125,7 +125,7 @@ internally'' is used should not be called by user-defined code.
        Used internally.
     it() bf(void print__()()):nl()
        Used internally.
-    it() bf(void print())):nl()
+    it() bf(void print()):nl()
       By default implemented inline in the tt(parser.hh) internal header file,
        this member calls tt(print__) to display the last received token and
        corrseponding matched text. The tt(print__) member is only implemented
@@ -144,3 +144,4 @@ internally'' is used should not be called by user-defined code.
     it() bf(void Base::top__+nop()()):nl()
        Used internally.
     )
+

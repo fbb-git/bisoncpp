@@ -17,7 +17,7 @@ classes, bic() makes life easy by offering the tt(%polymorphic) directive.
 
 The example program (cf. lurl(poly)) implements a polymorphic base class, and
 derived classes containing either an tt(int) or a tt(std::string) semantic
-value. These types are asociated with tags (resp. tt(INT) and tt(TEXT) using
+value. These types are asociated with tags (resp. tt(INT) and tt(TEXT)) using
 the tt(%polymorphic) directive, which is discussed next.
 
 

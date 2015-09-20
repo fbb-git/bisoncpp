@@ -57,7 +57,7 @@ bf(%type<TAG> and $$ or $1 specifications:)
 includefile(polytable)
 includefile(polytablenotes)
 
-bf(Member calls) (`$$.', `$1.', etc.):)
+bf(Member calls) (`$$.', `$1.', `($$)', `($1)', etc.):)
 
     When using `$$.' or `$1.' default tags are ignored. A warning is issued
 that the default tag is ignored. This syntax allows members of the semantic
@@ -65,7 +65,10 @@ value type (tt(STYPE__)) to be called explicitly. The default tag is only
 ignored if there are no additional characters (e.g., blanks, closing
 parentheses) between the dollar-expressions and the member selector operator
 (e.g., no tags are used with $1.member(), but tags are used with
-($1).member()). The opposite, overriding default tag associations, is
+tt(($1).member())). In fact, notations like tt(($$), ($1)), etc. are synonym
+to using tt($$.get<Tag__::TYPE>(), $1.get<Tag__::TYPE>())
+
+The opposite, overriding default tag associations, is
 accomplished using constructions like $<STYPE__>$ and $<STYPE__>1.
 
 When negative dollar indices are used, the appropriate tag must explicitly be
@@ -82,7 +85,7 @@ specification file itself:
     
     arg:
         {
-            call($-1->get<Tag__::INT>());
+            call($-1.get<Tag__::INT>());
         }
     ;
         )
@@ -117,14 +120,14 @@ Semantic values may also directly be associated with terminal tokens. In that
 case it is the lexical scanner's responsibility to assign a properly typed
 value to the parser's tt(STYPE__ d_val__) data member. When the lexical
 scanner receives a pointer to the parser's tt(d_val__) data member (using,
-e.g., a member tt(setSval(STYPE__ *dval)) 
+e.g., a member tt(setSval(STYPE__ *dval)))
     IFDEF(manual)((cf. section ref(PRIVDATA)))(), 
 then the lecical scanner must use em(tagged assignment) as shown in the above
 example to reach the different polymorphic types. The lexical scanner, having
 defined a tt(Parser::STYPE__ *d_val) data member could then use statements
 like
         verb(
-    d_val->get<Tag__::INT>() = stoi(matched());
+    d_val.get<Tag__::INT>() = stoi(matched());
         )
     to assign an tt(int) value to the parser's semantic value, which is then
 immediately available when the lexical scanner's tt(lex) function
