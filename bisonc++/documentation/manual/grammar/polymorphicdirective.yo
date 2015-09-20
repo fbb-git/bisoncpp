@@ -1,8 +1,9 @@
-    The tt(%polymorphic) directive results in bic() generating a parser using
-polymorphic semantic values. Each semantic value specification consists of a
-em(tag), which is a bf(C++) identifier, and a bf(C++) type definition.
+    When encountering the tt(%polymorphic) directive bic() generates a parser
+that uses polymorphic semantic values. Each semantic value specification
+consists of a em(tag), which is a bf(C++) identifier, and a bf(C++) type
+definition.
 
-Tags and type definitions are separated from each other by a colon, and
+Tags and type definitions are separated by colons, and
 multiple semantic values specifications are separated by semicolons. The
 semicolon trailing the final semantic value specification is optional.
 
@@ -19,10 +20,12 @@ tt(std::string) and a tt(std::vector<double>):
     The identifier to the left of the colon is called the em(type-identifier),
 and the type definition to the right of the colon is called the
 em(type-definition). Types specified at the tt(%polymorphic) type-definitions
-must be built-in types or class-type declarations. Class types mentioned at
-the tt(%polymorphic) directive must offer default constructors.
+must be built-in types or class-type declarations. Since bic() version 4.12.00
+the types no longer have to offer offer default constructors, but if no
+default constructor is available then the option
+tt(--no-default-action-return) is required.
 
-    If type declarations refer to types declared in header files that were
-not already included by the parser's base class header, then these header
-file(s) must be inserted using the tt(%baseclass-preinclude) directive as
+    When polymorphic type-names refer to types not yet declared by the
+parser's base class header, then these types must be declared in a header file
+whose location is specified through the tt(%baseclass-preinclude) directive as
 these types are referred to in the generated tt(parserbase.h) header file.

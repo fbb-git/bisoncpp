@@ -1,7 +1,7 @@
     The tt(%type) directive is used to associate (non-)terminals with semantic
 value types.
 
-Non-terminals may automatically be associated with polymorphic semantic
+Non-terminals may be associated with polymorphic semantic
 values using tt(%type) directives. E.g., after:
         verb(
     %polymorphic INT: int; TEXT: std::string
@@ -16,10 +16,11 @@ a rule like:
             $$ = $1 + $3;
         }
         )
-    automatically associates $$, $1 and $3 with tt(int) values. $$ is an
+    automatically associates $$, $1 and $3 with tt(int) values. Here $$ is an
 lvalue (representing the semantic value associated with the tt(expr:) rule),
-while $1 and $3 represent the tt(int) semantic value associated with the
-tt(expr) non-terminal in the production rule tt('-' expr) (rvalues).
+while $1 and $3 represent, because of the tt(%type) specification, tt(int)
+semantic values which are associated with, resp., the first and second
+tt(expr) non-terminal in the production rule tt(expr '+' expr).
 
     When negative dollar indices (like $-1) are used, pre-defined associations
 between non-terminals and semantic types are ignored.  With positive indices
