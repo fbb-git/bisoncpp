@@ -12,6 +12,8 @@ void Generator::implementationHeader() const
 {
     string const &implementationHeader = d_options.implementationHeader();
 
+    warnOldImpHeader(implementationHeader);
+
     if (d_stat.set(implementationHeader))   // do not overwrite an existing
         return;                             // implementation header
 

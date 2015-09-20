@@ -90,7 +90,7 @@ class Generator
         void actionCases(std::ostream &out) const;
         void baseClass(std::ostream &out) const;
         void classH(std::ostream &out) const;
-        void classIH(std::ostream &out) const;
+        void classHH(std::ostream &out) const;
         void debug(std::ostream &out) const;
         void debugIncludes(std::ostream &out) const;
         void debugFunctions(std::ostream &out) const;
@@ -144,6 +144,8 @@ class Generator
         void insert(std::ostream &out, size_t indent, char const *skel) const;
         void bolAt(std::ostream &out, std::string &line, std::istream &in,
                                                         bool &accept) const;
+
+        void warnOldImpHeader(std::string const &newIH) const;
 
         template <typename AtType> 
         typename std::vector<AtType>::const_iterator find(

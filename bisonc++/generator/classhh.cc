@@ -1,6 +1,6 @@
 #include "generator.hh"
 
-void Generator::classIH(ostream &out) const
+void Generator::classHH(ostream &out) const
 {
     key(out);
     out << "#include \"" << 

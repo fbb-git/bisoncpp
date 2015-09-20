@@ -1,0 +1,70 @@
+#!/bin/bash
+
+OLD=ih
+NEW=hh
+
+sedPattern='s/\(^\s*#include\s\+"[^.]\+\.\)'${OLD}'\(.*\)/\1'${NEW}'\2/'
+grepPattern='^\s*#include\s\+"[^.]\+\.'${OLD}'"'
+
+changeIncludes()
+{
+    for x in `find -name "*.cc"`
+    do
+        GREP=`grep "$grepPattern" < $x`
+
+        [ $? -eq 0 ] || continue
+
+        echo "$x: ${GREP}->"`echo $GREP | sed "$sedPattern"`
+        sed -i "$sedPattern" $x
+    done
+}
+
+case $1 in
+    (dry)
+        for x in `find -name "*.${OLD}"`
+        do
+            echo mv $x ${x%${OLD}}${NEW}
+        done
+
+        for x in `find -name "*.cc"`
+        do
+            GREP=`grep "$grepPattern" < $x`
+
+            [ $? -eq 0 ] &&
+                    echo "$x: ${GREP}->"`echo $GREP | sed "$sedPattern"`
+        done
+    ;;
+
+     (run)
+        for x in `find -name "*.${OLD}"`
+        do
+            echo mv $x ${x%${OLD}}${NEW}
+            mv $x ${x%${OLD}}${NEW}
+        done
+
+        changeIncludes
+     ;;
+
+     (git)
+        for x in `find -name "*.${OLD}"`
+        do
+            echo mv $x ${x%${OLD}}${NEW}
+            git mv -f $x ${x%${OLD}}${NEW}
+        done
+
+        changeIncludes
+     ;;
+
+    (*)
+    echo "
+Usage: $0 dry|run|git
+    This script converts the .${NEW} headers in and below the current working
+    directory to .${OLD} files, and changes \`#include \"xxx.${NEW}\"' in .cc files 
+    into \`#include \"xxx.${OLD}\"' directives.
+Arguments:    
+    dry: show the commands that are executed by \`$0 run\'
+    run: perform the conversions
+    git: same as run, but does 'git mv -f ...' instead of 'mv ...'
+"
+    ;;
+esac

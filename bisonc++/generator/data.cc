@@ -8,7 +8,7 @@ Generator::Map Generator::s_insert =
     {"scannerobject",               &Generator::scannerObject},
     {"baseclass",                   &Generator::baseClass},
     {"class.h",                     &Generator::classH},
-    {"class.hh",                    &Generator::classIH},
+    {"class.hh",                    &Generator::classHH},
     {"debug",                       &Generator::debug},
     {"debugdecl",                   &Generator::debugDecl},
     {"debuginit",                   &Generator::debugInit},

@@ -1,6 +1,44 @@
-bisonc++ (4.11.00)      TO BE TAGGED
+bisonc++ (4.12.00)      TO BE TAGGED
 
-  * Standardized the installation logging procedure.
+  * To facilitate using precompiled headers, bisonc++ now by default generates
+    class internal header files having .hh rather than .ih
+    extensions. Bisonc++'s documentation was updated correspondingly. In
+    particular: the bisonc++(1) man page received a new section labeled
+    PRECOMPILED HEADERS.
+
+    | NOTE: this may interfere with existing projects in which Bisonc++ was
+    | used to generate the initial sources of the parser class. For those
+    | projects you can (assuming generated files start with 'parser'):
+    |
+    |   - (preferred approach) rename parser.ih to parser.hh, and include
+    |     parser.hh in your parser's source files (a bash-script
+    |     'convert2hh' is provided to assist in performing the necessary 
+    |     conversions)
+    | 
+    |   - (alternate approach) define a soft-link accessing the existing .ih
+    |     file (e.g., parser.ih) via parser.hh:
+    |           ln -s parser.ih parser.hh
+    |
+    |   - (2nd alternative) keep using .ih implementation headers by
+    |     specifying the implementation header's filename using the -i option.
+
+  * Bisonc++'s .ih internal headers were renamed to .hh, allowing g++ to
+    automatically recognize them as header files, so they can easily be
+    converted to precompiled headers, following a suggestion by Bram
+    Neijt. The build script now creates precompiled headers which are used
+    during the compilation phase, speeding up Bisonc++'s compilation. They are
+    removed again by ./build distclean.
+
+  * Added 'build uninstall'. This command only works if, when calling one of
+    the 'build install' alternatives and when calling 'build uninstall' the
+    environment variable BISONCPP contains the (preferably absolute) filename
+    of a file on which installed files and directories are logged.
+    Note that 'build (dist)clean' does not remove the file pointed at by the
+    BISONCPP environment variable, unless that file happpens to be in a
+    directory removed by 'build (dist)clean'. See also the file INSTALL.
+    Defining the BISONCPP environment variable as ~/.bisoncpp usually works
+    well. 
+
 
 
 

@@ -17,7 +17,6 @@ void precompileHeaders()
 
     classes = makelist(O_SUBDIR, "*");
 
-
     g_compiler = setOpt(CXX, "CXX") + " " + 
                                     setOpt(CXXFLAGS, "CXXFLAGS") + " ";
 
