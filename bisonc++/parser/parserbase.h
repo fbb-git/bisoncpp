@@ -139,12 +139,41 @@ namespace Meta__
             template <Tag__ tg_>
             typename TypeOf<tg_>::type const &get() const;
     };
-    
+
+        // NoDefault and HasDefault are used to handle the initialization of
+        // Semantic below. With NoDefault as base class Semantic's default
+        // constructor won't compile. NoDefault is selected if the Base class
+        // from which Semantic derives has no default constructor.
+    struct HasDefault
+    {
+        HasDefault() = default;
+        HasDefault(int)
+        {}
+    };
+   
+    struct NoDefault
+    {
+        NoDefault() = delete;   // beautifies the error message
+        NoDefault(int)
+        {}
+    };
+        
         // The class Semantic is derived from Base. It stores a particular
         // semantic value type. 
     template <Tag__ tg_>
-    class Semantic: public Base
+    class Semantic: public Base,
+                    private std::conditional<
+                                std::is_default_constructible<
+                                    typename TypeOf<tg_>::type>::value,
+                                    HasDefault, NoDefault
+                            >::type
     {
+        typedef typename std::conditional<
+                            std::is_default_constructible<
+                                typename TypeOf<tg_>::type>::value,
+                                HasDefault, NoDefault
+                            >::type Base2;
+
         typedef typename TypeOf<tg_>::type DataType;
     
         DataType d_data;
@@ -160,6 +189,25 @@ namespace Meta__
             DataType const &data() const;
     };
 
+        // If Type is default constructible, Initializer::value is
+        // initialized to new Type, otherwise it's initialized to 0, allowing
+        // struct SType: public std::shared_ptr<Base> to initialize its
+        // shared_ptr<Base> class whether or not Base is default
+        // constructible.
+    template <bool constructible, typename Type>
+    struct Initializer
+    {
+        static Type *value;
+    };
+    template <bool constructible, typename Type>
+    Type *Initializer<constructible, Type>::value = new Type;
+    
+    template<typename Type>
+    struct Initializer<false, Type>
+    {
+        static constexpr Type *value = 0;
+    };
+
         // The class Stype wraps the shared_ptr holding a pointer to Base.
         // It becomes the polymorphic STYPE__
         // It also wraps Base's get members, allowing constructions like
@@ -170,6 +218,8 @@ namespace Meta__
         // Semantic *. 
     struct SType: public std::shared_ptr<Base>
     {
+        SType();
+
         template <typename Tp_>
         SType &operator=(Tp_ &&value);
 
@@ -189,6 +239,9 @@ namespace Meta__
         typename TypeOf<tg_>::type &data();
         template <Tag__ tg_>
         typename TypeOf<tg_>::type const &data() const;
+
+        template <Tag__ tg_, typename ...Args>
+        void emplace(Args &&...args);
     };
 
 }  // namespace Meta__
@@ -362,6 +415,7 @@ template <Tag__ tg_>
 inline Semantic<tg_>::Semantic(typename TypeOf<tg_>::type const &data)
 :
     Base(tg_),
+    Base2(0),
     d_data(data)
 {}
 
@@ -369,6 +423,7 @@ template <Tag__ tg_>
 inline Semantic<tg_>::Semantic(DataType &&tmp)
 :
     Base(tg_),
+    Base2(0),
     d_data(std::move(tmp))
 {}
 
@@ -396,6 +451,15 @@ inline typename TypeOf<tg_>::type const &Base::get() const
     return static_cast<Semantic<tg_> *>(this)->data();
 }
 
+inline SType::SType()
+:
+    std::shared_ptr<Base>{
+        Initializer<
+            std::is_default_constructible<Base>::value, Base
+        >::value
+    }
+{}
+
 inline Tag__ SType::tag() const
 {
     return std::shared_ptr<Base>::get()->tag();
@@ -407,7 +471,18 @@ inline typename TypeOf<tg_>::type &SType::get()
                     // if we're not yet holding a (tg_) value, initialize to 
                     // a Semantic<tg_> holding a default value
     if (std::shared_ptr<Base>::get() == 0 || tag() != tg_)
-        reset(new Semantic<tg_>());
+    {
+        typedef Semantic<tg_> SemType;
+
+        if (not std::is_default_constructible<
+                    typename TypeOf<tg_>::type
+                >::value
+        )
+            throw std::runtime_error(
+                "STYPE::get<tag>: no default constructor available");
+
+        reset(new SemType);
+    }
 
     return std::shared_ptr<Base>::get()->get<tg_>();
 }
@@ -422,6 +497,12 @@ template <Tag__ tg_>
 inline typename TypeOf<tg_>::type const &SType::data() const
 {
     return std::shared_ptr<Base>::get()->get<tg_>();
+}
+
+template <Tag__ tg_, typename ...Args>
+inline void SType::emplace(Args &&...args)
+{
+    reset(new Semantic<tg_>(std::forward<Args>(args) ...));
 }
 
 template <bool, typename Tp_>

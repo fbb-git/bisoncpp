@@ -201,9 +201,7 @@ try
     if (d_token__ != _UNDETERMINED_)
         pushToken__(d_token__);     // save an already available token
 
-                                    // save default non-nested block $$
-    if (int size = s_productionInfo[production].d_size)
-        d_val__ = d_vsp__[1 - size];
+$insert defaultactionreturn
 
 $insert 4 debug "executeAction(): of rule " << production +
 $insert 4 debug  stype__(", semantic [TOS]: ", d_val__) << " ..."

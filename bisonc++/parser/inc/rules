@@ -45,6 +45,9 @@ _productionElements:
     }
 |
     _productionElement
+    {
+        $$ = $1;
+    }
 ;
 
 _production:

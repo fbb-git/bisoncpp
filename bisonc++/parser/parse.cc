@@ -1700,9 +1700,6 @@ try
     if (d_token__ != _UNDETERMINED_)
         pushToken__(d_token__);     // save an already available token
 
-                                    // save default non-nested block $$
-    if (int size = s_productionInfo[production].d_size)
-        d_val__ = d_vsp__[1 - size];
 
     // $insert debug
     if (d_debug__)
@@ -2195,6 +2192,12 @@ try
          d_val__ = handleProductionElements(d_vsp__[-1], d_vsp__[0]);
          
          
+         }
+        break;
+
+        case 100:
+        {
+         d_val__ = d_vsp__[0];
          }
         break;
 

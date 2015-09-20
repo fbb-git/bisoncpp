@@ -54,6 +54,8 @@ namespace
         Arg::LongOption("no-parse-member"), // options only
 
         {"no-decoration", 'D'},
+        {"no-default-action-return", 'N'},
+
         {"own-debug", Arg::None},
         {"own-tokens", 'T'},
         {"parsefun-skeleton", 'P'},         
@@ -88,7 +90,7 @@ namespace
 int main(int argc, char **argv)
 try
 {
-    Arg &arg = Arg::initialize("AB:b:C:c:Df:H:hI:i:M:m:n:p:P:s:S:tTVv", 
+    Arg &arg = Arg::initialize("AB:b:C:c:Df:H:hI:i:M:m:n:Np:P:s:S:tTVv", 
                     longOptions, longEnd, argc, argv);
 
     arg.versionHelp(usage, version, 1);

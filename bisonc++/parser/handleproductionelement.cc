@@ -29,4 +29,17 @@ void Parser::handleProductionElement(STYPE__ &last)
         default:            // can't occur, but used to keep the 
         break;              // compiler from generating a warning
     }
+
+    if (
+        d_rules.lastProduction().action().empty() and 
+            d_arg.option('N') and
+            d_rules.sType() != ""
+    )
+        wmsg << 
+            "rule `" << &d_rules.lastProduction() << 
+            "' lacks an action block assigning a(n) " << d_rules.sType() << 
+                    " value to $$" << endl;
 }
+
+
+

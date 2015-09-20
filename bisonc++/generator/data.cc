@@ -15,6 +15,7 @@ Generator::Map Generator::s_insert =
     {"debugfunctions",              &Generator::debugFunctions},
     {"debugincludes",               &Generator::debugIncludes},
     {"debuglookup",                 &Generator::debugLookup},
+    {"defaultactionreturn",         &Generator::defaultActionReturn},
     {"errorverbose",                &Generator::errorVerbose},
     {"namespace-open",              &Generator::namespaceOpen},
     {"namespace-close",             &Generator::namespaceClose},
