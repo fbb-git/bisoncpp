@@ -1,9 +1,8 @@
     Syntax: bf(%polymorphic) tt(polymorphic-specification(s))
 
-            The tt(%polymorphic) directive results in defining and using a
+            The tt(%polymorphic) directive is used by bic() to define a
             polymorphic semantic value class, which can be used as a
-            (preferred) alternative to the (traditional) a tt(union)
-            specification. 
+            (preferred) alternative to (traditional) tt(union) types. 
 
             Refer to section ref(POLYMORPHIC) for a detailed description of
             the specification, characteristics, and use of polymorphic

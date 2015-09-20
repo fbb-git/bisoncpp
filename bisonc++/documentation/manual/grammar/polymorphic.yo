@@ -1,7 +1,7 @@
-Bic() may generate code using polymorphic semantic values. The approach
-discussed here is a direct result of a suggestion originally made by Dallas
-A. Clement in September 2007. All sources of the example discussed in this
-section can be retrieved from the lurl(poly) directory.
+Bic() may define polymorphic semantic values. The approach discussed here is a
+direct result of a suggestion originally made by Dallas A. Clement in
+September 2007. All sources of the example discussed in this section can be
+retrieved from the lurl(poly) directory.
 
 One may wonder why a tt(union) is still used by b() as bf(C++) offers
 inherently superior approaches to combine multiple types in one type. The
@@ -11,10 +11,9 @@ approach is still supported by b() since it is supported by bf(bison)(1) and
 bf(bison++); dropping the tt(union) would needlessly impede backward
 compatibility.
 
-The (preferred) alternative to using a tt(union), however, is using a
-polymorphic base class. Although it is possible to define your own polymorphic
-semantic value classes, bic() makes life easy by offering the tt(%polymorphic)
-directive.
+The (preferred) alternative to a tt(union), however, is a polymorphic base
+class. Although it is possible to define your own polymorphic semantic value
+classes, bic() makes life easy by offering the tt(%polymorphic) directive.
 
 The example program (cf. lurl(poly)) implements a polymorphic base class, and
 derived classes containing either an tt(int) or a tt(std::string) semantic

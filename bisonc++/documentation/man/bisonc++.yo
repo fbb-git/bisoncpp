@@ -620,13 +620,12 @@ the directive's specification.
 
 manpagesection(6. POLYMORPHIC SEMANTIC VALUES)
 
-    The tt(%polymorphic) directive results in bic() generating a parser using
+    The tt(%polymorphic) directive allows bic() to generate a parser using
 polymorphic semantic values. The various semantic values are specified as
 pairs, consisting of em(tags) (which are bf(C++) identifiers), and bf(C++)
-type names. Tags and type names are separated from each other by
-colons. Multiple tag and type name combinations are separated from each other
-by semicolons, and an optional semicolon ends the final tag/type
-specification.
+type names. Tags and type names are separated by colons. Multiple tag and type
+name combinations are separated by semicolons, and an optional semicolon ends
+the final tag/type specification.
 
 Here is an example, defining three semantic values: an tt(int), a
 tt(std::string) and a tt(std::vector<double>):
@@ -636,12 +635,13 @@ tt(std::string) and a tt(std::vector<double>):
         )
     The identifier to the left of the colon is called the em(tag-identifier)
 (or simply em(tag)), and the type name to the right of the colon is called the
-em(type-name). The type-names must be built-in types or must offer default
-constructors.
+em(type-name). Starting with bic() version 4.12.00 the types no longer have to
+offer  offer default constructors, but if no default constructor is available
+then the option tt(--no-default-action-return) is required.
 
-    If type-names refer to types declared in header files that were not
-already included by the parser's base class header, then these header files
-must be inserted using the tt(%baseclass-preinclude) directive.
+    When polymorphic type-names refer to types not yet declared by the
+parser's base class header, then these types must be declared in a header file
+whose location is specified through the tt(%baseclass-preinclude) directive.
 
     includefile(../manual/grammar/polymorphictype.yo)
 

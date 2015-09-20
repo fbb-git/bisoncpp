@@ -210,6 +210,13 @@ END)
             functions which are called from the rules's actions have not yet
             been impleemented.
 
+    it() loption(no-default-action-return) (soption(N))nl()
+           Do not use the default tt($$ = $1) assignment of semantic values
+            when returning from an action block. When this option is specified
+            then bic() generates a warning for typed rules (non-terminals)
+            whose action blocks do not provide an explicit tt($$) return
+            value.
+
     it() loption(no-lines)nl() 
            Do not put tt(#line) preprocessor directives in the file containing
             the parser's tt(parse) function. By default the file containing

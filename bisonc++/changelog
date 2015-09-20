@@ -39,8 +39,24 @@ bisonc++ (4.12.00)      TO BE TAGGED
     Defining the BISONCPP environment variable as ~/.bisoncpp usually works
     well. 
 
-  * Items about Guillaume changes
-
+  * Guillaume  Endignoux offered several valuable suggestions:
+    - Classes may not have default constructors, but may still be used if
+      the default $$ = $1 action is not used. This can now be controlled using
+      option --no-dafault-action-return (-N). When this option is specified
+      the default $$ = $1 assignment of semantic values when returning from an
+      action block isn't provided. When this option is specified then Bisonc++
+      generates a warning for typed rules (non-terminals) whose action blocks
+      do not provide an explicit $$ return value.
+    - To assign a value to $$ a member `emplace' is provided, expecting the
+      arguments of the type represented by $$.
+    - In cases where a $x.get<Tag::NAME>() cannot return a reference to a
+      value matching tt(Tag::NAME) and the associated type does not provide a
+      default constructor this function throws an exception reporting
+        STYPE::get<tag>: no default constructor available
+    
+  * Bisonc++'s documentation about using polymorphic values was modified, in
+      particular the information about how the various polymorphic values can
+      be assigned and retrieved.
 
 
 bisonc++ (4.11.00) 
