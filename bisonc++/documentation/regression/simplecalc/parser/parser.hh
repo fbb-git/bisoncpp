@@ -14,3 +14,7 @@
     // symbols from the namespace std without specifying std::
 //using namespace std;
 
+inline void Parser::exceptionHandler__(std::exception const &exc)
+{
+    throw;
+}

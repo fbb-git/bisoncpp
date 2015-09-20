@@ -30,6 +30,7 @@ class Parser: public ParserBase
         int lookup(bool recovery);
         void nextToken();
         void print__();
+        void exceptionHandler__(std::exception const &exc);
 };
 
 inline void Parser::error(char const *msg)

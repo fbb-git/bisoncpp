@@ -3,18 +3,18 @@
     # Modifiy the COMMAND variable to your taste, if your shell isn't
     # mentioned.  By specifying your COMMAND-shell last it will be used;
 COMMAND="/usr/bin/tcsh -f"
-COMMAND=/bin/bash
+#COMMAND=/bin/bash
 
     # Assuming bisonc++ is in your computer's search-path. If not, define
     # BISONCPP as the full path to bisconc++:
-BISONCPP=/home/frank/git/bisonc++/src/bisonc++/tmp/bin/binary
+#BISONCPP=/home/frank/git/bisonc++/src/bisonc++/tmp/bin/binary
 BISONCPP=bisonc++
 
     # UNCOMMENT the following variables if you want to run the examples from
     # the source distribution's documentation/regression directory rather than
     # from bisonc++ documentation's `regression' subdirectory.
-# SKEL=../../../../skeletons
-# BISONCPP="../../../../tmp/bin/bisonc++ -S ${SKEL}"
+SKEL=../../../../skeletons
+BISONCPP="../../../../tmp/bin/binary -S ${SKEL}"
 
 example()
 {
