@@ -2,7 +2,7 @@
 
 #include "../parser/parserbase.h"
 
-// end of scanner.hh
+// end of scanner.ih
 
 
 

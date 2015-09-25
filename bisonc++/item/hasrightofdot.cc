@@ -1,4 +1,4 @@
-#include "item.hh"
+#include "item.ih"
 
 bool Item::hasRightOfDot(Symbol const &symbol) const
 {

@@ -1,4 +1,4 @@
-#include "production.hh"
+#include "production.ih"
 
 std::ostream &Production::standard(std::ostream &out) const
 {

@@ -1,4 +1,4 @@
-#include "nonterminal.hh"
+#include "nonterminal.ih"
 
         // For an empty production, the N gets <empty>. For non-empty
         // productions: add those element's first symbols, and stop if an

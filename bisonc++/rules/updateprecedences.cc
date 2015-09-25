@@ -1,4 +1,4 @@
-#include "rules.hh"
+#include "rules.ih"
 
 // The precedence of a production rule is defined either explicitly (using
 // %prec) or it is defined as the priority setting of the rule's first

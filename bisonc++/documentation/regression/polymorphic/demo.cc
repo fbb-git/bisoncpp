@@ -2,7 +2,7 @@
                               demo.cc
 */
 
-#include "main.hh"
+#include "main.ih"
 
 int main(int argc, char **argv)
 {

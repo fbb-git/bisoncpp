@@ -1,4 +1,4 @@
-#include "parser.hh"
+#include "parser.ih"
 
 void Parser::returnSingle(AtDollar const &atd) const
 {

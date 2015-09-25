@@ -1,4 +1,4 @@
-#include "parser.hh"
+#include "parser.ih"
 
     // When a block is read, process its $ and @ symbols. If it's a nested
     // block, it inherits the outer rule's stype, but it can only sensibly

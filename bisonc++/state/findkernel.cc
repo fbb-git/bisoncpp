@@ -1,4 +1,4 @@
-#include "state.hh"
+#include "state.ih"
 
 // return the index of a state having all items listed in `searchKernel'. If
 // no such state is found, return s_state's size.

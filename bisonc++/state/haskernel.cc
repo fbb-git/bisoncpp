@@ -1,4 +1,4 @@
-#include "state.hh"
+#include "state.ih"
 
 // return true if `state' contains all items stored in `searchKernel'
 

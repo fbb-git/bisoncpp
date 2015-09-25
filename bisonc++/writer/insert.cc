@@ -1,4 +1,4 @@
-#include "writer.hh"
+#include "writer.ih"
 
 void Writer::insert(Terminal::ConstVector const &tokens) const
 {

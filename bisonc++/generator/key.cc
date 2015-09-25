@@ -1,4 +1,4 @@
-#include "generator.hh"
+#include "generator.ih"
 
 void Generator::key(ostream &out) const
 {

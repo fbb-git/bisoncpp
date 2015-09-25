@@ -1,4 +1,4 @@
-#include "rules.hh"
+#include "rules.ih"
 
 void Rules::termToNonterm(Symbol *term, Symbol *nonTerm)
 {

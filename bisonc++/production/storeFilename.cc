@@ -1,4 +1,4 @@
-#include "production.hh"
+#include "production.ih"
 
 void Production::storeFilename(string const &filename)
 {

@@ -1,4 +1,4 @@
-#include "rmreduction.hh"
+#include "rmreduction.ih"
 
 RmReduction::
 {

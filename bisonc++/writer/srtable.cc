@@ -1,4 +1,4 @@
-#include "writer.hh"
+#include "writer.ih"
 
 void Writer::srTable(State const *sp,  std::string const &baseclassScope,
                      FBB::Table &table, std::ostream &out)

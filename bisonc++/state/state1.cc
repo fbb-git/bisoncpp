@@ -1,4 +1,4 @@
-#include "state.hh"
+#include "state.ih"
 
 State::State(size_t idx)
 :

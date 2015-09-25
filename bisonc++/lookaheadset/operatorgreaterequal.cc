@@ -1,4 +1,4 @@
-#include "lookaheadset.hh"
+#include "lookaheadset.ih"
 
 //  Return true if all elements in `other' are already in *this
 

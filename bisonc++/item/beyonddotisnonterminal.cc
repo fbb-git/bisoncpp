@@ -1,4 +1,4 @@
-#include "item.hh"
+#include "item.ih"
 
 Symbol const *Item::beyondDotIsNonTerminal() const
 {

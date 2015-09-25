@@ -1,4 +1,4 @@
-#include "options.hh"
+#include "options.ih"
 
 void Options::showFilenames() const
 {

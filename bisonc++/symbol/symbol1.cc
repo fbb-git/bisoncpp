@@ -1,4 +1,4 @@
-#include "symbol.hh"
+#include "symbol.ih"
 
 Symbol::Symbol(string const &name, Type type, string const &stype)
 :

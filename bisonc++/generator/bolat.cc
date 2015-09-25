@@ -1,4 +1,4 @@
-#include "generator.hh"
+#include "generator.ih"
 
 void Generator::bolAt(ostream &out, string &line, istream &in, bool &accept) 
                                                                         const

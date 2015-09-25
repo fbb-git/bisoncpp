@@ -1,4 +1,4 @@
-#include "generator.hh"
+#include "generator.ih"
 
 bool Generator::errExisting(string const &fileName, string const &option,
                              string const &pattern) const

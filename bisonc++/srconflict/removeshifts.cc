@@ -1,4 +1,4 @@
-#include "srconflict.hh"
+#include "srconflict.ih"
 
 size_t SRConflict::removeShifts(Next::Vector &nextVector)
 {

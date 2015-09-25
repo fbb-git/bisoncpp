@@ -1,4 +1,4 @@
-#include "srconflict.hh"
+#include "srconflict.ih"
 
 // Each reducible item index is passed to visitReduction() which handles an
 // observed S/R conflict. See README.states-and-conflicts for a description of

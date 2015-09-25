@@ -1,4 +1,4 @@
-#include "nonterminal.hh"
+#include "nonterminal.ih"
 
 size_t NonTerminal::s_counter;
 size_t NonTerminal::s_number;

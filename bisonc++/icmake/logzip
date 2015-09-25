@@ -26,12 +26,17 @@ void logZip(string src, string names, string dest)
     for (idx = sizeof(files); idx--; )
     {
         file = files[idx];
-        run("gzip -n -9 < " + file + " > " + g_cwd + dest + file + ".gz");
+        run("gzip -n -9 < " + file + " > " + file + ".gz");
     }
 
-    chdir(g_cwd + dest);
+    run("tar cf - *.gz | (chdir " + 
+                                g_cwd + "; chdir " + dest + "; tar xf -)");
+
+
     for (idx = sizeof(files); idx--; )
         log(files[idx] + ".gz");
+
+    run("rm *.gz");
 }
 
 

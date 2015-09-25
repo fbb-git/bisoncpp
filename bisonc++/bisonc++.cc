@@ -2,7 +2,7 @@
                               bisonc++.cc
 */
 
-#include "bisonc++.hh"
+#include "bisonc++.ih"
 
 using namespace std;
 using namespace FBB;

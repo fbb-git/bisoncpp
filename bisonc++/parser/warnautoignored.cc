@@ -1,4 +1,4 @@
-#include "parser.hh"
+#include "parser.ih"
 
 void Parser::warnAutoIgnored(char const *typeOrField, 
                              AtDollar const &atd) const

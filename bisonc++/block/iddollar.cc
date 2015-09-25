@@ -1,4 +1,4 @@
-#include "block.hh"
+#include "block.ih"
 
     // $<ID>$
 void Block::IDdollar(size_t lineNr, string const &text)

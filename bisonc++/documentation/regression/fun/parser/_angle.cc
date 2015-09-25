@@ -1,4 +1,4 @@
-#include "parser.hh"
+#include "parser.ih"
 
 double Parser::angle(double radians)    // convert radians to angle type 
 {

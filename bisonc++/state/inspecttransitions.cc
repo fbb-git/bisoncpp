@@ -1,4 +1,4 @@
-#include "state.hh"
+#include "state.ih"
 
 // All Next objects in the state's d_nextVector are inspected. The Next 
 // objects hold 

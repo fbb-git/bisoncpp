@@ -1,4 +1,4 @@
-#include "state.hh"
+#include "state.ih"
 
 // compute the LA sets of the items of a state.
 

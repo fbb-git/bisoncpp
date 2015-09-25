@@ -1,4 +1,4 @@
-#include "parser.hh"
+#include "parser.ih"
 
 void Parser::display(int x)
 {

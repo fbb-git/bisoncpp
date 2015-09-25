@@ -1,4 +1,4 @@
-#include "options.hh"
+#include "options.ih"
 
 // define the polymorphic semantic value type, embedded in a shared_ptr
 

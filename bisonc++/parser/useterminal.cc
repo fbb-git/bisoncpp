@@ -1,4 +1,4 @@
-#include "parser.hh"
+#include "parser.ih"
 
 Terminal *Parser::useTerminal() 
 {

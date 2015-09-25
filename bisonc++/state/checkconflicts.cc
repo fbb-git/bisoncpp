@@ -1,4 +1,4 @@
-#include "state.hh"
+#include "state.ih"
 
 // If there are reducible items, SR or RR conflicts may be observed.
 

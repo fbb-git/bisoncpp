@@ -1,4 +1,4 @@
-#include "grammar.hh"
+#include "grammar.ih"
 
 bool Grammar::isDerivable(Production const *prod) 
 {

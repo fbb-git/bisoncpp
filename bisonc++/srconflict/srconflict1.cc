@@ -1,4 +1,4 @@
-#include "srconflict.hh"
+#include "srconflict.ih"
 
 SRConflict::SRConflict(Next::Vector const &nextVector, 
                         StateItem::Vector const &itemVector, 

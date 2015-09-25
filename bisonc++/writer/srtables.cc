@@ -1,4 +1,4 @@
-#include "writer.hh"
+#include "writer.ih"
 
 void Writer::srTables() const
 {

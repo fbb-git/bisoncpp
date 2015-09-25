@@ -1,4 +1,4 @@
-#include "production.hh"
+#include "production.ih"
 
 Symbol *Production::vectorIdx(size_t idx) const
 {

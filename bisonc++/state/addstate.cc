@@ -1,4 +1,4 @@
-#include "state.hh"
+#include "state.ih"
 
 void State::addState(Item::Vector const &kernel)
 {

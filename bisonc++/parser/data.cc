@@ -1,4 +1,4 @@
-#include "parser.hh"
+#include "parser.ih"
 
 size_t Parser::s_nHidden;
 

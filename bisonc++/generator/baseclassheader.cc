@@ -1,4 +1,4 @@
-#include "generator.hh"
+#include "generator.ih"
 
 // The base class header contains some of the member functions hat are
 // inherited by the parser class itself. It also defines the tokens to be

@@ -1,4 +1,4 @@
-#include "generator.hh"
+#include "generator.ih"
 
 // New members and other facilites may be added to the parser's class header
 // after its initial generation. 

@@ -1,4 +1,4 @@
-#include "rrconflict.hh"
+#include "rrconflict.ih"
 
 RRConflict::RRConflict(StateItem::Vector const &stateItem, 
                        vector<size_t> const &reducible)

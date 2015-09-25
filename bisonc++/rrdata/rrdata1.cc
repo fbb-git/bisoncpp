@@ -1,4 +1,4 @@
-#include "rrdata.hh"
+#include "rrdata.ih"
 
 RRData::RRData(LookaheadSet laSet)
 :

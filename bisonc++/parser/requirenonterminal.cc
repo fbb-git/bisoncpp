@@ -1,4 +1,4 @@
-#include "parser.hh"
+#include "parser.ih"
 
 NonTerminal *Parser::requireNonTerminal(string const &name)
 {

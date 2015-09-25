@@ -1,4 +1,4 @@
-#include "atdollar.hh"
+#include "atdollar.ih"
 
     // $<ID>$ or $<ID>-?NR
 

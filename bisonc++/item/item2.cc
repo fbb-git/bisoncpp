@@ -1,4 +1,4 @@
-#include "item.hh"
+#include "item.ih"
 
 Item::Item(Item const *item, size_t dot)
 :

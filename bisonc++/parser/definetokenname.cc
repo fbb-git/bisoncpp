@@ -1,4 +1,4 @@
-#include "parser.hh"
+#include "parser.ih"
 
 void Parser::defineTokenName(string const &name, bool hasValue)
 {

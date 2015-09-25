@@ -1,4 +1,4 @@
-#include "block.hh"
+#include "block.ih"
 
 std::ostream &operator<<(std::ostream &out, Block const &blk)
 {

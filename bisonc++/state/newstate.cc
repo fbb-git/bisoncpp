@@ -1,4 +1,4 @@
-#include "state.hh"
+#include "state.ih"
 
 State &State::newState()
 {

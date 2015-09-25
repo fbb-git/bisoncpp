@@ -1,4 +1,4 @@
-#include "parser.hh"
+#include "parser.ih"
 
 Parser::Parser(Rules &rules)
 :

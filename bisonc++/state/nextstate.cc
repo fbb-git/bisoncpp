@@ -1,4 +1,4 @@
-#include "state.hh"
+#include "state.ih"
 
 void State::nextState(Next &next)
 {

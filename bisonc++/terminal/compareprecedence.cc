@@ -1,4 +1,4 @@
-#include "terminal.hh"
+#include "terminal.ih"
 
 Terminal::Precedence
     Terminal::comparePrecedence(Symbol const *firstSymbol, 

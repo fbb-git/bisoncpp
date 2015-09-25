@@ -1,4 +1,4 @@
-#include "next.hh"
+#include "next.ih"
 
 Next::Next(Symbol const *symbol, size_t stateItemOffset)
 :

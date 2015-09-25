@@ -1,4 +1,4 @@
-#include "parser.hh"
+#include "parser.ih"
 
 size_t Parser::extractIndex(int *idx, size_t pos)
 {

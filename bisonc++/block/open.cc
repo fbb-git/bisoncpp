@@ -1,4 +1,4 @@
-#include "block.hh"
+#include "block.ih"
 
 void Block::open(size_t lineno, string const &source)
 {

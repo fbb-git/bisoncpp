@@ -1,3 +1,3 @@
-#include "rrconflict.hh"
+#include "rrconflict.ih"
 
 size_t RRConflict::s_nConflicts;

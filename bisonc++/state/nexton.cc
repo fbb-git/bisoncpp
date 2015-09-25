@@ -1,4 +1,4 @@
-#include "state.hh"
+#include "state.ih"
 
 size_t State::nextOn(Symbol const *symbol) const
 {

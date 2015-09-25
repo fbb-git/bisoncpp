@@ -1,4 +1,4 @@
-#include "options.hh"
+#include "options.ih"
 
 //     1           2           3       4
 // --target     %target     --dest   %dest       action: (D: default)

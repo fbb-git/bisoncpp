@@ -1,4 +1,4 @@
-#include "state.hh"
+#include "state.ih"
 
 // The LA set of an item tt(`idx') is distributed over the items representing
 // production rules of the non-terminal to the right of item idx's dot

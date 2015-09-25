@@ -1,4 +1,4 @@
-#include "_rulevalue.hh"
+#include "_rulevalue.ih"
 
 RuleValue::Function::Function(double (*ptr)(double), Type t)
 :

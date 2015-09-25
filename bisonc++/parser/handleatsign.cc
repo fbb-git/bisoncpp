@@ -1,4 +1,4 @@
-#include "parser.hh"
+#include "parser.ih"
 
 // We're at a @ character, followed by a number, @1, @2, ... etc. @<x>. 
 // The number is the element number  of a production rule

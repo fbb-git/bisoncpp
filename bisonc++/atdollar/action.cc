@@ -1,4 +1,4 @@
-#include "atdollar.hh"
+#include "atdollar.ih"
 
 AtDollar::Action AtDollar::action() const
 {

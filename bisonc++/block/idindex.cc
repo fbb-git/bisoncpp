@@ -1,4 +1,4 @@
-#include "block.hh"
+#include "block.ih"
 
 void Block::IDindex(size_t lineNr, string const &text)
 {

@@ -1,4 +1,4 @@
-#include "generator.hh"
+#include "generator.ih"
 
 bool Generator::conflicts() const
 {

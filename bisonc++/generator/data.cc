@@ -1,4 +1,4 @@
-#include "generator.hh"
+#include "generator.ih"
 
 Generator::Map Generator::s_insert =
 {
@@ -8,7 +8,7 @@ Generator::Map Generator::s_insert =
     {"scannerobject",               &Generator::scannerObject},
     {"baseclass",                   &Generator::baseClass},
     {"class.h",                     &Generator::classH},
-    {"class.hh",                    &Generator::classHH},
+    {"class.ih",                    &Generator::classIH},
     {"debug",                       &Generator::debug},
     {"debugdecl",                   &Generator::debugDecl},
     {"debuginit",                   &Generator::debugInit},

@@ -1,4 +1,4 @@
-#include "scanner.hh"
+#include "scanner.ih"
 
 bool Scanner::handleXstring(size_t nRedo)
 {

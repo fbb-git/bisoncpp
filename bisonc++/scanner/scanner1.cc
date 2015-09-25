@@ -1,4 +1,4 @@
-#include "scanner.hh"
+#include "scanner.ih"
 
 Scanner::Scanner(std::string const &infile)
 :

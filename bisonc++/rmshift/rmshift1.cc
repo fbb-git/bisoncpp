@@ -1,4 +1,4 @@
-#include "rmshift.hh"
+#include "rmshift.ih"
 
 RmShift::RmShift(size_t idx, bool forced)
 :

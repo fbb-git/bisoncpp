@@ -1,4 +1,4 @@
-#include "rules.hh"
+#include "rules.ih"
 
 void Rules::updatePrecedence(Production *production, 
                              Terminal::Vector const &tv)

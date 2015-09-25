@@ -1,4 +1,4 @@
-#include "srconflict.hh"
+#include "srconflict.ih"
 
 // Assume the itemVector of a state is as follows (StateItems):
 //     0:    [P11 3] expression -> expression '-' expression  .   

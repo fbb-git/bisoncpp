@@ -1,4 +1,4 @@
-#include "production.hh"
+#include "production.ih"
 
 void Production::setPrecedence(Terminal const *terminal) 
 {

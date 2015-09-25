@@ -1,4 +1,4 @@
-#include "parser.hh"
+#include "parser.ih"
 
 Parser::SemTag Parser::semTag(char const *label, AtDollar const &atd, 
                      bool (Parser::*testID)(std::string const &) const) const

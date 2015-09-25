@@ -17,7 +17,7 @@ Here is how to compile and run the parser file:
     build  parser  rpn  rpn.cc  rpn.h
     
     ./parser:
-    Parser.h  Parser.hh  Parserbase.h  grammar  lex.cc  parse.cc  parse.output
+    Parser.h  Parser.ih  Parserbase.h  grammar  lex.cc  parse.cc  parse.output
         )
     Here is an example session using tt(rpn):
         verb(

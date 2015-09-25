@@ -1,4 +1,4 @@
-#include "block.hh"
+#include "block.ih"
 
 bool Block::close()
 {

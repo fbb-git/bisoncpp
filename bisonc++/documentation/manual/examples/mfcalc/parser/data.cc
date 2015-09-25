@@ -1,4 +1,4 @@
-#include "Parser.hh"
+#include "Parser.ih"
 
 Parser::FunctionPair Parser::s_funTab[] =
 {

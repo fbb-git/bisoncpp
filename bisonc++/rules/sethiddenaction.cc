@@ -1,4 +1,4 @@
-#include "rules.hh"
+#include "rules.ih"
 
 void Rules::setHiddenAction(Block const &block) 
 {

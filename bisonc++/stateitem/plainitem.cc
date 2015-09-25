@@ -1,4 +1,4 @@
-#include "stateitem.hh"
+#include "stateitem.ih"
 
 ostream &StateItem::plainItem(ostream &out) const
 {

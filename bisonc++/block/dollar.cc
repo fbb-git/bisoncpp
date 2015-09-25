@@ -1,4 +1,4 @@
-#include "block.hh"
+#include "block.ih"
 
     // called at @@, $$ or $$. in a block
 

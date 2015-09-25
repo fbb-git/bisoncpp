@@ -1,4 +1,4 @@
-#include "main.hh"
+#include "main.ih"
 
 int main()
 {

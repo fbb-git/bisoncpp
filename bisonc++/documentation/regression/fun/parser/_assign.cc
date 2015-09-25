@@ -1,4 +1,4 @@
-#include "parser.hh"
+#include "parser.ih"
 
 RuleValue &Parser::assign(RuleValue &v1, int operation, RuleValue const &v2)
 {

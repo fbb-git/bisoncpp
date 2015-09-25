@@ -1,4 +1,4 @@
-#include "item.hh"
+#include "item.ih"
 
 bool Item::firstBeyondDot(FirstSet *firstSet) const
 {

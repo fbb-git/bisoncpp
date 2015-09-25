@@ -1,4 +1,4 @@
-#include "terminal.hh"
+#include "terminal.ih"
 
 namespace {
     char const *quotes[][2] = 

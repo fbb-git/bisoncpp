@@ -1,4 +1,4 @@
-#include "rules.hh"
+#include "rules.ih"
 
 void Rules::addProduction(size_t lineNr)
 {

@@ -38,7 +38,7 @@ class Options
     std::set<std::string> d_warnOptions;    // contains the names of options 
                                             // for which Generator may warn
                                             // if specified for already
-                                            // existing .h or .hh files
+                                            // existing .h or .ih files
 
     std::string d_baseClassHeader;
     std::string d_baseClassSkeleton;

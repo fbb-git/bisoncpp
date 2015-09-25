@@ -1,4 +1,4 @@
-#include "generator.hh"
+#include "generator.ih"
 
 string Generator::filename(std::string const &path)
 {

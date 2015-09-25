@@ -1,4 +1,4 @@
-#include "generator.hh"
+#include "generator.ih"
 
 std::string const &Generator::atTokenFunction() const
 {

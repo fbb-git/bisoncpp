@@ -1,4 +1,4 @@
-#include "item.hh"
+#include "item.ih"
 
 ostream &Item::plainItem(ostream &out) const
 {

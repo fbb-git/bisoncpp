@@ -67,11 +67,11 @@ void main(int argc, list argv)
     if (option == "distclean")
         clean(1);
 
-    if (option == "install")
-        install(argv[2]);
-
     if (option != "")
         special();
+
+    if (option == "install")
+        install(argv[2]);
 
     if (option == "uninstall")
         uninstall();
@@ -112,7 +112,7 @@ void main(int argc, list argv)
     if (option == "scanner")
     {
         chdir("scanner");
-        system("flexc++ -i scanner.hh lexer");
+        system("flexc++ -i scanner.ih lexer");
         chdir("..");
         system("icmbuild program " + strip);
         exit(0);

@@ -1,4 +1,4 @@
-#include "srconflict.hh"
+#include "srconflict.ih"
 
 void SRConflict::showConflicts(Rules const &rules) const
 {

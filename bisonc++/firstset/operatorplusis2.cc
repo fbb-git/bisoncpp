@@ -1,4 +1,4 @@
-#include "firstset.hh"
+#include "firstset.ih"
 
 FirstSet &FirstSet::operator+=(std::set<Element const *> const &terminalSet)
 {

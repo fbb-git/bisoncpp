@@ -1,4 +1,4 @@
-#include "rrconflict.hh"
+#include "rrconflict.ih"
 
 void RRConflict::removeConflicts(StateItem::Vector &itemVector)
 {

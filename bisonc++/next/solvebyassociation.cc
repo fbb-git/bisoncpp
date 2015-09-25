@@ -1,4 +1,4 @@
-#include "next.hh"
+#include "next.ih"
 
 Next::Solution Next::solveByAssociation() const
 {

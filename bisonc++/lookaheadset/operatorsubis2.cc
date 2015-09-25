@@ -1,4 +1,4 @@
-#include "lookaheadset.hh"
+#include "lookaheadset.ih"
 
 LookaheadSet &LookaheadSet::operator-=(Symbol const *symbol)
 {

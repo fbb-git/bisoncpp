@@ -1,4 +1,4 @@
-#include "nonterminal.hh"
+#include "nonterminal.ih"
 
 NonTerminal::NonTerminal(string const &name, string const &stype, Type type)
 :

@@ -1,4 +1,4 @@
-#include "next.hh"
+#include "next.ih"
 
 void Next::checkRemoved(ostream &out) const
 {

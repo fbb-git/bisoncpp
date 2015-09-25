@@ -1,4 +1,4 @@
-#include "state.hh"
+#include "state.ih"
 
 Next::ConstIter State::nextFind(Symbol const *symbol) const
 {

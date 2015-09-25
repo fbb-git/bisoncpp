@@ -1,4 +1,4 @@
-#include "terminal.hh"
+#include "terminal.ih"
 
 ostream &Terminal::nameOrValue(ostream &out) const
 {

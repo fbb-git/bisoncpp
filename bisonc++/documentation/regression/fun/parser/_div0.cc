@@ -1,4 +1,4 @@
-#include "parser.hh"
+#include "parser.ih"
 
 void Parser::div0(RuleValue const &vl, RuleValue const &vr)
 {

@@ -1,4 +1,4 @@
-#include "parser.hh"
+#include "parser.ih"
 
 string Parser::returnPolymorphic(AtDollar const &atd) const
 {

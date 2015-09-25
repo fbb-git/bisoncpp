@@ -1,3 +1,3 @@
-#include "writer.hh"
+#include "writer.ih"
 
 char const *Writer::s_threadConst = "";

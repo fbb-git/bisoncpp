@@ -1,4 +1,4 @@
-#include "options.hh"
+#include "options.ih"
 
 void Options::setPathStrings()
 {
@@ -7,7 +7,7 @@ void Options::setPathStrings()
 
     setPath(&d_classHeader, 'c', d_genericFilename, ".h", "class-header");
 
-    setPath(&d_implementationHeader, 'i', d_genericFilename, ".hh",
+    setPath(&d_implementationHeader, 'i', d_genericFilename, ".ih",
                                                     "implementation-header");
 
     setPath(&d_parsefunSource, 'p', s_defaultParsefunSource, "",

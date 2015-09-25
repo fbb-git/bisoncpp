@@ -1,4 +1,4 @@
-#include "options.hh"
+#include "options.ih"
 
 // copy the location declaration into `d_locationDecl' as the
 // definition of LSTYPE.

@@ -1,4 +1,4 @@
-#include "state.hh"
+#include "state.ih"
 
 // Defining states proceeds like this:
 //
