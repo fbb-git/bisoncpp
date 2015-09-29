@@ -20,8 +20,9 @@ if [ "$yesno" == "y" ] ; then
     cd ..    
     git co gh-pages
 
-    mv ../wip/changelog.txt ../wip/bisonc++man.html ../wip/manual/* .
-    rm -r essence
+    rm --rf manual
+    mv ../wip/changelog.txt ../wip/bisonc++man.html ../wip/manual .
+    rm -r manual/essence
 fi
 
 echo
