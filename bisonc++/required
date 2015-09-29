@@ -5,7 +5,7 @@ explicitly mentioned, but a fairly recent one is assumed.
 Required software for building Bisonc++ 4.12.00
 -----------------------------------------------
 
-libbobcat-dev (>= 3.25.02),
+libbobcat-dev (>= 4.01.00),
 
 To use the provided build-script:
 

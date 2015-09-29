@@ -1,4 +1,4 @@
-bisonc++ (4.12.00)      TO BE TAGGED
+bisonc++ (4.12.00)
 
   * Added 'build uninstall'. This command only works if, when calling one of
     the 'build install' alternatives and when calling 'build uninstall' the
@@ -13,7 +13,7 @@ bisonc++ (4.12.00)      TO BE TAGGED
   * Guillaume  Endignoux offered several valuable suggestions:
     - Classes may not have default constructors, but may still be used if
       the default $$ = $1 action is not used. This can now be controlled using
-      option --no-dafault-action-return (-N). When this option is specified
+      option --no-default-action-return (-N). When this option is specified
       the default $$ = $1 assignment of semantic values when returning from an
       action block isn't provided. When this option is specified then Bisonc++
       generates a warning for typed rules (non-terminals) whose action blocks
@@ -29,6 +29,7 @@ bisonc++ (4.12.00)      TO BE TAGGED
       particular the information about how the various polymorphic values can
       be assigned and retrieved.
 
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 29 Sep 2015 11:48:18 +0200
 
 bisonc++ (4.11.00) 
 
