@@ -11,7 +11,7 @@
 <body>
 <hr>
 <h1>bisonc++</h1>
-<h2>bisonc++.4.11.00.tar.gz</h2>
+<h2>bisonc++.4.12.00.tar.gz</h2>
 <h2>2005-2015</h2>
 
 <!DOCTYPE html><html><head>
@@ -46,7 +46,7 @@
 <body>
 <hr>
 <h1>bisonc++(1)</h1>
-<h2>bisonc++.4.11.00.tar.gz bisonc++ parser generator</h2>
+<h2>bisonc++.4.12.00.tar.gz bisonc++ parser generator</h2>
 <h2>2005-2015</h2>
 
 
@@ -439,6 +439,13 @@ It is an error if this option is used and an already existing
             situations where the grammar has already been decorated, but
             functions which are called from the rules's actions have not yet
             been impleemented.
+<p>
+<li> <strong>--no-default-action-return</strong> (<strong>-N</strong>)<br>
+           Do not use the default <em>$$ = $1</em> assignment of semantic values
+            when returning from an action block. When this option is specified
+            then <strong>bisonc++</strong> generates a warning for typed rules (non-terminals)
+            whose action blocks do not provide an explicit <em>$$</em> return
+            value.
 <p>
 <li> <strong>--no-lines</strong><br> 
            Do not put <em>#line</em> preprocessor directives in the file containing
@@ -994,13 +1001,12 @@ Within the parser class, the semantic value type is available as
 <p>
 <h2>5. POLYMORPHIC SEMANTIC VALUES</h2>
 <p>
-The <em>%polymorphic</em> directive results in <strong>bisonc++</strong> generating a parser using
+The <em>%polymorphic</em> directive allows <strong>bisonc++</strong> to generate a parser using
 polymorphic semantic values. The various semantic values are specified as
 pairs, consisting of <em>tags</em> (which are <strong>C++</strong> identifiers), and <strong>C++</strong>
-type names. Tags and type names are separated from each other by
-colons. Multiple tag and type name combinations are separated from each other
-by semicolons, and an optional semicolon ends the final tag/type
-specification.
+type names. Tags and type names are separated by colons. Multiple tag and type
+name combinations are separated by semicolons, and an optional semicolon ends
+the final tag/type specification.
 <p>
 Here is an example, defining three semantic values: an <em>int</em>, a
 <em>std::string</em> and a <em>std::vector&lt;double&gt;</em>:
@@ -1013,17 +1019,18 @@ Here is an example, defining three semantic values: an <em>int</em>, a
 
     The identifier to the left of the colon is called the <em>tag-identifier</em>
 (or simply <em>tag</em>), and the type name to the right of the colon is called the
-<em>type-name</em>. The type-names must be built-in types or must offer default
-constructors.
+<em>type-name</em>. Since <strong>bisonc++</strong> version 4.12.00 the types no longer have to
+offer  offer default constructors, but if no default constructor is available
+then the option <em>--no-default-action-return</em> is required.
 <p>
-If type-names refer to types declared in header files that were not
-already included by the parser's base class header, then these header files
-must be inserted using the <em>%baseclass-preinclude</em> directive.
+When polymorphic type-names refer to types not yet declared by the
+parser's base class header, then these types must be declared in a header file
+whose location is specified through the <em>%baseclass-preinclude</em> directive.
 <p>
     The <em>%type</em> directive is used to associate (non-)terminals with semantic
 value types.
 <p>
-Non-terminals may automatically be associated with polymorphic semantic
+Non-terminals may be associated with polymorphic semantic
 values using <em>%type</em> directives. E.g., after:
         <pre>
 
@@ -1044,10 +1051,11 @@ a rule like:
         
 </pre>
 
-    automatically associates $$, $1 and $3 with <em>int</em> values. $$ is an
+    automatically associates $$, $1 and $3 with <em>int</em> values. Here $$ is an
 lvalue (representing the semantic value associated with the <em>expr:</em> rule),
-while $1 and $3 represent the <em>int</em> semantic value associated with the
-<em>expr</em> non-terminal in the production rule <em>'-' expr</em> (rvalues).
+while $1 and $3 represent, because of the <em>%type</em> specification, <em>int</em>
+semantic values which are associated with, resp., the first and second
+<em>expr</em> non-terminal in the production rule <em>expr '+' expr</em>.
 <p>
 When negative dollar indices (like $-1) are used, pre-defined associations
 between non-terminals and semantic types are ignored.  With positive indices
@@ -1252,7 +1260,10 @@ value type (<em>STYPE__</em>) to be called explicitly. The default tag is only
 ignored if there are no additional characters (e.g., blanks, closing
 parentheses) between the dollar-expressions and the member selector operator
 (e.g., no tags are used with $1.member(), but tags are used with
-($1).member()). The opposite, overriding default tag associations, is
+<em>($1).member()</em>). In fact, notations like <em>($$), ($1)</em>, etc. are synonym
+to using <em>$$.get&lt;Tag__::TYPE&gt;(), $1.get&lt;Tag__::TYPE&gt;()</em>
+<p>
+The opposite, overriding default tag associations, is
 accomplished using constructions like $&lt;STYPE__&gt;$ and $&lt;STYPE__&gt;1.
 <p>
 When negative dollar indices are used, the appropriate tag must explicitly be
@@ -1270,7 +1281,7 @@ specification file itself:
     
     arg:
         {
-            call($-1-&gt;get&lt;Tag__::INT&gt;());
+            call($-1.get&lt;Tag__::INT&gt;());
         }
     ;
         
@@ -1313,7 +1324,7 @@ Semantic values may also directly be associated with terminal tokens. In that
 case it is the lexical scanner's responsibility to assign a properly typed
 value to the parser's <em>STYPE__ d_val__</em> data member. When the lexical
 scanner receives a pointer to the parser's <em>d_val__</em> data member (using,
-e.g., a member <em>setSval(STYPE__ *dval)</em> 
+e.g., a member <em>setSval(STYPE__ *dval)</em>)
     , 
 then the lecical scanner must use <em>tagged assignment</em> as shown in the above
 example to reach the different polymorphic types. The lexical scanner, having
@@ -1321,7 +1332,7 @@ defined a <em>Parser::STYPE__ *d_val</em> data member could then use statements
 like
         <pre>
 
-    d_val-&gt;get&lt;Tag__::INT&gt;() = stoi(matched());
+    d_val.get&lt;Tag__::INT&gt;() = stoi(matched());
         
 </pre>
 
@@ -1656,7 +1667,7 @@ In Parser.ih, assuming the name of the generated class is `Parser', add the
        Used internally.
     <li> <strong>void print__()()</strong>:<br>
        Used internally.
-    <li> <strong>void print()</strong></ul>:<br>
+    <li> <strong>void print()</strong>:<br>
       By default implemented inline in the <em>parser.ih</em> internal header file,
        this member calls <em>print__</em> to display the last received token and
        corrseponding matched text. The <em>print__</em> member is only implemented
@@ -1674,7 +1685,7 @@ In Parser.ih, assuming the name of the generated class is `Parser', add the
        Used internally.
     <li> <strong>void Base::top__()</strong>:<br>
        Used internally.
-    )
+    </ul>
 <p>
 <h2>9. PRIVATE DATA MEMBERS</h2>
 <p>

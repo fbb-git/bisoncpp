@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<title> <div style="text-align: center"><strong>Bisonc++</strong> (Version 4.11.00) User Guide</div> </title>
+<title> <div style="text-align: center"><strong>Bisonc++</strong> (Version 4.12.00) User Guide</div> </title>
 <style type="text/css">
     figure {text-align: center;}
     img {vertical-align: center;}
@@ -686,10 +686,9 @@ the multiplication or the addition operators.
             values</h3> 
         Syntax: <strong>%polymorphic</strong> <code>polymorphic-specification(s)</code>
 <p>
-The <code>%polymorphic</code> directive results in defining and using a
+The <code>%polymorphic</code> directive is used by <strong>bisonc++</strong> to define a
             polymorphic semantic value class, which can be used as a
-            (preferred) alternative to the (traditional) a <code>union</code>
-            specification. 
+            (preferred) alternative to (traditional) <code>union</code> types. 
 <p>
 Refer to section <a href="bisonc++05.html#POLYMORPHIC">5.6.3</a> for a detailed description of
             the specification, characteristics, and use of polymorphic
@@ -1154,10 +1153,10 @@ type-correctness of assignments to rule results.
 <a name="POLYMORPHIC"></a><a name="l78"></a>
 <h3>5.6.3: Polymorphism and multiple semantic values:
                         `%polymorphic'</h3> 
-    <strong>Bisonc++</strong> may generate code using polymorphic semantic values. The approach
-discussed here is a direct result of a suggestion originally made by Dallas
-A. Clement in September 2007. All sources of the example discussed in this
-section can be retrieved from the <a href="poly">poly</a> directory.
+    <strong>Bisonc++</strong> may define polymorphic semantic values. The approach discussed here is a
+direct result of a suggestion originally made by Dallas A. Clement in
+September 2007. All sources of the example discussed in this section can be
+retrieved from the <a href="poly">poly</a> directory.
 <p>
 One may wonder why a <code>union</code> is still used by <strong>bisonc++</strong> as <strong>C++</strong> offers
 inherently superior approaches to combine multiple types in one type. The
@@ -1167,23 +1166,23 @@ approach is still supported by <strong>bisonc++</strong> since it is supported b
 <strong>bison++</strong>; dropping the <code>union</code> would needlessly impede backward
 compatibility.
 <p>
-The (preferred) alternative to using a <code>union</code>, however, is using a
-polymorphic base class. Although it is possible to define your own polymorphic
-semantic value classes, <strong>bisonc++</strong> makes life easy by offering the <code>%polymorphic</code>
-directive.
+The (preferred) alternative to a <code>union</code>, however, is a polymorphic base
+class. Although it is possible to define your own polymorphic semantic value
+classes, <strong>bisonc++</strong> makes life easy by offering the <code>%polymorphic</code> directive.
 <p>
 The example program (cf. <a href="poly">poly</a>) implements a polymorphic base class, and
 derived classes containing either an <code>int</code> or a <code>std::string</code> semantic
-value. These types are asociated with tags (resp. <code>INT</code> and <code>TEXT</code> using
+value. These types are asociated with tags (resp. <code>INT</code> and <code>TEXT</code>) using
 the <code>%polymorphic</code> directive, which is discussed next.
 <p>
 <a name="l79"></a>
 <h4>5.6.3.1: The %polymorphic directive</h4>
-            The <code>%polymorphic</code> directive results in <strong>bisonc++</strong> generating a parser using
-polymorphic semantic values. Each semantic value specification consists of a
-<em>tag</em>, which is a <strong>C++</strong> identifier, and a <strong>C++</strong> type definition.
+            When encountering the <code>%polymorphic</code> directive <strong>bisonc++</strong> generates a parser
+that uses polymorphic semantic values. Each semantic value specification
+consists of a <em>tag</em>, which is a <strong>C++</strong> identifier, and a <strong>C++</strong> type
+definition.
 <p>
-Tags and type definitions are separated from each other by a colon, and
+Tags and type definitions are separated by colons, and
 multiple semantic values specifications are separated by semicolons. The
 semicolon trailing the final semantic value specification is optional.
 <p>
@@ -1203,12 +1202,14 @@ Here is an example, defining three semantic values types: an <code>int</code>, a
     The identifier to the left of the colon is called the <em>type-identifier</em>,
 and the type definition to the right of the colon is called the
 <em>type-definition</em>. Types specified at the <code>%polymorphic</code> type-definitions
-must be built-in types or class-type declarations. Class types mentioned at
-the <code>%polymorphic</code> directive must offer default constructors.
+must be built-in types or class-type declarations. Since <strong>bisonc++</strong> version 4.12.00
+the types no longer have to offer offer default constructors, but if no
+default constructor is available then the option
+<code>--no-default-action-return</code> is required.
 <p>
-If type declarations refer to types declared in header files that were
-not already included by the parser's base class header, then these header
-<strong>s</strong> must be inserted using the <code>%baseclass-preinclude</code> directive as
+When polymorphic type-names refer to types not yet declared by the
+parser's base class header, then these types must be declared in a header file
+whose location is specified through the <code>%baseclass-preinclude</code> directive as
 these types are referred to in the generated <code>parserbase.h</code> header file.
 <p>
 <a name="POLYTYPE"></a><a name="l80"></a>
@@ -1217,7 +1218,7 @@ these types are referred to in the generated <code>parserbase.h</code> header fi
             The <code>%type</code> directive is used to associate (non-)terminals with semantic
 value types.
 <p>
-Non-terminals may automatically be associated with polymorphic semantic
+Non-terminals may be associated with polymorphic semantic
 values using <code>%type</code> directives. E.g., after:
         <pre>
 
@@ -1238,10 +1239,11 @@ a rule like:
         
 </pre>
 
-    automatically associates $$, $1 and $3 with <code>int</code> values. $$ is an
+    automatically associates $$, $1 and $3 with <code>int</code> values. Here $$ is an
 lvalue (representing the semantic value associated with the <code>expr:</code> rule),
-while $1 and $3 represent the <code>int</code> semantic value associated with the
-<code>expr</code> non-terminal in the production rule <code>'-' expr</code> (rvalues).
+while $1 and $3 represent, because of the <code>%type</code> specification, <code>int</code>
+semantic values which are associated with, resp., the first and second
+<code>expr</code> non-terminal in the production rule <code>expr '+' expr</code>.
 <p>
 When negative dollar indices (like $-1) are used, pre-defined associations
 between non-terminals and semantic types are ignored.  With positive indices
@@ -1531,7 +1533,10 @@ value type (<code>STYPE__</code>) to be called explicitly. The default tag is on
 ignored if there are no additional characters (e.g., blanks, closing
 parentheses) between the dollar-expressions and the member selector operator
 (e.g., no tags are used with $1.member(), but tags are used with
-($1).member()). The opposite, overriding default tag associations, is
+<code>($1).member()</code>). In fact, notations like <code>($$), ($1)</code>, etc. are synonym
+to using <code>$$.get&lt;Tag__::TYPE&gt;(), $1.get&lt;Tag__::TYPE&gt;()</code>
+<p>
+The opposite, overriding default tag associations, is
 accomplished using constructions like $&lt;STYPE__&gt;$ and $&lt;STYPE__&gt;1.
 <p>
 When negative dollar indices are used, the appropriate tag must explicitly be
@@ -1549,7 +1554,7 @@ specification file itself:
     
     arg:
         {
-            call($-1-&gt;get&lt;Tag__::INT&gt;());
+            call($-1.get&lt;Tag__::INT&gt;());
         }
     ;
         
@@ -1592,7 +1597,7 @@ Semantic values may also directly be associated with terminal tokens. In that
 case it is the lexical scanner's responsibility to assign a properly typed
 value to the parser's <code>STYPE__ d_val__</code> data member. When the lexical
 scanner receives a pointer to the parser's <code>d_val__</code> data member (using,
-e.g., a member <code>setSval(STYPE__ *dval)</code> 
+e.g., a member <code>setSval(STYPE__ *dval)</code>)
     (cf. section <a href="bisonc++06.html#PRIVDATA">6.4</a>), 
 then the lecical scanner must use <em>tagged assignment</em> as shown in the above
 example to reach the different polymorphic types. The lexical scanner, having
@@ -1600,7 +1605,7 @@ defined a <code>Parser::STYPE__ *d_val</code> data member could then use stateme
 like
         <pre>
 
-    d_val-&gt;get&lt;Tag__::INT&gt;() = stoi(matched());
+    d_val.get&lt;Tag__::INT&gt;() = stoi(matched());
         
 </pre>
 
@@ -1615,33 +1620,35 @@ expressions and return tokens and their corresponding matched text.
 <h4>5.6.3.3: Code generated by %polymorphic</h4>
         The parser using polymorphic semantic values adds several classes to the
 generated files. The majority of these are class templates, defined in
-<code>parserbase.h</code>. In addition, some of the additionally implemented code is
-added to the <code>parse.cc</code> source file.
+<code>parserbase.h</code>; some of the additionally implemented code is added to the
+<code>parse.cc</code> source file.
 <p>
 To minimize namespace pollution most of the additional code is contained in a
 namespace of its own: <code>Meta__</code>. If the <code>%namespace</code> directive was used
 then <code>Meta__</code> is nested under the namespace declared by that directive. The
-name <code>Meta__</code> hints at the fact that much of the code implementing
+name <code>Meta__</code> provides a hint to the fact that much of the code implementing
 polymorphic semantic values uses template meta programming.
 <p>
 <strong>The enumeration 'enum class Tag__'</strong>
 <p>
-One notable exception is the enumeration <code>Tag__</code>. It is declared outside of
-<code>Meta__</code> (but inside the <code>%namespace</code> namespace, if provided) to simplify
-its use. Its identifiers are the tags declared by the <code>%polymorphic</code>
-directive. This is a strongly typed enumeration. The <code>%weak-tags</code> directive
-can be used to declare a pre C++-11 standard <code>enum Tag__</code>.
+One notable exception to the above is the enumeration <code>Tag__</code>. To simplify
+its use it is declared outside of <code>Meta__</code> (but inside the <code>%namespace</code>
+namespace, if provided). Its identifiers are the tags declared by the
+<code>%polymorphic</code> directive. This is a strongly typed enumeration. The
+<code>%weak-tags</code> directive can be used to declare a pre C++-11 standard `<code>enum
+Tag__</code>'.
 <p>
 <strong>The namespace Meta__</strong>
 <p>
 Below, <code>DataType</code> refers to the semantic value's data type that is
-associated with a <code>Tag__</code> identifier; <code>ReturnType</code> equals <code>DataType</code> if
-<code>DataType</code> is a built-in type (like <code>int, double,</code> etc.), while it is
-equal to <code>DataType const &amp;</code> otherwise (for, e.g., class-type data types).
+associated with a <code>Tag__</code> identifier. Furthermore, <code>ReturnType</code> equals
+<code>DataType</code> if <code>DataType</code> is a built-in type (like <code>int, double,</code> etc.),
+in other cases (for, e.g., class-type data types) it is equal to <code>DataType
+const &amp;</code> .
 <p>
 The important elements of the namespace <code>Meta__</code> are:
     <ul>
-    <li> The polymorphic semantic value's base class <code>Base</code>.<br>
+    <li> First, the polymorphic semantic value's base class <code>Base</code>.<br>
         Its public interface offers the following members:<br>
         <ul>
         <li><code>Tag__ tag() const:</code>  returns the semantic value type's tag.
@@ -1649,103 +1656,135 @@ The important elements of the namespace <code>Meta__</code> are:
             element of the type matching the tag.  the data element of the
             type matching the tag (also see below at the description of the
             class <code>SType</code>).
-        <li><code>DataType &amp;get&lt;Tag__&gt;() const:</code> accesses the (modifiable) data
-            element of the type matching the tag.
+        <li><code>DataType &amp;get&lt;Tag__&gt;() const:</code> provides access to the (modifiable)
+            data element of the type matching the tag.
         </ul>
 <p>
-<li> The semantic value classes <code>Semantic&lt;Tag__::ID&gt;: public Base</code>.<br>
-         <code>Semantic&lt;Tag__::ID&gt;</code> classes are derived for each of the tag
-         identifiers <code>ID</code> declared at the <code>%polymorphic</code>
-         directive. <code>Semantic&lt;Tag__::ID&gt;</code> classes contain a <code>mutable
-         DataType</code> data member. Their public interfaces offer the following
-         members:
-        <ul>
-        <li> A default constructor;
-        <li> A <code>Semantic(DataType const &amp;)</code> constructor; 
-        <li> A <code>Semantic(DataType &amp;&amp;)</code> constructor; 
-        <li> An <code>operator ReturnType() const</code> conversion operator;
-        <li> An <code>operator DataType &amp;()t</code> conversion operator.
-        </ul>
-        <code>Semantic&lt;Tag__::ID&gt;</code> objects are usually not explicitly used. Rather,
-         their use is implied by the actual semantic value class <code>SType</code> and
-         by several support functions (see below).
+<li> Second, the semantic value classes <code>Semantic&lt;Tag__::ID&gt;: public
+        Base</code>.<br>
+       The various <code>Semantic&lt;Tag__::ID&gt;</code> classes are derived for each of the
+        tag identifiers <code>ID</code> that are declared at the <code>%polymorphic</code>
+        directive. These <code>Semantic&lt;Tag__::ID&gt;</code> classes contain a <code>mutable
+        DataType</code> data member. Their public interfaces offer the following
+        members: 
+            <ul> 
+            <li> A default constructor (which is not available if 
+        <code>DataType</code> does not provide a default constructor); 
+            <li> A <code>Semantic(DataType const &amp;)</code> constructor; 
+            <li> A <code>Semantic(DataType &amp;&amp;)</code> constructor; 
+            <li> An <code>operator ReturnType() const</code> conversion operator; 
+            <li> An <code>operator DataType &amp;()t</code> conversion operator.  
+            </ul> 
+       <code>Semantic&lt;Tag__::ID&gt;</code> objects are usually not explicitly
+        used. Rather, their use is implied by the actual semantic value class
+        <code>SType</code> and by several support functions (see below).
 <p>
-<li> De semantic value class <code>SType: public std::shared_ptr&lt;Base&gt;</code>
-         provides access to the various semantic value types. The <code>SType__</code>
-         class becomes the parser's <code>STYPE__</code> type, and explicitly accessing
-         <code>Semantic&lt;Tag__::ID&gt;</code> should never be necessary.<br>
-        <code>SType</code>'s public interface offers the following members:
-        <ul>
-        <li> Constructors: default, copy and move constructors.<br> 
-        Since the parser's semantic value and semantic value stack is
-         completely controlled by the parser, and since the actual semantic
-         data values are unknown at construction time of the semantic value
-         (<code>d_val__</code>) and of the semantic value stack, no constructors
-         expecting <code>DataType</code> values are provided.
-        <li> Assignment operators.<br>
-        The standard overloaded assignment operator (copy and move variants)
-         as well as copy and move assignment operators for the types declared
-         at the <code>%polymorphic</code> directive are provided. Assigning a value
-         using <code>operator=</code> allocates a <code>Semantic&lt;Tag__::tag&gt;</code> object for
-         the tag matching the right-hand side's data type, and resets the
-         <code>SType</code>'s <code>shared_pointer</code> to this new <code>Semantic&lt;Tag__::tag&gt;</code>
-         object. Be aware that this may break the default association of the
-         semantic value as declared by a <code>%type</code> directive. When breaking
-         the default association make sure that explicit tags are used (as in
-         $&lt;Tag__::tag&gt;1), overriding the default association with the
-         currently active association. In most cases, however, the assignment
-         is not used to break the default association but simply to assign a
-         value to $$. By default the <code>SType</code>'s shared pointer is zero, and
-         the assignment initializes the semantic value to a value of the
-         proper type. Assuming a lexical scanner may return a <code>NR</code> token,
-         offering an <code>int number() const</code> accessor, then part of <code>expr</code>
-         rule could be: <pre>
+<li> Third, the semantic value class <code>SType: public
+        std::shared_ptr&lt;Base&gt;</code> provides access to the various semantic value
+        types. The <code>SType__</code> class becomes the parser's <code>STYPE__</code> type,
+        and explicitly accessing <code>Semantic&lt;Tag__::ID&gt;</code> should never be
+        necessary.<br> 
+       <code>SType</code>'s public interface offers the following members: 
+            <ul>
+            <li> Constructors: default (available if the <code>Semantic</code> type
+                class offers a default constructor), copy and move
+                constructors.<br> 
+               Since the parser's semantic value and semantic value stack is
+                completely controlled by the parser, and since the actual
+                semantic data values are unknown at construction time of the
+                semantic value (<code>d_val__</code>) and of the semantic value stack,
+                no constructors expecting <code>DataType</code> values are provided.
+            <li> Assignment operators.<br> 
+               The standard overloaded assignment operator (copy and move
+                variants) as well as copy and move assignment operators for
+                the types declared at the <code>%polymorphic</code> directive are
+                provided. Assigning a value using <code>operator=</code> allocates a
+                <code>Semantic&lt;Tag__::tag&gt;</code> object for the tag matching the
+                right-hand side's data type, and resets the <code>SType</code>'s
+                <code>shared_pointer</code> to this new <code>Semantic&lt;Tag__::tag&gt;</code>
+                object.<br>
+               Be aware that this may break the default association of the
+                semantic value as declared by a <code>%type</code> directive. When
+                breaking the default association make sure that explicit tags
+                are used (as in <code>$&lt;Tag__::tag&gt;</code>), overriding the default
+                association with the currently active association. Usually,
+                however, the assignment is of course not used to break the
+                default association but simply to assign a value to $$. By
+                default the <code>SType</code>'s shared pointer is zero, and the
+                assignment initializes the semantic value to a value of the
+                proper type.<br>
+               Assuming a lexical scanner may return a <code>NR</code> token, offering
+                an <code>int number() const</code> accessor, then part of an <code>expr</code>
+                rule could be: 
+                    <pre>
+ 
+    expr: NR 
+    { 
+        $$ = d_scanner.number(); 
+    } ...
+                    
+</pre>
+ 
+               whereafter <code>expr</code>'s semantic value has been initialized
+                to a <code>Semantic&lt;Tag__::INT&gt;</code>.  
+            <li> <code>DataType &amp;get&lt;Tag__&gt;()</code><br>
+               This <code>get</code> member returns a reference to the (modifiable)
+                semantic value stored inside <code>Semantic&lt;Tag__&gt;</code>.<br> 
+               This member checks for 0-pointers and for <code>Tag__</code> mismatches
+                between the requested and actual <code>Tag__</code>, in that case
+                replacing the current <code>Semantic</code> object pointed to by a new
+                <code>Semantic&lt;Tag__&gt;</code> object of the type associated with the requested
+                <code>Tag__</code>. However, if that type does not provide a default
+                constructor then a <code>runtime_error</code> exception is thrown
+                holding the description 
+                        <pre>
 
-        expr:
-            NR
-            {
-                $$ = d_scanner.number();
-            }
-        ...
+    STYPE::get&lt;tag&gt;: no default constructor available
+                        
+</pre>
+
+            <li> <code>ReturnType data&lt;Tag__&gt;() const</code><br>
+               Here, <code>ReturnType</code> refers to the semantic value stored inside
+                <code>Semantic&lt;Tag__&gt;</code>. If the type-name is a built-in type a
+                copy of the value is returned, otherwise a reference to a
+                constant object is returned;<br> 
+               This is a (partially) <em>unchecking</em> variant of the
+                corresponing <code>get</code> member, resulting in a <em>segfault</em> if
+                used when the <code>shared_ptr</code> holds a 0-pointer, and throwing a
+                <code>std::bad_cast</code> in case of a mismatch between the requested
+                and actual <code>Tag__</code>.  
+            <li> <code>DataType &amp;data&lt;Tag__&gt;()</code><br> 
+               This member returns a reference to the (modifiable) semantic
+                value stored inside <code>Semantic&lt;Tag__&gt;</code>.<br> 
+               This is a (partially) <em>unchecking</em> variant of the
+                corresponing <code>get</code> member, resulting in a <em>segfault</em> if
+                used when the <code>shared_ptr</code> holds a 0-pointer, and throwing a
+                <code>std::bad_cast</code> in case of a mismatch between the requested
+                and actual <code>Tag__</code>.  
+            <li> <code>void emplace(Args &amp;&amp;...args)</code><br>
+               This member perfectly forwars its <code>args</code> arguments to the
+                currently stored <code>Semantic</code> value type, replacing its
+                current value by the newly constructed <code>Semantic</code> value.
+            </ul>
+        These members may explicitly be tagged, using constructions like
+            <pre>
+
+    SS.emplace&lt;Tag__::STRING&gt;(5, 'c');
             
 </pre>
 
-        after which <code>expr</code>'s semantic value has been initialized to a
-         <code>Semantic&lt;Tag__::INT&gt;</code>. 
-        <li> returns the semantic
-             value stored inside <code>Semantic&lt;Tag__&gt;</code>. If the type-name is a
-             built-in type a copy of the value is returned, otherwise a
-             reference to a constant object is returned;<br>
-            This member checks for 0-pointers and for <code>Tag__</code> mismatches
-             between the requested and actual <code>Tag__</code>, throwing a
-             <code>std::logic_error</code> if found.
-        <li> returns a reference to the (modifiable)
-             semantic value stored inside <code>Semantic&lt;Tag__&gt;</code>.<br>
-            This member checks for 0-pointers and for <code>Tag__</code> mismatches
-             between the requested and actual <code>Tag__</code>, in that case
-             replacing the current <code>Semantic</code> object pointed to by a new
-             <code>Semantic&lt;Tag__&gt;</code> object of the requested <code>Tag__</code>.
-        <li> refers to the semantic
-             value stored inside <code>Semantic&lt;Tag__&gt;</code>. If the type-name is a
-             built-in type a copy of the value is returned, otherwise a
-             reference to a constant object is returned;<br>
-            This is a (partially) <em>unchecking</em> variant of the corresponing
-             <code>get</code> member, resulting in a <em>Segfault</em> if used when the
-             <code>shared_ptr</code> holds a 0-pointer, and throwing a
-             <code>std::bad_cast</code> in case of a mismatch between the requested and
-             actual <code>Tag__</code>.
-        <li> returns a reference to the (modifiable)
-             semantic value stored inside <code>Semantic&lt;Tag__&gt;</code>.<br>
-            This is a (partially) <em>unchecking</em> variant of the corresponing
-             <code>get</code> member, resulting in a <em>Segfault</em> if used when the
-             <code>shared_ptr</code> holds a 0-pointer, and throwing a
-             <code>std::bad_cast</code> in case of a mismatch between the requested and
-             actual <code>Tag__</code>.
-        </ul>
+        But the shorthand <code>($)</code> can also be used, which automatically
+                provides the correct tag:
+            <pre>
+
+    (SS).emplace(5, 'c');
+            
+</pre>
+
     </ul>
     When an incorrect tag is specified (e.g., with <code>get&lt;Tag__::tag&gt;(),
-$&lt;Tag__::tag&gt;$</code>, or <code>$&lt;Tag__::tag&gt;1</code>), the generated code correctly copiles,
-but the program will throw a <code>std::bad_cast</code> exception once the offending
+$&lt;Tag__::tag&gt;$</code>, or <code>$&lt;Tag__::tag&gt;1</code>), the generated code correctly compiles,
+but the program likely throws a <code>std::bad_cast</code> exception once the offending
 code is executed.
 <p>
 <strong>Additional Headers</strong>
@@ -1823,7 +1862,7 @@ These simple assignments can be used as <code>int</code> is pre-associated with 
 As the <code>combi</code> rule is not associated with a specific semantic value, its
 semantic value could be either <code>INT</code> or <code>TEXT</code>. Irrespective of what is
 actually returned by <code>combi</code>, its semantic value can be passed on to a
-function (<code>process(STYPE__ const &amp;)</code>, responsible for the semantic value's
+function (<code>process(STYPE__ const &amp;)</code>), responsible for the semantic value's
 further processing. Here are the definition of the <code>combi</code> non-terminal and
 action blocks for the <code>rule</code> non-terminal:
         <pre>

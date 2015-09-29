@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<title> <div style="text-align: center"><strong>Bisonc++</strong> (Version 4.11.00) User Guide</div> </title>
+<title> <div style="text-align: center"><strong>Bisonc++</strong> (Version 4.12.00) User Guide</div> </title>
 <style type="text/css">
     figure {text-align: center;}
     img {vertical-align: center;}
@@ -211,6 +211,13 @@ It is an error if this option is used and an already existing
             functions which are called from the rules's actions have not yet
             been impleemented.
 <p>
+<li> <strong>--no-default-action-return</strong> (<strong>-N</strong>)<br>
+           Do not use the default <code>$$ = $1</code> assignment of semantic values
+            when returning from an action block. When this option is specified
+            then <strong>bisonc++</strong> generates a warning for typed rules (non-terminals)
+            whose action blocks do not provide an explicit <code>$$</code> return
+            value.
+<p>
 <li> <strong>--no-lines</strong><br> 
            Do not put <code>#line</code> preprocessor directives in the file containing
             the parser's <code>parse</code> function. By default the file containing
@@ -411,7 +418,7 @@ information:
 
 bisonc++ by Frank B. Brokken (f.b.brokken@rug.nl)
 
-LALR(1) Parser Generator V 4.11.00
+LALR(1) Parser Generator V 4.12.00
 Copyright (c) GPL 2005-2015. NO WARRANTY.
 Designed after `bison++' (1.21.9-1) by Alain Coetmeur &lt;coetmeur@icdc.fr&gt;
 
@@ -457,6 +464,9 @@ Where:
    --no-baseclass-header: don't create the parser's base class header.
    --no-decoration (-D): do not include the user-defined actions when
            generating the parser's tt(parse) member.
+   --no-default-action-return (-N): do not use the default $$ = $1
+           assignment of semantic values when returning from an action
+           block
    --no-lines: don't put #line directives in generated output,
            overruling the %lines directive.
    --no-parse-member: don't create the member parse().
