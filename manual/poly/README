@@ -1,0 +1,23 @@
+Bisonc++ and flexc++ are required to generate the parser and the lexical
+scanner. 
+
+If you have icmake installed, simply run 'icmbuild' to create the program
+Otherwise the ./build command should work.
+
+./tmp/bin/binary starts an interactive program, each line should either
+contain
+
+    ident ( ident )
+
+(blanks are optional, ident is any C++ identifier)
+
+or
+
+    ident = int 
+
+(int: any non-negative int-value)
+
+To end the program: ^D or ^C. Any other input also ends the program (with a
+syntax error message)
+
+See also the explanation of the implementation of operator= in ../essence.

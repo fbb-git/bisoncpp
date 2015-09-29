@@ -1,0 +1,526 @@
+<!DOCTYPE html><html><head>
+<meta charset="UTF-8">
+<title> <div style="text-align: center"><strong>Bisonc++</strong> (Version 4.12.00) User Guide</div> </title>
+<style type="text/css">
+    figure {text-align: center;}
+    img {vertical-align: center;}
+</style>
+</head>
+<body text="#27408B" bgcolor="#FFFAF0">
+<hr>
+<ul>
+    <li> <a href="bisonc++.html">Table of Contents</a>
+    <li> <a href="bisonc++08.html">Previous Chapter</a>
+</ul>
+<hr>
+<a name="INVOKING"></a><a name="l127"></a>
+<h1>Chapter 9: Invoking Bisonc++</h1>
+<a name="OPTIONS"></a><a name="l128"></a>
+<h2>9.1: Bisonc++ options</h2>
+    Where available, single letter options are listed between parentheses
+beyond their associated long-option variants. Single letter options require
+arguments if their associated long options require arguments. Options
+affecting the class header or implementation header file are ignored if these
+files already exist. Options accepting a `filename' do not accept path names,
+i.e., they cannot contain directory separators (<code>/</code>); options accepting a
+'pathname' may contain directory separators. 
+<p>
+Some options may generate errors. This happens when an option conflicts with
+the contents of a file which <strong>bisonc++</strong> cannot modify (e.g., a parser
+class header file exists, but doesn't define a name space, but a
+<code>--namespace</code> option was provided). 
+<p>
+To solve the error the offending option could be omitted, the existing file
+could be removed, or the existing file could be hand-edited according to the
+option's specification. Note that <strong>bisonc++</strong> currently does not handle the opposite
+error condition: if a previously used option is omitted, then <strong>bisonc++</strong> does not
+detect the inconsistency. In those cases compilation errors may be generated.
+<p>
+<ul>
+    <li> <strong>--analyze-only</strong> (<strong>-A</strong>)<br>
+           Only analyze the grammar. No files are (re)written. This option can
+            be used to test the grammatic correctness of modification `in
+            situ', without overwriting previously generated files. If the
+            grammar contains syntactic errors only syntax analysis is 
+            performed.
+<p>
+<li> <strong>--baseclass-header</strong>=<code>filename</code> (<strong>-b</strong>)<br>
+           <code>Filename</code> defines the name of the file to contain the parser's
+            base class. This class defines, e.g., the parser's symbolic
+            tokens. Defaults to the name of the parser class plus the suffix
+            <code>base.h</code>. It is generated, unless otherwise indicated (see
+            <code>--no-baseclass-header</code> and <code>--dont-rewrite-baseclass-header</code>
+            below).
+<p>
+It is an error if this option is used and an already
+            existing parser class header file does not contain <code>#include
+            "filename"</code>.
+<p>
+<li> <a name="PREINCLUDE"></a> <strong>--baseclass-preinclude</strong>=<code>pathname</code> (<strong>-H</strong>)<br>
+           <code>Pathname</code> defines  the path to the file preincluded in the
+            parser's base-class header. This option is needed in situations
+            where the base class header file refers to types which might not
+            yet be known. E.g., with polymorphic semantic values a
+            <code>std::string</code> value type might be used. Since the <code>string</code>
+            header file is not by default included in <code>parserbase.h</code> we
+            somehow need to inform the compiler about this and possibly other
+            headers. The suggested procedure is to use a pre-include header
+            file declaring the required types. By default `<code>header</code>' is
+            surrounded by double quotes: <code>#include "header"</code> is used when
+            the option <code>-H header</code> is specified.  When the argument is
+            surrounded by pointed brackets <code>#include &lt;header&gt;</code> is
+            included. In the latter case, quotes might be required to escape
+            interpretation by the shell (e.g., using <code>-H '&lt;header&gt;'</code>).
+<p>
+<li> <strong>--baseclass-skeleton</strong>=<code>pathname</code> (<strong>-B</strong>)<br> 
+           <code>Pathname</code> defines the path name to the file containing the
+            skeleton of the parser's base class. It defaults to the
+            installation-defined default path name (e.g.,
+            <code>/usr/share/bisonc++/</code> plus <code>bisonc++base.h</code>).
+<p>
+<li> <strong>--class-header</strong>=<code>filename</code> (<strong>-c</strong>)<br>
+           <code>Filename</code> defines the name of the file to contain the parser
+            class. Defaults to the name of the parser class plus the suffix
+            <code>.h</code>
+<p>
+It is an error if this option is used and an already
+            existing implementation header file does not contain <code>#include
+            "filename"</code>.
+<p>
+<li> <strong>--class-name</strong> <code>className</code> <br>
+           Defines the name of the <strong>C++</strong> class that is generated.  If
+            neither this option, nor the <code>%class-name</code> directory is
+            specified, then the default class name (<code>Parser</code>) is used.
+<p>
+It is an error if this option is used and an already
+            existing parser-class header file does not define <code>class
+            `className'</code> and/or if an already existing implementation header
+            file does not define members of the class <code>`className'</code>.
+<p>
+<li> <strong>--class-skeleton</strong>=<code>pathname</code> (<strong>-C</strong>)<br>
+           <code>Pathname</code> defines the path name to the file containing the
+            skeleton of the parser class. It defaults to the
+            installation-defined default path name (e.g.,
+            <code>/usr/share/bisonc++/</code> plus <code>bisonc++.h</code>).
+<p>
+<li> <strong>--construction</strong><br> 
+           Details about the construction of the parsing tables are written to
+            the same file as written by the <code>--verbose</code> option (i.e.,
+            <code>&lt;grammar&gt;.output</code>, where <code>&lt;grammar&gt;</code> is the input file read
+            by <strong>bisonc++</strong>. This information is primarily useful for developers. It
+            augments the information written to the verbose grammar output
+            file, generated by the <code>--verbose</code> option.
+<p>
+<li> <strong>--debug</strong><br> 
+           Provide <code>parse</code> and its support functions with debugging code,
+            showing the actual parsing process on the standard output
+            stream. When included, the debugging output is active by default,
+            but its activity may be controlled using the <code>setDebug(bool
+            on-off)</code> member. An <code>#ifdef DEBUG</code> macro is not supported by
+            <strong>bisonc++</strong>. Rerun <strong>bisonc++</strong> without the <code>--debug</code> option to remove the
+            debugging code.
+<p>
+<li> <a name="ERRORVERBOSE"></a><strong>--error-verbose</strong><br>
+           When a syntactic error is reported, the generated parse function
+            dumps the parser's state stack to the standard output
+            stream. The stack dump shows on separate lines a stack index
+            followed by the state stored at the indicated stack element. The
+            first stack element is the stack's top element.
+<p>
+<li> <strong>--filenames</strong>=<code>filename</code> (<strong>-f</strong>)<br>
+           <code>Filename</code> is a generic file name that is used for all header
+            files generated by <strong>bisonc++</strong>. Options defining specific file names are
+            also available (which then, in turn, overrule the name specified
+            by this option).
+<p>
+<li> <strong>--flex</strong><br> 
+           <strong>Bisonc++</strong> generates code calling <code>d_scanner.yylex()</code> to obtain the
+            next lexical token, and calling <code>d_scanner.YYText()</code> for the
+            matched text, unless overruled by options or directives explicitly
+            defining these functions. By default, the interface defined by
+            <strong>flexc++</strong>(1) is used. This option is only interpreted if the
+            <code>--scanner</code> option or <code>%scanner</code> directive is also used.
+<p>
+<li> <strong>--help</strong> (<strong>-h</strong>)<br>
+            Write basic usage information to the standard output stream and
+            terminate. 
+<p>
+<li> <strong>--implementation-header</strong>=<code>filename</code> (<strong>-i</strong>)<br>
+           <code>Filename</code> defines the name of the file to contain the
+            implementation header. It defaults to the name of the generated
+            parser class plus the suffix <code>.ih</code>.
+<p>
+The implementation header should contain all directives and
+            declarations <em>only</em> used by the implementations of the parser's
+            member functions. It is the only header file that is included by
+            the source file containing <code>parse</code>'s implementation. User
+            defined implementation of other class members may use the same
+            convention, thus concentrating all directives and declarations
+            that are required for the compilation of other source files
+            belonging to the parser class in one header file.
+<p>
+<li> <strong>--implementation-skeleton</strong>=<code>pathname</code> (<strong>-I</strong>)<br>
+           <code>Pathname</code> defines the path name to the file containing the
+            skeleton of the implementation header. t defaults to the
+            installation-defined default path name (e.g.,
+            <code>/usr/share/bisonc++/</code> plus <code>bisonc++.ih</code>).
+<p>
+<li> <strong>--insert-stype</strong><br>
+           This option is only effective if the <code>debug</code> option (or
+            <code>%debug</code> directive) has also been specified. When
+            <code>insert-stype</code> has been specified the parsing function's debug
+            output also shows selected semantic values. It should only be used
+            if objects or variables of the semantic value type <code>STYPE__</code> can
+            be inserted into <code>ostreams</code>.
+<p>
+<li> <a name="MAXDEPTH"></a> <strong>--max-inclusion-depth</strong>=<code>value</code><br>
+           Set the maximum number of nested grammar files. Defaults to 10.
+<p>
+<li> <strong>--namespace</strong> <code>identifier</code> <br>
+           Define all of the code generated by <strong>bisonc++</strong> in the name space
+            <code>identifier</code>. By default no name space is defined. If this
+            options is used the implementation header is provided with a
+            commented out <code>using namespace</code> declaration for the specified
+            name space. In addition, the parser and parser base class
+            header files also use the specified namespace to define their
+            include guard directives.
+<p>
+It is an error if this option is used and an already existing
+            parser-class header file and/or implementation header file does
+            not define <code>namespace identifier</code>.
+<p>
+<li> <strong>--no-baseclass-header</strong><br>
+           Do not write the file containing the parser class' base class, even
+            if that file doesn't yet exist. By default the file containing the
+            parser's base class is (re)written each time <strong>bisonc++</strong> is called. Note
+            that this option should normally be avoided, as the base class
+            defines the symbolic terminal tokens that are returned by the
+            lexical scanner. When the construction of this file is suppressed,
+            modifications of these terminal tokens are not communicated to the
+            lexical scanner.
+<p>
+<li> <strong>--no-decoration</strong> (<strong>-D</strong>)<br>
+           Do not include the user-defined actions when generating the
+            parser's <code>parse</code> member. This effectively generates a parser
+            which merely performs semantic checks, without performing the
+            actions which are normally executed when rules have been
+            matched. This may be useful in situations where a (partially or
+            completely) decorated grammar is reorganized, and the syntactical
+            correctness of the modified grammar must be verified, or in
+            situations where the grammar has already been decorated, but
+            functions which are called from the rules's actions have not yet
+            been impleemented.
+<p>
+<li> <strong>--no-default-action-return</strong> (<strong>-N</strong>)<br>
+           Do not use the default <code>$$ = $1</code> assignment of semantic values
+            when returning from an action block. When this option is specified
+            then <strong>bisonc++</strong> generates a warning for typed rules (non-terminals)
+            whose action blocks do not provide an explicit <code>$$</code> return
+            value.
+<p>
+<li> <strong>--no-lines</strong><br> 
+           Do not put <code>#line</code> preprocessor directives in the file containing
+            the parser's <code>parse</code> function. By default the file containing
+            the parser's <code>parse</code> function also contains <code>#line</code>
+            preprocessor directives. This option allows the compiler and
+            debuggers to associate errors with lines in your grammar
+            specification file, rather than with the source file containing
+            the <code>parse</code> function itself.
+<p>
+<li> <strong>--no-parse-member</strong><br>
+           Do not write the file containing the parser's predefined parser
+            member functions, even if that file doesn't yet exist. By default
+            the file containing the parser's <code>parse</code> member function is
+            (re)written each time <strong>bisonc++</strong> is called. Note that this option
+            should normally be avoided, as this file contains parsing
+            tables which are altered whenever the grammar definition is
+            modified. 
+<p>
+<li> <strong>--own-debug</strong><br>
+           Extensively displays the actions performed by <strong>bisonc++</strong>'s parser when
+            it processes the grammar specification <strong>s</strong>. This implies the
+            <code>--verbose</code> option.
+<p>
+<li> <strong>--own-tokens</strong> (<strong>-T</strong>)<br>
+           The tokens returned as well as the text matched when <strong>bisonc++</strong> reads
+            its input files(s) are shown when this option is used.
+<p>
+This option does <em>not</em> result in the generated parsing function
+            displaying returned tokens and matched text. If that is what you
+            want, use the <code>--print-tokens</code> option.
+<p>
+<li> <strong>--parsefun-skeleton</strong>=<code>pathname</code> (<strong>-P</strong>)<br>
+           <code>Pathname</code> defines the path name of the file containing the
+            parsing member function's skeleton. It defaults to the
+            installation-defined default path name (e.g.,
+            <code>/usr/share/bisonc++/</code> plus <code>bisonc++.cc</code>).
+<p>
+<li> <strong>--parsefun-source</strong>=<code>filename</code> (<strong>-p</strong>)<br>
+           <code>Filename</code> defines the name of the source file to contain the
+            parser member function <code>parse</code>. Defaults to <code>parse.cc</code>.
+<p>
+<li> <strong>--polymorphic-skeleton</strong>=<code>pathame</code> (<strong>-M</strong>)<br>
+           <code>Pathname</code> defines the path name of the file containing the
+            skeleton of the polymorphic template classes. It defaults to the
+            installation-defined default path name (e.g.,
+            <code>/usr/share/bisonc++/</code> plus <code>bisonc++polymorphic</code>).
+<p>
+<li> <strong>--polymorphic-inline-skeleton</strong>=<code>pathname</code> (<strong>-m</strong>)<br>
+           <code>Pathname</code> defines the path name of the file containing the
+            skeleton of the inline implementations of the members of the
+            polymorphic template classes.  It defaults to the
+            installation-defined default path name (e.g.,
+            <code>/usr/share/bisonc++/</code> plus <code>bisonc++polymorphic</code>).
+<p>
+<li> <strong>--print-tokens</strong> (<strong>-t</strong>)<br>
+           The generated parsing function implements a function <code>print__</code>
+            displaying (on the standard output stream) the tokens returned by
+            the parser's scanner as well as the corresponding matched
+            text. This implementation is suppressed when the parsing function
+            is generated without using this option. The member <code>print__</code>) is
+            called from <code>Parser::print</code>, which is defined in-line in the the
+            parser's class header. Calling <code>Parser::print__</code> can thus easily
+            be controlled from <code>print</code>, using, e.g., a variable that set by
+            the program using the parser generated by <strong>bisonc++</strong>.
+<p>
+This option does <em>not</em> show the tokens returned and text matched
+            by <strong>bisonc++</strong> itself when it is reading its input <strong>s</strong>. If
+            that is what you want, use the <code>--own-tokens</code> option.
+<p>
+<li> <a name="REQUIRED"></a> <strong>--required-tokens</strong>=<code>number</code><br>
+           Following a syntactic error, require at least <code>number</code>
+            successfully processed tokens before another syntactic error can
+            be reported. By default <code>number</code> is zero.
+<p>
+<li> <a name="SCANOPT"></a> <strong>--scanner</strong>=<code>pathname</code> (<strong>-s</strong>)<br>
+           <code>Pathname</code> defines the path name to the file defining the
+            scanner's class interface (e.g., <code>"../scanner/scanner.h"</code>). When
+            this option is used the parser's member <code>int lex()</code> is
+            predefined as
+           <pre>
+
+    int Parser::lex()
+    {
+        return d_scanner.lex();
+    }
+                
+</pre>
+
+           and an object <code>Scanner d_scanner</code> is composed into the parser
+            (but see also option <code>scanner-class-name</code>). The example shows
+            the function that's called by default. When the <code>--flex</code> option
+            (or <code>%flex</code> directive) is specified the function
+            <code>d_scanner.yylex()</code> is called. Any other function to call can be
+            specified using the <code>--scanner-token-function</code> option (or
+            <code>%scanner-token-function</code> directive).
+<p>
+By default <strong>bisonc++</strong> surrounds <code>pathname</code> by double quotes (using,
+            e.g., <code>#include "pathname"</code>).  When <code>pathname</code> is surrounded
+            by pointed brackets <code>#include &lt;pathname&gt;</code> is included.
+<p>
+It is an error if this option is used and an already existing
+            parser class header file does not include <code>`pathname'</code>.
+<p>
+<li> <strong>--scanner-class-name</strong> <code>scannerClassName</code> <br> 
+           Defines the name of the scanner class, declared by the <code>pathname</code>
+            header file that is specified at the <code>scanner</code> option or 
+            directive. By default the class name <code>Scanner</code> is used.
+<p>
+It is an error if this option is used and either the
+            <code>scanner</code> option was not provided, or the parser class interface
+            in an already existing parser class header file does not declare a
+            scanner class <code>d_scanner</code> object.
+<p>
+<li> <strong>--scanner-debug</strong><br> 
+           Show de scanner's matched rules and returned tokens. This offers an
+            extensive display of the rules and tokens matched and returned by
+            <strong>bisonc++</strong>'s scanner, not of just the tokens and matched text received
+            by <strong>bisonc++</strong>. If that is what you want use the <code>--own-tokens</code>
+            option.
+<p>
+<li> <strong>--scanner-matched-text-function</strong>=<code>function-call</code><br> 
+           The scanner function returning the text that was matched at the
+            last call of the scanner's token function. A complete function
+            call expression should be provided (including a scanner object, if
+            used). This option overrules the <code>d_scanner.matched()</code> call used
+            by default when the <code>%scanner</code> directive is specified, and it
+            overrules the <code>d_scanner.YYText()</code> call used when the <code>%flex</code>
+            directive is provided. Example:
+           <pre>
+
+    --scanner-matched-text-function "myScanner.matchedText()"
+                
+</pre>
+
+<p>
+<li> <strong>--scanner-token-function</strong>=<code>function-call</code><br> 
+           The scanner function returning the next token, called from the
+            parser's <code>lex</code> function. A complete function
+            call expression should be provided (including a scanner object, if
+            used). This option overrules the <code>d_scanner.lex()</code> call used
+            by default when the <code>%scanner</code> directive is specified, and it
+            overrules the <code>d_scanner.yylex()</code> call used when the <code>%flex</code>
+            directive is provided. Example:
+           <pre>
+
+    --scanner-token-function "myScanner.nextToken()"
+                
+</pre>
+
+<p>
+It is an error if this option is used and the scanner token
+            function is not called from the code in an already
+            existing implementation header.
+<p>
+<li> <strong>--show-filenames</strong><br> 
+           Writes the names of the generated files to the standard error
+            stream.
+<p>
+<li> <strong>--skeleton-directory</strong>=<code>directory</code> (<strong>-S</strong>)<br> 
+           Specifies the directory containing the skeleton files. This option
+            can be overridden by the specific skeleton-specifying options
+            (<code>-B -C, -H, -I, -M</code> and <code>-m</code>).
+<p>
+<li> <strong>--target-directory</strong>=<code>pathname</code> <br> 
+           <code>Pathname</code> defines the directory where generated files should be
+            written.  By default this is the directory where <strong>bisonc++</strong> is
+            called. 
+<p>
+<li> <strong>--thread-safe</strong><br> 
+           No static data are modified, making <strong>bisonc++</strong> thread-safe.
+<p>
+<li> <strong>--usage</strong><br>
+            Write basic usage information to the standard output stream and
+            terminate. 
+<p>
+<li> <strong>--verbose</strong> (<strong>-V</strong>)<br> 
+           Write a file containing verbose descriptions of the parser states
+            and what is done for each type of look-ahead token in that state.
+            This file also describes all conflicts detected in the grammar,
+            both those resolved by operator precedence and those that remain
+            unresolved.  It is not created by default, but if requested the
+            information is written on <code>&lt;grammar&gt;.output</code>, where
+            <code>&lt;grammar&gt;</code> is the grammar specification file passed to <strong>bisonc++</strong>.
+<p>
+<li> <strong>--version</strong> (<strong>-v</strong>)<br>
+            Display <strong>bisonc++</strong>'s version number and terminate.
+<p>
+</ul>
+<p>
+<a name="l129"></a>
+<h2>9.2: Bisonc++ usage</h2>
+When <strong>bisonc++</strong> is called without any arguments it generates the following usage
+information: 
+    
+<p>
+
+    <pre>
+
+bisonc++ by Frank B. Brokken (f.b.brokken@rug.nl)
+
+LALR(1) Parser Generator V 4.12.00
+Copyright (c) GPL 2005-2015. NO WARRANTY.
+Designed after `bison++' (1.21.9-1) by Alain Coetmeur &lt;coetmeur@icdc.fr&gt;
+
+Usage: bisonc++ [OPTIONS] file
+Where:
+  [OPTIONS] - zero or more optional arguments (int options between
+              parentheses. Short options require arguments if their
+              long option variants do too):
+   --analyze-only (-A): only analyze the grammar; except for possibly
+           the verbose grammar description file no files are written.
+   --baseclass-preinclude=&lt;header&gt; (-H):
+           preinclude header in the base-class header file.
+           Use [header] to include &lt;header&gt;, otherwise "header"
+           will be included.
+   --baseclass-header=&lt;header&gt; (-b):
+           filename holding the base class definition.
+   --baseclass-skeleton=&lt;skeleton&gt; (-B):
+           location of the baseclass header skeleton.
+   --class-header=&lt;header&gt; (-c):
+           filename holding the parser class definition.
+   --class-skeleton=&lt;skeleton&gt; (-C):
+           location of the class header skeleton.
+   --construction: write details about the grammar analysis to stdout.
+   --debug: generates debug output statements in the generated parse
+           function's source.
+   --error-verbose: the parse function will dump the parser's state
+           stack to stdout when a syntactic error is reported
+   --filenames=&lt;filename&gt; (-f):
+           filename of output files (overruling the default filename).
+   --help (-h): produce this information (and terminate).
+   --implementation-header=&lt;header&gt; (-i):
+           filename holding the implementation header.
+   --implementation-skeleton=&lt;skeleton&gt; (-I):
+           location of the implementation header skeleton.
+   --include-only: catenate all grammar files in their order of
+           processing to the standard output stream and terminate.
+   --insert-stype: show selected semantic values in the output generated
+           by --debug. Ignored unless --debug was specified.
+   --max-inclusion-depth=&lt;value&gt;:
+           sets the maximum number of nested grammar files (default: 10).
+   --namespace=&lt;namespace&gt; (-n):
+           define the parser in the mentioned namespace.
+   --no-baseclass-header: don't create the parser's base class header.
+   --no-decoration (-D): do not include the user-defined actions when
+           generating the parser's tt(parse) member.
+   --no-default-action-return (-N): do not use the default $$ = $1
+           assignment of semantic values when returning from an action
+           block
+   --no-lines: don't put #line directives in generated output,
+           overruling the %lines directive.
+   --no-parse-member: don't create the member parse().
+   --own-debug:
+           bisonc++ displays the actions of its parser while processing
+           its input file(s) (implies --verbose).
+   --own-tokens (-t):
+           bisonc++ displays the tokens and their corresponding
+           matched text it received from its lexcial scanner.
+   --parser-skeleton=&lt;parserskel&gt; (-P):
+           location of the parse function's skeleton.
+   --parsefun-source=&lt;source&gt; (-p):
+           filename holding the parse function's source.
+   --polymorphic-inline-skeleton=&lt;skeleton&gt; (-m):
+           location of the polymorphic inline functions skeleton.
+   --polymorphic-skeleton=&lt;skeleton&gt; (-M):
+           location of the polymorphic semantic values skeleton.
+   --print-tokens (-t):
+           the print() member of the generated parser class displays
+           the tokens and their corresponding matched text.
+   --required-tokens=&lt;value&gt;:
+           minimum number of successfully processed tokens between
+           errors (default: 0).
+   --scanner=&lt;header-file&gt; (-s):
+           include `header-file' declaring the class Scanner, and call
+           d_scanner.yylex() from Parser::lex().
+   --scanner-class-name=&lt;scanner class name&gt;:
+           specifies the name of the scanner class: this option is
+           only interpreted if --scanner (or %scanner) is also used.
+   --scanner-debug: extensive display of the actions of bisonc++'s scanner
+   --scanner-token-function=&lt;scanner token function&gt;:
+           define the function called from lex() returning the next
+           token returned (by default d_scanner.yylex() when --scanner
+           is used)
+   --show-filenames: show the names of the used/generated files on
+           the standard error stream.
+   --skeleton-directory=&lt;skeleton-directory&gt; (-S):
+           location of the skeleton directory.
+   --thread-safe: no static data are modified, making bisonc++'s
+           generated code thread-safe.
+   --usage: produce this information (and terminate).
+   --verbose (-V):
+           generate verbose description of the analyzed grammar.
+   --version (-v):
+           display bisonc++'s version and terminate.
+
+</pre>
+
+<p>
+<hr>
+<ul>
+    <li> <a href="bisonc++.html">Table of Contents</a>
+    <li> <a href="bisonc++08.html">Previous Chapter</a>
+</ul>
+<hr>
+</body>
+</html>

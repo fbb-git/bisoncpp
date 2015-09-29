@@ -1,0 +1,73 @@
+%filenames parser
+%scanner ../scanner/scanner.h
+
+%polymorphic INT: int; TEXT: std::string;
+
+%token INT IDENTIFIER 
+
+%type <TEXT>    identifier
+%type <INT>     int
+%type <STYPE__> combi
+
+%%
+
+start:
+    prompt
+    rules
+;
+
+prompt:
+    {
+        cout << "? ";
+    }
+;
+
+identifier:
+    IDENTIFIER
+    {
+        $$ = d_scanner.matched();
+    }
+;
+
+int:
+    INT
+    {
+        $$ = intValue();
+    }
+;
+
+combi:
+    int
+|
+    identifier
+;
+
+rule:
+    identifier '(' identifier ')' '\n'
+    {
+          cout << $1 << " " << $3 << '\n';
+    }
+|
+    identifier '=' int '\n'
+    {
+          cout << $1 << " " << $3 << '\n';
+    }
+|
+    combi '\n'
+;
+
+rulePrompt:
+    rule
+    prompt
+;
+
+rules:
+    rules rulePrompt
+|
+    rulePrompt
+;
+
+
+
+
+

@@ -1,0 +1,17 @@
+%interactive
+%filenames scanner
+
+%%
+
+[ \t]+                  // skip white space
+
+[0-9]+                  return Parser::INT;
+
+[a-zA-Z_][a-zA-Z0-9_]*  return Parser::IDENTIFIER;
+
+.|\n                    return matched()[0];
+
+
+
+
+
