@@ -1,11 +1,7 @@
-string  g_skel;
-
 void special()
 {
-    g_skel = setOpt(SKELDIR, "SKEL");
-
     if ("INSTALL.im" newer "options/SKEL")
-        run("echo \"#define _Skel_  \\\"" + g_skel + "\\\"\" > options/SKEL");
+        run("echo \"#define _Skel_  \\\"" SKEL + "\\\"\" > options/SKEL");
 
     if (! exists("release.yo") || "VERSION" newer "release.yo") 
     {

@@ -1,0 +1,21 @@
+list path_file(string path)
+{
+    list ret;
+    int len;
+    int idx;
+
+    for (len = strlen(path), idx = len; idx--; )
+    {
+        if (path[idx] == "/")
+        {
+            ret = 
+                (list)substr(path, 0, idx) + (list)substr(path, idx + 1, len);
+            return ret;
+        }
+    }
+
+    ret = (list)"" + (list)path;
+    return ret;
+}
+
+    

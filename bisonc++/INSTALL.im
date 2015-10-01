@@ -29,38 +29,40 @@
     // flags passed to the linker
 
 
-    // the directory where the skeleton files are installed
-    // Recompile options/data.cc if the skeleton location changes
-    // Before compiling bisonc++ the environment variable SKEL can be defined
-    // to overruled the location specified here
-#define SKELDIR    "/usr/share/bisonc++"
+// COMPONENTS TO INSTALL
+// =====================
 
+    // For an operational non-Debian installation, you probably must be
+    // `root'.
 
-// =========================================================================
-// Deactivate (e.g., use //#define ...) the following #defines to prevent
-// installation of the indicated component by 'build install'
-// 'build install base' can be used to specify a base directory below which
-// all components are installed (e.g., the bisonc++ program is then installed
-// in 'base + BINARY')
-// =========================================================================
+    // If necessary, adapt the #defines below to your situation.
+    // The provided locations are used by Debian Linux.
 
-    // the full path of the final program
-#define BINARY     "/usr/bin"
+    // With 'build install' you can dynamically specify a location to prepend
+    // to the locations configured here, and select which components you want 
+    // to install
 
-    // define SKEL if the skeleton files must be installed at SKELDIR
-#define SKEL
+// ONLY USE ABSOLUTE DIRECTORY NAMES:
+
+    // the directory where additional documentation is stored 
+#define ADD     "/usr/share/doc/"${PROGRAM}"-doc"
+
+    // the full pathname of the final program
+#define BINARY  "/usr/bin/"${PROGRAM}
+
+    // the directory where the standard documentation is stored 
+#define DOC     "/usr/share/doc/"${PROGRAM}
 
     // the directory whre the manual page is stored
 #define MAN     "/usr/share/man/man1"
 
-    // the directory whre the manual page is stored
-#define MANUAL   "/usr/share/doc/"${PROGRAM}"-doc/manual"
+    // the directory whre the user-guide is stored
+#define UGUIDE   "/usr/share/doc/"${PROGRAM}"-doc/manual"
 
-    // the directory where the standard documentation is stored 
-#define STD     "/usr/share/doc/"${PROGRAM}
+    // the directory where the skeleton files are installed
+    // Recompile options/data.cc if the skeleton location changes
+#define SKEL    "/usr/share/bisonc++"
 
-    // the directory where the extra documentation is stored 
-#define EXTRA   "/usr/share/doc/"${PROGRAM}"-doc"
 
 
 

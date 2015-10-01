@@ -1,17 +1,25 @@
-void remove(list entry)
-{
-    int equal;
-    string file;
+#!/bin/bash
 
-    file = entry[3];
+IFS="
+"
 
-    if (!exists(file))
-        return;
+for line in `cat $1`
+do
+    field1=`echo $line | awk '{printf $1}'`
+    field2=`echo $line | awk '{printf $2}'`
 
-    equal = md5sum(file) == entry[2];
-
-    if (equal)
-        run("rm " + file);
+    if [ $field1 == "link" ] ; then
+        rm -f $field2
+    elif [ $field1 == "dir" ] ; then
+        rmdir --ignore-fail-on-non-empty -p $field2 || echo FAILED: $field2
+    elif [ -e "$field2" ] ; then
+        if [ "$field1" != "`md5sum $field2 | awk '{printf $1}'`" ] ; then
+            echo $field2 changed, not removed
+        fi
     else
-        printf("not removing modified file ", file, "\n");
-}
+        rm -f $field2
+    fi
+done
+
+rm $1
+

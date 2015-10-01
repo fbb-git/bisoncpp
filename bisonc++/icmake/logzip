@@ -11,12 +11,19 @@ void logZip(string src, string names, string dest)
 
     chdir(g_cwd);
 
+    md(dest);
     dest += "/";
 
-    md(dest);
-
     if (src != "")
+    {
+        if (sizeof(makelist(O_DIR, src)) == 0)
+        {
+            printf("Warning: ", src, " not found: can't install ", src, names,
+                    " at ", dest, "\n");
+            return;
+        }
         chdir(src);
+    }
 
     if (names == "")
         files = makelist("*");
@@ -31,10 +38,6 @@ void logZip(string src, string names, string dest)
 
     run("tar cf - *.gz | (chdir " + 
                                 g_cwd + "; chdir " + dest + "; tar xf -)");
-
-
-    for (idx = sizeof(files); idx--; )
-        log(files[idx] + ".gz");
 
     run("rm *.gz");
 }

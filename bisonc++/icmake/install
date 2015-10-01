@@ -1,69 +1,123 @@
-void install(string base)
+
+void install(string request, string dest)
 {
     string target;
+    int components = 0;
+    list pathsplit;
+    string base;
+    base = "tmp/install/";
 
-    g_installing = 1;
+    md(base);
 
-#ifdef BINARY
-    target = base + BINARY "/";
-    printf("  installing the executable `", target + PROGRAM "'\n");
-    logFile("tmp/bin", "binary", target, PROGRAM);
-#endif
+    if (request == "x")
+        components = 63;
+    else 
+    {
+        if (strfind(request, "a") != -1)
+            components |= 1;
+        if (strfind(request, "b") != -1)
+            components |= 2;
+        if (strfind(request, "d") != -1)
+            components |= 4;
+        if (strfind(request, "m") != -1)
+            components |= 8;                
+        if (strfind(request, "s") != -1)
+            components |= 16;
+        if (strfind(request, "u") != -1)
+            components |= 32;
+    }
 
-#ifdef SKEL
-    target = base + g_skel;
-    printf("  installing skeleton files at `", target + "'\n");
-    logInstall("skeletons", "", target);
-#endif
+    if (components & 1)
+    {
+        printf("\n  installing additional documentation\n");
 
-#ifdef MAN
-    target = base + MAN;
-    printf("  installing the manual pages below `", target, "'\n");
+        target = base + ADD + "/bison-docs/";
+        printf("  installing original bison's docs below `", target + "'\n");
+        logRecursive("documentation/html", target);
+
+        target = base + ADD + "/examples/";
+        printf("  installing examples below `", target + "'\n");
+        logRecursive("documentation/examples", target);
+
+        logRecursive("documentation/man/calculator", target + "/calculator/");
+
+        printf("  installing regression tests below `", target + "'\n");
+        logRecursive("documentation/regression", target + "/regression/");
+
+        printf("  installing polymorphic semval demo at `", 
+                                                        target + "poly/'\n");
+        logRecursive("tmp/manual/poly", target + "poly/");
+
+        printf("  installing polymorphic impl. demo at `", 
+                                                    target + "/essence/'\n");
+        logRecursive("tmp/manual/essence", target + "/essence/");
+    }
+
+    if (components & 2)
+    {
+        target = base + BINARY;
+        pathsplit = path_file(target);
+
+        printf("  installing the executable `", target, "'\n");
+        logFile("tmp/bin", "binary", pathsplit[0], pathsplit[1]);
+    }
+
+
+    if (components & (4 | 8))
+    {
+        target = base + DOC "/";
+        if (components & 4)
+        {
+            printf("  installing the changelog at `", target, "\n");
+            logZip("", "changelog", target );
+        }
+
+        if (components & 8)
+        {
+            printf("  installing the html-manual pages at `", target, "\n");
+            logInstall("tmp/manhtml", "", target);
+        }
+    }
+
+
+    if (components & 8)
+    {
+        target = base + MAN "/";
+        printf("  installing the manual pages below `", target, "'\n");
     
-    logZip("tmp/man", "bisonc++.1", target);
-#endif
+        logZip("tmp/man", "bisonc++.1", target);
+    }
 
-#ifdef MANUAL
-    target = base + MANUAL;
-    printf("  installing the manual at `", target, "'\n");
-    logInstall("tmp/manual", "", target);
-#endif
+    if (components & 16)
+    {
+        target = base + SKEL "/";
+        printf("  installing skeleton files at `" + target + "'\n");
+        logInstall("skeletons", "", target);
+    }
 
-#ifdef STD
-    target = base + STD;
-    printf("  installing the changelog at `", target, "\n");
-    logZip("", "changelog", target);
 
-    printf("  installing the html-manual pages at `", target, "\n");
-    logInstall("tmp/manhtml", "", target);
-#endif
+    if (components & 32)
+    {
+        target = base + UGUIDE "/";
+        printf("  installing the user-guide at `", target, "'\n");
+        logInstall("tmp/manual", "", target);
+    }
 
-#ifdef EXTRA
-    target = base + EXTRA + "/bison-docs";
-    printf("  installing original bison's docs below `", target + "'\n");
-    logRecursive("documentation/html", target);
 
-    target = base + EXTRA + "/examples";
+    chdir(g_cwd);
+    if (dest == "")
+        dest = "/";
+    else
+        md(dest);
 
-    printf("  installing examples below `", target + "'\n");
-    logRecursive("documentation/examples", target);
+    dest = cutEoln(backtick("realpath " + dest)[0]);
 
-    logRecursive("documentation/man/calculator", target + "/calculator");
+    if (g_logPath != "")
+        backtick("icmake/log " + dest + " " + g_logPath);
 
-    printf("  installing regression tests below `", target + "'\n");
-    logRecursive("documentation/regression", target + "/regression");
+    run("tar cf - -Ctmp/install . | tar xf - -C" + dest);
 
-    printf("  installing polymorphic semval demo at `", target + "/poly'\n");
-    logRecursive("tmp/manual/poly", target + "/poly");
+    printf("\n  Installation completed\n");
 
-    printf("  installing polymorphic impl. demo at `", 
-                                                    target + "/essence'\n");
-    logRecursive("tmp/manual/essence", target + "/essence");
-#endif
-
-    writeLog();
+    exit(0);
 }
-
-
-
-
