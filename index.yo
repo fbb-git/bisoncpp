@@ -32,6 +32,9 @@ release page):
         itemization(
         it() url(4.12.00)
                     (https://github.com/fbb-git/bisoncpp/releases/tag/4.11.00)
+Oct 01 2015;
+        it() url(4.12.00)
+                    (https://github.com/fbb-git/bisoncpp/releases/tag/4.11.00)
 Sep 29 2015;
         it() url(4.11.00)
                     (https://github.com/fbb-git/bisoncpp/releases/tag/4.11.00)
@@ -41,10 +44,7 @@ Aug 30 2015;
 May 17 2015;
         it() url(4.10.00)
                     (https://github.com/fbb-git/bisoncpp/releases/tag/4.10.00)
-May 17 2015;
-        it() url(4.09.02)
-                    (https://github.com/fbb-git/bisoncpp/releases/tag/4.09.02)
-Jul 28 2014.
+May 17 2015.
         )
     COMMENT(NOTE: LAST ITEM SHOULD END IN . )
 
