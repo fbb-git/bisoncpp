@@ -45,11 +45,17 @@ read yesno
 
 if [ "$yesno" == "y" ] ; then
 
-    echo -n "Enter the ci message: "
-    read msg;
-
     RELEASE=`head -n1 ../wip/release.yo | 
                 sed 's/SUBST(_CurVers_)(\(.*\))/\1/'`
+
+    msgDefault="gh-pages for release ${RELEASE}"
+
+    echo -n "Enter the ci message [default: $msgDefault]"
+
+    read msg;
+
+    [ "$msg" == "" ] && msg=$msgDefault
+
     git ci -am "$msg"
     git push
     git co master
