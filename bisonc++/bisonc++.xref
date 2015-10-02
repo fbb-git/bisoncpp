@@ -1,15 +1,9 @@
 oxref by Frank B. Brokken (f.b.brokken@rug.nl)
 oxref V1.00.02 2012-2015
 
-CREATED Sun, 17 May 2015 14:57:34 +0000
+CREATED Fri, 02 Oct 2015 10:17:22 +0000
 CROSS REFERENCE FOR: -fxs tmp/libmodules.a 
 ----------------------------------------------------------------------
-
-accept(Options::PathType, char const*)
-  Full name: Options::accept(Options::PathType, char const*)
-  Source:    accept.cc 
-  Used By:
-    assign.cc: Options::assign(std::string*, Options::PathType, char const*)
 
 actionCases(std::ostream&) const
   Full name: Generator::actionCases(std::ostream&) const
@@ -26,8 +20,8 @@ addElement(Symbol*)
     handleproductionelements.cc: Parser::handleProductionElements(Meta__::SType&, Meta__::SType const&)
     nestedblock.cc: Parser::nestedBlock(Block&)
 
-addIncludeQuotes(std::string&)
-  Full name: Options::addIncludeQuotes(std::string&)
+addIncludeQuotes(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&)
+  Full name: Options::addIncludeQuotes(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&)
   Source:    addincludequotes.cc 
   Used By:
     setquotedstrings.cc: Options::setQuotedStrings()
@@ -45,8 +39,8 @@ addNext(Symbol const*, unsigned int)
   Used By:
     notreducible.cc: State::notReducible(unsigned int)
 
-addPolymorphic(std::string const&, std::string const&)
-  Full name: Parser::addPolymorphic(std::string const&, std::string const&)
+addPolymorphic(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: Parser::addPolymorphic(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    addpolymorphic.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
@@ -56,7 +50,7 @@ addProduction(unsigned int)
   Source:    addproduction.cc 
   Used By:
     augmentgrammar.cc: Rules::augmentGrammar(Symbol*)
-    openrule.cc: Parser::openRule(std::string const&)
+    openrule.cc: Parser::openRule(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
     parse.cc: Parser::executeAction(int)
 
 addProductions(Symbol const*, unsigned int)
@@ -77,32 +71,26 @@ addToKernel(std::vector<Next, std::allocator<Next> >&, Symbol const*, unsigned i
   Used By:
     notreducible.cc: State::notReducible(unsigned int)
 
-assign(std::string*, Options::PathType, char const*)
-  Full name: Options::assign(std::string*, Options::PathType, char const*)
+assign(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, Options::PathType, char const*)
+  Full name: Options::assign(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, Options::PathType, char const*)
   Source:    assign.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
 
-atClassname() const
-  Full name: Generator::atClassname() const
-  Source:    atclassname.cc 
-  Used By:
-    data.cc: GLOBALS data.cc 28data.o
-
-AtDollar(AtDollar::Type, unsigned int, unsigned int, std::string const&, int, bool)
-  Full name: AtDollar::AtDollar(AtDollar::Type, unsigned int, unsigned int, std::string const&, int, bool)
+AtDollar(AtDollar::Type, unsigned int, unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, bool)
+  Full name: AtDollar::AtDollar(AtDollar::Type, unsigned int, unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, bool)
   Source:    atdollar1.cc 
   Used By:
-    atindex.cc: Block::atIndex(unsigned int, std::string const&)
-    dollar.cc: Block::dollar(unsigned int, std::string const&, bool)
-    dollarindex.cc: Block::dollarIndex(unsigned int, std::string const&, bool)
+    atindex.cc: Block::atIndex(unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+    dollar.cc: Block::dollar(unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, bool)
+    dollarindex.cc: Block::dollarIndex(unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, bool)
 
-AtDollar(AtDollar::Type, unsigned int, unsigned int, std::string const&, std::string const&, int)
-  Full name: AtDollar::AtDollar(AtDollar::Type, unsigned int, unsigned int, std::string const&, std::string const&, int)
+AtDollar(AtDollar::Type, unsigned int, unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int)
+  Full name: AtDollar::AtDollar(AtDollar::Type, unsigned int, unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int)
   Source:    atdollar2.cc 
   Used By:
-    iddollar.cc: Block::IDdollar(unsigned int, std::string const&)
-    idindex.cc: Block::IDindex(unsigned int, std::string const&)
+    iddollar.cc: Block::IDdollar(unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+    idindex.cc: Block::IDindex(unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
 
 atElse(bool&) const
   Full name: Generator::atElse(bool&) const
@@ -116,35 +104,11 @@ atEnd(bool&) const
   Used By:
     data.cc: GLOBALS data.cc 28data.o
 
-atIndex(unsigned int, std::string const&)
-  Full name: Block::atIndex(unsigned int, std::string const&)
+atIndex(unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: Block::atIndex(unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    atindex.cc 
   Used By:
     lex.cc: Scanner::executeAction__(unsigned int)
-
-atLtype() const
-  Full name: Generator::atLtype() const
-  Source:    atltype.cc 
-  Used By:
-    data.cc: GLOBALS data.cc 28data.o
-
-atMatchedTextFunction() const
-  Full name: Generator::atMatchedTextFunction() const
-  Source:    atmatchedtextfunction.cc 
-  Used By:
-    data.cc: GLOBALS data.cc 28data.o
-
-atNameSpacedClassname() const
-  Full name: Generator::atNameSpacedClassname() const
-  Source:    atnamespacedclassname.cc 
-  Used By:
-    data.cc: GLOBALS data.cc 28data.o
-
-atTokenFunction() const
-  Full name: Generator::atTokenFunction() const
-  Source:    attokenfunction.cc 
-  Used By:
-    data.cc: GLOBALS data.cc 28data.o
 
 augmentGrammar(Symbol*)
   Full name: Rules::augmentGrammar(Symbol*)
@@ -158,12 +122,6 @@ baseClass(std::ostream&) const
   Used By:
     data.cc: GLOBALS data.cc 28data.o
 
-baseclassHeaderName() const
-  Full name: Options::baseclassHeaderName() const
-  Source:    baseclassheadername.cc 
-  Used By:
-    conflicts.cc: Generator::conflicts() const
-
 becomesDerivable(Production const*)
   Full name: Grammar::becomesDerivable(Production const*)
   Source:    becomesderivable.cc 
@@ -176,8 +134,8 @@ beyondDotIsNonTerminal() const
   Used By:
     distributelasetof.cc: State::distributeLAsetOf(StateItem&)
 
-bolAt(std::ostream&, std::string&, std::istream&, bool&) const
-  Full name: Generator::bolAt(std::ostream&, std::string&, std::istream&, bool&) const
+bolAt(std::ostream&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::istream&, bool&) const
+  Full name: Generator::bolAt(std::ostream&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::istream&, bool&) const
   Source:    bolat.cc 
   Used By:
     insert2.cc: Generator::insert(std::ostream&, unsigned int, char const*) const
@@ -187,14 +145,6 @@ buildKernel(std::vector<Item, std::allocator<Item> >*, std::vector<StateItem, st
   Source:    buildkernel.cc 
   Used By:
     nextstate.cc: State::nextState(Next&)
-
-canonicalQuote()
-  Full name: Scanner::canonicalQuote()
-  Source:    canonicalquote.cc 
-  Used By:
-    parse.cc: Parser::executeAction(int)
-    setprecedence.cc: Parser::setPrecedence(int)
-    useterminal.cc: Parser::useTerminal()
 
 checkConflicts()
   Full name: State::checkConflicts()
@@ -247,8 +197,8 @@ classIH(std::ostream&) const
   Used By:
     data.cc: GLOBALS data.cc 28data.o
 
-cleanDir(std::string&, bool)
-  Full name: Options::cleanDir(std::string&, bool)
+cleanDir(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, bool)
+  Full name: Options::cleanDir(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, bool)
   Source:    cleandir.cc 
   Used By:
     setbasicstrings.cc: Options::setBasicStrings()
@@ -258,7 +208,7 @@ clear()
   Source:    clear.cc 
   Used By:
     expectrules.cc: Parser::expectRules()
-    open.cc: Block::open(unsigned int, std::string const&)
+    open.cc: Block::open(unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
 
 close()
   Full name: Block::close()
@@ -297,6 +247,116 @@ containsKernelItem(Item const&, unsigned int, std::vector<StateItem, std::alloca
   Used By:
     haskernel.cc: State::hasKernel(std::vector<Item, std::allocator<Item> > const&) const
 
+cxx11]
+  Full name: ScannerBase::s_out__[abi:cxx11]
+  Source:    lex.cc 
+  Used By:
+    checkendofrawstring.cc: Scanner::checkEndOfRawString()
+    eoln.cc: Scanner::eoln()
+    handlerawstring.cc: Scanner::rawString()
+    handlexstring.cc: Scanner::handleXstring(unsigned int)
+    returnquoted.cc: Scanner::returnQuoted(void (Scanner::*)())
+    returntypespec.cc: Scanner::returnTypeSpec()
+    parse.cc: Parser::executeAction(int)
+
+cxx11]
+  Full name: Parser::s_hiddenName[abi:cxx11]
+  Source:    data.cc 
+  Used By:
+    nexthiddenname.cc: Parser::nextHiddenName[abi:cxx11]()
+
+cxx11]
+  Full name: Production::s_fileName[abi:cxx11]
+  Source:    data.cc 
+  Used By:
+    showconflicts.cc: RRConflict::showConflicts(Rules const&) const
+    showconflicts.cc: SRConflict::showConflicts(Rules const&) const
+    production1.cc: Production::Production(Symbol const*, unsigned int)
+    storeFilename.cc: Production::storeFilename(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+
+cxx11]
+  Full name: Generator::s_insert[abi:cxx11]
+  Source:    data.cc 
+  Used By:
+    insert.cc: Generator::insert(std::ostream&) const
+
+cxx11]()
+  Full name: Scanner::canonicalQuote[abi:cxx11]()
+  Source:    canonicalquote.cc 
+  Used By:
+    parse.cc: Parser::executeAction(int)
+    setprecedence.cc: Parser::setPrecedence(int)
+    useterminal.cc: Parser::useTerminal()
+
+cxx11]()
+  Full name: Parser::nextHiddenName[abi:cxx11]()
+  Source:    nexthiddenname.cc 
+  Used By:
+    nestedblock.cc: Parser::nestedBlock(Block&)
+
+cxx11]() const
+  Full name: Options::baseclassHeaderName[abi:cxx11]() const
+  Source:    baseclassheadername.cc 
+  Used By:
+    conflicts.cc: Generator::conflicts() const
+
+cxx11]() const
+  Full name: Generator::atTokenFunction[abi:cxx11]() const
+  Source:    attokenfunction.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 28data.o
+
+cxx11]() const
+  Full name: Generator::atNameSpacedClassname[abi:cxx11]() const
+  Source:    atnamespacedclassname.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 28data.o
+
+cxx11]() const
+  Full name: Generator::atClassname[abi:cxx11]() const
+  Source:    atclassname.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 28data.o
+
+cxx11]() const
+  Full name: Generator::atMatchedTextFunction[abi:cxx11]() const
+  Source:    atmatchedtextfunction.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 28data.o
+
+cxx11]() const
+  Full name: Generator::atLtype[abi:cxx11]() const
+  Source:    atltype.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 28data.o
+
+cxx11](AtDollar const&) const
+  Full name: Parser::returnPolymorphic[abi:cxx11](AtDollar const&) const
+  Source:    returnpolymorphic.cc 
+  Used By:
+    handledollar.cc: Parser::handleDollar(Block&, AtDollar const&, int)
+
+cxx11](AtDollar const&) const
+  Full name: Parser::returnUnion[abi:cxx11](AtDollar const&) const
+  Source:    returnunion.cc 
+  Used By:
+    handledollar.cc: Parser::handleDollar(Block&, AtDollar const&, int)
+
+cxx11](Options::PathType, char const*)
+  Full name: Options::accept[abi:cxx11](Options::PathType, char const*)
+  Source:    accept.cc 
+  Used By:
+    assign.cc: Options::assign(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, Options::PathType, char const*)
+
+cxx11](unsigned int) const
+  Full name: Rules::sType[abi:cxx11](unsigned int) const
+  Source:    stype.cc 
+  Used By:
+    checkfirsttype.cc: Parser::checkFirstType()
+    returnpolymorphic.cc: Parser::returnPolymorphic[abi:cxx11](AtDollar const&) const
+    returnunion.cc: Parser::returnUnion[abi:cxx11](AtDollar const&) const
+    semtag.cc: Parser::semTag(char const*, AtDollar const&, bool (Parser::*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const) const
+
 debug(std::ostream&) const
   Full name: Generator::debug(std::ostream&) const
   Source:    debug.cc 
@@ -333,21 +393,27 @@ debugLookup(std::ostream&) const
   Used By:
     data.cc: GLOBALS data.cc 28data.o
 
-defineNonTerminal(std::string const&, std::string const&)
-  Full name: Parser::defineNonTerminal(std::string const&, std::string const&)
+defaultActionReturn(std::ostream&) const
+  Full name: Generator::defaultActionReturn(std::ostream&) const
+  Source:    defaultactionreturn.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 28data.o
+
+defineNonTerminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: Parser::defineNonTerminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    definenonterminal.cc 
   Used By:
     nestedblock.cc: Parser::nestedBlock(Block&)
 
-defineTerminal(std::string const&, Symbol::Type)
-  Full name: Parser::defineTerminal(std::string const&, Symbol::Type)
+defineTerminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Symbol::Type)
+  Full name: Parser::defineTerminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Symbol::Type)
   Source:    defineterminal.cc 
   Used By:
-    definetokenname.cc: Parser::defineTokenName(std::string const&, bool)
+    definetokenname.cc: Parser::defineTokenName(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, bool)
     parse.cc: Parser::executeAction(int)
 
-defineTokenName(std::string const&, bool)
-  Full name: Parser::defineTokenName(std::string const&, bool)
+defineTokenName(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, bool)
+  Full name: Parser::defineTokenName(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, bool)
   Source:    definetokenname.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
@@ -383,14 +449,14 @@ distributeLAsetOf(StateItem&)
   Used By:
     computelasets.cc: State::computeLAsets()
 
-dollar(unsigned int, std::string const&, bool)
-  Full name: Block::dollar(unsigned int, std::string const&, bool)
+dollar(unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, bool)
+  Full name: Block::dollar(unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, bool)
   Source:    dollar.cc 
   Used By:
     lex.cc: Scanner::executeAction__(unsigned int)
 
-dollarIndex(unsigned int, std::string const&, bool)
-  Full name: Block::dollarIndex(unsigned int, std::string const&, bool)
+dollarIndex(unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, bool)
+  Full name: Block::dollarIndex(unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, bool)
   Source:    dollarindex.cc 
   Used By:
     lex.cc: Scanner::executeAction__(unsigned int)
@@ -408,8 +474,8 @@ eoln()
   Used By:
     lex.cc: Scanner::executeAction__(unsigned int)
 
-errExisting(std::string const&, std::string const&, std::string const&) const
-  Full name: Generator::errExisting(std::string const&, std::string const&, std::string const&) const
+errExisting(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const
+  Full name: Generator::errExisting(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const
   Source:    errexisting.cc 
   Used By:
     conflicts.cc: Generator::conflicts() const
@@ -421,11 +487,11 @@ errIndexTooLarge(AtDollar const&, int) const
     handleatsign.cc: Parser::handleAtSign(Block&, AtDollar const&, int)
     handledollar.cc: Parser::handleDollar(Block&, AtDollar const&, int)
 
-errNoSemantic(char const*, AtDollar const&, std::string const&) const
-  Full name: Parser::errNoSemantic(char const*, AtDollar const&, std::string const&) const
+errNoSemantic(char const*, AtDollar const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const
+  Full name: Parser::errNoSemantic(char const*, AtDollar const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const
   Source:    errnosemantic.cc 
   Used By:
-    semtag.cc: Parser::semTag(char const*, AtDollar const&, bool (Parser::*)(std::string const&) const) const
+    semtag.cc: Parser::semTag(char const*, AtDollar const&, bool (Parser::*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const) const
 
 error(char const*)
   Full name: Parser::error(char const*)
@@ -451,8 +517,8 @@ expectRules()
   Used By:
     parse.cc: Parser::executeAction(int)
 
-filename(std::string const&)
-  Full name: Generator::filename(std::string const&)
+filename(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: Generator::filename(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    filename.cc 
   Used By:
     baseclass.cc: Generator::baseClass(std::ostream&) const
@@ -486,14 +552,14 @@ FirstSet(Element const*)
   Full name: FirstSet::FirstSet(Element const*)
   Source:    firstset1.cc 
   Used By:
-    terminal1.cc: Terminal::Terminal(std::string const&, Symbol::Type, unsigned int, Terminal::Association, std::string const&)
-    terminal2.cc: Terminal::Terminal(std::string const&, std::string const&, Symbol::Type)
+    terminal1.cc: Terminal::Terminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Symbol::Type, unsigned int, Terminal::Association, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+    terminal2.cc: Terminal::Terminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Symbol::Type)
 
-grep(std::string const&, std::string const&) const
-  Full name: Generator::grep(std::string const&, std::string const&) const
+grep(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const
+  Full name: Generator::grep(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const
   Source:    grep.cc 
   Used By:
-    errexisting.cc: Generator::errExisting(std::string const&, std::string const&, std::string const&) const
+    errexisting.cc: Generator::errExisting(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const
 
 handleAtSign(Block&, AtDollar const&, int)
   Full name: Parser::handleAtSign(Block&, AtDollar const&, int)
@@ -543,14 +609,14 @@ hexadecimal()
   Used By:
     lex.cc: Scanner::executeAction__(unsigned int)
 
-IDdollar(unsigned int, std::string const&)
-  Full name: Block::IDdollar(unsigned int, std::string const&)
+IDdollar(unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: Block::IDdollar(unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    iddollar.cc 
   Used By:
     lex.cc: Scanner::executeAction__(unsigned int)
 
-IDindex(unsigned int, std::string const&)
-  Full name: Block::IDindex(unsigned int, std::string const&)
+IDindex(unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: Block::IDindex(unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    idindex.cc 
   Used By:
     lex.cc: Scanner::executeAction__(unsigned int)
@@ -598,34 +664,9 @@ insert(NonTerminal*)
   Source:    insert2.cc 
   Used By:
     augmentgrammar.cc: Rules::augmentGrammar(Symbol*)
-    definenonterminal.cc: Parser::defineNonTerminal(std::string const&, std::string const&)
-    requirenonterminal.cc: Parser::requireNonTerminal(std::string const&)
+    definenonterminal.cc: Parser::defineNonTerminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+    requirenonterminal.cc: Parser::requireNonTerminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
     usesymbol.cc: Parser::useSymbol()
-
-insert(std::ostream&) const
-  Full name: NonTerminal::insert(std::ostream&) const
-  Source:    v.cc 
-  Used By:
-    destructor.cc: NonTerminal::~NonTerminal()
-
-insert(std::ostream&) const
-  Full name: LookaheadSet::insert(std::ostream&) const
-  Source:    insert.cc 
-  Used By:
-    operatorinsert.cc: operator<<(std::ostream&, LookaheadSet const&)
-
-insert(std::ostream&) const
-  Full name: Generator::insert(std::ostream&) const
-  Source:    insert.cc 
-  Used By:
-    filter.cc: Generator::filter(std::istream&, std::ostream&, bool) const
-
-insert(std::ostream&) const
-  Full name: RRConflict::insert(std::ostream&) const
-  Source:    insert.cc 
-  Used By:
-    insertext.cc: State::insertExt(std::ostream&) const
-    insertstd.cc: State::insertStd(std::ostream&) const
 
 insert(std::ostream&) const
   Full name: SRConflict::insert(std::ostream&) const
@@ -635,11 +676,36 @@ insert(std::ostream&) const
     insertstd.cc: State::insertStd(std::ostream&) const
 
 insert(std::ostream&) const
+  Full name: LookaheadSet::insert(std::ostream&) const
+  Source:    insert.cc 
+  Used By:
+    operatorinsert.cc: operator<<(std::ostream&, LookaheadSet const&)
+
+insert(std::ostream&) const
   Full name: FirstSet::insert(std::ostream&) const
   Source:    oinsert.cc 
   Used By:
     showfirst.cc: GLOBALS showfirst.cc 12showfirst.o
     insertext.cc: GLOBALS insertext.cc 25insertext.o
+
+insert(std::ostream&) const
+  Full name: RRConflict::insert(std::ostream&) const
+  Source:    insert.cc 
+  Used By:
+    insertext.cc: State::insertExt(std::ostream&) const
+    insertstd.cc: State::insertStd(std::ostream&) const
+
+insert(std::ostream&) const
+  Full name: Generator::insert(std::ostream&) const
+  Source:    insert.cc 
+  Used By:
+    filter.cc: Generator::filter(std::istream&, std::ostream&, bool) const
+
+insert(std::ostream&) const
+  Full name: NonTerminal::insert(std::ostream&) const
+  Source:    v.cc 
+  Used By:
+    destructor.cc: NonTerminal::~NonTerminal()
 
 insert(std::ostream&, Production const*) const
   Full name: Item::insert(std::ostream&, Production const*) const
@@ -668,11 +734,11 @@ insert(std::vector<Terminal const*, std::allocator<Terminal const*> > const&) co
   Used By:
     tokens.cc: Generator::tokens(std::ostream&) const
 
-insert(Terminal*, std::string const&)
-  Full name: Rules::insert(Terminal*, std::string const&)
+insert(Terminal*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: Rules::insert(Terminal*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    insert1.cc 
   Used By:
-    defineterminal.cc: Parser::defineTerminal(std::string const&, Symbol::Type)
+    defineterminal.cc: Parser::defineTerminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Symbol::Type)
     predefine.cc: Parser::predefine(Terminal const*)
     useterminal.cc: Parser::useTerminal()
 
@@ -709,13 +775,13 @@ insName(std::ostream&) const
     insertext.cc: GLOBALS insertext.cc 25insertext.o
 
 inspect()
-  Full name: SRConflict::inspect()
+  Full name: RRConflict::inspect()
   Source:    inspect.cc 
   Used By:
     checkconflicts.cc: State::checkConflicts()
 
 inspect()
-  Full name: RRConflict::inspect()
+  Full name: SRConflict::inspect()
   Source:    inspect.cc 
   Used By:
     checkconflicts.cc: State::checkConflicts()
@@ -736,7 +802,7 @@ instance()
   Full name: Options::instance()
   Source:    instance.cc 
   Used By:
-    generator1.cc: Generator::Generator(Rules const&, std::unordered_map<std::string, std::string, std::hash<std::string>, std::equal_to<std::string>, std::allocator<std::pair<std::string const, std::string> > > const&)
+    generator1.cc: Generator::Generator(Rules const&, std::unordered_map<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::hash<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::equal_to<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::pair<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > > const&)
     parser1.cc: Parser::Parser(Rules&)
 
 intersection(LookaheadSet const&) const
@@ -757,7 +823,7 @@ isFirstStypeDefinition() const
   Used By:
     setpolymorphicdecl.cc: Options::setPolymorphicDecl()
     setstype.cc: Options::setStype()
-    setuniondecl.cc: Options::setUnionDecl(std::string const&)
+    setuniondecl.cc: Options::setUnionDecl(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
 
 Item()
   Full name: Item::Item()
@@ -798,6 +864,7 @@ key(std::ostream&) const
     debugincludes.cc: Generator::debugIncludes(std::ostream&) const
     debuginit.cc: Generator::debugInit(std::ostream&) const
     debuglookup.cc: Generator::debugLookup(std::ostream&) const
+    defaultactionreturn.cc: Generator::defaultActionReturn(std::ostream&) const
     errorverbose.cc: Generator::errorVerbose(std::ostream&) const
     lex.cc: Generator::lex(std::ostream&) const
     ltype.cc: Generator::ltype(std::ostream&) const
@@ -853,14 +920,14 @@ LookaheadSet(LookaheadSet::EndStatus)
     distributelasetof.cc: State::distributeLAsetOf(StateItem&)
     initialstate.cc: State::initialState()
 
-lookup(std::string const&)
-  Full name: Symtab::lookup(std::string const&)
+lookup(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: Symtab::lookup(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    lookup.cc 
   Used By:
     cleanup.cc: Parser::cleanup()
-    definenonterminal.cc: Parser::defineNonTerminal(std::string const&, std::string const&)
-    defineterminal.cc: Parser::defineTerminal(std::string const&, Symbol::Type)
-    requirenonterminal.cc: Parser::requireNonTerminal(std::string const&)
+    definenonterminal.cc: Parser::defineNonTerminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+    defineterminal.cc: Parser::defineTerminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Symbol::Type)
+    requirenonterminal.cc: Parser::requireNonTerminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
     setprecedence.cc: Parser::setPrecedence(int)
     usesymbol.cc: Parser::useSymbol()
     useterminal.cc: Parser::useTerminal()
@@ -911,9 +978,9 @@ multiplyDefined(Symbol const*)
   Full name: Parser::multiplyDefined(Symbol const*)
   Source:    multiplydefined.cc 
   Used By:
-    definenonterminal.cc: Parser::defineNonTerminal(std::string const&, std::string const&)
-    defineterminal.cc: Parser::defineTerminal(std::string const&, Symbol::Type)
-    requirenonterminal.cc: Parser::requireNonTerminal(std::string const&)
+    definenonterminal.cc: Parser::defineNonTerminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+    defineterminal.cc: Parser::defineTerminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Symbol::Type)
+    requirenonterminal.cc: Parser::requireNonTerminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
     useterminal.cc: Parser::useTerminal()
 
 nameOrValue(std::ostream&) const
@@ -945,7 +1012,7 @@ negativeIndex(AtDollar const&) const
   Full name: Parser::negativeIndex(AtDollar const&) const
   Source:    negativeindex.cc 
   Used By:
-    semtag.cc: Parser::semTag(char const*, AtDollar const&, bool (Parser::*)(std::string const&) const) const
+    semtag.cc: Parser::semTag(char const*, AtDollar const&, bool (Parser::*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const) const
     warnautoignored.cc: Parser::warnAutoIgnored(char const*, AtDollar const&) const
 
 nestedBlock(Block&)
@@ -954,12 +1021,12 @@ nestedBlock(Block&)
   Used By:
     handleproductionelements.cc: Parser::handleProductionElements(Meta__::SType&, Meta__::SType const&)
 
-newRule(NonTerminal*, std::string const&, unsigned int)
-  Full name: Rules::newRule(NonTerminal*, std::string const&, unsigned int)
+newRule(NonTerminal*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned int)
+  Full name: Rules::newRule(NonTerminal*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned int)
   Source:    newrule.cc 
   Used By:
     augmentgrammar.cc: Rules::augmentGrammar(Symbol*)
-    openrule.cc: Parser::openRule(std::string const&)
+    openrule.cc: Parser::openRule(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
 
 newState()
   Full name: State::newState()
@@ -981,25 +1048,19 @@ nextFind(Symbol const*) const
     nexton.cc: State::nextOn(Symbol const*) const
     notreducible.cc: State::notReducible(unsigned int)
 
-nextHiddenName()
-  Full name: Parser::nextHiddenName()
-  Source:    nexthiddenname.cc 
-  Used By:
-    nestedblock.cc: Parser::nestedBlock(Block&)
-
 nextState(Next&)
   Full name: State::nextState(Next&)
   Source:    nextstate.cc 
   Used By:
     construct.cc: State::construct()
 
-NonTerminal(std::string const&, std::string const&, Symbol::Type)
-  Full name: NonTerminal::NonTerminal(std::string const&, std::string const&, Symbol::Type)
+NonTerminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Symbol::Type)
+  Full name: NonTerminal::NonTerminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Symbol::Type)
   Source:    nonterminal1.cc 
   Used By:
     augmentgrammar.cc: Rules::augmentGrammar(Symbol*)
-    definenonterminal.cc: Parser::defineNonTerminal(std::string const&, std::string const&)
-    requirenonterminal.cc: Parser::requireNonTerminal(std::string const&)
+    definenonterminal.cc: Parser::defineNonTerminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+    requirenonterminal.cc: Parser::requireNonTerminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
     usesymbol.cc: Parser::useSymbol()
 
 nonTerminalSymbol(NonTerminal const*, std::ostream&)
@@ -1020,20 +1081,20 @@ octal()
   Used By:
     lex.cc: Scanner::executeAction__(unsigned int)
 
-open(unsigned int, std::string const&)
-  Full name: Block::open(unsigned int, std::string const&)
+open(unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: Block::open(unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    open.cc 
   Used By:
     lex.cc: Scanner::executeAction__(unsigned int)
 
-openRule(std::string const&)
-  Full name: Parser::openRule(std::string const&)
+openRule(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: Parser::openRule(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    openrule.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
 
-operator()(std::string const&)
-  Full name: Block::operator()(std::string const&)
+operator()(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: Block::operator()(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    opfuncharp.cc 
   Used By:
     lex.cc: Scanner::executeAction__(unsigned int)
@@ -1127,7 +1188,7 @@ plainWarnings()
   Used By:
     unused.cc: NonTerminal::unused(NonTerminal const*)
     showunusednonterminals.cc: Rules::showUnusedNonTerminals() const
-    generator1.cc: Generator::Generator(Rules const&, std::unordered_map<std::string, std::string, std::hash<std::string>, std::equal_to<std::string>, std::allocator<std::pair<std::string const, std::string> > > const&)
+    generator1.cc: Generator::Generator(Rules const&, std::unordered_map<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::hash<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::equal_to<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::pair<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > > const&)
     unused.cc: Terminal::unused(Terminal const*)
     unused.cc: Production::unused(Production const*)
 
@@ -1156,16 +1217,16 @@ polymorphicSpecializations(std::ostream&) const
     data.cc: GLOBALS data.cc 28data.o
 
 popStream()
-  Full name: Scanner::popStream()
-  Source:    popstream.cc 
-  Used By:
-    lex.cc: Scanner::lex__()
-
-popStream()
   Full name: ScannerBase::popStream()
   Source:    lex.cc 
   Used By:
     popstream.cc: Scanner::popStream()
+
+popStream()
+  Full name: Scanner::popStream()
+  Source:    popstream.cc 
+  Used By:
+    lex.cc: Scanner::lex__()
 
 predefine(Terminal const*)
   Full name: Parser::predefine(Terminal const*)
@@ -1210,8 +1271,8 @@ productions() const
   Used By:
     staticdata.cc: Generator::staticData(std::ostream&) const
 
-pushStream(std::string const&)
-  Full name: ScannerBase::pushStream(std::string const&)
+pushStream(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: ScannerBase::pushStream(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    lex.cc 
   Used By:
     handlexstring.cc: Scanner::handleXstring(unsigned int)
@@ -1244,7 +1305,7 @@ reductions(FBB::Table&, State const&)
   Full name: Writer::reductions(FBB::Table&, State const&)
   Source:    reductions.cc 
   Used By:
-    srtable.cc: Writer::srTable(State const*, std::string const&, FBB::Table&, std::ostream&)
+    srtable.cc: Writer::srTable(State const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, FBB::Table&, std::ostream&)
 
 reductionSymbol(Element const*, unsigned int, FBB::Table&)
   Full name: Writer::reductionSymbol(Element const*, unsigned int, FBB::Table&)
@@ -1276,14 +1337,14 @@ removeShifts(std::vector<Next, std::allocator<Next> >&)
   Used By:
     checkconflicts.cc: State::checkConflicts()
 
-replace(std::string&, char, std::string const&)
-  Full name: Generator::replace(std::string&, char, std::string const&)
+replace(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, char, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: Generator::replace(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, char, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    replace.cc 
   Used By:
     conflicts.cc: Generator::conflicts() const
 
-replaceBaseFlag(std::string&) const
-  Full name: Generator::replaceBaseFlag(std::string&) const
+replaceBaseFlag(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) const
+  Full name: Generator::replaceBaseFlag(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) const
   Source:    replacebaseflag.cc 
   Used By:
     filter.cc: Generator::filter(std::istream&, std::ostream&, bool) const
@@ -1295,23 +1356,17 @@ requiredTokens(std::ostream&) const
   Used By:
     data.cc: GLOBALS data.cc 28data.o
 
-requireNonTerminal(std::string const&)
-  Full name: Parser::requireNonTerminal(std::string const&)
+requireNonTerminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: Parser::requireNonTerminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    requirenonterminal.cc 
   Used By:
-    openrule.cc: Parser::openRule(std::string const&)
+    openrule.cc: Parser::openRule(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
 
 reRead(unsigned int)
   Full name: ScannerBase::Input::reRead(unsigned int)
   Source:    lex.cc 
   Used By:
     returntypespec.cc: Scanner::returnTypeSpec()
-
-returnPolymorphic(AtDollar const&) const
-  Full name: Parser::returnPolymorphic(AtDollar const&) const
-  Source:    returnpolymorphic.cc 
-  Used By:
-    handledollar.cc: Parser::handleDollar(Block&, AtDollar const&, int)
 
 returnQuoted(void (Scanner::*)())
   Full name: Scanner::returnQuoted(void (Scanner::*)())
@@ -1330,12 +1385,6 @@ returnTypeSpec()
   Source:    returntypespec.cc 
   Used By:
     lex.cc: Scanner::executeAction__(unsigned int)
-
-returnUnion(AtDollar const&) const
-  Full name: Parser::returnUnion(AtDollar const&) const
-  Source:    returnunion.cc 
-  Used By:
-    handledollar.cc: Parser::handleDollar(Block&, AtDollar const&, int)
 
 RmReduction(unsigned int, unsigned int, Symbol const*, bool)
   Full name: RmReduction::RmReduction(unsigned int, unsigned int, Symbol const*, bool)
@@ -1372,26 +1421,26 @@ s_acceptState
   Source:    data.cc 
   Used By:
     define.cc: State::define(Rules const&)
-    srtable.cc: Writer::srTable(State const*, std::string const&, FBB::Table&, std::ostream&)
+    srtable.cc: Writer::srTable(State const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, FBB::Table&, std::ostream&)
 
 s_at
   Full name: Generator::s_at
   Source:    data.cc 
   Used By:
-    replaceatkey.cc: Generator::replaceAtKey(std::string&, unsigned int) const
-    replacebaseflag.cc: Generator::replaceBaseFlag(std::string&) const
+    replaceatkey.cc: Generator::replaceAtKey(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, unsigned int) const
+    replacebaseflag.cc: Generator::replaceBaseFlag(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) const
 
 s_atBol
   Full name: Generator::s_atBol
   Source:    data.cc 
   Used By:
-    bolat.cc: Generator::bolAt(std::ostream&, std::string&, std::istream&, bool&) const
+    bolat.cc: Generator::bolAt(std::ostream&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::istream&, bool&) const
 
 s_atFlag
   Full name: Generator::s_atFlag
   Source:    data.cc 
   Used By:
-    replacebaseflag.cc: Generator::replaceBaseFlag(std::string&) const
+    replacebaseflag.cc: Generator::replaceBaseFlag(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) const
 
 s_counter
   Full name: NonTerminal::s_counter
@@ -1502,7 +1551,7 @@ s_eofTerminal
   Used By:
     operatorsubis2.cc: LookaheadSet::operator-=(Symbol const*)
     reduction.cc: Writer::reduction(FBB::Table&, StateItem const&)
-    srtable.cc: Writer::srTable(State const*, std::string const&, FBB::Table&, std::ostream&)
+    srtable.cc: Writer::srTable(State const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, FBB::Table&, std::ostream&)
     selectsymbolic.cc: Generator::selectSymbolic(Terminal const*, std::vector<Terminal const*, std::allocator<Terminal const*> >&)
     parser1.cc: Parser::Parser(Rules&)
 
@@ -1513,33 +1562,20 @@ s_errorTerminal
     notreducible.cc: State::notReducible(unsigned int)
     parser1.cc: Parser::Parser(Rules&)
 
-s_fileName
-  Full name: Production::s_fileName
-  Source:    data.cc 
-  Used By:
-    showconflicts.cc: RRConflict::showConflicts(Rules const&) const
-    showconflicts.cc: SRConflict::showConflicts(Rules const&) const
-    production1.cc: Production::Production(Symbol const*, unsigned int)
-    storeFilename.cc: Production::storeFilename(std::string const&)
-
-s_hiddenName
-  Full name: Parser::s_hiddenName
-  Source:    data.cc 
-  Used By:
-    nexthiddenname.cc: Parser::nextHiddenName()
-
-s_insert
-  Full name: Generator::s_insert
-  Source:    data.cc 
-  Used By:
-    insert.cc: Generator::insert(std::ostream&) const
-
 s_insert
   Full name: State::s_insert
   Source:    data.cc 
   Used By:
     allstates.cc: State::allStates()
     define.cc: State::define(Rules const&)
+
+s_insertPtr
+  Full name: Item::s_insertPtr
+  Source:    data.cc 
+  Used By:
+    itemcontext.cc: StateItem::itemContext(std::ostream&) const
+    plainitem.cc: StateItem::plainItem(std::ostream&) const
+    insertext.cc: State::insertExt(std::ostream&) const
 
 s_insertPtr
   Full name: NonTerminal::s_insertPtr
@@ -1555,11 +1591,33 @@ s_insertPtr
     multiplydefined.cc: Parser::multiplyDefined(Symbol const*)
 
 s_insertPtr
-  Full name: StateItem::s_insertPtr
+  Full name: Terminal::s_insertPtr
   Source:    data.cc 
   Used By:
+    setprecedence.cc: GLOBALS setprecedence.cc 12setprecedence.o
+    showfirst.cc: Rules::showFirst() const
+    showterminals.cc: GLOBALS showterminals.cc 12showterminals.o
+    showunusedrules.cc: Rules::showUnusedRules() const
+    showunusedterminals.cc: Rules::showUnusedTerminals() const
+    derivesentence.cc: GLOBALS derivesentence.cc 13derivesentence.o
+    insert.cc: GLOBALS insert.cc 14insert.o
+    insert.cc: GLOBALS insert.cc 15insert.o
+    transition.cc: GLOBALS transition.cc 23transition.o
+    transitionkernel.cc: GLOBALS transitionkernel.cc 23transitionkernel.o
+    insert.cc: GLOBALS insert.cc 24insert.o
+    showconflicts.cc: GLOBALS showconflicts.cc 24showconflicts.o
     insertext.cc: State::insertExt(std::ostream&) const
-    insertstd.cc: State::insertStd(std::ostream&) const
+    inserttoken.cc: GLOBALS inserttoken.cc 26inserttoken.o
+    reductionsymbol.cc: Writer::reductionSymbol(Element const*, unsigned int, FBB::Table&)
+    srtable.cc: Writer::srTable(State const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, FBB::Table&, std::ostream&)
+    terminalsymbol.cc: GLOBALS terminalsymbol.cc 26terminalsymbol.o
+    transition.cc: Writer::transition(Next const&, FBB::Table&)
+    filter.cc: Generator::filter(std::istream&, std::ostream&, bool) const
+    multiplydefined.cc: GLOBALS multiplydefined.cc 2multiplydefined.o
+    destructor.cc: GLOBALS destructor.cc 8destructor.o
+    setvalue.cc: GLOBALS setvalue.cc 8setvalue.o
+    unused.cc: GLOBALS unused.cc 8unused.o
+    standard.cc: GLOBALS standard.cc 9standard.o
 
 s_insertPtr
   Full name: Next::s_insertPtr
@@ -1569,37 +1627,18 @@ s_insertPtr
     insertstd.cc: State::insertStd(std::ostream&) const
 
 s_insertPtr
-  Full name: Item::s_insertPtr
+  Full name: StateItem::s_insertPtr
   Source:    data.cc 
   Used By:
-    itemcontext.cc: StateItem::itemContext(std::ostream&) const
-    plainitem.cc: StateItem::plainItem(std::ostream&) const
     insertext.cc: State::insertExt(std::ostream&) const
-
-s_insertPtr
-  Full name: Terminal::s_insertPtr
-  Source:    data.cc 
-  Used By:
-    setprecedence.cc: Rules::setPrecedence(Terminal const*)
-    showfirst.cc: Rules::showFirst() const
-    showterminals.cc: Rules::showTerminals() const
-    showunusedrules.cc: Rules::showUnusedRules() const
-    showunusedterminals.cc: Rules::showUnusedTerminals() const
-    insert.cc: Item::insert(std::ostream&, Production const*) const
-    transitionkernel.cc: Next::transitionKernel(std::ostream&) const
-    insertext.cc: State::insertExt(std::ostream&) const
-    reductionsymbol.cc: Writer::reductionSymbol(Element const*, unsigned int, FBB::Table&)
-    transition.cc: Writer::transition(Next const&, FBB::Table&)
-    filter.cc: Generator::filter(std::istream&, std::ostream&, bool) const
-    multiplydefined.cc: Parser::multiplyDefined(Symbol const*)
-    destructor.cc: GLOBALS destructor.cc 8destructor.o
+    insertstd.cc: State::insertStd(std::ostream&) const
 
 s_lastLineNr
   Full name: Rules::s_lastLineNr
   Source:    data.cc 
   Used By:
     addproduction.cc: Rules::addProduction(unsigned int)
-    newrule.cc: Rules::newRule(NonTerminal*, std::string const&, unsigned int)
+    newrule.cc: Rules::newRule(NonTerminal*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned int)
     sethiddenaction.cc: Rules::setHiddenAction(Block const&)
 
 s_locationValue
@@ -1619,20 +1658,20 @@ s_maxValue
   Source:    data.cc 
   Used By:
     assignnonterminalnumbers.cc: Rules::assignNonTerminalNumbers()
-    terminal1.cc: Terminal::Terminal(std::string const&, Symbol::Type, unsigned int, Terminal::Association, std::string const&)
-
-s_nConflicts
-  Full name: SRConflict::s_nConflicts
-  Source:    data.cc 
-  Used By:
-    handlesrconflict.cc: SRConflict::handleSRconflict(unsigned int, __gnu_cxx::__normal_iterator<Next const*, std::vector<Next, std::allocator<Next> > > const&, unsigned int)
-    define.cc: State::define(Rules const&)
+    terminal1.cc: Terminal::Terminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Symbol::Type, unsigned int, Terminal::Association, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
 
 s_nConflicts
   Full name: RRConflict::s_nConflicts
   Source:    data.cc 
   Used By:
     comparereductions.cc: RRConflict::compareReductions(unsigned int)
+    define.cc: State::define(Rules const&)
+
+s_nConflicts
+  Full name: SRConflict::s_nConflicts
+  Source:    data.cc 
+  Used By:
+    handlesrconflict.cc: SRConflict::handleSRconflict(unsigned int, __gnu_cxx::__normal_iterator<Next const*, std::vector<Next, std::allocator<Next> > > const&, unsigned int)
     define.cc: State::define(Rules const&)
 
 s_nExpectedConflicts
@@ -1646,7 +1685,7 @@ s_nHidden
   Full name: Parser::s_nHidden
   Source:    data.cc 
   Used By:
-    nexthiddenname.cc: Parser::nextHiddenName()
+    nexthiddenname.cc: Parser::nextHiddenName[abi:cxx11]()
 
 s_nr
   Full name: Production::s_nr
@@ -1666,26 +1705,14 @@ s_options
   Used By:
     instance.cc: Options::instance()
 
-s_out__
-  Full name: ScannerBase::s_out__
-  Source:    lex.cc 
-  Used By:
-    checkendofrawstring.cc: Scanner::checkEndOfRawString()
-    eoln.cc: Scanner::eoln()
-    handlerawstring.cc: Scanner::rawString()
-    handlexstring.cc: Scanner::handleXstring(unsigned int)
-    returnquoted.cc: Scanner::returnQuoted(void (Scanner::*)())
-    returntypespec.cc: Scanner::returnTypeSpec()
-    parse.cc: Parser::executeAction(int)
-
 s_precedence
   Full name: Terminal::s_precedence
   Source:    data.cc 
   Used By:
     expectrules.cc: Parser::expectRules()
     parse.cc: Parser::executeAction(int)
-    terminal1.cc: Terminal::Terminal(std::string const&, Symbol::Type, unsigned int, Terminal::Association, std::string const&)
-    terminal2.cc: Terminal::Terminal(std::string const&, std::string const&, Symbol::Type)
+    terminal1.cc: Terminal::Terminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Symbol::Type, unsigned int, Terminal::Association, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+    terminal2.cc: Terminal::Terminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Symbol::Type)
 
 s_semanticValue
   Full name: Parser::s_semanticValue
@@ -1732,22 +1759,22 @@ s_stateName
   Full name: StateType::s_stateName
   Source:    data.cc 
   Used By:
-    srtable.cc: Writer::srTable(State const*, std::string const&, FBB::Table&, std::ostream&)
+    srtable.cc: Writer::srTable(State const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, FBB::Table&, std::ostream&)
 
 s_stype__
   Full name: Parser::s_stype__
   Source:    data.cc 
   Used By:
     checkfirsttype.cc: Parser::checkFirstType()
-    semtag.cc: Parser::semTag(char const*, AtDollar const&, bool (Parser::*)(std::string const&) const) const
+    semtag.cc: Parser::semTag(char const*, AtDollar const&, bool (Parser::*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const) const
 
 s_threadConst
   Full name: Writer::s_threadConst
   Source:    data.cc 
   Used By:
-    srtable.cc: Writer::srTable(State const*, std::string const&, FBB::Table&, std::ostream&)
+    srtable.cc: Writer::srTable(State const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, FBB::Table&, std::ostream&)
     statesarray.cc: Writer::statesArray() const
-    writer0.cc: Writer::Writer(std::string const&, Rules const&)
+    writer0.cc: Writer::Writer(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Rules const&)
 
 s_undefined
   Full name: NonTerminal::s_undefined
@@ -1757,25 +1784,25 @@ s_undefined
     showunusednonterminals.cc: Rules::showUnusedNonTerminals() const
 
 s_unused
-  Full name: Production::s_unused
-  Source:    data.cc 
-  Used By:
-    showunusedrules.cc: Rules::showUnusedRules() const
-    unused.cc: Production::unused(Production const*)
-
-s_unused
   Full name: NonTerminal::s_unused
   Source:    data.cc 
   Used By:
     unused.cc: NonTerminal::unused(NonTerminal const*)
     showunusednonterminals.cc: Rules::showUnusedNonTerminals() const
 
+s_unused
+  Full name: Production::s_unused
+  Source:    data.cc 
+  Used By:
+    showunusedrules.cc: Rules::showUnusedRules() const
+    unused.cc: Production::unused(Production const*)
+
 s_value
   Full name: Terminal::s_value
   Source:    data.cc 
   Used By:
     setvalue.cc: Terminal::setValue(unsigned int)
-    terminal1.cc: Terminal::Terminal(std::string const&, Symbol::Type, unsigned int, Terminal::Association, std::string const&)
+    terminal1.cc: Terminal::Terminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Symbol::Type, unsigned int, Terminal::Association, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
 
 s_valueSet
   Full name: Terminal::s_valueSet
@@ -1802,17 +1829,17 @@ saveDollar1(Block&, int)
   Used By:
     substituteblock.cc: Parser::substituteBlock(int, Block&)
 
-Scanner(std::string const&)
-  Full name: Scanner::Scanner(std::string const&)
+Scanner(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: Scanner::Scanner(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    scanner1.cc 
   Used By:
     parser1.cc: Parser::Parser(Rules&)
 
-ScannerBase(std::string const&, std::string const&)
-  Full name: ScannerBase::ScannerBase(std::string const&, std::string const&)
+ScannerBase(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: ScannerBase::ScannerBase(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    lex.cc 
   Used By:
-    scanner1.cc: Scanner::Scanner(std::string const&)
+    scanner1.cc: Scanner::Scanner(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
 
 scannerH(std::ostream&) const
   Full name: Generator::scannerH(std::ostream&) const
@@ -1832,13 +1859,13 @@ selectSymbolic(Terminal const*, std::vector<Terminal const*, std::allocator<Term
   Used By:
     tokens.cc: Generator::tokens(std::ostream&) const
 
-semTag(char const*, AtDollar const&, bool (Parser::*)(std::string const&) const) const
-  Full name: Parser::semTag(char const*, AtDollar const&, bool (Parser::*)(std::string const&) const) const
+semTag(char const*, AtDollar const&, bool (Parser::*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const) const
+  Full name: Parser::semTag(char const*, AtDollar const&, bool (Parser::*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const) const
   Source:    semtag.cc 
   Used By:
-    returnpolymorphic.cc: Parser::returnPolymorphic(AtDollar const&) const
+    returnpolymorphic.cc: Parser::returnPolymorphic[abi:cxx11](AtDollar const&) const
     returnsingle.cc: Parser::returnSingle(AtDollar const&) const
-    returnunion.cc: Parser::returnUnion(AtDollar const&) const
+    returnunion.cc: Parser::returnUnion[abi:cxx11](AtDollar const&) const
 
 setAccessorVariables()
   Full name: Options::setAccessorVariables()
@@ -1897,8 +1924,8 @@ setLineNrs() const
     lex.cc: Scanner::executeAction__(unsigned int)
     settags.cc: Scanner::setTags() const
 
-setLocationDecl(std::string const&)
-  Full name: Options::setLocationDecl(std::string const&)
+setLocationDecl(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: Options::setLocationDecl(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    setlocationdecl.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
@@ -1915,14 +1942,14 @@ setNonTerminalTypes()
   Used By:
     expectrules.cc: Parser::expectRules()
 
-setOpt(std::string*, char const*, std::string const&)
-  Full name: Options::setOpt(std::string*, char const*, std::string const&)
+setOpt(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: Options::setOpt(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    setopt.cc 
   Used By:
     setbasicstrings.cc: Options::setBasicStrings()
 
-setPath(std::string*, int, std::string const&, char const*, char const*)
-  Full name: Options::setPath(std::string*, int, std::string const&, char const*, char const*)
+setPath(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, char const*, char const*)
+  Full name: Options::setPath(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, char const*, char const*)
   Source:    setpath2.cc 
   Used By:
     setpathstrings.cc: Options::setPathStrings()
@@ -1934,16 +1961,16 @@ setPathStrings()
     setaccessorvariables.cc: Options::setAccessorVariables()
 
 setPolymorphicDecl()
-  Full name: Options::setPolymorphicDecl()
-  Source:    setpolymorphicdecl.cc 
-  Used By:
-    setpolymorphicdecl.cc: Parser::setPolymorphicDecl()
-
-setPolymorphicDecl()
   Full name: Parser::setPolymorphicDecl()
   Source:    setpolymorphicdecl.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
+
+setPolymorphicDecl()
+  Full name: Options::setPolymorphicDecl()
+  Source:    setpolymorphicdecl.cc 
+  Used By:
+    setpolymorphicdecl.cc: Parser::setPolymorphicDecl()
 
 setPrecedence(int)
   Full name: Parser::setPrecedence(int)
@@ -1952,17 +1979,17 @@ setPrecedence(int)
     parse.cc: Parser::executeAction(int)
 
 setPrecedence(Terminal const*)
-  Full name: Rules::setPrecedence(Terminal const*)
-  Source:    setprecedence.cc 
-  Used By:
-    setprecedence.cc: Parser::setPrecedence(int)
-
-setPrecedence(Terminal const*)
   Full name: Production::setPrecedence(Terminal const*)
   Source:    setprecedence.cc 
   Used By:
     setprecedence.cc: Rules::setPrecedence(Terminal const*)
     updateprecedence.cc: Rules::updatePrecedence(Production*, std::vector<Terminal*, std::allocator<Terminal*> > const&)
+
+setPrecedence(Terminal const*)
+  Full name: Rules::setPrecedence(Terminal const*)
+  Source:    setprecedence.cc 
+  Used By:
+    setprecedence.cc: Parser::setPrecedence(int)
 
 setPrintTokens()
   Full name: Options::setPrintTokens()
@@ -2006,7 +2033,7 @@ setTags() const
   Used By:
     handlexstring.cc: Scanner::handleXstring(unsigned int)
     popstream.cc: Scanner::popStream()
-    scanner1.cc: Scanner::Scanner(std::string const&)
+    scanner1.cc: Scanner::Scanner(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
 
 setUnionDecl()
   Full name: Parser::setUnionDecl()
@@ -2014,8 +2041,8 @@ setUnionDecl()
   Used By:
     parse.cc: Parser::executeAction(int)
 
-setUnionDecl(std::string const&)
-  Full name: Options::setUnionDecl(std::string const&)
+setUnionDecl(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: Options::setUnionDecl(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    setuniondecl.cc 
   Used By:
     setuniondecl.cc: Parser::setUnionDecl()
@@ -2030,7 +2057,7 @@ setValue(unsigned int)
   Full name: Terminal::setValue(unsigned int)
   Source:    setvalue.cc 
   Used By:
-    definetokenname.cc: Parser::defineTokenName(std::string const&, bool)
+    definetokenname.cc: Parser::defineTokenName(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, bool)
 
 setVerbosity()
   Full name: Options::setVerbosity()
@@ -2039,13 +2066,13 @@ setVerbosity()
     cleanup.cc: Parser::cleanup()
 
 showConflicts(Rules const&) const
-  Full name: SRConflict::showConflicts(Rules const&) const
+  Full name: RRConflict::showConflicts(Rules const&) const
   Source:    showconflicts.cc 
   Used By:
     define.cc: State::define(Rules const&)
 
 showConflicts(Rules const&) const
-  Full name: RRConflict::showConflicts(Rules const&) const
+  Full name: SRConflict::showConflicts(Rules const&) const
   Source:    showconflicts.cc 
   Used By:
     define.cc: State::define(Rules const&)
@@ -2074,8 +2101,8 @@ SRConflict(std::vector<Next, std::allocator<Next> > const&, std::vector<StateIte
   Used By:
     state1.cc: State::State(unsigned int)
 
-srTable(State const*, std::string const&, FBB::Table&, std::ostream&)
-  Full name: Writer::srTable(State const*, std::string const&, FBB::Table&, std::ostream&)
+srTable(State const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, FBB::Table&, std::ostream&)
+  Full name: Writer::srTable(State const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, FBB::Table&, std::ostream&)
   Source:    srtable.cc 
   Used By:
     srtables.cc: Writer::srTables() const
@@ -2092,10 +2119,13 @@ standard(std::ostream&) const
   Used By:
     showrules.cc: Rules::showRules() const
     productioninfo.cc: Writer::productionInfo(Production const*, std::ostream&)
+    checkemptyblocktype.cc: Parser::checkEmptyBlocktype()
     checkfirsttype.cc: Parser::checkFirstType()
     errindextoolarge.cc: Parser::errIndexTooLarge(AtDollar const&, int) const
-    errnosemantic.cc: Parser::errNoSemantic(char const*, AtDollar const&, std::string const&) const
+    errnosemantic.cc: Parser::errNoSemantic(char const*, AtDollar const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const
+    handleproductionelement.cc: Parser::handleProductionElement(Meta__::SType&)
     negativeindex.cc: Parser::negativeIndex(AtDollar const&) const
+    substituteblock.cc: Parser::substituteBlock(int, Block&)
     warnautoignored.cc: Parser::warnAutoIgnored(char const*, AtDollar const&) const
     warnautooverride.cc: Parser::warnAutoOverride(AtDollar const&) const
     warnuntaggedvalue.cc: Parser::warnUntaggedValue(AtDollar const&) const
@@ -2127,26 +2157,17 @@ staticData(std::ostream&) const
   Used By:
     data.cc: GLOBALS data.cc 28data.o
 
-storeFilename(std::string const&)
-  Full name: Production::storeFilename(std::string const&)
+storeFilename(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: Production::storeFilename(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    storeFilename.cc 
   Used By:
-    newrule.cc: Rules::newRule(NonTerminal*, std::string const&, unsigned int)
+    newrule.cc: Rules::newRule(NonTerminal*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned int)
 
 stype(std::ostream&) const
   Full name: Generator::stype(std::ostream&) const
   Source:    stype.cc 
   Used By:
     data.cc: GLOBALS data.cc 28data.o
-
-sType(unsigned int) const
-  Full name: Rules::sType(unsigned int) const
-  Source:    stype.cc 
-  Used By:
-    checkfirsttype.cc: Parser::checkFirstType()
-    returnpolymorphic.cc: Parser::returnPolymorphic(AtDollar const&) const
-    returnunion.cc: Parser::returnUnion(AtDollar const&) const
-    semtag.cc: Parser::semTag(char const*, AtDollar const&, bool (Parser::*)(std::string const&) const) const
 
 substituteBlock(int, Block&)
   Full name: Parser::substituteBlock(int, Block&)
@@ -2161,13 +2182,13 @@ summarizeActions()
   Used By:
     define.cc: State::define(Rules const&)
 
-Symbol(std::string const&, Symbol::Type, std::string const&)
-  Full name: Symbol::Symbol(std::string const&, Symbol::Type, std::string const&)
+Symbol(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Symbol::Type, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: Symbol::Symbol(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Symbol::Type, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    symbol1.cc 
   Used By:
-    nonterminal1.cc: NonTerminal::NonTerminal(std::string const&, std::string const&, Symbol::Type)
-    terminal1.cc: Terminal::Terminal(std::string const&, Symbol::Type, unsigned int, Terminal::Association, std::string const&)
-    terminal2.cc: Terminal::Terminal(std::string const&, std::string const&, Symbol::Type)
+    nonterminal1.cc: NonTerminal::NonTerminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Symbol::Type)
+    terminal1.cc: Terminal::Terminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Symbol::Type, unsigned int, Terminal::Association, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+    terminal2.cc: Terminal::Terminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Symbol::Type)
 
 symbolicNames() const
   Full name: Writer::symbolicNames() const
@@ -2175,17 +2196,17 @@ symbolicNames() const
   Used By:
     staticdata.cc: Generator::staticData(std::ostream&) const
 
-Terminal(std::string const&, std::string const&, Symbol::Type)
-  Full name: Terminal::Terminal(std::string const&, std::string const&, Symbol::Type)
+Terminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Symbol::Type)
+  Full name: Terminal::Terminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Symbol::Type)
   Source:    terminal2.cc 
   Used By:
     data.cc: GLOBALS data.cc 12data.o
 
-Terminal(std::string const&, Symbol::Type, unsigned int, Terminal::Association, std::string const&)
-  Full name: Terminal::Terminal(std::string const&, Symbol::Type, unsigned int, Terminal::Association, std::string const&)
+Terminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Symbol::Type, unsigned int, Terminal::Association, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: Terminal::Terminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Symbol::Type, unsigned int, Terminal::Association, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    terminal1.cc 
   Used By:
-    defineterminal.cc: Parser::defineTerminal(std::string const&, Symbol::Type)
+    defineterminal.cc: Parser::defineTerminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Symbol::Type)
     useterminal.cc: Parser::useTerminal()
 
 terminalSymbol(Terminal const*, std::ostream&)
@@ -2198,7 +2219,7 @@ termToNonterm(Symbol*, Symbol*)
   Full name: Rules::termToNonterm(Symbol*, Symbol*)
   Source:    termtononterm.cc 
   Used By:
-    requirenonterminal.cc: Parser::requireNonTerminal(std::string const&)
+    requirenonterminal.cc: Parser::requireNonTerminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
 
 threading(std::ostream&) const
   Full name: Generator::threading(std::ostream&) const
@@ -2234,7 +2255,7 @@ transitions(FBB::Table&, std::vector<Next, std::allocator<Next> > const&)
   Full name: Writer::transitions(FBB::Table&, std::vector<Next, std::allocator<Next> > const&)
   Source:    transitions.cc 
   Used By:
-    srtable.cc: Writer::srTable(State const*, std::string const&, FBB::Table&, std::ostream&)
+    srtable.cc: Writer::srTable(State const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, FBB::Table&, std::ostream&)
 
 undefined(NonTerminal const*)
   Full name: NonTerminal::undefined(NonTerminal const*)
@@ -2242,14 +2263,14 @@ undefined(NonTerminal const*)
   Used By:
     showunusednonterminals.cc: Rules::showUnusedNonTerminals() const
 
-undelimit(std::string const&)
-  Full name: Options::undelimit(std::string const&)
+undelimit(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: Options::undelimit(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    undelimit.cc 
   Used By:
     handlexstring.cc: Scanner::handleXstring(unsigned int)
-    cleandir.cc: Options::cleanDir(std::string&, bool)
-    setopt.cc: Options::setOpt(std::string*, char const*, std::string const&)
-    definepathname.cc: Parser::definePathname(std::string*)
+    cleandir.cc: Options::cleanDir(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, bool)
+    setopt.cc: Options::setOpt(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+    definepathname.cc: Parser::definePathname(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*)
 
 unused(NonTerminal const*)
   Full name: NonTerminal::unused(NonTerminal const*)
@@ -2310,7 +2331,7 @@ vectorIdx(unsigned int) const
   Full name: Production::vectorIdx(unsigned int) const
   Source:    vectoridx.cc 
   Used By:
-    stype.cc: Rules::sType(unsigned int) const
+    stype.cc: Rules::sType[abi:cxx11](unsigned int) const
     beyonddotisnonterminal.cc: Item::beyondDotIsNonTerminal() const
     firstbeyonddot.cc: Item::firstBeyondDot(FirstSet*) const
     hasrightofdot.cc: Item::hasRightOfDot(Symbol const&) const
@@ -2321,14 +2342,8 @@ version
   Full name: version
   Source:    version.cc 
   Used By:
-    usage.cc: usage(std::string const&)
+    usage.cc: usage(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
     filter.cc: Generator::filter(std::istream&, std::ostream&, bool) const
-
-visitReduction(unsigned int)
-  Full name: RRConflict::visitReduction(unsigned int)
-  Source:    visitreduction.cc 
-  Used By:
-    inspect.cc: RRConflict::inspect()
 
 visitReduction(unsigned int)
   Full name: SRConflict::visitReduction(unsigned int)
@@ -2336,42 +2351,48 @@ visitReduction(unsigned int)
   Used By:
     inspect.cc: SRConflict::inspect()
 
+visitReduction(unsigned int)
+  Full name: RRConflict::visitReduction(unsigned int)
+  Source:    visitreduction.cc 
+  Used By:
+    inspect.cc: RRConflict::inspect()
+
 warnAutoIgnored(char const*, AtDollar const&) const
   Full name: Parser::warnAutoIgnored(char const*, AtDollar const&) const
   Source:    warnautoignored.cc 
   Used By:
-    semtag.cc: Parser::semTag(char const*, AtDollar const&, bool (Parser::*)(std::string const&) const) const
+    semtag.cc: Parser::semTag(char const*, AtDollar const&, bool (Parser::*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const) const
 
 warnAutoOverride(AtDollar const&) const
   Full name: Parser::warnAutoOverride(AtDollar const&) const
   Source:    warnautooverride.cc 
   Used By:
-    semtag.cc: Parser::semTag(char const*, AtDollar const&, bool (Parser::*)(std::string const&) const) const
+    semtag.cc: Parser::semTag(char const*, AtDollar const&, bool (Parser::*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const) const
 
 warnUntaggedValue(AtDollar const&) const
   Full name: Parser::warnUntaggedValue(AtDollar const&) const
   Source:    warnuntaggedvalue.cc 
   Used By:
-    semtag.cc: Parser::semTag(char const*, AtDollar const&, bool (Parser::*)(std::string const&) const) const
+    semtag.cc: Parser::semTag(char const*, AtDollar const&, bool (Parser::*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const) const
 
-Writer(std::string const&, Rules const&)
-  Full name: Writer::Writer(std::string const&, Rules const&)
+Writer(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Rules const&)
+  Full name: Writer::Writer(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Rules const&)
   Source:    writer0.cc 
   Used By:
-    generator1.cc: Generator::Generator(Rules const&, std::unordered_map<std::string, std::string, std::hash<std::string>, std::equal_to<std::string>, std::allocator<std::pair<std::string const, std::string> > > const&)
+    generator1.cc: Generator::Generator(Rules const&, std::unordered_map<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::hash<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::equal_to<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::pair<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > > const&)
 
 year
   Full name: year
   Source:    version.cc 
   Used By:
-    usage.cc: usage(std::string const&)
+    usage.cc: usage(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
 
 ~Element()
   Full name: Element::~Element()
   Source:    destructor.cc 
   Used By:
     destructor.cc: Symbol::~Symbol()
-    symbol1.cc: Symbol::Symbol(std::string const&, Symbol::Type, std::string const&)
+    symbol1.cc: Symbol::Symbol(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Symbol::Type, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
 
 ~Symbol()
   Full name: Symbol::~Symbol()
@@ -2379,8 +2400,8 @@ year
   Used By:
     destructor.cc: NonTerminal::~NonTerminal()
     destructor.cc: Terminal::~Terminal()
-    terminal1.cc: Terminal::Terminal(std::string const&, Symbol::Type, unsigned int, Terminal::Association, std::string const&)
-    terminal2.cc: Terminal::Terminal(std::string const&, std::string const&, Symbol::Type)
+    terminal1.cc: Terminal::Terminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Symbol::Type, unsigned int, Terminal::Association, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+    terminal2.cc: Terminal::Terminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Symbol::Type)
 
 ~Terminal()
   Full name: Terminal::~Terminal()

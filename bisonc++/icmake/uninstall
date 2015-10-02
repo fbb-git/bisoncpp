@@ -11,7 +11,7 @@ void uninstall(string logfile)
         exit(0);
     }
 
-    run("icmake/remove " + logfile);
+    run("icmake/remove " + logfile + " " + (string)g_echo);
 
     exit(0);
 }

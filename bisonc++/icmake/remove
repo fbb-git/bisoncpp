@@ -1,5 +1,20 @@
 #!/bin/bash
 
+g_echo=$2
+
+rm_f()
+{
+    [ $g_echo -ne 0 ] && echo rm $1
+    rm -f $1
+}
+
+rm_dir()
+{
+    [ $g_echo -ne 0 ] && echo rmdir $1
+    rmdir --ignore-fail-on-non-empty -p $1
+}
+ 
+
 IFS="
 "
 
@@ -9,17 +24,17 @@ do
     field2=`echo $line | awk '{printf $2}'`
 
     if [ $field1 == "link" ] ; then
-        rm -f $field2
+        rm_f $field2
     elif [ $field1 == "dir" ] ; then
-        rmdir --ignore-fail-on-non-empty -p $field2 || echo FAILED: $field2
+	rm_dir $field2
     elif [ -e "$field2" ] ; then
         if [ "$field1" != "`md5sum $field2 | awk '{printf $1}'`" ] ; then
             echo $field2 changed, not removed
+        else
+	    rm_f $field2
         fi
-    else
-        rm -f $field2
     fi
 done
 
-rm $1
+rm_f $1
 

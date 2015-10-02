@@ -1,3 +1,8 @@
+bisonc++ (4.12.02) NOT YET TAGGED
+
+  * Refined the 'build uninstall' procedure
+
+
 bisonc++ (4.12.01)
 
   * The implementation of the ./build script was improved.

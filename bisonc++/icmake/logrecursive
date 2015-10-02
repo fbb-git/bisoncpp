@@ -16,7 +16,6 @@ void logRecursive(string src, string dest)
         next = "/" + dirs[idx];
         logRecursive(src + next, dest + next);
     }
-
     logInstall(src, "", dest);
 }
 
