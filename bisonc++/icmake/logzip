@@ -36,8 +36,7 @@ void logZip(string src, string names, string dest)
         run("gzip -n -9 < " + file + " > " + file + ".gz");
     }
 
-    run("tar cf - *.gz | (chdir " + 
-                                g_cwd + "; chdir " + dest + "; tar xf -)");
+    run("tar cf - *.gz | (cd " + g_cwd + "; cd " + dest + "; tar xf -)");
 
     run("rm *.gz");
 }

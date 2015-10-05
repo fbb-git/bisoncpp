@@ -1,4 +1,5 @@
 string g_compiler;
+int g_gch = 1;
 
 void _precompile(string class)
 {
@@ -15,12 +16,18 @@ void precompileHeaders()
     list classes;
     string class;
 
+    if (!g_gch)
+        return;
+
     classes = makelist(O_SUBDIR, "*");
+
 
     g_compiler = setOpt(CXX, "CXX") + " " + 
                                     setOpt(CXXFLAGS, "CXXFLAGS") + " ";
 
-    _precompile("bisonc++");
+
+    _precompile("main");         // precompile the main program .ih file
+
 
     for (idx = sizeof(classes); idx--; )
     {

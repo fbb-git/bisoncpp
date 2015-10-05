@@ -9,6 +9,12 @@ void logRecursive(string src, string dest)
         
     chdir(g_cwd);
 
+    if (!exists(src))
+    {
+        printf("skipping unavailable directory `", src, "'\n");
+        return;
+    }
+
     dirs = findAll("d", src, "");     // find all subdirs 
 
     for (idx = sizeof(dirs); idx--; ) // visit all subdirs

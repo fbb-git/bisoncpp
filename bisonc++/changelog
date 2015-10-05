@@ -1,7 +1,19 @@
-bisonc++ (4.12.02) NOT YET TAGGED
+bisonc++ (4.12.03)
+
+  * Kevin Brodsky observed that the installation scripts used 'chdir' rather
+    than 'cd'. Fixed in this release.
+
+  * Kevin Brodsky also observed that the combined size of all precompiled 
+    headers might exceed some disks capacities. The option -P was added to the
+    ./build script to prevent the use of precompiled headers.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 05 Oct 2015 20:17:56 +0200
+
+bisonc++ (4.12.02)
 
   * Refined the 'build uninstall' procedure
 
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 04 Oct 2015 16:27:18 +0200
 
 bisonc++ (4.12.01)
 

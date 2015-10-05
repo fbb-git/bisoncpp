@@ -37,15 +37,23 @@ void main(int argc, list argv)
 {
     string option;
     string strip;
+    int idx;
 
-    if (argv[1] == "-q")
+    for (idx = sizeof(argv); idx--; )
     {
-        g_echo = OFF;
-        argv -= (list)"-q";
+        if (argv[idx] == "-q")
+        {
+            g_echo = OFF;
+            argv -= (list)"-q";
+        }
+        else if (argv[idx] == "-P")
+        {
+            g_gch = 0;
+            argv -= (list)"-P";
+        }
     }
 
     echo(g_echo);
-
 
     option = argv[1];
 
