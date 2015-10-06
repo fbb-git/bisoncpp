@@ -3,9 +3,10 @@
 echo if any modified or untracked files are shown, handle these first:
 echo
 git st
-echo -n "Continue [y/n] ? "
+echo -n "Continue [Yn] ? "
 read yesno
-[ "$yesno" == "y" ] || exit 0
+[ "$yesno" == "y" -o "$yesno" == "" ]   ||   exit 0
+
 
 echo -n "Need to (re)create bisoncpp's wip files for gh-pages [y/N] ? "
 read yesno
@@ -30,17 +31,19 @@ echo -n "Check index.yo: version and last 5 releases [y/n] ? "
 read yesno
 
 if [ "$yesno" == "y" ] ; then
+    cat ../wip/release.yo
     emacs index.yo
 fi
 
 yodl2html index.yo || exit 1
+
 
 echo "Running 'git st': check for unexpected files"
 git st
 
 echo
 
-echo -n "ci change to index.html etc., push the result and co master [y/N] ? "
+echo -n "ci change to index.html etc., push the result and co master [y/n] ? "
 read yesno
 
 if [ "$yesno" == "y" ] ; then
@@ -60,6 +63,3 @@ if [ "$yesno" == "y" ] ; then
     git push
     git co master
 fi
-
-
-
