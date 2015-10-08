@@ -1,3 +1,10 @@
+bisonc++ (4.12.04) NOT YET TAGGED
+
+  * 'build install' uses an optional -l argument: the (relative or
+    absolute) path to the logfile to use. The environment variable BISONCPP is
+    no longer used.
+
+
 bisonc++ (4.12.03)
 
   * Kevin Brodsky observed that the installation scripts used 'chdir' rather

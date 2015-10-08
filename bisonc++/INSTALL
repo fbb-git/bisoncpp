@@ -35,51 +35,53 @@ the following steps:
 
     6. Run (probably as root) 
 
-            ./build install 'what' 'base'
+            ./build install 'LOG:path' 'what' 'base'
 
-        to install. Here, 'what' specifies what you want to install.
-        Specify:
-                  x, to install all components,
-        or specify a combination of:
-                  a (additional documentation),
-                  b (binary program),
-                  d (standard documentation),
-                  m (man-pages)
-                  s (skeleton files)
-                  u (user guide)
+        to install components of Bisonc++. 
 
-        E.g., use 
-            ./build install bs 'base'
-        if you only want to be able to run bisonc++, and want it to be
-        installed below 'base'. 
+        Here, 
+            'LOG:path' is an optional item specifying the absolute or relative
+                path of a log file to contain a log of all installed files (see
+                also the next item). Using LOG:~/.bisoncpp usually works
+                well. Do not put any blanks between LOG: and the path
+                specification, or protect the LOG: specification by quotes.
 
-        ./build install's last argument 'base' is optional: the base directory
-        below which the requested files are installed. This base directory is
-        prepended to the paths #defined in the INSTALL.im file. If 'base' is
-        not specified, then INSTALL.im's #defined paths are used as-is.
+            'what' specifies what you want to install.
+                Specify:
+                          x, to install all components,
+                or specify a combination of:
+                          a (additional documentation),
+                          b (binary program),
+                          d (standard documentation),
+                          m (man-pages)
+                          s (skeleton files)
+                          u (user guide)
+                E.g., use 
+                    ./build install bs 'base'
+                if you only want to be able to run bisonc++, and want it to be
+                installed below 'base'. 
 
-        When requesting non-existing elements (e.g., ./build install x was
-        requested, but the man-pages weren't constructed) then these
-        non-existing elements are silently ignored by the installation
-        process.
+                When requesting non-existing elements (e.g., ./build install x
+                was requested, but the man-pages weren't constructed) then
+                these non-existing elements are silently ignored by the
+                installation process.
+    
+            'base' is optional and specifies the base directory below which
+                the requested files are installed. This base directory is
+                prepended to the paths #defined in the INSTALL.im file. If
+                'base' is not specified, then INSTALL.im's #defined paths are
+                used as-is.
 
-        If the environment variable BISONCPP was defined when issuing the
-        `./build install ...' command then a log of all installed files is
-        written to the file indicated by the BISONCPP environment variable
-        (see also the next item).
+    7.  Uninstalling previously installed components of Bisonc++ is easy if a
+        log path (LOG:...) was specified at the `./build install ...'
+        command. In that case, run the command
 
-        Defining the BISONCPP environment variable as ~/.bisoncpp usually
-        works well.
+            ./build uninstall logpath
 
-    7.  Uninstalling previously installed components of Bisonc++ is easy if the
-        environment variable BISONCPP was defined before issuing the 
-        `./build install ...' command. In that case, run the command
-
-            ./build uninstall logfile
-
-        where 'logfile' is the file that was written by ./build install.
-        Modified files and non-empty directories are not removed, but the
-        logfile itself is removed following the uninstallation.
+        where 'logpath' specifies the location of the logfile that was
+        written by ./build install.  Modified files and non-empty directories
+        are not removed, but the logfile itself is removed following the
+        uninstallation.
 
     8. Following the installation nothing in the directory tree which contains
         this file (i.e., INSTALL) is required for the proper functioning of
