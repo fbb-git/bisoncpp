@@ -12,26 +12,12 @@ inline Tag__ Base::tag() const
 }
 
 template <Tag__ tg_>
-inline Semantic<tg_>::Semantic()
-:
-    Base(tg_),
-    d_data{}
-{}
-
-template <Tag__ tg_>
-inline Semantic<tg_>::Semantic(typename TypeOf<tg_>::type const &data)
+template <typename ...Args>
+inline Semantic<tg_>::Semantic(Args &&...args)
 :
     Base(tg_),
     Base2(0),
-    d_data(data)
-{}
-
-template <Tag__ tg_>
-inline Semantic<tg_>::Semantic(DataType &&tmp)
-:
-    Base(tg_),
-    Base2(0),
-    d_data(std::move(tmp))
+    d_data(std::forward<Args>(args) ...)
 {}
 
 template <Tag__ tg_>
