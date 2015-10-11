@@ -48,10 +48,15 @@ The important elements of the namespace tt(Meta__) are:
         DataType) data member. Their public interfaces offer the following
         members: 
             itemization( 
-            it() A default constructor (which is not available if 
-        tt(DataType) does not provide a default constructor); 
-            it() A tt(Semantic(DataType const &)) constructor; 
-            it() A tt(Semantic(DataType &&)) constructor; 
+            it() Constructors accepting the same sets of arguments as
+                supported by its tt(DataType) data member. The arguments
+                passed to the tt(Semantic) constructor are perfectly forwarded
+                to the tt(DataType) member. E.g., if tt(DataType) supports a
+                default constructor, a copy constructor and/or a move
+                constructor then the matching tt(Semantic) class also offers a
+                default constructor, a constructor expecting a tt(DataType)
+                object, and a constructor expecting an  anonymous tt(DataType)
+                object. 
             it() An tt(operator ReturnType() const) conversion operator; 
             it() An tt(operator DataType &()t) conversion operator.  
             ) 
