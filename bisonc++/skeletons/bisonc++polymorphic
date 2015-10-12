@@ -71,10 +71,11 @@ $insert polymorphicSpecializations
         DataType d_data;
     
         public:
-                // The constructors forward arguments 
-                // to defined data types
-            template <typename ...Args>
-            Semantic(Args &&...args);
+                // The constructor forwards arguments to d_data, allowing
+                // it to be initialized using whatever constructor is
+                // available for DataType
+            template <typename ...Params>
+            Semantic(Params &&...params);
 
             DataType &data();
             DataType const &data() const;

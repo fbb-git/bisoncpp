@@ -12,12 +12,12 @@ inline Tag__ Base::tag() const
 }
 
 template <Tag__ tg_>
-template <typename ...Args>
-inline Semantic<tg_>::Semantic(Args &&...args)
+template <typename ...Params>
+inline Semantic<tg_>::Semantic(Params &&...params)
 :
     Base(tg_),
     Base2(0),
-    d_data(std::forward<Args>(args) ...)
+    d_data(std::forward<Params>(params) ...)
 {}
 
 template <Tag__ tg_>
@@ -92,10 +92,10 @@ inline typename TypeOf<tg_>::type const &SType::data() const
     return std::shared_ptr<Base>::get()->get<tg_>();
 }
 
-template <Tag__ tg_, typename ...Args>
-inline void SType::emplace(Args &&...args)
+template <Tag__ tg_, typename ...Params>
+inline void SType::emplace(Params &&...params)
 {
-    reset(new Semantic<tg_>(std::forward<Args>(args) ...));
+    reset(new Semantic<tg_>(std::forward<Params>(params) ...));
 }
 
 template <bool, typename Tp_>

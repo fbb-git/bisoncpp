@@ -1,8 +1,13 @@
-bisonc++ (4.12.04) NOT YET TAGGED
+bisonc++ (4.13.00) NOT YET TAGGED
 
   * 'build install' uses an optional -l argument: the (relative or
     absolute) path to the logfile to use. The environment variable BISONCPP is
     no longer used.
+
+  * Following a suggestion made by gendx the polymorphic class Semantic now
+    defines a variadic template constructor, allowing Semantic objects
+    (and thus SType::emplace) to be initialized (c.q. called) using any set of
+    argument types that are supported by Semantic's DataType.
 
 
 bisonc++ (4.12.03)
