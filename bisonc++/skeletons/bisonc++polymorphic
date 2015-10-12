@@ -32,40 +32,11 @@ $insert polymorphicSpecializations
             typename TypeOf<tg_>::type const &get() const;
     };
 
-        // NoDefault and HasDefault are used to handle the initialization of
-        // Semantic below. With NoDefault as base class Semantic's default
-        // constructor won't compile. NoDefault is selected if the Base class
-        // from which Semantic derives has no default constructor.
-    struct HasDefault
-    {
-        HasDefault() = default;
-        HasDefault(int)
-        {}
-    };
-   
-    struct NoDefault
-    {
-        NoDefault() = delete;   // beautifies the error message
-        NoDefault(int)
-        {}
-    };
-        
         // The class Semantic is derived from Base. It stores a particular
         // semantic value type. 
     template <Tag__ tg_>
-    class Semantic: public Base,
-                    private std::conditional<
-                                std::is_default_constructible<
-                                    typename TypeOf<tg_>::type>::value,
-                                    HasDefault, NoDefault
-                            >::type
+    class Semantic: public Base
     {
-        typedef typename std::conditional<
-                            std::is_default_constructible<
-                                typename TypeOf<tg_>::type>::value,
-                                HasDefault, NoDefault
-                            >::type Base2;
-
         typedef typename TypeOf<tg_>::type DataType;
     
         DataType d_data;
