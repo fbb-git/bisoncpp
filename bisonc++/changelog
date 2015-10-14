@@ -7,7 +7,10 @@ bisonc++ (4.13.00) NOT YET TAGGED
   * Following a suggestion made by gendx the polymorphic class Semantic now
     defines a variadic template constructor, allowing Semantic objects
     (and thus SType::emplace) to be initialized (c.q. called) using any set of
-    argument types that are supported by Semantic's DataType.
+    argument types that are supported by Semantic's DataType. Also, the
+    (internally used) classes HasDefault and NoDefault are now superfluous and
+    were removed (from skeletons/bisonc++polymorphic and
+    skeletons/bisonc++polymorphic.inline). 
 
 
 bisonc++ (4.12.03)
