@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [ $# -eq 0 ] ; then
+    echo destination path, ending in /, must be provided
+    exit 0
+fi
+
+for src in `find -mindepth 1 -type d`           # create missing target dirs
+do
+    [ ! -e $1$src ] && mkdir -p $1$src
+done
+
+for file in `find -type f -or -type l`
+do
+    cp -d --preserve=timestamps $file $1$file
+done
+

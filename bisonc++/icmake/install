@@ -110,12 +110,13 @@ void install(string request, string dest)
     else
         md(dest);
 
-    dest = cutEoln(backtick("realpath " + dest)[0]);
+    dest = cutEoln(backtick("readlink -f " + dest)[0]);
 
     if (g_logPath != "")
         backtick("icmake/log " + dest + " " + g_logPath);
 
-    run("tar cf - -Ctmp/install . | tar xf - -C" + dest);
+    chdir(base);
+    run("../../icmake/installer " + dest + "/");
 
     printf("\n  Installation completed\n");
 

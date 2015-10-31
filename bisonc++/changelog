@@ -1,8 +1,11 @@
 bisonc++ (4.13.00) NOT YET TAGGED
 
-  * 'build install' uses an optional -l argument: the (relative or
-    absolute) path to the logfile to use. The environment variable BISONCPP is
-    no longer used.
+  * 'build install' supports an optional LOG: argument: the (relative or
+    absolute) path to a installation log file. The environment variable
+    BISONCPP is no longer used.
+
+  * Updated the usage info displayed by `./build', altered the procedure to
+    install the files at their final destinations.
 
   * Following a suggestion made by gendx the polymorphic class Semantic now
     defines a variadic template constructor, allowing Semantic objects
