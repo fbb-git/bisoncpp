@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<title> <div style="text-align: center"><strong>Bisonc++</strong> (Version 4.12.03) User Guide</div> </title>
+<title> <div style="text-align: center"><strong>Bisonc++</strong> (Version 4.13.00) User Guide</div> </title>
 <style type="text/css">
     figure {text-align: center;}
     img {vertical-align: center;}
@@ -385,7 +385,7 @@ the directive's specification.
 <a name="l40"></a>
 <h3>5.5.1: %baseclass-preinclude: specifying a header included by the
             baseclass</h3>    
-         Syntax: <strong>%baseclass-preinclude</strong> <code>pathname</code><br>
+         Syntax: <strong>%baseclass-preinclude</strong> <code>pathname</code><br/>
            <code>Pathname</code> defines the path to the file preincluded in the
             parser's base-class header.  See the description of the
             <a href="bisonc++09.html#PREINCLUDE">--baseclass-preinclude</a> option for details about
@@ -396,7 +396,7 @@ the directive's specification.
 <p>
 <a name="PARSERCLASS"></a><a name="l41"></a>
 <h3>5.5.2: %class-name: defining the name of the parser class</h3>
-    Syntax: <strong>%class-name</strong> <code>parser-class-name</code> <br> 
+    Syntax: <strong>%class-name</strong> <code>parser-class-name</code> <br/> 
     By default, <strong>bisonc++</strong> generates a parser-class by the name of
 <code>Parser</code>. The default can be changed using this directive which defines the
 name of the <strong>C++</strong> class that will be generated. It may be defined only once
@@ -417,7 +417,7 @@ existing implementation header file does not define members of the class
 <p>
 <a name="l42"></a>
 <h3>5.5.3: %debug: adding debugging code to the `parse()' member</h3>
-    Syntax:  <strong>%debug</strong> <br> 
+    Syntax:  <strong>%debug</strong> <br/> 
            Provide <code>parse()</code> and its support functions with debugging code,
             showing the actual parsing process on the standard output
             stream. When included, the debugging output is active by default,
@@ -428,7 +428,7 @@ existing implementation header file does not define members of the class
 <p>
 <a name="l43"></a>
 <h3>5.5.4: %error-verbose: dumping the parser's state stack</h3>
-    Syntax:     <strong>%error-verbose</strong> <br>    
+    Syntax:     <strong>%error-verbose</strong> <br/>    
     The parser's state stack is dumped to the standard error stream when an
 error is detected by the <code>parse()</code> member function. Following a call of the
 <code>error()</code> function, the stack is dumped from the top of the stack (highest
@@ -437,7 +437,7 @@ stack element's index.
 <p>
 <a name="EXPECT"></a><a name="l44"></a>
 <h3>5.5.5: %expect: suppressing conflict warnings</h3>
-    Syntax: <strong>%expect</strong> <code>number</code> <br>
+    Syntax: <strong>%expect</strong> <code>number</code> <br/>
     <strong>Bisonc++</strong> normally warns if there are any conflicts in the grammar (see section
 <a href="bisonc++07.html#SHIFTREDUCE">7.1</a>), but many real grammars have harmless <em>shift/reduce
 conflicts</em> which are resolved in a predictable way and would be difficult to
@@ -468,7 +468,7 @@ type of conflicts.
 <p>
 <a name="l45"></a>
 <h3>5.5.6: %flex: using the traditional `flex++'  interface</h3>
-    Syntax:     <strong>%flex</strong> <br>    
+    Syntax:     <strong>%flex</strong> <br/>    
            When provided, the scanner matched text function is called as
             <code>d_scanner.YYText()</code>, and the scanner token function is called
             as <code>d_scanner.yylex()</code>. This directive is only interpreted if
@@ -476,7 +476,7 @@ type of conflicts.
 <p>
 <a name="INCLUDE"></a><a name="l46"></a>
 <h3>5.5.7: %include: splitting the input file</h3>
-    Syntax:     <strong>%include</strong> <code>pathname</code><br>    
+    Syntax:     <strong>%include</strong> <code>pathname</code><br/>    
            This directive is used to switch to <code>pathname</code> while processing a
             grammar specification. Unless <code>pathname</code> defines an absolute
             file-path, <code>pathname</code> is searched relative to the location of
@@ -508,8 +508,8 @@ default.
 <h3>5.5.8: %left, %right, %nonassoc: defining operator
         precedence</h3>
     Syntax: <blockquote>
-    <strong>%left</strong> [ &lt;type&gt; ] terminal(s)    <br>
-    <strong>%nonassoc</strong> [ &lt;type&gt; ] terminal(s)    <br>
+    <strong>%left</strong> [ &lt;type&gt; ] terminal(s)    <br/>
+    <strong>%nonassoc</strong> [ &lt;type&gt; ] terminal(s)    <br/>
     <strong>%right</strong> [ &lt;type&gt; ] terminal(s) 
     </blockquote>
     These directives are called <em>precedence directives</em> (see also section
@@ -544,7 +544,7 @@ symbolic tokens mentioned with these directives should not be defined using
 <p>
 <a name="LOCSTRUCT"></a><a name="l48"></a>
 <h3>5.5.9: %locationstruct: specifying a dedicated location struct</h3>
-    Syntax: <strong>%locationstruct</strong> <code>struct-definition</code> <br> 
+    Syntax: <strong>%locationstruct</strong> <code>struct-definition</code> <br/> 
            Defines the organization of the location-struct data type
             <strong>LTYPE__</strong>. This struct should be specified analogously to the
             way the parser's stacktype is defined using <strong>%union</strong> (see
@@ -554,7 +554,7 @@ symbolic tokens mentioned with these directives should not be defined using
 <p>
 <a name="LSPNEEDED"></a><a name="l49"></a>
 <h3>5.5.10: %lsp-needed: using the default location type</h3>
-    Syntax:  <strong>%lsp-needed</strong> <br>    
+    Syntax:  <strong>%lsp-needed</strong> <br/>    
            Defining this causes <strong>bisonc++</strong> to include code into the generated
             parser using the standard location stack.  The token-location type
             defaults to the following struct, defined in the parser's base
@@ -579,7 +579,7 @@ required to initialize the fields of this struct properly.
 <p>
 <a name="LTYPE"></a><a name="l50"></a>
 <h3>5.5.11: %ltype: using an existing location type</h3>
-     <strong>%ltype typename</strong> <br>    
+     <strong>%ltype typename</strong> <br/>    
     Specifies a user-defined token location type.  If <strong>%ltype</strong> is used,
 <code>typename</code> should be the name of an alternate (predefined) type (e.g.,
 <strong>size_t</strong>). It should not be used together with a
@@ -593,7 +593,7 @@ of a series of trailing blanks or tabs or up to a comment-token (<code>//</code>
 <p>
 <a name="l51"></a>
 <h3>5.5.12: %namespace: using a namespace</h3>
-    Syntax:     <strong>%namespace</strong> <code>namespace</code> <br>
+    Syntax:     <strong>%namespace</strong> <code>namespace</code> <br/>
     Defines all of the code generated by <strong>bisonc++</strong> in the namespace
 <code>namespace</code>. By default no namespace is defined.
 <p>
@@ -609,7 +609,7 @@ identifier</code>.
 <p>
 <a name="l52"></a>
 <h3>5.5.13: %negative-dollar-indices: using constructions like $-1</h3>
-    Syntax:    <strong>%negative-dollar-indices</strong> <br>
+    Syntax:    <strong>%negative-dollar-indices</strong> <br/>
     Accept (do not generate warnings) zero- or negative dollar-indices in the
 grammar's action blocks. Zero or negative dollar-indices are commonly used to
 implement inherited attributes and should normally be avoided. When used they
@@ -622,7 +622,7 @@ the <code>$-i</code> format can be used (see also section <a href="bisonc++05.ht
 <p>
 <a name="l53"></a>
 <h3>5.5.14: %no-lines: suppressing `#line' directives</h3>
-    Syntax:    <strong>%no-lines</strong> <br> 
+    Syntax:    <strong>%no-lines</strong> <br/> 
            Do not put <strong>#line</strong> preprocessor directives in the file containing
             the parser's <code>parse()</code> function. By default <code>#line</code>
             preprocessor directives are inserted just before action blocks in
@@ -634,7 +634,7 @@ The <code>#line</code> directives allow compilers and debuggers to associate
 <p>
 <a name="l54"></a>
 <h3>5.5.15: %prec: overruling default precedences</h3>
-    Syntax: <strong>%prec</strong> <code>token</code> <br>
+    Syntax: <strong>%prec</strong> <code>token</code> <br/>
     The construction <strong>%prec</strong> <code>token</code> may be used in production rules to
 overrule the actual precendence of an operator in a particular production
 rule. Well known is the construction
@@ -709,7 +709,7 @@ As a quick reference: to define multiple semantic values using a
 <p>
 <a name="l56"></a>
 <h3>5.5.17: %print-tokens: displaying tokens and matched text</h3> 
-    Syntax: <strong>%print-tokens</strong> <br>
+    Syntax: <strong>%print-tokens</strong> <br/>
 <p>
 The <code>%print-tokens</code> directive provides an implementation of the Parser
 class's <code>print__</code> function displaying the current token value and the text
@@ -722,7 +722,7 @@ command-line option is provided.
 <a name="l57"></a>
 <h3>5.5.18: %required-tokens: defining the minimum number of tokens between
         error reports</h3> 
-    Syntax:    <strong>%required-tokens</strong> <code>ntokens</code> <br> 
+    Syntax:    <strong>%required-tokens</strong> <code>ntokens</code> <br/> 
     Whenever a syntactic error is detected during the parsing process the next
 few tokens that are received by the parsing function may easily cause yet
 another (spurious) syntactic error. In this situation error recovery in fact
@@ -744,7 +744,7 @@ number of required tokens is initialized to 0.
 <p>
 <a name="SCANNER"></a><a name="l58"></a>
 <h3>5.5.19: %scanner: using a standard scanner interface</h3>
-    Syntax: <strong>%scanner</strong> <code>header</code><br>
+    Syntax: <strong>%scanner</strong> <code>header</code><br/>
     Use <code>header</code> as the pathname of a file to include in the parser's class
 header. See the description of the <a href="bisonc++09.html#SCANOPT">--scanner</a> option for details
 about this option.  This directive also implies the automatic definition of a
@@ -764,7 +764,7 @@ header file does not include `<code>header</code>'.
 <a name="l59"></a>
 <h3>5.5.20: %scanner-matched-text-function: define the name of the scanner's
         member returning the matched texttoken</h3> 
-    Syntax: <strong>%scanner-matched-text-function</strong> <code>function-call</code> <br>
+    Syntax: <strong>%scanner-matched-text-function</strong> <code>function-call</code> <br/>
 <p>
 The <code>%scanner-matched-text-function</code> directive defines the scanner function
 returning the text matching the previously returned token. By default this is
@@ -787,7 +787,7 @@ command-line option.
 <a name="l60"></a>
 <h3>5.5.21: %scanner-token-function: define the name of the scanner's token
             function</h3> 
-    Syntax: <strong>%scanner-token-function</strong> <code>function-call</code> <br>
+    Syntax: <strong>%scanner-token-function</strong> <code>function-call</code> <br/>
 <p>
 The scanner function returning the next token, called from the
             generated parser's <code>lex</code> function. A complete function
@@ -821,7 +821,7 @@ grammar's start symbol.
 <p>
 <a name="l62"></a>
 <h3>5.5.23: %stype: specifying the semantic stack type</h3>
-    Syntax: <strong>%stype typename</strong> <br>    
+    Syntax: <strong>%stype typename</strong> <br/>    
            The type of the semantic value of tokens.  The specification
             <code>typename</code> should be the name of an unstructured type (e.g.,
             <strong>size_t</strong>). By default it is <strong>int</strong>. See <strong>YYSTYPE</strong> in
@@ -837,7 +837,7 @@ of a series of trailing blanks or tabs or up to a comment-token (<code>//</code>
 <a name="TOKTYPENAMES"></a><a name="l63"></a>
 <h3>5.5.24: %token: defining token names</h3>
     Syntax: <blockquote>
-    <strong>%token</strong> <code>terminal token(s)</code> <br>
+    <strong>%token</strong> <code>terminal token(s)</code> <br/>
     <strong>%token</strong> [ &lt;type&gt; ] <code>terminal token(s)</code> 
         </blockquote>
 <p>
@@ -895,7 +895,7 @@ tokens is a small penalty to pay for keeping backward compatibility.
 <p>
 <a name="TYPE"></a><a name="l65"></a>
 <h3>5.5.25: %type: associating semantic values to (non)terminals</h3>
-    Syntax: <strong>%type</strong> <code>&lt;type&gt; symbol(s)</code><br>
+    Syntax: <strong>%type</strong> <code>&lt;type&gt; symbol(s)</code><br/>
     When <code>%polymorphic</code> is used to specify multiple semantic value types,
 (non-)terminals can be associated with one of the semantic value types
 specified with the <code>%polymorphic</code> directive.
@@ -923,7 +923,7 @@ can also be specified in a <code>%type</code> directive.
 <p>
 <a name="UNION"></a><a name="l66"></a>
 <h3>5.5.26: %union: using a 'union' to define multiple semantic values</h3> 
-        Syntax: <strong>%union</strong> <code>union-definition body</code><br>
+        Syntax: <strong>%union</strong> <code>union-definition body</code><br/>
 The <code>%union</code> directive specifies the entire collection of possible data
 types for semantic values. The keyword <code>%union</code> is followed by a pair of
 braces containing the same thing that goes inside a union in <strong>C++</strong>.
@@ -997,7 +997,7 @@ configurable using <code>%class-name</code> (see section <a href="bisonc++05.htm
 <p>
 <a name="BCHEADER"></a><a name="l69"></a>
 <h4>5.5.28.1: %baseclass-header: defining the parser's base class header</h4>
-            Syntax: <strong>%baseclass-header</strong> <code>filename</code> <br>
+            Syntax: <strong>%baseclass-header</strong> <code>filename</code> <br/>
            <code>Filename</code> defines the name of the file to contain the parser's
             base class. This class defines, e.g., the parser's symbolic
             tokens. Defaults to the name of the parser class plus the suffix
@@ -1012,7 +1012,7 @@ header file does not contain <code>#include "filename"</code>.
 <p>
 <a name="CHEADER"></a><a name="l70"></a>
 <h4>5.5.28.2: %class-header: defining the parser's class header</h4>
-            Syntax: <strong>%class-header</strong> <code>filename</code> <br>
+            Syntax: <strong>%class-header</strong> <code>filename</code> <br/>
            <code>Filename</code> defines the name of the file to contain the parser
             class. Defaults to the name of the parser class plus the suffix
             <code>.h</code> This directive is overruled by the <strong>--class-header</strong>
@@ -1025,7 +1025,7 @@ existing implementation header file does not define members of the class
 <p>
 <a name="FILES"></a><a name="l71"></a>
 <h4>5.5.28.3: %filenames: specifying a generic filename</h4>
-        Syntax:     <strong>%filenames</strong> <code>filename</code> <br>
+        Syntax:     <strong>%filenames</strong> <code>filename</code> <br/>
            <code>Filename</code> is a generic filename that is used for all header
             files generated by <strong>bisonc++</strong>.  Options defining specific filenames are
             also available (which then, in turn, overrule the name specified
@@ -1034,10 +1034,10 @@ existing implementation header file does not define members of the class
 <p>
 <a name="IHEADER"></a><a name="l72"></a>
 <h4>5.5.28.4: %implementation-header: defining the implementation header</h4>
-        Syntax:    <strong>%implementation-header</strong> <code>filename</code> <br>
+        Syntax:    <strong>%implementation-header</strong> <code>filename</code> <br/>
            <code>Filename</code> defines the name of the file to contain the
             implementation header. It defaults to the name of the generated
-            parser class plus the suffix <code>.ih</code>. <br>
+            parser class plus the suffix <code>.ih</code>. <br/>
            The implementation header should contain all directives and
             declarations <em>only</em> used by the implementations of the parser's
             member functions. It is the only header file that is included by
@@ -1045,13 +1045,13 @@ existing implementation header file does not define members of the class
             defined implementation of other class members may use the same
             convention, thus concentrating all directives and declarations
             that are required for the compilation of other source files
-            belonging to the parser class in one header file.<br>
+            belonging to the parser class in one header file.<br/>
            This directive is overruled by the
             <strong>--implementation-header</strong> (<strong>-i</strong>) command-line option.
 <p>
 <a name="PARSESOURCE"></a><a name="l73"></a>
 <h4>5.5.28.5: %parsefun-source: defining the parse() function's sourcefile</h4>
-        Syntax: <strong>%parsefun-source</strong> <code>filename</code> <br>
+        Syntax: <strong>%parsefun-source</strong> <code>filename</code> <br/>
            <code>Filename</code> defines the name of the source file to contain the
             parser member function <code>parse</code>. Defaults to <code>parse.cc</code>.  This
             directive is overruled by the <strong>--parse-source</strong> (<strong>-p</strong>)
@@ -1060,7 +1060,7 @@ existing implementation header file does not define members of the class
 <a name="l74"></a>
 <h4>5.5.28.6: %target-directory: defining the directory where files must
                 be written</h4>
-        Syntax: <strong>%target-directory</strong> <code>pathname</code> <br>
+        Syntax: <strong>%target-directory</strong> <code>pathname</code> <br/>
            <code>Pathname</code> defines the directory where generated files should be
             written.  By default this is the directory where <strong>bisonc++</strong> is called.
             This directive is overruled by the
@@ -1269,7 +1269,7 @@ encountered:
 <div style="text-align: center">
 <table>
 
-<td colspan=1><hr></td>
+<td colspan=1><hr/></td>
 
 
 <tr>
@@ -1282,7 +1282,7 @@ encountered:
  
 </tr>
 
-    <td colspan=5><hr></td>
+    <td colspan=5><hr/></td>
 
     
 <tr>
@@ -1295,7 +1295,7 @@ encountered:
 </td><td> action:</td> 
 </tr>
 
-    <td colspan=5><hr></td>
+    <td colspan=5><hr/></td>
 
     
 <tr>
@@ -1308,7 +1308,7 @@ encountered:
 </td><td> STYPE__ is used</td> 
 </tr>
 
-                        <tr><td colspan=2</td><td colspan=3><hr></td></tr>
+                        <tr><td colspan=2</td><td colspan=3><hr/></td></tr>
 
                     
 <tr>
@@ -1321,7 +1321,7 @@ encountered:
 </td><td> tag-override</td> 
 </tr>
 
-                        <tr><td colspan=2</td><td colspan=3><hr></td></tr>
+                        <tr><td colspan=2</td><td colspan=3><hr/></td></tr>
 
                     
 <tr>
@@ -1334,7 +1334,7 @@ encountered:
 </td><td> STYPE__ is used</td> 
 </tr>
 
-                        <tr><td colspan=2</td><td colspan=3><hr></td></tr>
+                        <tr><td colspan=2</td><td colspan=3><hr/></td></tr>
 
                     
 <tr>
@@ -1347,7 +1347,7 @@ encountered:
 </td><td> STYPE__ is used</td> 
 </tr>
 
-    <td colspan=5><hr></td>
+    <td colspan=5><hr/></td>
 
     
 <tr>
@@ -1360,7 +1360,7 @@ encountered:
 </td><td> STYPE__ is used</td> 
 </tr>
 
-                        <tr><td colspan=2</td><td colspan=3><hr></td></tr>
+                        <tr><td colspan=2</td><td colspan=3><hr/></td></tr>
 
                     
 <tr>
@@ -1373,7 +1373,7 @@ encountered:
 </td><td> tag-override</td> 
 </tr>
 
-                        <tr><td colspan=2</td><td colspan=3><hr></td></tr>
+                        <tr><td colspan=2</td><td colspan=3><hr/></td></tr>
 
                     
 <tr>
@@ -1386,7 +1386,7 @@ encountered:
 </td><td> STYPE__ is used</td> 
 </tr>
 
-                        <tr><td colspan=2</td><td colspan=3><hr></td></tr>
+                        <tr><td colspan=2</td><td colspan=3><hr/></td></tr>
 
                     
 <tr>
@@ -1399,7 +1399,7 @@ encountered:
 </td><td> STYPE__ is used</td> 
 </tr>
 
-    <td colspan=5><hr></td>
+    <td colspan=5><hr/></td>
 
     
 <tr>
@@ -1412,7 +1412,7 @@ encountered:
 </td><td> auto-tag</td> 
 </tr>
 
-                        <tr><td colspan=2</td><td colspan=3><hr></td></tr>
+                        <tr><td colspan=2</td><td colspan=3><hr/></td></tr>
 
                     
 <tr>
@@ -1425,7 +1425,7 @@ encountered:
 </td><td> tag-override</td> 
 </tr>
 
-                        <tr><td colspan=2</td><td colspan=3><hr></td></tr>
+                        <tr><td colspan=2</td><td colspan=3><hr/></td></tr>
 
                     
 <tr>
@@ -1438,7 +1438,7 @@ encountered:
 </td><td> STYPE__ is used</td> 
 </tr>
 
-                        <tr><td colspan=2</td><td colspan=3><hr></td></tr>
+                        <tr><td colspan=2</td><td colspan=3><hr/></td></tr>
 
                     
 <tr>
@@ -1451,7 +1451,7 @@ encountered:
 </td><td> STYPE__ is used</td> 
 </tr>
 
-    <td colspan=5><hr></td>
+    <td colspan=5><hr/></td>
 
     
 <tr>
@@ -1464,7 +1464,7 @@ encountered:
 </td><td> tag-error</td> 
 </tr>
 
-                        <tr><td colspan=2</td><td colspan=3><hr></td></tr>
+                        <tr><td colspan=2</td><td colspan=3><hr/></td></tr>
 
                     
 <tr>
@@ -1477,7 +1477,7 @@ encountered:
 </td><td> tag-override</td> 
 </tr>
 
-                        <tr><td colspan=2</td><td colspan=3><hr></td></tr>
+                        <tr><td colspan=2</td><td colspan=3><hr/></td></tr>
 
                     
 <tr>
@@ -1490,7 +1490,7 @@ encountered:
 </td><td> STYPE__ is used</td> 
 </tr>
 
-                        <tr><td colspan=2</td><td colspan=3><hr></td></tr>
+                        <tr><td colspan=2</td><td colspan=3><hr/></td></tr>
 
                     
 <tr>
@@ -1503,7 +1503,7 @@ encountered:
 </td><td> STYPE__ is used</td> 
 </tr>
 
-    <td colspan=5><hr></td>
+    <td colspan=5><hr/></td>
 
 
 </table>
@@ -1524,7 +1524,7 @@ encountered:
             tag <code>id</code>).
 </ul>
 <p>
-<td colspan=0><hr></td>
+<td colspan=0><hr/></td>
 
 <p>
 When using `$$.' or `$1.' default tags are ignored. A warning is issued
@@ -1648,8 +1648,8 @@ const &amp;</code> .
 <p>
 The important elements of the namespace <code>Meta__</code> are:
     <ul>
-    <li> First, the polymorphic semantic value's base class <code>Base</code>.<br>
-        Its public interface offers the following members:<br>
+    <li> First, the polymorphic semantic value's base class <code>Base</code>.<br/>
+        Its public interface offers the following members:<br/>
         <ul>
         <li><code>Tag__ tag() const:</code>  returns the semantic value type's tag.
         <li><code>ReturnType get&lt;Tag__&gt;() const:</code> accesses the (non-modifiable) data
@@ -1661,17 +1661,22 @@ The important elements of the namespace <code>Meta__</code> are:
         </ul>
 <p>
 <li> Second, the semantic value classes <code>Semantic&lt;Tag__::ID&gt;: public
-        Base</code>.<br>
+        Base</code>.<br/>
        The various <code>Semantic&lt;Tag__::ID&gt;</code> classes are derived for each of the
         tag identifiers <code>ID</code> that are declared at the <code>%polymorphic</code>
         directive. These <code>Semantic&lt;Tag__::ID&gt;</code> classes contain a <code>mutable
         DataType</code> data member. Their public interfaces offer the following
         members: 
             <ul> 
-            <li> A default constructor (which is not available if 
-        <code>DataType</code> does not provide a default constructor); 
-            <li> A <code>Semantic(DataType const &amp;)</code> constructor; 
-            <li> A <code>Semantic(DataType &amp;&amp;)</code> constructor; 
+            <li> Constructors accepting the same sets of arguments as
+                supported by its <code>DataType</code> data member. The arguments
+                passed to the <code>Semantic</code> constructor are perfectly forwarded
+                to the <code>DataType</code> member. E.g., if <code>DataType</code> supports a
+                default constructor, a copy constructor and/or a move
+                constructor then the matching <code>Semantic</code> class also offers a
+                default constructor, a constructor expecting a <code>DataType</code>
+                object, and a constructor expecting an  anonymous <code>DataType</code>
+                object. 
             <li> An <code>operator ReturnType() const</code> conversion operator; 
             <li> An <code>operator DataType &amp;()t</code> conversion operator.  
             </ul> 
@@ -1683,18 +1688,18 @@ The important elements of the namespace <code>Meta__</code> are:
         std::shared_ptr&lt;Base&gt;</code> provides access to the various semantic value
         types. The <code>SType__</code> class becomes the parser's <code>STYPE__</code> type,
         and explicitly accessing <code>Semantic&lt;Tag__::ID&gt;</code> should never be
-        necessary.<br> 
+        necessary.<br/> 
        <code>SType</code>'s public interface offers the following members: 
             <ul>
             <li> Constructors: default (available if the <code>Semantic</code> type
                 class offers a default constructor), copy and move
-                constructors.<br> 
+                constructors.<br/> 
                Since the parser's semantic value and semantic value stack is
                 completely controlled by the parser, and since the actual
                 semantic data values are unknown at construction time of the
                 semantic value (<code>d_val__</code>) and of the semantic value stack,
                 no constructors expecting <code>DataType</code> values are provided.
-            <li> Assignment operators.<br> 
+            <li> Assignment operators.<br/> 
                The standard overloaded assignment operator (copy and move
                 variants) as well as copy and move assignment operators for
                 the types declared at the <code>%polymorphic</code> directive are
@@ -1702,7 +1707,7 @@ The important elements of the namespace <code>Meta__</code> are:
                 <code>Semantic&lt;Tag__::tag&gt;</code> object for the tag matching the
                 right-hand side's data type, and resets the <code>SType</code>'s
                 <code>shared_pointer</code> to this new <code>Semantic&lt;Tag__::tag&gt;</code>
-                object.<br>
+                object.<br/>
                Be aware that this may break the default association of the
                 semantic value as declared by a <code>%type</code> directive. When
                 breaking the default association make sure that explicit tags
@@ -1712,7 +1717,7 @@ The important elements of the namespace <code>Meta__</code> are:
                 default association but simply to assign a value to $$. By
                 default the <code>SType</code>'s shared pointer is zero, and the
                 assignment initializes the semantic value to a value of the
-                proper type.<br>
+                proper type.<br/>
                Assuming a lexical scanner may return a <code>NR</code> token, offering
                 an <code>int number() const</code> accessor, then part of an <code>expr</code>
                 rule could be: 
@@ -1727,9 +1732,9 @@ The important elements of the namespace <code>Meta__</code> are:
  
                whereafter <code>expr</code>'s semantic value has been initialized
                 to a <code>Semantic&lt;Tag__::INT&gt;</code>.  
-            <li> <code>DataType &amp;get&lt;Tag__&gt;()</code><br>
+            <li> <code>DataType &amp;get&lt;Tag__&gt;()</code><br/>
                This <code>get</code> member returns a reference to the (modifiable)
-                semantic value stored inside <code>Semantic&lt;Tag__&gt;</code>.<br> 
+                semantic value stored inside <code>Semantic&lt;Tag__&gt;</code>.<br/> 
                This member checks for 0-pointers and for <code>Tag__</code> mismatches
                 between the requested and actual <code>Tag__</code>, in that case
                 replacing the current <code>Semantic</code> object pointed to by a new
@@ -1743,25 +1748,25 @@ The important elements of the namespace <code>Meta__</code> are:
                         
 </pre>
 
-            <li> <code>ReturnType data&lt;Tag__&gt;() const</code><br>
+            <li> <code>ReturnType data&lt;Tag__&gt;() const</code><br/>
                Here, <code>ReturnType</code> refers to the semantic value stored inside
                 <code>Semantic&lt;Tag__&gt;</code>. If the type-name is a built-in type a
                 copy of the value is returned, otherwise a reference to a
-                constant object is returned;<br> 
+                constant object is returned;<br/> 
                This is a (partially) <em>unchecking</em> variant of the
                 corresponing <code>get</code> member, resulting in a <em>segfault</em> if
                 used when the <code>shared_ptr</code> holds a 0-pointer, and throwing a
                 <code>std::bad_cast</code> in case of a mismatch between the requested
                 and actual <code>Tag__</code>.  
-            <li> <code>DataType &amp;data&lt;Tag__&gt;()</code><br> 
+            <li> <code>DataType &amp;data&lt;Tag__&gt;()</code><br/> 
                This member returns a reference to the (modifiable) semantic
-                value stored inside <code>Semantic&lt;Tag__&gt;</code>.<br> 
+                value stored inside <code>Semantic&lt;Tag__&gt;</code>.<br/> 
                This is a (partially) <em>unchecking</em> variant of the
                 corresponing <code>get</code> member, resulting in a <em>segfault</em> if
                 used when the <code>shared_ptr</code> holds a 0-pointer, and throwing a
                 <code>std::bad_cast</code> in case of a mismatch between the requested
                 and actual <code>Tag__</code>.  
-            <li> <code>void emplace(Args &amp;&amp;...args)</code><br>
+            <li> <code>void emplace(Args &amp;&amp;...args)</code><br/>
                This member perfectly forwars its <code>args</code> arguments to the
                 currently stored <code>Semantic</code> value type, replacing its
                 current value by the newly constructed <code>Semantic</code> value.

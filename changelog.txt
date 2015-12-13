@@ -1,3 +1,24 @@
+bisonc++ (4.13.00)
+
+  * 'build install' supports an optional LOG: argument: the (relative or
+    absolute) path to a installation log file. The environment variable
+    BISONCPP is no longer used.
+
+  * Updated the usage info displayed by `./build', altered the procedure to
+    install the files at their final destinations.
+
+  * Following a suggestion made by gendx the polymorphic class Semantic now
+    defines a variadic template constructor, allowing Semantic objects
+    (and thus SType::emplace) to be initialized (c.q. called) using any set of
+    argument types that are supported by Semantic's DataType. Also, the
+    (internally used) classes HasDefault and NoDefault are now superfluous and
+    were removed (from skeletons/bisonc++polymorphic and
+    skeletons/bisonc++polymorphic.inline). 
+
+  * Adapted the icmake build files to icmake 8.00.04
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 13 Dec 2015 16:29:41 +0100
+
 bisonc++ (4.12.03)
 
   * Kevin Brodsky observed that the installation scripts used 'chdir' rather
