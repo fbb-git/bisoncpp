@@ -37,7 +37,7 @@ void main(int argc, list argv)
     string strip;
     int idx;
 
-    for (idx = sizeof(argv); idx--; )
+    for (idx = listlen(argv); idx--; )
     {
         if (argv[idx] == "-q")
         {

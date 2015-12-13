@@ -29,7 +29,7 @@ void precompileHeaders()
     _precompile("main");         // precompile the main program .ih file
 
 
-    for (idx = sizeof(classes); idx--; )
+    for (idx = listlen(classes); idx--; )
     {
         class = classes[idx];
 

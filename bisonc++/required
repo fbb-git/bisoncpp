@@ -2,18 +2,18 @@ This file lists non-standard software only. Thus, standard utilities like cp,
 mv, sed, etc, etc, are not explicitly mentioned. Neither is the g++ compiler
 explicitly mentioned, but a fairly recent one is assumed.
 
-Required software for building Bisonc++ 4.12.00
+Required software for building Bisonc++ 4.13.00
 -----------------------------------------------
 
-libbobcat-dev (>= 4.01.00),
+libbobcat-dev (>= 4.01.03),
 
 To use the provided build-script:
 
-    icmake (>= 7.22.01)
+    icmake (>= 8.00.04)
 
 To construct the manual and map-page:
         
-    yodl (>= 3.05.0)
+    yodl (>= 3.06.0)
 
 
 

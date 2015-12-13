@@ -17,7 +17,7 @@ void logRecursive(string src, string dest)
 
     dirs = findAll("d", src, "");     // find all subdirs 
 
-    for (idx = sizeof(dirs); idx--; ) // visit all subdirs
+    for (idx = listlen(dirs); idx--; ) // visit all subdirs
     {
         next = "/" + dirs[idx];
         logRecursive(src + next, dest + next);

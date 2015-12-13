@@ -16,7 +16,7 @@ void logZip(string src, string names, string dest)
 
     if (src != "")
     {
-        if (sizeof(makelist(O_DIR, src)) == 0)
+        if (listlen(makelist(O_DIR, src)) == 0)
         {
             printf("Warning: ", src, " not found: can't install ", src, names,
                     " at ", dest, "\n");
@@ -30,7 +30,7 @@ void logZip(string src, string names, string dest)
     else
         files = strtok(names, " ");
 
-    for (idx = sizeof(files); idx--; )
+    for (idx = listlen(files); idx--; )
     {
         file = files[idx];
         run("gzip -n -9 < " + file + " > " + file + ".gz");

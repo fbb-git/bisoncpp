@@ -6,6 +6,6 @@ void logFiles(string source, string dest)
     echo(OFF);
     files = `"(chdir " + source + ";find ./ -type f)"`;
 
-    for (idx = sizeof(files); idx--; )
+    for (idx = listlen(files); idx--; )
         log(dest + "/" + files[idx]);
 }

@@ -5,7 +5,7 @@ list addDir(list dir, string entry)
     int keep = 1;
     string elem;
 
-    for (idx = sizeof(dir); idx--; )
+    for (idx = listlen(dir); idx--; )
     {
         elem = dir[idx];
 

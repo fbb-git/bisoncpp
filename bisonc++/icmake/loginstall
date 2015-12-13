@@ -15,7 +15,7 @@ void logInstall(string src, string pattern, string dest)
     src += "/";
     dest += "/";
 
-    if (sizeof(makelist(O_DIR, src)) == 0)
+    if (listlen(makelist(O_DIR, src)) == 0)
     {
         printf("Warning: ", src, " not found: can't install ", src, pattern,
                 " at ", dest, "\n");
@@ -24,13 +24,13 @@ void logInstall(string src, string pattern, string dest)
 
     entries = findAll("f", src, pattern);
 
-    for (idx = sizeof(entries); idx--; )
+    for (idx = listlen(entries); idx--; )
         run("cp " + src + entries[idx] + " " + dest);
 
     chdir(g_cwd);
     entries = findAll("l", src, pattern);
 
-    for (idx = sizeof(entries); idx--; )
+    for (idx = listlen(entries); idx--; )
         run("cp " CPOPTS " " + src + entries[idx] + " " + dest);
 }
 

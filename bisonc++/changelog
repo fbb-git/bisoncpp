@@ -1,4 +1,4 @@
-bisonc++ (4.13.00) NOT YET TAGGED
+bisonc++ (4.13.00)
 
   * 'build install' supports an optional LOG: argument: the (relative or
     absolute) path to a installation log file. The environment variable
@@ -15,6 +15,9 @@ bisonc++ (4.13.00) NOT YET TAGGED
     were removed (from skeletons/bisonc++polymorphic and
     skeletons/bisonc++polymorphic.inline). 
 
+  * Adapted the icmake build files to icmake 8.00.04
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 13 Dec 2015 16:29:41 +0100
 
 bisonc++ (4.12.03)
 
