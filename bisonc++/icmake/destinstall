@@ -1,0 +1,5 @@
+void destInstall(string dest, string base)
+{
+    chdir(g_cwd + base);                            // go to the base directory
+    run(g_cwd + "icmake/installer " + dest + "/ "); // install the files
+}    

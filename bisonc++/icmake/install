@@ -13,29 +13,41 @@ void install(string request, string dest)
         components = 63;
     else 
     {
-        if (strfind(request, "a") != -1)
+        if (strfind(request, "a") != -1)    // additional documentation
             components |= 1;
-        if (strfind(request, "b") != -1)
+        if (strfind(request, "b") != -1)    // binary program
             components |= 2;
-        if (strfind(request, "d") != -1)
+        if (strfind(request, "d") != -1)    // standard documentation
             components |= 4;
-        if (strfind(request, "m") != -1)
+        if (strfind(request, "m") != -1)    // man-pages
             components |= 8;                
-        if (strfind(request, "s") != -1)
+        if (strfind(request, "s") != -1)    // skeleton
             components |= 16;
-        if (strfind(request, "u") != -1)
+        if (strfind(request, "u") != -1)    // user guide
             components |= 32;
     }
+
+    chdir(g_cwd);                       // determine the destination path
+    if (dest == "")
+        dest = "/";
+    else
+        md(dest);
+
+    dest = cutEoln(backtick("readlink -f " + dest)[0]);
+
+    if (g_logPath != "")
+        backtick("icmake/log " + dest + " " + g_logPath);
+
 
     if (components & 1)
     {
         printf("\n  installing additional documentation\n");
 
-        target = base + ADD + "/bison-docs/";
+        target = base + "a/" ADD + "/bison-docs/";
         printf("  installing original bison's docs below `", target + "'\n");
         logRecursive("documentation/html", target);
 
-        target = base + ADD + "/examples/";
+        target = base + "a/" ADD + "/examples/";
         printf("  installing examples below `", target + "'\n");
         logRecursive("documentation/examples", target);
 
@@ -51,72 +63,74 @@ void install(string request, string dest)
         printf("  installing polymorphic impl. demo at `", 
                                                     target + "/essence/'\n");
         logRecursive("tmp/manual/essence", target + "/essence/");
+
+        chdir(base);                        // go to the base directory
+
+        destInstall(dest, base + "a");
     }
 
     if (components & 2)
     {
-        target = base + BINARY;
+        target = base + "b/" BINARY;
         pathsplit = path_file(target);
 
         printf("  installing the executable `", target, "'\n");
         logFile("tmp/bin", "binary", pathsplit[0], pathsplit[1]);
+
+        destInstall(dest, base + "b");
     }
 
 
     if (components & (4 | 8))
     {
-        target = base + DOC "/";
+        target = base + "d/" DOC "/";
         if (components & 4)
         {
             printf("  installing the changelog at `", target, "\n");
             logZip("", "changelog", target );
+
+            destInstall(dest, base + "d");
         }
 
         if (components & 8)
         {
             printf("  installing the html-manual pages at `", target, "\n");
             logInstall("tmp/manhtml", "", target);
+
+            destInstall(dest, base + "d");
         }
     }
 
 
     if (components & 8)
     {
-        target = base + MAN "/";
+        target = base + "m/" MAN "/";
         printf("  installing the manual pages below `", target, "'\n");
     
         logZip("tmp/man", "bisonc++.1", target);
+
+        destInstall(dest, base + "m");
     }
 
     if (components & 16)
     {
-        target = base + SKEL "/";
+        target = base + "s/" SKEL "/";
         printf("  installing skeleton files at `" + target + "'\n");
         logInstall("skeletons", "", target);
+
+        destInstall(dest, base + "s");
     }
 
 
     if (components & 32)
     {
-        target = base + UGUIDE "/";
+        target = base + "u/" UGUIDE "/";
         printf("  installing the user-guide at `", target, "'\n");
         logInstall("tmp/manual", "", target);
+
+        destInstall(dest, base + "u");
     }
 
-
-    chdir(g_cwd);
-    if (dest == "")
-        dest = "/";
-    else
-        md(dest);
-
-    dest = cutEoln(backtick("readlink -f " + dest)[0]);
-
-    if (g_logPath != "")
-        backtick("icmake/log " + dest + " " + g_logPath);
-
-    chdir(base);
-    run("../../icmake/installer " + dest + "/");
 
     printf("\n  Installation completed\n");
 

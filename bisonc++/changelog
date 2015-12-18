@@ -1,3 +1,10 @@
+bisonc++ (4.13.01)
+
+  * slightly modified the icmake build scripts to prevent multiple inclusions
+    of some of the installed files.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri, 18 Dec 2015 13:41:08 +0100
+
 bisonc++ (4.13.00)
 
   * 'build install' supports an optional LOG: argument: the (relative or
