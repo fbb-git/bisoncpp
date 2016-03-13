@@ -26,7 +26,7 @@ void Generator::polymorphicCode(ostream &out) const
         //    "No default constructor for poly.first (poly.second)");       
 
     ifstream in;
-    Exception::open(in,  d_options.polymorphicCode()); 
+    Exception::open(in,  d_options.polymorphicCodeSkeleton()); 
 
     filter(in, out, false);
 }

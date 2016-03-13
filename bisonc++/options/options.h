@@ -34,7 +34,7 @@ class Options
     bool        d_polymorphic       = false;
     bool        d_printTokens       = false;
     bool        d_strongTags        = true;
-    bool        d_warnTagMismatch   = false;
+    bool        d_warnTagMismatches = false;
 
     size_t      d_requiredTokens = 0;
 
@@ -129,7 +129,7 @@ class Options
         void setUnionDecl(std::string const &block);
         void setVerbosity();            // Prepare Msg for verbose output
         void setWarnTagMismatches();
-        void unsetDefaulActions();
+        void unsetDefaultActions();
         void unsetCheckDefaultConstructors();
         void unsetLines();
         void unsetStrongTags();
@@ -220,7 +220,7 @@ inline bool Options::defaultActions() const
 
 inline bool Options::warnTagMismatches() const
 {
-    return d_warnTagMismatch;
+    return d_warnTagMismatches;
 }
 
 inline bool Options::checkDefaultConstructors() const

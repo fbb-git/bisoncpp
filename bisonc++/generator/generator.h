@@ -110,6 +110,7 @@ class Generator
         void namespaceOpen(std::ostream &out) const;
         void namespaceUse(std::ostream &out) const;
         void polymorphic(std::ostream &out) const;
+        void polymorphicCode(std::ostream &out) const;
         void polymorphicInline(std::ostream &out) const;
         void polymorphicSpecializations(std::ostream &out) const;
         void preIncludes(std::ostream &out) const;
@@ -121,6 +122,7 @@ class Generator
         void stype(std::ostream &out) const;
         void threading(std::ostream &out) const;
         void tokens(std::ostream &out) const;
+        void warnTagMismatches(std::ostream &out) const;
 
         void ifInsertStype(bool &accept) const;
         void ifPrintTokens(bool &accept) const;
