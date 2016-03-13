@@ -137,6 +137,8 @@ NR      [[:digit:]]+
 %namespace                      return Parser::NAMESPACE;
 %negative-dollar-indices        return Parser::NEG_DOLLAR;
 %no-lines                       return Parser::NOLINES;
+%no-default-actions             return Parser::NODEFAULT_ACTIONS;
+%no-default-constructors        return Parser::NODEFAULT_CONS;
 %nonassoc                       return Parser::NONASSOC;
 %parsefun-source[ \t]+          {
                                     begin(StartCondition__::pxstring);
@@ -176,6 +178,7 @@ NR      [[:digit:]]+
 %token                          return Parser::TOKEN;
 %type                           return Parser::TYPE;
 %union                          return Parser::UNION;
+%warn-tag-mismatches            return Parser::WARN_TAGS;
 %weak-tags                      return Parser::WEAK_TAGS;
 "%%"                            return Parser::TWO_PERCENTS;
 

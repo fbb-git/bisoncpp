@@ -74,9 +74,12 @@ void usage(string const &program_name)
     "   --no-decoration (-D): do not include the user-defined actions when\n"
     "           generating the parser's tt(parse) member.\n"
 
-    "   --no-default-action-return (-N): do not use the default $$ = $1\n"
-    "           assignment of semantic values when returning from an action\n"
-    "           block\n"
+    "   --no-default-action (-N): do not use the default $$ = $1 assignment\n"
+    "           of semantic values when returning from an action block\n"
+
+    "   --no-default-constructors: do not check whether default "
+                                                            "constructors\n"
+    "           are available for polymorphic semantic value types\n"
 
     "   --no-lines: don't put #line directives in generated output,\n"
     "           overruling the %lines directive.\n"
@@ -97,6 +100,9 @@ void usage(string const &program_name)
 
     "   --parsefun-source=<source> (-p):\n"
     "           filename holding the parse function's source.\n"
+
+    "   --polymorphic-code-skeleton=<skeleton> (-L):\n"
+    "           location of the non-inline polymorphic functions skeleton.\n"
 
     "   --polymorphic-inline-skeleton=<skeleton> (-m):\n"
     "           location of the polymorphic inline functions skeleton.\n"

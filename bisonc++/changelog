@@ -3,7 +3,10 @@ bisonc++ (4.14.00)
   * Reimplemented handling polymorphic semantic values. shared pointers are no
     longer used. Details: see README.polymorphic-technical
 
-  * Added options/directives warn-tag-mismatch
+  * Added options/directives warn-tag-mismatch, no-default-constructor,
+    and option --polymorphic-code (-L). The formerly called option
+    --no-default-action-return was renamed to --no-default-action (-N was
+    kept), and can now also be used as a directive: %no-default-action.
 
   * Renamed the top-level bisonc++.cc and bisonc++.ih files to main.cc and
     main.ih, respectively.

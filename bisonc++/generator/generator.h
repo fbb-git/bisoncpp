@@ -42,7 +42,7 @@ class Generator
     mutable std::string d_line;
     bool d_debug;
     bool d_printTokens;
-    
+
     std::unordered_map<std::string, std::string> const &d_polymorphic; 
 
     mutable Writer d_writer;                // maintains its own const-ness

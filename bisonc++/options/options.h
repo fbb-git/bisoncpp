@@ -24,16 +24,19 @@ class Options
     std::string d_fileName;                 // the name of the current file
     size_t d_lineNr;                        // the current line nr.
 
-    bool        d_debug;
-    bool        d_errorVerbose;
-    bool        d_flex;
-    bool        d_lines;
-    bool        d_lspNeeded;
-    bool        d_printTokens;
-    bool        d_polymorphic;
-    bool        d_strongTags;
+    bool        d_checkDefaultConstructors = true;
+    bool        d_debug             = false;
+    bool        d_defaultActions    = true;
+    bool        d_errorVerbose      = false;
+    bool        d_flex              = false;
+    bool        d_lines             = true;
+    bool        d_lspNeeded         = false;
+    bool        d_polymorphic       = false;
+    bool        d_printTokens       = false;
+    bool        d_strongTags        = true;
+    bool        d_warnTagMismatch   = false;
 
-    size_t      d_requiredTokens;
+    size_t      d_requiredTokens = 0;
 
     std::set<std::string> d_warnOptions;    // contains the names of options 
                                             // for which Generator may warn
@@ -42,6 +45,7 @@ class Options
 
     std::string d_baseClassHeader;
     std::string d_baseClassSkeleton;
+    std::string d_polymorphicCodeSkeleton;
     std::string d_polymorphicInline;
     std::string d_polymorphicInlineSkeleton;
     std::string d_polymorphicSkeleton;
@@ -66,6 +70,7 @@ class Options
     std::string d_verboseName;
 
     static char s_defaultBaseClassSkeleton[];
+    static char s_defaultPolymorphicCodeSkeleton[];
     static char s_defaultPolymorphicInlineSkeleton[];
     static char s_defaultPolymorphicSkeleton[];
     static char s_defaultClassName[];
@@ -95,7 +100,7 @@ class Options
         bool specified(std::string const &option) const;
 
         void setBaseClassHeader();
-        void setBaseClassSkeleton();
+//        void setBaseClassSkeleton();
         void setClassHeader();
         void setClassName();
         void setDebug();
@@ -109,20 +114,23 @@ class Options
         void setNamespace();
         void setParsefunSource();
         void setPolymorphicDecl();
-        void setPolymorphicInlineSkeleton();
-        void setPolymorphicSkeleton();
-        void setPrintTokens();
+//        void setPolymorphicInlineSkeleton();
+//        void setPolymorphicSkeleton();
         void setPreInclude();
+        void setPrintTokens();
         void setRequiredTokens(size_t nRequiredTokens);
         void setScannerClassName();
         void setScannerInclude();
         void setScannerMatchedTextFunction();
         void setScannerTokenFunction();
-        void setSkeletonDirectory();
+//        void setSkeletonDirectory();
         void setStype();
         void setTargetDirectory();
         void setUnionDecl(std::string const &block);
         void setVerbosity();            // Prepare Msg for verbose output
+        void setWarnTagMismatches();
+        void unsetDefaulActions();
+        void unsetCheckDefaultConstructors();
         void unsetLines();
         void unsetStrongTags();
 
@@ -131,11 +139,15 @@ class Options
 
         bool printTokens() const;
         bool debug() const;
+        bool defaultActions() const;
         bool errorVerbose() const;
         bool lines() const;
         bool lspNeeded() const;
         bool polymorphic() const;
         bool strongTags() const;
+        bool warnTagMismatches() const;
+        bool checkDefaultConstructors() const;  // of polymorphic semantic
+                                                // values
 
         size_t requiredTokens() const;
 
@@ -152,6 +164,7 @@ class Options
         std::string const &parseSkeleton() const;
         std::string const &parseSource() const;
         std::string const &preInclude() const;
+        std::string const &polymorphicCodeSkeleton() const;
         std::string const &polymorphicInlineSkeleton() const;
         std::string const &polymorphicSkeleton() const;
         std::string const &scannerClassName() const;
@@ -198,6 +211,21 @@ class Options
 inline bool Options::debug() const
 {
     return d_debug;
+}
+
+inline bool Options::defaultActions() const
+{
+    return d_defaultActions;
+}
+
+inline bool Options::warnTagMismatches() const
+{
+    return d_warnTagMismatch;
+}
+
+inline bool Options::checkDefaultConstructors() const
+{
+    return d_checkDefaultConstructors;
 }
 
 inline std::string const &Options::baseClassHeader() const
@@ -285,6 +313,11 @@ inline std::string const &Options::polymorphicInlineSkeleton() const
     return d_polymorphicInlineSkeleton;
 }
 
+inline std::string const &Options::polymorphicCodeSkeleton() const
+{
+    return d_polymorphicCodeSkeleton;
+}
+
 inline std::string const &Options::polymorphicSkeleton() const
 {
     return d_polymorphicSkeleton;
@@ -330,10 +363,10 @@ inline void Options::setBaseClassHeader()
     assign(&d_baseClassHeader, FILENAME, "baseclass-header");
 }
 
-inline void Options::setBaseClassSkeleton()
-{
-    assign(&d_baseClassSkeleton, PATHNAME, "baseclass-skeleton");
-}
+//inline void Options::setBaseClassSkeleton()
+//{
+//    assign(&d_baseClassSkeleton, PATHNAME, "baseclass-skeleton");
+//}
 
 inline void Options::setClassHeader()
 {
@@ -375,6 +408,11 @@ inline void Options::unsetLines()
     d_lines = false;
 }
 
+inline void Options::unsetDefaultActions()
+{
+    d_defaultActions = false;
+}
+
 inline void Options::setLspNeeded()
 {
     d_lspNeeded = true;
@@ -395,16 +433,22 @@ inline void Options::setParsefunSource()
     assign(&d_parsefunSource, FILENAME, "parsefun-source");
 }
 
-inline void Options::setPolymorphicInlineSkeleton()
-{
-    assign(&d_polymorphicInlineSkeleton, 
-                            PATHNAME, "polymorphic-inline-skeleton");
-}
-
-inline void Options::setPolymorphicSkeleton()
-{
-    assign(&d_polymorphicSkeleton, PATHNAME, "polymorphic-skeleton");
-}
+// inline void Options::setPolymorphicCodeSkeleton()
+// {
+//     assign(&d_polymorphicCodeSkeleton, 
+//                             PATHNAME, "polymorphic-code-skeleton");
+// }
+// 
+// inline void Options::setPolymorphicInlineSkeleton()
+// {
+//     assign(&d_polymorphicInlineSkeleton, 
+//                             PATHNAME, "polymorphic-inline-skeleton");
+// }
+// 
+// inline void Options::setPolymorphicSkeleton()
+// {
+//     assign(&d_polymorphicSkeleton, PATHNAME, "polymorphic-skeleton");
+// }
 
 inline void Options::setPreInclude()
 {
@@ -432,10 +476,10 @@ inline void Options::setScannerTokenFunction()
     assign(&d_scannerTokenFunction, FILENAME, "scanner-token-function");
 }
 
-inline void Options::setSkeletonDirectory()
-{
-    assign(&d_skeletonDirectory, PATHNAME, "skeleton-directory (-S)");
-}
+//inline void Options::setSkeletonDirectory()
+//{
+//    assign(&d_skeletonDirectory, PATHNAME, "skeleton-directory (-S)");
+//}
 
 inline void Options::setTargetDirectory()
 {
@@ -450,6 +494,16 @@ inline std::string const &Options::stype() const
 inline bool Options::strongTags() const
 {
     return d_strongTags;
+}
+
+inline void Options::setWarnTagMismatches()
+{
+    d_warnTagMismatches = true;
+}
+
+inline void Options::unsetCheckDefaultConstructors()
+{
+    d_checkDefaultConstructors = false;
 }
 
 inline void Options::unsetStrongTags()

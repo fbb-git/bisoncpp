@@ -17,6 +17,7 @@ namespace
         {"baseclass-preinclude", 'H'},
 
         {"baseclass-skeleton", 'B'},        // options only
+        {"polymorphic-code-skeleton", 'L'},
         {"polymorphic-skeleton", 'M'},
         {"polymorphic-inline-skeleton", 'm'},
 
@@ -25,36 +26,37 @@ namespace
 
         {"class-skeleton", 'C'},            // option only
 
-        Arg::LongOption("construction"),    // option only
+        Arg::LongOption{"construction"},    // option only
                 // implies verbose, but also shows FIRST and FOLLOW sets as
                 // well as the full set of states, including the non-kernel
                 // items
 
-        Arg::LongOption("debug"),
-        Arg::LongOption("error-verbose"),
+        Arg::LongOption{"debug"},
+        Arg::LongOption{"error-verbose"},
         {"filenames", 'f'},
-        Arg::LongOption("flex"),
+        Arg::LongOption{"flex"},
 
         {"help", 'h'},                      // option only
 
         {"implementation-header", 'i'},
 
         {"implementation-skeleton", 'I'},   // option only
-        Arg::LongOption("insert-stype"),    // option only
+        Arg::LongOption{"insert-stype"},    // option only
 
         {"max-inclusion-depth", Arg::Required}, // option only
 
         {"namespace", 'n'},
 
                                             // option only
-        Arg::LongOption("no-baseclass-header"),
+        Arg::LongOption{"no-baseclass-header"},
 
-        Arg::LongOption("no-lines"),
+        Arg::LongOption{"no-default-constructors"},
+        Arg::LongOption{"no-lines"},
 
-        Arg::LongOption("no-parse-member"), // options only
+        Arg::LongOption{"no-parse-member"},         // options only
 
         {"no-decoration", 'D'},
-        {"no-default-action-return", 'N'},
+        {"no-default-actions", 'N'},
 
         {"own-debug", Arg::None},
         {"own-tokens", 'T'},
@@ -66,22 +68,23 @@ namespace
         {"required-tokens", Arg::Required},
 
         {"scanner", 's'},
-        Arg::LongOption("scanner-debug"),
+        Arg::LongOption{"scanner-debug"},
         {"scanner-matched-text-function", Arg::Required},
         {"scanner-token-function", Arg::Required},
         {"scanner-class-name", Arg::Required},
 
-        Arg::LongOption("show-filenames"),  // option only
+        Arg::LongOption{"show-filenames"},  // option only
         {"skeleton-directory", 'S'},        // option only
 
         {"target-directory", Arg::Required},
 
-        Arg::LongOption("thread-safe"),     // options only
+        Arg::LongOption{"thread-safe"},     // options only
         {"usage", 'h'},                     
         {"verbose", 'V'},
                 // shows rules, tokens, final states and kernel items, 
                 // and describes conflicts when found
         {"version", 'v'},
+        Arg::LongOption{"warn-tag-mismatches"},
     };
     auto longEnd = longOptions + 
                                sizeof(longOptions) / sizeof(Arg::LongOption);  
@@ -90,7 +93,7 @@ namespace
 int main(int argc, char **argv)
 try
 {
-    Arg &arg = Arg::initialize("AB:b:C:c:Df:H:hI:i:M:m:n:Np:P:s:S:tTVv", 
+    Arg &arg = Arg::initialize("AB:b:C:c:Df:H:hI:i:L:M:m:n:Np:P:s:S:tTVv", 
                     longOptions, longEnd, argc, argv);
 
     arg.versionHelp(usage, version, 1);

@@ -11,6 +11,7 @@ char Options::s_defaultClassSkeleton[]          = "bisonc++.h";
 char Options::s_defaultImplementationSkeleton[] = "bisonc++.ih";
 char Options::s_defaultParsefunSkeleton[]       = "bisonc++.cc";
 char Options::s_defaultPolymorphicSkeleton[]    = "bisonc++polymorphic";
+char Options::s_defaultPolymorphicCodeSkeleton[]= "bisonc++polymorphic.code";
 char Options::s_defaultPolymorphicInlineSkeleton[] 
                                               = "bisonc++polymorphic.inline";
 

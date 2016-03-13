@@ -441,6 +441,16 @@ _directiveSpec:
         setUnionDecl();
     }
 |
+    NODEFAULT_ACTIONS
+    {
+        d_options.unsetDefaultActions();
+    }
+|
+    NODEFAULT_CONS
+    {
+        d_options.unsetCheckDefaultConstructors();
+    }
+|
     _polymorphic
     _polyspecs
     optSemiCol
@@ -448,6 +458,11 @@ _directiveSpec:
     WEAK_TAGS
     {
         d_options.unsetStrongTags();
+    }
+|
+    WARN_TAGS
+    {
+        d_options.setWarnTagMismatches();
     }
 |
     error

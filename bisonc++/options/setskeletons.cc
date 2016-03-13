@@ -23,4 +23,8 @@ void Options::setSkeletons()
     if (!d_arg.option(&d_polymorphicInlineSkeleton, 'm'))
         d_polymorphicInlineSkeleton = d_skeletonDirectory + 
                                       s_defaultPolymorphicInlineSkeleton;
+
+    if (!d_arg.option(&d_polymorphicCodeSkeleton, 'L'))
+        d_polymorphicCodeSkeleton = d_skeletonDirectory + 
+                                      s_defaultPolymorphicCodeSkeleton;
 }

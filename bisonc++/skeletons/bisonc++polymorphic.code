@@ -30,7 +30,7 @@ namespace Meta__
                     // a Semantic<tag> holding a default value
         if (d_base->tag() != tag)
         {
-$insert warnTagMismatch
+$insert 12 warnTagMismatches
             emplace<tag>();
         }
         return data<tag>();
