@@ -1,0 +1,120 @@
+enum class Tag__    
+
+    defines the tags that are associated with the various semantic value
+    types. Examples of tags:
+
+        VECTOR,
+        TEXTTYPE,
+
+namespace Meta__
+
+    1. defines struct templates TagOf that, when provided with the actual data
+       types, provide the associated Tag__ as
+            TagOf<data-type>::tag
+       Example:
+
+        template <>
+        struct TagOf<FlexTypes::TextType>
+        {
+            static Tag__ const tag = Tag__::TEXTTYPE;
+        };
+
+    2. defines struct templates TypeOf that, when provided with a tag,
+       provides the associated data type as 
+            typename TypeOf<Tag__>::type
+       Example:
+
+        template <>
+        struct TypeOf<Tag__::VECTOR>
+        {
+            typedef std::vector<std::string> type;
+        };
+
+
+
+The semantic polymorphic value is available as STYPE__ inside the parser:
+
+         typedef Meta__::SType STYPE__;
+
+	The struct Stype holds a shared_ptr to a Base class object.
+    
+    SType::get<Tag__>() returns the data type of the stored value
+    (so, the tag is available). 
+
+    Given an Stype variable (like d_val__), it can be used to assign a value
+    of the requested type:
+
+        d_val__.get<Tag__::TEXTTYPE>() = d_matched.
+
+	If a rhs value is available, then it is known as a Semantic *, and it can
+    be assigned to the SType object. 
+
+    The free functions (in the parser's namespace (if defined)) semantic__ can
+    be used to obtain a Semantic *.
+
+
+All semantic values are stored in class template Semantic objects. Semantic is
+    derived from Base, and must be initialized with a Tag__. The Tag__ allows
+    Semantic to define a DataType (via TypeOf<Tag__>) and
+    Semantic has as data() const member returning a const reference to its
+    value
+
+The class Base is Semantic's base class. A pointer to a Base class can use
+    members 
+
+            tag()   to obtain the value's tag;
+
+            get<Tag__>()  to obtain a (const or non-const) reference to the
+    data stored in the Semantic object. Internallly, as the known, and since
+    Base is a base class of Semantic, it can statically cast this (the Base
+    class pointer to a Semantic<tag> pointer.
+
+Assignment (Stype = value) is handled by a member template operator=(Tp &&arg)
+
+===========================================================================
+
+Since version 4.14.00:
+
+    The Base class no longer offers get() etc. members: all access is handled
+through the class SType.
+
+    The Base class implements polymorphism without using virtual
+functions. This is realized by defining interface functions that can be called
+from Base & or Base * objects. These functions then call a function via a
+pointer to function (e.g., clone() calls the function pointed to by
+d_baseClone. Those functions are static functions, expecting a pointer to a
+Base const object. Derived classes initialize the pointers to function with
+the address of their own function. When clone() is called, the Base object
+passes its own address as argument to d_baseClone. If the Base object was
+derived from, e.g., Semantic<Tag__::INT>, then the Base pointer is also a
+pointer to Semantic<Tag__::INT>. As the derived class (Semantic<Tag__::INT>)
+has assigned the address of its own clone function to d_baseClone,
+Semantic<Tag__::INT>'s clone function is called. It defines a Base const *
+parameter, but it knows that it has been called with a pointer to a 
+Semantic<Tag__::INT>, and therefore it can safely static_cast the Base const *
+to a Semantic<Tag__::INT> *, if needed.
+
+        Base:
+            d_baseClone:    ptr to static member function
+
+            clone():        calls d_baseClone(this)
+
+        Semantic<Tag__>
+            implements static member clone, having Base::d_baseClone's
+            prototype. 
+
+            at construction time: assigns &clone to d_baseClone
+
+        run-time call:
+            Base::clone()       is called, calling
+
+            d_basClone(this)    where 'this' is the address of the actual
+                                Semantic object
+
+                                d_baseClone points to Semantic<Tag__>'s clone,
+
+            Semantic<Tag__>::clone is called, statically casting its Base *
+                                parameter to a Semantic<Tag__> *
+
+
+

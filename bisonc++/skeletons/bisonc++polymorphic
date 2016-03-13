@@ -10,26 +10,35 @@ $insert polymorphicSpecializations
 
         // The Base class: 
         // Individual semantic value classes are derived from this class.
-        // This class offers a member returning the value's Tag__
-        // and two member templates get() offering const/non-const access to
-        // the actual semantic value type.
+        // This class offers a member returning the value's Tag__,
+        // a member cloning the object of its derived Semantic<Tag__> 
+        // and a member returning a pointerr to its derived Semantic<Tag__> 
+        // data, used by SType. Since SType's user knows what data type 
+        // he/she looks at, the user can do a static cast to that type.
+        // See also Bisonc++'s distribution file README.polymorphic-techical
     class Base
     {
-        Tag__ d_tag;
-    
         protected:
-            Base(Tag__ tag);
+
+            Tag__ d_baseTag;    // Base should not be used for Tag__ values
+                                // outside of the enum class Tag__ range.
+    
+                // these members implement polymorphism without using
+                // virtual functions. 
+            Base *(*d_baseClone)(Base const *thisObj) = error;
+            void *(*d_baseData)(Base const *thisObj) = 0;
 
         public:
+            Base();
+
             Base(Base const &other) = delete;
 
             Tag__ tag() const;
-    
-            template <Tag__ tg_>
-            typename TypeOf<tg_>::type &get();
+            Base *clone() const;
+            void *data() const;        
 
-            template <Tag__ tg_>
-            typename TypeOf<tg_>::type const &get() const;
+        private:
+            static Base *error(Base const *obj);
     };
 
         // The class Semantic is derived from Base. It stores a particular
@@ -37,74 +46,69 @@ $insert polymorphicSpecializations
     template <Tag__ tg_>
     class Semantic: public Base
     {
-        typedef typename TypeOf<tg_>::type DataType;
-    
-        DataType d_data;
-    
+        typename TypeOf<tg_>::type d_data;
+        
         public:
-                // The constructor forwards arguments to d_data, allowing
-                // it to be initialized using whatever constructor is
-                // available for DataType
+            Semantic();
+            Semantic(Semantic<tg_> const &other);
+
+                // The constructor member template forwards its arguments to
+                // d_data, allowing it to be initialized using whatever
+                // constructor is available for DataType
             template <typename ...Params>
             Semantic(Params &&...params);
 
-            DataType &data();
-            DataType const &data() const;
+        private:
+            static Base *clone(Base const *obj);
+            static void *data(Base const *obj);
     };
 
-        // If Type is default constructible, Initializer::value is
-        // initialized to new Type, otherwise it's initialized to 0, allowing
-        // struct SType: public std::shared_ptr<Base> to initialize its
-        // shared_ptr<Base> class whether or not Base is default
-        // constructible.
-    template <bool constructible, typename Type>
-    struct Initializer
+        // The class Stype wraps the shared_ptr holding a pointer to Base.  It
+        // becomes the polymorphic STYPE__ It also defines a get member,
+        // allowing constructions like $$.get<INT> to be used.  Instantiations
+        // of its operator= member template are used to assign semantic values
+        // to the SType object.
+    class SType
     {
-        static Type *value;
-    };
-    template <bool constructible, typename Type>
-    Type *Initializer<constructible, Type>::value = new Type;
+        Base *d_base;
+
+        public:
+            SType();
+            SType(SType const &other);
+            SType(SType &&tmp);
     
-    template<typename Type>
-    struct Initializer<false, Type>
-    {
-        static constexpr Type *value = 0;
-    };
-
-        // The class Stype wraps the shared_ptr holding a pointer to Base.
-        // It becomes the polymorphic STYPE__
-        // It also wraps Base's get members, allowing constructions like
-        // $$.get<INT> to be used, rather than $$->get<INT>.
-        // Its operator= can be used to assign a Semantic *
-        // directly to the SType object. The free functions (in the parser's
-        // namespace (if defined)) semantic__ can be used to obtain a 
-        // Semantic *. 
-    struct SType: public std::shared_ptr<Base>
-    {
-        SType();
-
-        template <typename Tp_>
-        SType &operator=(Tp_ &&value);
-
-        Tag__ tag() const;
-
-            // this get()-member checks for 0-pointer and correct tag 
-            // in shared_ptr<Base>, and resets the shared_ptr's Base * 
-            // to point to Meta::__Semantic<tg_>() if not
-        template <Tag__ tg_>
-        typename TypeOf<tg_>::type &get();
-        template <Tag__ tg_>
-        typename TypeOf<tg_>::type const &get() const;
-
-            // the data()-member does not check, and may result in a 
-            // segfault if used incorrectly
-        template <Tag__ tg_>
-        typename TypeOf<tg_>::type &data();
-        template <Tag__ tg_>
-        typename TypeOf<tg_>::type const &data() const;
-
-        template <Tag__ tg_, typename ...Args>
-        void emplace(Args &&...args);
+            ~SType();
+    
+                // Specific overloads are needed for SType = SType assignments
+            SType &operator=(SType const &rhs);
+            SType &operator=(SType &&tmp);
+    
+                // A template member operator= is used because it allows
+                // the compiler to deduce the appropriate typename
+            template <typename Type>
+            SType &operator=(Type const &value);
+    
+                // this get()-member checks for invalid Semantic data and
+                // (when initialized) for tags matching the tag of the stored
+                // semantic value, or if the tag specified with get() does not
+                // match the tag that's currently stored, then SType is
+                // initialized to a default value of the type matching
+                // 'tag'. If no default constructor for that type exists a
+                // runtime error exception results. The option or directive 
+                // warn-tag-mismatch can be specified to generate run-time 
+                // warnings about tag mismatches to cerr.
+            template <Tag__ tag>
+            typename TypeOf<tag>::type &get();
+    
+                // the data()-member does not check, and may result in a 
+                // segfault if used incorrectly
+            template <Tag__ tag>
+            typename TypeOf<tag>::type &data();
+    
+            template <Tag__ tag, typename ...Args>
+            void emplace(Args &&...args);
+        
+            void swap(SType &other);
     };
 
 }  // namespace Meta__

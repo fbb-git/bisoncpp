@@ -4,6 +4,9 @@ void Generator::polymorphicSpecializations(ostream &out) const
 {
     key(out);
 
+    out <<
+        "   enum { sizeofTag__ = " << d_polymorphic.size() << " };\n\n";
+
     for (auto &poly: d_polymorphic)
         out << 
         "    template <>\n"

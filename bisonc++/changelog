@@ -1,3 +1,13 @@
+bisonc++ (4.14.00)
+
+  * Reimplemented handling polymorphic semantic values. shared pointers are no
+    longer used. Details: see README.polymorphic-technical
+
+  * Added options/directives warn-tag-mismatch
+
+  * Renamed the top-level bisonc++.cc and bisonc++.ih files to main.cc and
+    main.ih, respectively.
+
 bisonc++ (4.13.01)
 
   * slightly modified the icmake build scripts to prevent multiple inclusions

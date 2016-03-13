@@ -111,6 +111,8 @@ $insert 4 staticdata
 
 $insert namespace-open
 
+$insert polymorphic-cc
+
 // If the parsing function call uses arguments, then provide an overloaded
 // function.  The code below doesn't rely on parameters, so no arguments are
 // required.  Furthermore, parse uses a function try block to allow us to do

@@ -5,7 +5,7 @@
 
     // For more information about this file: 'man 7 icmconf'
 
-#define MAIN                "bisonc++.cc"
+#define MAIN                "main.cc"
 #define REFRESH
 #define LIBRARY           "modules"
 #define SHAREDREQ           ""

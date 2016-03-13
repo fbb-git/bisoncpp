@@ -1,149 +1,119 @@
 namespace Meta__
 {
 
-inline Base::Base(Tag__ tag)
+inline Base::Base()
 :
-    d_tag(tag)
+    d_baseTag(static_cast<Tag__>(sizeofTag__))
 {}
 
 inline Tag__ Base::tag() const
 {
-    return d_tag;
+    return d_baseTag;
+}
+
+inline Base *Base::error(Base const *obj)
+{
+    std::runtime_error("Internal error: Base::clone() or Base::data() "
+                       "called for default Base");
+    return 0;           // to prevent `no return value' complaints
+}
+
+inline Base *Base::clone() const
+{
+    return d_baseClone(this);
+}
+
+inline void *Base::data() const
+{
+    return d_baseData(this);
+}
+
+template <Tag__ tg_>
+Semantic<tg_>::Semantic()
+{
+        // Setting Base's data members:
+    d_baseTag = tg_;
+    d_baseClone = clone;
+    d_baseData =  data;
+}
+
+template <Tag__ tg_>
+Semantic<tg_>::Semantic(Semantic<tg_> const &other)
+{
+        // Setting Base's data members:
+    d_baseTag = other.d_baseTag;
+    d_baseClone = other.d_baseClone;
+    d_baseData =  other.d_baseData;
 }
 
 template <Tag__ tg_>
 template <typename ...Params>
-inline Semantic<tg_>::Semantic(Params &&...params)
+Semantic<tg_>::Semantic(Params &&...params)
 :
-    Base(tg_),
     d_data(std::forward<Params>(params) ...)
-{}
-
-template <Tag__ tg_>
-inline typename TypeOf<tg_>::type &Semantic<tg_>::data()
 {
-    return d_data;
+        // Setting Base's data members:
+    d_baseTag = tg_;
+    d_baseClone = clone;
+    d_baseData =  data;
 }
 
 template <Tag__ tg_>
-inline typename TypeOf<tg_>::type const &Semantic<tg_>::data() const
+inline Base *Semantic<tg_>::clone(Base const *obj) // static
 {
-    return d_data;
+    return new Semantic<tg_>{*static_cast<Semantic<tg_> const *>(obj)};
 }
 
 template <Tag__ tg_>
-inline typename TypeOf<tg_>::type &Base::get()
+inline void *Semantic<tg_>::data(Base const *obj) // static
 {
-    return static_cast<Semantic<tg_> *>(this)->data();
+    return &static_cast<Semantic<tg_> *>(const_cast<Base *>(obj))->d_data;
 }
 
-template <Tag__ tg_>
-inline typename TypeOf<tg_>::type const &Base::get() const
-{
-    return static_cast<Semantic<tg_> *>(this)->data();
-}
 
 inline SType::SType()
 :
-    std::shared_ptr<Base>{
-        Initializer<
-            std::is_default_constructible<Base>::value, Base
-        >::value
-    }
+    d_base(new Base)        // default Base object doesn't do anyting
+{}                          // but prevents tests for d_base == 0
+
+inline SType::SType(SType const &other)
+:
+    d_base(other.d_base->clone())
 {}
 
-inline Tag__ SType::tag() const
+inline SType::SType(SType &&tmp)
+:
+    d_base(tmp.d_base)
 {
-    return std::shared_ptr<Base>::get()->tag();
-}
-    
-template <Tag__ tg_>
-inline typename TypeOf<tg_>::type &SType::get()
-{
-                    // if we're not yet holding a (tg_) value, initialize to 
-                    // a Semantic<tg_> holding a default value
-    if (std::shared_ptr<Base>::get() == 0 || tag() != tg_)
-    {
-        typedef Semantic<tg_> SemType;
-
-        if (not std::is_default_constructible<
-                    typename TypeOf<tg_>::type
-                >::value
-        )
-            throw std::runtime_error(
-                "STYPE::get<tag>: no default constructor available");
-
-        reset(new SemType);
-    }
-
-    return std::shared_ptr<Base>::get()->get<tg_>();
+    tmp.d_base = 0;
 }
 
-template <Tag__ tg_>
-inline typename TypeOf<tg_>::type &SType::data()
+inline SType::~SType()
 {
-    return std::shared_ptr<Base>::get()->get<tg_>();
+    delete d_base;
 }
 
-template <Tag__ tg_>
-inline typename TypeOf<tg_>::type const &SType::data() const
+inline SType &SType::operator=(SType &&tmp)
 {
-    return std::shared_ptr<Base>::get()->get<tg_>();
+    swap(tmp);
+    return *this;
 }
 
-template <Tag__ tg_, typename ...Params>
-inline void SType::emplace(Params &&...params)
+    // A template assignment function is used because it allows
+    // the compiler to deduce the appropriate typename
+template <typename Type>
+inline SType &SType::operator=(Type const &value)
 {
-    reset(new Semantic<tg_>(std::forward<Params>(params) ...));
+    emplace< TagOf<Type>::tag >(value);
+    return *this;
 }
 
-template <bool, typename Tp_>
-struct Assign;
-
-template <typename Tp_>
-struct Assign<true, Tp_>
+    // the data()-member does not check, and may result in a 
+    // segfault if used incorrectly
+template <Tag__ tag>
+inline typename TypeOf<tag>::type &SType::data()
 {
-    static SType &assign(SType *lhs, Tp_ &&tp);
-};
-
-template <typename Tp_>
-struct Assign<false, Tp_>
-{
-    static SType &assign(SType *lhs, Tp_ const &tp);
-};
-
-template <>
-struct Assign<false, SType>
-{
-    static SType &assign(SType *lhs, SType const &tp);
-};
-
-template <typename Tp_>
-inline SType &Assign<true, Tp_>::assign(SType *lhs, Tp_ &&tp)
-{
-    lhs->reset(new Semantic<TagOf<Tp_>::tag>(std::move(tp)));
-    return *lhs;
-}
-
-template <typename Tp_>
-inline SType &Assign<false, Tp_>::assign(SType *lhs, Tp_ const &tp)
-{
-    lhs->reset(new Semantic<TagOf<Tp_>::tag>(tp));
-    return *lhs;
-}
-
-inline SType &Assign<false, SType>::assign(SType *lhs, SType const &tp)
-{
-    return lhs->operator=(tp);
-}
-
-template <typename Tp_>
-inline SType &SType::operator=(Tp_ &&rhs) 
-{
-    return Assign<
-                std::is_rvalue_reference<Tp_ &&>::value, 
-                typename std::remove_reference<Tp_>::type
-           >::assign(this, std::forward<Tp_>(rhs));
+    return *static_cast<typename TypeOf<tag>::type *>(d_base->data());
 }
 
 } // namespace Meta__
