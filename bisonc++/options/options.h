@@ -24,7 +24,7 @@ class Options
     std::string d_fileName;                 // the name of the current file
     size_t d_lineNr;                        // the current line nr.
 
-    bool        d_checkDefaultConstructors = true;
+    bool        d_checkDefaultConstructors = false;
     bool        d_debug             = false;
     bool        d_defaultActions    = true;
     bool        d_errorVerbose      = false;

@@ -50,6 +50,7 @@ namespace
                                             // option only
         Arg::LongOption{"no-baseclass-header"},
 
+// to modify: see also options.h
         Arg::LongOption{"no-default-constructors"},
         Arg::LongOption{"no-lines"},
 
