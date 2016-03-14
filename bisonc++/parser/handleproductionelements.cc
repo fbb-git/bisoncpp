@@ -12,7 +12,7 @@ Parser::STYPE__ Parser::handleProductionElements(STYPE__ &first,
     if (!d_rules.hasRules())    // may happen if the first rule could not be
         return first;           // defined because of token/rulename clash
 
-    switch (first->tag())
+    switch (first.tag())
     {
         case Tag__::TERMINAL:
             d_rules.addElement(first.get<Tag__::TERMINAL>());

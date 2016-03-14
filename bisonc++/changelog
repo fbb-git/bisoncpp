@@ -1,4 +1,4 @@
-bisonc++ (4.14.00)
+bisonc++ (4.14.00) (WIP)
 
   * Reimplemented handling polymorphic semantic values. shared pointers are no
     longer used. Details: see README.polymorphic-technical
@@ -10,8 +10,22 @@ bisonc++ (4.14.00)
     The option --polymorphic-inline-skeleton (-m) is not required anymore and
     was removed from bisonc++.
 
+  * The semantic value type STYPE__ (the class Meta__::SType) member operator
+    bool() const returns true if the member tag() returns a valid Tag__,
+    otherwise it returns false. False is returned for default constructed
+    STYPE__ values to which a value of one of the defined polymorphic Tag__
+    values has not yet been assigned. With previous implementations of STYPE__
+    an undocumented member pointer (->) operator could be used for calling 
+    get() and data(). This operator is no longer available. Instead of -> the
+    member selector operator (.) should be used. E.g.,
+    stype.get<Tag__::INT>(). 
+
+  * Bisonc++'s man-page and documentation was updated.
+
   * Renamed the top-level bisonc++.cc and bisonc++.ih files to main.cc and
     main.ih, respectively.
+
+(WIP)
 
 bisonc++ (4.13.01)
 

@@ -12,18 +12,18 @@ void Parser::handleProductionElement(STYPE__ &last)
         return;
     }
 
-    switch (last->tag())
+    switch (last.tag())
     {
         case Tag__::TERMINAL:
-            d_rules.addElement(last->get<Tag__::TERMINAL>());
+            d_rules.addElement(last.get<Tag__::TERMINAL>());
             checkFirstType();
         break;
         case Tag__::SYMBOL:
-            d_rules.addElement(last->get<Tag__::SYMBOL>());
+            d_rules.addElement(last.get<Tag__::SYMBOL>());
             checkFirstType();
         break;
         case Tag__::BLOCK:
-            installAction(last->get<Tag__::BLOCK>());
+            installAction(last.get<Tag__::BLOCK>());
         break;
 
         default:            // can't occur, but used to keep the 
