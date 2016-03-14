@@ -104,9 +104,6 @@ void usage(string const &program_name)
     "   --polymorphic-code-skeleton=<skeleton> (-L):\n"
     "           location of the non-inline polymorphic functions skeleton.\n"
 
-    "   --polymorphic-inline-skeleton=<skeleton> (-m):\n"
-    "           location of the polymorphic inline functions skeleton.\n"
-
     "   --polymorphic-skeleton=<skeleton> (-M):\n"
     "           location of the polymorphic semantic values skeleton.\n"
 

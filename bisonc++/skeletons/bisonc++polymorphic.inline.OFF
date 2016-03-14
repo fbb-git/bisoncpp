@@ -11,13 +11,6 @@ inline Tag__ Base::tag() const
     return d_baseTag;
 }
 
-inline Base *Base::error(Base const *obj)
-{
-    std::runtime_error("Internal error: Base::clone() or Base::data() "
-                       "called for default Base");
-    return 0;           // to prevent `no return value' complaints
-}
-
 inline Base *Base::clone() const
 {
     return d_baseClone(this);
@@ -26,6 +19,17 @@ inline Base *Base::clone() const
 inline void *Base::data() const
 {
     return d_baseData(this);
+}
+
+inline void *Base::noData(Base const *obj)              // static
+{
+    std::runtime_error("Default STYPE__ has no value");
+    return 0;
+}
+
+inline Base *Base::defaultClone(Base const *obj)        // static
+{
+    return new Base;
 }
 
 template <Tag__ tg_>
@@ -39,6 +43,8 @@ Semantic<tg_>::Semantic()
 
 template <Tag__ tg_>
 Semantic<tg_>::Semantic(Semantic<tg_> const &other)
+:
+    d_data(other.d_data)
 {
         // Setting Base's data members:
     d_baseTag = other.d_baseTag;
@@ -56,6 +62,27 @@ Semantic<tg_>::Semantic(Params &&...params)
     d_baseTag = tg_;
     d_baseClone = clone;
     d_baseData =  data;
+}
+
+template <Tag__ tag, typename ...Args>
+void SType::emplace(Args &&...args)
+{
+    Semantic<tag> *semPtr = new Semantic<tag>(std::forward<Args>(args) ...);
+    delete d_base;
+    d_base = semPtr;
+}
+
+template <Tag__ tag>
+typename TypeOf<tag>::type &SType::get()
+{
+                // if we're not yet holding a (tag) value, initialize to 
+                // a Semantic<tag> holding a default value
+    if (d_base->tag() != tag)
+    {
+$insert 8 warnTagMismatches
+        emplace<tag>();
+    }
+    return data<tag>();
 }
 
 template <Tag__ tg_>

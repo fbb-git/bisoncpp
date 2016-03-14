@@ -10,9 +10,6 @@ void Generator::preIncludes(std::ostream &out) const
 
     key(out);
 
-    if (polymorphic)
-        out << "#include <memory>\n";
- 
     if (preInclude)    
         out << "#include " << d_options.preInclude() << '\n';
 }

@@ -47,7 +47,6 @@ class Options
     std::string d_baseClassSkeleton;
     std::string d_polymorphicCodeSkeleton;
     std::string d_polymorphicInline;
-    std::string d_polymorphicInlineSkeleton;
     std::string d_polymorphicSkeleton;
     std::string d_classHeader;
     std::string d_className;
@@ -71,7 +70,6 @@ class Options
 
     static char s_defaultBaseClassSkeleton[];
     static char s_defaultPolymorphicCodeSkeleton[];
-    static char s_defaultPolymorphicInlineSkeleton[];
     static char s_defaultPolymorphicSkeleton[];
     static char s_defaultClassName[];
     static char s_defaultClassSkeleton[];
@@ -114,8 +112,6 @@ class Options
         void setNamespace();
         void setParsefunSource();
         void setPolymorphicDecl();
-//        void setPolymorphicInlineSkeleton();
-//        void setPolymorphicSkeleton();
         void setPreInclude();
         void setPrintTokens();
         void setRequiredTokens(size_t nRequiredTokens);
@@ -123,7 +119,6 @@ class Options
         void setScannerInclude();
         void setScannerMatchedTextFunction();
         void setScannerTokenFunction();
-//        void setSkeletonDirectory();
         void setStype();
         void setTargetDirectory();
         void setUnionDecl(std::string const &block);
@@ -165,7 +160,6 @@ class Options
         std::string const &parseSource() const;
         std::string const &preInclude() const;
         std::string const &polymorphicCodeSkeleton() const;
-        std::string const &polymorphicInlineSkeleton() const;
         std::string const &polymorphicSkeleton() const;
         std::string const &scannerClassName() const;
         std::string const &scannerInclude() const;
@@ -308,11 +302,6 @@ inline std::string const &Options::parseSource() const
     return d_parsefunSource;
 }
 
-inline std::string const &Options::polymorphicInlineSkeleton() const
-{
-    return d_polymorphicInlineSkeleton;
-}
-
 inline std::string const &Options::polymorphicCodeSkeleton() const
 {
     return d_polymorphicCodeSkeleton;
@@ -362,11 +351,6 @@ inline void Options::setBaseClassHeader()
 {
     assign(&d_baseClassHeader, FILENAME, "baseclass-header");
 }
-
-//inline void Options::setBaseClassSkeleton()
-//{
-//    assign(&d_baseClassSkeleton, PATHNAME, "baseclass-skeleton");
-//}
 
 inline void Options::setClassHeader()
 {
@@ -432,23 +416,6 @@ inline void Options::setParsefunSource()
 {
     assign(&d_parsefunSource, FILENAME, "parsefun-source");
 }
-
-// inline void Options::setPolymorphicCodeSkeleton()
-// {
-//     assign(&d_polymorphicCodeSkeleton, 
-//                             PATHNAME, "polymorphic-code-skeleton");
-// }
-// 
-// inline void Options::setPolymorphicInlineSkeleton()
-// {
-//     assign(&d_polymorphicInlineSkeleton, 
-//                             PATHNAME, "polymorphic-inline-skeleton");
-// }
-// 
-// inline void Options::setPolymorphicSkeleton()
-// {
-//     assign(&d_polymorphicSkeleton, PATHNAME, "polymorphic-skeleton");
-// }
 
 inline void Options::setPreInclude()
 {

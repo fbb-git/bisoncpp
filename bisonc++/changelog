@@ -7,6 +7,8 @@ bisonc++ (4.14.00)
     and option --polymorphic-code (-L). The formerly called option
     --no-default-action-return was renamed to --no-default-action (-N was
     kept), and can now also be used as a directive: %no-default-action.
+    The option --polymorphic-inline-skeleton (-m) is not required anymore and
+    was removed from bisonc++.
 
   * Renamed the top-level bisonc++.cc and bisonc++.ih files to main.cc and
     main.ih, respectively.

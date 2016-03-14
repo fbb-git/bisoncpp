@@ -111,7 +111,6 @@ class Generator
         void namespaceUse(std::ostream &out) const;
         void polymorphic(std::ostream &out) const;
         void polymorphicCode(std::ostream &out) const;
-        void polymorphicInline(std::ostream &out) const;
         void polymorphicSpecializations(std::ostream &out) const;
         void preIncludes(std::ostream &out) const;
         void print(std::ostream &out) const;
