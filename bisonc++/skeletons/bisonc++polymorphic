@@ -89,6 +89,10 @@ class SType
         template <typename Type>
         SType &operator=(Type const &value);
 
+        operator bool() const;
+
+        Tag__ tag() const;
+
             // this get()-member checks for invalid Semantic data and
             // (when initialized) for tags matching the tag of the stored
             // semantic value, or if the tag specified with get() does not
@@ -173,6 +177,16 @@ Semantic<tg_>::Semantic(Params &&...params)
     d_baseTag = tg_;
     d_baseClone = clone;
     d_baseData =  data;
+}
+
+inline Tag__ SType::tag() const
+{
+    return d_base->tag();
+}
+
+inline SType::operator bool() const
+{
+    return tag() != static_cast<Tag__>(sizeofTag__);
 }
 
 template <Tag__ tag, typename ...Args>
