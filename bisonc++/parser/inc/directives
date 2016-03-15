@@ -448,7 +448,7 @@ _directiveSpec:
 |
     NODEFAULT_CONS
     {
-        d_options.unsetCheckDefaultConstructors();
+        noConstructorChecks();
     }
 |
     _polymorphic
@@ -462,7 +462,7 @@ _directiveSpec:
 |
     WARN_TAGS
     {
-        d_options.setWarnTagMismatches();
+        warnTagMismatches();
     }
 |
     error
@@ -479,6 +479,9 @@ _directive:
 
 directives:
     directives _directive
+    {
+        inspectDirectives();
+    }
 |
     // empty
 ;

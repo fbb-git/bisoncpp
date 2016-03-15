@@ -9,82 +9,98 @@ namespace FBB
     class Arg;
 }
 
-class Options
+struct Options
 {
-    enum PathType
+    enum TriVal
     {
-        FILENAME,
-        PATHNAME
+        UNKNOWN,
+        OFF,
+        ON
     };
 
-    FBB::Arg &d_arg;
+    struct OptInfo
+    {
+        TriVal      triVal;
+        std::string filename;
+        size_t      lineNr;
+    };
 
-    std::string const *d_matched;
+    private:
+        enum PathType
+        {
+            FILENAME,
+            PATHNAME
+        };
 
-    std::string d_fileName;                 // the name of the current file
-    size_t d_lineNr;                        // the current line nr.
+        FBB::Arg &d_arg;
+    
+        std::string const *d_matched;
+    
+        std::string d_fileName;             // the name of the current file
+        size_t d_lineNr;                    // the current line nr.
+    
+        OptInfo d_constructorChecks{UNKNOWN, "", 0};
+        OptInfo d_warnTagMismatches{OFF, "", 0};
 
-    bool        d_checkDefaultConstructors = false;
-    bool        d_debug             = false;
-    bool        d_defaultActions    = true;
-    bool        d_errorVerbose      = false;
-    bool        d_flex              = false;
-    bool        d_lines             = true;
-    bool        d_lspNeeded         = false;
-    bool        d_polymorphic       = false;
-    bool        d_printTokens       = false;
-    bool        d_strongTags        = true;
-    bool        d_warnTagMismatches = false;
+        bool        d_debug             = false;
+        bool        d_defaultActions    = true;
+        bool        d_errorVerbose      = false;
+        bool        d_flex              = false;
+        bool        d_lines             = true;
+        bool        d_lspNeeded         = false;
+        bool        d_polymorphic       = false;
+        bool        d_printTokens       = false;
+        bool        d_strongTags        = true;
+    
+        size_t      d_requiredTokens = 0;
 
-    size_t      d_requiredTokens = 0;
-
-    std::set<std::string> d_warnOptions;    // contains the names of options 
+        std::set<std::string> d_warnOptions;// contains the names of options 
                                             // for which Generator may warn
                                             // if specified for already
                                             // existing .h or .ih files
 
-    std::string d_baseClassHeader;
-    std::string d_baseClassSkeleton;
-    std::string d_polymorphicCodeSkeleton;
-    std::string d_polymorphicInline;
-    std::string d_polymorphicSkeleton;
-    std::string d_classHeader;
-    std::string d_className;
-    std::string d_classSkeleton;
-    std::string d_genericFilename;
-    std::string d_implementationHeader;
-    std::string d_implementationSkeleton;
-    std::string d_locationDecl;
-    std::string d_nameSpace;
-    std::string d_parsefunSkeleton;
-    std::string d_parsefunSource;
-    std::string d_preInclude;
-    std::string d_scannerInclude;
-    std::string d_scannerMatchedTextFunction;
-    std::string d_scannerTokenFunction;
-    std::string d_scannerClassName;
-    std::string d_skeletonDirectory;
-    std::string d_stackDecl;
-    std::string d_targetDirectory;
-    std::string d_verboseName;
-
-    static char s_defaultBaseClassSkeleton[];
-    static char s_defaultPolymorphicCodeSkeleton[];
-    static char s_defaultPolymorphicSkeleton[];
-    static char s_defaultClassName[];
-    static char s_defaultClassSkeleton[];
-    static char s_defaultImplementationSkeleton[];
-    static char s_defaultParsefunSkeleton[];
-    static char s_defaultParsefunSource[];
-    static char s_defaultSkeletonDirectory[];
-    static char s_defaultTargetDirectory[];
-    static char s_defaultScannerClassName[];
-    static char s_defaultScannerMatchedTextFunction[];
-    static char s_defaultScannerTokenFunction[];
-    static char s_YYText[];
-    static char s_yylex[];
-
-    static Options *s_options;
+        std::string d_baseClassHeader;
+        std::string d_baseClassSkeleton;
+        std::string d_polymorphicCodeSkeleton;
+        std::string d_polymorphicInline;
+        std::string d_polymorphicSkeleton;
+        std::string d_classHeader;
+        std::string d_className;
+        std::string d_classSkeleton;
+        std::string d_genericFilename;
+        std::string d_implementationHeader;
+        std::string d_implementationSkeleton;
+        std::string d_locationDecl;
+        std::string d_nameSpace;
+        std::string d_parsefunSkeleton;
+        std::string d_parsefunSource;
+        std::string d_preInclude;
+        std::string d_scannerInclude;
+        std::string d_scannerMatchedTextFunction;
+        std::string d_scannerTokenFunction;
+        std::string d_scannerClassName;
+        std::string d_skeletonDirectory;
+        std::string d_stackDecl;
+        std::string d_targetDirectory;
+        std::string d_verboseName;
+    
+        static char s_defaultBaseClassSkeleton[];
+        static char s_defaultPolymorphicCodeSkeleton[];
+        static char s_defaultPolymorphicSkeleton[];
+        static char s_defaultClassName[];
+        static char s_defaultClassSkeleton[];
+        static char s_defaultImplementationSkeleton[];
+        static char s_defaultParsefunSkeleton[];
+        static char s_defaultParsefunSource[];
+        static char s_defaultSkeletonDirectory[];
+        static char s_defaultTargetDirectory[];
+        static char s_defaultScannerClassName[];
+        static char s_defaultScannerMatchedTextFunction[];
+        static char s_defaultScannerTokenFunction[];
+        static char s_YYText[];
+        static char s_yylex[];
+    
+        static Options *s_options;
 
     public:
         static Options &instance();
@@ -98,7 +114,6 @@ class Options
         bool specified(std::string const &option) const;
 
         void setBaseClassHeader();
-//        void setBaseClassSkeleton();
         void setClassHeader();
         void setClassName();
         void setDebug();
@@ -123,9 +138,10 @@ class Options
         void setTargetDirectory();
         void setUnionDecl(std::string const &block);
         void setVerbosity();            // Prepare Msg for verbose output
-        void setWarnTagMismatches();
+        void setWarnTagMismatches(TriVal value);
+        void setConstructorChecks(TriVal value);
+
         void unsetDefaultActions();
-        void unsetCheckDefaultConstructors();
         void unsetLines();
         void unsetStrongTags();
 
@@ -140,9 +156,9 @@ class Options
         bool lspNeeded() const;
         bool polymorphic() const;
         bool strongTags() const;
-        bool warnTagMismatches() const;
-        bool checkDefaultConstructors() const;  // of polymorphic semantic
-                                                // values
+
+        OptInfo const &warnTagMismatches() const;
+        OptInfo const &constructorChecks() const;  
 
         size_t requiredTokens() const;
 
@@ -212,14 +228,14 @@ inline bool Options::defaultActions() const
     return d_defaultActions;
 }
 
-inline bool Options::warnTagMismatches() const
+inline Options::OptInfo const &Options::warnTagMismatches() const
 {
     return d_warnTagMismatches;
 }
 
-inline bool Options::checkDefaultConstructors() const
+inline Options::OptInfo const &Options::constructorChecks() const
 {
-    return d_checkDefaultConstructors;
+    return d_constructorChecks;
 }
 
 inline std::string const &Options::baseClassHeader() const
@@ -443,11 +459,6 @@ inline void Options::setScannerTokenFunction()
     assign(&d_scannerTokenFunction, FILENAME, "scanner-token-function");
 }
 
-//inline void Options::setSkeletonDirectory()
-//{
-//    assign(&d_skeletonDirectory, PATHNAME, "skeleton-directory (-S)");
-//}
-
 inline void Options::setTargetDirectory()
 {
     assign(&d_targetDirectory, PATHNAME, "target-directory");
@@ -463,14 +474,14 @@ inline bool Options::strongTags() const
     return d_strongTags;
 }
 
-inline void Options::setWarnTagMismatches()
+inline void Options::setConstructorChecks(TriVal value)
 {
-    d_warnTagMismatches = true;
+    d_constructorChecks = OptInfo{value, d_fileName, d_lineNr};
 }
 
-inline void Options::unsetCheckDefaultConstructors()
+inline void Options::setWarnTagMismatches(TriVal value)
 {
-    d_checkDefaultConstructors = false;
+    d_warnTagMismatches = OptInfo{value, d_fileName, d_lineNr};
 }
 
 inline void Options::unsetStrongTags()

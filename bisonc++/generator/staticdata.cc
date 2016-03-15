@@ -13,7 +13,7 @@ void Generator::staticData(ostream &out) const
     if (d_debug || d_printTokens)
         d_writer.symbolicNames();
 
-    if (d_options.polymorphic() and d_options.warnTagMismatches())
+    if (d_options.warnTagMismatches().triVal == Options::ON)
     {
         out << "    char const *aTag__Name__[] = {\n";
         for (auto const &poly: d_polymorphic)

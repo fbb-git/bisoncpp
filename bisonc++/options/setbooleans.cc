@@ -23,11 +23,4 @@ void Options::setBooleans()
 
     if (d_arg.option(0, "no-lines"))
         d_lines = false;
-
-    if (d_arg.option(0, "no-default-constructors"))
-        d_checkDefaultConstructors = false;
-
-    if (d_arg.option(0, "warn-tag-mismatches"))
-        d_warnTagMismatches = true;
-
 }
