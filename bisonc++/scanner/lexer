@@ -138,7 +138,7 @@ NR      [[:digit:]]+
 %negative-dollar-indices        return Parser::NEG_DOLLAR;
 %no-lines                       return Parser::NOLINES;
 %no-default-actions             return Parser::NODEFAULT_ACTIONS;
-%no-default-constructors        return Parser::NODEFAULT_CONS;
+%no-constructor-checks          return Parser::NODEFAULT_CONS;
 %nonassoc                       return Parser::NONASSOC;
 %parsefun-source[ \t]+          {
                                     begin(StartCondition__::pxstring);
