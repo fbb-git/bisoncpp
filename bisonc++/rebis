@@ -32,7 +32,8 @@ cp ./self/parse.cc ./self/parserbase.h ./parser
 
 
 prompt "    4. Rebuild: rebuilding the program ('build program')"
-touch ./scanner/a
+touch scanner/a
+rm -f scanner/scanner.ih.gch parser/parser.ih.gch
 build program || exit 1
 echo
 
