@@ -479,9 +479,6 @@ _directive:
 
 directives:
     directives _directive
-    {
-        inspectDirectives();
-    }
 |
     // empty
 ;

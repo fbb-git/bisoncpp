@@ -2,6 +2,8 @@
 
 void Parser::expectRules()
 {
+    inspectDirectives();
+
     d_scanner.clearBlock();
 
     Terminal::resetPrecedence();    // Incremented terminal priority must be

@@ -6,5 +6,6 @@
 void Parser::warnTagMismatches() const
 {
     if (d_options.warnTagMismatches().triVal == Options::UNKNOWN)
-        d_options.setWarnTagMismatches(Options::ON);
+        d_options.setWarnTagMismatches(Options::ON, d_scanner.filename(),
+                                                    d_scanner.lineNr());
 }

@@ -36,8 +36,8 @@ struct Options
     
         std::string const *d_matched;
     
-        std::string d_fileName;             // the name of the current file
-        size_t d_lineNr;                    // the current line nr.
+//        std::string d_fileName;             // the name of the current file
+//        size_t d_lineNr;                    // the current line nr.
     
         OptInfo d_constructorChecks{UNKNOWN, "", 0};
         OptInfo d_warnTagMismatches{OFF, "", 0};
@@ -138,8 +138,10 @@ struct Options
         void setTargetDirectory();
         void setUnionDecl(std::string const &block);
         void setVerbosity();            // Prepare Msg for verbose output
-        void setWarnTagMismatches(TriVal value);
-        void setConstructorChecks(TriVal value);
+        void setWarnTagMismatches(TriVal value, std::string const &filename,
+                                  size_t lineNr);
+        void setConstructorChecks(TriVal value, std::string const &filename,
+                                  size_t lineNr);
 
         void unsetDefaultActions();
         void unsetLines();
@@ -474,14 +476,18 @@ inline bool Options::strongTags() const
     return d_strongTags;
 }
 
-inline void Options::setConstructorChecks(TriVal value)
+inline void Options::setConstructorChecks(TriVal value, 
+                                          std::string const &filename,
+                                          size_t lineNr)
 {
-    d_constructorChecks = OptInfo{value, d_fileName, d_lineNr};
+    d_constructorChecks = OptInfo{value, filename, lineNr};
 }
 
-inline void Options::setWarnTagMismatches(TriVal value)
+inline void Options::setWarnTagMismatches(TriVal value,
+                                          std::string const &filename,
+                                          size_t lineNr)
 {
-    d_warnTagMismatches = OptInfo{value, d_fileName, d_lineNr};
+    d_warnTagMismatches = OptInfo{value, filename, lineNr};
 }
 
 inline void Options::unsetStrongTags()
