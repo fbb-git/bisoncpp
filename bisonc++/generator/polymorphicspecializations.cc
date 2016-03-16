@@ -7,6 +7,9 @@ void Generator::polymorphicSpecializations(ostream &out) const
     out <<
         "enum { sizeofTag__ = " << d_polymorphic.size() << " };\n\n";
 
+    if (d_options.warnTagMismatches().triVal == Options::ON)
+        out << "extern char const *idOfTag__[];\n";
+
     for (auto &poly: d_polymorphic)
         out << 
             "template <>\n"

@@ -36,9 +36,6 @@ struct Options
     
         std::string const *d_matched;
     
-//        std::string d_fileName;             // the name of the current file
-//        size_t d_lineNr;                    // the current line nr.
-    
         OptInfo d_constructorChecks{UNKNOWN, "", 0};
         OptInfo d_warnTagMismatches{OFF, "", 0};
 
@@ -218,6 +215,8 @@ struct Options
                       char const *optionName);
 
         bool isFirstStypeDefinition() const;
+
+        static void warnNonPolymorphic(OptInfo &info, char const *name);
 };
 
 inline bool Options::debug() const

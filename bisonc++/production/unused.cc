@@ -6,7 +6,6 @@ void Production::unused(Production const *production)
     {
         if (!s_unused)
         {
-            Global::plainWarnings();
             wmsg << 
                 "Unused production rule(s):" << endl;
             s_unused = true;

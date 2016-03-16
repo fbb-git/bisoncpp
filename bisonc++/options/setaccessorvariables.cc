@@ -1,5 +1,6 @@
 #include "options.ih"
 
+    // called after the grammar has been parsed (by Parser::cleanup in main)
 void Options::setAccessorVariables()
 {
     setBooleans();
@@ -8,18 +9,27 @@ void Options::setAccessorVariables()
     setQuotedStrings();
     setSkeletons();
 
-    cerr << "pre-value is " << d_constructorChecks.triVal << '\n';
-
-    if (d_arg.option(0, "no-constructor-checks"))
-        d_constructorChecks.triVal = OFF;
-
-    if (not d_polymorphic) 
+    if (d_polymorphic)
     {
+        d_constructorChecks.triVal = 
+                    d_arg.option(0, "no-constructor-checks") ?
+                        OFF
+                    :
+                        ON;
 
+        if (d_arg.option(0, "warn-tag-mismatches"))
+            d_constructorChecks.triVal = ON;
+    }
+    else
+    {
+        if (d_constructorChecks.triVal == OFF)
+            warnNonPolymorphic(d_constructorChecks, "no-constructor-checks");
 
+        if (d_warnTagMismatches.triVal == ON)
+            warnNonPolymorphic(d_warnTagMismatches, "warn-tag-mismatches");
+    }
 
-    if (d_arg.option(0, "warn-tag-mismatches"))
-        d_warnTagMismatches.triVal = ON;
+    Global::plainWarnings();
 }
 
 

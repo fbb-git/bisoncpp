@@ -3,24 +3,31 @@ bisonc++ (4.14.00) (WIP)
   * Reimplemented handling polymorphic semantic values. shared pointers are no
     longer used. Details: see README.polymorphic-technical
 
-  * Added options/directives warn-tag-mismatch, no-default-constructor,
-    and option --polymorphic-code (-L). The formerly called option
-    --no-default-action-return was renamed to --no-default-action (-N was
-    kept), and can now also be used as a directive: %no-default-action.
-    The option --polymorphic-inline-skeleton (-m) is not required anymore and
-    was removed from bisonc++.
-
   * The semantic value type STYPE__ (the class Meta__::SType) member operator
-    bool() const returns true if the member tag() returns a valid Tag__,
-    otherwise it returns false. False is returned for default constructed
-    STYPE__ values to which a value of one of the defined polymorphic Tag__
-    values has not yet been assigned. With previous implementations of STYPE__
-    an undocumented member pointer (->) operator could be used for calling 
-    get() and data(). This operator is no longer available. Instead of -> the
-    member selector operator (.) should be used. E.g.,
-    stype.get<Tag__::INT>(). 
+    bool() const returns true if its member tag() returns a valid Tag__,
+    otherwise it returns false. 
+    False is returned for default constructed STYPE__ values.
+    Previous implementations of STYPE__ implemented an undocumented member
+    pointer (->) operator for calling get() and data(). This operator is no
+    longer available. Instead of -> the member selector operator (.) should be
+    used. E.g., stype.get<Tag__::INT>().
+
+  * Added options/directives warn-tag-mismatches and no-constructor-checks, 
+    and added option --polymorphic-code (-L). 
+
+  * The formerly available option --no-default-action-return was renamed to
+    --no-default-action (-N still available), and can now also be used as a
+    directive: %no-default-action.  
+
+  * Option --polymorphic-inline-skeleton (-m) is not used anymore and was
+    removed.
 
   * Bisonc++'s man-page and documentation was updated.
+
+  * After parsing a grammar file only plain warning messages (i.e., no
+    file/line info is displayed) are issued. Switching to plain warning
+    message is done in Parser::cleanup, and no longer in various members of
+    objects being used after calling Parser::cleanup().
 
   * Renamed the top-level bisonc++.cc and bisonc++.ih files to main.cc and
     main.ih, respectively.

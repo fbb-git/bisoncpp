@@ -16,11 +16,6 @@
 #include "../terminal/terminal.h"
 #include "../production/production.h"
 
-namespace Global
-{
-    void plainWarnings();
-}
-
 extern char version[];
 
 using namespace std;

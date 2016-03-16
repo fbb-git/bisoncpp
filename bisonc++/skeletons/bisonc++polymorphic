@@ -204,7 +204,7 @@ typename TypeOf<tag>::type &SType::get()
                 // a Semantic<tag> holding a default value
     if (d_base->tag() != tag)
     {
-$insert 8 warnTagMismatches
+$insert warnTagMismatches
         emplace<tag>();
     }
     return data<tag>();

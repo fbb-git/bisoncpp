@@ -7,6 +7,14 @@ void Generator::polymorphicCode(ostream &out) const
 
     key(out);
 
+    if (d_options.warnTagMismatches().triVal == Options::ON)
+    {
+        out << "char const *idOfTag__[] = {\n";
+        for (auto const &poly: d_polymorphic)
+            out << "    \"" << poly.first << "\",\n";
+        out <<     "    \"<default>\"\n"
+               "};\n";
+    }
 
         // static_assert(std::is_default_constructible<poly.second>::value, 
         //    "No default constructor for poly.first (poly.second)");       

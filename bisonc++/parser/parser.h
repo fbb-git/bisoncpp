@@ -90,7 +90,6 @@ class Parser: public ParserBase
         std::unordered_map<std::string, std::string> const &polymorphic() const;
 
     private:
-        void inspectDirectives() const;
         void noConstructorChecks() const;
         void warnTagMismatches() const;
 
