@@ -19,7 +19,7 @@ RuleValue::RuleValue(int i)
     d_value.i = i;
 }
 
-RuleValue::RuleValue(size_t s)
+RuleValue::RuleValue(unsigned s)
 :
     d_tag(VARIABLE)
 {

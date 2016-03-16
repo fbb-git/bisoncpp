@@ -30,6 +30,3 @@ inline void Scanner::matched2()
 {
     d_number = d_matched[2];
 }
-
-
-

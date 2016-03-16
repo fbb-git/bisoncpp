@@ -29,6 +29,14 @@ bisonc++ (4.14.00) (WIP)
     message is done in Parser::cleanup, and no longer in various members of
     objects being used after calling Parser::cleanup().
 
+  * Comment (to end-of-line and C-style) can also be used in polymorphic type
+    specifications.
+
+  * The extensive calculator regression test declared a RuleValue(unsigned)
+    constructor, but implemented a RuleValue(size_t) constructor, which does
+    not compile on amd64 architectures. The regression test was modified by
+    changing the constructor's size_t parameter type into unsigned.
+
   * Renamed the top-level bisonc++.cc and bisonc++.ih files to main.cc and
     main.ih, respectively.
 

@@ -5,6 +5,7 @@
 // %print-tokens
 
 %x xstring pstring pxstring string rawstring comment quote block typespec
+%x typecomment
 
 OCTAL   [0-7]
 OCT3    {OCTAL}{3}
@@ -316,5 +317,14 @@ NR      [[:digit:]]+
     \\.             |
     [^;%]           more();
 
+    "//".*          // ignore EOLN comment
+
+    "/*"            begin(StartCondition__::typecomment);
+    
     [;%]            returnTypeSpec();   // back to INITIAL, returns IDENTIFIER
+}
+
+<typecomment>{
+    .|\n            // ignored
+    "*/"            begin(StartCondition__::typespec);
 }

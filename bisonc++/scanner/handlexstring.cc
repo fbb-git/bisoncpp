@@ -29,7 +29,7 @@ bool Scanner::handleXstring(size_t nRedo)
     if (++d_inclusionDepth > d_maxDepth)
         fmsg << "maximum inclusion depth (" << d_inclusionDepth << ", " <<
                     d_maxDepth << ") exceeded" <<
-                endl;
+                noid;
 
     pushStream(filename);
     setTags();

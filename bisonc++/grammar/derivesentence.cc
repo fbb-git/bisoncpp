@@ -8,5 +8,5 @@ void Grammar::deriveSentence()
     if (!derivable(Rules::startSymbol()))
         fmsg << 
             "Grammar's start symbol `" << Rules::startSymbol() <<
-            "' does not derive any sentence" << endl;
+            "' does not derive any sentence" << noid;
 }

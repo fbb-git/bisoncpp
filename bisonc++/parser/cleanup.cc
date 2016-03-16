@@ -5,7 +5,7 @@ void Parser::cleanup()
     d_rules.clearLocations();   // locations aren't required anymore
 
     if (!d_rules.hasRules() || !d_rules.nProductions())
-        fmsg << "No production rules" << endl;
+        fmsg << "No production rules" << noid;
 
     emsg.setTag("error");
 
