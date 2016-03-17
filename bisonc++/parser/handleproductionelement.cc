@@ -26,20 +26,50 @@ void Parser::handleProductionElement(STYPE__ &last)
             installAction(last.get<Tag__::BLOCK>());
         break;
 
-        default:            // can't occur, but used to keep the 
-        break;              // compiler from generating a warning
+        default:            // can't occur, but prevents a warning
+        break;              // from the compiler
     }
 
-    if (
-        d_rules.lastProduction().action().empty() and 
-            d_arg.option('N') and
-            d_rules.sType() != ""
-    )
-        wmsg << 
-            "rule `" << &d_rules.lastProduction() << 
-            "' lacks an action block assigning a(n) " << d_rules.sType() << 
-                    " value to $$" << endl;
+    Production const &lastProd = d_rules.lastProduction();
+
+    if (not lastProd.action().empty())
+        return;
+
+    string const &stype = d_rules.sType();
+
+    if (d_arg.option('N') || stype.empty())
+        return;
+
+    Block block;
+    block.open(lastProd.lineNr(), lastProd.fileName());
+
+    int idx = 1 - lastProd.size();
+
+    block += "\n" 
+                "  d_val__ = d_vsp__[" + to_string(idx) + "];"
+            + "\n}";
+
+
+    d_rules.setAction(block);
+
+    string firstType = lastProd[0].sType();
+        
+    if (stype == firstType)
+        wmsg << "rule `" << &lastProd << 
+                                "': added $$ = $1 assignment" << endl;
+    else
+    {
+        if (firstType.empty())
+            firstType = "(token)";
+
+        emsg << "rule `" << &lastProd << "':\n"
+            "    cannot add assignment (= $1) to " << stype << " ($$)" << 
+                                                                        endl;
+    }
 }
+
+
+
 
 
 
