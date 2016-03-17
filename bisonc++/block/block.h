@@ -16,14 +16,14 @@ class Block: private std::string
                                         // was found. The block's text itself
                                         // is in the Block's base class
 
-    int     d_count;                    // curly braces nesting count, handled 
+    int     d_count = 0;                // curly braces nesting count, handled 
                                         // by clear(), close(), and open()
 
     std::vector<AtDollar> d_atDollar;   // @- and $-specifications
 
-    public:
-        Block();
+    bool d_usedDollarDollar = false;
 
+    public:
         using std::string::empty;
         using std::string::find;
         using std::string::find_first_not_of;
@@ -36,7 +36,7 @@ class Block: private std::string
         using std::string::substr;
 
         void clear();
-                                        // clears the previous block contents
+                                       // clears the previous block contents
         void open(size_t lineno, std::string const &source);
         bool close();
 
@@ -67,12 +67,14 @@ class Block: private std::string
         size_t line() const;
         std::string const &source() const;  // the block's source file
         std::string const &str() const;     // the block's contents
+
+        bool usedDollarDollar() const;      // used $$, $$., or $<ID>$
 };
 
-inline Block::Block()
-:
-    d_count(0)
-{}
+inline bool Block::usedDollarDollar() const
+{
+    return d_usedDollarDollar;
+}
 
 inline void Block::operator+=(std::string const &text)
 {

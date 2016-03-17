@@ -5,12 +5,13 @@ void clean(int dist)
             "options/SKEL "
             "tmp/*.o" + 
             " o */o release.yo tmp/lib*.a "    
-            "parser/grammar.output"
+            "parser/grammar.output "
+            "main.ih.gch */*.ih.gch"
     );
 
 
     if (dist)
-        run("rm -rf tmp main.ih.gch */*.ih.gch" );
+        run("rm -rf tmp" );
 
     chdir("documentation");
 

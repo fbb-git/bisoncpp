@@ -90,6 +90,9 @@ class Parser: public ParserBase
         std::unordered_map<std::string, std::string> const &polymorphic() const;
 
     private:
+        void missingSemval(Production const &prod, 
+                            std::string const &stype) const;
+
         void noConstructorChecks() const;
         void warnTagMismatches() const;
 

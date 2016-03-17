@@ -1,14 +1,21 @@
 #include "parser.ih"
 
+    // encountered a rule w/o action block
+
 void Parser::checkEmptyBlocktype() 
 {
     string const &stype = d_rules.sType();
 
-                                    // no type or no default action requested
-    if (d_arg.option('N') || stype.empty())
+    if (stype.empty())              // no semantic type: no action needed
         return;
 
     Production const &last = d_rules.lastProduction();
+
+    if (not d_options.defaultActions()) // no default action requested
+    {
+        missingSemval(last, stype);
+        return;
+    }
 
     Block block;
     block.open(last.lineNr(), last.fileName());
@@ -25,7 +32,14 @@ void Parser::checkEmptyBlocktype()
 
     d_rules.setAction(block);
 
-    wmsg << "rule `" << &last <<
-            "': returns default " << stype << " value" << endl;
+    wmsg << "rule `" << &last << "':\n"
+            "    added $$ = " <<
+            (
+                d_semType == POLYMORPHIC ?
+                    "Meta__::TypeOf<Tag__::" + stype + ">::type{}"
+                :
+                    "STYPE__{}"s
+            )
+            << " value" << endl;
 }
 

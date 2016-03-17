@@ -30,15 +30,27 @@ void Parser::handleProductionElement(STYPE__ &last)
         break;              // from the compiler
     }
 
+    string const &stype = d_rules.sType();
+
+    if (stype.empty())              // no semantic type: no action needed
+        return;
+    
     Production const &lastProd = d_rules.lastProduction();
 
     if (not lastProd.action().empty())
-        return;
+    {
+        if (not lastProd.action().usedDollarDollar())
+            missingSemval(lastProd, stype);
 
-    string const &stype = d_rules.sType();
-
-    if (d_arg.option('N') || stype.empty())
         return;
+    }
+
+    if (not d_options.defaultActions())
+    {
+        if (not lastProd.action().usedDollarDollar())
+            missingSemval(lastProd, stype);
+        return;
+    }
 
     Block block;
     block.open(lastProd.lineNr(), lastProd.fileName());
@@ -63,8 +75,8 @@ void Parser::handleProductionElement(STYPE__ &last)
             firstType = "(token)";
 
         emsg << "rule `" << &lastProd << "':\n"
-            "    cannot add assignment (= $1) to " << stype << " ($$)" << 
-                                                                        endl;
+            "    cannot add assignment " << firstType << " (= $1) to " << 
+            stype << " (= $$)" << endl;
     }
 }
 

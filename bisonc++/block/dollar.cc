@@ -11,5 +11,7 @@ void Block::dollar(size_t lineNr, string const &text, bool member)
             text, numeric_limits<int>::max(), member
         )
     );
+    d_usedDollarDollar |= text[0] == '$';
+
     append(text);
 }
