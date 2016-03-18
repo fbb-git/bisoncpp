@@ -231,21 +231,21 @@ _union:
 _default_actions:
     DEFAULT_ACTIONS
     {
-        d_expect = "Add default $$ = $... action on/off specification";
+        d_expect = "%default-actions on/off specification";
     }
 ;
 
 _constructor_checks:
     CONSTRUCTOR_CHECKS
     {
-        d_expect = "Add default $$ = $... action on/off specification";
+        d_expect = "%constructor-checks  on/off specification";
     }
 ;
 
 _tag_mismatches:
     WARN_TAGS
     {
-        d_expect = "Warn tag-mismatches on/off specification";
+        d_expect = "%tag-mismatches on/off specification";
     }
 ;
 
@@ -463,13 +463,13 @@ _directiveSpec:
     }
 |
     _default_actions
-    STRING
+    IDENTIFIER
     {
         defaultAction();
     }
 |
     _constructor_checks
-    STRING
+    IDENTIFIER
     {
         constructorChecks();
     }
@@ -484,7 +484,7 @@ _directiveSpec:
     }
 |
     _tag_mismatches
-    STRING
+    IDENTIFIER
     {
         warnTagMismatches();
     }

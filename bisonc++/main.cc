@@ -68,7 +68,7 @@ namespace
         Arg::LongOption{"show-filenames"},
         {"skeleton-directory", 'S'},
 
-        Arg::LongOption{"tag-mismatches"},                  // also directive
+        {"tag-mismatches", Arg::Required},                  // also directive
         {"target-directory", Arg::Required},                // also directive
         Arg::LongOption{"thread-safe"},
 
@@ -96,6 +96,8 @@ try
 
     Parser parser(rules);   // Prepare parsing. If `include-only' was
                             // specified, processing stops here.
+                            // options relevant for parsing are set by
+                            // the parser's constructor.
 
 
     parser.parse();        // parses the input, fills the data in the Rules

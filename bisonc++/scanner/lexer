@@ -112,14 +112,8 @@ NR      [[:digit:]]+
                                     return Parser::CLASS_HEADER;
                                 }
 %class-name                     return Parser::CLASS_NAME;
-%constructor-checks             {
-                                    begin(StartCondition__::xstring);
-                                    return Parser::CONSTRUCTOR_CHECKS;
-                                }
-%default-actions                {
-                                    begin(StartCondition__::xstring);
-                                    return Parser::DEFAULT_ACTIONS;
-                                }
+%constructor-checks             return Parser::CONSTRUCTOR_CHECKS;
+%default-actions                return Parser::DEFAULT_ACTIONS;
 %debug                          return Parser::DEBUGFLAG;
 %error-verbose                  return Parser::ERROR_VERBOSE;
 %expect                         return Parser::EXPECT;
@@ -178,10 +172,7 @@ NR      [[:digit:]]+
                                     begin(StartCondition__::xstring);
                                     return Parser::STYPE;
                                 }
-%tag-mismatches                 {
-                                    begin(StartCondition__::xstring);
-                                    return Parser::WARN_TAGS;
-                                }
+%tag-mismatches                 return Parser::WARN_TAGS;
 %target-directory[ \t]+         {
                                     begin(StartCondition__::pxstring);
                                     return Parser::TARGET_DIRECTORY;

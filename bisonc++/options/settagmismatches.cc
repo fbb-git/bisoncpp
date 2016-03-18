@@ -1,5 +1,6 @@
 #include "options.ih"
 
+    // Resulting values: ON, OFF
 void Options::setTagMismatches(string const &request,
                                string const &filename, size_t lineNr)
 {
