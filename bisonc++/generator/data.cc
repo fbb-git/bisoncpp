@@ -16,6 +16,7 @@ Generator::Map Generator::s_insert =
     {"debugincludes",               &Generator::debugIncludes},
     {"debuglookup",                 &Generator::debugLookup},
     {"errorverbose",                &Generator::errorVerbose},
+    {"idoftag",                     &Generator::idOfTag},
     {"namespace-open",              &Generator::namespaceOpen},
     {"namespace-close",             &Generator::namespaceClose},
     {"namespace-use",               &Generator::namespaceUse},

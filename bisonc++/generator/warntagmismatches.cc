@@ -10,8 +10,9 @@ void Generator::warnTagMismatches(ostream &out) const
     // idOfTag: defined by staticdata.cc
 
     out << R"(
-        std::cerr << "[Warning] requesting value of Tag " <<
-            idOfTag__[static_cast<int>(tag)] << " from Tag " <<
-            idOfTag__[static_cast<int>(d_base->tag())] << '\n';
+        if (static_cast<int>(d_base->tag()) != sizeofTag__)
+            std::cerr << "[Warning] requesting value of Tag " <<
+                idOfTag__[static_cast<int>(tag)] << " from Tag " <<
+                idOfTag__[static_cast<int>(d_base->tag())] << '\n';
     )" << '\n';
 }

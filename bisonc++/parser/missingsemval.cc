@@ -7,6 +7,6 @@ void Parser::missingSemval(Production const &prod) const
     if (stype.empty() or d_options.tagMismatches().value != Options::ON)
         return;
 
-    wmsg << "rule `" << &prod << "':\n"
-            "    may not return a required " << stype << " value" << endl;
+    wmsg << '`' << &prod << "':\n"
+            "    might not return a required " << stype << " value" << endl;
 }

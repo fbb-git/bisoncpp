@@ -2,11 +2,10 @@
 
 void Parser::addDefaultAction(Production const &prod) 
 {
-return;
     if (d_options.defaultActions().value == Options::OFF)
     {
         if (d_options.tagMismatches().value == Options::ON)
-            wmsg << "rule `" << &prod << "':\n"
+            wmsg << '`' << &prod << "':\n"
                     "    configuration prevents adding $$ = $1 "
                                                     "action block" << endl;
 
@@ -15,22 +14,25 @@ return;
 
     string const &stype = d_rules.sType();
 
-    if (stype != prod[0].sType()) 
+    int idx = prod.size();
+
+    if (idx > 0 && stype != prod[0].sType()) 
     {
-        emsg << "rule `" << &prod << "':\n"
+        emsg << '`' << &prod << "':\n"
             "    type mismatch: can't add $$ = $1 action block" << endl;
         return;
     }
 
-    if (d_options.defaultActions().value == Options::WARN)
-        wmsg << "rule `" << &prod << "':\n"
-                    "    adding $$ = $1 action block" << endl;
+    if (d_semType != SINGLE && stype.empty())   // union or polymorphic but
+        return;                                 // no associated value type:
+                                                // no action block required.
 
+    if (d_options.defaultActions().value == Options::WARN)
+        wmsg << '`' << &prod << "':\n"
+                    "    adding $$ = $1 action block" << endl;
 
     Block block;
     block.open(prod.lineNr(), prod.fileName());
-
-    int idx = prod.size();
 
     block += "\n"
             "    d_val__ = ";

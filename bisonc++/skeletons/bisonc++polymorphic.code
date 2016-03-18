@@ -1,6 +1,8 @@
 namespace Meta__
 {
 
+$insert idoftag
+
 void SType::swap(SType &other)
 {
     Base *tmp = d_base;

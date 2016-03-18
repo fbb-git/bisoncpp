@@ -99,6 +99,7 @@ class Generator
         void debugLookup(std::ostream &out) const;
         void defaultActionReturn(std::ostream &out) const;
         void errorVerbose(std::ostream &out) const;
+        void idOfTag(std::ostream &out) const;
         void lex(std::ostream &out) const;
         void ltype(std::ostream &out) const;
         void ltypeData(std::ostream &out) const;
