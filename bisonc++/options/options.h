@@ -42,14 +42,14 @@ struct Options
         // The following three data members get their final values in 
         // setAccessorVariables
 
-                            // maybe set to OFF by no-constructor-checks 
+                            // maybe set to OFF by constructor-checks 
                             // directive or option. ON by default.
-        OptInfo d_constructorChecks{UNKNOWN, "", 0};
+        OptInfo d_constructorChecks{ON, "", 0};
 
                             // maybe set to OFF by no-constructor-checks 
                             // directive or option
-        OptInfo d_tagMismatches{UNKNOWN, "", 0};
-        OptInfo d_defaultActions{UNKNOWN, "", 0};
+        OptInfo d_tagMismatches{WARN, "", 0};
+        OptInfo d_defaultActions{WARN, "", 0};
 
         bool        d_debug             = false;
         bool        d_errorVerbose      = false;

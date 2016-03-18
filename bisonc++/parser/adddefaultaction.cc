@@ -2,6 +2,7 @@
 
 void Parser::addDefaultAction(Production const &prod) 
 {
+return;
     if (d_options.defaultActions().value == Options::OFF)
     {
         if (d_options.tagMismatches().value == Options::ON)
