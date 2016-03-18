@@ -3,6 +3,7 @@
 
 #include <string>
 #include <set>
+#include <unordered_map>
 
 namespace FBB
 {
@@ -11,16 +12,18 @@ namespace FBB
 
 struct Options
 {
-    enum TriVal
+    enum Value
     {
-        UNKNOWN,
-        OFF,
-        ON
+        UNKNOWN = 0,
+        OFF     = 1 << 0,
+        ON      = 1 << 1,
+        QUIET   = 1 << 2, // do not show warnings (with defaultActions)
+        WARN    = 1 << 3, // show warnings (with defaultActions)
     };
 
     struct OptInfo
     {
-        TriVal      triVal;
+        Value      value;
         std::string filename;
         size_t      lineNr;
     };
@@ -36,11 +39,19 @@ struct Options
     
         std::string const *d_matched;
     
+        // The following three data members get their final values in 
+        // setAccessorVariables
+
+                            // maybe set to OFF by no-constructor-checks 
+                            // directive or option. ON by default.
         OptInfo d_constructorChecks{UNKNOWN, "", 0};
-        OptInfo d_warnTagMismatches{OFF, "", 0};
+
+                            // maybe set to OFF by no-constructor-checks 
+                            // directive or option
+        OptInfo d_tagMismatches{UNKNOWN, "", 0};
+        OptInfo d_defaultActions{UNKNOWN, "", 0};
 
         bool        d_debug             = false;
-        bool        d_defaultActions    = true;
         bool        d_errorVerbose      = false;
         bool        d_flex              = false;
         bool        d_lines             = true;
@@ -97,6 +108,8 @@ struct Options
         static char s_YYText[];
         static char s_yylex[];
     
+        static std::unordered_map<std::string, Value> s_value;
+
         static Options *s_options;
 
     public:
@@ -135,12 +148,14 @@ struct Options
         void setTargetDirectory();
         void setUnionDecl(std::string const &block);
         void setVerbosity();            // Prepare Msg for verbose output
-        void setWarnTagMismatches(TriVal value, std::string const &filename,
-                                  size_t lineNr);
-        void setConstructorChecks(TriVal value, std::string const &filename,
-                                  size_t lineNr);
 
-        void unsetDefaultActions();
+        void setTagMismatches(std::string const &request, 
+                                std::string const &filename, size_t lineNr);
+        void setDefaultAction(std::string const &request, 
+                                std::string const &filename, size_t lineNr);
+        void setConstructorChecks(std::string const &request,
+                                std::string const &filename, size_t lineNr);
+
         void unsetLines();
         void unsetStrongTags();
 
@@ -149,15 +164,16 @@ struct Options
 
         bool printTokens() const;
         bool debug() const;
-        bool defaultActions() const;
+
         bool errorVerbose() const;
         bool lines() const;
         bool lspNeeded() const;
         bool polymorphic() const;
         bool strongTags() const;
 
-        OptInfo const &warnTagMismatches() const;
+        OptInfo const &tagMismatches() const;
         OptInfo const &constructorChecks() const;  
+        OptInfo const &defaultActions() const;
 
         size_t requiredTokens() const;
 
@@ -216,7 +232,10 @@ struct Options
 
         bool isFirstStypeDefinition() const;
 
-        static void warnNonPolymorphic(OptInfo &info, char const *name);
+//FBB        static void warnNonPolymorphic(OptInfo &info, char const *name);
+
+        static Value valueOf(std::string const &key, Value byDefault, 
+                                unsigned mask = ~0);
 };
 
 inline bool Options::debug() const
@@ -224,14 +243,14 @@ inline bool Options::debug() const
     return d_debug;
 }
 
-inline bool Options::defaultActions() const
+inline Options::OptInfo const &Options::defaultActions() const
 {
     return d_defaultActions;
 }
 
-inline Options::OptInfo const &Options::warnTagMismatches() const
+inline Options::OptInfo const &Options::tagMismatches() const
 {
-    return d_warnTagMismatches;
+    return d_tagMismatches;
 }
 
 inline Options::OptInfo const &Options::constructorChecks() const
@@ -409,11 +428,6 @@ inline void Options::unsetLines()
     d_lines = false;
 }
 
-inline void Options::unsetDefaultActions()
-{
-    d_defaultActions = false;
-}
-
 inline void Options::setLspNeeded()
 {
     d_lspNeeded = true;
@@ -473,20 +487,6 @@ inline std::string const &Options::stype() const
 inline bool Options::strongTags() const
 {
     return d_strongTags;
-}
-
-inline void Options::setConstructorChecks(TriVal value, 
-                                          std::string const &filename,
-                                          size_t lineNr)
-{
-    d_constructorChecks = OptInfo{value, filename, lineNr};
-}
-
-inline void Options::setWarnTagMismatches(TriVal value,
-                                          std::string const &filename,
-                                          size_t lineNr)
-{
-    d_warnTagMismatches = OptInfo{value, filename, lineNr};
 }
 
 inline void Options::unsetStrongTags()

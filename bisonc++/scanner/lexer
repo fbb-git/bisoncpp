@@ -112,6 +112,14 @@ NR      [[:digit:]]+
                                     return Parser::CLASS_HEADER;
                                 }
 %class-name                     return Parser::CLASS_NAME;
+%constructor-checks             {
+                                    begin(StartCondition__::xstring);
+                                    return Parser::CONSTRUCTOR_CHECKS;
+                                }
+%default-actions                {
+                                    begin(StartCondition__::xstring);
+                                    return Parser::DEFAULT_ACTIONS;
+                                }
 %debug                          return Parser::DEBUGFLAG;
 %error-verbose                  return Parser::ERROR_VERBOSE;
 %expect                         return Parser::EXPECT;
@@ -138,8 +146,6 @@ NR      [[:digit:]]+
 %namespace                      return Parser::NAMESPACE;
 %negative-dollar-indices        return Parser::NEG_DOLLAR;
 %no-lines                       return Parser::NOLINES;
-%no-default-actions             return Parser::NODEFAULT_ACTIONS;
-%no-constructor-checks          return Parser::NODEFAULT_CONS;
 %nonassoc                       return Parser::NONASSOC;
 %parsefun-source[ \t]+          {
                                     begin(StartCondition__::pxstring);
@@ -172,6 +178,10 @@ NR      [[:digit:]]+
                                     begin(StartCondition__::xstring);
                                     return Parser::STYPE;
                                 }
+%tag-mismatches                 {
+                                    begin(StartCondition__::xstring);
+                                    return Parser::WARN_TAGS;
+                                }
 %target-directory[ \t]+         {
                                     begin(StartCondition__::pxstring);
                                     return Parser::TARGET_DIRECTORY;
@@ -179,7 +189,6 @@ NR      [[:digit:]]+
 %token                          return Parser::TOKEN;
 %type                           return Parser::TYPE;
 %union                          return Parser::UNION;
-%warn-tag-mismatches            return Parser::WARN_TAGS;
 %weak-tags                      return Parser::WEAK_TAGS;
 "%%"                            return Parser::TWO_PERCENTS;
 

@@ -15,9 +15,11 @@ bisonc++ (4.14.00) (WIP)
   * Added options/directives warn-tag-mismatches and no-constructor-checks, 
     and added option --polymorphic-code (-L). 
 
++ ARGUMENT:
+
   * The formerly available option --no-default-action-return was renamed to
-    --no-default-action (-N still available), and can now also be used as a
-    directive: %no-default-action.  
+    default-actions (-d replacing -N), and can now also be used as a
+    directive: %default-actions.  
 
   * Option --polymorphic-inline-skeleton (-m) is not used anymore and was
     removed.

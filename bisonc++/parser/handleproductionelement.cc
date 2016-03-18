@@ -1,5 +1,7 @@
 #include "parser.ih"
 
+    // See also README.polymorphic-technical
+
 void Parser::handleProductionElement(STYPE__ &last)
 {
         // maybe also when currentRule == 0 ? See addProduction
@@ -30,54 +32,17 @@ void Parser::handleProductionElement(STYPE__ &last)
         break;              // from the compiler
     }
 
-    string const &stype = d_rules.sType();
-
-    if (stype.empty())              // no semantic type: no action needed
-        return;
-    
     Production const &lastProd = d_rules.lastProduction();
 
     if (not lastProd.action().empty())
     {
         if (not lastProd.action().usedDollarDollar())
-            missingSemval(lastProd, stype);
+            missingSemval(lastProd);
 
         return;
     }
 
-    if (not d_options.defaultActions())
-    {
-        if (not lastProd.action().usedDollarDollar())
-            missingSemval(lastProd, stype);
-        return;
-    }
-
-    Block block;
-    block.open(lastProd.lineNr(), lastProd.fileName());
-
-    int idx = 1 - lastProd.size();
-
-    block += "\n" 
-                "  d_val__ = d_vsp__[" + to_string(idx) + "];"
-            + "\n}";
-
-
-    d_rules.setAction(block);
-
-    string firstType = lastProd[0].sType();
-        
-    if (stype == firstType)
-        wmsg << "rule `" << &lastProd << 
-                                "': added $$ = $1 assignment" << endl;
-    else
-    {
-        if (firstType.empty())
-            firstType = "(token)";
-
-        emsg << "rule `" << &lastProd << "':\n"
-            "    cannot add assignment " << firstType << " (= $1) to " << 
-            stype << " (= $$)" << endl;
-    }
+    addDefaultAction(lastProd);
 }
 
 

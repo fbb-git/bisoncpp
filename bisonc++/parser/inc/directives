@@ -228,6 +228,27 @@ _union:
     }
 ;
 
+_default_actions:
+    DEFAULT_ACTIONS
+    {
+        d_expect = "Add default $$ = $... action on/off specification";
+    }
+;
+
+_constructor_checks:
+    CONSTRUCTOR_CHECKS
+    {
+        d_expect = "Add default $$ = $... action on/off specification";
+    }
+;
+
+_tag_mismatches:
+    WARN_TAGS
+    {
+        d_expect = "Warn tag-mismatches on/off specification";
+    }
+;
+
 _polymorphic:
     POLYMORPHIC
     {
@@ -441,14 +462,16 @@ _directiveSpec:
         setUnionDecl();
     }
 |
-    NODEFAULT_ACTIONS
+    _default_actions
+    STRING
     {
-        d_options.unsetDefaultActions();
+        defaultAction();
     }
 |
-    NODEFAULT_CONS
+    _constructor_checks
+    STRING
     {
-        noConstructorChecks();
+        constructorChecks();
     }
 |
     _polymorphic
@@ -460,7 +483,8 @@ _directiveSpec:
         d_options.unsetStrongTags();
     }
 |
-    WARN_TAGS
+    _tag_mismatches
+    STRING
     {
         warnTagMismatches();
     }

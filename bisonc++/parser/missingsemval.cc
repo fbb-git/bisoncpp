@@ -1,9 +1,12 @@
 #include "parser.ih"
 
-void Parser::missingSemval(Production const &prod, string const &stype) const
+void Parser::missingSemval(Production const &prod) const
 {
-    emsg << "rule `" << &prod << "':\n"
-            "    does not return required " << 
-                (d_semType == POLYMORPHIC ? stype : "STYPE__"s) << 
-                " value" << endl;
+    string const &stype = d_rules.sType();
+
+    if (stype.empty() or d_options.tagMismatches().value != Options::ON)
+        return;
+
+    wmsg << "rule `" << &prod << "':\n"
+            "    may not return a required " << stype << " value" << endl;
 }

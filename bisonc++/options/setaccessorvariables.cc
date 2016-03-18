@@ -9,25 +9,16 @@ void Options::setAccessorVariables()
     setQuotedStrings();
     setSkeletons();
 
-    if (d_polymorphic)
-    {
-        d_constructorChecks.triVal = 
-                    d_arg.option(0, "no-constructor-checks") ?
-                        OFF
-                    :
-                        ON;
+    string value;
 
-        if (d_arg.option(0, "warn-tag-mismatches"))
-            d_constructorChecks.triVal = ON;
-    }
-    else
-    {
-        if (d_constructorChecks.triVal == OFF)
-            warnNonPolymorphic(d_constructorChecks, "no-constructor-checks");
+    if (d_arg.option(&value, "constructor-checks"))
+        setConstructorChecks(value, "", 0);
 
-        if (d_warnTagMismatches.triVal == ON)
-            warnNonPolymorphic(d_warnTagMismatches, "warn-tag-mismatches");
-    }
+    if (d_arg.option(&value, 'd'))
+        setDefaultAction(value, "", 0);
+
+    if (d_arg.option(&value, "tag-mismatches"))
+        setTagMismatches(value, "", 0);
 
     Global::plainWarnings();
 }

@@ -13,6 +13,28 @@
 using namespace std;
 using namespace FBB;
 
+inline void Parser::checkEmptyBlocktype() 
+{
+    addDefaultAction(d_rules.lastProduction());
+}
+
+inline void Parser::warnTagMismatches() const
+{
+    d_options.setTagMismatches(d_scanner.matched(), 
+                                d_scanner.filename(), d_scanner.lineNr());
+}
+
+inline void Parser::constructorChecks() const
+{
+    d_options.setConstructorChecks(d_scanner.matched(), 
+                                d_scanner.filename(), d_scanner.lineNr());
+}
+
+inline void Parser::defaultAction() const
+{
+    d_options.setDefaultAction(d_scanner.matched(), 
+                                d_scanner.filename(), d_scanner.lineNr());
+}
 
 inline bool Parser::noID(string const &) const
 {

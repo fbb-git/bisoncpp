@@ -2,7 +2,7 @@
 
 void Generator::warnTagMismatches(ostream &out) const
 {
-    if (d_options.warnTagMismatches().triVal != Options::ON)
+    if (d_options.tagMismatches().value != Options::ON)
         return;
 
     key(out);

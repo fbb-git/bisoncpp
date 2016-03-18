@@ -90,10 +90,11 @@ class Parser: public ParserBase
         std::unordered_map<std::string, std::string> const &polymorphic() const;
 
     private:
-        void missingSemval(Production const &prod, 
-                            std::string const &stype) const;
+        void addDefaultAction(Production const &prod);
+        void defaultAction() const;
+        void missingSemval(Production const &prod) const;
 
-        void noConstructorChecks() const;
+        void constructorChecks() const;
         void warnTagMismatches() const;
 
         void addPolymorphic(std::string const &tag, 
@@ -101,7 +102,11 @@ class Parser: public ParserBase
 
         void addIncludeQuotes(std::string *target); // ensure ".." or <..> 
                                                     // around target name
+//FBB remove the source file:
         void checkEmptyBlocktype();
+
+//FBB void noConstructorChecks() const
+
         void checkFirstType();
 
 

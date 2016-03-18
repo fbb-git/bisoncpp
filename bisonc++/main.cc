@@ -25,8 +25,10 @@ namespace
             // FIRST and FOLLOW sets as well as             
             // the full set of states, including             
             // the non-kernel items                         
+        {"constructor-checks", Arg::Required},              // also directive
                                                             
         Arg::LongOption{"debug"},                           // also directive
+        {"default-actions", 'd'},                           // also directive
 
         Arg::LongOption{"error-verbose"},                   // also directive
                                                             
@@ -43,11 +45,9 @@ namespace
                                                             
         {"namespace", 'n'},                                 // also directive
         Arg::LongOption{"no-baseclass-header"},
-        Arg::LongOption{"no-constructor-checks"},           // also directive
         Arg::LongOption{"no-lines"},                        // also directive
         Arg::LongOption{"no-parse-member"},
         {"no-decoration", 'D'},
-        {"no-default-actions", 'N'},                        // also directive
                                                             
         {"own-debug", Arg::None},
         {"own-tokens", 'T'},
@@ -68,6 +68,7 @@ namespace
         Arg::LongOption{"show-filenames"},
         {"skeleton-directory", 'S'},
 
+        Arg::LongOption{"tag-mismatches"},                  // also directive
         {"target-directory", Arg::Required},                // also directive
         Arg::LongOption{"thread-safe"},
 
@@ -78,7 +79,6 @@ namespace
             // items, and describes conflicts when found
         {"version", 'v'},
 
-        Arg::LongOption{"warn-tag-mismatches"},             // also directive
     };
     auto longEnd = longOptions + 
                                sizeof(longOptions) / sizeof(Arg::LongOption);  
@@ -87,7 +87,7 @@ namespace
 int main(int argc, char **argv)
 try
 {
-    Arg &arg = Arg::initialize("AB:b:C:c:Df:H:hI:i:L:M:n:Np:P:s:S:tTVv", 
+    Arg &arg = Arg::initialize("AB:b:C:c:d:Df:H:hI:i:L:M:n:p:P:s:S:tTVv", 
                     longOptions, longEnd, argc, argv);
 
     arg.versionHelp(usage, version, 1);

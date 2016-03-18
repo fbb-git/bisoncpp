@@ -11,10 +11,6 @@ void Options::setBooleans()
         d_printTokens = true;
     }
 
-    if (d_arg.option('N'))
-        d_defaultActions = false;
-
-
     if (d_arg.option(0, "error-verbose"))
         d_errorVerbose = true;
 

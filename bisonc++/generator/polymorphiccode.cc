@@ -7,7 +7,7 @@ void Generator::polymorphicCode(ostream &out) const
 
     key(out);
 
-    if (d_options.warnTagMismatches().triVal == Options::ON)
+    if (d_options.tagMismatches().value == Options::ON)
     {
         out << "char const *idOfTag__[] = {\n";
         for (auto const &poly: d_polymorphic)
@@ -18,14 +18,20 @@ void Generator::polymorphicCode(ostream &out) const
 
         // static_assert(std::is_default_constructible<poly.second>::value, 
         //    "No default constructor for poly.first (poly.second)");       
-    if (d_options.constructorChecks().triVal == Options::ON)
+    if (d_options.constructorChecks().value == Options::ON)
     {
-        for (auto &poly: d_polymorphic)
-            out <<  "static_assert(std::is_default_constructible<" << 
+        if (not d_options.polymorphic())
+            out << "static_assert(std::is_default_constructible<STYPE__>\n" << 
+                "    \"No default constructor for STYPE__\");\n";
+        else
+        {
+            for (auto &poly: d_polymorphic)
+                out <<  "static_assert(std::is_default_constructible<" << 
                                                 poly.second << ">::value,\n"
-                "    \"No default constructor for " << poly.first << 
+                    "    \"No default constructor for " << poly.first << 
                                             " (" << poly.second << ")\");\n"
-                "\n";
+                    "\n";
+        }
     }
 
     ifstream in;

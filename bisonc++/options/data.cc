@@ -24,3 +24,13 @@ char Options::s_defaultScannerTokenFunction[]   = "d_scanner.lex()";
 char Options::s_yylex[]                         = "d_scanner.yylex()";
 
 Options *Options::s_options = 0;
+
+unordered_map<string, Options::Value> Options::s_value 
+{
+    { "true",   Options::ON     },
+    { "on",     Options::ON     },
+    { "false",  Options::OFF    },
+    { "off",    Options::OFF    },
+    { "quiet",  Options::QUIET  },
+    { "warn",   Options::WARN   }
+};

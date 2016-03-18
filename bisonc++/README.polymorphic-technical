@@ -118,3 +118,8 @@ to a Semantic<Tag__::INT> *, if needed.
 
 
 
+---------------------------------------------------------
+
+In addition to %prolymorphic %union also supports tags. Other STYPE__
+definitions do not. Correct type assignments for missing rules is checket in 
+parser/handleproductionelement.cc and parser/checkemptyblocktype.cc
