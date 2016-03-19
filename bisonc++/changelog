@@ -15,6 +15,10 @@ bisonc++ (4.14.00) (WIP)
   * Added options/directives warn-tag-mismatches and no-constructor-checks, 
     and added option --polymorphic-code (-L). 
 
+  * Mismatches between the types of nonterminals and the types of the first
+    elements of their production rules previously resulted in a `type clash of
+    default action' warning. Such mismatches are now considered errors.
+
 + ARGUMENT:
 
   * The formerly available option --no-default-action-return was renamed to

@@ -6,7 +6,7 @@
 // If nElements is negative then this is a mid-action block, automatically
 // resulting in negative dollar indices
 
-bool Parser::substituteBlock(int nElements, Block &block)
+void Parser::substituteBlock(int nElements, Block &block)
 {
         // Look for special characters. Do this from the end of the
         // block-text to the beginning, to keep the positions of earlier
@@ -28,16 +28,21 @@ bool Parser::substituteBlock(int nElements, Block &block)
             break;
         }
     }
-                                            // save the default $1 value
-                                            // at the beginning of a mid-rule
-    if (nElements < 0)                      // action block
-        saveDollar1(block, indexToOffset(1, nElements));
+//                                            // save the default $1 value
+//                                            // at the beginning of a mid-rule
+//    if (nElements < 0)                      // action block
+//        saveDollar1(block, indexToOffset(1, nElements));
 
-    if (not explicitReturn and d_arg.option('N') and d_rules.sType() != "")
-        wmsg << "rule " << &d_rules.lastProduction() << 
-            ": action block does not assign a(n) " << d_rules.sType() << 
-                    " value to $$." << endl;
+                                // the final block does not return a value
+                                // and has a semantic type
+    if (not explicitReturn)
+        warnMissingSemval();
+    
 
-    return explicitReturn;
+//    if (not explicitReturn and not d_rules.sType().empty())
+//        wmsg << "rule " << &d_rules.lastProduction() << 
+//            ": action block does not assign a(n) " << d_rules.sType() << 
+//                    " value to $$." << endl;
+//
+//    return explicitReturn;
 }
-

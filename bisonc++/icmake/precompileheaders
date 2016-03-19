@@ -6,6 +6,13 @@ void _precompile(string class)
     string classIH;
 
     classIH = class + ".ih";
+
+    if (!exists(classIH))
+        return;
+    
+    if (class + ".h" younger classIH)
+        system(P_NOCHECK, "touch " + classIH);
+
     if (classIH younger class + ".ih.gch")
         run(g_compiler + " -x c++-header " + classIH);
 }

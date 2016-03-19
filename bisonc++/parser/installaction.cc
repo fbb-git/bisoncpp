@@ -6,9 +6,10 @@ void Parser::installAction(Block &block)
                                     // production rule, having a given number
                                     // of elements. Returns false if no
                                     // explicit return was defined
-    if (!substituteBlock(d_rules.nElements(), block))
-        checkFirstType();
-        
+//    if (!substituteBlock(d_rules.nElements(), block))
+//        checkFirstType();
+          
+    substituteBlock(d_rules.nElements(), block);
     d_rules.setAction(block);
 }
 

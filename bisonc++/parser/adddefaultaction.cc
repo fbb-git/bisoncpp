@@ -5,9 +5,9 @@ void Parser::addDefaultAction(Production const &prod)
     if (d_options.defaultActions().value == Options::OFF)
     {
         if (d_options.tagMismatches().value == Options::ON)
-            wmsg << '`' << &prod << "':\n"
-                    "    configuration prevents adding $$ = $1 "
-                                                    "action block" << endl;
+            wmsg << '`' << &prod << "': auto-appending `$$ = $1' action "
+                "block suppressed by configuration "
+                "(default-actions off)" << endl;
 
         return;                     // no default action. Hope it's OK...
     }
@@ -16,36 +16,40 @@ void Parser::addDefaultAction(Production const &prod)
 
     int idx = prod.size();
 
-    if (idx > 0 && stype != prod[0].sType()) 
-    {
-        emsg << '`' << &prod << "':\n"
-            "    type mismatch: can't add $$ = $1 action block" << endl;
-        return;
-    }
+    string const &prodStype = prod[0].sType();
 
     if (d_semType != SINGLE && stype.empty())   // union or polymorphic but
         return;                                 // no associated value type:
                                                 // no action block required.
+    if (idx > 0 && stype != prodStype) 
+    {
+        emsg << '`' << &prod << "':  type clash ($$: " << stype << ", $1: " <<
+                (prodStype.empty() ? "<undefined>"s : prodStype) <<
+                " prevents auto-appending default action `$$ = $1'" << endl;
+        return;
+    }
 
     if (d_options.defaultActions().value == Options::WARN)
-        wmsg << '`' << &prod << "':\n"
-                    "    adding $$ = $1 action block" << endl;
+        wmsg << '`' << &prod << "': auto-appended `$$ = $1' action block" << 
+                                                                        endl;
 
     Block block;
     block.open(prod.lineNr(), prod.fileName());
 
     block += "\n"
-            "    d_val__ = ";
+            "    ";
+    block += s_semanticValue;
+    block += " = ";
 
     block += 
         idx != 0?                   // production not empty
-            "d_vsp__[" + to_string(1 - idx) + "];"
+            string{s_semanticValueStack} + '[' + to_string(1 - idx) + "];"
         :
         (                           // empty production
             d_semType == POLYMORPHIC ?
                 "Meta__::TypeOf<Tag__::" + stype + ">::type{};"
             :
-                "STYPE__{}"s
+                s_stype__ + "{}"s
         );
 
     block += "\n}";

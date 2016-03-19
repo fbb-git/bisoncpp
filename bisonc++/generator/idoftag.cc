@@ -9,7 +9,7 @@ void Generator::idOfTag(ostream &out) const
         out << "char const *idOfTag__[] = {\n";
         for (auto const &poly: d_polymorphic)
             out << "    \"" << poly.first << "\",\n";
-        out <<     "    \"<default>\"\n"
+        out <<     "    \"<undefined>\"\n"
                "};\n";
     }
 }

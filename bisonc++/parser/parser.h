@@ -92,7 +92,7 @@ class Parser: public ParserBase
     private:
         void addDefaultAction(Production const &prod);
         void defaultAction() const;
-        void missingSemval(Production const &prod) const;
+        void warnMissingSemval() const;
 
         void constructorChecks() const;
         void warnTagMismatches() const;
@@ -187,7 +187,7 @@ class Parser: public ParserBase
 
         NonTerminal *requireNonTerminal(std::string const &name);
 
-        bool substituteBlock(int nElements, Block &block);
+        void substituteBlock(int nElements, Block &block);
 
                                         // saves the default $1 value
                                         // at the beginning of a mid-rule
