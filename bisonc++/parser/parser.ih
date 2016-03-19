@@ -15,7 +15,7 @@ using namespace FBB;
 
 inline void Parser::checkEmptyBlocktype() 
 {
-    addDefaultAction(d_rules.lastProduction());
+    checkFirstType();
 }
 
 inline void Parser::warnTagMismatches() const

@@ -234,8 +234,6 @@ struct Options
 
         bool isFirstStypeDefinition() const;
 
-//FBB        static void warnNonPolymorphic(OptInfo &info, char const *name);
-
         static Value valueOf(std::string const &key, Value byDefault, 
                                 unsigned mask = ~0);
 };

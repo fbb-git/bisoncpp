@@ -101,8 +101,6 @@ $insert 4 debug "ERROR(): Forced error condition"
     throw UNEXPECTED_TOKEN__;
 }
 
-//FBB: RM insert polymorphicInline
-
 // For convenience, when including ParserBase.h its symbols are available as
 // symbols in the class Parser, too.
 #define \@ \@Base

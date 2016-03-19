@@ -1,7 +1,7 @@
 oxref by Frank B. Brokken (f.b.brokken@rug.nl)
 oxref V1.00.06 2012-2015
 
-CREATED Sat, 19 Mar 2016 13:24:16 +0000
+CREATED Sat, 19 Mar 2016 16:06:01 +0000
 CROSS REFERENCE FOR: -fxs tmp/libmodules.a 
 ----------------------------------------------------------------------
 
@@ -10,13 +10,6 @@ actionCases(std::ostream&) const
   Source:    actioncases.cc 
   Used By:
     data.cc: GLOBALS data.cc 1data.o
-
-addDefaultAction(Production const&)
-  Full name: Parser::addDefaultAction(Production const&)
-  Source:    adddefaultaction.cc 
-  Used By:
-    handleproductionelement.cc: Parser::handleProductionElement(Meta__::SType&)
-    parse.cc: Parser::executeAction(int)
 
 addElement(Symbol*)
   Full name: Rules::addElement(Symbol*)
@@ -170,7 +163,7 @@ checkFirstType()
   Source:    checkfirsttype.cc 
   Used By:
     handleproductionelement.cc: Parser::handleProductionElement(Meta__::SType&)
-    installaction.cc: Parser::installAction(Block&)
+    parse.cc: Parser::executeAction(int)
 
 checkRemoved(std::ostream&) const
   Full name: Next::checkRemoved(std::ostream&) const
@@ -249,22 +242,20 @@ containsKernelItem(Item const&, unsigned long, std::vector<StateItem, std::alloc
     haskernel.cc: State::hasKernel(std::vector<Item, std::allocator<Item> > const&) const
 
 cxx11]
-  Full name: Parser::s_hiddenName[abi:cxx11]
-  Source:    data.cc 
-  Used By:
-    nexthiddenname.cc: Parser::nextHiddenName[abi:cxx11]()
-
-cxx11]
-  Full name: Options::s_value[abi:cxx11]
-  Source:    data.cc 
-  Used By:
-    valueof.cc: Options::valueOf(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Options::Value, unsigned int)
-
-cxx11]
   Full name: Generator::s_insert[abi:cxx11]
   Source:    data.cc 
   Used By:
     insert.cc: Generator::insert(std::ostream&) const
+
+cxx11]
+  Full name: Production::s_fileName[abi:cxx11]
+  Source:    data.cc 
+  Used By:
+    production1.cc: Production::Production(Symbol const*, unsigned long)
+    storeFilename.cc: Production::storeFilename(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+    checkfirsttype.cc: Parser::checkFirstType()
+    showconflicts.cc: RRConflict::showConflicts(Rules const&) const
+    showconflicts.cc: SRConflict::showConflicts(Rules const&) const
 
 cxx11]
   Full name: ScannerBase::s_out__[abi:cxx11]
@@ -279,14 +270,16 @@ cxx11]
     parse.cc: Parser::executeAction(int)
 
 cxx11]
-  Full name: Production::s_fileName[abi:cxx11]
+  Full name: Options::s_value[abi:cxx11]
   Source:    data.cc 
   Used By:
-    production1.cc: Production::Production(Symbol const*, unsigned long)
-    storeFilename.cc: Production::storeFilename(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
-    adddefaultaction.cc: Parser::addDefaultAction(Production const&)
-    showconflicts.cc: RRConflict::showConflicts(Rules const&) const
-    showconflicts.cc: SRConflict::showConflicts(Rules const&) const
+    valueof.cc: Options::valueOf(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Options::Value, unsigned int)
+
+cxx11]
+  Full name: Parser::s_hiddenName[abi:cxx11]
+  Source:    data.cc 
+  Used By:
+    nexthiddenname.cc: Parser::nextHiddenName[abi:cxx11]()
 
 cxx11]()
   Full name: Scanner::canonicalQuote[abi:cxx11]()
@@ -301,24 +294,6 @@ cxx11]()
   Source:    nexthiddenname.cc 
   Used By:
     nestedblock.cc: Parser::nestedBlock(Block&)
-
-cxx11]() const
-  Full name: Options::baseclassHeaderName[abi:cxx11]() const
-  Source:    baseclassheadername.cc 
-  Used By:
-    conflicts.cc: Generator::conflicts() const
-
-cxx11]() const
-  Full name: Generator::atClassname[abi:cxx11]() const
-  Source:    atclassname.cc 
-  Used By:
-    data.cc: GLOBALS data.cc 1data.o
-
-cxx11]() const
-  Full name: Generator::atTokenFunction[abi:cxx11]() const
-  Source:    attokenfunction.cc 
-  Used By:
-    data.cc: GLOBALS data.cc 1data.o
 
 cxx11]() const
   Full name: Generator::atNameSpacedClassname[abi:cxx11]() const
@@ -338,15 +313,33 @@ cxx11]() const
   Used By:
     data.cc: GLOBALS data.cc 1data.o
 
-cxx11](AtDollar const&) const
-  Full name: Parser::returnUnion[abi:cxx11](AtDollar const&) const
-  Source:    returnunion.cc 
+cxx11]() const
+  Full name: Generator::atClassname[abi:cxx11]() const
+  Source:    atclassname.cc 
   Used By:
-    handledollar.cc: Parser::handleDollar(Block&, AtDollar const&, int)
+    data.cc: GLOBALS data.cc 1data.o
+
+cxx11]() const
+  Full name: Generator::atTokenFunction[abi:cxx11]() const
+  Source:    attokenfunction.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 1data.o
+
+cxx11]() const
+  Full name: Options::baseclassHeaderName[abi:cxx11]() const
+  Source:    baseclassheadername.cc 
+  Used By:
+    conflicts.cc: Generator::conflicts() const
 
 cxx11](AtDollar const&) const
   Full name: Parser::returnPolymorphic[abi:cxx11](AtDollar const&) const
   Source:    returnpolymorphic.cc 
+  Used By:
+    handledollar.cc: Parser::handleDollar(Block&, AtDollar const&, int)
+
+cxx11](AtDollar const&) const
+  Full name: Parser::returnUnion[abi:cxx11](AtDollar const&) const
+  Source:    returnunion.cc 
   Used By:
     handledollar.cc: Parser::handleDollar(Block&, AtDollar const&, int)
 
@@ -360,7 +353,6 @@ cxx11](unsigned long) const
   Full name: Rules::sType[abi:cxx11](unsigned long) const
   Source:    stype.cc 
   Used By:
-    checkfirsttype.cc: Parser::checkFirstType()
     returnpolymorphic.cc: Parser::returnPolymorphic[abi:cxx11](AtDollar const&) const
     returnunion.cc: Parser::returnUnion[abi:cxx11](AtDollar const&) const
     semtag.cc: Parser::semTag(char const*, AtDollar const&, bool (Parser::*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const) const
@@ -666,7 +658,6 @@ indexToOffset(int, int) const
   Used By:
     handleatsign.cc: Parser::handleAtSign(Block&, AtDollar const&, int)
     handledollar.cc: Parser::handleDollar(Block&, AtDollar const&, int)
-    substituteblock.cc: Parser::substituteBlock(int, Block&)
 
 initialState()
   Full name: State::initialState()
@@ -684,12 +675,6 @@ insert(NonTerminal*)
     augmentgrammar.cc: Rules::augmentGrammar(Symbol*)
 
 insert(std::ostream&) const
-  Full name: NonTerminal::insert(std::ostream&) const
-  Source:    v.cc 
-  Used By:
-    destructor.cc: NonTerminal::~NonTerminal()
-
-insert(std::ostream&) const
   Full name: Generator::insert(std::ostream&) const
   Source:    insert.cc 
   Used By:
@@ -702,7 +687,13 @@ insert(std::ostream&) const
     operatorinsert.cc: operator<<(std::ostream&, LookaheadSet const&)
 
 insert(std::ostream&) const
-  Full name: SRConflict::insert(std::ostream&) const
+  Full name: NonTerminal::insert(std::ostream&) const
+  Source:    v.cc 
+  Used By:
+    destructor.cc: NonTerminal::~NonTerminal()
+
+insert(std::ostream&) const
+  Full name: RRConflict::insert(std::ostream&) const
   Source:    insert.cc 
   Used By:
     insertext.cc: State::insertExt(std::ostream&) const
@@ -716,7 +707,7 @@ insert(std::ostream&) const
     insertext.cc: GLOBALS insertext.cc 3insertext.o
 
 insert(std::ostream&) const
-  Full name: RRConflict::insert(std::ostream&) const
+  Full name: SRConflict::insert(std::ostream&) const
   Source:    insert.cc 
   Used By:
     insertext.cc: State::insertExt(std::ostream&) const
@@ -790,13 +781,13 @@ insName(std::ostream&) const
     insertext.cc: GLOBALS insertext.cc 3insertext.o
 
 inspect()
-  Full name: SRConflict::inspect()
+  Full name: RRConflict::inspect()
   Source:    inspect.cc 
   Used By:
     checkconflicts.cc: State::checkConflicts()
 
 inspect()
-  Full name: RRConflict::inspect()
+  Full name: SRConflict::inspect()
   Source:    inspect.cc 
   Used By:
     checkconflicts.cc: State::checkConflicts()
@@ -880,6 +871,7 @@ key(std::ostream&) const
     debuginit.cc: Generator::debugInit(std::ostream&) const
     debuglookup.cc: Generator::debugLookup(std::ostream&) const
     errorverbose.cc: Generator::errorVerbose(std::ostream&) const
+    idoftag.cc: Generator::idOfTag(std::ostream&) const
     lex.cc: Generator::lex(std::ostream&) const
     ltype.cc: Generator::ltype(std::ostream&) const
     ltypedata.cc: Generator::ltypeData(std::ostream&) const
@@ -903,7 +895,6 @@ key(std::ostream&) const
     threading.cc: Generator::threading(std::ostream&) const
     tokens.cc: Generator::tokens(std::ostream&) const
     warntagmismatches.cc: Generator::warnTagMismatches(std::ostream&) const
-    idoftag.cc: Generator::idOfTag(std::ostream&) const
 
 lex(std::ostream&) const
   Full name: Generator::lex(std::ostream&) const
@@ -983,12 +974,6 @@ ltypeStack(std::ostream&) const
   Source:    ltypestack.cc 
   Used By:
     data.cc: GLOBALS data.cc 1data.o
-
-missingSemval(Production const&) const
-  Full name: Parser::missingSemval(Production const&) const
-  Source:    missingsemval.cc 
-  Used By:
-    handleproductionelement.cc: Parser::handleProductionElement(Meta__::SType&)
 
 multiCharQuote()
   Full name: Scanner::multiCharQuote()
@@ -1108,7 +1093,7 @@ open(unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std
   Source:    open.cc 
   Used By:
     lex.cc: Scanner::executeAction__(unsigned long)
-    adddefaultaction.cc: Parser::addDefaultAction(Production const&)
+    checkfirsttype.cc: Parser::checkFirstType()
 
 openRule(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Full name: Parser::openRule(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
@@ -1194,16 +1179,16 @@ ParserBase()
     parser1.cc: Parser::Parser(Rules&)
 
 plainItem(std::ostream&) const
-  Full name: StateItem::plainItem(std::ostream&) const
-  Source:    plainitem.cc 
-  Used By:
-    data.cc: GLOBALS data.cc 6data.o
-
-plainItem(std::ostream&) const
   Full name: Item::plainItem(std::ostream&) const
   Source:    plainitem.cc 
   Used By:
     data.cc: GLOBALS data.cc 8data.o
+
+plainItem(std::ostream&) const
+  Full name: StateItem::plainItem(std::ostream&) const
+  Source:    plainitem.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 6data.o
 
 plainWarnings()
   Full name: Global::plainWarnings()
@@ -1236,16 +1221,16 @@ polymorphicSpecializations(std::ostream&) const
     data.cc: GLOBALS data.cc 1data.o
 
 popStream()
-  Full name: ScannerBase::popStream()
-  Source:    lex.cc 
-  Used By:
-    popstream.cc: Scanner::popStream()
-
-popStream()
   Full name: Scanner::popStream()
   Source:    popstream.cc 
   Used By:
     lex.cc: Scanner::lex__()
+
+popStream()
+  Full name: ScannerBase::popStream()
+  Source:    lex.cc 
+  Used By:
+    popstream.cc: Scanner::popStream()
 
 predefine(Terminal const*)
   Full name: Parser::predefine(Terminal const*)
@@ -1589,7 +1574,7 @@ s_insert
     define.cc: State::define(Rules const&)
 
 s_insertPtr
-  Full name: Next::s_insertPtr
+  Full name: StateItem::s_insertPtr
   Source:    data.cc 
   Used By:
     insertext.cc: State::insertExt(std::ostream&) const
@@ -1625,14 +1610,6 @@ s_insertPtr
     derivesentence.cc: GLOBALS derivesentence.cc 9derivesentence.o
 
 s_insertPtr
-  Full name: Item::s_insertPtr
-  Source:    data.cc 
-  Used By:
-    insertext.cc: State::insertExt(std::ostream&) const
-    itemcontext.cc: StateItem::itemContext(std::ostream&) const
-    plainitem.cc: StateItem::plainItem(std::ostream&) const
-
-s_insertPtr
   Full name: NonTerminal::s_insertPtr
   Source:    data.cc 
   Used By:
@@ -1646,7 +1623,15 @@ s_insertPtr
     insert.cc: Item::insert(std::ostream&, Production const*) const
 
 s_insertPtr
-  Full name: StateItem::s_insertPtr
+  Full name: Item::s_insertPtr
+  Source:    data.cc 
+  Used By:
+    insertext.cc: State::insertExt(std::ostream&) const
+    itemcontext.cc: StateItem::itemContext(std::ostream&) const
+    plainitem.cc: StateItem::plainItem(std::ostream&) const
+
+s_insertPtr
+  Full name: Next::s_insertPtr
   Source:    data.cc 
   Used By:
     insertext.cc: State::insertExt(std::ostream&) const
@@ -1680,17 +1665,17 @@ s_maxValue
     assignnonterminalnumbers.cc: Rules::assignNonTerminalNumbers()
 
 s_nConflicts
-  Full name: RRConflict::s_nConflicts
-  Source:    data.cc 
-  Used By:
-    comparereductions.cc: RRConflict::compareReductions(unsigned long)
-    define.cc: State::define(Rules const&)
-
-s_nConflicts
   Full name: SRConflict::s_nConflicts
   Source:    data.cc 
   Used By:
     handlesrconflict.cc: SRConflict::handleSRconflict(unsigned long, __gnu_cxx::__normal_iterator<Next const*, std::vector<Next, std::allocator<Next> > > const&, unsigned long)
+    define.cc: State::define(Rules const&)
+
+s_nConflicts
+  Full name: RRConflict::s_nConflicts
+  Source:    data.cc 
+  Used By:
+    comparereductions.cc: RRConflict::compareReductions(unsigned long)
     define.cc: State::define(Rules const&)
 
 s_nExpectedConflicts
@@ -1737,15 +1722,15 @@ s_semanticValue
   Full name: Parser::s_semanticValue
   Source:    data.cc 
   Used By:
+    checkfirsttype.cc: Parser::checkFirstType()
     handledollar.cc: Parser::handleDollar(Block&, AtDollar const&, int)
-    savedollar1.cc: Parser::saveDollar1(Block&, int)
 
 s_semanticValueStack
   Full name: Parser::s_semanticValueStack
   Source:    data.cc 
   Used By:
+    checkfirsttype.cc: Parser::checkFirstType()
     handledollar.cc: Parser::handleDollar(Block&, AtDollar const&, int)
-    savedollar1.cc: Parser::saveDollar1(Block&, int)
 
 s_startProduction
   Full name: Production::s_startProduction
@@ -1841,12 +1826,6 @@ s_YYText
   Source:    data.cc 
   Used By:
     setbasicstrings.cc: Options::setBasicStrings()
-
-saveDollar1(Block&, int)
-  Full name: Parser::saveDollar1(Block&, int)
-  Source:    savedollar1.cc 
-  Used By:
-    substituteblock.cc: Parser::substituteBlock(int, Block&)
 
 Scanner(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Full name: Scanner::Scanner(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
@@ -2000,16 +1979,16 @@ setPathStrings()
     setaccessorvariables.cc: Options::setAccessorVariables()
 
 setPolymorphicDecl()
-  Full name: Parser::setPolymorphicDecl()
-  Source:    setpolymorphicdecl.cc 
-  Used By:
-    parse.cc: Parser::executeAction(int)
-
-setPolymorphicDecl()
   Full name: Options::setPolymorphicDecl()
   Source:    setpolymorphicdecl.cc 
   Used By:
     setpolymorphicdecl.cc: Parser::setPolymorphicDecl()
+
+setPolymorphicDecl()
+  Full name: Parser::setPolymorphicDecl()
+  Source:    setpolymorphicdecl.cc 
+  Used By:
+    parse.cc: Parser::executeAction(int)
 
 setPrecedence(int)
   Full name: Parser::setPrecedence(int)
@@ -2018,17 +1997,17 @@ setPrecedence(int)
     parse.cc: Parser::executeAction(int)
 
 setPrecedence(Terminal const*)
-  Full name: Rules::setPrecedence(Terminal const*)
-  Source:    setprecedence.cc 
-  Used By:
-    setprecedence.cc: Parser::setPrecedence(int)
-
-setPrecedence(Terminal const*)
   Full name: Production::setPrecedence(Terminal const*)
   Source:    setprecedence.cc 
   Used By:
     setprecedence.cc: Rules::setPrecedence(Terminal const*)
     updateprecedence.cc: Rules::updatePrecedence(Production*, std::vector<Terminal*, std::allocator<Terminal*> > const&)
+
+setPrecedence(Terminal const*)
+  Full name: Rules::setPrecedence(Terminal const*)
+  Source:    setprecedence.cc 
+  Used By:
+    setprecedence.cc: Parser::setPrecedence(int)
 
 setPrintTokens()
   Full name: Options::setPrintTokens()
@@ -2164,15 +2143,13 @@ standard(std::ostream&) const
   Source:    standard.cc 
   Used By:
     unused.cc: Production::unused(Production const*)
-    adddefaultaction.cc: Parser::addDefaultAction(Production const&)
     checkfirsttype.cc: Parser::checkFirstType()
     errindextoolarge.cc: Parser::errIndexTooLarge(AtDollar const&, int) const
     errnosemantic.cc: Parser::errNoSemantic(char const*, AtDollar const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const
-    missingsemval.cc: Parser::missingSemval(Production const&) const
     negativeindex.cc: Parser::negativeIndex(AtDollar const&) const
-    substituteblock.cc: Parser::substituteBlock(int, Block&)
     warnautoignored.cc: Parser::warnAutoIgnored(char const*, AtDollar const&) const
     warnautooverride.cc: Parser::warnAutoOverride(AtDollar const&) const
+    warnmissingsemval.cc: Parser::warnMissingSemval() const
     warnuntaggedvalue.cc: Parser::warnUntaggedValue(AtDollar const&) const
     showrules.cc: Rules::showRules() const
     productioninfo.cc: Writer::productionInfo(Production const*, std::ostream&)
@@ -2385,7 +2362,7 @@ vectorIdx(unsigned long) const
   Full name: Production::vectorIdx(unsigned long) const
   Source:    vectoridx.cc 
   Used By:
-    adddefaultaction.cc: Parser::addDefaultAction(Production const&)
+    checkfirsttype.cc: Parser::checkFirstType()
     warnautooverride.cc: Parser::warnAutoOverride(AtDollar const&) const
     stype.cc: Rules::sType[abi:cxx11](unsigned long) const
     notreducible.cc: State::notReducible(unsigned long)
@@ -2423,6 +2400,12 @@ warnAutoOverride(AtDollar const&) const
   Source:    warnautooverride.cc 
   Used By:
     semtag.cc: Parser::semTag(char const*, AtDollar const&, bool (Parser::*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const) const
+
+warnMissingSemval() const
+  Full name: Parser::warnMissingSemval() const
+  Source:    warnmissingsemval.cc 
+  Used By:
+    substituteblock.cc: Parser::substituteBlock(int, Block&)
 
 warnTagMismatches(std::ostream&) const
   Full name: Generator::warnTagMismatches(std::ostream&) const
