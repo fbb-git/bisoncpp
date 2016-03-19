@@ -28,8 +28,8 @@ void Parser::substituteBlock(int nElements, Block &block)
             break;
         }
     }
-//                                            // save the default $1 value
-//                                            // at the beginning of a mid-rule
+                                              // save the default $1 value
+                                              // at the beginning of a mid-rule
 //    if (nElements < 0)                      // action block
 //        saveDollar1(block, indexToOffset(1, nElements));
 
