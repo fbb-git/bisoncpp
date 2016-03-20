@@ -28,6 +28,9 @@ bisonc++ (4.14.00) (WIP)
   * Option --polymorphic-inline-skeleton (-m) is not used anymore and was
     removed.
 
+  * The option --include-only has been dropped (although it was mentioned in
+    the usage info, it had in fact not been available for quite some time).
+
   * Bisonc++'s man-page and documentation was updated.
 
   * After parsing a grammar file only plain warning messages (i.e., no

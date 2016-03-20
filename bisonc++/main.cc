@@ -45,9 +45,9 @@ namespace
                                                             
         {"namespace", 'n'},                                 // also directive
         Arg::LongOption{"no-baseclass-header"},
+        {"no-decoration", 'D'},
         Arg::LongOption{"no-lines"},                        // also directive
         Arg::LongOption{"no-parse-member"},
-        {"no-decoration", 'D'},
                                                             
         {"own-debug", Arg::None},
         {"own-tokens", 'T'},
@@ -61,10 +61,10 @@ namespace
         {"required-tokens", Arg::Required},                 // also directive
                                                             
         {"scanner", 's'},                                   // also directive
+        {"scanner-class-name", Arg::Required},              // also directive
         Arg::LongOption{"scanner-debug"},
         {"scanner-matched-text-function", Arg::Required},   // also directive
         {"scanner-token-function", Arg::Required},          // also directive
-        {"scanner-class-name", Arg::Required},              // also directive
         Arg::LongOption{"show-filenames"},
         {"skeleton-directory", 'S'},
 
@@ -94,11 +94,7 @@ try
 
     Rules rules;
 
-    Parser parser(rules);   // Prepare parsing. If `include-only' was
-                            // specified, processing stops here.
-                            // options relevant for parsing are set by
-                            // the parser's constructor.
-
+    Parser parser(rules);
 
     parser.parse();        // parses the input, fills the data in the Rules
                             // read the grammar file, build required data
