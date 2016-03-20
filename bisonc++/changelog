@@ -46,6 +46,13 @@ bisonc++ (4.14.00) (WIP)
   * Renamed the top-level bisonc++.cc and bisonc++.ih files to main.cc and
     main.ih, respectively.
 
+  * New lexical scanner, built by Flexc++ V2.04.00.
+
+  * All regression test grammar files contain the directive 
+        %default-actions quiet
+    preventing warning messages about adding default $$ = $1 action blocks to
+    production rules without action blocks.
+
 (WIP)
 
 bisonc++ (4.13.01)

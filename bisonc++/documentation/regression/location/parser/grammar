@@ -1,3 +1,4 @@
+%default-actions quiet
 %scanner ../scanner/scanner.h
 %lsp-needed
 

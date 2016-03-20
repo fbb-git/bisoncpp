@@ -1,4 +1,5 @@
 //DECLARATION
+%default-actions quiet
 %filenames parser
 %scanner ../scanner/scanner.h
 

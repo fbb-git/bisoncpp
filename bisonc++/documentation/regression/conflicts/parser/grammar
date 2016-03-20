@@ -1,4 +1,6 @@
 %token i
+%default-actions quiet
+
 %%
 
 E: 

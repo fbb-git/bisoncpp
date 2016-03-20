@@ -1,3 +1,5 @@
+%default-actions quiet
+
 %scanner ../scanner/scanner.h
 %token NR
 %print-tokens

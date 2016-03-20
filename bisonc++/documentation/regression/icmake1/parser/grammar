@@ -1,4 +1,5 @@
 %token X
+%default-actions quiet
 
 %%
 

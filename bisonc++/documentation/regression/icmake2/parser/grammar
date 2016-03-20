@@ -1,3 +1,5 @@
+%default-actions quiet
+
 %token
         ARG_HEAD
         ARG_TAIL

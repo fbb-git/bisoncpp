@@ -54,12 +54,12 @@ void Parser::checkFirstType()
         :
         (                           // empty production
             d_semType == POLYMORPHIC ?
-                "Meta__::TypeOf<Tag__::" + stype + ">::type{};"
+                "Meta__::TypeOf<Tag__::" + stype + ">::type{}"
             :
                 s_stype__ + "{}"s
         );
 
-    block += "\n}";
+    block += ";\n}";
 
     d_rules.setAction(block);
 }
