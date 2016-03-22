@@ -77,6 +77,7 @@ class SType
         SType();
         SType(SType const &other);
         SType(SType &&tmp);
+        SType(Base *base);
 
         ~SType();
 
@@ -114,6 +115,9 @@ class SType
         void emplace(Args &&...args);
     
         void swap(SType &other);
+
+        template <Tag__ tag, typename ...Args>
+        static SType semantic(Args &&...args);
 };
 
 inline Base::Base()
@@ -179,6 +183,14 @@ Semantic<tg_>::Semantic(Params &&...params)
     d_baseData =  data;
 }
 
+template <Tag__ tag, typename ...Args>
+inline SType SType::semantic(Args &&...args)    // static
+{
+    return 
+        SType{new Semantic<tag>(std::forward<Args>(args) ...)};
+}
+
+
 inline Tag__ SType::tag() const
 {
     return d_base->tag();
@@ -239,6 +251,11 @@ inline SType::SType(SType &&tmp)
 {
     tmp.d_base = 0;
 }
+
+inline SType::SType(Base *base)
+:
+    d_base(base)
+{}
 
 inline SType::~SType()
 {

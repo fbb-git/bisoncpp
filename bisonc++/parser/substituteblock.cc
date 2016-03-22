@@ -26,6 +26,11 @@ void Parser::substituteBlock(int nElements, Block &block)
             case AtDollar::AT:
                 handleAtSign(block, atd, nElements); 
             break;
+
+            case AtDollar::STYPE:
+                handleSTYPE(block, atd); 
+                explicitReturn = true;
+            break;
         }
     }
                                 // the final block does not return a value

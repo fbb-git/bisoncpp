@@ -66,6 +66,24 @@ $$ or $i specifications (i >= 0):
                                                      otherwise: ERR
                                                         <xx> not defined
 -----------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------
+$$( : (followed by an optional argument list and );
+-----------------------------------------------------------------------------
+                                only available for POLYMORPHIC
+-----------------------------------------------------------------------------
+    rule not associated with a %type tag: invalid.
+
+calls d_val__ = STYPE__::semantic<id>(...
+
+    d_val is directly initialized (no default constructor for the rule's
+semantic type is required) with a semantic value, constructed using the
+perfectly forwarded arguments passed to $$(
+-----------------------------------------------------------------------------
+ 
+-----------------------------------------------------------------------------
+
+
 NONE: parse.cc does not use a field specification
 AUTO: replace the $-spec by d_val__.field or d_val__.get<>() from 
         d_rules.sType()

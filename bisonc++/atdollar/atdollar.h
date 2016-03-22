@@ -13,7 +13,8 @@ class AtDollar
         enum Type
         {
             AT,
-            DOLLAR
+            DOLLAR,
+            STYPE,
         };
 
         enum Action
@@ -38,7 +39,8 @@ class AtDollar
     public:
         AtDollar() = default;       // only used by std::vector in Block
 
-                                    // 1    $$, $$., $NR, $NR., @@ or @NR
+                                    // 1    STYPE__<>, $$, $$., $NR, $NR., 
+                                    //      @@ or @NR
         AtDollar(Type type, size_t blockPos, size_t lineNr, 
                  std::string const &text, int nr, bool member);
 

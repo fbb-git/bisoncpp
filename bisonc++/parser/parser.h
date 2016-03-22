@@ -143,6 +143,7 @@ class Parser: public ParserBase
                                         // block
         bool handleDollar(Block &block, AtDollar const &atd, int nElements);
 
+        void handleSTYPE(Block &block, AtDollar const &atd);
 
         STYPE__ handleProductionElements(STYPE__ &first, 
                                          STYPE__ const &second);
