@@ -19,6 +19,16 @@ bisonc++ (4.14.00) (WIP)
     elements of their production rules previously resulted in a `type clash of
     default action' warning. Such mismatches are now considered errors.
 
+  * The static function template SType::semantic<Tag__>(Args ...&&args) is
+    available when %polymorphic has been specified, and returns a semantic
+    value that can directly be assigned to d_val__, without using an
+    intermediate default constructor call (cf. get<>(), which calls the
+    semantic value's default constructor if d_val__ does not yet hold a value
+    that is associated with a defined polymorphic tag). The construction $$(
+    -optional arguments- ); can be used in action blocks to define this
+    assignment.
+
+
 + ARGUMENT:
 
   * The formerly available option --no-default-action-return was renamed to
