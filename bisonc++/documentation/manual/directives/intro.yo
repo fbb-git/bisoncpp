@@ -44,7 +44,7 @@ command-line options take priority over directives.
 
 Some directives may generate errors. This happens when an directive
 conflicts with the contents of a file which bic() cannot modify (e.g., a
-parser class header file exists, but doesn't define a name space, but a
+parser class header file exists, but doesn't define a namespace, but a
 tt(%namespace) directive was provided). 
 
 To solve such errore the offending directive could be omitted, the existing

@@ -25,7 +25,8 @@ namespace
             // FIRST and FOLLOW sets as well as             
             // the full set of states, including             
             // the non-kernel items                         
-        {"constructor-checks", Arg::Required},              // also directive
+
+//        {"constructor-checks", Arg::Required},              // also directive
                                                             
         Arg::LongOption{"debug"},                           // also directive
         {"default-actions", 'd'},                           // also directive
