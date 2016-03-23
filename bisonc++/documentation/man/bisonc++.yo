@@ -633,11 +633,6 @@ file (if the tt(%namespace) directive was used then all declared/defined
 elements are placed inside the namespace that is specified by the
 tt(%namespace) directive):
     itemization(
-    it() An additional header is included in the parser's base class
-header: 
-            verb(
-    #include <memory>
-            )
     it() All semantic value type identifiers are collected in a strongly typed
 `tt(Tag__)' enumeration. E.g.,
         verb(
@@ -653,23 +648,24 @@ implementing polymorphic values.
     )
 
     The namespace tt(Meta__) contains the following elements:
-    itemization(
-    it() A polymorphic base class tt(Base). This class is normally not
-     explicitly referred to by user-defined code. Refer to by bic()'s
-     user manual for a detailed description of this class.
+   itemization(
+   it() The class tt(Base), acting as the base class of the various
+    polymorphic value types. This class is normally not explicitly referred to
+    by user-defined code. Refer to by bic()'s user manual for a detailed
+    description of this class.
 
-    it() For each of the tag-identifiers specified with the tt(%polymorphic)
-     directive a class template tt(Semantic<Tag__>) is defined, containing a
-     data element of the type-name matching the tt(Tag__) for which
-     tt(Semantic<Tag__>) was derived. 
+   it() The class template tt(Semantic<Tag__>), derived from tt(Base), 
+    stores the data elements of the the types matching the various polymorphic
+    tt(Tag__) values.
 
-    The tt(Semantic<Tag__>) classes are normally not explicitly referred to by
-     user-defined code. Refer to by bic()'s user manual for a detailed
-     description of these classes.
+    Like tt(Base), the tt(Semantic<Tag__>) classes are normally not explicitly
+    mentioned in user-defined code. Refer to by bic()'s user manual for a
+    detailed description of this class.
 
-    it() A class tt(SType), derived from tt(std::shared_ptr<Base>). This class
-     becomes the parser's semantic value type, offering the following
-     members:nl()
+   it() The class tt(SType). This class becomes the parser's semantic value
+    type, and becomes the generated parser's tt(STYPE__) type. This class
+    defines the standard user interface to the polymorphic semantic values,
+    and it offers the following members:nl()
 
         tt(Constructors:) default, copy and move constructors;nl()
 
@@ -677,24 +673,33 @@ implementing polymorphic values.
             tt(SType) or any of the tt(%polymorphic) type-names as their
             right-hand side operands;nl()
 
-        tt(Tag__ tag() const), returning tt(Semantic<Tag__>)'s tt(Tag__)
+        tt(operator bool() const), returns tt(true) if the object's tt(Tag__)
+            value is valid. This operator returns tt(false) when its object
+            was initialized by its default constructor or when a default
+            tt(SType) object is assigned to it. After reassigning a
+            non-default tt(SType) value to an tt(SType) object its tt(operator
+            bool) will again return tt(true);nl()
+
+        tt(Tag__ tag() const), returns tt(Semantic<Tag__>)'s tt(Tag__)
              value;nl()
 
-        tt(DataType &get<Tag__>()) returns a reference to the semantic value
-             stored inside tt(Semantic<Tag__>).
+        tt(DataType const &get<tag>() const), where tt(tag) is a tt(Tag__)
+            value, returns a const reference to the semantic value stored
+            inside tt(Semantic<tag> (note: tt(const) attributes were added to
+            this member since bic() version 4.14.00).
 
-            This member checks for 0-pointers and for tt(Tag__) mismatches
-             between the requested and actual tt(Tag__), in that case
-             replacing the current tt(Semantic) object pointed to by a new
-             tt(Semantic<Tag__>) object of the requested tt(Tag__).
+        tt(void void assign<tag>(Args &&...args)), where tt(tag) is a
+            tt(Tag__) value, constructs a tt(Semantic<tag>) value from the
+            arguments which are passed to this member (zero arguments are OK
+            if the type associated with tt(tag) supports default
+            construction), and assigns this value to the current tt(SType)
+            object.
 
-        tt(DataType &data<Tag__>()) returns a reference to the semantic value
-             stored inside tt(Semantic<Tag__>).
-
-            This is a (partially) em(unchecking) variant of the corresponing
-             tt(get) member, resulting in a em(Segfault) if used when the
-             tt(shared_ptr) holds a 0-pointer, compilation may fail in case of
-             a mismatch between the requested and actual tt(Tag__).
+        tt(static SType semantic<tag>(Args &&...args) , where tt(tag) is a
+            tt(Tag__) value, constructs a tt(Semantic<tag>) value from the
+            arguments which are passed to this member (zero arguments are OK
+            if the type associated with tt(tag) supports default
+            construction),
     )
 
     Since bic() declares tt(typedef Meta__::SType STYPE__), polymorphic

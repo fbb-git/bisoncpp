@@ -62,11 +62,10 @@ bf(Direct semantic value-type assignments) (`$$(...)):
     Semantic values that are returned from action blocks at the end of
 production rules of non-terminals that have been associated with a polymorphic
 semantic value type are usually assigned through tt($$ = )
-expressions. However, such statements cannot always be used if the semantic
-value types do not support default construction. Especially in initial $$
-assignments this may cause problems. Assuming that the non-terminal tt(number)
-is associated with a tt(INT: int) polymorphic semantic value type, then
-consider the following production rule:
+expressions. However, such statements cannot be used for initial assignments
+to $$ if the semantic value type does not support default
+construction. Initial semantic value assignments are often used in situations
+that are comparable to this rule definition:
         verb(
     number:
         INT
@@ -82,10 +81,10 @@ consider the following production rule:
 action block's semantic value, while its tt(get...()) member returns a
 reference to the appropriate semantic value type. But at this point tt($$) has
 not yet been initialized, and tt(get...()) will first initialize tt(d_val__)
-to a default value, in this case an tt(int). The data type's default
-constructor takes care of the initialization, which constructor must therefore
-be available. If no default constructor is available tt(get()) cannot be
-used, 
+to a default value, in this case an tt(int), and the data type's default
+constructor takes care of the initialization. 
+If no default constructor is available tt(get()) cannot be
+used, but another 
 
 bf(Member calls) (`$$.', `$1.', `($$)', `($1)', etc.):)
 

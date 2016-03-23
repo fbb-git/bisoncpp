@@ -2,7 +2,7 @@
 
 string Parser::returnPolymorphic(AtDollar const &atd) const
 {
-    string ret = atd.returnValue() ? ".get" : ".data";
+    string ret = ".get";
  
     switch (semTag("tag", atd, &Parser::findTag))
     {

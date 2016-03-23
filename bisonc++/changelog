@@ -1,5 +1,7 @@
 bisonc++ (4.14.00) (WIP)
 
+  * The SType::data() member is now obsolete and has been removed.
+
   * Reimplemented handling polymorphic semantic values. shared pointers are no
     longer used. Details: see README.polymorphic-technical
 
@@ -19,14 +21,10 @@ bisonc++ (4.14.00) (WIP)
     elements of their production rules previously resulted in a `type clash of
     default action' warning. Such mismatches are now considered errors.
 
-  * The static function template SType::semantic<Tag__>(Args ...&&args) is
-    available when %polymorphic has been specified, and returns a semantic
-    value that can directly be assigned to d_val__, without using an
-    intermediate default constructor call (cf. get<>(), which calls the
-    semantic value's default constructor if d_val__ does not yet hold a value
-    that is associated with a defined polymorphic tag). The construction $$(
-    -optional arguments- ); can be used in action blocks to define this
-    assignment.
+  * The member SType::emplace (See the 4.13.00 log entry) was renamed to
+    SType::assign: it doesn't emplace, but assign. The construction 
+    $$(-optional arguments-); can be used in action blocks to do
+    $$.emplace<Tag of the rule's semantic value>(-optional arguments-); 
 
 
 + ARGUMENT:

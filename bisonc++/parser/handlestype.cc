@@ -20,11 +20,11 @@ void Parser::handleSTYPE(Block &block, AtDollar const &atd)
     {
         emsg << '`' << &d_rules.lastProduction() << 
                 "':  $$(...) requires %type-tagged production rules" << endl;
+        return;
     }
 
     string replacement = s_semanticValue;
-    replacement += 
-                    " = STYPE__::semantic<Tag__::" + d_rules.sType() + ">(";
+    replacement += ".assign<Tag__::" + d_rules.sType() + ">(";
 
                                         // replace $$ by the semantic value
     block.replace(atd.pos(), atd.length(), replacement);

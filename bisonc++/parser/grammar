@@ -1,4 +1,4 @@
-%no-lines
+//%no-lines
 %filenames parser
 
 %scanner ../scanner/scanner.h
