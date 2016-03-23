@@ -7,11 +7,11 @@ optComma:
 optNumber:
     NUMBER
     {
-        $$ = true;
+        $$(true);
     }
 |
     {
-        $$ = false;
+        $$(false);
     }
 ;
 

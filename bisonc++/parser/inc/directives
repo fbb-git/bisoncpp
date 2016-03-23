@@ -99,7 +99,7 @@ _parsefun_source:
 
 _pushPrecedence:
     {
-        $$ = Terminal::sPrecedence();
+        $$(Terminal::sPrecedence());
         Terminal::resetPrecedence();
     }
 ;

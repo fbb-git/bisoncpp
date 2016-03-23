@@ -1,6 +1,6 @@
 identifier:
     IDENTIFIER
     {
-        $$ = d_matched;
+        $$(d_matched);
     }
 ;

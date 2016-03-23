@@ -1,36 +1,36 @@
 _precSpec:
     IDENTIFIER
     {
-        $$ = static_cast<size_t>(IDENTIFIER);
+        $$(static_cast<size_t>(IDENTIFIER));
     }
 |
     QUOTE
     {
-        $$ = static_cast<size_t>(QUOTE);
+        $$(static_cast<size_t>(QUOTE));
     }
 ;
 
 _productionElement:
     QUOTE
     {
-        $$ = useTerminal();
+        $$ = useTerminal();     // assigns Tag__::TERMINAL
     }
 |
     IDENTIFIER
     {
-        $$ = useSymbol();
+        $$ = useSymbol();       // assigns Tag__::SYMBOL
     }
 |
     BLOCK
     {
-        $$ = d_scanner.block();
+        $$ = d_scanner.block(); // assigns Tag__::BLOCK
     }
 |
     PREC
     _precSpec
     {
         setPrecedence($2);
-        $$ = STYPE__();
+        $$ = STYPE__{};         // assigns default STYPE (Tag__ = sizeofTag__)
         //  $$ = spSemBase();   // a 0-ptr spSemBase indicates 
                                 // that a %prec has been handled
     }
