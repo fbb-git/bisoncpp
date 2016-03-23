@@ -688,18 +688,15 @@ implementing polymorphic values.
             inside tt(Semantic<tag> (note: tt(const) attributes were added to
             this member since bic() version 4.14.00).
 
-        tt(void void assign<tag>(Args &&...args)), where tt(tag) is a
+        tt(void assign<tag>(Args &&...args)), where tt(tag) is a
             tt(Tag__) value, constructs a tt(Semantic<tag>) value from the
             arguments which are passed to this member (zero arguments are OK
             if the type associated with tt(tag) supports default
             construction), and assigns this value to the current tt(SType)
             object.
 
-        tt(static SType semantic<tag>(Args &&...args) , where tt(tag) is a
-            tt(Tag__) value, constructs a tt(Semantic<tag>) value from the
-            arguments which are passed to this member (zero arguments are OK
-            if the type associated with tt(tag) supports default
-            construction),
+        tt(void swap(SType &other)) swaps the current and other tt(SType)
+            objects. 
     )
 
     Since bic() declares tt(typedef Meta__::SType STYPE__), polymorphic

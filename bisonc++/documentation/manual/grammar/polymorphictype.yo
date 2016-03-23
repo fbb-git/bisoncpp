@@ -59,10 +59,11 @@ includefile(polytablenotes)
 
 bf(Direct semantic value-type assignments) (`$$(...)):
 
-    Semantic values that are returned from action blocks at the end of
-production rules of non-terminals that have been associated with a polymorphic
-semantic value type are usually assigned through tt($$ = )
-expressions. However, such statements cannot be used for initial assignments
+    Production rules associated with polymorphic tags should assign a matching
+type to the rule's semantic value. If an appropriately tagged semantic value
+is available it can directly be used. E.g., $$ = $1. However, initial semantic
+value assignments to assign
+initial such statements cannot be used for initial assignments
 to $$ if the semantic value type does not support default
 construction. Initial semantic value assignments are often used in situations
 that are comparable to this rule definition:
