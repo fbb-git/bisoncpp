@@ -14,7 +14,6 @@ void Parser::handleProductionElement(STYPE__ &last)
         return;
     }
 
-
     switch (last.tag())
     {
         case Tag__::TERMINAL:

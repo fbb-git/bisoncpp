@@ -386,10 +386,10 @@ END)
             (tt(-B -C, -H, -I, -L) and tt(-M)).
 
     it() loption(tag-mismatches) tt(off|on)nl()
-           When tt(on) is specified (which is the default), issue a warning if
-            no $$ statement was detected in an action block, or if adding a
-            default $$ = $1 action was suppressed by a tt(default-actions off)
-            option or directive.
+           When tt(on) is specified (which is the default), a warning is
+            issued if no $$ statement was detected in an action block, or if
+            adding a default $$ = $1 action was suppressed by a
+            tt(default-actions off) option or directive.
 
     it() laoption(target-directory)(pathname) nl() 
            tt(Pathname) defines the directory where generated files should be
@@ -400,11 +400,11 @@ END)
            No static data are modified, making bic() thread-safe.
 
     it() loption(usage)nl()
-            Write basic usage information to the standard output stream and
-            terminate. 
+            Writes basic usage information to the standard output stream and
+            terminates. 
 
     it() loption(verbose) (soption(V))nl() 
-           Write a file containing verbose descriptions of the parser states
+           Writes a file containing verbose descriptions of the parser states
             and what is done for each type of look-ahead token in that state.
             This file also describes all conflicts detected in the grammar,
             both those resolved by operator precedence and those that remain
@@ -413,6 +413,6 @@ END)
             tt(<grammar>) is the grammar specification file passed to bic().
 
     it() loption(version) (soption(v))nl()
-            Display bic()'s version number and terminate.
+            Displays bic()'s version number and terminates.
 
     )

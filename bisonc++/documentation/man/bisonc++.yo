@@ -138,7 +138,7 @@ starting with tt(yy) or tt(YY). Instead, following a suggestion by Lakos
 with tt(s_). This convention was not introduced to enforce identifier
 protection, but to clarify the storage type of variables. Other (local)
 symbols lack specific prefixes. Furthermore, bic() allows its users to define
-the parser class in a particular namespace of their own choice.
+the parser class in a namespace of their choice.
 
     Bic() should be used as follows:
     itemization(
@@ -601,7 +601,7 @@ the directive's specification.
 manpagesection(5. POLYMORPHIC SEMANTIC VALUES)
 
     The tt(%polymorphic) directive allows bic() to generate a parser using
-polymorphic semantic values. The various semantic values are specified as
+polymorphic semantic values. In this case semantic values are specified as
 pairs, consisting of em(tags) (which are bf(C++) identifiers), and bf(C++)
 type names. Tags and type names are separated by colons. Multiple tag and type
 name combinations are separated by semicolons, and an optional semicolon ends
@@ -615,9 +615,11 @@ tt(std::string) and a tt(std::vector<double>):
         )
     The identifier to the left of the colon is called the em(tag-identifier)
 (or simply em(tag)), and the type name to the right of the colon is called the
-em(type-name). Since bic() version 4.12.00 the types no longer have to
-offer  offer default constructors, but if no default constructor is available
-then the option tt(--no-default-action-return) is required.
+em(type-name). Starting with bic() version 4.12.00 the types no longer have to
+offer default constructors. By default bin() assumes that default constructors
+are available, and the option/directive tt(constructor-checks off) can be
+specified if default constructors are not available for all polymorphic
+semantic value types.
 
     When polymorphic type-names refer to types not yet declared by the
 parser's base class header, then these types must be declared in a header file

@@ -1,8 +1,8 @@
     The tt(%type) directive is used to associate (non-)terminals with semantic
 value types.
 
-Non-terminals may be associated with polymorphic semantic
-values using tt(%type) directives. E.g., after:
+Non-terminals may be associated with polymorphic semantic values using
+tt(%type) directives. E.g., after:
         verb(
     %polymorphic INT: int; TEXT: std::string
     %type <INT> expr
@@ -56,6 +56,36 @@ whenman(
 bf(%type<TAG> and $$ or $1 specifications:)
 includefile(polytable)
 includefile(polytablenotes)
+
+bf(Direct semantic value-type assignments) (`$$(...)):
+
+    Semantic values that are returned from action blocks at the end of
+production rules of non-terminals that have been associated with a polymorphic
+semantic value type are usually assigned through tt($$ = )
+expressions. However, such statements cannot always be used if the semantic
+value types do not support default construction. Especially in initial $$
+assignments this may cause problems. Assuming that the non-terminal tt(number)
+is associated with a tt(INT: int) polymorphic semantic value type, then
+consider the following production rule:
+        verb(
+    number:
+        INT
+        {
+            $$ = stol(d_scanner.matched());
+        }
+        )
+    Here the  $$-statement is translated into 
+        verb(
+    d_val__.get<Tag__::INT>() = stol(d_scanner.matched());
+        )
+    where (see below) tt(d_val__) is the parser's data member to contain the
+action block's semantic value, while its tt(get...()) member returns a
+reference to the appropriate semantic value type. But at this point tt($$) has
+not yet been initialized, and tt(get...()) will first initialize tt(d_val__)
+to a default value, in this case an tt(int). The data type's default
+constructor takes care of the initialization, which constructor must therefore
+be available. If no default constructor is available tt(get()) cannot be
+used, 
 
 bf(Member calls) (`$$.', `$1.', `($$)', `($1)', etc.):)
 

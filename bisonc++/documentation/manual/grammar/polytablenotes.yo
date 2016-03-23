@@ -1,4 +1,6 @@
 itemization(
+    itx() 
+
     itx() auto-tag: $$ and $1 represent, respectively, tt($$.get<tag>()) and
             tt($1.get<tag>());
 
@@ -8,3 +10,4 @@ itemization(
             represent the tag's type. Otherwise: em(error) (using undefined
             tag tt(id)).
 )
+
