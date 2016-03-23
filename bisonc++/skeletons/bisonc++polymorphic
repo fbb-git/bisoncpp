@@ -202,6 +202,8 @@ void SType::assign(Args &&...args)
 template <Tag__ tag>
 typename TypeOf<tag>::type &SType::get()
 {
+//    if (d_base->tag() != tag()
+// $insert warnTagMismatches <-- including the test
     return *static_cast<typename TypeOf<tag>::type *>(d_base->data());
 }
 
