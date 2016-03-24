@@ -43,9 +43,9 @@ void usage(string const &program_name)
     "   --construction:\n"
     "           write details about the grammar analysis to stdout.\n"
 
-    "   --constructor-checks=<off|on>:\n"
-    "           unless 'off', insert compile-time checks whether default\n"
-    "           construction is supported by STYPE__ or polymorphic types\n"
+//  "   --constructor-checks=<off|on>:\n"
+//  "           unless 'off', insert compile-time checks whether default\n"
+//  "           construction is supported by STYPE__ or polymorphic types\n"
 
     "   --debug:\n"
     "           generates debug output statements in the generated parse\n"

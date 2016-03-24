@@ -1,4 +1,4 @@
-The parser using polymorphic semantic values adds several classes to the
+A parser using polymorphic semantic values adds several classes to the
 generated files. The majority of these are class templates, defined in
 tt(parserbase.h); some of the additionally implemented code is added to the
 tt(parse.cc) source file.
@@ -64,51 +64,46 @@ The important elements of the namespace tt(Meta__) are:
         used. Rather, their use is implied by the actual semantic value class
         tt(SType) and by several support functions (see below).
 
-    it() Third, the semantic value class tt(SType: public
-        std::shared_ptr<Base>) provides access to the various semantic value
-        types. The tt(SType__) class becomes the parser's tt(STYPE__) type,
-        and explicitly accessing tt(Semantic<Tag__::ID>) should never be
-        necessary.nl() 
-       tt(SType)'s public interface offers the following members: 
+------------------------
+
+    it() The semantic value class tt(SType) defines the interface to the
+        various semantic value types. The tt(SType) class becomes the
+        parser's tt(STYPE__) type.
+
+       tt(SType)'s public interface defines the following members: 
             itemization(
-            it() Constructors: default (available if the tt(Semantic) type
-                class offers a default constructor), copy and move
-                constructors.nl() 
-               Since the parser's semantic value and semantic value stack is
-                completely controlled by the parser, and since the actual
-                semantic data values are unknown at construction time of the
-                semantic value (tt(d_val__)) and of the semantic value stack,
-                no constructors expecting tt(DataType) values are provided.
-            it() Assignment operators.nl() 
+            it() Constructors: 
+
+                Default, copy and move constructors.  The default constructor
+                does not contain usable data, but a value of a defined
+                polymorphic type can be assigned to it, which may then be
+                retrieved from the object.
+
+            it() Assignment operators:
+ 
                The standard overloaded assignment operator (copy and move
                 variants) as well as copy and move assignment operators for
-                the types declared at the tt(%polymorphic) directive are
-                provided. Assigning a value using tt(operator=) allocates a
-                tt(Semantic<Tag__::tag>) object for the tag matching the
-                right-hand side's data type, and resets the tt(SType)'s
-                tt(shared_pointer) to this new tt(Semantic<Tag__::tag>)
-                object.nl()
-               Be aware that this may break the default association of the
-                semantic value as declared by a tt(%type) directive. When
-                breaking the default association make sure that explicit tags
-                are used (as in tt($<Tag__::tag>)), overriding the default
-                association with the currently active association. Usually,
-                however, the assignment is of course not used to break the
-                default association but simply to assign a value to $$. By
-                default the tt(SType)'s shared pointer is zero, and the
-                assignment initializes the semantic value to a value of the
-                proper type.nl()
+                the various polymorphic types are available. E.g., if tt(INT:
+                int) is a defined polymorphic tag/type pair, then tt(d_val__ =
+                12) assigns the value 12 to tt(d_val__), setting its tag to
+                tt(Tag__::INT).
+
+               In production rules' action blocks such assignments are hardly
+                ever used. In action blocks assignments to tt(d_val__) are
+                usually handled using the tt($$(args)) or tt($$ = $x) syntax.
+
                Assuming a lexical scanner may return a tt(NR) token, offering
-                an tt(int number() const) accessor, then part of an tt(expr)
-                rule could be: 
+                an tt(int number() const) accessor, then an tt(expr)
+                production rule could be: 
                     verb( 
     expr: NR 
     { 
-        $$ = d_scanner.number(); 
+        $$(d_scanner.number()); 
     } ...
                     ) 
                whereafter tt(expr)'s semantic value has been initialized
                 to a tt(Semantic<Tag__::INT>).  
+
             it() tt(DataType &get<Tag__>())nl()
                This tt(get) member returns a reference to the (modifiable)
                 semantic value stored inside tt(Semantic<Tag__>).nl() 

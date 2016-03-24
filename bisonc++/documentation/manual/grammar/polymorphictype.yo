@@ -15,22 +15,24 @@ a rule like:
         )
     automatically associates $$, $1 and $3 with tt(int) values. Here $$ is an
 lvalue (representing the semantic value associated with the tt(expr:) rule),
-while $1 and $3 represent, because of the tt(%type) specification, tt(int)
-semantic values which are associated with, resp., the first and second
+while $1 and $3 represent, due to the `tt(%type<INT> expr)' specification,
+tt(int) semantic values which are associated with, resp., the first and second
 tt(expr) non-terminal in the production rule tt(expr '+' expr).
 
     When negative dollar indices (like $-1) are used, pre-defined associations
-between non-terminals and semantic types are ignored.  With positive indices
-or in combination with the production rule's return value tt($$), however,
-semantic value types can explicitly be specified using the common `$<type>$'
-or `$<type>1' syntax. (In this and following examples index number 1 represents
+between non-terminals and semantic types are lost, and must explicitly be
+provided to access their polymorphic value types.  However, when positive
+indices are used or when the production rule's return value tt($$) is used,
+bic() will automatically use their associated polymorphic value types, unless
+overruled by explicit specifications, using the common `$<type>$' or
+`$<type>1' syntax. (In this and subsequent examples index number 1 represents
 any valid positive index; -1 represents any valid negative index).
 
 The type-overruling syntax does not allow blanks to be used (so $<INT>$ is OK,
 $< INT >$ isn't).
 
-Various combinations of type-associations and type specifications may be
-encountered:
+Various combinations of type-associations and type specifications are
+available: 
 itemization(
 it() $-1: tt(%type) associations are ignored, and the semantic value type
     tt(STYPE__) is used instead. A warning is issued unless the
@@ -54,45 +56,76 @@ bf(%type<TAG> and $$ or $1 specifications:)
 includefile(polytable)
 includefile(polytablenotes)
 
-bf(Direct semantic value assignments) (`$$(opt-args)'):
+bf(Direct semantic value assignments) (`$$(args)'):
 
-    Production rules associated with polymorphic tags should assign a matching
-type to the rule's semantic value. If an appropriately tagged semantic value
-is available it can directly be used. E.g., $$ = $1. However, initial semantic
-value assignments should not use the assignment operator because the semantic
-values polymorphic tag might not be correct. A phrase like tt($$ = ) is
-translated into tt(d_val__.get<tag>()) where tt(tag) equals the polymorphic
-tag of the production rule's left-hand side non-terminal. If there is a tag
-mismatch the semantic value has not properly been initialized, and a
-(run-time) warning is issued to the standard error stream. These warnings
-should be thoroughly investigated. Failing to do so might result in a
-segmentation fault when calling  the generated tt(parse) function.
+    Production rules associated with polymorphic tags and production rules
+associated with tt(%type <STYPE__>) should assign values of matching types to
+the rules' semantic values. If a matching value type is available from a
+production rule's component it can directly be used to assign the semantic
+value of the rule's left-hand side non-terminal. E.g., $$ = $1 returns the
+semantic value of the production rule's first component. 
 
-    To initialize a rule's semantic value tt($$ =) constructions should be
-avoided. Instead, a tt($$(opt-args)) expression should be used. No blanks are
-allowed between tt($$) and the open-parenthesis. The tt(opt-args) are
-optional, comma-separated arguments, and bic() translates a tt($$(opt-args))
+However, often production rules receiving tokens from the lexical scanner
+cannot refer to semantic values of components of their production rules, as
+the scanner merely returns the token and matching text, as in the following
+production rule:
+        verb(
+    number:         // assume %type<NUMBER> number
+        NUMBER
+        {
+            // convert text to a numeric value
+        }
+    ;
+        )
+    In such cases the appropriate semantic value must be initialized. 
+
+Bic() translates phrases like tt($$ = xyz) into tt(d_val__.get<tag>() =
+xyz) (where tt(tag) is the production rule's left-hand side non-terminal's
+polymorphic tag, and tt(d_val__) (see below) is the parser's data member
+containing the action block's semantic value). The function tt(get) returns a
+reference to a value of the type matching tt(tag), but that value isn't
+available yet: in this case it is the action block's duty to initialize it.
+Unless there's comment at either side of the assignment operator, bic() 
+recognizes such situations, and issues a warning, and such warnings should be
+prevented lest the generated tt(parse) function produce a segmentation
+fault.
+
+Fortunately, prevention is easy.  To initialize a rule's semantic value a
+tt($$(args)) expression should be used (no blanks are allowed between
+tt($$) and the open-parenthesis). tt(Args) are at least one, comma-separated
+arguments. For tagged non-terminals bic() translates a tt($$(args))
 expression into
         verb(
-    d_val__.assign<tag>(opt-args).
+    d_val__.assign<tag>(args).
         )
-   In this expression tt(d_val__) (see below) is the parser's data member
-containing the action block's semantic value, and tt(tag) is determined by
-bic() as the tag associated with the production rule's left-hand side
-non-terminal. This also implies that tt($$(opt-args)) cannot be used for
-untagged production rules.
+    where `tt(tag)' is the tag associated with the production rule's left-hand
+side non-terminal. For non-terminals that are associated with a
+tt(%type<STYPE__>) specification only one argument can be passed to
+tt($$(arg)), which translates to
+        verb(
+    d_val__ = (arg);
+        )
+    The tt($$(args)) syntax cannot be used for untagged production rules.
 
-In the occasional event that a semantic value must be assigned to a
-non-tagged production rule the construction tt($$ = ) or
-tt($$.assign<tag>(opt-args)) can be used. When using tt($$ =)
-bic() will not select a tt(Tag__)-value, and will not use the tt(get)
-member. Instead, it translates a tt($$ = ) expression into a direct
-assignment. E.g., tt($$ = STYPE__{}) is translated into tt(d_val__ =
-STYPE__{});
+If a non-terminal is associated with tt(%type<STYPE__>) and its production
+rule calls a function returning a value of a known tagged type, then an
+explicit tt(assign) call can be used. E.g.,
+        verb(
+    Symbol useSymbol();             // available function
 
+    %polymorphic SYMBOL: Symbol;    // directives
+    %type<STYPE__> rule
+    
+    rule:                           // grammar rule
+        IDENTIFIER
+        {
+            $$.assign<Tag__::SYMBOL>(useSymbol());
+        }
+    ;
+        
 bf(Member calls) (`$$.', `$1.', `($$)', `($1)', etc.):)
 
-    When using `$$.' or `$1.' default tags are ignored. A warning is issued
+    When `$$.' or `$1.' is used default tags are ignored. A warning is issued
 that the default tag is ignored. This syntax allows members of the semantic
 value type (tt(STYPE__)) to be called explicitly. The default tag is only
 ignored if there are no additional characters (e.g., blanks, closing
@@ -160,14 +193,16 @@ example to reach the different polymorphic types. The lexical scanner, having
 defined a tt(Parser::STYPE__ *d_val) data member could then use statements
 like
         verb(
-    d_val.get<Tag__::INT>() = stoi(matched());
+    d_val.assign<Tag__::INT>(stoi(matched()));
         )
     to assign an tt(int) value to the parser's semantic value, which is then
-immediately available when the lexical scanner's tt(lex) function
-returns. Note, however that this also adds intelligence about the meaning of a
-tt(Parser::INT) token to the scanner. It can be argued that this knowledge
-belongs to the parser, and that the scanner should merely recognize regular
-expressions and return tokens and their corresponding matched text.
+available to the parser when the lexical scanner's tt(lex) function returns as
+the semantic value (e.g., $1) of the production rule's element specifying the
+terminal token. Note, however that this requires the scanner to harbor some
+intelligence about the meaning of a tt(Parser::INT) token. It can be argued
+that this intelligence should only be available to the parser, and that the
+scanner should merely recognize regular expressions and return tokens and
+their corresponding matched text.
 
 
 

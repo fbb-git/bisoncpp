@@ -64,11 +64,10 @@ class Semantic: public Base
         static void *data(Base const *obj);
 };
 
-    // The class Stype wraps the shared_ptr holding a pointer to Base.  It
-    // becomes the polymorphic STYPE__ It also defines a get member,
-    // allowing constructions like $$.get<INT> to be used.  Instantiations
-    // of its operator= member template are used to assign semantic values
-    // to the SType object.
+    // The class SType wraps a pointer to Base.  It becomes the polymorphic
+    // STYPE__ type It also defines a get member, allowing constructions like
+    // $$.get<INT> to be used.  Instantiations of its operator= member
+    // template are used to assign semantic values to the SType object.
 class SType
 {
     Base *d_base;
@@ -187,6 +186,9 @@ inline SType::operator bool() const
 template <Tag__ tag, typename ...Args>
 void SType::assign(Args &&...args)
 {
+    static_assert(sizeof...(Args) > 0, 
+                "assign<args> needs at least one argument");
+
     Semantic<tag> *semPtr = new Semantic<tag>(std::forward<Args>(args) ...);
     delete d_base;
     d_base = semPtr;
@@ -248,5 +250,3 @@ inline void *Semantic<tg_>::data(Base const *obj) // static
 }
 
 }  // namespace Meta__
-
-

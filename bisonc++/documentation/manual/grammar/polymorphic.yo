@@ -20,5 +20,12 @@ derived classes containing either an tt(int) or a tt(std::string) semantic
 value. These types are asociated with tags (resp. tt(INT) and tt(TEXT)) using
 the tt(%polymorphic) directive, which is discussed next.
 
+As a technical side-note: although the directive for using polymorphic
+semantic values is called tt(%polymorphic) this does not imply that the
+generated parser uses dynamic polymorphism. Instead, meta-template programming
+techniques are used to create the various semantic value types whenever
+necessary. It isn't `static polymorphism' either, but the term `polymorphic'
+indicates that each semantic value represents exactly one of the types that
+were defined using the tt(%polymorphic) keyword.
 
 

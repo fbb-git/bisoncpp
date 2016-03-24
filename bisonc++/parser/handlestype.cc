@@ -3,16 +3,22 @@
 // See 'README.dollar' in this directory for a description of the actions
 // involved at these alternatives.
 
-//FBB: see returnPolymorphic and substitutedollar
-
 void Parser::handleSTYPE(Block &block, AtDollar const &atd) 
 {
-    string const &stype = d_rules.sType();
-
     if (d_semType != POLYMORPHIC)
     {
         emsg << '`' << &d_rules.lastProduction() << 
                 "':  $$(...) requires %polymorphic" << endl;
+        return;
+    }
+
+    string const &stype = d_rules.sType();
+
+    if (stype.empty())
+    {
+        emsg <<  '`' << &d_rules.lastProduction() << 
+                "':  $$(...) requires a tagged left-hand side non-terminal" <<
+                                                                    endl;
         return;
     }
 

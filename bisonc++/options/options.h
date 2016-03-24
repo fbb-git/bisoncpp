@@ -43,7 +43,7 @@ struct Options
         // setAccessorVariables
 
                             // Resulting values: ON, OFF
-        OptInfo d_constructorChecks{ON, "", 0};
+        OptInfo d_constructorChecks{OFF, "", 0};
 
                             // Resulting values: ON, OFF
         OptInfo d_tagMismatches{ON, "", 0};

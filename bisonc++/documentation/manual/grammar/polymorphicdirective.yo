@@ -1,18 +1,17 @@
     When encountering the tt(%polymorphic) directive bic() generates a parser
-that uses polymorphic semantic values. Each semantic value specification
+using polymorphic semantic values. Each semantic value specification
 consists of a em(tag), which is a bf(C++) identifier, and a bf(C++) type
 definition.
 
-Tags and type definitions are separated by colons, and
-multiple semantic values specifications are separated by semicolons. The
-semicolon trailing the final semantic value specification is optional.
+Tags and type definitions are separated by colons, and multiple semantic
+values specifications are separated by semicolons. The semicolon trailing the
+final semantic value specification is optional.
 
-A grammar specification file may contain only one tt(%polymorphic) directive,
-and the tt(%polymorphic, %stype) and tt(%union) directives are mutually
-exclusive.
+The tt(%polymorphic) directive may be specified only once, and the
+tt(%polymorphic, %stype) and tt(%union) directives are mutually exclusive.
 
-Here is an example, defining three semantic values types: an tt(int), a
-tt(std::string) and a tt(std::vector<double>):
+Here is an example, defining three semantic values types: tt(int), 
+tt(std::string) and tt(std::vector<double>):
         verb(
     %polymorphic INT: int; STRING: std::string; 
                  VECT: std::vector<double>
@@ -21,11 +20,19 @@ tt(std::string) and a tt(std::vector<double>):
 and the type definition to the right of the colon is called the
 em(type-definition). Types specified at the tt(%polymorphic) type-definitions
 must be built-in types or class-type declarations. Since bic() version 4.12.00
-the types no longer have to offer offer default constructors, but if no
-default constructor is available then the option
-tt(--no-default-action-return) is required.
+the types no longer have to support default construction.
 
-    When polymorphic type-names refer to types not yet declared by the
-parser's base class header, then these types must be declared in a header file
-whose location is specified through the tt(%baseclass-preinclude) directive as
-these types are referred to in the generated tt(parserbase.h) header file.
+As the parser's generic semantic value type is called tt(STYPE__), and
+functions called by the parser may return tt(STYPE__) values. Likewise,
+production rules can be associated with the generic tt(STYPE__) semantic
+type. To prevent ambiguities the generic tt(STYPE__) type cannot be specified
+as a polymorphic type. E.g., a specification like tt(GENERIC: STYPE__) cannot
+be used when defining the tag/type pairs at the tt(%polymorphic)
+directive. However, (non-)terminals em(may) be associated with the generic
+semantic type, using the tt(%type<STYPE__>) directive.
+
+    When polymorphic type-names refer to types that have not yet been declared
+by the parser's base class header, then these types must be declared in a
+header file whose location is specified through the tt(%baseclass-preinclude)
+directive (as these types are referred to in the generated tt(parserbase.h)
+header file).

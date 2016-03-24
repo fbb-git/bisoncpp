@@ -77,7 +77,7 @@ NR      [[:digit:]]+
                     more();
                 }
 
-    "$$"[ \t]*=[ \t]*.      warnAssign();
+    "$$"[ \t\n]*=[ \t\n]*.      warnAssign();
 
             // see: parser/substituteblock.cc
     "$$("                   |
