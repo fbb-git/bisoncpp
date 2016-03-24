@@ -194,10 +194,11 @@ void SType::assign(Args &&...args)
     d_base = semPtr;
 }
 
-template <Tag__ tag>
-typename TypeOf<tag>::type &SType::get()
+template <Tag__ tg>
+typename TypeOf<tg>::type &SType::get()
 {
-    return *static_cast<typename TypeOf<tag>::type *>(d_base->data());
+$insert warnTagMismatches
+    return *static_cast<typename TypeOf<tg>::type *>(d_base->data());
 }
 
 inline SType::SType()
