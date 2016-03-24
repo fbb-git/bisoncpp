@@ -21,111 +21,16 @@ Tag__)'.
 bf(The namespace Meta__)
 
 Below, tt(DataType) refers to the semantic value's data type that is
-associated with a tt(Tag__) identifier. Furthermore, tt(ReturnType) equals
-tt(DataType) if tt(DataType) is a built-in type (like tt(int, double,) etc.),
-in other cases (for, e.g., class-type data types) it is equal to tt(DataType
-const &) .
+associated with a tt(Tag__) identifier.
 
-The important elements of the namespace tt(Meta__) are:
-    itemization(
-    it() First, the polymorphic semantic value's base class tt(Base).nl()
-        Its public interface offers the following members:nl()
-        itemization(
-        itt(Tag__ tag() const:)  returns the semantic value type's tag.
-        itt(ReturnType get<Tag__>() const:) accesses the (non-modifiable) data
-            element of the type matching the tag.  the data element of the
-            type matching the tag (also see below at the description of the
-            class tt(SType)).
-        itt(DataType &get<Tag__>() const:) provides access to the (modifiable)
-            data element of the type matching the tag.
-        )
+Several classes are defined in the namespace tt(Meta__). However, the really
+import class is the class tt(SType), defining the interface to the various
+semantic value types. The tt(SType) class becomes the parser's tt(STYPE__)
+type. All operations related to semantic values are handled by this class. 
 
-    it() Second, the semantic value classes tt(Semantic<Tag__::ID>: public
-        Base).nl()
-       The various tt(Semantic<Tag__::ID>) classes are derived for each of the
-        tag identifiers tt(ID) that are declared at the tt(%polymorphic)
-        directive. These tt(Semantic<Tag__::ID>) classes contain a tt(mutable
-        DataType) data member. Their public interfaces offer the following
-        members: 
-            itemization( 
-            it() Constructors accepting the same sets of arguments as
-                supported by its tt(DataType) data member. The arguments
-                passed to the tt(Semantic) constructor are perfectly forwarded
-                to the tt(DataType) member. E.g., if tt(DataType) supports a
-                default constructor, a copy constructor and/or a move
-                constructor then the matching tt(Semantic) class also offers a
-                default constructor, a constructor expecting a tt(DataType)
-                object, and a constructor expecting an  anonymous tt(DataType)
-                object. 
-            it() An tt(operator ReturnType() const) conversion operator; 
-            it() An tt(operator DataType &()t) conversion operator.  
-            ) 
-       tt(Semantic<Tag__::ID>) objects are usually not explicitly
-        used. Rather, their use is implied by the actual semantic value class
-        tt(SType) and by several support functions (see below).
+The class tt(SType) provides the following public interface:
 
-------------------------
-
-    it() The semantic value class tt(SType) defines the interface to the
-        various semantic value types. The tt(SType) class becomes the
-        parser's tt(STYPE__) type.
-
-       tt(SType)'s public interface defines the following members: 
-            itemization(
-            it() Constructors: 
-
-                Default, copy and move constructors.  The default constructor
-                does not contain usable data, but a value of a defined
-                polymorphic type can be assigned to it, which may then be
-                retrieved from the object.
-
-            it() Assignment operators:
- 
-               The standard overloaded assignment operator (copy and move
-                variants) are available. 
-
-            tt(operator bool() const):
-
-                The value tt(true) is returned if the object's tt(Tag__) value
-                is valid. The value tt(false) is returned when its object was
-                initialized by the tt(SType) default constructor or when a
-                default tt(SType) object wass assigned to it. After
-                reassigning a non-default tt(SType) value to an tt(SType)
-                object its tt(operator bool) will again return tt(true);
-
-        tt(typename TagOf<tag>::type &get<tag>()). The template argument
-            tt(tag) must be a valid tt(Tag__) value. This member
-            returns a reference to the object's (modifiable) semantic value 
-            data.
-
-           When the option/directive tt(tag-mismatches on) was specified then
-            tt(get), when called from the generated tt(pars) function,
-            performs a run-time check whether the specified tag corresponds to
-            object's actual tt(Tag__) value. If a mismatch is observed, then
-            the parsing function aborts with a fatal error message.
-
-            tt(Tag__ tag() const):
-
-               The tag matching the semantic value's polymorphic type. The
-                returned value is only valid when the tt(SType) object's
-                tt(operator bool) returns tt(true);
-
-
-            )
-        These members may explicitly be tagged, using constructions like
-            verb(
-    SS.emplace<Tag__::STRING>(5, 'c');
-            )
-        But the shorthand tt(($)) can also be used, which automatically
-                provides the correct tag:
-            verb(
-    (SS).emplace(5, 'c');
-            )
-    )
-    When an incorrect tag is specified (e.g., with tt(get<Tag__::tag>(),
-$<Tag__::tag>$), or tt($<Tag__::tag>1)), the generated code correctly compiles,
-but the program likely throws a tt(std::bad_cast) exception once the offending
-code is executed.
+includefile(stypeinterface)
 
 bf(Additional Headers)
 

@@ -1,4 +1,4 @@
-    The tt(%type) directive is used to associate (non-)terminals with semantic
+    tt(%type) directives is used to associate (non-)terminals with semantic
 value types.  E.g., after:
         verb(
     %polymorphic INT: int; TEXT: std::string
@@ -55,6 +55,7 @@ whenman(
 bf(%type<TAG> and $$ or $1 specifications:)
 includefile(polytable)
 includefile(polytablenotes)
+)
 
 bf(Direct semantic value assignments) (`$$(args)'):
 

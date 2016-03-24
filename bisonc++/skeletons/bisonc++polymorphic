@@ -186,9 +186,6 @@ inline SType::operator bool() const
 template <Tag__ tag, typename ...Args>
 void SType::assign(Args &&...args)
 {
-    static_assert(sizeof...(Args) > 0, 
-                "assign<args> needs at least one argument");
-
     Semantic<tag> *semPtr = new Semantic<tag>(std::forward<Args>(args) ...);
     delete d_base;
     d_base = semPtr;

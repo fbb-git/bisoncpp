@@ -1,0 +1,60 @@
+
+    itemization(
+    it() Constructors: 
+
+        Default, copy and move constructors.  The default constructor does not
+        provide usable data, but may acts as a stub, accepting values of
+        defined polymorphic types, which may then be retrieved from the
+        tt(SType) object.
+
+    it() Operators:
+
+        Assignment operators: the standard overloaded assignment operator
+        (copy and move assignment operators) are available.
+
+        tt(operator bool() const): the value tt(true) is returned if the
+        object stores a value of a type that is defined by the
+        tt(%polymorphic) directive. The value tt(false) is returned when its
+        object represents a default tt(SType) object. After reassigning a
+        non-default tt(SType) value its tt(operator bool) returns tt(true);
+
+    it() tt(void assign<tag>(Args &&...args)) 
+
+        The tt(tag) template argument must be a tt(Tag__) value. This member
+        function constructs a semantic value of the type corresponding to
+        tt(tag) from the arguments which are passed to this member (zero
+        arguments are OK if the type associated with tt(tag) supports default
+        construction). The constructed value is then stored in the tt(SType)
+        object for which tt(assign) has been called.
+
+        The member tt(assign) should be used to store a particular polymorphic
+        semantic value in an tt(STYPE__) object. To initialize an tt(STYPE__)
+        object with a default tt(STYPE__) value, direct assignment can be
+        used (e.g., tt(d_lval__ = STYPE__{})).
+
+    it(DataType &get<tag>()). 
+
+        This member returns a reference to the object's (modifiable) semantic
+        value data. The tt(tag) is a defined tt(Tag__) value: it must be
+        specified to allow the compiler to determine the data type
+        corresponding to tt(tag). 
+ 
+        When the option/directive tt(tag-mismatches on) was specified then
+        tt(get), when called from the generated tt(parse) function, performs a
+        run-time check to confirm that the specified tag corresponds to
+        object's actual tt(Tag__) value. If a mismatch is observed, then the
+        parsing function aborts with a fatal error message. Shortcuts (like
+        tt($$) and tt($1)) can be used in production rules' action
+        blocks. When used, bic() determines the correct tt(tag), thus
+        preventing the runtime check from failing.
+
+    it() tt(void swap(SType &other)) 
+
+        The current and other tt(SType) objects are swapped.
+
+    it(Tag__ tag() const):
+
+       The tag matching the semantic value's polymorphic type. The returned
+        value is a valid tt(Tag__) value when the tt(SType) object's
+        tt(operator bool) returns tt(true);
+   )

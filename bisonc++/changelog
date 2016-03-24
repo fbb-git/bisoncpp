@@ -1,4 +1,4 @@
-bisonc++ (4.14.00) (WIP)
+bisonc++ (5.00.00) (WIP)
 
   * The SType::data() member is now obsolete and has been removed.
 
