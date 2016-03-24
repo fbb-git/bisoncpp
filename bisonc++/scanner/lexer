@@ -79,6 +79,7 @@ NR      [[:digit:]]+
 
     "$$"[ \t]*=[ \t]*.      warnAssign();
 
+            // see: parser/substituteblock.cc
     "$$("                   |
     "$$"                    |
     "@@"                    d_block.dollar(lineNr(), d_matched, false);

@@ -16,15 +16,13 @@ void Parser::handleSTYPE(Block &block, AtDollar const &atd)
         return;
     }
 
-    if (stype.empty())
-    {
-        emsg << '`' << &d_rules.lastProduction() << 
-                "':  $$(...) requires %type-tagged production rules" << endl;
-        return;
-    }
-
     string replacement = s_semanticValue;
-    replacement += ".assign<Tag__::" + d_rules.sType() + ">(";
+
+    replacement += 
+        stype == "STYPE__"?
+            " = ("s
+        :
+            ".assign<Tag__::" + d_rules.sType() + ">(";
 
                                         // replace $$ by the semantic value
     block.replace(atd.pos(), atd.length(), replacement);
