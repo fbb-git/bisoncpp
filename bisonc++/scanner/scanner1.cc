@@ -4,6 +4,7 @@ Scanner::Scanner(std::string const &infile)
 :
     ScannerBase(infile, ""),
     d_include(false),
+    d_warnAssign(Options::instance().tagMismatches().value == Options::ON),
     d_matched(matched()),
     d_inclusionDepth(1)
 {

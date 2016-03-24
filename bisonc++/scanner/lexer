@@ -69,15 +69,15 @@ NR      [[:digit:]]+
     
     "\""        {
                     begin(StartCondition__::string);
-                    // d_block.beginSkip();
                     more();
                 }
     
     "'"         {
                     begin(StartCondition__::quote);
-                    // d_block.beginSkip();
                     more();
                 }
+
+    "$$"[ \t]*=[ \t]*.      warnAssign();
 
     "$$("                   |
     "$$"                    |
@@ -97,7 +97,7 @@ NR      [[:digit:]]+
     "$<>"-?{NR}             |
     "$<"{IDENT}">"-?{NR}    d_block.IDindex(lineNr(), d_matched);
 
-    .           d_block(d_matched);
+    .                       d_block(d_matched);
 }
 
 %baseclass-header[ \t]+         {

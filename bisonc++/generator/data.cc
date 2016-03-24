@@ -29,7 +29,6 @@ Generator::Map Generator::s_insert =
     {"staticdata",                  &Generator::staticData},
     {"threading",                   &Generator::threading},
     {"tokens",                      &Generator::tokens},
-    {"warnTagMismatches",           &Generator::warnTagMismatches},
     {"LTYPE",                       &Generator::ltype},
     {"LTYPEdata",                   &Generator::ltypeData},
     {"LTYPEpop",                    &Generator::ltypePop},

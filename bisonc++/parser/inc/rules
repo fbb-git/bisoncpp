@@ -13,26 +13,24 @@ _precSpec:
 _productionElement:
     QUOTE
     {
-        $$ = useTerminal();     // assigns Tag__::TERMINAL
+        $$.assign<Tag__::TERMINAL>(useTerminal());
     }
 |
     IDENTIFIER
     {
-        $$ = useSymbol();       // assigns Tag__::SYMBOL
+        $$.assign<Tag__::SYMBOL>(useSymbol());
     }
 |
     BLOCK
     {
-        $$ = d_scanner.block(); // assigns Tag__::BLOCK
+        $$.assign<Tag__::BLOCK>(d_scanner.block());
     }
 |
     PREC
     _precSpec
     {
         setPrecedence($2);
-        $$ = STYPE__{};         // assigns default STYPE (Tag__ = sizeofTag__)
-        //  $$ = spSemBase();   // a 0-ptr spSemBase indicates 
-                                // that a %prec has been handled
+        $$ = STYPE__{};
     }
 ;
 

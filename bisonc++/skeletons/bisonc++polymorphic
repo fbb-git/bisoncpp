@@ -174,13 +174,6 @@ Semantic<tg_>::Semantic(Params &&...params)
     d_baseData =  data;
 }
 
-//template <Tag__ tag, typename ...Args>
-//inline SType SType::semantic(Args &&...args)    // static
-//{
-//    return 
-//        SType{new Semantic<tag>(std::forward<Args>(args) ...)};
-//}
-
 inline Tag__ SType::tag() const
 {
     return d_base->tag();
@@ -202,7 +195,6 @@ void SType::assign(Args &&...args)
 template <Tag__ tag>
 typename TypeOf<tag>::type &SType::get()
 {
-$insert warnTagMismatches
     return *static_cast<typename TypeOf<tag>::type *>(d_base->data());
 }
 
@@ -222,11 +214,6 @@ inline SType::SType(SType &&tmp)
 {
     tmp.d_base = 0;
 }
-
-//inline SType::SType(Base *base)
-//:
-//    d_base(base)
-//{}
 
 inline SType::~SType()
 {

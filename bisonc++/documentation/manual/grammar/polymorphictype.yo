@@ -1,8 +1,5 @@
     The tt(%type) directive is used to associate (non-)terminals with semantic
-value types.
-
-Non-terminals may be associated with polymorphic semantic values using
-tt(%type) directives. E.g., after:
+value types.  E.g., after:
         verb(
     %polymorphic INT: int; TEXT: std::string
     %type <INT> expr
@@ -69,19 +66,19 @@ tag of the production rule's left-hand side non-terminal. If there is a tag
 mismatch the semantic value has not properly been initialized, and a
 (run-time) warning is issued to the standard error stream. These warnings
 should be thoroughly investigated. Failing to do so might result in a
-segmentation fault once the generated tt(parse) function is run.
+segmentation fault when calling  the generated tt(parse) function.
 
-    Instead of using tt($$ =) constructions a semantic value is preferably
-assigned using a tt($$(opt-args)) expression. No blanks are allowed between
-tt($$) and the open-parenthesis. The tt(opt-args) are optional,
-comma-separated arguments, and bic() translates a tt($$(opt-args)) expression
-into 
+    To initialize a rule's semantic value tt($$ =) constructions should be
+avoided. Instead, a tt($$(opt-args)) expression should be used. No blanks are
+allowed between tt($$) and the open-parenthesis. The tt(opt-args) are
+optional, comma-separated arguments, and bic() translates a tt($$(opt-args))
+expression into
         verb(
     d_val__.assign<tag>(opt-args).
         )
-   In this expression (see below) tt(d_val__) is the parser's data member to
-contain the action block's semantic value, and tt(tag) is determined by bic()
-as the tag associated with the production rule's left-hand side
+   In this expression tt(d_val__) (see below) is the parser's data member
+containing the action block's semantic value, and tt(tag) is determined by
+bic() as the tag associated with the production rule's left-hand side
 non-terminal. This also implies that tt($$(opt-args)) cannot be used for
 untagged production rules.
 

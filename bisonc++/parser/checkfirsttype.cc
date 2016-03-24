@@ -12,9 +12,9 @@ void Parser::checkFirstType()
     if (d_options.defaultActions().value == Options::OFF)
     {
         if (d_options.tagMismatches().value == Options::ON)
-            wmsg << '`' << &prod << "': auto-appending `$$ = $1' action "
-                "block suppressed by configuration "
-                "(default-actions off)" << endl;
+            wmsg << '`' << &prod << "': auto-appending `$$ = ...' action "
+                "block suppressed by option/directive "
+                "`default-actions off'" << endl;
 
         return;                     // no default action. Hope it's OK...
     }
@@ -37,7 +37,7 @@ void Parser::checkFirstType()
     }
 
     if (d_options.defaultActions().value == Options::WARN)
-        wmsg << '`' << &prod << "': auto-appended `$$ = $1' action block" << 
+        wmsg << '`' << &prod << "': auto-appended `$$ = ...' action block" << 
                                                                         endl;
 
     Block block;
