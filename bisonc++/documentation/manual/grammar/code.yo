@@ -82,63 +82,35 @@ The important elements of the namespace tt(Meta__) are:
             it() Assignment operators:
  
                The standard overloaded assignment operator (copy and move
-                variants) as well as copy and move assignment operators for
-                the various polymorphic types are available. E.g., if tt(INT:
-                int) is a defined polymorphic tag/type pair, then tt(d_val__ =
-                12) assigns the value 12 to tt(d_val__), setting its tag to
-                tt(Tag__::INT).
+                variants) are available. 
 
-               In production rules' action blocks such assignments are hardly
-                ever used. In action blocks assignments to tt(d_val__) are
-                usually handled using the tt($$(args)) or tt($$ = $x) syntax.
+            tt(operator bool() const):
 
-               Assuming a lexical scanner may return a tt(NR) token, offering
-                an tt(int number() const) accessor, then an tt(expr)
-                production rule could be: 
-                    verb( 
-    expr: NR 
-    { 
-        $$(d_scanner.number()); 
-    } ...
-                    ) 
-               whereafter tt(expr)'s semantic value has been initialized
-                to a tt(Semantic<Tag__::INT>).  
+                The value tt(true) is returned if the object's tt(Tag__) value
+                is valid. The value tt(false) is returned when its object was
+                initialized by the tt(SType) default constructor or when a
+                default tt(SType) object wass assigned to it. After
+                reassigning a non-default tt(SType) value to an tt(SType)
+                object its tt(operator bool) will again return tt(true);
 
-            it() tt(DataType &get<Tag__>())nl()
-               This tt(get) member returns a reference to the (modifiable)
-                semantic value stored inside tt(Semantic<Tag__>).nl() 
-               This member checks for 0-pointers and for tt(Tag__) mismatches
-                between the requested and actual tt(Tag__), in that case
-                replacing the current tt(Semantic) object pointed to by a new
-                tt(Semantic<Tag__>) object of the type associated with the requested
-                tt(Tag__). However, if that type does not provide a default
-                constructor then a tt(runtime_error) exception is thrown
-                holding the description 
-                        verb(
-    STYPE::get<tag>: no default constructor available
-                        )
-            it() tt(ReturnType data<Tag__>() const)nl()
-               Here, tt(ReturnType) refers to the semantic value stored inside
-                tt(Semantic<Tag__>). If the type-name is a built-in type a
-                copy of the value is returned, otherwise a reference to a
-                constant object is returned;nl() 
-               This is a (partially) em(unchecking) variant of the
-                corresponing tt(get) member, resulting in a em(segfault) if
-                used when the tt(shared_ptr) holds a 0-pointer, and throwing a
-                tt(std::bad_cast) in case of a mismatch between the requested
-                and actual tt(Tag__).  
-            it() tt(DataType &data<Tag__>())nl() 
-               This member returns a reference to the (modifiable) semantic
-                value stored inside tt(Semantic<Tag__>).nl() 
-               This is a (partially) em(unchecking) variant of the
-                corresponing tt(get) member, resulting in a em(segfault) if
-                used when the tt(shared_ptr) holds a 0-pointer, and throwing a
-                tt(std::bad_cast) in case of a mismatch between the requested
-                and actual tt(Tag__).  
-            it() tt(void emplace(Args &&...args))nl()
-               This member perfectly forwars its tt(args) arguments to the
-                currently stored tt(Semantic) value type, replacing its
-                current value by the newly constructed tt(Semantic) value.
+        tt(typename TagOf<tag>::type &get<tag>()). The template argument
+            tt(tag) must be a valid tt(Tag__) value. This member
+            returns a reference to the object's (modifiable) semantic value 
+            data.
+
+           When the option/directive tt(tag-mismatches on) was specified then
+            tt(get), when called from the generated tt(pars) function,
+            performs a run-time check whether the specified tag corresponds to
+            object's actual tt(Tag__) value. If a mismatch is observed, then
+            the parsing function aborts with a fatal error message.
+
+            tt(Tag__ tag() const):
+
+               The tag matching the semantic value's polymorphic type. The
+                returned value is only valid when the tt(SType) object's
+                tt(operator bool) returns tt(true);
+
+
             )
         These members may explicitly be tagged, using constructions like
             verb(

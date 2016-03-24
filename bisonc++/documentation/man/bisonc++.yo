@@ -667,26 +667,17 @@ implementing polymorphic values.
     defines the standard user interface to the polymorphic semantic values,
     and it offers the following members:nl()
 
-        tt(Constructors:) default, copy and move constructors;nl()
+        tt(Constructors:) default, copy and move constructors are available;
 
-        tt(Assignment operators:) copy and move assignment operators declaring 
-            tt(SType) or any of the tt(%polymorphic) type-names as their
-            right-hand side operands;nl()
+        tt(Assignment operators:) copy and move assignment operators are
+            available;
 
         tt(operator bool() const), returns tt(true) if the object's tt(Tag__)
             value is valid. This operator returns tt(false) when its object
             was initialized by its default constructor or when a default
-            tt(SType) object is assigned to it. After reassigning a
+            tt(SType) object was assigned to it. After reassigning a
             non-default tt(SType) value to an tt(SType) object its tt(operator
             bool) will again return tt(true);nl()
-
-        tt(Tag__ tag() const), returns tt(Semantic<Tag__>)'s tt(Tag__)
-             value;nl()
-
-        tt(DataType const &get<tag>() const), where tt(tag) is a tt(Tag__)
-            value, returns a const reference to the semantic value stored
-            inside tt(Semantic<tag> (note: tt(const) attributes were added to
-            this member since bic() version 4.14.00).
 
         tt(void assign<tag>(Args &&...args)), where tt(tag) is a
             tt(Tag__) value, constructs a tt(Semantic<tag>) value from the
@@ -695,8 +686,26 @@ implementing polymorphic values.
             construction), and assigns this value to the current tt(SType)
             object.
 
+        tt(typename TagOf<tag>::type &get<tag>()). The template argument
+            tt(tag) must be a valid tt(Tag__) value. This member
+            returns a reference to the object's (modifiable) semantic value 
+            data.
+
+           When the option/directive tt(tag-mismatches on) was specified then
+            tt(get), when called from the generated tt(pars) function,
+            performs a run-time check whether the specified tag corresponds to
+            object's actual tt(Tag__) value. If a mismatch is observed, then
+            the parsing function aborts with a fatal error message.
+
+
         tt(void swap(SType &other)) swaps the current and other tt(SType)
             objects. 
+
+        tt(Tag__ tag() const), returns tt(Semantic<Tag__>)'s tt(Tag__)
+             value.  The returned value is only valid when
+             the tt(SType) object's tt(operator bool) returns tt(true);
+
+
     )
 
     Since bic() declares tt(typedef Meta__::SType STYPE__), polymorphic
