@@ -1,6 +1,6 @@
 #include "atdollar.ih"
 
-void AtDollar::setRefPatterns()     // text[0] == '('   ) (for emacs)
+void AtDollar::setRefPatterns()     // text[0] == '_'
 {
     switch (d_text[2])
     {

@@ -13,7 +13,7 @@ AtDollar::AtDollar(size_t blockPos, size_t lineNr, std::string const &text)
             setDollarPatterns();
         return;
 
-        case '(':                   // ) (for emacs's () matcher)
+        case '_':
             setRefPatterns();
         return;
 

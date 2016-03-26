@@ -86,33 +86,15 @@ NR      [[:digit:]]+
     @{NR}                   |
     "$$"                    |       // DD
     \$-?{NR}                |
-    "($$)"                  |       // refDD
-    "($"-?{NR}\)            |
+    "_$$"                   |       // refDD
+    "_$"-?{NR}              |
     "$$"\.?                 |       // DDm
     \$-?{NR}\.              |
     "$$->"                  |       // DDp
     \$-?{NR}"->"            |
-    "($<"{IDENT}">"-{NR}\)  |       // refDid_n
+    "_$<"{IDENT}">"-{NR}    |       // refDid_n
     "$<"{IDENT}">"-{NR}\.?  |
     "$<"{IDENT}">"-{NR}"->" d_block.atDollar(lineNr(), d_matched);
-
-/*
-    "$$"\.?                 |
-    "$$->"                  |
-    "($$)"                  |
-    "@@"                    d_block.dollar(lineNr(), d_matched);
-                            
-    @{NR}                   d_block.atIndex(lineNr(), d_matched);
-
-    \$-?{NR}                |
-    \$-?{NR}\.              |
-    \$-?{NR}"->"            |
-    "($"-?{NR}\)            d_block.dollarIndex(lineNr(), d_matched);
-
-    "$<"{IDENT}">"-{NR}"->" |
-    "$<"{IDENT}">"-{NR}\.?  |
-    "($<"{IDENT}">"-{NR}\)  d_block.IDindex(lineNr(), d_matched);
-*/
 
     .                       d_block(d_matched);
 }
