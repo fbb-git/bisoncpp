@@ -12,13 +12,13 @@ string Parser::returnUnion(AtDollar const &atd) const
         case AUTO:
             ret =   "." + 
                     (
-                        atd.returnValue() ?
+                        atd.dollarDollar() ?
                             d_rules.sType() : d_rules.sType(atd.nr())
                     );
         break;
 
         case EXPLICIT:
-            ret = "." + atd.id();
+            ret = "." + atd.tag();
         break;
     }
 

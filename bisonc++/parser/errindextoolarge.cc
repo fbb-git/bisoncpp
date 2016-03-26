@@ -2,7 +2,7 @@
 
 bool Parser::errIndexTooLarge(AtDollar const &atd, int elements) const
 {
-    if (atd.returnValue())
+    if (atd.dollarDollar())
         return false;
 
     int nElements = nComponents(elements);

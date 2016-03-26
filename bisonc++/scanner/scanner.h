@@ -28,7 +28,10 @@ class Scanner: public ScannerBase
                                 // 8 set.
 
     bool        d_include;      // set to true/false by lexer-actions
+
+//FBB: remove?
     bool        d_warnAssign;   // see warnAssign() and lexer
+
     char        d_commentChar[2];   // set to ' ' in `lexer' when C
                                 // comment without \n is matched,
                                 // otherwise set to \n. See
@@ -57,7 +60,7 @@ class Scanner: public ScannerBase
         void beginTypeSpec();
 
     private:
-        void warnAssign();
+//FBB        void warnAssign();
 
         void print();
         int lex__();

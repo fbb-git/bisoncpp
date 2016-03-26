@@ -6,8 +6,8 @@ std::ostream &operator<<(std::ostream &out, AtDollar const &atd)
             ", length: " << atd.d_length << ": " << 
             (atd.d_type == AtDollar::AT ? '@' : '$');
 
-    if (atd.d_id.length())
-        out << '<' << atd.d_id << '>';
+    if (atd.d_tag.length())
+        out << '<' << atd.d_tag << '>';
 
     if (atd.d_nr == numeric_limits<int>::max())
         out << '$';

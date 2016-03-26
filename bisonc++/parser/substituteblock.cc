@@ -6,6 +6,9 @@
 // If nElements is negative then this is a mid-action block, automatically
 // resulting in negative dollar indices
 
+// $-expressions in blocks are filled by the scanner, calling d_block.dollar
+// d_block.atIndex, d_block.dollarIndex, d_block.idIndex
+
 void Parser::substituteBlock(int nElements, Block &block)
 {
         // Look for special characters. Do this from the end of the
@@ -19,18 +22,19 @@ void Parser::substituteBlock(int nElements, Block &block)
     {
         switch (atd.type())
         {
-            case AtDollar::DOLLAR:
-                explicitReturn |= handleDollar(block, atd, nElements);
-            break;
-
             case AtDollar::AT:
                 handleAtSign(block, atd, nElements); 
             break;
 
-            case AtDollar::STYPE:
-                handleSTYPE(block, atd); 
-                explicitReturn = true;
+            case AtDollar::DEREF:
+            case AtDollar::DOLLAR:
+                explicitReturn |= handleDollar(block, atd, nElements);
             break;
+
+//FBB
+//            case AtDollar::DEREF:
+//                handleDeref(block, atd); 
+//            break;
         }
     }
                                 // the final block does not return a value

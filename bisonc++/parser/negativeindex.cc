@@ -2,10 +2,10 @@
 
 void Parser::negativeIndex(AtDollar const &atd) const
 {
-    if (not atd.id().empty())
+    if (not atd.tag().empty())
     {
         emsg << "rule " << &d_rules.lastProduction() << ":\n"
-            "\t\t<" << atd.id() << 
+            "\t\t<" << atd.tag() << 
             "> cannot be used for negative $-indices (" << atd.text() << 
             ')' << endl;
         return;

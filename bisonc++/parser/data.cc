@@ -20,6 +20,8 @@ char Parser::s_locationValue[] = "d_loc__";
 char const Parser::s_stype__[] = "STYPE__";
                                     // generic semantic value for POLYMORPHIC
 
+string const Parser::s_undefined{"<undefined>"};
+
 
 
 

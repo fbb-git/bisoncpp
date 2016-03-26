@@ -11,7 +11,7 @@ void Parser::handleAtSign(Block &block, AtDollar const &atd, int nElements)
         return;
 
     ostringstream os;
-    if (atd.returnValue())
+    if (atd.dollarDollar())
         os << s_locationValue;
     else
         os << s_locationValueStack << "[" << 

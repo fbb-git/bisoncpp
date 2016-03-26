@@ -4,12 +4,12 @@ Parser::SemTag Parser::semTag(char const *label, AtDollar const &atd,
                      bool (Parser::*testID)(std::string const &) const) const
 {
     string const &stype = 
-        atd.returnValue() ? 
+        atd.dollarDollar() ? 
             d_rules.sType()
         :
             d_rules.sType(atd.nr());      // get the rule/element's stype
 
-    string const *id = &atd.id();
+    string const *tag = &atd.tag();
 
     if (atd.nr() < 0)
     {
@@ -21,26 +21,23 @@ Parser::SemTag Parser::semTag(char const *label, AtDollar const &atd,
     if  // with polymorphic: warn if an untyped $-value is used
     (
         d_semType == POLYMORPHIC
-        &&                                       //id->empty()
-        not atd.returnValue() && stype.empty() && not atd.stype() 
+        &&                                       //tag->empty()
+        not atd.dollarDollar() && stype.empty()
     )
         warnUntaggedValue(atd);
 
 
     if (stype.empty() || stype == s_stype__)    // no rule stype
     {
-        if (atd.id().empty())                   // no explicit tag either
+        if (atd.tag().empty())                   // no explicit tag either
             return NONE;
         
-        if (atd.stype())                        // STYPE__ requested
-            return NONE;
-        
-        if ((this->*testID)(atd.id()))
+        if ((this->*testID)(atd.tag()))
             return EXPLICIT;
     }
     else if ((this->*testID)(stype))            // auto tag/field
     {
-        if (atd.id().empty())                   // but no explicit tag/field
+        if (atd.tag().empty())                   // but no explicit tag/field
         {
             if (atd.callsMember())
             {
@@ -50,10 +47,7 @@ Parser::SemTag Parser::semTag(char const *label, AtDollar const &atd,
             return AUTO;
         }
         
-        if (atd.stype())                        // ignoring auto tag/field
-            return NONE;
-        
-        if ((this->*testID)(atd.id()))          // tag/field override
+        if ((this->*testID)(atd.tag()))          // tag/field override
         {
             if (d_semType == POLYMORPHIC)
                 warnAutoOverride(atd);
@@ -63,23 +57,17 @@ Parser::SemTag Parser::semTag(char const *label, AtDollar const &atd,
     }
     else    // illegal stype
     {
-        if (atd.id().empty())                   // no explicit type, but 
-            id = &stype;                        // auto is illegal: set ptr.
-        else
+        if (atd.tag().empty())                   // no explicit type, but 
+            tag = &stype;                        // auto is illegal: set ptr.
+        else if ((this->*testID)(atd.tag()))
         {
-            if (atd.stype())                    // no explicit tag requested
-                return NONE;
-            
-            if ((this->*testID)(atd.id()))
-            {
-                if (d_semType == POLYMORPHIC)
-                    warnAutoOverride(atd);
+            if (d_semType == POLYMORPHIC)
+                warnAutoOverride(atd);
 
-                return EXPLICIT;
-            }
+            return EXPLICIT;
         }
     }
     
-    errNoSemantic(label, atd, *id);
+    errNoSemantic(label, atd, *tag);
     return NONE;
 }

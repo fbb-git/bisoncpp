@@ -31,7 +31,7 @@ void Parser::checkFirstType()
     if (idx > 0 && stype != prodStype) 
     {
         emsg << '`' << &prod << "':  type clash ($$: " << stype << ", $1: " <<
-                (prodStype.empty() ? "<undefined>"s : prodStype) <<
+                (prodStype.empty() ? s_undefined : prodStype) <<
                 " prevents auto-appending default action `$$ = $1'" << endl;
         return;
     }

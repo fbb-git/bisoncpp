@@ -1,17 +1,18 @@
 #include "atdollar.ih"
 
-    // $<ID>$ or $<ID>-?NR
+    // $<ID>-NR, ($<ID>-NR),
+    // $<ID>-NR.   
 
 AtDollar::AtDollar(Type type, size_t blockPos, size_t lineNr, 
-                    string const &text, string const &id, int nr)
+                    string const &text, string const &tag, int nr)
 :
     d_type(type),
     d_lineNr(lineNr),
     d_pos(blockPos),
     d_length(text.length()),
     d_text(text),
-    d_id(id.empty() ? "STYPE__" : id),
-    d_nr(nr),
-    d_member(false),
-    d_stype(d_id == "STYPE__")
-{}
+    d_tag(tag),
+    d_nr(nr)
+{
+    suffixAndMember();
+}

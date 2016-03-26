@@ -1,16 +1,16 @@
 #include "block.ih"
 
-    // called at @@, $$, $$. or $$( in a block
+    // // @@, $$, ($$), $$. or $$-> in a block
 
-void Block::dollar(size_t lineNr, string const &text, bool member)
+void Block::dollar(size_t lineNr, string const &text)
 {
     d_atDollar.push_back(
         AtDollar(
-            text.back() == '(' ?    AtDollar::STYPE  :
-            text[0] == '$' ?        AtDollar::DOLLAR : 
-                                    AtDollar::AT, 
+            text[0] == '@' ?    AtDollar::AT  :
+            text[0] == '$' ?    AtDollar::DOLLAR : 
+                                AtDollar::DEREF, 
             length(), lineNr, 
-            text, numeric_limits<int>::max(), member
+            text, numeric_limits<int>::max()
         )
     );
     d_usedDollarDollar |= text[0] == '$';

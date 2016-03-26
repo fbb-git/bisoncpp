@@ -34,6 +34,7 @@ class Parser: public ParserBase
         POLYMORPHIC
     };
 
+//FBB
     enum SemTag
     {
         NONE,
@@ -62,7 +63,7 @@ class Parser: public ParserBase
 
     Terminal::Association d_association;
 
-        // associations between type-identifiers and type-definitions of
+        // associations between tags (keys) and types (values) of
         // polymorphic semantic values
     std::unordered_map<std::string, std::string> d_polymorphic;
 
@@ -83,6 +84,8 @@ class Parser: public ParserBase
 
     static char const s_stype__[];  // generic semantic value for POLYMORPHIC
                                     
+    static std::string const s_undefined;
+
     public:
         Parser(Rules &rules);
         int parse();
@@ -90,6 +93,10 @@ class Parser: public ParserBase
         std::unordered_map<std::string, std::string> const &polymorphic() const;
 
     private:
+        std::string const &productionTag(int nr) const; // requires: nr > 0
+        void checkExplicitTag(AtDollar const &atd) const;
+//FBB        std::string callGet(AtDollar const &atd) const;
+
         void defaultAction() const;
         void warnMissingSemval() const;
 
@@ -143,7 +150,7 @@ class Parser: public ParserBase
                                         // block
         bool handleDollar(Block &block, AtDollar const &atd, int nElements);
 
-        void handleSTYPE(Block &block, AtDollar const &atd);
+//FBB        void handleDeref(Block &block, AtDollar const &atd);
 
         STYPE__ handleProductionElements(STYPE__ &first, 
                                          STYPE__ const &second);

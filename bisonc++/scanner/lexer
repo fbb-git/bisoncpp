@@ -77,26 +77,25 @@ NR      [[:digit:]]+
                     more();
                 }
 
-    "$$"[ \t\n]*=[ \t\n]*.      warnAssign();
+    // "$$"[ \t\n]*=[ \t\n]*.      warnAssign();
 
             // see: parser/substituteblock.cc
-    "$$("                   |
-    "$$"                    |
-    "@@"                    d_block.dollar(lineNr(), d_matched, false);
-                            
-    "$$."                   d_block.dollar(lineNr(), d_matched, true);
+
+    "$$"\.?                 |
+    "$$->"                  |
+    "($$)"                  |
+    "@@"                    d_block.dollar(lineNr(), d_matched);
                             
     @{NR}                   d_block.atIndex(lineNr(), d_matched);
 
-    \$-?{NR}                d_block.dollarIndex(lineNr(), d_matched, false);
+    \$-?{NR}                |
+    \${NR}\.                |
+    \${NR}"->"              |
+    "($"-?{NR}\)            d_block.dollarIndex(lineNr(), d_matched);
 
-    \$-?{NR}\.              d_block.dollarIndex(lineNr(), d_matched, true);
-
-    "$<>$"                  |
-    "$<"{IDENT}">$"         d_block.IDdollar(lineNr(), d_matched);
-
-    "$<>"-?{NR}             |
-    "$<"{IDENT}">"-?{NR}    d_block.IDindex(lineNr(), d_matched);
+    "$<"{IDENT}">"-{NR}"->" |
+    "$<"{IDENT}">"-{NR}\.?  |
+    "($<"{IDENT}">"-{NR}\)  d_block.IDindex(lineNr(), d_matched);
 
     .                       d_block(d_matched);
 }
