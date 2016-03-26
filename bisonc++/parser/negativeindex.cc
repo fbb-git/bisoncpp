@@ -12,7 +12,7 @@
 //    }
 //
 //    if (
-//        d_negativeDollarIndices 
+//        d_negativeDollarIndicesOK 
 //        || 
 //        d_semType == SINGLE 
 //        || 

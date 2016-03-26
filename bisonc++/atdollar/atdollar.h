@@ -59,10 +59,14 @@ class AtDollar
         size_t d_length;
         Pattern d_pattern;
         std::string d_tag;
+
+//FBB: remove:
         std::string d_suffix;   // when callsMember() == true: . or -> 
 
                                 // $$ or @@ if numeric_limits<int>::max()
         int d_nr = std::numeric_limits<int>::max(); 
+
+//FBB: remove:
         bool d_member = false;  // a member selector operator was used
 
 
@@ -98,9 +102,10 @@ class AtDollar
         size_t length() const;          // matched text length
         size_t lineNr() const;          // line nr in the grammar file
 //FBB        Action action() const;          // %type associated or not
-        bool callsMember() const;       // . was used -> .get required
+//FBB        bool callsMember() const;       // . was used -> .get required
         bool dollarDollar() const;      // true: $$ is being referred to
-        std::string const &suffix() const;  // if callsMember():  "." or "->"
+//FBB        std::string const &suffix() const;  // if callsMember():  "." or "->"
+        bool stackElement() const;
 
     private:
         void setAtPatterns();           // text[0] == '@'
@@ -112,10 +117,10 @@ class AtDollar
 
 };
 
-inline std::string const &AtDollar::suffix() const
-{
-    return d_suffix;
-}
+//inline std::string const &AtDollar::suffix() const
+//{
+//    return d_suffix;
+//}
         
 inline AtDollar::Pattern AtDollar::pattern() const
 {
@@ -133,10 +138,10 @@ inline int AtDollar::nr() const
     return d_nr;
 }
         
-inline bool AtDollar::callsMember() const
-{
-    return d_member;
-}
+//inline bool AtDollar::callsMember() const
+//{
+//    return d_member;
+//}
         
 inline bool AtDollar::dollarDollar() const
 {

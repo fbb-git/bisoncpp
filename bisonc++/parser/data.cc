@@ -30,20 +30,20 @@ bool (Parser::*Parser::s_single[])(int nElements, Block &block,
 //       locEl,    // An,      @nr
 //
 //       dval,     // DD,      $$
-//       vsp,      // Dn,      $nr
-//       vsp,      // D_,      $-nr
+//       svs,      // Dn,      $nr
+//       svs,      // D_,      $-nr
 //
 //       dval,     // refDD,   ($$)
-//       vsp,      // refDn,   ($nr)
-//       vsp,      // refD_,   ($-nr)
+//       svs,      // refDn,   ($nr)
+//       svs,      // refD_,   ($-nr)
 //
-//       dvalMem,  // DDm, 	$$.
-//       vspMem,   // Dnm,     $nr.
-//       vspMem,   // D_m,     $-nr.
+//       dvalMem,  // DDm,  $$.
+//       svsMem,   // Dnm,     $nr.
+//       svsMem,   // D_m,     $-nr.
 //
-//       dvalPtr,  // DDp, 	$$->
-//       vspPtr,   // Dnp,     $nr->
-//       vspPtr,   // D_p,     $-nr->
+//       dvalPtr,  // DDp,  $$->
+//       svsPtr,   // Dnp,     $nr->
+//       svsPtr,   // D_p,     $-nr->
 //
 //       err,      // refDt_   ($<TAG>-nr)
 //       err,      // Dt_m,    $<TAG>-nr.
@@ -57,20 +57,20 @@ bool (Parser::*Parser::s_union[])(int nElements, Block &block,
 //    locEl,      locEl,      // An,      @nr
 //
 //    dval,       dvalTag,    // DD,      $$
-//    vsp,        vspTag,     // Dn,      $nr
-//    vsp,        err,     vsp// D_,      $-nr
+//    svs,        svsTag,     // Dn,      $nr
+//    svs,        err,     svs// D_,      $-nr
 //
 //    dval,       dval,       // refDD,   ($$)
-//    vsp,        vsp,        // refDn,   ($nr)
-//    vsp,        vsp,        // refD_,   ($-nr)
+//    svs,        svs,        // refDn,   ($nr)
+//    svs,        svs,        // refD_,   ($-nr)
 //
-//    dvalMem,    dvalTagMem, // DDm, 	$$.
-//    vspMem,     vspTagMem,  // Dnm,     $nr.
-//    vspMem,     err,        // D_m,     $-nr.
+//    dvalMem,    dvalTagMem, // DDm,   $$.
+//    svsMem,     svsTagMem,  // Dnm,     $nr.
+//    svsMem,     err,        // D_m,     $-nr.
 //
-//    dvalPtr,    dvalTagPtr, // DDp, 	$$->
-//    vspPtr,     vspTagPtr,  // Dnp,     $nr->
-//    vspPtr,     err,        // D_p,     $-nr->
+//    dvalPtr,    dvalTagPtr, // DDp,   $$->
+//    svsPtr,     svsTagPtr,  // Dnp,     $nr->
+//    svsPtr,     err,        // D_p,     $-nr->
 //
 //    err,        err,        // refDt_   ($<TAG>-nr)
 //    err,        err,        // Dt_m,    $<TAG>-nr.
@@ -84,24 +84,24 @@ bool (Parser::*Parser::s_polymorphic[])(int nElements, Block &block,
       &Parser::locEl,      // An,      @nr
 
       &Parser::dval,       // DD,      $$
-      &Parser::vsp,        // Dn,      $nr
-      &Parser::vsp,        // D_,      $-nr
+      &Parser::svs,        // Dn,      $nr
+      &Parser::svs,        // D_,      $-nr
 
       &Parser::dvalRef,    // refDD,   ($$)
-      &Parser::vspRef,     // refDn,   ($nr)
+      &Parser::svsRef,     // refDn,   ($nr)
       &Parser::errNegative,// refD_,   ($-nr)
 
-      &Parser::dvalMem,    // DDm, 	  $$.
-      &Parser::vspMem,     // Dnm,     $nr.
+      &Parser::dvalMem,    // DDm,    $$.
+      &Parser::svsMem,     // Dnm,     $nr.
       &Parser::errNegative,// D_m,     $-nr.
 
-      &Parser::dvalPtr,    // DDp, 	  $$->
-      &Parser::vspPtr,     // Dnp,     $nr->
+      &Parser::dvalPtr,    // DDp,    $$->
+      &Parser::svsPtr,     // Dnp,     $nr->
       &Parser::errNegative,// D_p,     $-nr->
 
-      &Parser::vspTagRef,  // refDt_   ($<TAG>-nr)
-      &Parser::vspTagMem,  // Dt_m,    $<TAG>-nr.
-      &Parser::vspTagPtr,  // Dt_p     $<TAG>-nr->
+      &Parser::svsTagRef,  // refDt_   ($<TAG>-nr)
+      &Parser::svsTagMem,  // Dt_m,    $<TAG>-nr.
+      &Parser::svsTagPtr,  // Dt_p     $<TAG>-nr->
 };
 
 

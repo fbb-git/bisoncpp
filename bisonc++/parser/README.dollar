@@ -6,7 +6,7 @@ Negative $-index e.g,, ($-1, S<type>-1):
 -------------------------------------------------------------------------
 specification:      action:
 -------------------------------------------------------------------------
-    $-1             d_negativeDollarIndices  or SINGLE or no auto assoc: 
+    $-1             d_negativeDollarIndicesOK  or SINGLE or no auto assoc: 
                                                                 no action
                     else: warn STYPE__ is used
 
