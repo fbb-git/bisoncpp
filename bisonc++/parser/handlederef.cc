@@ -1,4 +1,4 @@
-#include "parser.ih"
+//#include "parser.ih"
 
 // See 'README.dollar' in this directory for a description of the actions
 // involved at these alternatives.

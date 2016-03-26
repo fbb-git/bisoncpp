@@ -39,21 +39,24 @@ class Block: private std::string
                                        // clears the previous block contents
         void open(size_t lineno, std::string const &source);
         bool close();
-                                                    // @@, $$, ($$), or $$.
-        void dollar(size_t lineNr, std::string const &matched); 
+
+        void atDollar(size_t lineNr, std::string const &text);
+     
+                                               // @@, $$, ($$), or $$.
+//FBB        void dollar(size_t lineNr, std::string const &matched); 
 
                                                     // @NR
-        void atIndex(size_t lineNr, std::string const &matched);
+//FBB        void atIndex(size_t lineNr, std::string const &matched);
 
                                                     // $-?NR, $NR. ($NR)
-        void dollarIndex(size_t lineNr, std::string const &matched);
+//FBB        void dollarIndex(size_t lineNr, std::string const &matched);
                                         
 //FBB OBSOLETE
 //        void IDdollar(size_t lineNr, std::string const &matched);   // $<ID>$
 
                                                     // $<ID>-NR, ($<ID>-NR),
                                                     // $<ID>-NR.   
-        void IDindex(size_t lineNr, std::string const &matched);    
+//FBB        void IDindex(size_t lineNr, std::string const &matched);    
 
         void operator+=(std::string const &text);
   

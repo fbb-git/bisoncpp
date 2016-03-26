@@ -20,25 +20,31 @@ void Parser::substituteBlock(int nElements, Block &block)
 
     for (auto &atd: ranger(block.rbeginAtDollar(), block.rendAtDollar()))
     {
-        switch (atd.type())
-        {
-            case AtDollar::AT:
-                handleAtSign(block, atd, nElements); 
-            break;
-
-            case AtDollar::DEREF:
-            case AtDollar::DOLLAR:
-                explicitReturn |= handleDollar(block, atd, nElements);
-            break;
-
-//FBB
-//            case AtDollar::DEREF:
-//                handleDeref(block, atd); 
-//            break;
-        }
+        if (not errIndexTooLarge(atd, nElements))
+            explicitReturn |= 
+                (this->*d_atDollar[atd.pattern()])(nElements, block, atd);
     }
-                                // the final block does not return a value
-                                // and has a semantic type
+//
+//    {
+//        switch (atd.type())
+//        {
+//            case AtDollar::AT:
+//                handleAtSign(block, atd, nElements); 
+//            break;
+//
+//            case AtDollar::DEREF:
+//            case AtDollar::DOLLAR:
+//                explicitReturn |= handleDollar(block, atd, nElements);
+//            break;
+//
+////FBB
+////            case AtDollar::DEREF:
+////                handleDeref(block, atd); 
+////            break;
+//        }
+//    }
+//                                // the final block does not return a value
+//                                // and has a semantic type
     if (not explicitReturn)
         warnMissingSemval();
 }

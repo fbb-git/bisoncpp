@@ -6,10 +6,7 @@ Parser::Parser(Rules &rules)
     d_options(Options::instance()),
     d_scanner(d_arg[0]),
     d_matched(d_scanner.matched()),
-    d_rules(rules),
-    d_typeDirective(false),
-    d_semType(SINGLE),
-    d_negativeDollarIndices(false)
+    d_rules(rules)
 {
     d_options.setMatched(d_matched);
     setDebug(d_arg.option(0, "own-debug"));

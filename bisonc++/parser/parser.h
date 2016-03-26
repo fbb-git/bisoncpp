@@ -57,9 +57,12 @@ class Parser: public ParserBase
 
     std::string d_expect;
     std::string d_field;                // %union field in <type> specs.
-    bool        d_typeDirective;        // true following %type
-    SemType     d_semType;              // see set{union,polymorphic}decl.cc
-    bool        d_negativeDollarIndices;
+    bool        d_typeDirective = false;// true following %type
+    bool        d_negativeDollarIndices = false;
+
+    SemType     d_semType = SINGLE;     // see set{union,polymorphic}decl.cc
+    bool (Parser::**d_atDollar)(int nElements, Block &block, 
+                                            AtDollar const &atd) = s_single;
 
     Terminal::Association d_association;
 
@@ -86,6 +89,13 @@ class Parser: public ParserBase
                                     
     static std::string const s_undefined;
 
+    static bool (Parser::*s_single[])(int nElements, Block &block, 
+                                                        AtDollar const &atd);
+    static bool (Parser::*s_union[])(int nElements, Block &block, 
+                                                        AtDollar const &atd);
+    static bool (Parser::*s_polymorphic[])(int nElements, Block &block, 
+                                                        AtDollar const &atd);
+
     public:
         Parser(Rules &rules);
         int parse();
@@ -93,12 +103,43 @@ class Parser: public ParserBase
         std::unordered_map<std::string, std::string> const &polymorphic() const;
 
     private:
+        void substituteBlock(int nElements, Block &block);
+
+        int indexToOffset(int idx, int nElements) const;
+        std::string checkRuleTag(AtDollar const &atd) const;
+        bool checkExistingTag(AtDollar const &atd) const;
+        bool errIndexTooLarge(AtDollar const &atd, int nElements) const;
+        void warnForceLSP(size_t lineNr) const;
+        void warnMissingSemval() const;
+
+        bool dval(int nElements, Block &block, AtDollar const &atd);
+        bool dvalMem(int nElements, Block &block, AtDollar const &atd);
+        bool dvalPtr(int nElements, Block &block, AtDollar const &atd);
+        bool dvalRef(int nElements, Block &block, AtDollar const &atd);
+        bool dvalReplace(Block &block, AtDollar const &atd, 
+                                                    char const *suffix);
+        bool errNegative(int nElements, Block &block, AtDollar const &atd);
+        bool loc(int nElements, Block &block, AtDollar const &atd);
+        bool locEl(int nElements, Block &block, AtDollar const &atd);
+        bool vsp(int nElements, Block &block, AtDollar const &atd);
+        bool vspMem(int nElements, Block &block, AtDollar const &atd);
+        bool vspPtr(int nElements, Block &block, AtDollar const &atd);
+        bool vspRef(int nElements, Block &block, AtDollar const &atd);
+        bool vspReplace(int nElements, Block &block, AtDollar const &atd, 
+                                                    char const *suffix);
+        bool vspTagMem(int nElements, Block &block, AtDollar const &atd);
+        bool vspTagPtr(int nElements, Block &block, AtDollar const &atd);
+        bool vspTagRef(int nElements, Block &block, AtDollar const &atd);
+        bool vspTagReplace(int nElements, Block &block, AtDollar const &atd, 
+                                                    char const *suffix);
+
+
         std::string const &productionTag(int nr) const; // requires: nr > 0
-        void checkExplicitTag(AtDollar const &atd) const;
+
+//FBB        void checkExplicitTag(AtDollar const &atd) const;
 //FBB        std::string callGet(AtDollar const &atd) const;
 
         void defaultAction() const;
-        void warnMissingSemval() const;
 
         void constructorChecks() const;
         void warnTagMismatches() const;
@@ -111,16 +152,16 @@ class Parser: public ParserBase
         void checkEmptyBlocktype();
         void checkFirstType();
 
-        bool noID(std::string const &) const;
-        bool idOK(std::string const &) const;
-        bool findTag(std::string const &tag) const;
+//FBB        bool noID(std::string const &) const;
+//FBB        bool idOK(std::string const &) const;
+//FBB        bool findTag(std::string const &tag) const;
 
-        void returnSingle(AtDollar const &atd) const;
-        std::string returnUnion(AtDollar const &atd) const;
-        std::string returnPolymorphic(AtDollar const &atd) const;
+//FBB        void returnSingle(AtDollar const &atd) const;
+//FBB        std::string returnUnion(AtDollar const &atd) const;
+//FBB        std::string returnPolymorphic(AtDollar const &atd) const;
  
-        SemTag semTag(char const *label, AtDollar const &atd, 
-                     bool (Parser::*testID)(std::string const &) const) const;
+//FBB        SemTag semTag(char const *label, AtDollar const &atd, 
+//FBB              bool (Parser::*testID)(std::string const &) const) const;
 
 
         Symbol *defineNonTerminal(std::string const &name, 
@@ -143,12 +184,12 @@ class Parser: public ParserBase
                                         // handles a location-value stack
                                         // reference (@) in a received action 
                                         // block
-        void handleAtSign(Block &block, AtDollar const &atd, int nElements);
+//FBB   void handleAtSign(Block &block, AtDollar const &atd, int nElements);
 
                                         // handles a semantic-value stack
                                         // reference ($) in a received action 
                                         // block
-        bool handleDollar(Block &block, AtDollar const &atd, int nElements);
+//FBB     bool handleDollar(Block &block, AtDollar const &atd, int nElements);
 
 //FBB        void handleDeref(Block &block, AtDollar const &atd);
 
@@ -158,7 +199,6 @@ class Parser: public ParserBase
 
 
         void installAction(Block &block);
-        int indexToOffset(int idx, int nElements) const;
 
         void multiplyDefined(Symbol const *sp);
 
@@ -167,17 +207,15 @@ class Parser: public ParserBase
         std::string nextHiddenName();
 
             // may generate error or warning:
-        void negativeIndex(AtDollar const &atd) const;
+//FBB        void negativeIndex(AtDollar const &atd) const;
 
-        void warnAutoOverride(AtDollar const &atd) const;
-        void warnAutoIgnored(char const *typeOrField, 
-                             AtDollar const &atd) const;
-        void warnUntaggedValue(AtDollar const &atd) const;
+//FBB        void warnAutoOverride(AtDollar const &atd) const;
+//FBB        void warnAutoIgnored(char const *typeOrField, 
+//                             AtDollar const &atd) const;
+//FBB        void warnUntaggedValue(AtDollar const &atd) const;
 
-        // generating emsgs:
-        bool errIndexTooLarge(AtDollar const &atd, int nElements) const;
-        void errNoSemantic(char const *label, AtDollar const &atd,
-                                              std::string const &id) const;
+//        void errNoSemantic(char const *label, AtDollar const &atd,
+// FBB?                                              std::string const &id) const;
 
         void setStart();
         void setPolymorphicDecl();
@@ -189,12 +227,10 @@ class Parser: public ParserBase
 
         NonTerminal *requireNonTerminal(std::string const &name);
 
-        void substituteBlock(int nElements, Block &block);
-
                                         // saves the default $1 value
                                         // at the beginning of a mid-rule
                                         // action block (in substituteBlock)
-        void saveDollar1(Block &block, int offset);
+//FBB        void saveDollar1(Block &block, int offset);
 
 
         Symbol *useSymbol();
