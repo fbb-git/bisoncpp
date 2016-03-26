@@ -26,28 +26,28 @@ string const Parser::s_undefined{"<undefined>"};
 bool (Parser::*Parser::s_single[])(int nElements, Block &block, 
                                                     AtDollar const &atd) = 
 {
-//       loc,      // AA,      @@
-//       locEl,    // An,      @nr
-//
-//       dval,     // DD,      $$
-//       svs,      // Dn,      $nr
-//       svs,      // D_,      $-nr
-//
-//       dval,     // refDD,   ($$)
-//       svs,      // refDn,   ($nr)
-//       svs,      // refD_,   ($-nr)
-//
-//       dvalMem,  // DDm,  $$.
-//       svsMem,   // Dnm,     $nr.
-//       svsMem,   // D_m,     $-nr.
-//
-//       dvalPtr,  // DDp,  $$->
-//       svsPtr,   // Dnp,     $nr->
-//       svsPtr,   // D_p,     $-nr->
-//
-//       err,      // refDt_   ($<TAG>-nr)
-//       err,      // Dt_m,    $<TAG>-nr.
-//       err,      // Dt_p     $<TAG>-nr->
+       &Parser::loc,            // AA,      @@
+       &Parser::locEl,          // An,      @nr
+                                
+       &Parser::dval,           // DD,      $$
+       &Parser::svs,            // Dn,      $nr
+       &Parser::svs,            // D_,      $-nr
+                                
+       &Parser::errNoRef,       // refDD,   _$$
+       &Parser::errNoRef,       // refDn,   _$nr
+       &Parser::errNoRef,       // refD_,   _$-nr
+                                
+       &Parser::dvalDirectMem,  // DDm,     $$.
+       &Parser::svsDirectMem,   // Dnm,     $nr.
+       &Parser::svsDirectMem,   // D_m,     $-nr.
+                                
+       &Parser::dvalDirectPtr,  // DDp,     $$->
+       &Parser::svsDirectPtr,   // Dnp,     $nr->
+       &Parser::svsDirectPtr,   // D_p,     $-nr->
+                                
+       &Parser::errNoRef,       // refDt_   _$<TAG>-nr
+       &Parser::errNoTag,       // Dt_m,    $<TAG>-nr.
+       &Parser::errNoTag,       // Dt_p     $<TAG>-nr->
 };
 
 bool (Parser::*Parser::s_union[])(int nElements, Block &block, 
@@ -87,19 +87,19 @@ bool (Parser::*Parser::s_polymorphic[])(int nElements, Block &block,
       &Parser::svs,        // Dn,      $nr
       &Parser::svs,        // D_,      $-nr
 
-      &Parser::dvalRef,    // refDD,   ($$)
-      &Parser::svsRef,     // refDn,   ($nr)
-      &Parser::errNegative,// refD_,   ($-nr)
+      &Parser::dvalRef,    // refDD,   _$$
+      &Parser::svsRef,     // refDn,   _$nr
+      &Parser::errNegative,// refD_,   _$-nr
 
-      &Parser::dvalMem,    // DDm,    $$.
+      &Parser::dvalMem,    // DDm,     $$.
       &Parser::svsMem,     // Dnm,     $nr.
       &Parser::errNegative,// D_m,     $-nr.
 
-      &Parser::dvalPtr,    // DDp,    $$->
+      &Parser::dvalPtr,    // DDp,     $$->
       &Parser::svsPtr,     // Dnp,     $nr->
       &Parser::errNegative,// D_p,     $-nr->
 
-      &Parser::svsTagRef,  // refDt_   ($<TAG>-nr)
+      &Parser::svsTagRef,  // refDt_   _$<TAG>-nr
       &Parser::svsTagMem,  // Dt_m,    $<TAG>-nr.
       &Parser::svsTagPtr,  // Dt_p     $<TAG>-nr->
 };

@@ -103,7 +103,8 @@ class Parser: public ParserBase
         std::unordered_map<std::string, std::string> const &polymorphic() const;
 
     private:
-        std::ostream &stdWarning(AtDollar const &atd) const;
+        std::ostream &stdWmsg(AtDollar const &atd) const;
+        std::ostream &stdEmsg(AtDollar const &atd) const;
         void warnNegativeDollarIndices(AtDollar const &atd) const;
 
         int indexToOffset(int idx, int nElements) const;
@@ -117,26 +118,48 @@ class Parser: public ParserBase
 
 
         bool dval(int nElements, Block &block, AtDollar const &atd);
+
+        bool dvalDirectMem(int nElements, Block &block, AtDollar const &atd);
+        bool dvalDirectPtr(int nElements, Block &block, AtDollar const &atd);
+
+        bool dvalDirectReplace(Block &block, AtDollar const &atd, 
+                                                        char const *suffix);
+
         bool dvalMem(int nElements, Block &block, AtDollar const &atd);
         bool dvalPtr(int nElements, Block &block, AtDollar const &atd);
         bool dvalRef(int nElements, Block &block, AtDollar const &atd);
+
         bool dvalReplace(Block &block, AtDollar const &atd, 
                                                     char const *suffix);
+
         bool errNegative(int nElements, Block &block, AtDollar const &atd);
+        bool errNoRef(int nElements, Block &block, AtDollar const &atd);
+        bool errNoTag(int nElements, Block &block, AtDollar const &atd);
+
         bool loc(int nElements, Block &block, AtDollar const &atd);
         bool locEl(int nElements, Block &block, AtDollar const &atd);
 
         std::string svsElement(int nElements, AtDollar const &ard) const;
 
         bool svs(int nElements, Block &block, AtDollar const &atd);
+
+        bool svsDirectMem(int nElements, Block &block, AtDollar const &atd);
+        bool svsDirectPtr(int nElements, Block &block, AtDollar const &atd);
+        bool svsDirectReplace(int nElements, Block &block, 
+                              AtDollar const &atd, char const *suffix);
+
         bool svsMem(int nElements, Block &block, AtDollar const &atd);
+
         bool svsPtr(int nElements, Block &block, AtDollar const &atd);
         bool svsRef(int nElements, Block &block, AtDollar const &atd);
+
         bool svsReplace(int nElements, Block &block, AtDollar const &atd, 
                                                     char const *suffix);
+
         bool svsTagMem(int nElements, Block &block, AtDollar const &atd);
         bool svsTagPtr(int nElements, Block &block, AtDollar const &atd);
         bool svsTagRef(int nElements, Block &block, AtDollar const &atd);
+
         bool svsTagReplace(int nElements, Block &block, AtDollar const &atd, 
                                                     char const *suffix);
 
