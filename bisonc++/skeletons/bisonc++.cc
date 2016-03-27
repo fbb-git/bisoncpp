@@ -203,8 +203,9 @@ try
     if (d_token__ != _UNDETERMINED_)
         pushToken__(d_token__);     // save an already available token
 
-$insert 4 debug "executeAction(): of rule " << production +
+$insert 4 debug "executeAction of rule " << production +
 $insert 4 debug  stype__(", semantic [TOS]: ", d_val__) << " ..."
+
     switch (production)
     {
 $insert 8 actioncases

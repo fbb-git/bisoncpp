@@ -169,7 +169,7 @@ _symbol:
     identifier
     optNumber
     {                                               // try to define as 
-        defineTokenName(_$1, _$2);                  // symbolic terminal
+        defineTokenName($1, $2);                    // symbolic terminal
     }
 ;
 
@@ -266,7 +266,7 @@ _typespec:
 _polyspec:
     identifier _typespec identifier     // identifier holds the typespec
     {
-        addPolymorphic(_$1, _$3);
+        addPolymorphic($1, $3);
     }
 ;
 
@@ -448,7 +448,7 @@ _directiveSpec:
     _pushPrecedence        // make sure %token precedences are zero
     _symbols
     {
-        Terminal::set_sPrecedence(_$3);
+        Terminal::set_sPrecedence($3);
     }
 |
     _type

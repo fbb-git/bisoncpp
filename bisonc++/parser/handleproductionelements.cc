@@ -3,9 +3,9 @@
 Parser::STYPE__ Parser::handleProductionElements(STYPE__ &first, 
                                                  STYPE__ const &second)
 {
-    if (!first)         // the first PTag was a %prec specification
+    if (not first.valid())      // the first PTag was a %prec specification
         return second;  
-    if (!second)        // the second PTag was a %prec specification:
+    if (not second.valid())     // the second PTag was a %prec specification:
         return first;   // postpone handling of first
 
         // maybe also when currentRule == 0 ? See addProduction
