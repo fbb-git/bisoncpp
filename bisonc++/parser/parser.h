@@ -61,8 +61,16 @@ class Parser: public ParserBase
     bool        d_negativeDollarIndicesOK = false;
 
     SemType     d_semType = SINGLE;     // see set{union,polymorphic}decl.cc
-    bool (Parser::**d_atDollar)(int nElements, Block &block, 
-                                            AtDollar const &atd) = s_single;
+
+        // ADfun: pointer to member function handling @ and $ constructions
+    typedef bool (Parser::*ADfun)
+                        (int nElements, Block &block, AtDollar const &atd);
+
+        // ADmap: unordered map returning a function given an 
+        //                                              AtDollar::Pattern
+    typedef std::unordered_map<int, ADfun> ADmap;
+
+    ADmap *d_atDollar = &s_single;
 
     Terminal::Association d_association;
 
@@ -89,12 +97,10 @@ class Parser: public ParserBase
                                     
     static std::string const s_undefined;
 
-    static bool (Parser::*s_single[])(int nElements, Block &block, 
-                                                        AtDollar const &atd);
-    static bool (Parser::*s_union[])(int nElements, Block &block, 
-                                                        AtDollar const &atd);
-    static bool (Parser::*s_polymorphic[])(int nElements, Block &block, 
-                                                        AtDollar const &atd);
+
+    static ADmap s_single;
+    static ADmap s_union;
+    static ADmap s_polymorphic;
 
     public:
         Parser(Rules &rules);
@@ -204,7 +210,7 @@ class Parser: public ParserBase
         void setExpectedConflicts();
         void setLocationDecl();
         void setNegativeDollarIndices();
-        void setPrecedence(int type);
+        void setPrecedence(size_t type);
         void setUnionDecl();
                                         
 

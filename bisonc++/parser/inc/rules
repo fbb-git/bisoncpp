@@ -29,7 +29,7 @@ _productionElement:
     PREC
     _precSpec
     {
-        setPrecedence(_$2);
+        setPrecedence($2);
         $$ = STYPE__{};
     }
 ;
@@ -82,7 +82,7 @@ _ruleName:
     identifier
     ':'
     {
-        openRule(_$1);
+        openRule($1);
     }
 ;
 

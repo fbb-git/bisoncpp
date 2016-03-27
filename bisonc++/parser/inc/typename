@@ -3,6 +3,6 @@ typename:
     identifier
     '>'
     {
-        d_field = _$2; 
+        d_field = static_cast<std::string const &>($2); 
     }
 ;

@@ -80,19 +80,19 @@ NR      [[:digit:]]+
     // "$$"[ \t\n]*=[ \t\n]*.      warnAssign();
 
             // see: parser/substituteblock.cc
+    // "_$$"                   |       // refDD
+    // "_$"-?{NR}              |
+    // "_$<"{IDENT}">"-{NR}    |       // refDid_n
 
                                 // AtDollar Pattern:
     "@@"                    |       // AA
     @{NR}                   |
     "$$"                    |       // DD
     \$-?{NR}                |
-    "_$$"                   |       // refDD
-    "_$"-?{NR}              |
     "$$"\.?                 |       // DDm
     \$-?{NR}\.              |
     "$$->"                  |       // DDp
     \$-?{NR}"->"            |
-    "_$<"{IDENT}">"-{NR}    |       // refDid_n
     "$<"{IDENT}">"-{NR}\.?  |
     "$<"{IDENT}">"-{NR}"->" d_block.atDollar(lineNr(), d_matched);
 

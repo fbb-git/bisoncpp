@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-void Parser::setPrecedence(int type)
+void Parser::setPrecedence(size_t type)
 {
     Symbol *sp = 0;     // to prevent `sp uninitialized' warning by the
                         // compiler 

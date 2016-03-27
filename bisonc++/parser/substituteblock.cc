@@ -22,7 +22,7 @@ void Parser::substituteBlock(int nElements, Block &block)
     {
         if (not errIndexTooLarge(atd, nElements))
             explicitReturn |= 
-                (this->*d_atDollar[atd.pattern()])(nElements, block, atd);
+                (this->*(*d_atDollar)[atd.pattern()])(nElements, block, atd);
     }
 //
 //    {
