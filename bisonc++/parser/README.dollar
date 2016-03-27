@@ -1,3 +1,78 @@
+Single:
+              AtDollar
+              Pattern   represents:
+------------------------------------
+$$          -   DD      d_val           
+_$$         -   refDD   d_val
+$$.         -   DDm     d_val.
+$$->        -   DDp     d_val->
+            
+$nr         -   Dn      d_vsp[idx]      
+_$nr        -   refDn   d_vsp[idx]
+$nr.        -   Dnm     d_vsp[idx].
+$nr->       -   Dnp     d_vsp[idx]->
+            
+$-nr        -   D_      d_vsp[idx]      
+_$-nr       -   refD_   d_vsp[idx]
+$-nr.       -   D_m     d_vsp[idx].
+$-nr->      -   D_p     d_vsp[idx]->
+            
+$<TAG>-nr   -   Dt_     err
+$<TAG>-nr.  -   Dt_m    err        
+$<TAG>-nr-> -   Dt_p    err
+--------------------------------------
+
+Unions:
+                                   represents:
+              AtDollar  ---------------------------------
+              Pattern   tagged:                 untagged:       x =
+-------------------------------------------------------------------------
+$$          -   DD      d_val.TAG               d_val           d_val
+_$$         -   refDD   d_val                   d_val
+$$.         -   DDm     d_val.TAG.              d_val.
+$$->        -   DDp     d_val.TAG->             d_val->
+            
+$nr         -   Dn      d_vsp[idx].TAG          d_vsp[idx]      d_vsp[idx]
+_$nr        -   refDn   d_vsp[idx]              d_vsp[idx]
+$nr.        -   Dnm     d_vsp[idx].TAG.         d_vsp[idx].
+$nr->       -   Dnp     d_vsp[idx].TAG->        d_vsp[idx]->
+            
+$-nr        -   D_      d_vsp[idx]              d_vsp[idx]      d_vsp[idx]
+_$-nr       -   refD_   d_vsp[idx]              d_vsp[idx]
+$-nr.       -   D_m     d_vsp[idx].             d_vsp[idx].
+$-nr->      -   D_p     d_vsp[idx]->            d_vsp[idx]->
+            
+$<TAG>-nr   -   Dt_     d_vsp[idx].TAG
+$<TAG>-nr.  -   Dt_m    d_vsp[idx].TAG.         
+$<TAG>-nr-> -   Dt_p    d_vsp[idx].TAG->
+
+
+Polymorphic:
+                                   represents:
+              AtDollar  ---------------------------------
+              Pattern       tagged:             untagged:       x =
+-----------------------------------------------------------------------------
+$$          -   DD      d_val.get<TAG>()        d_val           d_val
+_$$         -   refDD   d_val                   d_val
+$$.         -   DDm     d_val.get<TAG>().       d_val.
+$$->        -   DDp     d_val.get<TAG>()->      d_val->
+            
+$nr         -   Dn      d_vsp[idx].get<TAG>()   d_vsp[idx]      d_vsp[idx]
+_$nr        -   refDn   d_vsp[idx]              d_vsp[idx]
+$nr.        -   Dnm     d_vsp[idx].get<TAG>().  d_vsp[idx].
+$nr->       -   Dnp     d_vsp[idx].get<TAG>()-> d_vsp[idx]->
+            
+$-nr        -   D_      d_vsp[idx]              d_vsp[idx]      d_vsp[idx]
+_$-nr       -   refD_   d_vsp[idx]              d_vsp[idx]
+$-nr.       -   D_m     d_vsp[idx].             d_vsp[idx].
+$-nr->      -   D_p     d_vsp[idx]->            d_vsp[idx]->
+            
+$<TAG>-nr   -   Dt_     d_vsp[idx].get<TAG>()   
+$<TAG>-nr.  -   Dt_m    d_vsp[idx].get<TAG>().  
+$<TAG>-nr-> -   Dt_p    d_vsp[idx].get<TAG>()-> 
+
+
+
 
 Handling $-specifications: see semtag.cc
 

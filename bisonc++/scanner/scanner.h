@@ -61,6 +61,7 @@ class Scanner: public ScannerBase
 
     private:
 //FBB        void warnAssign();
+        void assignment();
 
         void print();
         int lex__();

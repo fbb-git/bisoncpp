@@ -77,21 +77,24 @@ NR      [[:digit:]]+
                     more();
                 }
 
-    // "$$"[ \t\n]*=[ \t\n]*.      warnAssign();
 
-            // see: parser/substituteblock.cc
-    // "_$$"                   |       // refDD
-    // "_$"-?{NR}              |
+    // negative dollar indices with tag indicate a .get request.
+    // there is no reference option:
     // "_$<"{IDENT}">"-{NR}    |       // refDid_n
 
-                                // AtDollar Pattern:
-    "@@"                    |       // AA
+            // see: parser/substituteblock.cc
+            // AtDollar Pattern:
+    "$$"[ \t\n]*=           |       // assignments are refDD or refD_
+    "$"-?{NR}[ \t\n]*=      assignment();
+ 
+    @@                      |
     @{NR}                   |
-    "$$"                    |       // DD
+    "_$$"                   |       
+    "$$"\.?                 |
+    "$$->"                  |
+    "_$"-?{NR}              |
     \$-?{NR}                |
-    "$$"\.?                 |       // DDm
     \$-?{NR}\.              |
-    "$$->"                  |       // DDp
     \$-?{NR}"->"            |
     "$<"{IDENT}">"-{NR}\.?  |
     "$<"{IDENT}">"-{NR}"->" d_block.atDollar(lineNr(), d_matched);

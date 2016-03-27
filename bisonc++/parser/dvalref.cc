@@ -2,5 +2,6 @@
 
 bool Parser::dvalRef(int nElements, Block &block, AtDollar const &atd)
 {
-    return dvalReplace(block, atd, "");
+    block.replace(atd.pos(), atd.length(), s_semanticValue);
+    return true;
 }

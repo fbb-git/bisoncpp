@@ -51,9 +51,9 @@ Parser::ADmap Parser::s_single =
 
 Parser::ADmap Parser::s_union =
 {
-//    loc,        loc,        // AA,      @@
-//    locEl,      locEl,      // An,      @nr
-//
+       {AtDollar::AA, &Parser::loc},            // @@
+       {AtDollar::An, &Parser::locEl},          // @nr
+
 //    dval,       dvalTag,    // DD,      $$
 //    svs,        svsTag,     // Dn,      $nr
 //    svs,        err,     svs// D_,      $-nr
@@ -77,28 +77,28 @@ Parser::ADmap Parser::s_union =
 
 Parser::ADmap Parser::s_polymorphic =
 {
-      {AtDollar::AA, &Parser::loc},        	    // @@
-      {AtDollar::An, &Parser::locEl},      	    // @nr
-                           	    
-      {AtDollar::DD, &Parser::dval},       	    // $$
-      {AtDollar::Dn, &Parser::svs},        	    // $nr
-      {AtDollar::D_, &Parser::svs},        	    // $-nr
-                           	    
-//      {AtDollar::refDD, &Parser::dvalRef},    	    // _$$
-//      {AtDollar::refDn, &Parser::svsRef},     	    // _$nr
-//      {AtDollar::refD_, &Parser::errNegative},	    // _$-nr
-                           	    
-      {AtDollar::DDm, &Parser::dvalMem},    	    // $$.
-      {AtDollar::Dnm, &Parser::svsMem},     	    // $nr.
-      {AtDollar::D_m, &Parser::errNegative},	    // $-nr.
-                           	    
-      {AtDollar::DDp, &Parser::dvalPtr},    	    // $$->
-      {AtDollar::Dnp, &Parser::svsPtr},     	    // $nr->
-      {AtDollar::D_p, &Parser::errNegative},	    // $-nr->
-                           	    
-//      {AtDollar::refDt_, &Parser::svsTagRef},  	    // _$<TAG>-nr
-      {AtDollar::Dt_m, &Parser::svsTagMem},  	    // $<TAG>-nr.
-      {AtDollar::Dt_p, &Parser::svsTagPtr},  	    // $<TAG>-nr->
+      {AtDollar::AA, &Parser::loc},             // @@
+      {AtDollar::An, &Parser::locEl},           // @nr
+                                
+      {AtDollar::DD, &Parser::dval},            // $$
+      {AtDollar::Dn, &Parser::svs},             // $nr
+      {AtDollar::D_, &Parser::errNegative},     // $-nr
+                                
+      {AtDollar::refDD, &Parser::dvalRef},       // _$$
+      {AtDollar::refDn, &Parser::svsRef},        // _$nr
+      {AtDollar::refD_, &Parser::svsRef},        // _$-nr
+                                
+      {AtDollar::DDm, &Parser::dvalMem},            // $$.
+      {AtDollar::Dnm, &Parser::svsMem},             // $nr.
+      {AtDollar::D_m, &Parser::errNegative},        // $-nr.
+                                
+      {AtDollar::DDp, &Parser::dvalPtr},            // $$->
+      {AtDollar::Dnp, &Parser::svsPtr},             // $nr->
+      {AtDollar::D_p, &Parser::errNegative},        // $-nr->
+                                
+//      {AtDollar::refDt_, &Parser::svsTagRef},         // _$<TAG>-nr
+      {AtDollar::Dt_m, &Parser::svsTagMem},         // $<TAG>-nr.
+      {AtDollar::Dt_p, &Parser::svsTagPtr},         // $<TAG>-nr->
 };
 
 
