@@ -119,7 +119,8 @@ class Parser: public ParserBase
         void warnNegativeDollarIndices(AtDollar const &atd) const;
 
         int indexToOffset(int idx, int nElements) const;
-        bool checkExistingTag(AtDollar const &atd) const;
+        bool existingTag(AtDollar const &atd) const;    // false and emsg if
+                                                        // not an existing tag
 
         bool errNoTag(int nElements, Block &block, AtDollar const &atd);
         bool errIndexTooLarge(AtDollar const &atd, int nElements) const;

@@ -1,10 +1,12 @@
 #include "parser.ih"
 
-bool Parser::svsPolyTagReplace(int nElements, Block &block,AtDollar 
-                                const &atd, char const *suffix)
+bool Parser::svsPolyTagReplace(int nElements, Block &block,
+                                AtDollar const &atd, char const *suffix)
 {
-    block.replace(atd.pos(), atd.length(), 
+    if (existingTag(atd))
+        block.replace(atd.pos(), atd.length(), 
             svsElement(nElements, atd) + 
-                            ".get<Tag__::" + atd.tag() + ">()" +suffix);
+           ".get<Tag__::" + atd.tag() + ">()" + suffix
+        );
     return false;
 }
