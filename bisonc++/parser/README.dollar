@@ -1,78 +1,87 @@
+
 Single:
-              AtDollar
-              Pattern   represents:
-------------------------------------
-$$          -   DD      d_val           
-_$$         -   refDD   d_val
-$$.         -   DDm     d_val.
-$$->        -   DDp     d_val->
+              AtDollar                      handler:
+              Pattern   represents:         (empty: see up)
+------------------------------------------------------------------
+$$          -   DD      d_val               dval
+_$$         -   refDD   d_val               dval       
+$$.         -   DDm     d_val.              dvalMem
+$$->        -   DDp     d_val->             dvalPtr
             
-$nr         -   Dn      d_vsp[idx]      
-_$nr        -   refDn   d_vsp[idx]
-$nr.        -   Dnm     d_vsp[idx].
-$nr->       -   Dnp     d_vsp[idx]->
+$nr         -   Dn      d_vsp[idx]          dvsp        
+_$nr        -   refDn   d_vsp[idx]          dvsp        
+$nr.        -   Dnm     d_vsp[idx].         svsMem
+$nr->       -   Dnp     d_vsp[idx]->        svsPtr
             
-$-nr        -   D_      d_vsp[idx]      
-_$-nr       -   refD_   d_vsp[idx]
-$-nr.       -   D_m     d_vsp[idx].
-$-nr->      -   D_p     d_vsp[idx]->
+$-nr        -   D_      d_vsp[idx]          dvsp        
+_$-nr       -   refD_   d_vsp[idx]          dvsp        
+$-nr.       -   D_m     d_vsp[idx].         svsMem
+$-nr->      -   D_p     d_vsp[idx]->        svsPtr
             
-$<TAG>-nr   -   Dt_     err
+$<TAG>-nr   -   Dt_     err                 errNoTag
 $<TAG>-nr.  -   Dt_m    err        
 $<TAG>-nr-> -   Dt_p    err
---------------------------------------
+-----------------------------------------------------------------
+
+===============================================================================================
 
 Unions:
                                    represents:
-              AtDollar  ---------------------------------
-              Pattern   tagged:                 untagged:       x =
--------------------------------------------------------------------------
-$$          -   DD      d_val.TAG               d_val           d_val
-_$$         -   refDD   d_val                   d_val
-$$.         -   DDm     d_val.TAG.              d_val.
-$$->        -   DDp     d_val.TAG->             d_val->
-            
-$nr         -   Dn      d_vsp[idx].TAG          d_vsp[idx]      d_vsp[idx]
-_$nr        -   refDn   d_vsp[idx]              d_vsp[idx]
-$nr.        -   Dnm     d_vsp[idx].TAG.         d_vsp[idx].
-$nr->       -   Dnp     d_vsp[idx].TAG->        d_vsp[idx]->
-            
-$-nr        -   D_      d_vsp[idx]              d_vsp[idx]      d_vsp[idx]
-_$-nr       -   refD_   d_vsp[idx]              d_vsp[idx]
-$-nr.       -   D_m     d_vsp[idx].             d_vsp[idx].
-$-nr->      -   D_p     d_vsp[idx]->            d_vsp[idx]->
-            
-$<TAG>-nr   -   Dt_     d_vsp[idx].TAG
-$<TAG>-nr.  -   Dt_m    d_vsp[idx].TAG.         
-$<TAG>-nr-> -   Dt_p    d_vsp[idx].TAG->
+              AtDollar  ---------------------------------                       handler:        
+              Pattern   tagged:                 untagged:       x =             (empty: see up) 
+-----------------------------------------------------------------------------------------------
+$$          -   DD      d_val.TAG               d_val           d_val           dvalUnion       
+_$$         -   refDD   d_val                   d_val                           dval            
+$$.         -   DDm     d_val.TAG.              d_val.                          dvalUnionMem    
+$$->        -   DDp     d_val.TAG->             d_val->                         dvalUnionPtr    
+                                                                                                
+$nr         -   Dn      d_vsp[idx].TAG          d_vsp[idx]      d_vsp[idx]      svsUnion        
+_$nr        -   refDn   d_vsp[idx]              d_vsp[idx]                      svs             
+$nr.        -   Dnm     d_vsp[idx].TAG.         d_vsp[idx].                     svsUnionMem     
+$nr->       -   Dnp     d_vsp[idx].TAG->        d_vsp[idx]->                    svsUnionPtr     
+                                                                                                
+$-nr        -   D_      d_vsp[idx]              d_vsp[idx]      d_vsp[idx]      svs             
+_$-nr       -   refD_   d_vsp[idx]              d_vsp[idx]                                      
+$-nr.       -   D_m     d_vsp[idx].             d_vsp[idx].                     svsMem          
+$-nr->      -   D_p     d_vsp[idx]->            d_vsp[idx]->                    svsPtr          
+                                                                                                
+$<TAG>-nr   -   Dt_     d_vsp[idx].TAG                                          svsUnionTag     
+$<TAG>-nr.  -   Dt_m    d_vsp[idx].TAG.                                         svsUnionTagMem  
+$<TAG>-nr-> -   Dt_p    d_vsp[idx].TAG->                                        svsUnionTagPtr  
+-----------------------------------------------------------------------------------------------
 
+
+===============================================================================================
 
 Polymorphic:
                                    represents:
-              AtDollar  ---------------------------------
-              Pattern       tagged:             untagged:       x =
------------------------------------------------------------------------------
-$$          -   DD      d_val.get<TAG>()        d_val           d_val
-_$$         -   refDD   d_val                   d_val
-$$.         -   DDm     d_val.get<TAG>().       d_val.
-$$->        -   DDp     d_val.get<TAG>()->      d_val->
-            
-$nr         -   Dn      d_vsp[idx].get<TAG>()   d_vsp[idx]      d_vsp[idx]
-_$nr        -   refDn   d_vsp[idx]              d_vsp[idx]
-$nr.        -   Dnm     d_vsp[idx].get<TAG>().  d_vsp[idx].
-$nr->       -   Dnp     d_vsp[idx].get<TAG>()-> d_vsp[idx]->
-            
-$-nr        -   D_      d_vsp[idx]              d_vsp[idx]      d_vsp[idx]
-_$-nr       -   refD_   d_vsp[idx]              d_vsp[idx]
-$-nr.       -   D_m     d_vsp[idx].             d_vsp[idx].
-$-nr->      -   D_p     d_vsp[idx]->            d_vsp[idx]->
-            
-$<TAG>-nr   -   Dt_     d_vsp[idx].get<TAG>()   
-$<TAG>-nr.  -   Dt_m    d_vsp[idx].get<TAG>().  
-$<TAG>-nr-> -   Dt_p    d_vsp[idx].get<TAG>()-> 
+              AtDollar  ---------------------------------                       handler:        
+              Pattern       tagged:             untagged:       x =             (empty: see up) 
+-----------------------------------------------------------------------------------------------
+$$          -   DD      d_val.get<TAG>()        d_val           d_val           dvalPoly       
+_$$         -   refDD   d_val                   d_val                           dval            
+$$.         -   DDm     d_val.get<TAG>().       d_val.                          dvalPolyMem    
+$$->        -   DDp     d_val.get<TAG>()->      d_val->                         dvalPolyPtr    
+                                                                                                
+$nr         -   Dn      d_vsp[idx].get<TAG>()   d_vsp[idx]      d_vsp[idx]      svsPoly        
+_$nr        -   refDn   d_vsp[idx]              d_vsp[idx]                      svs             
+$nr.        -   Dnm     d_vsp[idx].get<TAG>().  d_vsp[idx].                     svsPolyMem     
+$nr->       -   Dnp     d_vsp[idx].get<TAG>()-> d_vsp[idx]->                    svsPolyPtr     
+                                                                                                
+$-nr        -   D_      d_vsp[idx]              d_vsp[idx]      d_vsp[idx]      svs             
+_$-nr       -   refD_   d_vsp[idx]              d_vsp[idx]                                      
+$-nr.       -   D_m     d_vsp[idx].             d_vsp[idx].                     svsMem          
+$-nr->      -   D_p     d_vsp[idx]->            d_vsp[idx]->                    svsPtr          
+                                                                                                
+$<TAG>-nr   -   Dt_     d_vsp[idx].get<TAG>()                                   svsPolyTag     
+$<TAG>-nr.  -   Dt_m    d_vsp[idx].get<TAG>().                                  svsPolyTagMem  
+$<TAG>-nr-> -   Dt_p    d_vsp[idx].get<TAG>()->                                 svsPolyTagPtr  
+-----------------------------------------------------------------------------------------------
 
 
-
+========================= BELOW: OLD, IGNORE ==================================================
+===============================================================================================
+===============================================================================================
 
 Handling $-specifications: see semtag.cc
 

@@ -205,7 +205,7 @@ try
 
 $insert 4 debug "executeAction of rule " << production +
 $insert 4 debug  stype__(", semantic [TOS]: ", d_val__) << " ..."
-
+$insert executeactioncases
     switch (production)
     {
 $insert 8 actioncases

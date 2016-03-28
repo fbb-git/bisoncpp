@@ -17,6 +17,10 @@ void usage(string const &program_name)
     "              parentheses. Short options require arguments if their\n"
     "              long option variants do too):\n"
 
+    "   --action-cases (-a): display (to std::cerr) the case-entry numbers "
+                                                                    "of\n"
+    "           actions just before execution by Parser::executeAction.\n"
+
     "   --analyze-only (-A): only analyze the grammar; except for possibly\n"
     "           the verbose grammar description file no files are written.\n"
 

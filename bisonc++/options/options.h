@@ -49,7 +49,7 @@ struct Options
         OptInfo d_tagMismatches{ON, "", 0};
 
                             // Resulting values: OFF, QUIET, WARN
-        OptInfo d_defaultActions{WARN, "", 0};
+        OptInfo d_defaultActions{UNKNOWN, "", 0};
 
         bool        d_debug             = false;
         bool        d_errorVerbose      = false;

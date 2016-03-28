@@ -15,7 +15,8 @@ void Generator::warnTagMismatches(ostream &out) const
         std::cerr << "[Fatal] calling `.get<Tag__::" << 
             idOfTag__[static_cast<int>(tg)] << 
             ">()', but Tag " <<
-            idOfTag__[static_cast<int>(tag())] << " is available\n";
+            idOfTag__[static_cast<int>(tag())] << " is available. "
+            " Try option --rule-numbers\n";
         throw 1;        // ABORTs
     }
     )" << '\n';

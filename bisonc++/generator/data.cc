@@ -2,7 +2,7 @@
 
 Generator::Map Generator::s_insert =
 {
-    {"actioncases",                 &Generator::actionCases},
+    {"executeactioncases",          &Generator::executeActionCases},
     {"lex",                         &Generator::lex},
     {"scanner.h",                   &Generator::scannerH},
     {"scannerobject",               &Generator::scannerObject},
@@ -26,6 +26,7 @@ Generator::Map Generator::s_insert =
     {"preincludes",                 &Generator::preIncludes},
     {"print",                       &Generator::print},
     {"requiredtokens",              &Generator::requiredTokens},
+    {"actioncases",                 &Generator::actionCases},
     {"staticdata",                  &Generator::staticData},
     {"threading",                   &Generator::threading},
     {"tokens",                      &Generator::tokens},

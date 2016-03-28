@@ -75,7 +75,8 @@ class AtDollar
         void setRefPatterns();          // text[0] == '_'
         void setDollarPatterns();       // text[0] == '$'
         void setDollarDollarPatterns();
-
+        void setTagPatterns();
+        void setNumberPatterns();
 };
 
 inline AtDollar::Pattern AtDollar::pattern() const

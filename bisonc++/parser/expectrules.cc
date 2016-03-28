@@ -4,6 +4,13 @@ void Parser::expectRules()
 {
     d_options.setParsingOptions();
 
+        // default $$ = $1 actions are performed by default:
+        // quietly for SINGLE and UNION, with warnings for POLYMORPHIC:
+        //
+    if (d_options.defaultActions().value == Options::UNKNOWN)
+        d_options.setDefaultAction(
+            d_semType == POLYMORPHIC ? "warn" : "quiet", "", 0);
+
     d_scanner.clearBlock();
 
     Terminal::resetPrecedence();    // Incremented terminal priority must be

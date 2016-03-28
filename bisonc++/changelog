@@ -1,5 +1,7 @@
 bisonc++ (5.00.00) (WIP)
 
+  * new option: -a (--action-cases), documentation: TODO
+
   * The SType::data() member is now obsolete and has been removed.
 
   * Reimplemented handling polymorphic semantic values. shared pointers are no

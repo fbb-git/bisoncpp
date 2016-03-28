@@ -96,8 +96,8 @@ NR      [[:digit:]]+
     \$-?{NR}                |
     \$-?{NR}\.              |
     \$-?{NR}"->"            |
-    "$<"{IDENT}">"-{NR}\.?  |
-    "$<"{IDENT}">"-{NR}"->" d_block.atDollar(lineNr(), d_matched);
+    "$<"{IDENT}">"-{NR}\.?  |                               
+    "$<"{IDENT}">"-{NR}"->" d_block.atDollar(lineNr(), d_matched, false);
 
     .                       d_block(d_matched);
 }

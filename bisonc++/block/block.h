@@ -21,7 +21,7 @@ class Block: private std::string
 
     std::vector<AtDollar> d_atDollar;   // @- and $-specifications
 
-    bool d_usedDollarDollar = false;
+    bool d_assignment = false;
 
     public:
         using std::string::empty;
@@ -40,7 +40,7 @@ class Block: private std::string
         void open(size_t lineno, std::string const &source);
         bool close();
 
-        void atDollar(size_t lineNr, std::string const &text);
+        void atDollar(size_t lineNr, std::string const &text, bool assignment);
      
                                                // @@, $$, ($$), or $$.
 //FBB        void dollar(size_t lineNr, std::string const &matched); 
@@ -72,12 +72,12 @@ class Block: private std::string
         std::string const &source() const;  // the block's source file
         std::string const &str() const;     // the block's contents
 
-        bool usedDollarDollar() const;      // used $$, $$., or $<ID>$
+        bool assignment() const;            // used '$$ ='
 };
 
-inline bool Block::usedDollarDollar() const
+inline bool Block::assignment() const
 {
-    return d_usedDollarDollar;
+    return d_assignment;
 }
 
 inline void Block::operator+=(std::string const &text)

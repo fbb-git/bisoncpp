@@ -50,7 +50,7 @@ void Parser::checkFirstType()
 
     block += 
         idx != 0?                   // production not empty
-            string{s_semanticValueStack} + '[' + to_string(1 - idx) + "];"
+            s_semanticValueStack + '[' + to_string(1 - idx) + "]"
         :
         (                           // empty production
             d_semType == POLYMORPHIC ?

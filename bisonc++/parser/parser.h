@@ -81,11 +81,11 @@ class Parser: public ParserBase
     static size_t s_nHidden;          // number of hidden nonterminals
     static std::ostringstream s_hiddenName;
 
-    static char s_semanticValue[];  // name of the semantic value variable
-                                    // used by the generated parser
-    static char s_semanticValueStack[];  
-                                    // name of the semantic value stack
-                                    // used by the generated parser
+    static std::string s_semanticValue; // name of the semantic value variable
+                                        // used by the generated parser
+    static std::string s_semanticValueStack;  
+                                        // name of the semantic value stack
+                                        // used by the generated parser
     static char s_locationValueStack[];  
                                     // name of the location value stack
                                     // used by the generated parser
@@ -109,68 +109,105 @@ class Parser: public ParserBase
         std::unordered_map<std::string, std::string> const &polymorphic() const;
 
     private:
+//FBB        bool dvalRef(int nElements, Block &block, AtDollar const &atd);
+//FBB        bool errNegative(int nElements, Block &block, AtDollar const &atd);
+//FBB        bool errNoRef(int nElements, Block &block, AtDollar const &atd);
+//FBB        std::string checkRuleTag(AtDollar const &atd) const;
+
         std::ostream &stdWmsg(AtDollar const &atd) const;
         std::ostream &stdEmsg(AtDollar const &atd) const;
         void warnNegativeDollarIndices(AtDollar const &atd) const;
 
         int indexToOffset(int idx, int nElements) const;
-        std::string checkRuleTag(AtDollar const &atd) const;
         bool checkExistingTag(AtDollar const &atd) const;
+
+        bool errNoTag(int nElements, Block &block, AtDollar const &atd);
         bool errIndexTooLarge(AtDollar const &atd, int nElements) const;
+
         void warnForceLSP(size_t lineNr) const;
         void warnMissingSemval() const;
 
         void substituteBlock(int nElements, Block &block);
 
-
-        bool dval(int nElements, Block &block, AtDollar const &atd);
-
-        bool dvalDirectMem(int nElements, Block &block, AtDollar const &atd);
-        bool dvalDirectPtr(int nElements, Block &block, AtDollar const &atd);
-
-        bool dvalDirectReplace(Block &block, AtDollar const &atd, 
-                                                        char const *suffix);
-
-        bool dvalMem(int nElements, Block &block, AtDollar const &atd);
-        bool dvalPtr(int nElements, Block &block, AtDollar const &atd);
-        bool dvalRef(int nElements, Block &block, AtDollar const &atd);
+            // replacement members:
 
         bool dvalReplace(Block &block, AtDollar const &atd, 
                                                     char const *suffix);
-
-        bool errNegative(int nElements, Block &block, AtDollar const &atd);
-        bool errNoRef(int nElements, Block &block, AtDollar const &atd);
-        bool errNoTag(int nElements, Block &block, AtDollar const &atd);
-
-        bool loc(int nElements, Block &block, AtDollar const &atd);
-        bool locEl(int nElements, Block &block, AtDollar const &atd);
-
-        std::string svsElement(int nElements, AtDollar const &ard) const;
-
-        bool svs(int nElements, Block &block, AtDollar const &atd);
-
-        bool svsDirectMem(int nElements, Block &block, AtDollar const &atd);
-        bool svsDirectPtr(int nElements, Block &block, AtDollar const &atd);
-        bool svsDirectReplace(int nElements, Block &block, 
-                              AtDollar const &atd, char const *suffix);
-
-        bool svsMem(int nElements, Block &block, AtDollar const &atd);
-
-        bool svsPtr(int nElements, Block &block, AtDollar const &atd);
-        bool svsRef(int nElements, Block &block, AtDollar const &atd);
-
         bool svsReplace(int nElements, Block &block, AtDollar const &atd, 
                                                     char const *suffix);
 
-        bool svsTagMem(int nElements, Block &block, AtDollar const &atd);
-        bool svsTagPtr(int nElements, Block &block, AtDollar const &atd);
-        bool svsTagRef(int nElements, Block &block, AtDollar const &atd);
-
-        bool svsTagReplace(int nElements, Block &block, AtDollar const &atd, 
+        bool dvalUnionReplace(Block &block, AtDollar const &atd, 
+                                                    char const *suffix);
+        bool svsUnionReplace(int nElements, Block &block, AtDollar const &atd, 
                                                     char const *suffix);
 
+        bool dvalPolyReplace(Block &block, AtDollar const &atd, 
+                                                    char const *suffix);
+        bool svsPolyReplace(int nElements, Block &block, AtDollar const &atd, 
+                                                    char const *suffix);
 
+        bool svsUnionTagReplace(int nElements, Block &block, AtDollar 
+                                            const &atd, char const *suffix);
+        bool svsPolyTagReplace(int nElements, Block &block, AtDollar 
+                                            const &atd, char const *suffix);
+
+            // returns s_semanticValueStack[index]:
+        std::string svsElement(int nElements, AtDollar const &ard) const;
+
+            // empty, or tag associated with a production rule's element
         std::string const &productionTag(int nr) const; // requires: nr > 0
+
+            // $- and @-handlers
+                                                                // @@
+        bool loc(int nElements, Block &block, AtDollar const &atd);
+
+                                                                // @nr
+        bool locEl(int nElements, Block &block, AtDollar const &atd);
+
+                                                                // $$
+        bool dval(int nElements, Block &block, AtDollar const &atd);
+        bool dvalUnion(int nElements, Block &block, AtDollar const &atd);
+        bool dvalPoly(int nElements, Block &block, AtDollar const &atd);
+
+                                                                // $$.
+        bool dvalMem(int nElements, Block &block, AtDollar const &atd);
+        bool dvalUnionMem(int nElements, Block &block, AtDollar const &atd);
+        bool dvalPolyMem(int nElements, Block &block, AtDollar const &atd);
+
+                                                                // $$->
+        bool dvalPtr(int nElements, Block &block, AtDollar const &atd);
+        bool dvalUnionPtr(int nElements, Block &block, AtDollar const &atd);
+        bool dvalPolyPtr(int nElements, Block &block, AtDollar const &atd);
+
+                                                        // $nr _$nr $-nr _$-nr
+        bool svs(int nElements, Block &block, AtDollar const &atd);
+        bool svsUnion(int nElements, Block &block, AtDollar const &atd);
+        bool svsPoly(int nElements, Block &block, AtDollar const &atd);
+
+                                                        // $nr. $-nr.
+        bool svsMem(int nElements, Block &block, AtDollar const &atd);
+        bool svsUnionMem(int nElements, Block &block, AtDollar const &atd);
+        bool svsPolyMem(int nElements, Block &block, AtDollar const &atd);
+
+                                                        // $nr-> $-nr->
+        bool svsPtr(int nElements, Block &block, AtDollar const &atd);
+        bool svsUnionPtr(int nElements, Block &block, AtDollar const &atd);
+        bool svsPolyPtr(int nElements, Block &block, AtDollar const &atd);
+
+                                                        // $<TAG>-nr
+        bool svsUnionTag(int nElements, Block &block, AtDollar const &atd);
+        bool svsPolyTag(int nElements, Block &block, AtDollar const &atd);
+
+                                                        // $<TAG>-nr.
+        bool svsUnionTagMem(int nElements, Block &block, AtDollar const &atd);
+        bool svsPolyTagMem(int nElements, Block &block, AtDollar const &atd);
+
+                                                        // $<TAG>-nr->
+        bool svsUnionTagPtr(int nElements, Block &block, AtDollar const &atd);
+        bool svsPolyTagPtr(int nElements, Block &block, AtDollar const &atd);
+
+
+        // ================================================================
 
 //FBB        void checkExplicitTag(AtDollar const &atd) const;
 //FBB        std::string callGet(AtDollar const &atd) const;
