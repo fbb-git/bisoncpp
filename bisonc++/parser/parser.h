@@ -34,14 +34,6 @@ class Parser: public ParserBase
         POLYMORPHIC
     };
 
-//FBB
-    enum SemTag
-    {
-        NONE,
-        AUTO,
-        EXPLICIT,
-    };
-
             // data members that are self-explanatory are not explicitly
             // described here.
 
@@ -109,10 +101,8 @@ class Parser: public ParserBase
         std::unordered_map<std::string, std::string> const &polymorphic() const;
 
     private:
-//FBB        bool dvalRef(int nElements, Block &block, AtDollar const &atd);
 //FBB        bool errNegative(int nElements, Block &block, AtDollar const &atd);
 //FBB        bool errNoRef(int nElements, Block &block, AtDollar const &atd);
-//FBB        std::string checkRuleTag(AtDollar const &atd) const;
 
         std::ostream &stdWmsg(AtDollar const &atd) const;
         std::ostream &stdEmsg(AtDollar const &atd) const;
@@ -136,12 +126,10 @@ class Parser: public ParserBase
                                                     char const *suffix);
         bool svsReplace(int nElements, Block &block, AtDollar const &atd, 
                                                     char const *suffix);
-
         bool dvalUnionReplace(Block &block, AtDollar const &atd, 
                                                     char const *suffix);
         bool svsUnionReplace(int nElements, Block &block, AtDollar const &atd, 
                                                     char const *suffix);
-
         bool dvalPolyReplace(Block &block, AtDollar const &atd, 
                                                     char const *suffix);
         bool svsPolyReplace(int nElements, Block &block, AtDollar const &atd, 
@@ -168,6 +156,7 @@ class Parser: public ParserBase
                                                                 // $$
         bool dval(int nElements, Block &block, AtDollar const &atd);
         bool dvalUnion(int nElements, Block &block, AtDollar const &atd);
+        bool dvalRefUnion(int nElements, Block &block, AtDollar const &atd);
         bool dvalPoly(int nElements, Block &block, AtDollar const &atd);
 
                                                                 // $$.
@@ -183,6 +172,7 @@ class Parser: public ParserBase
                                                         // $nr _$nr $-nr _$-nr
         bool svs(int nElements, Block &block, AtDollar const &atd);
         bool svsUnion(int nElements, Block &block, AtDollar const &atd);
+        bool svsRefUnion(int nElements, Block &block, AtDollar const &atd);
         bool svsPoly(int nElements, Block &block, AtDollar const &atd);
 
                                                         // $nr. $-nr.
@@ -210,9 +200,6 @@ class Parser: public ParserBase
 
         // ================================================================
 
-//FBB        void checkExplicitTag(AtDollar const &atd) const;
-//FBB        std::string callGet(AtDollar const &atd) const;
-
         void defaultAction() const;
 
         void constructorChecks() const;
@@ -225,18 +212,6 @@ class Parser: public ParserBase
                                                     // around target name
         void checkEmptyBlocktype();
         void checkFirstType();
-
-//FBB        bool noID(std::string const &) const;
-//FBB        bool idOK(std::string const &) const;
-//FBB        bool findTag(std::string const &tag) const;
-
-//FBB        void returnSingle(AtDollar const &atd) const;
-//FBB        std::string returnUnion(AtDollar const &atd) const;
-//FBB        std::string returnPolymorphic(AtDollar const &atd) const;
- 
-//FBB        SemTag semTag(char const *label, AtDollar const &atd, 
-//FBB              bool (Parser::*testID)(std::string const &) const) const;
-
 
         Symbol *defineNonTerminal(std::string const &name, 
                                   std::string const &stype);
@@ -254,18 +229,6 @@ class Parser: public ParserBase
 
         size_t extractIndex(int *idx, size_t pos);
         size_t extractType(std::string *type, size_t pos, Block &block);
-
-                                        // handles a location-value stack
-                                        // reference (@) in a received action 
-                                        // block
-//FBB   void handleAtSign(Block &block, AtDollar const &atd, int nElements);
-
-                                        // handles a semantic-value stack
-                                        // reference ($) in a received action 
-                                        // block
-//FBB     bool handleDollar(Block &block, AtDollar const &atd, int nElements);
-
-//FBB        void handleDeref(Block &block, AtDollar const &atd);
 
         STYPE__ handleProductionElements(STYPE__ &first, 
                                          STYPE__ const &second);
@@ -300,12 +263,6 @@ class Parser: public ParserBase
                                                     // pre-enter into d_symtab
 
         NonTerminal *requireNonTerminal(std::string const &name);
-
-                                        // saves the default $1 value
-                                        // at the beginning of a mid-rule
-                                        // action block (in substituteBlock)
-//FBB        void saveDollar1(Block &block, int offset);
-
 
         Symbol *useSymbol();
         Terminal *useTerminal();

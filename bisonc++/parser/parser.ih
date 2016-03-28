@@ -42,21 +42,6 @@ inline void Parser::defaultAction() const
                                 d_scanner.filename(), d_scanner.lineNr());
 }
 
-//FBB inline bool Parser::noID(string const &) const
-//FBB {
-//FBB     return false;
-//FBB }
-//FBB 
-//FBB inline bool Parser::idOK(string const &) const
-//FBB {
-//FBB     return true;
-//FBB }
-//FBB 
-//FBB inline bool Parser::findTag(string const &tag) const
-//FBB {
-//FBB     return d_polymorphic.find(tag) != d_polymorphic.end();
-//FBB }
-
 inline int Parser::nComponents(int nElements)
 {
     return nElements >= 0 ? nElements : -nElements - 1;

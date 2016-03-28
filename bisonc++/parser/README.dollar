@@ -31,12 +31,12 @@ Unions:
               Pattern   tagged:                 untagged:       x =             (empty: see up) 
 -----------------------------------------------------------------------------------------------
 $$          -   DD      d_val.TAG               d_val           d_val           dvalUnion       
-_$$         -   refDD   d_val                   d_val                           dval            
+_$$         -   refDD   d_val or dval.Tag       d_val                           dvalRefUnion
 $$.         -   DDm     d_val.TAG.              d_val.                          dvalUnionMem    
 $$->        -   DDp     d_val.TAG->             d_val->                         dvalUnionPtr    
                                                                                                 
 $nr         -   Dn      d_vsp[idx].TAG          d_vsp[idx]      d_vsp[idx]      svsUnion        
-_$nr        -   refDn   d_vsp[idx]              d_vsp[idx]                      svs             
+_$nr        -   refDn   d_vsp[idx] or ...Tag    d_vsp[idx]                      svsRefUnion
 $nr.        -   Dnm     d_vsp[idx].TAG.         d_vsp[idx].                     svsUnionMem     
 $nr->       -   Dnp     d_vsp[idx].TAG->        d_vsp[idx]->                    svsUnionPtr     
                                                                                                 

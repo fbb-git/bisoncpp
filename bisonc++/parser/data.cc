@@ -53,12 +53,12 @@ Parser::ADmap Parser::s_union =
        {AtDollar::An,       &Parser::locEl},            // @nr
                                                     
        {AtDollar::DD,       &Parser::dvalUnion},        // $$
-       {AtDollar::refDD,    &Parser::dval},             // _$$
+       {AtDollar::refDD,    &Parser::dvalRefUnion},     // _$$
        {AtDollar::DDm,      &Parser::dvalUnionMem},     // $$.
        {AtDollar::DDp,      &Parser::dvalUnionPtr},     // $$->
                                                     
        {AtDollar::Dn,       &Parser::svsUnion},         // $nr
-       {AtDollar::refDn,    &Parser::svs},              // _$nr
+       {AtDollar::refDn,    &Parser::svsRefUnion},      // _$nr
        {AtDollar::Dnm,      &Parser::svsUnionMem},      // $nr.
        {AtDollar::Dnp,      &Parser::svsUnionPtr},      // $nr->
                                                     
