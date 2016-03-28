@@ -153,7 +153,7 @@ class Parser: public ParserBase
                                             const &atd, char const *suffix);
 
             // returns s_semanticValueStack[index]:
-        std::string svsElement(int nElements, AtDollar const &ard) const;
+        std::string svsElement(int nElements, int nr) const; // nr, not index!
 
             // empty, or tag associated with a production rule's element
         std::string const &productionTag(int nr) const; // requires: nr > 0

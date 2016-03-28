@@ -1,9 +1,10 @@
 #include "parser.ih"
 
-string Parser::svsElement(int nElements, AtDollar const &atd) const
+    // note: 2nd arg. is the production rule's element NUMBER, not index.
+string Parser::svsElement(int nElements, int nr) const
 {
     ostringstream os;
     os << s_semanticValueStack << "[" << 
-                                indexToOffset(atd.nr(), nElements) << "]";
+                                indexToOffset(nr, nElements) << "]";
     return os.str();
 }

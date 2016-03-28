@@ -1,11 +1,13 @@
 #include "atdollar.ih"
 
-AtDollar::AtDollar(size_t blockPos, size_t lineNr, std::string const &text)
+AtDollar::AtDollar(size_t blockPos, size_t lineNr, std::string const &text,
+                    bool refByScanner)
 :
     d_pos(blockPos),
     d_lineNr(lineNr),
     d_text(text),
-    d_length(text.length())
+    d_length(text.length()),
+    d_refByScanner(refByScanner)
 {
     switch (text[0])
     {

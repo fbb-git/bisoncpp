@@ -40,7 +40,8 @@ class Block: private std::string
         void open(size_t lineno, std::string const &source);
         bool close();
 
-        void atDollar(size_t lineNr, std::string const &text, bool assignment);
+        void atDollar(size_t lineNr, std::string const &text, 
+                                bool assignment, bool refByScanner = false);
      
                                                // @@, $$, ($$), or $$.
 //FBB        void dollar(size_t lineNr, std::string const &matched); 

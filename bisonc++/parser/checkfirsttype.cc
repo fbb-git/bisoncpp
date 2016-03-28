@@ -9,57 +9,59 @@ void Parser::checkFirstType()
 {
     Production const &prod = d_rules.lastProduction();
 
-    if (d_options.defaultActions().value == Options::OFF)
+    switch (d_options.defaultActions().value)
     {
-        if (d_options.tagMismatches().value == Options::ON)
-            wmsg << '`' << &prod << "': auto-appending `$$ = ...' action "
-                "block suppressed by option/directive "
-                "`default-actions off'" << endl;
+        case Options::OFF:
+            if (d_options.tagMismatches().value == Options::ON)
+                wmsg << '`' << &prod << "': auto-appending `$$ = ...' "
+                    "action block suppressed by option/directive "
+                    "`default-actions off'" << endl;
 
         return;                     // no default action. Hope it's OK...
+
+        case Options::WARN:
+            wmsg << '`' << &prod << 
+                    "': auto-appended `$$ = ...' action block" << endl;
+        break;
+
+        default:
+        break;
     }
 
-    string const &stype = d_rules.sType();
+    size_t nElements = prod.size();
+    string const &ruleType = d_rules.sType();
 
-    int idx = prod.size();
+    if (nElements && d_semType == POLYMORPHIC)   // check for mismatches between
+    {                                       // $$'s type and $1's type
+        string const &firstElementType = prod[0].sType();
 
-    string const &prodStype = prod[0].sType();
-
-    if (d_semType != SINGLE && stype.empty())   // union or polymorphic but
-        return;                                 // no associated value type:
-                                                // no action block required.
-    if (idx > 0 && stype != prodStype) 
-    {
-        emsg << '`' << &prod << "':  type clash ($$: " << stype << ", $1: " <<
-                (prodStype.empty() ? s_undefined : prodStype) <<
-                " prevents auto-appending default action `$$ = $1'" << endl;
-        return;
+        if (ruleType != firstElementType) 
+        {
+            emsg << '`' << &prod << "':  type clash ($$: " << 
+                ruleType << ", $1: " <<
+                (firstElementType.empty() ? s_undefined : firstElementType) <<
+                ") prevents auto-appending default action `$$ = $1'" << endl;
+            return;
+        }
     }
-
-    if (d_options.defaultActions().value == Options::WARN)
-        wmsg << '`' << &prod << "': auto-appended `$$ = ...' action block" << 
-                                                                        endl;
 
     Block block;
     block.open(prod.lineNr(), prod.fileName());
 
     block += "\n"
-            "    ";
-    block += s_semanticValue;
-    block += " = ";
-
-    block += 
-        idx != 0?                   // production not empty
-            s_semanticValueStack + '[' + to_string(1 - idx) + "]"
-        :
-        (                           // empty production
-            d_semType == POLYMORPHIC ?
-                "Meta__::TypeOf<Tag__::" + stype + ">::type{}"
+        "    " + s_semanticValue + " = " +
+        (
+            nElements > 0 ?
+                svsElement(nElements, 1)
             :
-                s_stype__ + "{}"s
-        );
-
-    block += ";\n}";
+            (                           // empty production
+                d_semType == POLYMORPHIC ?
+                    "Meta__::TypeOf<Tag__::" + ruleType + ">::type{}"
+                :
+                    s_stype__ + "{}"s
+            )
+        ) + ";\n"
+        "}";
 
     d_rules.setAction(block);
 }

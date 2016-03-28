@@ -5,7 +5,7 @@ bool Parser::svsPolyTagReplace(int nElements, Block &block,
 {
     if (existingTag(atd))
         block.replace(atd.pos(), atd.length(), 
-            svsElement(nElements, atd) + 
+            svsElement(nElements, atd.nr()) + 
            ".get<Tag__::" + atd.tag() + ">()" + suffix
         );
     return false;

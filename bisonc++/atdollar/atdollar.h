@@ -44,6 +44,8 @@ class AtDollar
         size_t d_length;
         Pattern d_pattern;
         std::string d_tag;
+        bool d_refByScanner;            // scanner.assignment substututed
+                                        // $$ ($nr) by _$$ (_$nr)
 
                                 // $$ or @@ if numeric_limits<int>::max()
         int d_nr = std::numeric_limits<int>::max(); 
@@ -52,7 +54,8 @@ class AtDollar
         AtDollar() = default;       // only used by std::vector in Block
 
 
-        AtDollar(size_t blockPos, size_t lineNr, std::string const &text);
+        AtDollar(size_t blockPos, size_t lineNr, std::string const &text,
+                 bool refByScanner);
 
         Pattern pattern() const;
 
@@ -62,8 +65,8 @@ class AtDollar
         size_t pos() const;             // offset inside the block
         size_t length() const;          // matched text length
         size_t lineNr() const;          // line nr in the grammar file
-        bool dollarDollar() const;      // true: $$ is being referred to
-
+//FBB        bool dollarDollar() const;      // true: $$ is being referred to
+        bool refByScanner() const;      // ref. inserted scanner.assignment()
         bool stackElement() const;
 
     private:
@@ -89,9 +92,9 @@ inline int AtDollar::nr() const
     return d_nr;
 }
         
-inline bool AtDollar::dollarDollar() const
+inline bool AtDollar::refByScanner() const
 {
-    return d_pattern == DD;
+    return d_refByScanner;
 }
         
 inline size_t AtDollar::pos() const

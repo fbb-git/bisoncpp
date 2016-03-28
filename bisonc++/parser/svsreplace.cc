@@ -6,6 +6,6 @@ bool Parser::svsReplace(int nElements, Block &block,AtDollar const &atd,
     warnNegativeDollarIndices(atd);
 
     block.replace(atd.pos(), atd.length(), 
-                                    svsElement(nElements, atd) + suffix);
+                             svsElement(nElements, atd.nr()) + suffix);
     return false;
 }
