@@ -12,8 +12,10 @@ class AtDollar
     public:
 
         // Pattern is determined by the constructor
+        // Update stackElement if another $$ or @@ element is added
         enum Pattern        // A: at, D represents $, ref: (), _: -nr, n: nr
         {                   //      m (= member): .  p (= pointer) -> t: <TAG>
+                            //      par (open parenthesis)
             AA,             // @@
             An,             // @nr
 
@@ -35,6 +37,8 @@ class AtDollar
             Dt_,            // $<TAG>-nr
             Dt_m,           // $<TAG>-nr.
             Dt_p,           // $<TAG>-nr->
+
+            DDpar,          // $$(
         };
             
     private:
@@ -67,7 +71,8 @@ class AtDollar
         size_t lineNr() const;          // line nr in the grammar file
 //FBB        bool dollarDollar() const;      // true: $$ is being referred to
         bool refByScanner() const;      // ref. inserted scanner.assignment()
-        bool stackElement() const;
+        bool stackElement() const;      // referring to an element in the
+                                        // stack, so not $$ or @@ 
 
     private:
 //FBB        void memberSelectorPatterns();  // text.back() == '.'

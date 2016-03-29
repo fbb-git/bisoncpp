@@ -9,6 +9,7 @@ bool AtDollar::stackElement() const
         case refDD:
         case DDm:
         case DDp:
+        case DDpar:
         return false;
 
         default:

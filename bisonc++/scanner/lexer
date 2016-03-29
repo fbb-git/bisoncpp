@@ -87,6 +87,7 @@ NR      [[:digit:]]+
     "$$"[ \t\n]*=           |       // assignments are refDD or refD_
     "$"-?{NR}[ \t\n]*=      assignment();
  
+    "$$("                   |
     @@                      |
     @{NR}                   |
     "_$$"                   |       

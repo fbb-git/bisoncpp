@@ -21,7 +21,7 @@ void Parser::checkFirstType()
 
         case Options::WARN:
             wmsg << '`' << &prod << 
-                    "': auto-appended `$$ = ...' action block" << endl;
+                    "': auto-appended `$$ = $1' action block" << endl;
         break;
 
         default:
@@ -40,7 +40,7 @@ void Parser::checkFirstType()
             emsg << '`' << &prod << "':  type clash ($$: " << 
                 ruleType << ", $1: " <<
                 (firstElementType.empty() ? s_undefined : firstElementType) <<
-                ") prevents auto-appending default action `$$ = $1'" << endl;
+                ") prevents auto-appending default action `$$ = ...'" << endl;
             return;
         }
     }

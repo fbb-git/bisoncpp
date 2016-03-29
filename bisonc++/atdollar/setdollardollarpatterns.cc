@@ -3,6 +3,7 @@
 //          DD,             // $$
 //          DDm,            // $$.
 //          DDp,            // $$->
+//          DDpar,          // $$(
 
 void AtDollar::setDollarDollarPatterns()
 {
@@ -18,6 +19,10 @@ void AtDollar::setDollarDollarPatterns()
 
         case '>':
             d_pattern = DDp;
+        return;
+
+        case '(':
+            d_pattern = DDpar;
         return;
     }
 }

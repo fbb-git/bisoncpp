@@ -45,6 +45,8 @@ Parser::ADmap Parser::s_single =
        {AtDollar::Dt_,      &Parser::errNoTag}, // $<TAG>-nr
        {AtDollar::Dt_m,     &Parser::errNoTag}, // $<TAG>-nr.
        {AtDollar::Dt_p,     &Parser::errNoTag}, // $<TAG>-nr->
+
+       {AtDollar::DDpar,    &Parser::dvalPar},  // $$(
 };
 
 Parser::ADmap Parser::s_union =
@@ -70,6 +72,8 @@ Parser::ADmap Parser::s_union =
        {AtDollar::Dt_,      &Parser::svsUnionTag},      // $<TAG>-nr
        {AtDollar::Dt_m,     &Parser::svsUnionTagMem},   // $<TAG>-nr.
        {AtDollar::Dt_p,     &Parser::svsUnionTagPtr},   // $<TAG>-nr->
+
+       {AtDollar::DDpar,    &Parser::dvalPar},          // $$(
 };
 
 Parser::ADmap Parser::s_polymorphic =
@@ -95,4 +99,6 @@ Parser::ADmap Parser::s_polymorphic =
        {AtDollar::Dt_,      &Parser::svsPolyTag},       // $<TAG>-nr
        {AtDollar::Dt_m,     &Parser::svsPolyTagMem},    // $<TAG>-nr.
        {AtDollar::Dt_p,     &Parser::svsPolyTagPtr},    // $<TAG>-nr->
+
+       {AtDollar::DDpar,    &Parser::dvalPolyPar},      // $$(
 };

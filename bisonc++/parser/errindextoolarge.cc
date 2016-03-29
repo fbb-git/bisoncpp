@@ -2,7 +2,7 @@
 
 bool Parser::errIndexTooLarge(AtDollar const &atd, int elements) const
 {
-    if (not atd.stackElement())
+    if (not atd.stackElement())     // when referring to $$ or @@
         return false;
 
     int nElements = nComponents(elements);

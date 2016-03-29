@@ -159,6 +159,10 @@ class Parser: public ParserBase
         bool dvalRefUnion(int nElements, Block &block, AtDollar const &atd);
         bool dvalPoly(int nElements, Block &block, AtDollar const &atd);
 
+                                                                // $$(
+        bool dvalPar(int nElements, Block &block, AtDollar const &atd);
+        bool dvalPolyPar(int nElements, Block &block, AtDollar const &atd);
+
                                                                 // $$.
         bool dvalMem(int nElements, Block &block, AtDollar const &atd);
         bool dvalUnionMem(int nElements, Block &block, AtDollar const &atd);
