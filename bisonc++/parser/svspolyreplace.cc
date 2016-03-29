@@ -8,7 +8,7 @@ bool Parser::svsPolyReplace(int nElements, Block &block,AtDollar const &atd,
     block.replace(atd.pos(), atd.length(), 
                 svsElement(nElements, atd.nr()) +
                 (
-                    tag.empty() ? 
+                    tag == s_stype__ ? 
                         ""s 
                     : 
                         ".get<Tag__::" + tag + ">()"

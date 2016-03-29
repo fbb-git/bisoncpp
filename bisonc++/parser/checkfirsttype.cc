@@ -21,7 +21,7 @@ void Parser::checkFirstType()
 
         case Options::WARN:
             wmsg << '`' << &prod << 
-                    "': auto-appended `$$ = $1' action block" << endl;
+                    "': auto-appended `$$ = ...' action block" << endl;
         break;
 
         default:
@@ -55,7 +55,7 @@ void Parser::checkFirstType()
                 svsElement(nElements, 1)
             :
             (                           // empty production
-                d_semType == POLYMORPHIC ?
+                d_semType == POLYMORPHIC && not ruleType.empty() ?
                     "Meta__::TypeOf<Tag__::" + ruleType + ">::type{}"
                 :
                     s_stype__ + "{}"s
