@@ -1,12 +1,12 @@
 _precSpec:
     IDENTIFIER
     {
-        $$ = static_cast<size_t>(IDENTIFIER);
+        $$(IDENTIFIER);
     }
 |
     QUOTE
     {
-        $$ = static_cast<size_t>(QUOTE);
+        $$(QUOTE);
     }
 ;
 
