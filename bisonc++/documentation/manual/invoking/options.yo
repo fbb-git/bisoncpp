@@ -45,20 +45,13 @@ ifdef(man)(\
 )(\
             ref(POLYMORPHIC)\
 )\
-              for details about this directive). When the generated parses
-            attempts to retrieve a
-            non-existing polymorphic value a fatal error is generated, ending
-            the parsing process (and usually ending the program as well). The
-            error message itself cannot refer to the action block where the
-            error occurred. If this situation is encountered, bic() should
-            regenerate
-
-see the description of the In
-            some situations Only analyze the grammar. No files are
-            (re)written. This option can be used to test the grammatic
-            correctness of modification `in situ', without overwriting
-            previously generated files. If the grammar contains syntactic
-            errors only syntax analysis is performed.
+           for details about this directive). When the generated parser
+            attempts to retrieve an incorrect polymorphic value a fatal error
+            is generated, ending bic()'s run. The error message itself cannot
+            refer to the action block where the error occurred. If this
+            situation is encountered, bic() can be rerun with this option to
+            find the executeAction switch's case entry where the fatal error
+            is encountered.
 
     it() loption(analyze-only) (soption(A))nl()
            Only analyze the grammar. No files are (re)written. This option can
@@ -137,26 +130,29 @@ see the description of the In
 
     it() loption(debug)nl() 
            Provide the generated tt(parse) and its support functions with
-            debugging code, showing the actual parsing process on the standard
-            output stream. When included, the debugging output is active by
-            default, but its activity may be controlled using the
-            tt(setDebug(bool on-off)) member. An tt(#ifdef DEBUG) macro is not
-            supported by bic(). Rerun bic() without the tt(--debug) option to
+            debugging code, optionally showing the actual parsing process on
+            the standard output stream. When included, the debugging output is
+            active by default, but its activity may be controlled using the
+            tt(setDebug(bool on-off)) member. Bic() does not use tt(#ifdef
+            DEBUG) macros. Rerun bic() without the tt(--debug) option to
             remove the debugging code.
 
             Note that this option does em(not) show the actions of bic()'s own
-            parser and lexical scanner. If that is what you want, use the
-            tt(--own-debug, --scanner-debug) and/or tt(--own-tokens) options.
+            parser, its own lexical scanner or merely the numbers of the
+            case-entries executed by the parser's tt(parse) function. If that
+            is what you want, use the tt(--own-debug, --action-cases,
+            --scanner-debug) and/or tt(--own-tokens) options.
 
     it() lsoption(default-actions)(d)(off|quiet|warn)nl()
            When tt(warn) is specified (which is the default) an action block
-            executing tt($$ = $1) is added to production rules without
-            explicitly defined final action blocks, and a warning is
-            issued. When tt(quiet) is specified such action blocks are
-            silently added. It is an error when the types of $$ and $1 differ.
-            When tt(off) is specified no action blocks are not added (and a
-            matching warning is issued, unless the option/directive
-            tt(tag-mismatches off) has been specified)
+            executing tt($$ = $1) (or tt($$ = STYPE__{} for empty production
+            rules) is added to production rules that do not explicitly define
+            their own final action blocks, while issuing a warning. When
+            tt(quiet) is specified these action blocks are silently added. It
+            is an error when the types of $$ and $1 differ.  When tt(off) is
+            specified no action blocks are added (issuing a warning issued,
+            unless the option/directive tt(tag-mismatches off) has been
+            specified).
 
     it() label(ERRORVERBOSE)loption(error-verbose)nl()
            When a syntactic error is reported, the generated parse function
@@ -205,11 +201,11 @@ see the description of the In
 
     it() loption(insert-stype)nl()
            This option is only effective if the tt(debug) option (or
-            tt(%debug) directive) has also been specified. When
-            tt(insert-stype) has been specified the parsing function's debug
-            output also shows selected semantic values. It should only be used
-            if objects or variables of the semantic value type tt(STYPE__) can
-            be inserted into tt(ostreams).
+            tt(%debug) directive) has been specified. When tt(insert-stype)
+            has been specified the parsing function's debug output also shows
+            selected semantic values. It should only be used if objects or
+            variables of the semantic value type tt(STYPE__) can be inserted
+            into tt(ostreams).
 
     it() label(MAXDEPTH) laoption(max-inclusion-depth)(value)nl()
            Set the maximum number of nested grammar files. Defaults to 10.
@@ -238,12 +234,12 @@ see the description of the In
             lexical scanner.
 
     it() loption(no-decoration) (soption(D))nl()
-           Do not include the user-defined actions when generating the
+           Do not include user-defined or default actions when generating the
             parser's tt(parse) member. This effectively generates a parser
-            which merely performs semantic checks, without performing the
+            which merely performs syntax checks, without performing the
             actions which are normally executed when rules have been
             matched. This may be useful in situations where a (partially or
-            completely) decorated grammar is reorganized, and the syntactical
+            completely) decorated grammar is reorganized, and the syntactic
             correctness of the modified grammar must be verified, or in
             situations where the grammar has already been decorated, but
             functions which are called from the rules's actions have not yet
@@ -268,17 +264,17 @@ see the description of the In
             modified. 
 
     it() loption(own-debug)nl()
-           Extensively displays the actions performed by bic()'s parser when
-            it processes the grammar specification file(s). This implies the
-            tt(--verbose) option.
+           Displays the actions performed by bic()'s parser when it processes
+            the grammar specification file(s) (lots of output!). This implies
+            the tt(--verbose) option.
 
     it() loption(own-tokens) (soption(T))nl()
-           The tokens returned as well as the text matched when bic() reads
-            its input files(s) are shown when this option is used.
+           The tokens returned as well as the text matched by bic()'s lexcial
+            scanner are shown when this option is used.
 
-           This option does em(not) result in the generated parsing function
-            displaying returned tokens and matched text. If that is what you
-            want, use the tt(--print-tokens) option.
+           This option does em(not) result in the em(generated) parsing
+            function displaying returned tokens and matched text. If that is
+            what you want, use the tt(--print-tokens) option.
 
     it() lsoption(parsefun-skeleton)(P)(pathname)nl()
            tt(Pathname) defines the path name of the file containing the
@@ -359,11 +355,11 @@ see the description of the In
             scanner class tt(d_scanner) object.
 
     it() loption(scanner-debug)nl() 
-           Show de scanner's matched rules and returned tokens. This offers an
-            extensive display of the rules and tokens matched and returned by
-            bic()'s scanner, not of just the tokens and matched text received
-            by bic(). If that is what you want use the tt(--own-tokens)
-            option.
+           Show de scanner's matched rules and returned tokens. This
+            extensively displays the rules and tokens matched and returned by
+            bic()'s scanner, instead of just showing the tokens and matched
+            text which are received by bic(). If you want the latter, use the
+            option tt(--own-tokens).
 
     it() laoption(scanner-matched-text-function)(function-call)nl() 
            The scanner function returning the text that was matched at the
@@ -405,9 +401,9 @@ see the description of the In
 
     it() loption(tag-mismatches) tt(off|on)nl()
            When tt(on) is specified (which is the default), a warning is
-            issued if no $$ statement was detected in an action block, or if
-            adding a default $$ = $1 action was suppressed by a
-            tt(default-actions off) option or directive.
+            issued if no $$ assignment was detected in an action block, or if
+            adding a default $$ = ... action was suppressed (cf.  the
+            tt(default-actions off) option or directive).
 
     it() laoption(target-directory)(pathname) nl() 
            tt(Pathname) defines the directory where generated files should be

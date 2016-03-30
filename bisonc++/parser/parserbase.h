@@ -480,7 +480,7 @@ class ParserBase
             UNEXPECTED_TOKEN__,
         };
         bool        d_actionCases__ = false;
-        bool        d_debug__ = false;
+        bool        d_debug__ = true;
         size_t      d_nErrors__ = 0;
         size_t      d_requiredTokens__;
         size_t      d_acceptedTokens__;

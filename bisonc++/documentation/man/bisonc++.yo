@@ -118,14 +118,14 @@ not involved in the actual parsing process may always be (re)implemented
 directly by the programmer. Thus there is no need to apply or define virtual
 member functions.
 
-    In fact, there are only two public members in the parser class generated
-by bic(): tt(setDebug) (see below) and tt(parse). Remaining members are
-private, and those that can be redefined by the programmer using bic() usually
-receive initial, very simple default in-line implementations. The (partial)
-exception to this rule is the member function tt(lex), producing the next
-lexical token. For tt(lex) either a standardized interface or a mere
-declaration is offered (requiring the programmer to provide his/her own 
-tt(lex) implementation).
+    In fact, there are only three public members in the parser class generated
+by bic(): tt(setDebug) (two overloaded versions, see below) and
+tt(parse). Remaining members are private, and those that can be redefined by
+the programmer using bic() usually receive initial, very simple default
+in-line implementations. The (partial) exception to this rule is the member
+function tt(lex), producing the next lexical token. For tt(lex) either a
+standardized interface or a mere declaration is offered (requiring the
+programmer to provide his/her own tt(lex) implementation).
 
     To enforce a primitive namespace, bf(bison) used a well-known
 naming-convention: all its public symbols started with tt(yy) or tt(YY).
