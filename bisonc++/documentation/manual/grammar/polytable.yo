@@ -7,13 +7,8 @@ table(5)(cccll)(
     tr(%type<TAG>)      ($<tag>)        (action:)
     rowline()
     \
-    tr(absent)          (no <tag>)      (STYPE__ is used)
-                        columnline(3)(5)
-                    tr()($<id>)         (tag-override)
-                        columnline(3)(5)
-                    tr()($<>)           (STYPE__ is used)
-                        columnline(3)(5)
-                    tr()($<STYPE__>)    (STYPE__ is used)
+    tr($$ =)          (d_val__ =)      (assign a value) ($$ = $1)
+    tr($$+CHAR(40))   (d_val__ =)      (assign a value) ($$(20))
     rowline()
     \
     tr(STYPE__)         (no <tag>)      (STYPE__ is used)

@@ -16,21 +16,24 @@ a rule like:
     automatically associates $$, $1 and $3 with tt(int) values. Here $$ is an
 lvalue (representing the semantic value associated with the tt(expr:) rule),
 while $1 and $3 represent, due to the `tt(%type<INT> expr)' specification,
-tt(int) semantic values which are associated with, resp., the first and second
-tt(expr) non-terminal in the production rule tt(expr '+' expr).
+tt(int) values which are associated with, resp., the first and second tt(expr)
+non-terminal in the production rule tt(expr '+' expr).
 
     When negative dollar indices (like $-1) are used, pre-defined associations
 between non-terminals and semantic types are lost, and must explicitly be
 provided to access their polymorphic value types.  However, when positive
 indices are used or when the production rule's return value tt($$) is used,
-bic() will automatically use their associated polymorphic value types, unless
-overruled by explicit specifications, using the common `$<type>$' or
-`$<type>1' syntax. (In this and subsequent examples index number 1 represents
-any valid positive index; -1 represents any valid negative index).
+bic() automatically uses their associated polymorphic value types (In this and
+subsequent examples index number 1 represents any valid positive index; -1
+represents any valid negative index).
 
-The type-overruling syntax does not allow blanks to be used (so $<INT>$ is OK,
-$< INT >$ isn't).
+The type-overruling syntax (used with negative dollar indices) does not allow
+blanks to be used (so $<INT>-1 is OK, $< INT >-1 is not).
 
+Various $-constructions can be used to indicate semantic values of
+rule-elements. The following table presents an overview:
+
+COMMENT(
 Various combinations of type-associations and type specifications are
 available: 
 itemization(
@@ -40,6 +43,7 @@ it() $-1: tt(%type) associations are ignored, and the semantic value type
 it() $<tag>-1: em(error): tt(<tag>) specifications are not allowed for
     negative dollar indices. 
 )
+END)
 
 whenhtml(
 center(

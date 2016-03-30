@@ -238,28 +238,28 @@ manpagesection(3. OPTIONS)
 manpagesection(4. DIRECTIVES)
 
     The following directives can be specified in the initial section of the
-grammar specification file. When command-line options for directives exist,
-they overrule the corresponding directives given in the grammar specification
-file.  Directives affecting the class header or implementation header file are
-ignored if these files already exist.
+grammar specification file. If command-line options for directives exist, then
+their specifications overrule the corresponding directives in the grammar
+file.  Once class header or implementation header files exist directives
+affecting those files are ignored.
 
     Directives accepting a `filename' do not accept path names, i.e., they
 cannot contain directory separators (tt(/)); directives accepting a 'pathname'
 may contain directory separators. A 'pathname' using blank characters should
 be surrounded by double quotes.
 
-Some directives may generate errors. This happens when a directive
-conflicts with the contents of a file which bic() cannot modify (e.g., a
-parser class header file exists, but doesn't define a namespace, but a
-tt(%namespace) directive was provided). 
+Some directives may generate errors. This happens when their specifications
+conflict with the contents of files bic() cannot modify (e.g., a parser class
+header file exists, but doesn't define a namespace, but in a later run the a
+tt(%namespace) directive was provided).
 
-To solve such errore the offending directive could be omitted, the existing
+To resolve such errors the offending directive could be omitted, the existing
 file could be removed, or the existing file could be hand-edited according to
 the directive's specification.
 
-
     itemization(
-    it() bf(%baseclass-header) tt(filename) nl()
+    it() bf(%baseclass-header) tt(filename)
+
            tt(Filename) defines the name of the file to contain the parser's
             base class. This class defines, e.g., the parser's symbolic
             tokens. Defaults to the name of the parser class plus the suffix
@@ -269,14 +269,18 @@ the directive's specification.
            It is an error if this directive is used and an already
             existing parser class header file does not contain tt(#include
             "filename").
-    it() bf(%baseclass-preinclude) tt(pathname)nl()
+
+    it() bf(%baseclass-preinclude) tt(pathname)
+
            tt(Pathname) defines the path to the file preincluded by the
             parser's base-class header.  See the description of the
             tt(--baseclass-preinclude) option for details about this
             directive.  By default, bic() surrounds tt(header) by double
             quotes.  However, when tt(header) itself is surrounded by pointed
             brackets tt(#include <header>) is included.
-    it() bf(%class-header) tt(filename) nl()
+
+    it() bf(%class-header) tt(filename)
+
            tt(Filename) defines the name of the file to contain the parser
             class. Defaults to the name of the parser class plus the suffix
             tt(.h) This directive is overruled by the bf(--class-header)
@@ -285,7 +289,9 @@ the directive's specification.
            It is an error if this directive is used and an already
             existing implementation header file does not contain tt(#include
             "filename").
-    it() bf(%class-name) tt(parser-class-name) nl()
+
+    it() bf(%class-name) tt(parser-class-name) 
+
            Declares the name of the parser class. It defines the name of the
             bf(C++) class that is generated. If no tt(%class-name) is
             specified the default class name tt(Parser) is used.
@@ -294,57 +300,70 @@ the directive's specification.
             existing parser-class header file does not define tt(class
             `className') and/or if an already existing implementation header
             file does not define members of the class tt(`className').
-    it() bf(constructor-checks) tt(off|on) nl() 
-           When tt(on) is specified (which is the default) compile-time checks
-            are inserted into the generated tt(parse.cc) file verifying that
-            default construction is available for the parsers's semantic value
-            type, or for all defined polymorphic types.
-    it() bf(%debug) nl() 
-           Provide the generated tt(parse) and its support functions with
-            debugging code, showing the actual parsing process on the standard
-            output stream. When included, the debugging output is active by
-            default, but its activity may be controlled using the
-            tt(setDebug(bool on-off)) member. No tt(#ifdef DEBUG) macros are
-            used anymore. To remove existing debugging code re-run bic()
-            without the tt(--debug) option or tt(%debug) declaration.
-    it() bf(%default-actions)(d)(off|quiet|warn)nl()
+
+    it() bf(%debug) 
+ 
+           Add debugging code to the generated tt(parse) and its support
+            functions, which can show (on the standard output stream) the
+            steps performed by the parsing function while it parses input
+            streams. When this directive is specified then the parsing steps
+            are shown by default. The tt(setDebug) members can be used to
+            suppress outputting these parsing steps. tt(#ifdef DEBUG) macros
+            are not used. Existing debugging code can be removed by rerunning
+            bic() without specifying the tt(debug) option or directive.
+
+    it() bf(%default-actions)(d)(off|quiet|warn)
+
            When tt(warn) is specified (which is the default) an action block
-            executing tt($$ = $1) is added to production rules without
-            explicitly defined final action blocks, and a warning is
-            issued. When tt(quiet) is specified such action blocks are
-            silently added. It is an error when the types of $$ and $1 differ.
-            When tt(off) is specified no action blocks are not added (and a
-            matching warning is issued, unless the option/directive
-            tt(tag-mismatches off) has been specified)
-    it() bf(%error-verbose) nl()    
+            executing tt($$ = $1) (or tt($$ = STYPE__{} for empty production
+            rules) is added to production rules that do not explicitly define
+            their own final action blocks, while issuing a warning. When
+            tt(quiet) is specified these action blocks are silently added. It
+            is an error when the types of $$ and $1 differ (but it is OK if
+            neither $$ nor $1 is associated with a specific type).  When
+            tt(off) is specified no action blocks are added (issuing a warning
+            issued, unless the option/directive tt(tag-mismatches off) has
+            been specified).
+
+    it() bf(%error-verbose) 
+    
            This directive can be specified to dump the parser's state stack to
             the standard output stream when the parser encounters a syntactic
             error.  The stack dump shows on separate lines a stack index
             followed by the state stored at the indicated stack element. The
             first stack element is the stack's top element.
-    it() bf(%expect) tt(number) nl()    
+
+    it() bf(%expect) tt(number) 
+    
            This directive specifies the exact number of shift/reduce and
             reduce/reduce conflicts for which no warnings are to be
             generated. Details of the conflicts are reported in the verbose
             output file (e.g., tt(grammar.output)). If the number of actually
             encountered conflicts deviates from `tt(number)', then this
             directive is ignored.
-    it() bf(%filenames) tt(filename) nl()
+
+    it() bf(%filenames) tt(filename) 
+
            tt(Filename) is a generic filename that is used for all header
             files generated by bic().  Options defining specific filenames are
             also available (which then, in turn, overrule the name specified
             by this directive).  This directive is overruled by the
             bf(--filenames) (bf(-f)) command-line option.
-    it() bf(%flex) nl()
+
+    it() bf(%flex) 
+
            When provided, the scanner member returning the matched text is
             called as tt(d_scanner.YYText()), and the scanner member returning
             the next lexical token is called as tt(d_scanner.yylex()). This
             directive is only interpreted if the tt(%scanner) directive is
             also provided.
-    it() bf(%implementation-header) tt(filename) nl()
+
+    it() bf(%implementation-header) tt(filename) 
+
            tt(Filename) defines the name of the file to contain the
             implementation header. It defaults to the name of the generated
-            parser class plus the suffix tt(.ih). nl()
+            parser class plus the suffix tt(.ih). 
+
            The implementation header should contain all directives and
             declarations that are em(only) used by the parser's member
             functions. It is the only header file that is included by the
@@ -352,10 +371,10 @@ the directive's specification.
             implementation of other class members may use the same convention,
             thus concentrating all directives and declarations that are
             required for the compilation of other source files belonging to
-            the parser class in one header file.nl()
-           This directive is overruled by the
-            bf(--implementation-header) (bf(-i)) command-line option.
-    it() bf(%include) tt(pathname) nl() 
+            the parser class in one header file.
+
+    it() bf(%include) tt(pathname) 
+ 
            This directive is used to switch to tt(pathname) while processing a
             grammar specification. Unless tt(pathname) defines an absolute
             file-path, tt(pathname) is searched relative to the location of
@@ -364,7 +383,9 @@ the directive's specification.
             can be used to split long grammar specification files in shorter,
             meaningful units. After processing tt(pathname) processing
             continues beyond the tt(%include pathname) directive.
-    it() bf(%left) tt(terminal ...) nl() 
+
+    it() bf(%left) tt(terminal ...) 
+ 
            Defines the names of symbolic terminal tokens that must be treated
             as left-associative. I.e., in case of a shift/reduce conflict, a
             reduction is preferred over a shift.  Sequences of tt(%left,
@@ -373,14 +394,18 @@ the directive's specification.
             directive defines the tokens having the lowest precedence, the
             last used defines the tokens having the highest priority. See also
             tt(%token) below.
-    it() bf(%locationstruct) tt(struct-definition) nl() 
+
+    it() bf(%locationstruct) tt(struct-definition) 
+ 
            Defines the organization of the location-struct data type
             tt(LTYPE__). This struct should be specified analogously to the
             way the parser's stacktype is defined using tt(%union) (see
             below). The location struct is named tt(LTYPE__). By default (if
             neither tt(locationstruct) nor tt(LTYPE__) is specified) the
             standard location struct (see the next directive) is used:
-    it() bf(%lsp-needed) nl()    
+
+    it() bf(%lsp-needed) 
+    
            This directive results in bic() generating a parser using 
             the standard location stack.  This stack's default type is:
            verb(
@@ -400,17 +425,21 @@ the directive's specification.
             tt(@) variables, like tt(@1.timestamp, @3.text, @5). The rule's
             location struct itself may be referred to as either tt(d_loc__) or
             tt(@@).
-    it() bf(%ltype typename) nl()    
-           Specifies a user-defined token location type. 
-           If tt(%ltype) is used, tt(typename) should be the name of an
-            alternate (predefined) type (e.g., tt(size_t)). It should not be
-            used if a tt(%locationstruct) specification is defined (see
-            below). Within the parser class, this type is available as the
-            type `tt(LTYPE__)'.  All text on the line following tt(%ltype)
-            is used for the tt(typename) specification. It should therefore
-            not contain comment or any other characters that are not part of
-            the actual type definition.
-    it() bf(%namespace) tt(namespace) nl()
+
+    it() bf(%ltype typename) 
+    
+           Specifies a user-defined token location type.  If tt(%ltype) is
+            used, tt(typename) should be the name of an alternate (predefined)
+            type (e.g., tt(size_t)). It should not be used if a
+            tt(%locationstruct) specification is defined (see below). Within
+            the parser class, this type is available as the type
+            `tt(LTYPE__)'.  All text on the line following tt(%ltype) is used
+            for the tt(typename) specification. It should therefore not
+            contain comment or any other characters that are not part of the
+            actual type definition.
+
+    it() bf(%namespace) tt(namespace) 
+
            Define all of the code generated by bic() in the namespace
             tt(namespace). By default no namespace is defined. If this
             directive is used the implementation header is provided with a
@@ -422,7 +451,9 @@ the directive's specification.
            It is an error if this directive is used and an already
             existing parser-class header file and/or implementation header
             file does not define tt(namespace identifier).
-    it() bf(%negative-dollar-indices) nl()
+
+    it() bf(%negative-dollar-indices) 
+
            Do not generate warnings when zero- or negative dollar-indices are
             used in the grammar's action blocks. Zero or negative
             dollar-indices are commonly used to implement inherited
@@ -431,25 +462,34 @@ the directive's specification.
             empty; an tt(STYPE__) tag; or a field-name. However, note that in
             combination with the tt(%polymorphic) directive (see below) only
             the tt($-i) format can be used.
-    it() bf(%no-lines) nl() 
+
+    it() bf(%no-lines) 
+ 
            By default tt(#line) preprocessor directives are inserted just
             before action statements in the file containing the parser's
             tt(parse) function. These directives are suppressed by the
             tt(%no-lines) directive.
-    it() bf(%nonassoc) tt(terminal ...) nl() Defines the names of symbolic
-            terminal tokens that should be treated as non-associative. I.e.,
-            in case of a shift/reduce conflict, a reduction is preferred over
-            a shift.  Sequences of tt(%left, %nonassoc, %right) and tt(%token)
-            directives may be used to define the precedence of operators.  In
-            expressions, the first used directive defines the tokens having
-            the lowest precedence, the last used defines the tokens having the
-            highest priority. See also tt(%token) below.
-    it() bf(%parsefun-source) tt(filename) nl()
+
+    it() bf(%nonassoc) tt(terminal ...) 
+
+           Defines the names of symbolic terminal tokens that should be
+            treated as non-associative. I.e., in case of a shift/reduce
+            conflict, a reduction is preferred over a shift.  Sequences of
+            tt(%left, %nonassoc, %right) and tt(%token) directives may be used
+            to define the precedence of operators.  In expressions, the first
+            used directive defines the tokens having the lowest precedence,
+            the last used defines the tokens having the highest priority. See
+            also tt(%token) below.
+
+    it() bf(%parsefun-source) tt(filename) 
+
            tt(Filename) defines the name of the file to contain the parser
             member function tt(parse). Defaults to tt(parse.cc).  This
             directive is overruled by the bf(--parse-source) (bf(-p))
             command-line option.
-    it() bf(%polymorphic) tt(polymorphic-specification(s))nl()
+
+    it() bf(%polymorphic) tt(polymorphic-specification(s))
+
            Bison's traditional way of handling multiple semantic values is to
             use a tt(%union) specification (see below). Although tt(%union) is
             supported by bic(), a polymorphic semantic value class is
@@ -461,7 +501,9 @@ the directive's specification.
             below or to bic()'s user manual for a detailed description of the
             specification, characteristics, and use of polymorphic semantic
             values.
-    it() bf(%prec) tt(token) nl() 
+
+    it() bf(%prec) tt(token) 
+
            Overrules the defined precendence of an operator for a particular
             grammatical rule. A well known application of tt(%prec) is:
                 verb(
@@ -478,16 +520,22 @@ the directive's specification.
     %right UMINUS
                 )
             (see below) following, e.g., the tt('*') and tt('/') operators.
-    it() bf(%print-tokens) nl()
+
+    it() bf(%print-tokens)
+
            The tt(print) directive provides an implementation of the Parser
             class's tt(print__) function displaying the current token value
             and the text matched by the lexical scanner as received by the
             generated tt(parse) function.
-    it() bf(%required-tokens) tt(number)nl()
+
+    it() bf(%required-tokens) tt(number)
+
            Following a syntactic error, require at least tt(number)
             successfully processed tokens before another syntactic error can
             be reported. By default tt(number) is zero.
-    it() bf(%right) tt(terminal ...) nl() 
+
+    it() bf(%right) tt(terminal ...) 
+
            Defines the names of symbolic terminal tokens that should be
             treated as right-associative. I.e., in case of a shift/reduce
             conflict, a shift is preferred over a reduction.  Sequences of
@@ -496,7 +544,9 @@ the directive's specification.
             used directive defines the tokens having the lowest precedence,
             the last used defines the tokens having the highest priority. See
             also tt(%token) below.
-    it() bf(%scanner) tt(pathname)nl()
+
+    it() bf(%scanner) tt(pathname)
+
            Use tt(pathname) as the path name to the file pre-included in the
             parser's class header. See the description of the tt(--scanner)
             option for details about this directive.  Similar to the convention
@@ -515,7 +565,9 @@ the directive's specification.
 
            It is an error if this directive is used and an already
             existing parser class header file does not include tt(`pathname').
-    it() bf(%scanner-class-name) tt(scannerClassName) nl() 
+
+    it() bf(%scanner-class-name) tt(scannerClassName) 
+
            Defines the name of the scanner class, declared by the tt(pathname)
             header file that is specified at the tt(scanner) option or 
             directive. By default the class name tt(Scanner) is used.
@@ -524,7 +576,9 @@ the directive's specification.
             tt(scanner) directive was not provided, or the parser class
             interface in an already existing parser class header file does not
             declare a scanner class tt(d_scanner) object.
-    it() bf(%scanner-matched-text-function) tt(function-call) nl() 
+
+    it() bf(%scanner-matched-text-function) tt(function-call) 
+
            The scanner function returning the text that was matched by the
             lexical scanner after its token function (see below) has
             returned. A complete function call expression should be provided
@@ -537,7 +591,9 @@ the directive's specification.
 
            If the function call contains white space
             tt(scanner-token-function) should be surrounded by double quotes.
-    it() bf(%scanner-token-function) tt(function-call) nl() 
+
+    it() bf(%scanner-token-function) tt(function-call) 
+
            The scanner function returning the next token, called from the
             generated parser's tt(lex) function. A complete function
             call expression should be provided (including a scanner object, if
@@ -551,47 +607,62 @@ the directive's specification.
            It is an error if this directive is used and the scanner token
             function is not called from the code in an already
             existing implementation header.
-    it() bf(%start) tt(non-terminal) nl()    
+
+    it() bf(%start) tt(non-terminal) 
+
             The non-terminal tt(non-terminal) should be used as the grammar's 
             start-symbol. If omitted, the first grammatical rule is used
             as the grammar's starting rule. All syntactically correct
             sentences must be derivable from this starting rule.
-    it() bf(%stype typename) nl() 
+
+    it() bf(%stype typename) 
+
            The type of the semantic value of non-terminal tokens.  By default
             it is tt(int). tt(%stype, %union,) and tt(%polymorphic) are
-            mutually exclusive directives.   
+            mutually exclusive directives.
 
            Within the parser class, the semantic value type is available as
             the type `tt(STYPE__)'. All text on the line following tt(%stype)
             is used for the tt(typename) specification. It should therefore
             not contain comment or any other characters that are not part of
             the actual type definition.
-    it() bf(%target-directory pathname) nl() 
+
+    it() bf(%target-directory pathname)  
+
            tt(Pathname) defines the directory where generated files should be
             written.  By default this is the directory where bic() is
             called. This directive is overruled by the tt(--target-directory)
             command-line option.
-    it() bf(%token) tt(terminal ...) nl()    
+
+    it() bf(%token) tt(terminal ...) 
+
            Defines the names of symbolic terminal tokens.  Sequences of
             tt(%left, %nonassoc, %right) and tt(%token) directives may be used
             to define the precedence of operators. In expressions, the first
             used directive defines the tokens having the lowest precedence,
             the last used defines the tokens having the highest priority. See
-            also tt(%token) below.nl()
+            also tt(%token) below.
+
            bf(NOTE:) Symbolic tokens are defined as tt(enum)-values in the
             parser's base class. The names of symbolic tokens may not be equal
             to the names of the members and types defined by bic() itself (see
             the next sections). This requirement is em(not) enforced by bic(),
             but compilation errors may result if this requirement is violated.
-    it() bf(%type) tt(<type> non-terminal ...) nl()    
+
+    it() bf(%type) tt(<type> non-terminal ...) 
+
            In combination with tt(%polymorphic) or tt(%union): associate the
             semantic value of a non-terminal symbol with a polymorphic
             semantic value tag or union field defined by these directives.
-    it() bf(%union) tt(union-definition) nl()    
+
+    it() bf(%union) tt(union-definition) 
+
            Acts identically to the identically named bf(bison) and bf(bison++)
             declaration.  Bic() generates a union, named tt(STYPE__), as its
             semantic type.  
-    it() bf(%weak-tags) nl()
+
+    it() bf(%weak-tags) 
+
            This directive is ignored unless the tt(%polymorphic)
             directive was specified. It results in the declaration of tt(enum
             Tag__) rather than tt(enum class Tag__). When in doubt, don't use
@@ -600,12 +671,12 @@ the directive's specification.
 
 manpagesection(5. POLYMORPHIC SEMANTIC VALUES)
 
-    When specifying the tt(%polymorphic) directive a parser is generated using
-polymorphic semantic values. In this case semantic values are specified as
-pairs, consisting of em(tags) (which are bf(C++) identifiers), and bf(C++)
+    When the tt(%polymorphic) directive is specified a parser is generated
+using polymorphic semantic values. In this case semantic values are specified
+as pairs, consisting of em(tags) (which are bf(C++) identifiers), and bf(C++)
 type names. Tags and type names are separated by colons. Multiple tag and type
 name combinations are separated by semicolons, and an optional semicolon ends
-the final tag/type specification.
+the final tag/type pair.
 
 Here is an example, defining three semantic values: an tt(int), a
 tt(std::string) and a tt(std::vector<double>):
@@ -616,10 +687,10 @@ tt(std::string) and a tt(std::vector<double>):
     The identifier to the left of the colon is called the em(tag-identifier)
 (or simply em(tag)), and the type name to the right of the colon is called the
 em(type-name). Starting with bic() version 4.12.00 the types no longer have to
-provide default constructors. 
+have default constructors. 
 
     When polymorphic type-names refer to types that have not yet been declared
-in the parser's base class header, then these types must be (directly or
+by the parser's base class header, then these types must be (directly or
 indirectly) declared in a header file whose location is specified using the
 tt(%baseclass-preinclude) directive.
 

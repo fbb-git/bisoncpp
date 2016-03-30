@@ -149,10 +149,11 @@ ifdef(man)(\
             rules) is added to production rules that do not explicitly define
             their own final action blocks, while issuing a warning. When
             tt(quiet) is specified these action blocks are silently added. It
-            is an error when the types of $$ and $1 differ.  When tt(off) is
-            specified no action blocks are added (issuing a warning issued,
-            unless the option/directive tt(tag-mismatches off) has been
-            specified).
+            is an error when the types of $$ and $1 differ (but it is OK if
+            neither $$ nor $1 is associated with a specific type). When
+            tt(off) is specified no action blocks are added (issuing a warning
+            issued, unless the option/directive tt(tag-mismatches off) has
+            been specified).
 
     it() label(ERRORVERBOSE)loption(error-verbose)nl()
            When a syntactic error is reported, the generated parse function
