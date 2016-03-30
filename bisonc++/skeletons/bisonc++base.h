@@ -32,7 +32,7 @@ $insert LTYPE
 $insert STYPE
 
     private:
-        int d_stackIdx__;
+        int d_stackIdx__ = -1;
         std::vector<size_t>   d_stateStack__;
         std::vector<STYPE__>  d_valueStack__;
 $insert LTYPEstack
@@ -48,9 +48,9 @@ $insert LTYPEstack
             DEFAULT_RECOVERY_MODE__,
             UNEXPECTED_TOKEN__,
         };
-        bool        d_actionCases__;
-        bool        d_debug__;
-        size_t      d_nErrors__;
+        bool        d_actionCases__ = false;
+        bool        d_debug__ = false;
+        size_t      d_nErrors__ = 0;
         size_t      d_requiredTokens__;
         size_t      d_acceptedTokens__;
         int         d_token__;

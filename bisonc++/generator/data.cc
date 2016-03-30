@@ -11,7 +11,7 @@ Generator::Map Generator::s_insert =
     {"class.ih",                    &Generator::classIH},
     {"debug",                       &Generator::debug},
     {"debugdecl",                   &Generator::debugDecl},
-    {"debuginit",                   &Generator::debugInit},
+//FBB    {"debuginit",                   &Generator::debugInit},
     {"debugfunctions",              &Generator::debugFunctions},
     {"debugincludes",               &Generator::debugIncludes},
     {"debuglookup",                 &Generator::debugLookup},

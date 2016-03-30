@@ -51,7 +51,7 @@ struct Options
                             // Resulting values: OFF, QUIET, WARN
         OptInfo d_defaultActions{UNKNOWN, "", 0};
 
-        bool        d_debug             = false;
+        bool        d_genDebug          = false;
         bool        d_errorVerbose      = false;
         bool        d_flex              = false;
         bool        d_lines             = true;
@@ -128,7 +128,7 @@ struct Options
         void setBaseClassHeader();
         void setClassHeader();
         void setClassName();
-        void setDebug();
+        void setGenDebug();
         void setErrorVerbose();
         void setFlex();
         void setGenericFilename();
@@ -165,7 +165,7 @@ struct Options
 
 
         bool printTokens() const;
-        bool debug() const;
+        bool genDebug() const;
 
         bool errorVerbose() const;
         bool lines() const;
@@ -238,9 +238,9 @@ struct Options
                                 unsigned mask = ~0);
 };
 
-inline bool Options::debug() const
+inline bool Options::genDebug() const
 {
-    return d_debug;
+    return d_genDebug;
 }
 
 inline Options::OptInfo const &Options::defaultActions() const
@@ -403,9 +403,9 @@ inline void Options::setErrorVerbose()
     d_errorVerbose = true;
 }
 
-inline void Options::setDebug()
+inline void Options::setGenDebug()
 {
-    d_debug = true;
+    d_genDebug = true;
 }
 
 inline void Options::setGenericFilename()

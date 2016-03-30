@@ -121,9 +121,6 @@ $insert polymorphicCode
 
 \@Base::\@Base()
 :
-    d_stackIdx__(-1),
-$insert 4 debuginit
-    d_nErrors__(0),
 $insert 4 requiredtokens
     d_acceptedTokens__(d_requiredTokens__),
     d_token__(_UNDETERMINED_),

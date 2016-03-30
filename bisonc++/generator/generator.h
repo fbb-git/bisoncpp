@@ -40,7 +40,7 @@ class Generator
     mutable size_t d_indent;
 
     mutable std::string d_line;
-    bool d_debug;
+    bool d_genDebug;
     bool d_printTokens;
 
     std::unordered_map<std::string, std::string> const &d_polymorphic; 
@@ -94,7 +94,7 @@ class Generator
         void debug(std::ostream &out) const;
         void debugIncludes(std::ostream &out) const;
         void debugFunctions(std::ostream &out) const;
-        void debugInit(std::ostream &out) const;
+//FBB        void debugInit(std::ostream &out) const;
         void debugDecl(std::ostream &out) const;
         void debugLookup(std::ostream &out) const;
         void defaultActionReturn(std::ostream &out) const;

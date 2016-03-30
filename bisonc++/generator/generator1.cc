@@ -11,7 +11,7 @@ Generator::Generator(Rules const &rules,
     d_matchedTextFunction(d_options.scannerMatchedTextFunction()),
     d_tokenFunction(d_options.scannerTokenFunction()),
     d_nameSpacedClassname(d_nameSpace + d_options.className()),
-    d_debug(d_options.debug()),
+    d_genDebug(d_options.genDebug()),
     d_printTokens(d_options.printTokens()),
     d_polymorphic(polymorphic),
 

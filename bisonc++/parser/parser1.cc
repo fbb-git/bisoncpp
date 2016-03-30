@@ -9,7 +9,7 @@ Parser::Parser(Rules &rules)
     d_rules(rules)
 {
     d_options.setMatched(d_matched);
-    setDebug(d_arg.option(0, "own-debug"));
+//    setDebug(d_arg.option(0, "own-debug"));
     d_scanner.setDebug(d_arg.option(0, "scanner-debug"));
 
     predefine(Rules::errorTerminal());

@@ -97,6 +97,9 @@ try
 
     Parser parser(rules);
 
+//    parser.setDebug(Parser::ON__);
+//    parser.setDebug(Parser::ACTIONCASES__);
+
     parser.parse();        // parses the input, fills the data in the Rules
                             // read the grammar file, build required data
                             // structures. 

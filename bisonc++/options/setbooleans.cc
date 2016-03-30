@@ -3,7 +3,7 @@
 void Options::setBooleans()
 {
     if (d_arg.option(0, "debug"))
-        d_debug = true;
+        d_genDebug = true;
 
     if (d_arg.option('t'))
     {
