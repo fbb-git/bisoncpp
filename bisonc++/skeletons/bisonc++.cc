@@ -132,6 +132,18 @@ $insert 4 requiredtokens
 
 $insert debugfunctions
 
+void \@Base::setDebug(bool mode)
+{
+    d_actionCases__ = false;
+    d_debug__ = mode;
+}
+
+void \@Base::setDebug(DebugMode__ mode)
+{
+    d_actionCases__ = mode == ACTIONCASES__;
+    d_debug__ =       mode == ON__;
+}
+
 void \@::print__()
 {
 $insert print

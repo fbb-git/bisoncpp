@@ -20,6 +20,13 @@ $insert polymorphic
 class \@Base
 {
     public:
+        enum DebugMode__
+        {
+            OFF__,
+            ON__,
+            ACTIONCASES__
+        };
+
 $insert tokens
 $insert LTYPE
 $insert STYPE
@@ -41,6 +48,7 @@ $insert LTYPEstack
             DEFAULT_RECOVERY_MODE__,
             UNEXPECTED_TOKEN__,
         };
+        bool        d_actionCases__;
         bool        d_debug__;
         size_t      d_nErrors__;
         size_t      d_requiredTokens__;
@@ -60,6 +68,7 @@ $insert debugdecl
         void ACCEPT() const;
         void ERROR() const;
         void clearin();
+        bool actionCases() const;
         bool debug() const;
         void pop__(size_t count = 1);
         void push__(size_t nextState);
@@ -71,6 +80,7 @@ $insert debugdecl
 
     public:
         void setDebug(bool mode);
+        void setDebug(DebugMode__ mode);
 }; 
 
 inline bool \@Base::debug() const
@@ -78,9 +88,9 @@ inline bool \@Base::debug() const
     return d_debug__;
 }
 
-inline void \@Base::setDebug(bool mode)
+inline bool \@Base::actionCases() const
 {
-    d_debug__ = mode;
+    return d_actionCases__;
 }
 
 inline void \@Base::ABORT() const

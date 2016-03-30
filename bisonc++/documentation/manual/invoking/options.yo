@@ -1,12 +1,12 @@
     Where available, single letter options are listed between parentheses
 beyond their associated long-option variants. Single letter options require
-arguments if their associated long options require arguments. Options
-affecting the class header or implementation header file are ignored if these
+arguments if their associated long options also require arguments. Options
+affecting the class- or implementation header files are ignored if these
 files already exist. Options accepting a `filename' do not accept path names,
 i.e., they cannot contain directory separators (tt(/)); options accepting a
-'pathname' may contain directory separators. 
+'pathname' may contain directory separators.
 
-Some options may generate errors. This happens when an option conflicts with
+Some options may produce errors. This happens when an option conflicts with
 the contents of a file which bic() cannot modify (e.g., a parser
 class header file exists, but doesn't define a namespace, but a
 tt(--namespace) option was provided). 

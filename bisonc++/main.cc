@@ -11,7 +11,6 @@ namespace
 {
     Arg::LongOption longOptions[] = 
     {
-        {"action-cases", 'a'},
         {"analyze-only", 'A'},
                                                             
         {"baseclass-header", 'b'},                          // also directive
@@ -89,7 +88,7 @@ namespace
 int main(int argc, char **argv)
 try
 {
-    Arg &arg = Arg::initialize("aAB:b:C:c:d:Df:H:hI:i:L:M:n:p:P:s:S:tTVv", 
+    Arg &arg = Arg::initialize("AB:b:C:c:d:Df:H:hI:i:L:M:n:p:P:s:S:tTVv", 
                     longOptions, longEnd, argc, argv);
 
     arg.versionHelp(usage, version, 1);

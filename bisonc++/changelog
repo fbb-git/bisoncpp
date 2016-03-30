@@ -1,6 +1,6 @@
 bisonc++ (5.00.00) (WIP)
 
-  * new option: -a (--action-cases), documentation: TODO
+  * new member: setDebug(DebugMode__)
 
   * The SType::data() member is now obsolete and has been removed.
 
