@@ -6,16 +6,17 @@ files already exist. Options accepting a `filename' do not accept path names,
 i.e., they cannot contain directory separators (tt(/)); options accepting a
 'pathname' may contain directory separators.
 
-Some options may produce errors. This happens when an option conflicts with
-the contents of a file which bic() cannot modify (e.g., a parser
-class header file exists, but doesn't define a namespace, but a
-tt(--namespace) option was provided). 
+Some options may produce errors. This happens when they conflict with the
+contents of a file which bic() cannot modify (e.g., a parser class header file
+exists, but doesn't define a namespace, but a tt(--namespace) option was
+provided).
 
 To solve the error the offending option could be omitted, the existing file
 could be removed, or the existing file could be hand-edited according to the
 option's specification. Note that bic() currently does not handle the opposite
 error condition: if a previously used option is omitted, then bic() does not
-detect the inconsistency. In those cases compilation errors may be generated.
+detect the inconsistency. In those cases compilation errors may be
+encountered.
 
 
 COMMENT(
@@ -36,6 +37,29 @@ END)
 
 
     itemization(
+    it() loption(action-cases) (soption(a))nl()
+           This option is only interpreted when polymorphic semantic values
+            are used (see section
+ifdef(man)(\
+            bf(POLYMORPHIC SEMANTIC VALUES)\
+)(\
+            ref(POLYMORPHIC)\
+)\
+              for details about this directive). When the generated parses
+            attempts to retrieve a
+            non-existing polymorphic value a fatal error is generated, ending
+            the parsing process (and usually ending the program as well). The
+            error message itself cannot refer to the action block where the
+            error occurred. If this situation is encountered, bic() should
+            regenerate
+
+see the description of the In
+            some situations Only analyze the grammar. No files are
+            (re)written. This option can be used to test the grammatic
+            correctness of modification `in situ', without overwriting
+            previously generated files. If the grammar contains syntactic
+            errors only syntax analysis is performed.
+
     it() loption(analyze-only) (soption(A))nl()
            Only analyze the grammar. No files are (re)written. This option can
             be used to test the grammatic correctness of modification `in
