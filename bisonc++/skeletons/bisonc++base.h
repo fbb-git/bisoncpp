@@ -22,9 +22,9 @@ class \@Base
     public:
         enum DebugMode__
         {
-            OFF__,
-            ON__,
-            ACTIONCASES__
+            OFF__           = 0,
+            ON__            = 1 << 0,
+            ACTIONCASES__   = 1 << 1
         };
 
 $insert tokens
@@ -80,7 +80,7 @@ $insert debugdecl
 
     public:
         void setDebug(bool mode);
-        void setDebug(DebugMode__ mode);
+        void setDebug(int mode);
 }; 
 
 inline bool \@Base::debug() const

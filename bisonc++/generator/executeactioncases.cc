@@ -9,6 +9,6 @@ void Generator::executeActionCases(ostream &out) const
 
     out << R"(
     if (d_actionCases__)
-        s_out__ << "executeAction case " << production << '\n';
+        s_out__ << "executeAction case " << production << '\n' << dflush__;
 )";
 }

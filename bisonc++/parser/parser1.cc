@@ -9,7 +9,12 @@ Parser::Parser(Rules &rules)
     d_rules(rules)
 {
     d_options.setMatched(d_matched);
-//    setDebug(d_arg.option(0, "own-debug"));
+
+    int debugMode = d_arg.option(0, "own-debug") ? ON__ : OFF__;
+    if (d_arg.option('a'))
+        debugMode |= ACTIONCASES__;
+    setDebug(debugMode);
+
     d_scanner.setDebug(d_arg.option(0, "scanner-debug"));
 
     predefine(Rules::errorTerminal());

@@ -11,15 +11,16 @@ namespace
 {
     Arg::LongOption longOptions[] = 
     {
-        {"analyze-only", 'A'},
+        Arg::LongOption{"action-cases", 'a'},
+        Arg::LongOption{"analyze-only", 'A'},
                                                             
-        {"baseclass-header", 'b'},                          // also directive
-        {"baseclass-preinclude", 'H'},                      // also directive
+        Arg::LongOption{"baseclass-header", 'b'},           // also directive
+        Arg::LongOption{"baseclass-preinclude", 'H'},       // also directive
         {"baseclass-skeleton", 'B'},
                                                             
-        {"class-header", 'c'},                              // also directive
-        {"class-name", Arg::Required},                      // also directive
-        {"class-skeleton", 'C'},
+        Arg::LongOption{"class-header", 'c'},               // also directive
+        Arg::LongOption{"class-name", Arg::Required},       // also directive
+        Arg::LongOption{"class-skeleton", 'C'},
         Arg::LongOption{"construction"},
             // implies verbose, but also shows              
             // FIRST and FOLLOW sets as well as             
@@ -29,56 +30,59 @@ namespace
 //        {"constructor-checks", Arg::Required},              // also directive
                                                             
         Arg::LongOption{"debug"},                           // also directive
-        {"default-actions", 'd'},                           // also directive
+        Arg::LongOption{"default-actions", 'd'},            // also directive
 
         Arg::LongOption{"error-verbose"},                   // also directive
                                                             
-        {"filenames", 'f'},                                 // also directive
+        Arg::LongOption{"filenames", 'f'},                  // also directive
         Arg::LongOption{"flex"},                            // also directive
                                                             
-        {"help", 'h'},
+        Arg::LongOption{"help", 'h'},
                                                             
-        {"implementation-header", 'i'},                     // also directive
-        {"implementation-skeleton", 'I'},
+        Arg::LongOption{"implementation-header", 'i'},      // also directive
+        Arg::LongOption{"implementation-skeleton", 'I'},
         Arg::LongOption{"insert-stype"},
                                                             
-        {"max-inclusion-depth", Arg::Required},
+        Arg::LongOption{"max-inclusion-depth", Arg::Required},
                                                             
-        {"namespace", 'n'},                                 // also directive
+        Arg::LongOption{"namespace", 'n'},                  // also directive
         Arg::LongOption{"no-baseclass-header"},
-        {"no-decoration", 'D'},
+        Arg::LongOption{"no-decoration", 'D'},
         Arg::LongOption{"no-lines"},                        // also directive
         Arg::LongOption{"no-parse-member"},
                                                             
-        {"own-debug", Arg::None},
-        {"own-tokens", 'T'},
+        Arg::LongOption{"own-debug"},
+        Arg::LongOption{"own-tokens", 'T'},
 
-        {"parsefun-skeleton", 'P'},
-        {"parsefun-source", 'p'},                           // also directive
-        {"polymorphic-code-skeleton", 'L'},
-        {"polymorphic-skeleton", 'M'},
-        {"print-tokens", 't'},                              // also directive
-                                                            
-        {"required-tokens", Arg::Required},                 // also directive
-                                                            
-        {"scanner", 's'},                                   // also directive
-        {"scanner-class-name", Arg::Required},              // also directive
+        Arg::LongOption{"parsefun-skeleton", 'P'},
+        Arg::LongOption{"parsefun-source", 'p'},            // also directive
+        Arg::LongOption{"polymorphic-code-skeleton", 'L'},
+        Arg::LongOption{"polymorphic-skeleton", 'M'},
+        Arg::LongOption{"print-tokens", 't'},               // also directive
+
+        Arg::LongOption{"required-tokens", Arg::Required},  // also directive
+
+        Arg::LongOption{"scanner", 's'},                    // also directive
+                                                            // also directive
+        Arg::LongOption{"scanner-class-name", Arg::Required},   
         Arg::LongOption{"scanner-debug"},
-        {"scanner-matched-text-function", Arg::Required},   // also directive
-        {"scanner-token-function", Arg::Required},          // also directive
+                                                            // also directive
+        Arg::LongOption{"scanner-matched-text-function", Arg::Required},    
+                                                            // also directive
+        Arg::LongOption{"scanner-token-function", Arg::Required},
         Arg::LongOption{"show-filenames"},
-        {"skeleton-directory", 'S'},
+        Arg::LongOption{"skeleton-directory", 'S'},
 
-        {"tag-mismatches", Arg::Required},                  // also directive
-        {"target-directory", Arg::Required},                // also directive
+        Arg::LongOption{"tag-mismatches", Arg::Required},   // also directive
+        Arg::LongOption{"target-directory", Arg::Required}, // also directive
         Arg::LongOption{"thread-safe"},
 
-        {"usage", 'h'},                                     
+        Arg::LongOption{"usage", 'h'},                                     
 
-        {"verbose", 'V'},
+        Arg::LongOption{"verbose", 'V'},
             // shows rules, tokens, final states and kernel
             // items, and describes conflicts when found
-        {"version", 'v'},
+        Arg::LongOption{"version", 'v'},
 
     };
     auto longEnd = longOptions + 
@@ -88,7 +92,7 @@ namespace
 int main(int argc, char **argv)
 try
 {
-    Arg &arg = Arg::initialize("AB:b:C:c:d:Df:H:hI:i:L:M:n:p:P:s:S:tTVv", 
+    Arg &arg = Arg::initialize("aAB:b:C:c:d:Df:H:hI:i:L:M:n:p:P:s:S:tTVv", 
                     longOptions, longEnd, argc, argv);
 
     arg.versionHelp(usage, version, 1);
@@ -97,8 +101,7 @@ try
 
     Parser parser(rules);
 
-//    parser.setDebug(Parser::ON__);
-//    parser.setDebug(Parser::ACTIONCASES__);
+//    parser.setDebug(Parser::ACTIONCASES__ |);
 
     parser.parse();        // parses the input, fills the data in the Rules
                             // read the grammar file, build required data

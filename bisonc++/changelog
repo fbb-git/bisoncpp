@@ -1,6 +1,7 @@
 bisonc++ (5.00.00) (WIP)
 
-  * new member: setDebug(DebugMode__)
+  * new member: setDebug(int), option --action-cases shows the action case
+    just before executing the action block.
 
   * The SType::data() member is now obsolete and has been removed.
 
