@@ -74,16 +74,16 @@ then a reference to the rule's semantic value is returned.
     itt($$.)
 
     If no semantic value was associated with $$ then this is shorthand for the
-member selector operator which is applied to a reference to the rule's return
+member selector operator, applied to a reference to the rule's return
 value. If a semantic value type was associated with $$ then the member
-selector operator is applied to a reference to the rule's semantic value.
+selector operator is applied to the rule's semantic value.
 
     itt($$->)
 
     If no semantic value was associated with $$ then this is shorthand for the
-pointer to member operator which is applied to the rule's return value. If a
-semantic value type was associated with $$ then the pointer to member operator
-is applied to a reference to the rule's semantic value.
+pointer to member operator, applied to the rule's return value. If a semantic
+value type was associated with $$ then the pointer to member operator is
+applied to the rule's semantic value.
 
 
     itt(_$1)
@@ -96,54 +96,84 @@ production rule's first element. No allowance is made for associated types.
     This construction refers to the semantic value of the production rule's
 first element. If no semantic value was associated with $1 then this is
 shorthand for the tt(STYPE__) value that's available for the production rule's
-first element.  If a semantic value was associated with $1 then a reference to
-the semantic value that's associated with the production rule's first element.
+element 1.  If a semantic value was associated with $1 then $1 refers to the
+semantic value associated with the production rule's element 1.
 
     itt($1.)
 
     If no semantic value was associated with $1 then this is shorthand for the
-member selector operator which is applied to the semantic value of the
-production rule's first element. If a semantic value was associated with $1
-then the member selector operator is applied to a reference to the semantic
-value that's associated with the production rule's first element.
-
+member selector operator, applied to the semantic value of the production
+rule's element 1. If a semantic value was associated with $1 then the member
+selector operator is applied to the semantic value associated with the
+production rule's element 1.
 
     itt($1->)
 
     If no semantic value was associated with $1 then this is shorthand for the
-pointer to member operator which is applied to the semantic value of the
-production rule's first element. If a semantic value was associated with $1
-then the pointer to member operator is applied to a reference to the semantic
-value that's associated with the production rule's first element.
-
+pointer to member operator, applied to the semantic value of the production
+rule's element 1. If a semantic value was associated with $1 then the pointer
+to member operator is applied to the semantic value associated with the
+production rule's element 1.
 
     itt(_$-1)
 
-    This refers to the variable containing the semantic value of a production
-rule element that's specified before the current rule's non-terminal. No
-allowance is made for associated types.
+    This refers to the value of some production rule element, 1 element before
+the current rule's non-terminal. No allowance is made for associated semantic
+types.
 
     itt($-1)
 
-    Same: this refers to the variable containing the semantic value of a
-production rule element that's specified before the current rule's
-non-terminal. No allowance is made for associated types.
+    Same: this refers to the value of some production rule element, 1 element
+before the current rule's non-terminal. No allowance is made for associated
+semantic types.
  
     itt($-1.)
 
-    This is shorthand for the member selector operator which is applied to the
-semantic value of the production rule's element that's specified before the
-current rule's non-terminal. No allowance is made for associated types.
-
+    This is shorthand for the member selector operator applied to to the value
+of some production rule element, 1 element before the current rule's
+non-terminal. No allowance is made for associated semantic types.
 
     itt($1->)
 
-    If no semantic value was associated with $1 then this is shorthand for the
-pointer to member operator which is applied to the semantic value of the
-production rule's first element. If a semantic value was associated with $1
-then the pointer to member operator is applied to a reference to the semantic
-value that's associated with the production rule's first element.
+    This is shorthand for the pointer to member operator applied to to the
+value of some production rule element, 1 element before the current rule's
+non-terminal. No allowance is made for associated semantic types.
 
+    itt($<tag>-1)
+
+    This refers to the semantic value of a polymorphic type (associated with
+tt(tag)) of some production rule element, 1 element before the current rule's
+non-terminal.
+
+If the semantic value type of that element doesn't match the type that is
+associated with tt(tag) then a run-time fatal error results. If that happens,
+and the tt(debug) option/directive was specified when bic() wrote the
+program's tt(parse) member, then the program can be rerun after specifying
+tt(parser.setDebug(Parser::ACTIONCASES__)) to locate the tt(parse) function's
+action block where the fatal error was encountered.
+ 
+    itt($<tag>-1.)
+
+    This refers to the member selector operator applied to the semantic value
+of a polymorphic type (associated with tt(tag)) of some production rule
+element, 1 element before the current rule's non-terminal.
+
+If the semantic value type of that element doesn't match the type that is
+associated with tt(tag) then a run-time fatal error results. The procedure
+suggested at the previous tt($<tag>-1) item for solving such errors can be
+applied here as well.
+
+ 
+    itt($<tag>-1->)
+
+    This refers to the pointer to member operator applied to the semantic
+value of a polymorphic type (associated with tt(tag)) of some production rule
+element, 1 element before the current rule's non-terminal.
+
+If the semantic value type of that element doesn't match the type that is
+associated with tt(tag) then a run-time fatal error results. The procedure
+suggested at the previous tt($<tag>-1) item for solving such errors can be
+applied here as well.
 
 
 
