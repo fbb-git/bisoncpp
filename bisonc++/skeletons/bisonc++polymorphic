@@ -90,21 +90,21 @@ class SType
 
         bool valid() const;
 
-        operator SType &()
-        {
-            return *this;
-        }
+//        operator SType &()
+//        {
+//            return *this;
+//        }
+//
+//        operator SType const &()
+//        {
+//            return *this;
+//        }
 
-        operator SType const &()
-        {
-            return *this;
-        }
-
-        template <typename Type>
-        operator Type &();
-
-        template <typename Type>
-        operator Type const &();
+//        template <typename Type>
+//        operator Type &();
+//
+//        template <typename Type>
+//        operator Type const &();
 
         Tag__ tag() const;
 
@@ -199,17 +199,17 @@ inline bool SType::valid() const
     return tag() != static_cast<Tag__>(sizeofTag__);
 }
 
-template <typename Type>
-inline SType::operator Type &()
-{
-    return get<TagOf<Type>::tag>();
-}
-
-template <typename Type>
-inline SType::operator Type const &()
-{
-    return get<TagOf<Type>::tag>();
-}
+//template <typename Type>
+//inline SType::operator Type &()
+//{
+//    return get<TagOf<Type>::tag>();
+//}
+//
+//template <typename Type>
+//inline SType::operator Type const &()
+//{
+//    return get<TagOf<Type>::tag>();
+//}
 
 template <Tag__ tag, typename ...Args>
 void SType::assign(Args &&...args)

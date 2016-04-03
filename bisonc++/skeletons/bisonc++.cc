@@ -135,7 +135,7 @@ void \@Base::setDebug(bool mode)
     d_debug__ = mode;
 }
 
-void \@Base::setDebug(int mode)
+void \@Base::setDebug(DebugMode__ mode)
 {
     d_actionCases__ = mode & ACTIONCASES__;
     d_debug__ =       mode & ON__;

@@ -1,4 +1,4 @@
-//%no-lines
+%no-lines
 %filenames parser
 %default-actions quiet
 %scanner ../scanner/scanner.h
