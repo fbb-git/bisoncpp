@@ -608,16 +608,16 @@ the directive's specification.
             function is not called from the code in an already
             existing implementation header.
 
-    it() bf(%start) tt(non-terminal) 
+    it() bf(%start) tt(nonterminal) 
 
-            The non-terminal tt(non-terminal) should be used as the grammar's 
+            The nonterminal tt(nonterminal) should be used as the grammar's 
             start-symbol. If omitted, the first grammatical rule is used
             as the grammar's starting rule. All syntactically correct
             sentences must be derivable from this starting rule.
 
     it() bf(%stype typename) 
 
-           The type of the semantic value of non-terminal tokens.  By default
+           The type of the semantic value of nonterminal tokens.  By default
             it is tt(int). tt(%stype, %union,) and tt(%polymorphic) are
             mutually exclusive directives.
 
@@ -649,10 +649,10 @@ the directive's specification.
             the next sections). This requirement is em(not) enforced by bic(),
             but compilation errors may result if this requirement is violated.
 
-    it() bf(%type) tt(<type> non-terminal ...) 
+    it() bf(%type) tt(<type> nonterminal ...) 
 
            In combination with tt(%polymorphic) or tt(%union): associate the
-            semantic value of a non-terminal symbol with a polymorphic
+            semantic value of a nonterminal symbol with a polymorphic
             semantic value tag or union field defined by these directives.
 
     it() bf(%union) tt(union-definition) 
@@ -671,12 +671,17 @@ the directive's specification.
 
 manpagesection(5. POLYMORPHIC SEMANTIC VALUES)
 
-    When the tt(%polymorphic) directive is specified a parser is generated
-using polymorphic semantic values. In this case semantic values are specified
-as pairs, consisting of em(tags) (which are bf(C++) identifiers), and bf(C++)
-type names. Tags and type names are separated by colons. Multiple tag and type
-name combinations are separated by semicolons, and an optional semicolon ends
-the final tag/type pair.
+    Like bf(bison)(1), bic() by default uses tt(int) semantic values, and also
+supports the tt(%stype) and tt(%union) directives for using single-type or
+traditional bf(C)-type unions as semantic values. These types of semantic
+values are covered in bic()'s manual.
+
+    In addition, the tt(%polymorphic) directive can be specified to generate a
+parser that uses `polymorphic' semantic values. In this case semantic values
+are specified as pairs, consisting of em(tags) (which are bf(C++)
+identifiers), and bf(C++) type names. Tags and type names are separated by
+colons. Multiple tag and type name combinations are separated by semicolons,
+and an optional semicolon ends the final tag/type pair.
 
 Here is an example, defining three semantic values: an tt(int), a
 tt(std::string) and a tt(std::vector<double>):
@@ -712,6 +717,9 @@ tt(%namespace) directive):
         VECT
     };
         )
+    it() An anonymous tt(enum) defining the symbolic constant tt(sizeofTag__)
+        equal to the number of tags in the tt(Tag__) enumeration.
+
     it() The namespace tt(Meta__) contains almost all of the code
 implementing polymorphic values.
     )
@@ -720,11 +728,11 @@ The namespace  tt(Meta__) contains, among other classes the class tt(SType).
 The parser's semantic value type tt(STYPE__) is equal to tt(Meta__::SType).
 
 tt(SType) provides the standard user interface for using polymorphic semantic
-data types. It provides the following public interface:
+data types. It offers the following public interface:
 
     includefile(../manual/grammar/stypeinterface)
 
-manpagesection(6. PUBLIC MEMBERS AND -TYPES)
+manpagesection(6. PUBLIC MEMBERS, TYPES, AND ENUMS)
 
     includefile(../manual/class/public.yo)
     
@@ -747,6 +755,11 @@ members inherited from the parser's base class.
         function or since the last detected syntactic error. It is initialized
         to tt(d_requiredTokens__) to allow an early error to be detected as
         well. 
+    it() bf(bool d_actionCases__):nl()
+       When the tt(debug) option has been specified, this variable (tt(false)
+        by default) determines whether the number of action block which is
+        about to be executed by the parser's member tt(executeAction) will be
+        displayed to the standard output stream.
     it() bf(bool d_debug__):nl()
        When the tt(debug) option has been specified, this variable (tt(true)
         by default) determines whether debug information is actually
@@ -792,8 +805,8 @@ members inherited from the parser's base class.
        The current token.
         Do not modify.
     it() bf(STYPE__ d_val__):nl()
-       The semantic value of a returned token or non-terminal symbol. With
-        non-terminal tokens it is assigned a value through the action rule's
+       The semantic value of a returned token or nonterminal symbol. With
+        nonterminal tokens it is assigned a value through the action rule's
         symbol tt($$). Lexical scanners may be offered the facility to assign
         a semantic value to this variable in parallel with a returned
         token. In order to allow a scanner access to tt(d_val__),
@@ -884,47 +897,47 @@ called from any member called by tt(parse). As a consequence, action blocks
 could contain mere function calls, rather than several statements, thus
 minimizing the need to rerun bic() when an action is modified.
 
-    Once bic() had created tt(parser.h) it was augmented with the required
-additional members, resulting in the following final version:
+    After bic() created tt(parser.h) the additional members were added to it,
+        resulting in the following final version:
 
         verbinclude(calculator/parser/parser.h)
 
-    it() To complete the example, the following lexical scanner specification
-was used:
+    it() The lexical scanner specification, used by bf(flexc++)(1) to create
+        the lexical scanner  completes the example.
 
         verbinclude(calculator/scanner/lexer)
 
     it() Since no member functions other than tt(parse) were defined in
-separate source files, only tt(parse) includes tt(parser.ih). Since
-tt(cerr) is used in the grammar's actions, a tt(using namespace
-std) or comparable statement is required. This was effectuated from
-tt(parser.ih) Here is the implementation header declaring the standard
-namespace:
+separate source files, only tt(parse) includes tt(parser.ih). Since tt(cerr)
+is used in the grammar's actions, a tt(using namespace std) or comparable
+directive is required. It was specified at the end of tt(parser.ih). Here is
+the implementation header declaring the standard namespace:
 
         verbinclude(calculator/parser/parser.ih)
 
-    The implementation of the parsing member function tt(parse) is basically
-irrelevant, since it should not be modified by the programmer. It was written
-on the file tt(parse.cc).
-    it() Finally, here is the program offering our simple calculator:
+    In the current context the parsing member function tt(parse's)
+implementation is not very relevant, since it should not be modified by the
+programmer. It is not shown here, but is available in the example's source
+file tt(calculator/parser/parse.cc).
+    it() Finally, here is the program's tt(main) function:
 
-        verbinclude(calculator/calculator.cc)
+        verbinclude(calculator/main.cc)
     )
 
 manpagesection(14. USING PARSER-CLASS SYMBOLS IN LEXICAL SCANNERS)
 
-        Note here that although the file tt(parserbase.h), defining the
-parser class' base-class, rather than the header file tt(parser.h)
-defining the parser class is included, the lexical scanner may simply return
-tokens of the class tt(Parser) (e.g., tt(Parser::NUMBER) rather than
-tt(ParserBase::NUMBER)). In fact, using a simple tt(#define - #undef)
-pair generated by the bic() respectively at the end of the base class header
-the file and just before the definition of the parser class itself it is
-the possible to assume in the lexical scanner that all symbols defined in the
-the parser's base class are actually defined in the parser class itself. It
-the should be noted that this feature can only be used to access base class
-the tt(enum) and types. The actual parser class is not available by the time
-the the lexical scanner is defined, thus avoiding circular class dependencies.
+        Although the file tt(parserbase.h), defining the parser class'
+base-class, rather than the header file tt(parser.h) defining the parser class
+is included by tt(scanner.ih), the lexical scanner may simply return tokens of
+the class tt(Parser) (e.g., tt(Parser::NUMBER) rather than
+tt(ParserBase::NUMBER)). This former specification is considered somewhat more
+intuitively appealing than the latter specification. It was realized by a
+simple tt(#define - #undef) pair generated by bic() near the end of
+tt(parserbase.h) and just before the definition of the parser class itself in
+the file tt(parser.h). Note that this feature can only be used to access base
+class types and tt(enum) values. The actual parser class is not available by
+the time the the lexical scanner is being defined, avoiding circular class
+dependencies.
         
 manpagesection(15. FILES)
     itemization(
@@ -934,13 +947,38 @@ manpagesection(15. FILES)
     it() bf(bisonc++.cc): skeleton of the member tt(parse);
     it() bf(bisonc++polymorphic): skeleton of the declarations used by
         tt(%polymorphic);
-    it() bf(bisonc++polymorphic.inline): skeleton of the inline
+    it() bf(bisonc++polymorphic.code): skeleton of the non-inline
         implementations of the members declared in bf(bisonc++polymorphic).
+    it() bf(debugdecl.in): skeleton declaring members of the parser's base
+        class that are only required when the tt(debug) option or directive
+        was specified.
+    it() bf(debugfunctions1.in): skeleton defining the members declared in
+        tt(debugdecl.in).
+    it() bf(debugfunctions2.in): skeleton implementing tt(symbol__), which is
+        only needed when the tt(print-tokens) option or directive was
+        specified. 
+    it() bf(debugfunctions3.in): skeleton implementing tt(errorVerbose__),
+        which is only needed when the tt(error-verbose) option or directive was
+        specified.
+    it() bf(debugincludes.in): skeleton specifying the header files
+        tt(#include) directives that are required  when the tt(debug) option
+        or directive was specified.
+    it() bf(debuglookup.in): skeleton containing extra code required in the
+        tt(Parser::lookup) member when the tt(debug) option of directive was
+        specified.
+    it() bf(lex.in): skeleton implementing the tt(Parser::lex) function.
+    it() bf(ltypedata.in): skeleton declaring the location variables
+    it() bf(ltype.in): skeleton defining the default or user defined
+        tt(LTYPE__).
+    it() bf(print.in): skeleton implementing the actions of tt(Parser::print)
+        if the tt(print-tokens) option or directive was specified.
+    it() bf(threading.in): skeleton defining the variables required for
+        generating a thread-safe parsing function.
     )
 
 manpagesection(16. SEE ALSO)
     bf(bison)(1), bf(bison++)(1), bf(bison.info) (using texinfo),
-    bf(flex++)(1)
+    bf(flexc++)(1)
 
     Lakos, J. (2001) bf(Large Scale C++ Software Design), Addison Wesley.nl()
     Aho, A.V., Sethi, R., Ullman, J.D. (1986) bf(Compilers), Addison Wesley.

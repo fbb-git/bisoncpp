@@ -4,7 +4,7 @@ value types.  E.g., after:
     %polymorphic INT: int; TEXT: std::string
     %type <INT> expr
         )
-    the tt(expr) non-terminal returns tt(int) semantic values. In a
+    the tt(expr) nonterminal returns tt(int) semantic values. In a
 rule like:
         verb(
     expr:
@@ -20,20 +20,20 @@ and $3 are automatically associated with tt(int) values. $$ is associated with
 the rule (here:, `tt(expr:)'; it is the semantic value that becomes available
 once the production rule has been recognized), while $1 and $3 are tt(int)
 values which are associated with, resp., the first and third element (the
-tt(expr) non-terminals) in the production rule tt(expr '+' expr).
+tt(expr) nonterminals) in the production rule tt(expr '+' expr).
 
     Negative dollar indices can also be used (like $-1), but then pre-defined
-associations between non-terminals and semantic types are not available, and
+associations between nonterminals and semantic types are not available, and
 must explicitly be specified to access their polymorphic value types.  Blanks
 cannot be used for type-specifications (so $<INT>-1 is OK, $< INT >-1 is not).
 
 Various $-constructions are available to indicate values of rule-elements. $$
-constructions refer to values of non-terminals, $1 constructions refer to
+constructions refer to values of nonterminals, $1 constructions refer to
 values of numbered elements of production rules (the examples use $1, but in
 general the positive number must be less than the element number of the action
 block in which it is used. Likewise, $-1 constructions refer to values of
 elements of production rules that are specified before the current rule's
-non-terminal, and in theory any negative number could be used.
+nonterminal, and in theory any negative number could be used.
 
 The term `value of' indicates the generic tt(STYPE__) value of an
 element. When a rule element is associated with a polymorphic type, then the
@@ -118,32 +118,32 @@ production rule's element 1.
     itt(_$-1)
 
     This refers to the value of some production rule element, 1 element before
-the current rule's non-terminal. No allowance is made for associated semantic
+the current rule's nonterminal. No allowance is made for associated semantic
 types.
 
     itt($-1)
 
     Same: this refers to the value of some production rule element, 1 element
-before the current rule's non-terminal. No allowance is made for associated
+before the current rule's nonterminal. No allowance is made for associated
 semantic types.
  
     itt($-1.)
 
     This is shorthand for the member selector operator applied to to the value
 of some production rule element, 1 element before the current rule's
-non-terminal. No allowance is made for associated semantic types.
+nonterminal. No allowance is made for associated semantic types.
 
     itt($1->)
 
     This is shorthand for the pointer to member operator applied to to the
 value of some production rule element, 1 element before the current rule's
-non-terminal. No allowance is made for associated semantic types.
+nonterminal. No allowance is made for associated semantic types.
 
     itt($<tag>-1)
 
     This refers to the semantic value of a polymorphic type (associated with
 tt(tag)) of some production rule element, 1 element before the current rule's
-non-terminal.
+nonterminal.
 
 If the semantic value type of that element doesn't match the type that is
 associated with tt(tag) then a run-time fatal error results. If that happens,
@@ -156,7 +156,7 @@ action block where the fatal error was encountered.
 
     This refers to the member selector operator applied to the semantic value
 of a polymorphic type (associated with tt(tag)) of some production rule
-element, 1 element before the current rule's non-terminal.
+element, 1 element before the current rule's nonterminal.
 
 If the semantic value type of that element doesn't match the type that is
 associated with tt(tag) then a run-time fatal error results. The procedure
@@ -168,25 +168,15 @@ applied here as well.
 
     This refers to the pointer to member operator applied to the semantic
 value of a polymorphic type (associated with tt(tag)) of some production rule
-element, 1 element before the current rule's non-terminal.
+element, 1 element before the current rule's nonterminal.
 
 If the semantic value type of that element doesn't match the type that is
 associated with tt(tag) then a run-time fatal error results. The procedure
 suggested at the previous tt($<tag>-1) item for solving such errors can be
 applied here as well.
+    )
 
-
-
-  COMMENT( Various combinations of type-associations and type
-specifications are available: itemization( it() $-1: tt(%type) associations
-are ignored, and the semantic value type
-    tt(STYPE__) is used instead. A warning is issued unless the
-    tt(%negative-dollar-indices) directive was specified.
-it() $<tag>-1: em(error): tt(<tag>) specifications are not allowed for
-    negative dollar indices. 
-)
-END)
-
+COMMENT(
 whenhtml(
 center(
 table(1)(l)(
@@ -203,13 +193,14 @@ includefile(polytable)
 includefile(polytablenotes)
 )
 
+
 bf(Direct semantic value assignments) (`$$(args)'):
 
     Production rules associated with polymorphic tags and production rules
 associated with tt(%type <STYPE__>) should assign values of matching types to
 the rules' semantic values. If a matching value type is available from a
 production rule's component it can directly be used to assign the semantic
-value of the rule's left-hand side non-terminal. E.g., $$ = $1 returns the
+value of the rule's left-hand side nonterminal. E.g., $$ = $1 returns the
 semantic value of the production rule's first component. 
 
 However, often production rules receiving tokens from the lexical scanner
@@ -227,7 +218,7 @@ production rule:
     In such cases the appropriate semantic value must be initialized. 
 
 Bic() translates phrases like tt($$ = xyz) into tt(d_val__.get<tag>() =
-xyz) (where tt(tag) is the production rule's left-hand side non-terminal's
+xyz) (where tt(tag) is the production rule's left-hand side nonterminal's
 polymorphic tag, and tt(d_val__) (see below) is the parser's data member
 containing the action block's semantic value). The function tt(get) returns a
 reference to a value of the type matching tt(tag), but that value isn't
@@ -240,13 +231,13 @@ fault.
 Fortunately, prevention is easy.  To initialize a rule's semantic value a
 tt($$(args)) expression should be used (no blanks are allowed between
 tt($$) and the open-parenthesis). tt(Args) are at least one, comma-separated
-arguments. For tagged non-terminals bic() translates a tt($$(args))
+arguments. For tagged nonterminals bic() translates a tt($$(args))
 expression into
         verb(
     d_val__.assign<tag>(args).
         )
     where `tt(tag)' is the tag associated with the production rule's left-hand
-side non-terminal. For non-terminals that are associated with a
+side nonterminal. For nonterminals that are associated with a
 tt(%type<STYPE__>) specification only one argument can be passed to
 tt($$(arg)), which translates to
         verb(
@@ -254,7 +245,7 @@ tt($$(arg)), which translates to
         )
     The tt($$(args)) syntax cannot be used for untagged production rules.
 
-If a non-terminal is associated with tt(%type<STYPE__>) and its production
+If a nonterminal is associated with tt(%type<STYPE__>) and its production
 rule calls a function returning a value of a known tagged type, then an
 explicit tt(assign) call can be used. E.g.,
         verb(
@@ -351,6 +342,7 @@ that this intelligence should only be available to the parser, and that the
 scanner should merely recognize regular expressions and return tokens and
 their corresponding matched text.
 
+END)
 
 
 

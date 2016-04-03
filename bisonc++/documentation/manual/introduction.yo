@@ -1,15 +1,15 @@
-B() is a general-purpose parser generator that converts a
-grammar description for an LALR(1) context-free grammar into a bf(C++)
-class to parse that grammar.  Once you are proficient with b(),
-you may use it to develop a wide range of language parsers, from those
-used in simple desk calculators to complex programming languages.
+B() is a general-purpose parser generator converting grammar descriptions for
+LALR(1) context-free grammars into bf(C++) classes whose members can parse
+such grammars.  Once you are a proficient b() user, you may use it to develop
+a wide range of language parsers, from those used in simple desk calculators
+to complex programming languages.
 
-B() is highly comparable to the program bison++, written by Alain
-Coetmeur: all properly-written bison++ grammars ought to be convertible to
-b() grammars after very little or no change.  Anyone familiar with
-bison++ or its precursor, bison, should be able to use b() with little
-trouble.  You need to be fluent in using the bf(C++) programming in order to
-use b() or to understand this manual.
+B() is highly comparable to the program bison++, written by Alain Coetmeur:
+all properly-written bison++ grammars ought to be convertible to b() grammars
+requiring very little or no modifications.  Anyone familiar with bison++ or
+its precursor, bison, should quickly be able to use b() as well. B()
+generates bf(C++) code, rather than bf(C) code, and so a fair knowledge of the
+bf(C++) programming language is required before b() can profitably be used.
 
 This manual closely resembles bf(bison)(1)'s userguide. In fact, many sections
 of that manual were copied straight into this manual. With b() distributions
@@ -17,17 +17,18 @@ of that manual were copied straight into this manual. With b() distributions
 bf(bison)'s orginal manual is included in both em(PostScript) and (converted
 from the tt(texi) format) tt(HTML) format. Where necessary sections of the
 original manual were adapted to b()'s characteristics. Some sections were
-removed, some new sections were added to the current manual. Expect upgrades
-of the manual to appear without further notice. Upgrades will be announced in
-the manual's title.
+removed, and some new sections were added to the current manual. Expect
+upgrades of the manual to appear without further notice. Upgrades will be
+announced in the manual's title.
 
 The current manual starts with tutorial chapters that explain the basic
-concepts of using b() and show three explained examples, each building on its
-previous (where available).  If you don't know b(), bison++ or bison, start by
-reading these chapters.  Reference chapters follow which describe specific
-aspects of the program b() in detail.
+concepts of using b() and use three examples illustrating some of the core
+issues of LALR(1) grammars, each example building on the previous example
+(where available).  If you don't know b(), bison++ or bison, start by reading
+these chapters.  Reference chapters follow describing specific aspects of b()
+in detail.
 
 B() was designed and built by url(Frank
-B. Brokken)(mailto:f.b.brokken@rug.nl). The program's initial release was
+B. Brokken)(mailto:f.b.brokken@rug.nl). The program's first version was 
 constructed between November 2004 and May 2005.
 

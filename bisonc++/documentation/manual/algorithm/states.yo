@@ -12,12 +12,12 @@ items of a state is called the set of em(kernel items). Except for the start
 rule, kernel items never have a dot before the very first symbol of a rule. In
 this particular state there's only one kernel item. Items are indexed, so this
 item receives index 0. Beyond, item indices are shown together with the items
-themselves. If a non-terminal follows immediately to the right of the dot,
-then all production rules of that non-terminal are added to the state as
+themselves. If a nonterminal follows immediately to the right of the dot,
+then all production rules of that nonterminal are added to the state as
 non-kernel items. Non-kernel items always have their dots at the very first
 position. Adding non-kernel items is a recursive process. If the rules of thus
-added items also show non-terminals to the right of the dot, then the
-production rules of those non-terminals are added too (unless they were
+added items also show nonterminals to the right of the dot, then the
+production rules of those nonterminals are added too (unless they were
 already added). 
 
     The above kernel item results in the addition of the following non-kernel
@@ -47,7 +47,7 @@ discussed in more detail in section ref(PARSING).
         it() item 0: tt(start_$ -> start  .)
         it() item 1: tt(start -> start  . expr)
         )
-        Since tt(expr) is a non-terminal to the right of the dot, we add
+        Since tt(expr) is a nonterminal to the right of the dot, we add
         all tt(expr) rules as this state's non-kernel items:
         itemization(
         it() item 2: tt(expr ->  . NR)
@@ -67,7 +67,7 @@ possible:
         it() item 0: tt(start -> start expr  .)
         it() item 1: tt(expr -> expr  . '+' expr)
         )
-        No non-terminal symbols appear to the right of the dots in these
+        No nonterminal symbols appear to the right of the dots in these
 items, so no non-kernel items are added to this state. Transitions from this
 state are:
         itemization(
@@ -88,7 +88,7 @@ state are:
         itemization(
         it() item 0: tt(expr -> expr '+'  . expr)
         )
-        Since tt(expr) is a non-terminal to the right of the dot, we add
+        Since tt(expr) is a nonterminal to the right of the dot, we add
         all tt(expr) rules as this state's non-kernel items:
         itemization(
         it() item 1: tt(expr -> . NR)

@@ -1,18 +1,18 @@
-In order to be useful, a program must do more than parse input; it must also
-produce some output based on the input. In a b() grammar, a grammar rule
-can have an action made up of bf(C++) statements. Each time the parser
-recognizes a match for that rule, the action is executed. See section 
-ref(ACTIONS). 
+A program usually must do more than just parse its input; it must also produce
+some output based on the input. In a b() grammar, a grammar rule can have an
+action consisting of bf(C++) statements. Each time the parser recognizes a
+match for that rule, its associated action is executed. See section
+ref(ACTIONS).
 
- Most of the time, the purpose of an action is to compute the semantic value
-of the whole construct from the semantic values of its parts. For example,
-suppose we have a rule which says an expression can be the sum of two
-expressions. When the parser recognizes such a sum, each of the subexpressions
-has a semantic value which describes how it was built up. The action for this
-rule should create a similar sort of value for the newly recognized larger
-expression.
+The purpose of an action usually is to compute the semantic value of the whole
+construct from the semantic values of its parts. For example, suppose we have
+a rule stating that an expression can be the sum of two expressions. Once the
+parser has recognized the rule's parts, each of its subexpressions has a
+semantic value of its own. The action for this rule
+could consist of a bf(C++) expression computing the rule's semantic value from
+its subexpressions.
 
-For example, here is a rule that says an expression can be the sum of two
+For example, here is a rule stating that an expression can be the sum of two
 subexpressions:
         verb(
     expr: expr '+' expr   
@@ -21,6 +21,5 @@ subexpressions:
         }
     ;
         )
-    The action says how to produce the semantic value of the sum expression
-from the values of the two subexpressions.
-
+    The action defines how the semantic value of the rule (i.e., tt($$)) is
+computed from the values of the two subexpressions (tt($1) and tt($3)).

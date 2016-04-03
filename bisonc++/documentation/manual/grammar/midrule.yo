@@ -123,7 +123,7 @@ the first tt(declarations) token or the first tt(statements) token, which
 would in any case tell b() which rule to use, thus solving the problem.
 
 Another (much used) solution is to bury the action inside a support
-non-terminal symbol which recognizes the first block-open brace and performs
+nonterminal symbol which recognizes the first block-open brace and performs
 the required preparations:
         verb(
     openblock:

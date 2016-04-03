@@ -19,7 +19,7 @@ have a look at the nested expression rule. Here it is, in a basic form:
         '(' expr ')'
     ;
         )
-    This definition is simply characterized that the non-terminal tt(expr)
+    This definition is simply characterized that the nonterminal tt(expr)
 appears within a set of parentheses, which is not too complex. 
 
     The definition of tt(opt_statements), however, is a bit more complex. But

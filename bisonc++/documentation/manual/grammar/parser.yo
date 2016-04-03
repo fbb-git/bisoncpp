@@ -4,8 +4,8 @@ tt(%polymorphic) directive looks like this:
     %polymorphic INT: int; TEXT: std::string;
         )
     Furthermore, the grammar declares tokens tt(INT) and tt(IDENTIFIER), and
-pre-associates the tt(TEXT) tag with the tt(identifier) non-terminal,
-associates the tt(INT) tag with the tt(int) non-terminal, and associates
+pre-associates the tt(TEXT) tag with the tt(identifier) nonterminal,
+associates the tt(INT) tag with the tt(int) nonterminal, and associates
 tt(STYPE__), the generic polymorphic value with the non=terminal tt(combi):
         verb(
     %type <TEXT>    identifier
@@ -49,8 +49,8 @@ As the tt(combi) rule is not associated with a specific semantic value, its
 semantic value could be either tt(INT) or tt(TEXT). Irrespective of what is
 actually returned by tt(combi), its semantic value can be passed on to a
 function (tt(process(STYPE__ const &))), responsible for the semantic value's
-further processing. Here are the definition of the tt(combi) non-terminal and
-action blocks for the tt(rule) non-terminal:
+further processing. Here are the definition of the tt(combi) nonterminal and
+action blocks for the tt(rule) nonterminal:
         verb(
     combi:
         int

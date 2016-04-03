@@ -23,13 +23,13 @@ To compute the LA sets of a state's items the LA set of each of its kernel
 items is distributed (by the member tt(State::distributeLAsetOf)) over the
 items which are implied by the item being considered. E.g., for item tt(X: a
 . Y z), where tt(a) and tt(z) are any sequence of grammar symbols and tt(X)
-and tt(Y) are non-terminal symbols, all of tt(Y's) production rules are added
+and tt(Y) are nonterminal symbols, all of tt(Y's) production rules are added
 as new items to the current state.
 
 Then the member tt(distributeLAsetOfItem(idx)) matches the item's rule
 specification with the specification tt(a.Bc), where tt(a) and tt(c) are
 (possibly empty) sequences of grammatical symbols, and tt(B) is a (possibly
-empty) non-terminal symbol appearing immediately to the right of the item's
+empty) nonterminal symbol appearing immediately to the right of the item's
 dot position. if tt(B) is empty then there are no additional production rules
 and tt(distributeLAsetOf) may return. Otherwise, the set tt(b = FIRST(c)) is
 computed. This set holds all symbols which may follow tt(B). If tt(b) contains

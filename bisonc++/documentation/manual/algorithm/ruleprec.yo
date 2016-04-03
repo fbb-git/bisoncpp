@@ -19,7 +19,7 @@ an element of the set of look-ahead tokens of item 0. B() must now decide what
 to do. In cases we've seen earlier b() could make the decision because the
 reducible item itself had a well known precedence. The precedence of a
 reducible item is defined as the precedence of the left-hand side
-non-terminal of the production rule to which the reducible item belongs. Item
+nonterminal of the production rule to which the reducible item belongs. Item
 0 in the above example is an item of the rule tt(expr -> term). 
 
     The precedence of a production rule is defined as follows:
@@ -41,7 +41,7 @@ than shifting.
 
 Some final remark as to why the above grammar is peculiar. It is peculiar as
 it combines precedence and association specifying directives with auxiliary
-non-terminals that may be useful conceptually (or when implementing an
+nonterminals that may be useful conceptually (or when implementing an
 expression parser `by hand') but which are not required when defining grammars
 for b(). The following grammar does not use tt(term) and tt(factor) but
 recognizes the same grammar as the above `peculiar' grammar without reporting

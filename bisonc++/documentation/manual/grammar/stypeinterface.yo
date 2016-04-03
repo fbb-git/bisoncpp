@@ -3,50 +3,84 @@
     it() Constructors: 
 
         Default, copy and move constructors.  The default constructor does not
-        provide usable data, but may acts as a stub, accepting values of
-        defined polymorphic types, which may then be retrieved from the
+        contain usable data, but occasionally acts as a stub, accepting values
+        of defined polymorphic types, which may then be retrieved from the
         tt(SType) object.
 
     it() Operators:
 
-        Assignment operators: the standard overloaded assignment operator
-        (copy and move assignment operators) are available.
+        Assignment operators: 
 
-        tt(operator bool() const): the value tt(true) is returned if the
-        object stores a value of a type that is defined by the
-        tt(%polymorphic) directive. The value tt(false) is returned when its
-        object represents a default tt(SType) object. After reassigning a
-        non-default tt(SType) value its tt(operator bool) returns tt(true);
+        the standard overloaded assignment operator
+        (copy and move assignment operators) are available. 
+
+        In addition the member template tt(SType &operator=(Type const
+        &value)) can be used for all polymorphic value types. tt(Type) must,
+        not using a cast, exactly match one of the defined polymorphic types,
+        because tt(Type) is used to determine the tt(Meta__::Tag__) value to
+        use. Casting can of course be used when formulating tt(value's)
+        expression. 
+
+        When tt(operator=(Type const &value) is used the left-hand side
+        tt(SType) object will receive a new value of the tt(Type) semantic
+        type. 
 
     it() tt(void assign<tag>(Args &&...args)) 
 
         The tt(tag) template argument must be a tt(Tag__) value. This member
-        function constructs a semantic value of the type corresponding to
-        tt(tag) from the arguments which are passed to this member (zero
-        arguments are OK if the type associated with tt(tag) supports default
-        construction). The constructed value is then stored in the tt(SType)
+        function constructs a semantic value of the type matching tt(tag) from
+        the arguments which are passed to this member (zero arguments are OK
+        if the type associated with tt(tag) supports default
+        construction). The constructed value is then stored in the tt(STYPE__)
         object for which tt(assign) has been called.
 
-        The member tt(assign) should be used to store a particular polymorphic
-        semantic value in an tt(STYPE__) object. To initialize an tt(STYPE__)
-        object with a default tt(STYPE__) value, direct assignment can be
-        used (e.g., tt(d_lval__ = STYPE__{})).
+        As a tt(Meta__::Tag__) value must be specified when using 
+        tt(assign) the compiler can use implicit tags to convert tt(assign's)
+        arguments to an tt(SType) object of the type matching the specified
+        tag. 
 
-    it(DataType &get<tag>()). 
+        The member tt(assign) can be used to store a particular polymorphic
+        semantic value in an tt(STYPE__) object. It differs from
+        tt(operator=(Type const &value) in that tt(assign) accepts multiple
+        arguments to construct the requested tt(SType) value, whereas
+        tt(operator=) only accepts one argument. 
+    
+        To initialize an tt(STYPE__) object with a default tt(STYPE__) value,
+        direct assignment can be used (e.g., tt(d_lval__ = STYPE__{})).
+
+    it(DataType &get<tag>())
 
         This member returns a reference to the object's (modifiable) semantic
-        value data. The tt(tag) is a defined tt(Tag__) value: it must be
-        specified to allow the compiler to determine the data type
-        corresponding to tt(tag). 
+        value. The tt(tag) is a defined tt(Tag__) value: it must be specified
+        to allow the compiler to determine the semantic value data type it
+        must use.
  
         When the option/directive tt(tag-mismatches on) was specified then
         tt(get), when called from the generated tt(parse) function, performs a
         run-time check to confirm that the specified tag corresponds to
         object's actual tt(Tag__) value. If a mismatch is observed, then the
-        parsing function aborts with a fatal error message. Shortcuts (like
-        tt($$) and tt($1)) can be used in production rules' action
-        blocks. When used, bic() determines the correct tt(tag), thus
-        preventing the runtime check from failing.
+        parsing function aborts with a fatal error message. When using
+        shorthand notations (like tt($$) and tt($1)) can be used in production
+        rules' action blocks. When used, bic() determines the correct tt(tag),
+        thus preventing the runtime check from failing.
+
+        If, however, a fatal error is encountered, while assuming that the
+        option/directive tt(debug) had been specified when bic() created the
+        tt(parse) parsing function, the program can be rerun, specifying
+        tt(parser.setDebug(Parser::ACTIONCASES__)) before calling the parser's
+        tt(parse) function. This will show (to the standard output stream) the
+        case-entry numbers of the tt(switch) which is defined in the parser's
+        tt(executeAction) member. The action case number that's reported just
+        before the program reports the fatal error tells you in which of the
+        grammar's action block the error was encountered.
+
+    it() tt(bool valid() const) 
+
+        The value tt(true) is returned if the object stores a value of a type
+        that is defined by the tt(%polymorphic) directive. The value tt(false)
+        is returned when its object represents a default tt(STYPE__)
+        object. After assigning a non-default tt(STYPE__) value its
+        tt(operator bool) returns tt(true);
 
     it() tt(void swap(SType &other)) 
 
@@ -58,3 +92,5 @@
         value is a valid tt(Tag__) value when the tt(SType) object's
         tt(operator bool) returns tt(true);
    )
+
+

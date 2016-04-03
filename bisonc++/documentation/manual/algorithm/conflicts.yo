@@ -8,7 +8,7 @@ statements, with a pair of rules like this:
     ;
         )
     Here we assume that tt(IF) and tt(ELSE) are terminal symbols for specific
-keywords, and that tt(expr) and tt(stmnt) are defined non-terminals.
+keywords, and that tt(expr) and tt(stmnt) are defined nonterminals.
 
 When the tt(ELSE) token is read and becomes the look-ahead token, the contents
 of the stack (assuming the input is valid) are just right for em(reduction) by
@@ -83,9 +83,9 @@ associations, usually in the context of arithmetic expressions, as discussed
 in the next sections.
 
 However, shift-reduce conflicts can also be observed in grammars where a state
-contains items that could be reduced to a certain non-terminal and items in
+contains items that could be reduced to a certain nonterminal and items in
 which a shift is possible in an item of a production rule of a completely
-different non-terminal. Here is an example of such a grammar:
+different nonterminal. Here is an example of such a grammar:
     verbinclude(examples/peculiar)
   Why these grammars show shift reduce conflicts and how these are solved is
 discussed in the next section.

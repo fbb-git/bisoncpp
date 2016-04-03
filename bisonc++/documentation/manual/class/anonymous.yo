@@ -36,7 +36,7 @@ the parser.
     it() bf(PI__) (Production Info):nl()
        This tt(struct) provides information about production rules. It has two
         fields: tt(d_nonTerm) is the identification number of the production's
-        non-terminal, tt(d_size) represents the number of elements of the
+        nonterminal, tt(d_size) represents the number of elements of the
         productin rule.
     it() bf(static PI__ s_productionInfo):nl()
        Used internally by the parsing function.
