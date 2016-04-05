@@ -15,12 +15,10 @@ includefile(concepts/actions)
 sect(Bisonc++ output: the Parser class)
 includefile(concepts/output)
 
-//FBB-------------
-
     subsect(Bisonc++: an optionally reentrant Parser)
     includefile(concepts/reentrant.yo)
 
-sect(Stages in Using Bisonc++)
+sect(Using Bisonc++: main steps)
 includefile(concepts/stages)
 
 lsect(LAYOUT)(The Overall Layout of a Bisonc++ Grammar File)

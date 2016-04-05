@@ -1,5 +1,5 @@
-The input file for the b() utility is a b() grammar file. Different
-from Bison++ and Bison grammar files, b() grammar file consist of only
+B() processes a file containing a grammar definition. Different
+from Bison++ and Bison grammar files, b()'s grammar file consists of only
 two sections. The general form of a b() grammar file is as follows:
         verb(
     Bisonc++ directives
@@ -8,28 +8,25 @@ two sections. The general form of a b() grammar file is as follows:
         )
     Readers familiar with Bison may note that there is no em(C declaration
 section) and no section to define em(Additional C code). With b() these
-sections are superfluous since, due to the fact that a b() parser is a 
-class, all additional code required for the parser's  implementation can be
-incorporated into the parser class itself. Also, bf(C++) classes
-normally only require declarations that can be defined in the classes' header
-files, so also the `additional C code' section could be omitted from the
-b() grammar file.
+sections are superfluous since, due to the fact that a b() parser is a class,
+all additionally required code can be incorporated into the parser class
+itself. Also, bf(C++) classes normally only require declarations that can be
+provided in the classes' header files, so also the `additional C code' section
+was omitted from the grammar file.
 
 The `%%' is a punctuation that appears in every b() grammar file to
 separate the two sections.
 
-The b() directives section is used to declare the names of the terminal
-and nonterminal symbols, and may also describe operator precedence and the
-data types of semantic values of various symbols. Furthermore, this section is
-also used to specify b() directives. These b() directives are used
-to define, e.g., the name of the generated parser class and a namespace in
-which the parser class will be defined.
+The b() directives section contains all necessary directive specifications,
+like directives declaring the names of the terminal and nonterminal symbols,
+and directives describing operator precedence, and the data types of semantic
+values of various symbols. 
 
-The grammar rules define how to construct each nonterminal symbol from its
-parts.
+The file's second section (grammar rules) is used to define how to construct
+each nonterminal symbol from its parts.
 
-One special directive is availble that may be used in the directives
+One special directive is availble that may be used in both the directives
 section and in the grammar rules section. This directive is tt(%include),
-allowing you to split long grammar specification files into smaller, more
+allowing you to split long grammar specifications into smaller, more
 comprehensible and accessible chunks. The tt(%include) directive is discussed
-in more detail in section ref(INCLUDE). 
+in more detail in section ref(INCLUDE).
