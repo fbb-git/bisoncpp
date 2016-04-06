@@ -2,14 +2,16 @@
 
 case $1 in
     (clean)
-        rm parser/[pP]arse* rpn
+	rm -f rpn
+	cd parser
+	rm -f Parser.h Parserbase.h parse.cc grammar.output
     ;;
     (rpn)
         cd parser
-        bisonc++ -V -l grammar
+        bisonc++ -V grammar || exit 1
 
         cd ..
-        g++ -Wall -o rpn *.cc */*.cc
+        g++ --std=c++14 -Wall -o rpn *.cc */*.cc
     ;;
     (*)
         echo "$0 [clean|rpn] to clean or build the rpn program"
