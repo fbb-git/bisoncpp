@@ -2,14 +2,16 @@
 
 case $1 in
     (clean)
-        rm parser/[pP]arse* calc
+        rm -f calc
+        cd parser
+        rm -f Parser.h Parserbase.h parse.cc grammar.output
     ;;
     (calc)
         cd parser
-        bisonc++ -V -l grammar
+        bisonc++ -V grammar
 
         cd ..
-        g++ -Wall -o calc *.cc */*.cc
+        g++ --std=c++14 -Wall -o calc *.cc */*.cc
     ;;
     (*)
         echo "$0 [clean|calc] to clean or build the calc program"
