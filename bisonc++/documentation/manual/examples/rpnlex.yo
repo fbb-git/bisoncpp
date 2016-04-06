@@ -1,32 +1,29 @@
-The lexical analyzer's job is low-level parsing: converting characters or
-sequences of characters into tokens. The b() parser gets its tokens by
-calling the lexical analyzer tt(lex()), which is a predeclared member of the
-parser class. See section ref(LEX).
+The lexical analyzer's job is to convert characters or sequences of characters
+read from the input stream into tokens. B()'s parser obtains its tokens by
+calling its lexical analyzer member (tt(lex)), which is a predefined member
+of the parser class. See section ref(LEX).
 
-Only a simple lexical analyzer is needed for tt(rpn). This lexical analyzer
-skips blanks and tabs, then reads in numbers as double and returns them as
-tt(NUM) tokens. Any other character that isn't part of a number is a separate
-token. Note that the token-code for such a single-character token is the
-character itself.
+Our calculator only needs a simple lexical analyzer. It skips blanks and tabs,
+then reads numbers, returning them as tt(NUM) tokens. Any other character that
+isn't part of a number is a separate token. Note that the token-value for such
+a single-character token is the character itself.
 
-The return value of the lexical analyzer function is a numeric code which
-represents a token type. The same text used in b() rules to stand for this
-token type is also a bf(C++) expression for the numeric code for the type. This
-works in two ways. If the token type is a character literal, then its numeric
-code is the tt(ASCII) code for that character; you can use the same character
-literal in the lexical analyzer to express the number. If the token type is an
-identifier, that identifier is defined by b() as a bf(C++) enumeration
-value. In this example, therefore, tt(NUM) becomes an enumeration value
-for tt(lex()) to return.
+The lexical analyzer function's return value is a numeric value representing a
+token. If the token is a literal character, then its numeric code is the
+character's tt(ASCII) code; if the token is the name of a token defined by b()
+in a grammar specification file, then such named tokens are defined by b() in
+a bf(C++) enumeration. In the current example, therefore, tt(NUM) becomes an
+enumeration value, returned by the tt(lex) member as the `value' tt(NUM).
 
-The semantic value of the token (if it has one) is stored into the parser's
-data member tt(d_val) (comparable to the variable tt(yylval) used by, e.g.,
-Bison). This data member has tt(int) as its  default type, but by specifying
-tt(%stype) in the directive section this default type can be modified (to,
-e.g., tt(double)).
+Semantic values of nonterminals are stored in the parser's data member
+tt(d_val__) (comparable to the variable tt(yylval) used by, e.g., Bison). This
+data member has tt(int) as its default type, but by specifying tt(%stype) in
+the grammar file's directive section this default type is modified (to, e.g.,
+tt(double)).
 
-A token value of zero is returned once end-of-file is encountered. (B()
-recognizes any nonpositive value as indicating the end of the input).
+A token value of zero is returned once end-of-file is encountered (the parsing
+function produced by b() interprets any nonpositive token value as
+end-of-input).
 
 Here is the lexical scanner's implementation:
     verbinclude(rpn/parser/lex.cc)

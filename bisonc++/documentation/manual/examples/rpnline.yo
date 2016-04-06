@@ -1,4 +1,4 @@
-Now consider the definition of line:
+Next consider the definition of the tt(line) nonterminal:
         verb(
     line:   
             '\n'
@@ -9,17 +9,17 @@ Now consider the definition of line:
             }
     ;
         )
-    The first alternative is a token which is a newline character; this means
-that tt(rpn) accepts a blank line (and ignores it, since there is no
-action). The second alternative is an expression followed by a newline. This
-is the alternative that makes tt(rpn) useful. The semantic value of the
-tt(exp) grouping is the value of tt($1) because the tt(exp) in question is the
-first symbol in the rule's alternative. The action prints this value, which is
-the result of the computation the user asked for.
+    The first alternative is a newline character token; this means that
+tt(rpn) accepts a blank line (and ignores it, since it has no associated
+action). The second alternative is an em(expression) (tt(expr)), followed by a
+newline. This alternative handles all expressions that are entered by the
+user. The semantic value of the tt(exp) grouping is the value of tt($1)
+because the tt(exp) nonterminal is the first symbol of the production
+rule. The action simply prints the expression's value.
 
 This action is unusual because it does not assign a value to tt($$). As a
-consequence, the semantic value associated with the line is not initialized
-(so its value will be unpredictable). This would be a bug if that value were
-ever used, but we don't use it: once tt(rpn) has printed the value of the
-user's input line, that value is no longer needed.
+consequence, the semantic value associated with tt(line) is not defined. This
+becomes a bug if that value is ever used, but we don't use it: once tt(rpn)
+has printed the value of the user's input line, that value is no longer
+needed.
 

@@ -1,13 +1,13 @@
-Before running b() to produce a parser class, we need to decide how to
-arrange all the source code in one or more source files. Even though the
-example is fairly simple, all user-defined functions should be defined in
-source files of their own. For tt(rpn) this means that a source file
-tt(rpn.cc) is constructed holding tt(main()), and a file tt(parser/lex.cc)
-holding the lexical scanner's implementation. Note that I've put all the
-parser's files in a separate directory as well (also see section ref(LAYOUT)).
+Before running b(), we should decide how to organize the program's source
+code, using one or more source files. Even though the example is simple, it is
+good practice to define all user-defined functions in source files of their
+own. For tt(rpn) this means that a source file (tt(main.cc)) is constructed
+holding tt(main), and a file tt(parser/lex.cc) containing the lexical
+scanner's implementation. Note that I've put all the parser's files in a
+separate directory as well (also see section ref(LAYOUT)).
 
 In  url(rpn's parser)(examples/rpn/parser) directory the file tt(grammar)
-holds the grammar specification. B() constructs a parser class and a
+contains the grammar specification. B() constructs a parser class and a
 parsing member function from this file after issuing the command:
         verb(
     b() grammar

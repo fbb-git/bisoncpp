@@ -1,4 +1,4 @@
 Here are the grammar rules for the multi-function calculator. Most of them are
-copied directly from tt(calc). Three rules, those which mention tt(VAR) or
+copied directly from tt(calc). Three rules, mentioning tt(VAR) or
 tt(FNCT), are new:
         verbinclude(mfcalc/parser/grammar.rules)

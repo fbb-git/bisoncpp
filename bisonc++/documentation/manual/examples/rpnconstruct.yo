@@ -3,25 +3,26 @@ Here is how to compile and run the parser file:
     # List files (recursively) in the (current) examples/rpn  directory.
     % ls -R 
     .:
-    build  parser  rpn.cc  rpn.h
+    build*  main.cc  parser/  rpn.ih
     
     ./parser:
-    grammar  lex.cc
+    grammar  lex.cc  Parser.ih
     
     # Create `rpn' using the `build' script:
-    % ./build rpn
+    % ./build program
     
     # List files again, ./rpn is the constructed program
     % ls -R
     .:
-    build  parser  rpn  rpn.cc  rpn.h
+    build*  main.cc  parser/  program*  rpn.ih
     
     ./parser:
-    Parser.h  Parser.ih  Parserbase.h  grammar  lex.cc  parse.cc  parse.output
+    grammar  grammar.output  lex.cc  parse.cc  Parserbase.h  Parser.h  Parser.ih
         )
-    Here is an example session using tt(rpn):
+
+    Here is an example session using the calculator:
         verb(
-    % rpn
+    % program
     4 9 +
             13
     3 7 + 3 4 5 *+-

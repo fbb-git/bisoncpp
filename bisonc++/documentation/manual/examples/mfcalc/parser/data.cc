@@ -10,7 +10,7 @@ Parser::FunctionPair Parser::s_funTab[] =
     FunctionPair("sqrt", sqrt),
 };
 
-map<string, double (*)(double)> Parser::s_functions
+unordered_map<string, double (*)(double)> Parser::s_functions
 (
     Parser::s_funTab, 
     Parser::s_funTab + sizeof(Parser::s_funTab) / sizeof(Parser::FunctionPair)

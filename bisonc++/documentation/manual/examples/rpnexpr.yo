@@ -1,7 +1,7 @@
 The tt(exp) grouping has several rules, one for each kind of expression. The
-first rule handles the simplest expressions: those that are just numbers. The
-second handles an addition-expression, which looks like two expressions
-followed by a plus-sign. The third handles subtraction, and so on.
+first rule handles the simplest kind of expression: just a single number. The
+second handles additions, which are two expressions followed by a
+plus-sign. The third handles subtractions, and so on.
         verb(
     exp:      
             NUM             
@@ -17,8 +17,9 @@ followed by a plus-sign. The third handles subtraction, and so on.
             }
     ...
         )
-    It is customary to use `tt(|)' to join all the rules for exp, but the
-rules could equally well have been written separately:
+    Normally the production rule separator `tt(|)' is used to separate the
+various production rules, but the rules could equally well have separately
+been defined:
         verb(
     exp:      
             NUM             
@@ -40,18 +41,18 @@ rules could equally well have been written separately:
 
     ...
         )
-    Most of the rules have actions that compute the value of the expression in
-terms of the values of its parts. For example, in the rule for addition,
-tt($1) refers to the first component tt(exp) and tt($2) refers to the second
-one. The third component, 'tt(+)', has no meaningful associated semantic
-value, but if it had one you could refer to it as tt($3). When the parser's
-parsing function tt(parse()) recognizes a sum expression using this rule, the
+    Most rules have actions assoicated with them computing the value of the
+expression using the values of the elements of production rules. For example,
+in the rule for addition, tt($1) refers to the first component tt(exp) and
+tt($2) refers to the second one. The third component, 'tt(+)', has no semantic
+value associated with it, but if it had you could refer to it as tt($3). When
+the parser's parsing function recognizes a sum expression using this rule, the
 sum of the two subexpressions' values is produced as the value of the entire
 expression. See section ref(ACTIONS).
 
-You don't have to give an action for every rule. When a rule has no action,
-Bison by default copies the value of tt($1) into tt($$). This is what happens
+You don't have to define actions for every rule. When a rule has no action,
+b() by default copies the value of tt($1) into tt($$). This is what happens
 in the first rule (the one that uses tt(NUM)).
 
-The formatting shown here is the recommended convention, but Bison does not
-require it. You can add or change whitespace as much as you wish.
+The formatting shown here shows  the recommended layout, but b() does not
+require it. You can alter whitespace as much as you like.

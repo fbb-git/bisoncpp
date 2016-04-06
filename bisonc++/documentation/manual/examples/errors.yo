@@ -1,31 +1,34 @@
-Up to this point, this manual has not addressed the issue of error recovery,
-i.e., how to continue parsing after the parser detects a syntax error. All
-that's been handled so far is error reporting using the tt(error()) member
-function with yyerror. Recall that by default tt(parse()) returns after
-calling tt(error()). This means that an erroneous input line causes the
-calculator program to exit. Now we show how to rectify this deficiency.
+Up to this point, error-recovery hasn't yet been covered i.e., how to continue
+parsing after the parser detects a syntax error. By default tt(parse) returns
+after calling tt(error). This means that an erroneous input line ends the
+calculator. Now we show how to recover from erroneous input.
 
-The b() language itself includes the reserved word tt(error), which may
-be included in the grammar rules. In the example below it has been added as
-one more alternatives for line:
+The b() grammar-specification language includes the reserved word tt(error),
+which can be used in production rules. In the example below it has been added
+as a new alternative for recognizing the tt(line) nonterminal:
         verbinsert(//LINE)(errorcalc/parser/grammar)
-    This addition to the grammar allows for simple error recovery in the event
-of a parse error. If an expression that cannot be evaluated is read, the error
-is recognized by the third rule for line, and parsing continues (The
-tt(error()) member function is still called upon to print its message as
-well). Different from the implementation of tt(error) in Bison, b() proceeds
-on the assumption that whenever tt(error) is used in a rule it is the grammar
-constructor's intention to have the parser continue parsing. Therefore, a
-statement like `tt(yyerrok;)' seen in Bison grammars is superfluous in b()
-grammars. The reserved keyword tt(error) itself causes the parsing function to
-skip all subsequent input until a possible token following tt(error) is
-seen. In the above implementation that token would be the newline character
-`tt(\n)' (see chapter ref(RECOVERY)).
+    This addition to the grammar allows the calculator to recover from syntax
+errors. If a syntax error is encountered, the third production rule is
+activated, skipping all tokens until a newline token has been encounters. At
+that point tt(line) has been recognized, and parsing continues afresh at the
+next input line (the tt(error) member function is also called, printing its
+message). Different from bison's tt(error) implementation, b() proceeds on the
+assumption that whenever tt(error) is used in a production rule it is the
+grammar constructor's intention to have the parser continue parsing
+(therefore, a statement like `tt(yyerrok)', encountered in bison grammars is
+superfluous in b() grammars. The reserved keyword tt(error) itself causes the
+parsing function to skip all subsequent input until a token that can follow
+tt(error) has been encountered. In the above implementation that token is the
+newline character `tt(\n)' (see chapter ref(RECOVERY)).
 
     This form of error recovery deals with syntax errors. There are other
 kinds of errors; for example, divisions by zero, which raises an exception
 signal that is normally fatal. A real calculator program must handle this
 signal and use whatever it takes to discard the rest of the current line of
-input and resume parsing thereafter. This extensive error handling is not
-discussed here, as it is not specific to b() programs.
+input and resume parsing thereafter. Handling such signals and other forms of
+semantic errors is not discussed here, as it is not specific to b()
+programs. But once a semantic error has been encountered, handling functions
+may call tt(ERROR()), resulting in the same procedure as the one that's used
+for syntax errors: all subsequenct tokens are skipped until a token has been
+encountered that can follow the tt(error) nonterminal.
 

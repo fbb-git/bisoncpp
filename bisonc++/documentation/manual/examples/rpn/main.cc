@@ -1,4 +1,4 @@
-#include "rpn.ih"
+#include "main.ih"
 
 int main()
 {

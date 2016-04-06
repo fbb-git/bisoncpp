@@ -11,7 +11,7 @@ int Parser::lex()
 {
     char c;
                                     // get the next non-ws character
-    while (cin.get(c) && c == ' ' || c == '\t')            
+    while (cin.get(c) && (c == ' ' || c == '\t'))
         ;
 
     if (!cin)                   // no characters were obtained
@@ -20,7 +20,7 @@ int Parser::lex()
     if (c == '.' || isdigit (c))    // if a digit char was found
     {
         cin.putback(c);        // return the character
-        cin >> d_val.u_val;    // extract a number
+        cin >> d_val__.u_val;    // extract a number
         return NUM;                 // return the NUM token
     }
     
@@ -44,19 +44,19 @@ int Parser::lex()
         }
     }
                                 // Now lookup the name as a function's name
-    map<string, double (*)(double)>::iterator function = 
+    unordered_map<string, double (*)(double)>::iterator function = 
                                                 s_functions.find(word);
 
                                 // Got it, so return FPTR 
     if (function != s_functions.end())  
     {
-        d_val.u_fun = function->second;
+        d_val__.u_fun = function->second;
         return FNCT;
     }
                                 // no function, so return a VAR. Set
                                 // u_symbol to the symbol's address in the
                                 // d_symbol map. The map will add the
                                 // symbol if not yet there.
-    d_val.u_symbol = &d_symbols[word];
+    d_val__.u_symbol = &d_symbols[word];
     return VAR;            
 }

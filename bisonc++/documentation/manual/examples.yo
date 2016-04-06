@@ -1,6 +1,6 @@
 includefile(examples/intro)
 
-lsect(RPN)(rpn: a Reverse Polish Notation Calculator)
+lsect(RPN)(Rpn: a Reverse Polish Notation Calculator)
 includefile(examples/rpn.yo)
 
     subsect(Declarations for the `rpn' calculator)
@@ -52,7 +52,7 @@ includefile(examples/mfcalc.yo)
     subsect(The `mfcalc' Symbol- and Function Tables)
     includefile(examples/mftables.yo)
 
-    lsubsect(MFLEX)(The revised `lex()' member)
+    lsubsect(MFLEX)(The new `lex()' member)
     includefile(examples/mflex.yo)
 
     subsect(Constructing `mfcalc')

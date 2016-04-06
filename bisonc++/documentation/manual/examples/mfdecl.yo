@@ -1,8 +1,7 @@
-The grammar specification file for the tt(mfcalc) calculator allows us to
-introduce several new features. Here is the b() directive section for
-the tt(mfcalc) multi-function calculator (line numbers were added for
-referential purposes, they are not part of the declaraction section as used in
-the actual grammar file):
+The grammar specification file for the tt(mfcalc) calculator shows several new
+features. Here is the b() directive section for the tt(mfcalc) multi-function
+calculator (line numbers were added for referential purposes, they are not
+part of the declaraction section as used in the actual grammar file):
         verb(
     1   %union
     2   {
@@ -22,14 +21,16 @@ the actual grammar file):
    16   %left NEG                   // negation--unary minus 
    17   %right '^'                  // exponentiation        
         )
-    The above grammar introduces only two new features of the Bison
-language. These features allow semantic values to have various data types 
-
-    The tt(%union) directive given in lines 1 until 6 allow semantic values
-to have various data types (see section ref(MORETYPES)).
-    The tt(%union) directive is used instead of tt(%stype), and defines the
-type tt(Parser::STYPE__) as the indicated union: all semantic values now
-have this tt(Parser::STYPE__) type. As defined here the allowable types are now
+    The above specifications show  two new features of b()'s grammar
+specification language, allowing semantic values to have different data types.
+    itemization(
+    it() The tt(%union) directive (given in lines 1 through 6) allows semantic
+values to have various data types (see section ref(MORETYPES)). It is used
+instead of tt(%stype), and defines tt(Parser::STYPE__) as a the union type:
+all semantic values now have this type. Now semantic values can have any of
+the types that are defined as the union's fields.
+    it() The tt(%type) directive is used to associate (non)terminal tokens with
+the types of the fields of the union:
     itemization(
     itt(double) (for tt(exp) and tt(NUM)); 
     it() a em(pointer) to a tt(double), being a pointer to entries in
@@ -38,21 +39,17 @@ have this tt(Parser::STYPE__) type. As defined here the allowable types are now
     it() a em(pointer to a function) expecting a tt(double) argument and
         returning a tt(double) value, used with tt(FNCT) tokens.
     )
-    Since values can now have various types, it is necessary to associate a
-type with each grammar symbol whose semantic value is used. These symbols are
-tt(NUM), tt(VAR), tt(FNCT), and tt(exp). Their declarations are augmented with
-information about their data type (placed between angle brackets).
-
-The Bison construct tt(%type) (line 12) is used for declaring nonterminal
-symbols, just as tt(%token) is used for declaring token types. We have not
-used tt(%type) before because nonterminal symbols are normally declared
-implicitly by the rules that define them. But tt(exp) must be declared
-explicitly so we can specify its value type. See also section 
-ref(TYPE).
-
-Finally note the em(right associative) operator `tt(=)', defined in line 13:
-by making the assignment operator right-associative we can allow em(sequential
-assignments) of the form tt(a = b = c = expression).
+    Since semantic values no longer are of one single type, each grammar
+symbol whose semantic value is used must explicitly be associated with one of
+the types of the fields of the union. This holds true for the symbols tt(NUM,
+VAR, FNCT), and tt(exp). The tt(%type) directive first specifies (between
+angle brackets) one of the union's field types, followed by a list of (blank
+or comma separated) nonterminal or terminal symbols which are associated with
+the specified union field type.
+    )
+    Finally note the em(right associative) operator `tt(=)', defined in line
+13: by making the assignment operator right-associative we can allow
+em(sequential assignments) of the form tt(a = b = c = expression).
 
 
 

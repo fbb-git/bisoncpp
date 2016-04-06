@@ -1,19 +1,23 @@
 #!/bin/bash
 
+program=`pwd`
+program=`basename $program`
+
+
 case $1 in
     (clean)
-        rm -f parser/[pP]arse* mfcalc
-        cp parser/internalheader.hh parser/Parser.ih
-        cp parser/parser.header parser/Parser.h
+	rm -f program
+	cd parser
+	rm -f Parserbase.h parse.cc grammar.output
     ;;
-    (mfcalc)
+    (program)
         cd parser
-        bisonc++ -V -l grammar
+        bisonc++ -V grammar || exit 1
 
         cd ..
-        g++ -Wall -o mfcalc *.cc */*.cc
+        g++ --std=c++14 -Wall -o program *.cc */*.cc
     ;;
     (*)
-        echo "$0 [clean|mfcalc] to clean or build the mfcalc program"
+        echo "$0 [clean|program] to clean or build \`program'"
     ;;
 esac

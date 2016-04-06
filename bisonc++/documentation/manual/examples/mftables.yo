@@ -1,24 +1,22 @@
-The multi-function calculator requires a symbol table to keep track of the
+The multi-function calculator needs a symbol table for keeping track of the
 names and meanings of variables and functions. This doesn't affect the grammar
-rules (except for the actions) or the b() directives, but it requires
-some additional bf(C++) types for support as well as several additional data
-members for the parser class.
+rules or the calculator's directives, but it requires that the parser class
+defines some additional bf(C++) types as well as several additional data
+members.
 
 The symbol table itself varies in size and contents once tt(mfcalc) is
-used, and if a program uses multiple parser objects (well...) each parser will
-require its own symbol table. Therefore it is defined as a em(data member)
+used. It is defined as the em(data member)
 tt(d_symbols) in the Parser's header file. In contrast, the em(function table)
-has a em(fixed) size and contents. Because of this, multiple parser objects
-(if defined) could share the same function table, and so the function table is
-defined as a em(static) data member. Both tables profitably use the
-tt(std::map) container data type that is available in bf(C++): their keys are
+has a em(fixed) size and contents. Because of this the function table is
+defined as a em(static) data member. Both tables are defined as 
+tt(std::unordered_map) containers: their keys are
 tt(std::string) objects, their values, respecively, tt(double)s and tt(double
 (*)(double))s. Here is the declaration of tt(d_symbols) and tt(s_functions) as
 used in tt(mfcalc)'s parser:
         verb(
-    std::map<std::string, double> d_symbols;
+    std::unordered_map<std::string, double> d_symbols;
 
-    static std::map<std::string, double (*)(double)> s_functions;
+    static std::unordered_map<std::string, double (*)(double)> s_functions;
         )
     As tt(s_functions) is a static member, it can be initialized em(compile
 time) from an em(array of pairs). To ease the definition of such an array a
