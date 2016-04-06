@@ -1,6 +1,6 @@
-A rule is called em(recursive) when its em(result) nonterminal appears also on
-its right hand side. Nearly all b() grammars need to use recursion,
-because that is the only way to define a sequence of any number of
+A rule is called em(recursive) when its em(result) nonterminal appears also in
+its production rules. Nearly all b() grammars use recursion, because
+that is the only way to define a sequence of any number of
 somethings. Consider this recursive definition of a comma-separated sequence
 of one or more expressions:
         verb(
@@ -21,12 +21,12 @@ construct is defined using em(right recursion):
     ;
         )
     Any kind of sequence can be defined using either left recursion or right
-recursion, but you should always use left recursion, because it can parse a
-sequence of any number of elements with bounded stack space. Right recursion
-uses up space on the b() stack in proportion to the number of elements in the
-sequence, because all the elements must be shifted onto the stack before the
-rule can be applied even once. See chapter ref(ALGORITHM) for further
-explanation of this.
+recursion, but whenever possible use left recursion, because it can parse a
+sequence of any number of elements given a limited stack space. Right
+recursion consumes stack space  proportionally  to the number of
+elements in the sequence, because all elements must be pushed on the
+stack before the rule can be applied even once. See chapter ref(ALGORITHM) for
+further explanation of this phenomenon.
 
 em(Indirect) or em(mutual) recursion occurs when the result of the rule does
 not appear directly on its right hand side, but does appear in rules for other

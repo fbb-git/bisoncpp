@@ -3,7 +3,7 @@ parsing after the parser detects a syntax error. By default tt(parse) returns
 after calling tt(error). This means that an erroneous input line ends the
 calculator. Now we show how to recover from erroneous input.
 
-The b() grammar-specification language includes the reserved word tt(error),
+The b() grammar-specification language includes the reserved symbol tt(error),
 which can be used in production rules. In the example below it has been added
 as a new alternative for recognizing the tt(line) nonterminal:
         verbinsert(//LINE)(errorcalc/parser/grammar)
@@ -16,7 +16,7 @@ message). Different from bison's tt(error) implementation, b() proceeds on the
 assumption that whenever tt(error) is used in a production rule it is the
 grammar constructor's intention to have the parser continue parsing
 (therefore, a statement like `tt(yyerrok)', encountered in bison grammars is
-superfluous in b() grammars. The reserved keyword tt(error) itself causes the
+superfluous in b() grammars. The reserved symbol tt(error) itself causes the
 parsing function to skip all subsequent input until a token that can follow
 tt(error) has been encountered. In the above implementation that token is the
 newline character `tt(\n)' (see chapter ref(RECOVERY)).
@@ -30,5 +30,5 @@ semantic errors is not discussed here, as it is not specific to b()
 programs. But once a semantic error has been encountered, handling functions
 may call tt(ERROR()), resulting in the same procedure as the one that's used
 for syntax errors: all subsequenct tokens are skipped until a token has been
-encountered that can follow the tt(error) nonterminal.
+encountered that can follow the reserved symbol tt(error).
 

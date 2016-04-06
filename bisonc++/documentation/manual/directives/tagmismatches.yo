@@ -1,0 +1,24 @@
+Syntax: bf(%tag-mismatches) tt(on|off)
+
+    By default tt(%tag-mismatches on) is used.  This directive is only
+interpreted when polymorphic semantic values are used. When tt(on) is
+specified the tt(parse) member of the generated parser will dynamically check
+that the tag that is used when calling a semantic value's tt(get) member
+matches the actual tag of the semantic value, If a mismatch is observed, then
+the parsing function aborts with a fatal error message. When using shorthand
+notations (like tt($$) and tt($1)) in production rules' action blocks bic()
+can determine the correct tt(tag), thus preventing the runtime check from
+failing.
+
+If, however, a fatal error is encountered, and if the option/directive
+tt(debug) was specified when bic() created the tt(parse) parsing function, the
+program can be rerun, specifying tt(parser.setDebug(Parser::ACTIONCASES__))
+before calling the parser's tt(parse) function. This will write (to the
+standard output stream) the case-entry numbers of the tt(switch) which is
+defined in the parser's tt(executeAction) member. The action case number
+that's reported just before the program reports the fatal error tells you in
+which of the grammar's action block the error was encountered.
+
+
+
+

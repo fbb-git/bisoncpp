@@ -4,14 +4,6 @@ tt(Parser). The default can be changed using this directive which defines the
 name of the bf(C++) class that will be generated. It may be defined only once
 and tt(parser-class-name) must be a bf(C++) identifier.
 
-    If you're familiar with the Bison++ program, please note:
-    itemization(
-    it() This directive replaces the bf(%name) directive previously used by
-Bison++. 
-    it() Contrary to Bison++'s bf(%name) directive, bf(%class-name) may
-appear anywhere in the directive section of the grammar specification file.
-    )
-
 It is an error if this directive is used and an already existing parser-class
 header file does not define tt(class `className') and/or if an already
 existing implementation header file does not define members of the class

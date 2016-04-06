@@ -1,74 +1,74 @@
-A b() grammar rule has the following general form:
+Grammar rules have the following general form:
         verb( 
     result: 
-        components
+        productions
         ...
     ;
         )
-    where em(result) is the nonterminal symbol that this rule describes and
-em(components) are various terminal and nonterminal symbols that are put
-together by this rule (see section ref(SYMBOLS)). With respect to the way
+    where em(result) is the nonterminal symbol defined by  this rule and
+em(productions) are sequences of terminal and nonterminal symbols that define
+how tt(result) can be recognized (see section ref(SYMBOLS)). 
+With respect to the way
 rules are defined, note the following:
     itemization(
-    it() The construction:
+    it() The construction
         verb(
     exp:    
         exp '+' exp
     ;
         )
-    means that two groupings of type tt(exp), with a `+' token in between, can
-be combined into a larger grouping of type tt(exp).
+    is a recursive rule definition, stating that when two tt(exp) groupings,
+with a `+' token in between, have been recognized, these three elements
+themselves represent an tt(exp) gouping.
 
-    it() Whitespace in rules is significant only to separate symbols. You can
-add extra whitespace as you wish.
+    it() Whitespace in rules is only used for  separating symbols.
 
-    it() Scattered among the components can be em(actions) that determine the
-semantics of the rule. An action looks like this:
+    it() em(Action blocks) determining the
+semantics of the rule can be inserted between the elements of production
+rules. An action block looks like this:
         verb(
     {
         C++ statements
     }
         )
-    Usually there is only one action and it follows the components. See
-section ref(ACTIONS).
+    Usually there is only one action block, defined at the end of production
+rules . See section ref(ACTIONS).
 
-    it() Multiple rules for the same result can be written separately or can
-be joined with the vertical-bar character `|' as follows:
+    it() Multiple production rules for the same grouping can be written
+separately or can be separated from each other using the vertical-bar
+character `|' as follows:
         verb(
     result: 
-        rule1-components
-        ...
+        first-production-rule
     | 
-        rule2-components...
+        second-production-rule
+    |
         ...
     ;
         )
-    They are still considered distinct rules even when joined in this way.
 
-    it() Alternatively, multiple rules of the same nonterminal can be
+    it() Alternatively, multiple rules of the same grouping can be
 defined. E.g., the previous definition of tt(result:) could also have been
 defined as:
         verb(
     result: 
-        rule1-components
-        ...
+        first-production-rule
     ;
 
     result:
-        rule2-components...
-        ...
+        second-production-rule
     ;
         )
     However, this is a potentially dangerous practice, since one of the two
-tt(result) rules could also have used a misspelled rule-name (e.g., the second
-tt(result)) should have been tt(results). Therefore, b() generates a
-warning if the same nonterminal is used repeatedly when defining production
-rules. 
+tt(result) rules could also have used a misspelled rule-name (maybe the second
+tt(result)) should have been tt(results). Therefore, b() generates a warning
+if the same nonterminal is used repeatedly when defining production rules.
 
-    it() If em(components) in a rule is em(empty), it means that em(result)
-can match the empty string. Such a alternative is called an em(empty
-production rule). For example, here is how to define a
-comma-separated sequence of zero or more tt(exp) groupings:
+    it() Production rules can be empty. This means that em(result) can match
+any token, which then isn't processed by the production rule, although its
+grouping symbol has been recognized. Such a alternative is called an em(empty
+production rule). For example, here is how to define a comma-separated
+sequence of zero or more tt(exp) groupings:
         verb(
     expseq:   
         expseq1
@@ -82,6 +82,12 @@ comma-separated sequence of zero or more tt(exp) groupings:
         exp
     ;
         )
-    Convention calls for a comment `tt(// empty)' in each empty production
-rule.
+    By convention, to improve the visibility of an empty production rule, it
+contains the comment `tt(// empty)'.
+
+    Empty production rules may contain action blocks. Statements in
+such action blocks are executed when the parser has recognized the empty
+production rule. In such cases the tt(// empty) comment is omitted.
     )
+
+

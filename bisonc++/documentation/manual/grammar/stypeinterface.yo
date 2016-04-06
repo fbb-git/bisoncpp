@@ -60,13 +60,13 @@
         run-time check to confirm that the specified tag corresponds to
         object's actual tt(Tag__) value. If a mismatch is observed, then the
         parsing function aborts with a fatal error message. When using
-        shorthand notations (like tt($$) and tt($1)) can be used in production
-        rules' action blocks. When used, bic() determines the correct tt(tag),
-        thus preventing the runtime check from failing.
+        shorthand notations (like tt($$) and tt($1)) in production
+        rules' action blocks  bic() can determine the correct tt(tag),
+        thus preventing the run-time check from failing.
 
-        If, however, a fatal error is encountered, while assuming that the
-        option/directive tt(debug) had been specified when bic() created the
-        tt(parse) parsing function, the program can be rerun, specifying
+        If, however, a fatal error is encountered, and the option/directive
+        tt(debug) was specified when bic() created the tt(parse) parsing
+        function, the program can be rerun, specifying
         tt(parser.setDebug(Parser::ACTIONCASES__)) before calling the parser's
         tt(parse) function. This will show (to the standard output stream) the
         case-entry numbers of the tt(switch) which is defined in the parser's

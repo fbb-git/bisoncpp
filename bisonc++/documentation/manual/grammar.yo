@@ -15,6 +15,8 @@ includefile(grammar/recursive.yo)
 lsect(DIRECTIVES)(Bisonc++ Directives)
 includefile(directives/intro.yo)
 
+//FBB
+
     subsect(%baseclass-preinclude: specifying a header included by the
             baseclass)    
     includefile(directives/preinclude.yo)
@@ -25,6 +27,10 @@ includefile(directives/intro.yo)
 
     subsect(%debug: adding debugging code to the `parse()' member)
     includefile(directives/debug.yo)
+
+    subsect(%dfault-actions: specifying whether or not to use $$ = $1 default
+            actions)
+    includefile(directives/defaultactions.yo)
 
     subsect(%error-verbose: dumping the parser's state stack)
     includefile(directives/errorverbose.yo)
@@ -91,6 +97,10 @@ includefile(directives/intro.yo)
 
     subsect(%stype: specifying the semantic stack type)
     includefile(directives/stype.yo)
+
+    subsect(%tag-mismatches: check for tag-mismatches with polymorphic
+        semantic values)
+    includefile(directives/tagmismatches.yo)
 
     lsubsect(TOKTYPENAMES)(%token: defining token names)
     includefile(directives/tokens.yo)
