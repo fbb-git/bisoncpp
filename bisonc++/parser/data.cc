@@ -108,14 +108,14 @@ Parser::ActionBlockInstaller Parser::s_defaultAction[2][3][3] =
   // QUIET
     {
         // LHS:         RHS:
-        { // ""     ""          s_stype               other
+        { // ""      ""         s_stype               other
             &Parser::blkNop,    &Parser::blkErr,        &Parser::blkErr
         },
         { // s_stype
-            &Parser::blkSTYPE,  &Parser::blkAssign,    &Parser::blkAssign
+            &Parser::blkSTYPE,  &Parser::blkDirect,     &Parser::blkAssign
         },
         {   // other
-            &Parser::blkErr,    &Parser::blkErr,       &Parser::blkCheck
+            &Parser::blkErr,    &Parser::blkErr,        &Parser::blkCheck
         },
     },
   // WARN
@@ -125,16 +125,10 @@ Parser::ActionBlockInstaller Parser::s_defaultAction[2][3][3] =
             &Parser::blkNopW,   &Parser::blkErr,        &Parser::blkErr
         },
         { // s_stype
-            &Parser::blkSTYPEW, &Parser::blkAssignW,   &Parser::blkAssignW
+            &Parser::blkSTYPEW, &Parser::blkDirectW,    &Parser::blkAssignW
         },
         {   // other
-            &Parser::blkErr,    &Parser::blkErr,       &Parser::blkCheckW
+            &Parser::blkErr,    &Parser::blkErr,        &Parser::blkCheckW
         },
     },
 };
-
-
-
-
-
-

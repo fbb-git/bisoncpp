@@ -124,11 +124,14 @@ class Parser: public ParserBase
             // no action block + error message
         void blkErr(std::string const &ruleType, Production const &prod);
 
-            // an STYPE__ assigning action block
+            // a $$ = STYPE__{} action block
         void blkSTYPE(std::string const &ruleType, Production const &prod);
 
-            // a $$ = $1 assigning action block
+            // a $$ = $1.get... action block
         void blkAssign(std::string const &ruleType, Production const &prod);
+
+            // a $$ = $1 action block
+        void blkDirect(std::string const &ruleType, Production const &prod);
 
             // with equal types: blkAssign, otherwise blkErr
         void blkCheck(std::string const &ruleType, Production const &prod);
@@ -142,6 +145,9 @@ class Parser: public ParserBase
 
             // warns and blkAssign
         void blkAssignW(std::string const &ruleType, Production const &prod);
+
+            // warns and blkDirect
+        void blkDirectW(std::string const &ruleType, Production const &prod);
 
             // with equal types blkAssignW, otherwise blkErr
         void blkCheckW(std::string const &ruleType, Production const &prod);
