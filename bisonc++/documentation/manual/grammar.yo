@@ -93,7 +93,7 @@ includefile(directives/intro.yo)
     subsect(%start: defining the start rule)
     includefile(directives/start.yo)
 
-    subsect(%stype: defining a single semantic value type)
+    lsubsect(STYPE)(%stype: defining a single semantic value type)
     includefile(directives/stype.yo)
 
     subsect(%tag-mismatches: check for tag-mismatches with polymorphic
@@ -145,18 +145,15 @@ includefile(directives/intro.yo)
 lsect(DEFSEM)(Defining Language Semantics)
 includefile(grammar/semantics.yo)
 
-//FBB
-
     lsubsect(SEMANTICTYPES)(Data Types of Semantic Values)
     includefile(grammar/datatypes.yo)
-
-    lsubsect(MORETYPES)(More Than One Value Type)
-    includefile(grammar/union.yo)
 
 
     lsubsect(POLYMORPHIC)(Polymorphism and Multiple Semantic Values:
                         `%polymorphic') 
     includefile(grammar/polymorphic.yo)
+
+//FBB
 
         subsubsect(The %polymorphic directive)
         includefile(grammar/polymorphicdirective.yo)

@@ -16,8 +16,7 @@ char Parser::s_locationValueStack[] = "d_lsp__";
 char Parser::s_locationValue[] = "d_loc__";  
                                     // name of the location value variable
                                     // used by the generated parser (@0)
-char const Parser::s_stype__[] = "STYPE__";
-                                    // generic semantic value for POLYMORPHIC
+string Parser::s_stype = "STYPE__"; // generic semantic value for POLYMORPHIC
 
 string const Parser::s_undefined{"<undefined>"};
 
@@ -102,4 +101,40 @@ Parser::ADmap Parser::s_polymorphic =
 
        {AtDollar::DDpar,    &Parser::dvalPolyPar},      // $$(
 };
+
+
+Parser::ActionBlockInstaller Parser::s_defaultAction[2][3][3] =
+{
+  // QUIET
+    {
+        // LHS:         RHS:
+        { // ""     ""          s_stype               other
+            &Parser::blkNop,    &Parser::blkErr,        &Parser::blkErr
+        },
+        { // s_stype
+            &Parser::blkSTYPE,  &Parser::blkAssign,    &Parser::blkAssign
+        },
+        {   // other
+            &Parser::blkErr,    &Parser::blkErr,       &Parser::blkCheck
+        },
+    },
+  // WARN
+    {
+        // LHS:
+        { // ""     ""          s_stype               other
+            &Parser::blkNopW,   &Parser::blkErr,        &Parser::blkErr
+        },
+        { // s_stype
+            &Parser::blkSTYPEW, &Parser::blkAssignW,   &Parser::blkAssignW
+        },
+        {   // other
+            &Parser::blkErr,    &Parser::blkErr,       &Parser::blkCheckW
+        },
+    },
+};
+
+
+
+
+
 

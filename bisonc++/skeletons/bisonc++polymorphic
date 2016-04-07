@@ -90,22 +90,6 @@ class SType
 
         bool valid() const;
 
-//        operator SType &()
-//        {
-//            return *this;
-//        }
-//
-//        operator SType const &()
-//        {
-//            return *this;
-//        }
-
-//        template <typename Type>
-//        operator Type &();
-//
-//        template <typename Type>
-//        operator Type const &();
-
         Tag__ tag() const;
 
             // this get()-member checks for invalid Semantic data and
@@ -119,6 +103,9 @@ class SType
             // warnings about tag mismatches to cerr.
         template <Tag__ tag>
         typename TypeOf<tag>::type &get();
+
+        template <Tag__ tag>
+        typename TypeOf<tag>::type const &get() const;
 
         template <Tag__ tag, typename ...Args>
         void assign(Args &&...args);
@@ -199,18 +186,6 @@ inline bool SType::valid() const
     return tag() != static_cast<Tag__>(sizeofTag__);
 }
 
-//template <typename Type>
-//inline SType::operator Type &()
-//{
-//    return get<TagOf<Type>::tag>();
-//}
-//
-//template <typename Type>
-//inline SType::operator Type const &()
-//{
-//    return get<TagOf<Type>::tag>();
-//}
-
 template <Tag__ tag, typename ...Args>
 void SType::assign(Args &&...args)
 {
@@ -221,6 +196,13 @@ void SType::assign(Args &&...args)
 
 template <Tag__ tg>
 typename TypeOf<tg>::type &SType::get()
+{
+$insert warnTagMismatches
+    return *static_cast<typename TypeOf<tg>::type *>(d_base->data());
+}
+
+template <Tag__ tg>
+typename TypeOf<tg>::type const &SType::get() const
 {
 $insert warnTagMismatches
     return *static_cast<typename TypeOf<tg>::type *>(d_base->data());

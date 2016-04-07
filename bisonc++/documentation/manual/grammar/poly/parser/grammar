@@ -9,6 +9,7 @@
 
 %type <TEXT>    identifier
 %type <INT>     int
+%type <STYPE__> combi
 
 %%
 

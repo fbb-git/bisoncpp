@@ -85,7 +85,7 @@ class Parser: public ParserBase
                                     // name of the location value variable
                                     // used by the generated parser (@0)
 
-    static char const s_stype__[];  // generic semantic value for POLYMORPHIC
+    static std::string  s_stype;   // generic semantic value for POLYMORPHIC
                                     
     static std::string const s_undefined;
 
@@ -94,6 +94,11 @@ class Parser: public ParserBase
     static ADmap s_union;
     static ADmap s_polymorphic;
 
+    typedef void (Parser::*ActionBlockInstaller)(std::string const &ruleType, 
+                                                 Production const &prod);
+
+    static ActionBlockInstaller s_defaultAction[2][3][3];
+
     public:
         Parser(Rules &rules);
         int parse();
@@ -101,6 +106,48 @@ class Parser: public ParserBase
         std::unordered_map<std::string, std::string> const &polymorphic() const;
 
     private:
+        static void warnDefaultAction(Production const &prod);
+
+        void installDefaultAction(Production const &prod, 
+                                  std::string const &rhs);
+        void defaultPolymorphicAction();
+
+        static std::string const &nameOf(std::string const &typeName);
+
+            // see s_defaultAction[] for details
+        static int typeIndex(std::string const &typeName);  // 0: "", 
+                                                            // 1: s_stype
+                                                            // 2: other types
+            // no action block is installed
+        void blkNop(std::string const &ruleType, Production const &prod);
+
+            // no action block + error message
+        void blkErr(std::string const &ruleType, Production const &prod);
+
+            // an STYPE__ assigning action block
+        void blkSTYPE(std::string const &ruleType, Production const &prod);
+
+            // a $$ = $1 assigning action block
+        void blkAssign(std::string const &ruleType, Production const &prod);
+
+            // with equal types: blkAssign, otherwise blkErr
+        void blkCheck(std::string const &ruleType, Production const &prod);
+
+
+            // warns that no action block is installed
+        void blkNopW(std::string const &ruleType, Production const &prod);
+
+            // warns and blkSTYPE
+        void blkSTYPEW(std::string const &ruleType, Production const &prod);
+
+            // warns and blkAssign
+        void blkAssignW(std::string const &ruleType, Production const &prod);
+
+            // with equal types blkAssignW, otherwise blkErr
+        void blkCheckW(std::string const &ruleType, Production const &prod);
+
+
+
 //FBB        bool errNegative(int nElements, Block &block, AtDollar const &atd);
 //FBB        bool errNoRef(int nElements, Block &block, AtDollar const &atd);
 
@@ -289,6 +336,13 @@ class Parser: public ParserBase
                                         // end- or mid-rule actions
         static int nComponents(int nElements);
 };
+
+// static 
+inline std::string const &Parser::nameOf(std::string const &typeName)
+{
+    return typeName.empty() ? s_undefined : typeName;
+}
+
 
 inline std::unordered_map<std::string, std::string> const &Parser::polymorphic() const
 {

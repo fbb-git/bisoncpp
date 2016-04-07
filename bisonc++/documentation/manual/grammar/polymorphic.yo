@@ -1,31 +1,34 @@
-Bic() may define polymorphic semantic values. The approach discussed here is a
-direct result of a suggestion originally made by Dallas A. Clement in
-September 2007. All sources of the example discussed in this section can be
-retrieved from the lurl(poly) directory.
+Bic() offers em(polymorphic semantic values). Polymorphic semantic values were
+developed as an alternative to using unions. Unions are still supported by
+b(), but are also considered `old school'. Polymorphic semantic values were
+added to b() as the result of a suggestion originally made by Dallas
+A. Clement in September 2007. 
+
+In this section a simple example program is developed illustrating polymorphic
+semantic values.  The sources of the example can be retrieved from the
+distribution's lurl(poly) directory.
 
 One may wonder why a tt(union) is still used by b() as bf(C++) offers
-inherently superior approaches to combine multiple types in one type. The
-bf(C++) way to do so is by defining a polymorphic base class and a series of
-derived classes implementing the various exclusive data types. The tt(union)
-approach is still supported by b() since it is supported by bf(bison)(1) and
-bf(bison++); dropping the tt(union) would needlessly impede backward
-compatibility.
+inherently superior approaches to combine multiple types into one union
+type. The bf(C++) way to do so is by defining a polymorphic base class and a
+series of derived classes implementing the various exclusive data types. The
+tt(union) approach is still supported by b(), mainly for historic reasons as
+it is supported by bf(bison)(1) and bf(bison++); dropping the tt(union) would
+needlessly impede backward compatibility.
 
-The (preferred) alternative to a tt(union), however, is a polymorphic base
-class. Although it is possible to define your own polymorphic semantic value
-classes, bic() makes life easy by offering the tt(%polymorphic) directive.
-
-The example program (cf. lurl(poly)) implements a polymorphic base class, and
-derived classes containing either an tt(int) or a tt(std::string) semantic
-value. These types are asociated with tags (resp. tt(INT) and tt(TEXT)) using
-the tt(%polymorphic) directive, which is discussed next.
+The preferred alternative to a tt(union), however, is a polymorphic base
+class. The example program (cf. lurl(poly)) uses a polymorphic semantic value
+type, supporting either tt(int) or tt(std::string)
+semantic values. These types are asociated with tags (resp. tt(INT) and
+tt(TEXT)) using the tt(%polymorphic) directive, discussed next.
 
 As a technical side-note: although the directive for using polymorphic
 semantic values is called tt(%polymorphic) this does not imply that the
-generated parser uses dynamic polymorphism. Instead, meta-template programming
-techniques are used to create the various semantic value types whenever
-necessary. It isn't `static polymorphism' either, but the term `polymorphic'
-indicates that each semantic value represents exactly one of the types that
-were defined using the tt(%polymorphic) keyword.
+generated parser uses bf(C++) dynamic polymorphism. Instead, meta-template
+programming techniques are used to create the various semantic value types
+whenever necessary. It isn't `static polymorphism' either, but the term
+`polymorphic' refers to the fact that the commonly used shorthand notations
+($$, $1, etc.) in action blocks may refer to different (hence polymorphic)
+data types.
 
 

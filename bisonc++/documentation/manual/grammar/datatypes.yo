@@ -1,24 +1,38 @@
 In a simple program it may be sufficient to use the same data type for the
-semantic values of all language constructs. This was true in the tt(rpn) and
-tt(infix) calculator examples (see, e.g., sections ref(RPN) and ref(CALC)).
+semantic values of all language constructs. This was true for, e.g., the
+tt(rpn) and tt(infix) calculator examples (see, e.g., sections ref(RPN) and
+ref(CALC)).
 
-B()'s default is to use type tt(int) for all semantic values. To specify
-some other type, the directive tt(%stype) must be used, like this:
-        verb(
-    %stype double
-        )
-    Any text following tt(%stype) up to the end of the line, up to the first
-of a series of trailing blanks or tabs or up to a comment-token (tt(//) or
-tt(/*)) becomes part of the type definition. Be sure em(not) to end a
-tt(%stype) definition in a semicolon.
+By default, b() uses tt(int) for the semantic value type of its parser's
+tokens. To use another single semantic value type , the directive tt(%stype)
+must be used: see section ref(STYPE).
 
-    This directive must go in the directives section of the grammar file (see
-section ref(OUTLINE)). As a result of this, the parser class defines a
-em(private type) tt(STYPE__) as tt(double): Semantic values of language
-constructs always have the type tt(STYPE__), and (assuming the parser class is
-named tt(Parser)) an internally used data member tt(d_val) that could be used
-by the lexical scanner to associate a semantic value with a returned token is
-defined as:
-        verb(
-    Parser::STYPE__ d_val;
-        )
+In many programs, however, different types of data are used for different
+terminal and nonterminal tokens. For example, a numeric constant may
+need type tt(int) or tt(double), while a string needs type tt(std::string),
+and an identifier might need a pointer to an entry in a symbol table.
+
+To use more than one data type for semantic values in one parser, b()
+offers the following features:
+    itemization(
+    it() Define your own class handling the various semantic values, and
+associate that class with the parser's semantic value type using the
+tt(%stype) directive. The association of (non-)terminal tokens and specific
+value types is handled by your own class.
+    it() Specify a collection of possible data types, using a tt(%union)
+directive (see section ref(UNION)), and associate (non-)terminal tokens with
+matching semantic values;
+    it() Define polymorphic semantic values, associating (non)terminals with
+their proper semantic types (cf section ref(POLYMORPHIC)), and associate
+(non-)terminal tokens with matching semantic values;
+    )
+    The last approach is preferred if the semantic types and values differ for
+various (non)terminals. It allows b() and the bf(C++) compiler to verify that
+the correct types are used when semantic values are assigned or retrieved,
+which, in turn, helps preventing run-time errors.
+
+
+
+
+
+

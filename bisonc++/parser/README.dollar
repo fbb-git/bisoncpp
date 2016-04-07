@@ -178,3 +178,10 @@ EXPLICIT: replace the $-spec by d_val__.field or d_val__.get<>() from
           atd.id()
 
 
+
+
+
+=============================================================================
+    lhs type    
+    
+    none

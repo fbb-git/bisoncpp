@@ -1,5 +1,12 @@
 Syntax: bf(%default-actions) tt(off|quiet|warn)
 
+TO DO: man-page entry
+
+
+This option is only interpreted in combination with polymorphic semantic
+values.
+
+
 When tt(warn) is specified (which is the default) an action block executing
 tt($$ = $1) (or tt($$ = STYPE__{} for empty production rules) is added to
 production rules that do not explicitly define their own final action blocks,
@@ -9,7 +16,5 @@ OK if neither $$ nor $1 is associated with a specific type).  When tt(off) is
 specified no action blocks are added (issuing a warning issued, unless the
 option/directive tt(tag-mismatches off) has been specified).
 
-This option probably is most useful in combination with the tt(%polymorphic)
-directive, where it can be useful to prevent semantic value mismatches.
 
 

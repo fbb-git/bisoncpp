@@ -7,63 +7,23 @@
     
 void Parser::checkFirstType() 
 {
-    Production const &prod = d_rules.lastProduction();
+    // stype and union types by default use the $$ = $1 option
+    // polymorphic types check the semantic value type of the first
+    // production element 
 
-    switch (d_options.defaultActions().value)
+    if (d_semType == POLYMORPHIC) 
     {
-        case Options::OFF:
-            if (d_options.tagMismatches().value == Options::ON)
-                wmsg << '`' << &prod << "': auto-appending `$$ = ...' "
-                    "action block suppressed by option/directive "
-                    "`default-actions off'" << endl;
-
-        return;                     // no default action. Hope it's OK...
-
-        case Options::WARN:
-            wmsg << '`' << &prod << 
-                    "': auto-appended `$$ = ...' action block" << endl;
-        break;
-
-        default:
-        break;
+        defaultPolymorphicAction();
+        return;
     }
 
+    Production const &prod = d_rules.lastProduction();
     size_t nElements = prod.size();
-    string const &ruleType = d_rules.sType();
 
-    if (nElements && d_semType == POLYMORPHIC)   // check for mismatches between
-    {                                       // $$'s type and $1's type
-        string const &firstElementType = prod[0].sType();
-
-        if (ruleType != firstElementType) 
-        {
-            emsg << '`' << &prod << "':  type clash ($$: " << 
-                ruleType << ", $1: " <<
-                (firstElementType.empty() ? s_undefined : firstElementType) <<
-                ") prevents auto-appending default action `$$ = ...'" << endl;
-            return;
-        }
-    }
-
-    Block block;
-    block.open(prod.lineNr(), prod.fileName());
-
-    block += "\n"
-        "    " + s_semanticValue + " = " +
-        (
-            nElements > 0 ?
-                svsElement(nElements, 1)
-            :
-            (                           // empty production
-                d_semType == POLYMORPHIC && not ruleType.empty() ?
-                    "Meta__::TypeOf<Tag__::" + ruleType + ">::type{}"
-                :
-                    s_stype__ + "{}"s
-            )
-        ) + ";\n"
-        "}";
-
-    d_rules.setAction(block);
+    installDefaultAction(
+        prod, 
+        nElements > 0 ? svsElement(nElements, 1) : s_stype + "{}"s
+    );
 }
 
 
