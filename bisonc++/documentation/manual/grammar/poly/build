@@ -1,14 +1,31 @@
 #!/bin/bash
 
-mkdir -p tmp/bin
+case $1 in
+    (program)
+        mkdir -p tmp/bin
+        
+        cd parser
+        bisonc++ grammar
+        
+        cd ../scanner
+        flexc++ lexer
+        
+        cd ../tmp
+        
+        g++ -fdiagnostics-color=never --std=c++14 -Wall -O2 -o bin/binary \
+            ../parser/*.cc ../scanner/*.cc ../*.cc -lbobcat
+    ;;
 
-cd parser
-bisonc++ grammar
+    (clean)
+        rm -rf tmp 
+        find ./ -type f -name  "*.ih.gch" -exec rm -f \{\} \;
+        cd parser
+        rm -f parse.cc parserbase.h
+        cd ../scanner
+        rm -f lex.cc scannerbase.h
+    ;;
 
-cd ../scanner
-flexc++ lexer
-
-cd ../tmp
-
-g++ --std=c++14 -Wall -O2 -o bin/binary \
-    ../parser/*.cc ../scanner/*.cc ../*.cc -lbobcat
+    (*)
+	echo ./build program to build the program, ./build clean to clean up
+    ;;
+esac

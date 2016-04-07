@@ -1,13 +1,14 @@
 %filenames parser
 %scanner ../scanner/scanner.h
 
+%default-actions off
+
 %polymorphic INT: int; TEXT: std::string;
 
 %token INT IDENTIFIER 
 
 %type <TEXT>    identifier
 %type <INT>     int
-%type <STYPE__> combi
 
 %%
 
