@@ -120,7 +120,7 @@ class Parser: public ParserBase
 
         void substituteBlock(int nElements, Block &block);
 
-            // replacement members:
+            // replacement members (see also handleProductionElement)
 
         bool dvalReplace(Block &block, AtDollar const &atd, 
                                                     char const *suffix);

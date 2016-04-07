@@ -1,6 +1,7 @@
 Syntax:     bf(%flex) nl()    
-           When provided, the scanner matched text function is called as
-            tt(d_scanner.YYText()), and the scanner token function is called
-            as tt(d_scanner.yylex()). This directive is only interpreted if
-            the tt(%scanner) directive is also provided.
+
+When provided, the scanner matched text function is called as
+tt(d_scanner.YYText()), and the scanner token function is called as
+tt(d_scanner.yylex()). This directive is only interpreted if the tt(%scanner)
+directive is also provided.
 

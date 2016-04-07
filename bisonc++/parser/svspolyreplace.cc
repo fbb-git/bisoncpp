@@ -5,10 +5,13 @@ bool Parser::svsPolyReplace(int nElements, Block &block,AtDollar const &atd,
 {
     string tag = productionTag(atd.nr());        // get the element's tag
 
+    if (tag == s_stype__)
+        tag.clear();
+
     block.replace(atd.pos(), atd.length(), 
                 svsElement(nElements, atd.nr()) +
                 (
-                    tag == s_stype__ ? 
+                    tag.empty() ? 
                         ""s 
                     : 
                         ".get<Tag__::" + tag + ">()"

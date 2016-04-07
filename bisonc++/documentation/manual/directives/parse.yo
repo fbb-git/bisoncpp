@@ -1,5 +1,4 @@
-Syntax: bf(%parsefun-source) tt(filename) nl()
-           tt(Filename) defines the name of the source file to contain the
-            parser member function tt(parse). Defaults to tt(parse.cc).  This
-            directive is overruled by the bf(--parse-source) (bf(-p))
-            command-line option.
+Syntax: bf(%parsefun-source) tt(filename) 
+
+tt(Filename) defines the name of the source file to contain the parser member
+function tt(parse). Defaults to tt(parse.cc).  

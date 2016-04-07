@@ -1,8 +1,8 @@
-Syntax:  bf(%lsp-needed) nl()    
-           Defining this causes b() to include code into the generated
-            parser using the standard location stack.  The token-location type
-            defaults to the following struct, defined in the parser's base
-            class when this directive is specified: 
+Syntax:  bf(%lsp-needed)
+
+When this directive is specified the standard location stack is added to the
+generated parser class.  The standard location type (defined in the parser's
+base class) is equal to the following struct:
            verb(
     struct LTYPE__
     {

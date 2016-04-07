@@ -1,15 +1,18 @@
 Syntax: bf(%scanner-token-function) tt(function-call) nl()
 
-           The scanner function returning the next token, called from the
-            generated parser's tt(lex) function. A complete function
-            call expression should be provided (including a scanner object, if
-            used). Example: 
+This directive is used to specify how to call the scanner function returning
+the next token from the parser's tt(lex) function. A complete function call
+expression should be provided (including a scanner object, if
+applicable). Example:
             verb(
     %scanner-token-function d_scanner.lex()
                 )
-           If the function call contains white space
-            tt(scanner-token-function) should be surrounded by double quotes.
+    If the function call contains white space then the function call
+specification must be surrounded by double quotes.
 
-It is an error if this directive is used and the specified scanner token
-function is not called from the code in an already existing implementation
-header.
+
+It is an error to use  this directive in combination with an already existing
+internal header file (.ih file) in which the specified function is not called.
+
+Note that an expression is expected, not an expression em(statement): do not
+include a final semicolon in the specification.

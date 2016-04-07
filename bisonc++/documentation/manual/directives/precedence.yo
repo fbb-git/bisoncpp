@@ -6,27 +6,29 @@ Syntax: quote(
     These directives are called em(precedence directives) (see also section
 ref(PRECEDENCE) for general information on operator precedence).
 
-    The tt(%left), tt(%right) or tt(%nonassoc) directive are used to declare 
-tokens and to specify their precedence and associativity, all at once.
+    The tt(%left), tt(%right), and tt(%nonassoc) directives are used to
+declare tokens and to specify their precedence and associativity, all at once.
     itemization(
     it() The em(associativity) of an operator tt(op) determines how repeated
-uses of the operator em(nest): whether `tt(x op y op z)' is parsed by grouping
-tt(x) with tt(y) first or by grouping tt(y) with tt(z) first. tt(%left)
-specifies em(left-associativity) (grouping tt(x) with tt(y) first) and
-tt(%right) specifies em(right-associativity) (grouping tt(y) with tt(z)
+uses of the operator em(nest): whether `tt(x op y op z)' is parsed by combining
+tt(x) with tt(y) first or by combining tt(y) with tt(z) first. tt(%left)
+specifies em(left-associativity) (combining tt(x) with tt(y) first) and
+tt(%right) specifies em(right-associativity) (combining tt(y) with tt(z)
 first). tt(%nonassoc) specifies em(no) associativity, which means that `tt(x
 op y op z)' is not a defined operation, and could be considered an error.
-    it() The precedence of an operator determines how it nests with other
-operators. All the tokens declared in a single precedence directive have equal
-precedence and nest together according to their associativity. When two tokens
-declared in different precedence directives associate, the one declared
-em(later) has the higher precedence and is grouped em(first).
+    it() The em(precedence) of an operator determines how it nests in
+combination with other operators. All the tokens declared in a single
+precedence directive have equal precedence and nest together according to
+their associativity. When two tokens declared in different precedence
+directives associate, the one declared em(later) has the higher precedence and
+is grouped em(first).
     )
     The tt(<type>) specification is optional, and specifies the type of the
 semantic value when a token specified to the right of a tt(<type>)
 specification is received. The pointed arrows are part of the type
-specification; the type itself must be a field of a tt(%union) specification
-(see section ref(UNION)).
+specification; the type itself must be a field of a tt(%union) 
+(see section ref(UNION)) or it must be a polymorphic em(tag) (see section
+ref(POLYMORPHIC)).
 
     When multiple tokens are listed they must be separated by whitespace or by
 commas. Note that the precedence directives also serve to define token names:

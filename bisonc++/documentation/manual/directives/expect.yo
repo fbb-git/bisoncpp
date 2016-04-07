@@ -1,10 +1,11 @@
-Syntax: bf(%expect) tt(number) nl()
+Syntax: bf(%expect) tt(number) 
+
     B() normally warns if there are any conflicts in the grammar (see section
 ref(SHIFTREDUCE)), but many real grammars have harmless em(shift/reduce
-conflicts) which are resolved in a predictable way and would be difficult to
-eliminate. It is desirable to suppress the warning about these conflicts
-unless the number of conflicts changes. You can do this with the tt(%expect)
-declaration.
+conflicts) which are resolved in a predictable way and which would be
+difficult to eliminate. It is desirable to suppress the warning about these
+conflicts unless the number of conflicts changes. You can do this with the
+tt(%expect) declaration.
 
     The argument tt(number) is a decimal integer. The declaration says there
 should be no warning if there are tt(number) shift/reduce conflicts and no
@@ -24,8 +25,8 @@ the beginning.
 conflict printed by b().
     )
     Now b() will stop annoying you about the conflicts you have checked, but
-it will warn you again if changes in the grammar result in another number or
-type of conflicts.
+it will warn you again if changes in the grammar result in a different number
+or type of conflicts.
 
 
 

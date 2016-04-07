@@ -1,6 +1,7 @@
-Syntax: bf(%prec) tt(token) nl()
+Syntax: bf(%prec) tt(token) 
+
     The construction bf(%prec) tt(token) may be used in production rules to
-overrule the actual precendence of an operator in a particular production
+overrule the actual precedence of an operator in a particular production
 rule. Well known is the construction
                 verb(
     expression:
@@ -21,16 +22,16 @@ tt(UMINUS) token, which is frequently defined as:
     %left '*' '/' '%'
     %right UMINUS
         )
-    giving tt('*' '/') and tt('%') a higher priority than tt('+') and tt('-'),
+    giving tt(* /) and tt(%) a higher priority than tt(+) and tt(-),
 ensuring at the same time that tt(UMINUS) is given both the highest priority
 and a right-associativity.
 
-In the above production rule the operator order would cause the
+In the above production rule the operator order would result in the
 construction 
         verb(
     '-' expression
         )
-    to be evaluated from right to left, having a higher precedence than either
+    being evaluated from right to left, having a higher precedence than either
 the multiplication or the addition operators.
 
 

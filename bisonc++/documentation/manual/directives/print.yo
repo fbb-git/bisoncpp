@@ -1,4 +1,4 @@
-Syntax: bf(%print-tokens) nl()
+Syntax: bf(%print-tokens) 
 
     The tt(%print-tokens) directive provides an implementation of the Parser
 class's tt(print__) function displaying the current token value and the text

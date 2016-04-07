@@ -15,8 +15,6 @@ includefile(grammar/recursive.yo)
 lsect(DIRECTIVES)(Bisonc++ Directives)
 includefile(directives/intro.yo)
 
-//FBB
-
     subsect(%baseclass-preinclude: specifying a header included by the
             baseclass)    
     includefile(directives/preinclude.yo)
@@ -95,7 +93,7 @@ includefile(directives/intro.yo)
     subsect(%start: defining the start rule)
     includefile(directives/start.yo)
 
-    subsect(%stype: specifying the semantic stack type)
+    subsect(%stype: defining a single semantic value type)
     includefile(directives/stype.yo)
 
     subsect(%tag-mismatches: check for tag-mismatches with polymorphic
@@ -147,13 +145,16 @@ includefile(directives/intro.yo)
 lsect(DEFSEM)(Defining Language Semantics)
 includefile(grammar/semantics.yo)
 
+//FBB
+
     lsubsect(SEMANTICTYPES)(Data Types of Semantic Values)
     includefile(grammar/datatypes.yo)
 
     lsubsect(MORETYPES)(More Than One Value Type)
     includefile(grammar/union.yo)
 
-    lsubsect(POLYMORPHIC)(Polymorphism and multiple semantic values:
+
+    lsubsect(POLYMORPHIC)(Polymorphism and Multiple Semantic Values:
                         `%polymorphic') 
     includefile(grammar/polymorphic.yo)
 
@@ -179,6 +180,15 @@ includefile(grammar/semantics.yo)
 
     lsubsect(ACTIONTYPES)(Data Types of Values in Actions)
     includefile(grammar/actiontypes.yo)
+
+        subsubsect(%stype shorthand notations ($-notations))
+        includefile(grammar/stypeshorthand.yo)
+
+        subsubsect(%union shorthand notations ($-notations))
+        includefile(grammar/unioneshorthand.yo)
+
+        subsubsect(%polymorphic shorthand notations ($-notations))
+        includefile(grammar/polymorphicshorthand.yo)
 
     lsubsect(MIDACTIONS)(Actions in Mid-Rule)
     includefile(grammar/midrule.yo)

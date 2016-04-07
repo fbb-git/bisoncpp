@@ -1,18 +1,18 @@
-Syntax: bf(%scanner) tt(header)nl()
+Syntax: bf(%scanner) tt(header)
+
     Use tt(header) as the pathname of a file to include in the parser's class
-header. See the description of the link(--scanner)(SCANOPT) option for details
-about this option.  This directive also implies the automatic definition of a
-composed tt(Scanner d_scanner) data member into the generated parser, as well
-as a predefined bf(int lex()) member, returning tt(d_scanner.lex()). 
+header file. See the description of the link(--scanner)(SCANOPT) option for
+details about this directive.  When this directive is used a tt(Scanner
+d_scanner) data member is automatically included in the generated parser,
+while the predefined bf(int lex()) member is simply returning
+tt(d_scanner.lex())'s return value.  When, in addition to the tt(%scanner)
+directive the tt(%flex) directive was also specified then the function
+tt(d_scanner.YYText()) is called.
 
-By specifying the tt(%flex) directive the function tt(d_scanner.YYText()) is
-called. 
+Unless double quotes or angular brackets were explixity used, the specified
+tt(header) file will be surrounded by double quotes.
 
-The specfied tt(header) file will be surrounded by double quotes if no
-delimiters were provided. If pointed brackets (tt(<...>)) are used, they are
-kept. 
-
-It is an error if this directive is used and an already existing parser-class
-header file does not include `tt(header)'.
+It is an error to use this directive in combination with an already existing
+parser-class header not including `tt(header)'.
 
 

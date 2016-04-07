@@ -1,24 +1,24 @@
-    Syntax: bf(%union) tt(union-definition body)nl()
-The tt(%union) directive specifies the entire collection of possible data
-types for semantic values. The keyword tt(%union) is followed by a pair of
-braces containing the same thing that goes inside a union in bf(C++).
-For example:
+    Syntax: bf(%union) tt(union-definition body)
+
+The tt(%union) directive defines a bf(C) union-type defining one or more data
+types for semantic values. The directive tt(%union) is followed by a pair of
+braces containing union's field definition(s). For example:
         verb(
     %union {
       double u_val;
       symrec *u_tptr;
     };
         )
-    This says that the two alternative types are tt(double) and tt(symrec
-*). They are given names tt(u_val) and tt(u_tptr); these names are used in the
-tt(%token) and tt(%type) directives to pick one of the types for a terminal or
-nonterminal symbol (see section ref(TYPE)).
+    In this example the two fields represent a tt(double) and a tt(symrec
+*). The associated field names are tt(u_val) and tt(u_tptr), which are used in
+the tt(%token) and tt(%type) directives to specify  types that are associated
+with terminal or nonterminal symbols (see section ref(TYPE)).
 
     Notes:
     itemization(
     it() The semicolon following the closing brace is em(optional).
-    it() bf(C++-11) does allow class types to be used in tt(union)
-        definitions, so they can also be used in tt(%union)
+    it() Since bf(C++-11) class types can be used in tt(union)
+        definitions; they can also be used when defining b()'s tt(%union)
         directives. When a class type variant is required, all required
         constructors, the destructor and other members (like overloaded
         assignment operators) must be able to handle the actual class type
@@ -26,8 +26,13 @@ nonterminal symbol (see section ref(TYPE)).
         is beyon this manual's scope, but can be found, e.g., in the url(C++
         Annotations)(http://cppannotations.sf.net). See also section
         ref(MORETYPES). 
+    it() The tt(%union) directive is also a bit of an anachronism. In many
+        situations using tt(%polymorphic) is more attractive than using
+        tt(%union) (cf. section ref(POLYMORPHIC)).
     )
 
 
 
 
+tt(%stype, %union) and tt(%polymorphic) are mutually exclusive: only one
+of these directives can be used.  

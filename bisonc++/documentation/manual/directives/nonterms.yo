@@ -1,4 +1,8 @@
-Syntax: bf(%type) tt(<type> symbol(s))nl()
+Syntax: bf(%type) tt(<type> symbol-list)
+
+    To associate (non-)terminals with specific semantic value types
+the bf(%type) directive is used.
+
     When tt(%polymorphic) is used to specify multiple semantic value types,
 (non-)terminals can be associated with one of the semantic value types
 specified with the tt(%polymorphic) directive.
@@ -7,20 +11,15 @@ specified with the tt(%polymorphic) directive.
 (non-)terminals can be associated with one of the tt(union) fields specified
 with the tt(%union) directive.
 
-    To associate (non-)terminals with specific semantic value types
-the bf(%type) directive is used.
-
-    With this directive, tt(symbol(s)) represents of one or more blank or
-comma delimited grammatical symbols (i.e., terminal and/or nonterminal
-symbols); tt(type) is either a polymorphic type-identifier or a field name
-defined in the tt(%union) specification. The
-specified nonterminal(s) are automatically associated with the indicate
-semantic type. The pointed arrows are part of
-the type specification.
+    With this directive, tt(symbol-list) defines of one or more blank or comma
+delimited grammatical symbols (i.e., terminal and/or nonterminal symbols);
+tt(type) is either a polymorphic type-identifier or a field name defined in
+the tt(%union) specification. The specified nonterminal(s) are automatically
+associated with the indicate semantic type. The pointed arrows are part of the
+type specification.
 
     When the semantic value type of a terminal symbol is defined the
 em(lexical scanner) rather than the parser's actions must assign the
 appropriate semantic value to link(d_val__)(DVAL) just prior to returning the
 token. To associate terminal symbols with semantic values, terminal symbols
 can also be specified in a tt(%type) directive.
-

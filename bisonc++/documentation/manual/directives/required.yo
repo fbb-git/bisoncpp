@@ -1,6 +1,7 @@
-Syntax:    bf(%required-tokens) tt(ntokens) nl() 
-    Whenever a syntactic error is detected during the parsing process the next
-few tokens that are received by the parsing function may easily cause yet
+Syntax:    bf(%required-tokens) tt(ntokens) 
+
+    Whenever a syntactic error is detected during the parsing process
+subsequent  tokens received by the parsing function may easily cause yet
 another (spurious) syntactic error. In this situation error recovery in fact
 produces an avalanche of additional errors. If this happens the recovery
 process may benefit from a slight modification. Rather than reporting every

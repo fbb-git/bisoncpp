@@ -8,28 +8,19 @@ tokens.  When multiple tokens are listed they must be separated by whitespace
 or by commas. 
 
     The tt(<type>) specification is optional, and specifies the type of the
-semantic value when a token specified to the right of a tt(<type>)
-specification is received. The pointed arrows are part of the type
-specification; the type itself must be a field of a tt(%union) specification
-(see section ref(UNION)).
+semantic value when receiving one of the subsequently named tokens is
+received. The pointed arrows are part of the type specification; the type
+itself must be a field of a tt(%union) specification (see section ref(UNION))
+or a tag defined at the tt(%polymorphic) directive (see section
+ref(POLYMORPHIC)).
 
         b() converts symbolic tokens (including those defined by the
 precedence directives (cf. section ref(PRECEDENCE))) into tt(Parser::Tokens)
-enumeration values (where `tt(Parser)' is the name of the generated parser
-class, see section ref(PARSERCLASS)). This allows the lexical scanner member
-function tt(lex()) to return these token values by name directly, and it
-allows externally defined lexical scanners (called by tt(lex())) to return
-token values as tt(Parser::name).
+enumeration values (see section ref(PARSERCLASS)). This allows the lexical
+scanner to return named tokens directly as tt(Parser::name).
 
-    When an externally defined lexical scanner is used, it should include
-tt(Parserbase.h), the parser's base class header file, in order to be able to
-use the tt(Parser::Tokens) enumeration type.
-
-
-    Although it em(is) possible to specify explicitly the numeric code for a
-token type by appending an integer value in the field immediately following
-the token name (as in tt(%token NUM 300)) this practice is deprecated. It is
-generally best to let b() choose the numeric values for all token types. B()
-automatically selects values that don't conflict with each other or with ASCII
-character values.
-
+    The enumeration containing the token names is defined in tt(Parserbase.h),
+the parser's base class header file. So externally defined lexical scanners
+can include that header file to have access to those enumeration values. 
+Token names can be returned as tt(Parser::name): it's not necessary to
+refer to token names as tt(ParserBase::name).

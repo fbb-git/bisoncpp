@@ -1,8 +1,11 @@
-Syntax:  bf(%debug) nl() 
-           Provide tt(parse()) and its support functions with debugging code,
-            showing the actual parsing process on the standard output
-            stream. When included, the debugging output is active by default,
-            but its activity may be controlled using the bf(setDebug(bool
-            on-off)) member. Note that no tt(#ifdef DEBUG) macros are used
-            anymore. Rerun b() without the bf(--debug) option to generate an
-            equivalent parser not containing the debugging code. 
+Syntax:  bf(%debug) 
+
+Provide tt(parse) and its support functions with debugging code,
+showing the actual parsing process on the standard output
+stream. 
+
+When specified, debug output is shown by default, but its activity may be
+controlled using the tt(setDebug(bool on-off)) or tt(setDebug(DebugMode__))
+members. Note that no tt(#ifdef DEBUG) macros are used anymore. Rerun b()
+without the bf(--debug) option to generate an equivalent parser not containing
+the debugging code.

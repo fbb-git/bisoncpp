@@ -9,9 +9,6 @@ In particular,
     ABORT, ACCEPT, ERROR, clearin, debug, error, setDebug
         )
     Except for tt(error), which is a predefined terminal token, these
-identifiers are the names of functions traditionally defined by b(). The
-restriction on the above identifers could be lifted, but then the resulting
-generated parser would no longer be backward compatible with versions before
-B() 2.0.0. It appears that imposing minimal restrictions on the names of
-tokens is a small penalty to pay for keeping backward compatibility.
+identifiers are traditionally used names of functions in the parser class
+defined by b().
     )

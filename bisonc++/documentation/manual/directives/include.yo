@@ -1,25 +1,25 @@
-Syntax:     bf(%include) tt(pathname)nl()    
-           This directive is used to switch to tt(pathname) while processing a
-            grammar specification. Unless tt(pathname) defines an absolute
-            file-path, tt(pathname) is searched relative to the location of
-            bic()'s main grammar specification file (i.e., the grammar file
-            that was specified as bic()'s command-line option). This directive
-            can be used to split long grammar specification files in shorter,
-            meaningful units. After processing tt(pathname) processing
-            continues beyond the tt(%include pathname) directive.
+Syntax:     bf(%include) tt(pathname)
 
-        Bic()'s main grammar specification file could be:
+This directive is used to switch to tt(pathname) while processing a grammar
+specification. Unless tt(pathname) defines an absolute file-path, tt(pathname)
+is searched relative to the location of bic()'s main grammar specification
+file (i.e., the grammar file that was specified as bic()'s command-line
+option). This directive can be used to split long grammar specification files
+in shorter, meaningful units. After processing tt(pathname) processing
+continues beyond the tt(%include pathname) directive.
+
+        Bic()'s main grammar specification file could simply be:
         verb(
-    %include spec/declarations.gr
+    %include spec/declarations
     %%
-    %include spec/rules.gr
+    %include spec/rules
         )
-    where tt(spec/declarations.gr) contains declarations and tt(spec/rules.gr)
+    where tt(spec/declarations) contains declarations and tt(spec/rules)
 contains the rules. Each of the files included using tt(%include) may itself
 use tt(%include) directives (which are then processed relative to their
 locations). The default nesting limit for tt(%include) directives is 10, but
 the option link(--max-inclusion-depth)(MAXDEPTH) can be used to change this
 default.
 
-tt(%include) directives should be specified on a line of their own.
-
+tt(%include) directives should be specified on their own lines, not containing
+any other information.

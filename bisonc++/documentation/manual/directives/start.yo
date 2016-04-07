@@ -1,13 +1,14 @@
 Syntax: bf(%start) tt(nonterminal symbol)
 
-    By default b() uses the the LHS of the first rule in a grammar
-specification file as the start symbol. I.e., the parser tries to recognize
-that nonterminal when parsing input. 
+    By default b() uses the nonterminal that is defined by the first rule in a
+grammar specification file as the start symbol. I.e., the parser tries to
+recognize that nonterminal when parsing input.
 
-    This default behavior may be overriden using the tt(%start) directive.
-    The nonterminal symbol specifies a LHS that may be defined anywhere in
-the rules section of the grammar specification file. This LHS becomes the
-grammar's start symbol.
+    This default behavior may be modified using the tt(%start) directive.
+    The nonterminal symbol specifies a nonterminal that may be defined
+anywhere in the rules section of the grammar specification file. This
+nonterminal then 
+becomes the grammar's start symbol.
 
 
 

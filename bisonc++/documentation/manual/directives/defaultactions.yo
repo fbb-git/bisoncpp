@@ -9,8 +9,7 @@ OK if neither $$ nor $1 is associated with a specific type).  When tt(off) is
 specified no action blocks are added (issuing a warning issued, unless the
 option/directive tt(tag-mismatches off) has been specified).
 
-This option probably is most useful in combination in combination with the
-tt(%polymorphic) directive, where it can be useful to prevent semantic value
-mismatches.
+This option probably is most useful in combination with the tt(%polymorphic)
+directive, where it can be useful to prevent semantic value mismatches.
 
 
