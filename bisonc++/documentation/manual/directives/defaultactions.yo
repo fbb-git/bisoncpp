@@ -1,11 +1,22 @@
-Syntax: bf(%default-actions) tt(off|quiet|warn)
+Syntax: bf(%default-actions) tt(off|quiet|warn|std)
 
 TO DO: man-page entry
 
+For production rules without final action block the bf(bison)(1) parser
+generator by default supplies the tt($$ = $1) action block: the semantic value
+of the first component is returned as the rule's semantic value. Its manual
+also states that for empty rules there is no meaningful default
+action. However, it could be argued that empty production rules could return 
+default semantic values, resulting in every matched rule having a defined
+semantic value.
 
-This option is only interpreted in combination with polymorphic semantic
-values.
+When multiple semantic value types are used, the semantic value type returned
+by a tt($$ = $1) action is not uniquely defined. For one rule tt($1) might be
+an tt(int) field in a union, for another rule it might be a tt(std::string
+*). With polymorphic semantic values comparable situations are encountered.
 
+By default, b() mimics bison's behavior in that it adds a tt($$ = $1) action
+block to rules not having final action blocks
 
 When tt(warn) is specified (which is the default) an action block executing
 tt($$ = $1) (or tt($$ = STYPE__{} for empty production rules) is added to

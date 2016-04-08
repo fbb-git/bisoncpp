@@ -13,24 +13,22 @@ void Parser::checkFirstType()
     // polymorphic types check the semantic value type of the first
     // production element 
 
-    Options::Value defaultAction = d_options.defaultActions().value;
-
-    if (defaultAction != Options::STD && d_semType == POLYMORPHIC) 
-    {
-        defaultPolymorphicAction();
-        return;
-    }
-
     Production const &prod = d_rules.lastProduction();
+
     size_t nElements = prod.size();
 
-    if (nElements == 0 && defaultAction == Options::STD)
+    if (nElements == 0)
         return;
 
-    installDefaultAction(
-        prod, 
-        nElements > 0 ? svsElement(nElements, 1) : s_stype + "{}"s
-    );
+    if 
+    (
+        d_options.defaultActions().value != Options::STD 
+        && 
+        d_semType == POLYMORPHIC
+    ) 
+        defaultPolymorphicAction(prod);
+    else
+        installDefaultAction(prod, svsElement(nElements, 1) );
 }
 
 

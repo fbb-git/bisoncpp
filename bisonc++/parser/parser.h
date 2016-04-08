@@ -115,7 +115,7 @@ class Parser: public ParserBase
 
         void installDefaultAction(Production const &prod, 
                                   std::string const &rhs);
-        void defaultPolymorphicAction();
+        void defaultPolymorphicAction(Production const &prod);
 
         static std::string const &nameOf(std::string const &typeName);
 

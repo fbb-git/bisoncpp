@@ -312,7 +312,7 @@ the directive's specification.
             are not used. Existing debugging code can be removed by rerunning
             bic() without specifying the tt(debug) option or directive.
 
-    it() bf(%default-actions)(d)(off|quiet|warn)
+    it() bf(%default-actions)(d)(off|quiet|warn|std)
 
 TO DO
 
