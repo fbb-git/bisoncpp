@@ -1,5 +1,5 @@
-In this section a parser is developed using polymorphic semantic values.  Its
-tt(%polymorphic) directive looks like this:
+In this section a small demo-parser is developed using polymorphic semantic
+values.  Its tt(%polymorphic) directive looks like this:
         verb(
     %polymorphic INT: int; TEXT: std::string;
         )
@@ -10,9 +10,9 @@ associates the tt(INT) tag with the tt(int) nonterminal:
     %type <TEXT>    identifier
     %type <INT>     int
         )
-    For this example a simple grammar was developed, expecting an optional
-number of input lines, formatted according to the following tt(rule)
-production rules:
+    
+    The parser's grammar is simple, expecting input lines, formatted
+according to the following (tt(rule)) production rule:
         verb(
     rule:
         identifier '(' identifier ')' '\n'
@@ -23,8 +23,8 @@ production rules:
     ;
         )
     
-    The rules for tt(identifier) and tt(int) assign, respectively, text and an
-tt(int) value to the parser's semantic value stack:
+    The rules for tt(identifier) and tt(int) return, respectively, text and an
+tt(int) value:
         verb(
     identifier:
         IDENTIFIER
@@ -43,14 +43,17 @@ tt(int) value to the parser's semantic value stack:
 These simple assignments can be used as tt(int) is pre-associated with the
 tt(INT) tag and tt(identifier) is asociated with the tt(TEXT) tag. 
 
-As the tt(combi) rule is not associated with a specific semantic value, its
-semantic value could be either tt(INT) or tt(TEXT). Irrespective of what is
-actually returned by tt(combi), its semantic value can be passed on to a
-function (tt(process(STYPE__ const &))), responsible for the semantic value's
-further processing. Here are the definition of the tt(combi) nonterminal and
-action blocks for the tt(rule) nonterminal:
+As the tt(combi) rule, which is used in one of the production rules of
+`tt(rule)', accepts a single tt(int) value, as well as an identifier, it
+cannot be associated with a single polymorphic type. But it can pass on any
+polymorphic value if it's associated with an tt(STYPE__): a generic semantic
+value. In tt(rule's) production rule that semantic value is then passed on to
+tt(process) like that: a plain tt(STYPE__ const &), and tt(process) will now
+have to inspect the semantic value's tag to learn what kind of value is stored
+inside the received semantic value. Here are the definition of the tt(combi)
+nonterminal and action blocks for the tt(rule) nonterminal:
         verb(
-    combi:
+    combi:          
         int
     |
         identifier
@@ -74,16 +77,15 @@ action blocks for the tt(rule) nonterminal:
     ;
         )
 
-Since tt(identifier) has been associated with tt(TEXT) and tt(int) 
-with tt(INT), the $-references to these elements in the production
-rules already return, respectively, a tt(std::string const &) and an tt(int).
+Note that tt(combi's) production rules do not define action blocks. The
+standard way to handle these situations is to add tt($$ = $1) action blocks to
+non-empty production rules not defining final action blocks. This works well
+in the current example, but a tt(default-actions quiet) (or tt(warn)) option
+or directive can also be used.
 
-For tt(combi) the situation is slightly more complex, as tt(combi) could
-either return an tt(int) (via its tt(int) production rule) or a tt(std::string
-const &) (via its tt(identifier) production rule). 
-
-Fortunately, tt(process) can find out by inspecting the semantic value's
-tt(Tag__):
+The function tt(process), called from tt(combi's) action block, inspects the
+semantic value's tag to select the proper way of handling the received
+semantic value. Here is its implementation:
         verb(
     void Parser::process(STYPE__ &semVal) const
     {

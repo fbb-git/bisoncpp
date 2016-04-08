@@ -1,12 +1,10 @@
 Syntax: bf(%default-actions) tt(off|quiet|warn|std)
 
-TO DO: man-page entry
-
-For production rules without final action block the bf(bison)(1) parser
-generator by default supplies the tt($$ = $1) action block: the semantic value
-of the first component is returned as the rule's semantic value. Its manual
-also states that for empty rules there is no meaningful default
-action. However, it could be argued that empty production rules could return 
+By default, production rules without final action blocks are augmented by the
+bf(bison)(1) parser generator with tt($$ = $1) action block: the semantic
+value of the first component is returned as the rule's semantic value. Its
+manual also states that for empty rules there is no meaningful default
+action. However, it could be argued that empty production rules could return
 default semantic values, resulting in every matched rule having a defined
 semantic value.
 

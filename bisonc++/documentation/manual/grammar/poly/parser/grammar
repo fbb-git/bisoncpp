@@ -1,7 +1,8 @@
 %filenames parser
 %scanner ../scanner/scanner.h
 
-%default-actions off
+// can be activated with no ill effects:
+// %default-actions quiet
 
 %polymorphic INT: int; TEXT: std::string;
 
@@ -56,6 +57,9 @@ rule:
     }
 |
     combi '\n'
+    {
+        process($1);
+    }
 ;
 
 rulePrompt:

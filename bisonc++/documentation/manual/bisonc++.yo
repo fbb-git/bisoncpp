@@ -57,3 +57,6 @@ includefile(error.yo)
 
 lchapter(INVOKING)(Invoking Bisonc++)
 includefile(invoking.yo)
+
+COMMENT( TO DO: man-page entry default-actions )
+

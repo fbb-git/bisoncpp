@@ -12,6 +12,12 @@ semantic value of its own. The action for this rule
 could consist of a bf(C++) expression computing the rule's semantic value from
 its subexpressions.
 
+Actions usually compute semantic values and refer to semantic values of
+elements of production rules. This happens so frequently that several
+shorthand notations can be used to simplify referring to semantic
+values. These shorthand notations are covered extensively in section
+ref(ACTIONS) and its sub-sections.
+
 For example, here is a rule stating that an expression can be the sum of two
 subexpressions:
         verb(
@@ -21,5 +27,6 @@ subexpressions:
         }
     ;
         )
-    The action defines how the semantic value of the rule (i.e., tt($$)) is
-computed from the values of the two subexpressions (tt($1) and tt($3)).
+    The action defines how the semantic value of the rule (using shorthand
+tt($$)) is computed from the values of the two sub-expressions (shorthands
+tt($1) and tt($3)).
