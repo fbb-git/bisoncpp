@@ -106,7 +106,8 @@ class Parser: public ParserBase
         Parser(Rules &rules);
         int parse();
         void cleanup();             // do cleanup following parse();
-        std::unordered_map<std::string, std::string> const &polymorphic() const;
+        std::unordered_map<std::string, 
+                           std::string> const &polymorphic() const;
 
     private:
         void checkField(std::string const &field);  // see inc/typename
@@ -156,11 +157,6 @@ class Parser: public ParserBase
 
             // with equal types blkAssignW, otherwise blkErr
         void blkCheckW(std::string const &ruleType, Production const &prod);
-
-
-
-//FBB        bool errNegative(int nElements, Block &block, AtDollar const &atd);
-//FBB        bool errNoRef(int nElements, Block &block, AtDollar const &atd);
 
         std::ostream &stdWmsg(AtDollar const &atd) const;
         std::ostream &stdEmsg(AtDollar const &atd) const;
@@ -305,17 +301,6 @@ class Parser: public ParserBase
 
         std::string nextHiddenName();
 
-            // may generate error or warning:
-//FBB        void negativeIndex(AtDollar const &atd) const;
-
-//FBB        void warnAutoOverride(AtDollar const &atd) const;
-//FBB        void warnAutoIgnored(char const *typeOrField, 
-//                             AtDollar const &atd) const;
-//FBB        void warnUntaggedValue(AtDollar const &atd) const;
-
-//        void errNoSemantic(char const *label, AtDollar const &atd,
-// FBB?                                              std::string const &id) const;
-
         void setStart();
         void setPolymorphicDecl();
 
@@ -354,11 +339,27 @@ inline std::string const &Parser::nameOf(std::string const &typeName)
     return typeName.empty() ? s_undefined : typeName;
 }
 
-
-inline std::unordered_map<std::string, std::string> const &Parser::polymorphic() const
+inline std::unordered_map<std::string, 
+                          std::string> const &Parser::polymorphic() const
 {
     return d_polymorphic;
 }
+
+
+//FBB        bool errNegative(int nElements, Block &block, AtDollar const &atd);
+//FBB        bool errNoRef(int nElements, Block &block, AtDollar const &atd);
+            // may generate error or warning:
+//FBB        void negativeIndex(AtDollar const &atd) const;
+
+//FBB        void warnAutoOverride(AtDollar const &atd) const;
+//FBB        void warnAutoIgnored(char const *typeOrField, 
+//                             AtDollar const &atd) const;
+//FBB        void warnUntaggedValue(AtDollar const &atd) const;
+
+//        void errNoSemantic(char const *label, AtDollar const &atd,
+// FBB?                                              std::string const &id) const;
+
+
 
 #endif
 

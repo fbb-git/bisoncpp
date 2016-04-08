@@ -69,14 +69,11 @@ class AtDollar
         size_t pos() const;             // offset inside the block
         size_t length() const;          // matched text length
         size_t lineNr() const;          // line nr in the grammar file
-//FBB        bool dollarDollar() const;      // true: $$ is being referred to
         bool refByScanner() const;      // ref. inserted scanner.assignment()
         bool stackElement() const;      // referring to an element in the
                                         // stack, so not $$ or @@ 
 
     private:
-//FBB        void memberSelectorPatterns();  // text.back() == '.'
-//FBB        void pointerPatterns();         // text.back() == '>'
         void setTagNr(size_t idx);      // idx beyond <
 
         void setAtPatterns();           // text[0] == '@'

@@ -43,22 +43,6 @@ class Block: private std::string
         void atDollar(size_t lineNr, std::string const &text, 
                                 bool assignment, bool refByScanner = false);
      
-                                               // @@, $$, ($$), or $$.
-//FBB        void dollar(size_t lineNr, std::string const &matched); 
-
-                                                    // @NR
-//FBB        void atIndex(size_t lineNr, std::string const &matched);
-
-                                                    // $-?NR, $NR. ($NR)
-//FBB        void dollarIndex(size_t lineNr, std::string const &matched);
-                                        
-//FBB OBSOLETE
-//        void IDdollar(size_t lineNr, std::string const &matched);   // $<ID>$
-
-                                                    // $<ID>-NR, ($<ID>-NR),
-                                                    // $<ID>-NR.   
-//FBB        void IDindex(size_t lineNr, std::string const &matched);    
-
         void operator+=(std::string const &text);
   
         operator bool() const;          // return true if a block is active
