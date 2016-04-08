@@ -3,6 +3,6 @@ typename:
     identifier
     '>'
     {
-        d_field = $2; 
+        checkField($2); //  d_field = $2; 
     }
 ;

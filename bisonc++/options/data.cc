@@ -32,5 +32,6 @@ unordered_map<string, Options::Value> Options::s_value
     { "false",  Options::OFF    },
     { "off",    Options::OFF    },
     { "quiet",  Options::QUIET  },
-    { "warn",   Options::WARN   }
+    { "warn",   Options::WARN   },
+    { "std",    Options::STD    }
 };

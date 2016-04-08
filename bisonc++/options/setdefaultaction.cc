@@ -1,12 +1,18 @@
 #include "options.ih"
 
+    // see also parser/expectrules.cc
 void Options::setDefaultAction(string const &request,
                                string const &filename, size_t lineNr)
 {
-    Value value = valueOf(request, WARN, ~ON); // the mask turns ON into WARN
+    Value value = valueOf(request, STD, ~STD); 
 
-    // OFF is off, QUIET is on without warning. 
-    // ON -> WARN, WARN is on + warning
+    if (value == ON)
+        value = WARN;
+
+    // OFF      -> off, 
+    // QUIET    -> on without warning. 
+    // WARN     -> ON + warning
+    // ALWAYS   -> Does $$ = $1, no warnings (default)
 
     d_defaultActions = OptInfo{value, filename, lineNr};
 }

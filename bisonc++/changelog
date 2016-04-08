@@ -5,6 +5,12 @@ bisonc++ (5.00.00) (WIP)
 
   * The SType::data() member is now obsolete and has been removed.
 
+  * Type specifications in %type directives are verified. With %union the
+    check is a simple check whether \btype\b is found in the %union spec.
+
+  * `default-actions std' unconditionally adds $$ = $1 action blocks to
+    empty rules and rules w/o final action block
+
   * Reimplemented handling polymorphic semantic values. shared pointers are no
     longer used. Details: see README.polymorphic-technical
 

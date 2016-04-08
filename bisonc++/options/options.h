@@ -17,8 +17,9 @@ struct Options
         UNKNOWN = 0,
         OFF     = 1 << 0,
         ON      = 1 << 1,
-        QUIET   = 1 << 2, // do not show warnings (with defaultActions)
-        WARN    = 1 << 3, // show warnings (with defaultActions)
+        QUIET   = 1 << 2,   // do not show warnings
+        WARN    = 1 << 3,   // show warnings
+        STD     = 1 << 4,   // do always $$ = $1, no warns
     };
 
     struct OptInfo
@@ -48,7 +49,7 @@ struct Options
                             // Resulting values: ON, OFF
         OptInfo d_tagMismatches{ON, "", 0};
 
-                            // Resulting values: OFF, QUIET, WARN
+                            // Resulting values: OFF, QUIET, WARN, STD
         OptInfo d_defaultActions{UNKNOWN, "", 0};
 
         bool        d_genDebug          = false;

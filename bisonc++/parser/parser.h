@@ -48,7 +48,10 @@ class Parser: public ParserBase
     Symtab      d_symtab;
 
     std::string d_expect;
-    std::string d_field;                // %union field in <type> specs.
+
+    std::string d_field;                // %union field or %polymorphic
+                                        // Tag__ value in %type specifications
+
     bool        d_typeDirective = false;// true following %type
     bool        d_negativeDollarIndicesOK = false;
 
@@ -106,6 +109,8 @@ class Parser: public ParserBase
         std::unordered_map<std::string, std::string> const &polymorphic() const;
 
     private:
+        void checkField(std::string const &field);  // see inc/typename
+
         static void warnDefaultAction(Production const &prod);
 
         void installDefaultAction(Production const &prod, 

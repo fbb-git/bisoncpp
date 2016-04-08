@@ -5,6 +5,7 @@
 
 #include <bobcat/mstream>
 #include <bobcat/ranger>
+#include <bobcat/pattern>
 
 #include "../block/block.h"
 #include "../options/options.h"
