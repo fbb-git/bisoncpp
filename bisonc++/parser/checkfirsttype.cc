@@ -13,12 +13,9 @@ void Parser::checkFirstType()
     // polymorphic types check the semantic value type of the first
     // production element 
 
-    if 
-    (
-        d_options.defaultActions().value != Options::STD 
-        &&
-        d_semType == POLYMORPHIC
-    ) 
+    Options::Value defaultAction = d_options.defaultActions().value;
+
+    if (defaultAction != Options::STD && d_semType == POLYMORPHIC) 
     {
         defaultPolymorphicAction();
         return;
@@ -26,6 +23,9 @@ void Parser::checkFirstType()
 
     Production const &prod = d_rules.lastProduction();
     size_t nElements = prod.size();
+
+    if (nElements == 0 && defaultAction == Options::STD)
+        return;
 
     installDefaultAction(
         prod, 
