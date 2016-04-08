@@ -15,17 +15,17 @@ void Parser::checkFirstType()
 
     Production const &prod = d_rules.lastProduction();
 
+    Options::Value actionType = d_options.defaultActions().value;
+
+    if (actionType == Options::OFF)
+        return;
+
     size_t nElements = prod.size();
 
     if (nElements == 0)
         return;
 
-    if 
-    (
-        d_options.defaultActions().value != Options::STD 
-        && 
-        d_semType == POLYMORPHIC
-    ) 
+    if (actionType != Options::STD && d_semType == POLYMORPHIC) 
         defaultPolymorphicAction(prod);
     else
         installDefaultAction(prod, svsElement(nElements, 1) );

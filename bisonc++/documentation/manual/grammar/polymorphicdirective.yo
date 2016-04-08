@@ -1,5 +1,5 @@
-    When encountering the tt(%polymorphic) directive bic() generates a parser
-using polymorphic semantic values. Each semantic value specification
+    Specifying the tt(%polymorphic) directive results in a parser that uses
+polymorphic semantic values. Polymorphic semantic value specifications
 consists of a em(tag), which is a bf(C++) identifier, and a bf(C++) type
 definition.
 
@@ -22,30 +22,15 @@ em(type-definition). Types specified at the tt(%polymorphic) type-definitions
 must be built-in types or class-type declarations. Since bic() version 4.12.00
 the types no longer have to be default-constructible.
 
-As the parser's generic semantic value type is called tt(STYPE__), and
-functions called by the parser may return tt(STYPE__) values, production rules
-can be associated with the generic tt(STYPE__) semantic type. To prevent
-ambiguities the generic tt(STYPE__) type cannot be specified as a polymorphic
-type. E.g., a specification like tt(GENERIC: STYPE__) cannot be used when
-defining the tag/type pairs at the tt(%polymorphic) directive. However,
-(non-)terminals em(may) be associated with the generic semantic type, using
-the tt(%type<STYPE__>) directive. In the demo program a nonterminal tt(combi)
-is defined like this:
-        verb(
-    combi:
-        int
-    |
-        string
-    ;
-        )
-    Here, the tt(int) nonterminal is associated with an tt(int) value type,
-while tt(string) is associated with tt(std::string). Clearly, tt(combi) cannot
-be both. But tt(combi) em(can) be associated with tt(STYPE__), in which case
-the semantic values of tt(int) and tt(string) can be returned as tt(combi's)
-semantic value. Nonterminals receiving tt(combi's) semantic value then have to
-inspect the semantic value's tt(tag) to retrieve the value of the semantic
-value's actual type. 
-                
+As the parser's generic semantic value type is called tt(STYPE__), and as
+functions called by the parser may return tt(STYPE__) values and may expect
+tt(STYPE__) arguments, grammar symbols can also be associated with the generic
+tt(STYPE__) semantic type using tt(%type <STYPE__>) directives.
+
+To prevent ambiguities the generic tt(STYPE__) type cannot be specified as a
+polymorphic type. E.g., a specification like tt(GENERIC: STYPE__) cannot be
+used when defining the tag/type pairs at the tt(%polymorphic)
+directive.                
 
     When polymorphic type-names refer to types that have not yet been declared
 by the parser's base class header, then these types must be declared in a

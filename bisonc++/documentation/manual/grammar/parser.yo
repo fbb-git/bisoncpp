@@ -5,12 +5,10 @@ tt(%polymorphic) directive looks like this:
         )
     Furthermore, the grammar declares tokens tt(INT) and tt(IDENTIFIER), and
 pre-associates the tt(TEXT) tag with the tt(identifier) nonterminal,
-associates the tt(INT) tag with the tt(int) nonterminal, and associates
-tt(STYPE__), the generic polymorphic value with the non=terminal tt(combi):
+associates the tt(INT) tag with the tt(int) nonterminal:
         verb(
     %type <TEXT>    identifier
     %type <INT>     int
-    %type <STYPE__> combi
         )
     For this example a simple grammar was developed, expecting an optional
 number of input lines, formatted according to the following tt(rule)

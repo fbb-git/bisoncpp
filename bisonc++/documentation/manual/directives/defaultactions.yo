@@ -16,16 +16,41 @@ an tt(int) field in a union, for another rule it might be a tt(std::string
 *). With polymorphic semantic values comparable situations are encountered.
 
 By default, b() mimics bison's behavior in that it adds a tt($$ = $1) action
-block to rules not having final action blocks
+block to rules not having final action blocks, but not to empty production
+rules. This default behavior can also be explicitly configured using the
+tt(default-actions std) option or directive. 
 
-When tt(warn) is specified (which is the default) an action block executing
-tt($$ = $1) (or tt($$ = STYPE__{} for empty production rules) is added to
-production rules that do not explicitly define their own final action blocks,
-while issuing a warning. When tt(quiet) is specified these action blocks are
-silently added. It is an error when the types of $$ and $1 differ (but it is
-OK if neither $$ nor $1 is associated with a specific type).  When tt(off) is
-specified no action blocks are added (issuing a warning issued, unless the
-option/directive tt(tag-mismatches off) has been specified).
+However, b() can also be configured with alternate ways of handling rules not
+having final action blocks.  When tt(off) is specified, b() does not add tt($$
+= $1) action blocks; and when polymorphic semantic values are used
+    itemization(
+    it() tt(warn) can be specified to add special  action blocks 
+        to production rules without final action blocks while issuing a
+        warning;
+    it() tt(quiet) can be specified to add special action blocks
+        to production rules without final action blocks without issuing 
+        warnings.
+    )    
+When either tt(warn) or tt(quiet) are specified the types of $$ and $1 must
+match. When b() detects a type mismatches it issues errors.
 
-
+When a default action block can be added to a production rule and either
+tt(warn) or tt(quiet) was specified,  b() compares the types associated with
+rule's nonterminal, and with the production rule's first element. The tt(warn)
+and tt(quiet) specifications make identical decisions about the action
+blocks to add, but in addition tt(warn) also shows a warning message that the
+action block is added to the production rule.
+    itemization(
+    it() If no type is associated with the rule then no default action block
+        is added if no type was associated with the production rule's first
+        element either; otherwise an error is issued.
+    it() If the rule's type is tt(STYPE__) then, if no type is associated
+        with the production rule's first element it is initialized to
+        tt(STYPE__); otherwise it is initialized with the first element's
+        semantic value.
+    it() If the rule is associated with a polymorphic tag then, if the same
+        tag was associated with production rule's first element it is
+        initialized with the first element's semantic value. Otherwise an
+        error is issued.
+    )
 

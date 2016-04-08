@@ -29,7 +29,7 @@
 
         The tt(tag) template argument must be a tt(Tag__) value. This member
         function constructs a semantic value of the type matching tt(tag) from
-        the arguments which are passed to this member (zero arguments are OK
+        the arguments that are passed to this member (zero arguments are OK
         if the type associated with tt(tag) supports default
         construction). The constructed value is then stored in the tt(STYPE__)
         object for which tt(assign) has been called.
@@ -48,12 +48,11 @@
         To initialize an tt(STYPE__) object with a default tt(STYPE__) value,
         direct assignment can be used (e.g., tt(d_lval__ = STYPE__{})).
 
-    it(DataType &get<tag>())
+    it(() tt(DataType &get<tag>(), DataType const &get<tag>() const)
 
-        This member returns a reference to the object's (modifiable) semantic
-        value. The tt(tag) is a defined tt(Tag__) value: it must be specified
-        to allow the compiler to determine the semantic value data type it
-        must use.
+        A reference to the object's semantic value. The tt(tag) is a defined
+        tt(Tag__) value: it must be specified to allow the compiler to
+        determine the semantic value data type it must use.
  
         When the option/directive tt(tag-mismatches on) was specified then
         tt(get), when called from the generated tt(parse) function, performs a
@@ -64,7 +63,7 @@
         rules' action blocks  bic() can determine the correct tt(tag),
         thus preventing the run-time check from failing.
 
-        If, however, a fatal error is encountered, and the option/directive
+        If, however, a fatal error was issued, and the option/directive
         tt(debug) was specified when bic() created the tt(parse) parsing
         function, the program can be rerun, specifying
         tt(parser.setDebug(Parser::ACTIONCASES__)) before calling the parser's
@@ -73,6 +72,12 @@
         tt(executeAction) member. The action case number that's reported just
         before the program reports the fatal error tells you in which of the
         grammar's action block the error was encountered.
+
+    it(Tag__ tag() const)
+
+       The tag matching the semantic value's polymorphic type. The returned
+        value is a valid tt(Tag__) value when the tt(SType) object's
+        tt(operator bool) returns tt(true);
 
     it() tt(bool valid() const) 
 
@@ -85,12 +90,6 @@
     it() tt(void swap(SType &other)) 
 
         The current and other tt(SType) objects are swapped.
-
-    it(Tag__ tag() const):
-
-       The tag matching the semantic value's polymorphic type. The returned
-        value is a valid tt(Tag__) value when the tt(SType) object's
-        tt(operator bool) returns tt(true);
    )
 
 

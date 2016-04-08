@@ -1,7 +1,7 @@
-A parser using polymorphic semantic values adds several classes to the
-generated files. The majority of these are class templates, defined in
-tt(parserbase.h); some of the additionally implemented code is added to the
-tt(parse.cc) source file.
+When polymorphic semantic values are used then, in addition to the parser and
+parse-base classes several more classes are defined. Several of these are 
+class templates; most additions are  defined in tt(parserbase.h); some
+implementations are added to the tt(parse.cc) source file.
 
 To minimize namespace pollution most of the additional code is contained in a
 namespace of its own: tt(Meta__). If the tt(%namespace) directive was used
@@ -24,11 +24,11 @@ Below, tt(DataType) refers to the semantic value's data type that is
 associated with a tt(Tag__) identifier.
 
 Several classes are defined in the namespace tt(Meta__). However, the really
-import class is the class tt(SType), defining the interface to the various
-semantic value types. The tt(SType) class becomes the parser's tt(STYPE__)
-type. All operations related to semantic values are handled by this class. 
+import class is the class tt(SType), defining the interface to the semantic
+value types. The class tt(SType) becomes the parser's tt(STYPE__) type. All
+operations related to semantic values are handled by this class.
 
-The class tt(SType) provides the following public interface:
+The class tt(SType) offers the following public interface:
 
 includefile(stypeinterface)
 
