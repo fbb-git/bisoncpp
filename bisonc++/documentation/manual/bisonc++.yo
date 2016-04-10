@@ -38,9 +38,6 @@ includefile(conditions.yo)
 chapter(Bisonc++ concepts)
 includefile(concepts.yo)
 
-chapter(Examples)
-includefile(examples.yo)
-
 //FBB
 
 lchapter(GRAMMARFILES)(Bisonc++ grammar files)
@@ -48,6 +45,9 @@ includefile(grammar.yo)
 
 lchapter(INTERFACE)(The Generated Parser Class' Members)
 includefile(class.yo)
+
+chapter(Examples)
+includefile(examples.yo)
 
 lchapter(ALGORITHM)(The Bisonc++ Parser Algorithm)
 includefile(algorithm.yo)

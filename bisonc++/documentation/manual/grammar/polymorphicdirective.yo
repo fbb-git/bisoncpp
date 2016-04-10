@@ -1,10 +1,10 @@
-    Specifying the tt(%polymorphic) directive results in a parser that uses
+    Specifying the tt(%polymorphic) directive results in a parser using
 polymorphic semantic values. Polymorphic semantic value specifications
-consists of a em(tag), which is a bf(C++) identifier, and a bf(C++) type
+consist of a em(tag), which is a bf(C++) identifier, and a bf(C++) type
 definition.
 
 Tags and type definitions are separated by colons, and multiple semantic
-values specifications are separated by semicolons. The semicolon trailing the
+value specifications are separated by semicolons. The semicolon trailing the
 final semantic value specification is optional.
 
 The tt(%polymorphic) directive may be specified only once, and the
@@ -16,11 +16,11 @@ tt(std::string) and tt(std::vector<double>):
     %polymorphic INT: int; STRING: std::string; 
                  VECT: std::vector<double>
         )
-    The identifier to the left of the colon is called the em(type-identifier),
-and the type definition to the right of the colon is called the
-em(type-definition). Types specified at the tt(%polymorphic) type-definitions
-must be built-in types or class-type declarations. Since bic() version 4.12.00
-the types no longer have to be default-constructible.
+    The identifier to the left of the colon is called the em(type-tag) (or
+simply `em(tag)', and the type definition to the right of the colon is called
+the em(type-definition). Types specified at the tt(%polymorphic)
+type-definitions must be built-in types or class-type declarations. Since
+bic() version 4.12.00 the types no longer have to be default-constructible.
 
 As the parser's generic semantic value type is called tt(STYPE__), and as
 functions called by the parser may return tt(STYPE__) values and may expect
@@ -34,6 +34,5 @@ directive.
 
     When polymorphic type-names refer to types that have not yet been declared
 by the parser's base class header, then these types must be declared in a
-header file whose location is specified through the tt(%baseclass-preinclude)
-directive (as these types are referred to in the generated tt(parserbase.h)
-header file).
+separate header file, included into the parser's base class header file
+through the tt(%baseclass-preinclude) directive.

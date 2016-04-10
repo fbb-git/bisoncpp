@@ -1,8 +1,14 @@
     Syntax: bf(%union) tt(union-definition body)
 
-The tt(%union) directive defines a bf(C) union-type defining one or more data
-types for semantic values. The directive tt(%union) is followed by a pair of
-braces containing union's field definition(s). For example:
+In the grammars of many programs different types of data are used for different
+terminal and nonterminal tokens. For example, a numeric constant may
+need type tt(int) or tt(double), while a string needs type tt(std::string),
+and an identifier might need a pointer to an entry in a symbol table.
+
+Traditionally, the tt(%union) directive has always been used to accomplish
+this. The directive defines a bf(C) union-type whose fields specify one or
+more data types for semantic values. The directive tt(%union) is followed by a
+pair of braces containing one or more field definitions. For example:
         verb(
     %union {
       double u_val;
@@ -31,8 +37,11 @@ with terminal or nonterminal symbols (see section ref(TYPE)).
         tt(%union) (cf. section ref(POLYMORPHIC)).
     )
 
-
-
+Although the tt(%union) directive is still supported by b(), its use is
+largely superseded by the newer tt(%polymorphic) directive, allowing b() and
+the bf(C++) compiler to verify that the correct types are used when semantic
+values are assigned or retrieved, which, in turn, helps preventing run-time
+errors.
 
 tt(%stype, %union) and tt(%polymorphic) are mutually exclusive: only one
 of these directives can be used.  

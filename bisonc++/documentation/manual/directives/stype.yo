@@ -2,7 +2,13 @@ Syntax: bf(%stype typename) nl()
 
 This directive defines the type of the semantic value of tokens.  The
 specified type must be a default constructible type, like tt(size_t) or
-tt(std::string). By default it is tt(int). 
+tt(std::string). By default, b() uses tt(int) for the semantic value type of
+its parser's tokens. To use another single semantic value type , this
+directive must be used.
+
+In programs using a simple grammar it may be sufficient to use the same data
+type for the semantic values of all language constructs (see, e.g., sections
+ref(RPN) and ref(CALC)).
 
     Any text following tt(%stype) up to the end of the line, up to the first
 of a series of trailing blanks or tabs or up to a comment-token (tt(//) or

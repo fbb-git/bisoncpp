@@ -3,7 +3,7 @@ parse-base classes several more classes are defined. Several of these are
 class templates; most additions are  defined in tt(parserbase.h); some
 implementations are added to the tt(parse.cc) source file.
 
-To minimize namespace pollution most of the additional code is contained in a
+To minimize namespace pollution most of the extra code is contained in a
 namespace of its own: tt(Meta__). If the tt(%namespace) directive was used
 then tt(Meta__) is nested under the namespace declared by that directive. The
 name tt(Meta__) provides a hint to the fact that much of the code implementing
@@ -13,19 +13,20 @@ bf(The enumeration 'enum class Tag__')
 
 One notable exception to the above is the enumeration tt(Tag__). To simplify
 its use it is declared outside of tt(Meta__) (but inside the tt(%namespace)
-namespace, if provided). Its identifiers are the tags declared by the
-tt(%polymorphic) directive. This is a strongly typed enumeration. The
-tt(%weak-tags) directive can be used to declare a pre C++-11 standard `tt(enum
-Tag__)'.
+namespace, if specified). Its tags are declared at the tt(%polymorphic)
+directive. tt(Targs__) is a strongly typed enumeration. The tt(%weak-tags)
+directive can be used to declare a pre C++-11 standard `tt(enum Tag__)'.
 
 bf(The namespace Meta__)
 
 Below, tt(DataType) refers to the semantic value's data type that is
 associated with a tt(Tag__) identifier.
 
-Several classes are defined in the namespace tt(Meta__). However, the really
-import class is the class tt(SType), defining the interface to the semantic
-value types. The class tt(SType) becomes the parser's tt(STYPE__) type. All
+Several classes are defined in the namespace tt(Meta__). The most import class
+is the class tt(SType), defining the interface to the semantic value
+types. The class tt(SType) becomes the parser's tt(STYPE__) type. Each
+tt(SType) object is either a default tt(SType) object, not containing a
+semantic value, or it contains a semantic value of a single tt(DataType).  All
 operations related to semantic values are handled by this class.
 
 The class tt(SType) offers the following public interface:

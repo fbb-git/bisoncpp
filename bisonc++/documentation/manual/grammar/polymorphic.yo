@@ -1,12 +1,12 @@
 Bic() offers em(polymorphic semantic values). Polymorphic semantic values were
 developed as an alternative to using unions. Unions are still supported by
-b(), but are also considered `old school'. Polymorphic semantic values were
-added to b() as the result of a suggestion originally made by Dallas
-A. Clement in September 2007. 
+b(), but are considered to be somewhat `old school'. Polymorphic semantic
+values were added to b() as the result of a suggestion originally made by
+Dallas A. Clement in September 2007.
 
-In this section a simple example program is developed illustrating polymorphic
-semantic values.  The sources of the example can be retrieved from the
-distribution's lurl(poly) directory.
+In this section a simple example program is developed illustrating the use of
+polymorphic semantic values.  The sources of the example can be retrieved from
+the distribution's lurl(poly) directory.
 
 One may wonder why a tt(union) is still used by b() as bf(C++) offers
 inherently superior approaches to combine multiple types into one union

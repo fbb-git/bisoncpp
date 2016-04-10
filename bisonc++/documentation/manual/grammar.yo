@@ -26,7 +26,8 @@ includefile(directives/intro.yo)
     subsect(%debug: adding debugging code to the `parse()' member)
     includefile(directives/debug.yo)
 
-    subsect(%dfault-actions: specifying whether or not to use $$ = $1 default
+    lsubsect(DEFAULTACTION)
+        (%dfault-actions: specifying whether or not to use $$ = $1 default
             actions)
     includefile(directives/defaultactions.yo)
 
@@ -106,7 +107,7 @@ includefile(directives/intro.yo)
         lsubsubsect(IMPROPER)(Improper token names)
         includefile(directives/improper.yo)
 
-    lsubsect(TYPE)(%type: associating semantic values to (non)terminals)
+    lsubsect(TYPE)(%type: associating semantic values with (non)terminals)
     includefile(directives/nonterms.yo)
 
     lsubsect(UNION)(%union: using a 'union' to define multiple semantic values) 
@@ -142,12 +143,8 @@ includefile(directives/intro.yo)
                 be written)
         includefile(directives/targetdir.yo)
 
-lsect(DEFSEM)(Defining Language Semantics)
+lsect(DEFSEM)(The Meaning Of Things: Semantics)
 includefile(grammar/semantics.yo)
-
-    lsubsect(SEMANTICTYPES)(Data Types of Semantic Values)
-    includefile(grammar/datatypes.yo)
-
 
     lsubsect(POLYMORPHIC)(Polymorphism and Multiple Semantic Values:
                         `%polymorphic') 
@@ -168,9 +165,7 @@ includefile(grammar/semantics.yo)
     lsubsect(ACTIONS)(Actions)
     includefile(grammar/actions.yo)
 
-    lsubsect(ACTIONTYPES)(Data Types of Values in Actions)
-    includefile(grammar/actiontypes.yo)
-
+// NOW:
         subsubsect(%stype shorthand notations ($-notations))
         includefile(grammar/stypeshorthand.yo)
 

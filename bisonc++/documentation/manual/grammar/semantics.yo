@@ -1,23 +1,24 @@
-The grammar rules for a language define its syntax. Its semantics are
-implemented through semantic values associated with various tokens and
-groupings, and by the actions taken when various groupings are recognized.
+A language's grammar rules define its syntax. Its semantics are defined
+through semantic values associated with various tokens and groupings, and
+generally by the actions taken when various groupings are recognized.
 
 For example, the calculator performs real-life calculations because the value
 associated with each expression is its computed numeric value; it correcly
 performs addition because the action for the grouping `x + y' is to add the
 numbers associated with x and y.
 
-In this section the semantics of a language is addressed, covering
-the following topics:
+Two ways of defining semantics have already been discussed:
     itemization(
-    it() link(Specifying one data type for all semantic values)(SEMANTICTYPES);
-    it() link(Specifying several alternative data types)(MORETYPES);
-    it() link(Using polymorphism to specify several data types)(POLYMORPHIC);
-    it() link(Specifying  Actions)(ACTIONS) (i.e., defining the semantic
-        meanings of grammar rules);
-    it() link(Specifying data types for actions to operate on)(ACTIONTYPES);
-    it() link(Specifying when and how to put actions in the middle of a
-        rule)(MIDACTIONS) (usually action blocks are defined as the last
-        element of production rules. In some cases it may be desirable to
-        define an action block somewhere in the middle of a production rule).
+    it() link(using a single data type for all semantic
+        values)(STYPE);
+    it() Semantic values representing link(several alternative data
+        types)(UNION).
     )
+
+A third way for defining semantic values is discussed next (cf. section
+ref(POLYMORPHIC)). em(Shorthand notations) that can be used in action blocks
+are described next (cf. section tt(ACTIONS)). Finally, Action blocks usually
+appear at the end of production rules. But in fact they can be defined
+anywhere in production rules. Refer to this section's final subsection
+(section ref(MIDACTIONS)) for the characteristics of such em(mid-rule action
+blocks).
