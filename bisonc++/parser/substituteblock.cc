@@ -18,6 +18,7 @@ void Parser::substituteBlock(int nElements, Block &block)
     bool explicitReturn = false;            // block return type as yet
                                             // unknown
 
+
     for (auto &atd: ranger(block.rbeginAtDollar(), block.rendAtDollar()))
     {
         if (not errIndexTooLarge(atd, nElements))
@@ -28,3 +29,7 @@ void Parser::substituteBlock(int nElements, Block &block)
     if (not explicitReturn)
         warnMissingSemval();
 }
+
+
+
+

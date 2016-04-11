@@ -1,22 +1,30 @@
-Occasionally it is useful to put an action in the middle of a rule. These
-actions are written just like usual end-of-rule actions, but they are executed
-before the parser recognizes the components that follow them.
+Occasionally it is useful to insert an action block somewhere in the middle of
+a production rule. These so-called mid-rule action blocks are comparable to
+the usual action blocks, appearing at the end of production rules, but
+mid-rule action blocks are executed before the parser has recognized the
+production rule's components that follow them.
 
-A mid-rule action may refer to the components preceding it using tt($n), but
-it may not (cannot) refer to subsequent components because it is executed
-before they are parsed.
+A mid-rule action block can refer to the components preceding it using tt($i),
+but it may not (cannot) refer to subsequent components because it is executed
+before they have been observed.
 
-The mid-rule action itself counts as one of the components of the rule. This
-makes a difference when there is another action later in the same rule (and
-usually there is another at the end): you have to count the actions along with
-the symbols when working out which number tt(n) to use in tt($n).
+The mid-rule action block itself counts as one of the components of the
+production rule. In the example shown below, tt(stmnt) can be referred to as
+tt($6) in the final action block.
 
-The mid-rule action can also have a semantic value. The action can set its
-value with an assignment to tt($$), and actions later in the rule can refer to
-the value using tt($n). Since there is no symbol to name the action, there is
-no way to declare a data type for the value in advance, so you must use the
-`tt($<...>)' construct to specify a data type each time you refer to this
-value.
+Mid-rule action blocks can also have semantic values. When using tt(%union) or
+tt(%polymorphic) and a rule's nonterminal is associated with a union field or
+polymorphic token, then Mid-rule action blocks ...
+
+
+can set their semantic values using assignments to tt($$), and actions later
+in the rule can refer to the value using the action block's
+dollar-index. Since types cannot be associated with mid-rule action blocks,
+using the tt(_$i) shorthand will probably be required to refer to the mid-rule
+action block's generic tt(STYPE__) value, to which the appropriate field
+selector (for union-type semantic values) or tt(.get<tag>()) member function
+can be applied to access the mid-rule action block's semantic value in a
+subsequent action block.
 
 There is no way to set the value of the entire rule with a mid-rule action,
 because assignments to tt($$) do not have that effect. The only way to set the

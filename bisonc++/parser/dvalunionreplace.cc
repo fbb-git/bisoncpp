@@ -1,11 +1,14 @@
 #include "parser.ih"
 
-bool Parser::dvalUnionReplace(Block &block, AtDollar const &atd, 
+bool Parser::dvalUnionReplace(bool midRule, Block &block, AtDollar const &atd, 
                                                         char const *suffix)
 {
-    string tag = productionTag(atd.nr());        // get the element's tag
+    string tag = warnAutoTag(midRule, atd, "field"); // get the element's tag
 
-    block.replace(atd.pos(), atd.length(), 
+    if (string("->") == suffix and tag.empty())
+        errNoUnionPtr(atd);
+    else        
+        block.replace(atd.pos(), atd.length(), 
                 s_semanticValue + (tag.empty() ? ""s : "." + tag) + suffix);
 
     return block.assignment();

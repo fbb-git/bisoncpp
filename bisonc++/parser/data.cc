@@ -72,7 +72,7 @@ Parser::ADmap Parser::s_union =
        {AtDollar::Dt_m,     &Parser::svsUnionTagMem},   // $<TAG>-nr.
        {AtDollar::Dt_p,     &Parser::svsUnionTagPtr},   // $<TAG>-nr->
 
-       {AtDollar::DDpar,    &Parser::dvalPar},          // $$(
+       {AtDollar::DDpar,    &Parser::dvalUnionPar},     // $$(
 };
 
 Parser::ADmap Parser::s_polymorphic =

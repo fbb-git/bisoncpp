@@ -5,8 +5,11 @@ bool Parser::svsUnionReplace(int nElements, Block &block,AtDollar const &atd,
 {
     string tag = productionTag(atd.nr());        // get the element's tag
 
-    block.replace(atd.pos(), atd.length(), 
-                svsElement(nElements, atd.nr()) +
+    if (string("->") == suffix and tag.empty())
+        errNoUnionPtr(atd);
+    else
+        block.replace(atd.pos(), atd.length(), 
+                    svsElement(nElements, atd.nr()) +
                                 (tag.empty() ? ""s : "." + tag) + suffix);
 
     return false;

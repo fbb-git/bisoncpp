@@ -166,6 +166,7 @@ class Parser: public ParserBase
         bool existingTag(AtDollar const &atd) const;    // false and emsg if
                                                         // not an existing tag
 
+        void errNoUnionPtr(AtDollar const &atd);
         bool errNoTag(int nElements, Block &block, AtDollar const &atd);
         bool errIndexTooLarge(AtDollar const &atd, int nElements) const;
 
@@ -176,15 +177,15 @@ class Parser: public ParserBase
 
             // replacement members (see also handleProductionElement)
 
-        bool dvalReplace(Block &block, AtDollar const &atd, 
-                                                    char const *suffix);
+        bool dvalReplace(bool midRule, Block &block, AtDollar const &atd, 
+                                       char const *suffix, char const *label);
         bool svsReplace(int nElements, Block &block, AtDollar const &atd, 
                                                     char const *suffix);
-        bool dvalUnionReplace(Block &block, AtDollar const &atd, 
+        bool dvalUnionReplace(bool midRule, Block &block, AtDollar const &atd, 
                                                     char const *suffix);
         bool svsUnionReplace(int nElements, Block &block, AtDollar const &atd, 
                                                     char const *suffix);
-        bool dvalPolyReplace(Block &block, AtDollar const &atd, 
+        bool dvalPolyReplace(bool midRule, Block &block, AtDollar const &atd, 
                                                     char const *suffix);
         bool svsPolyReplace(int nElements, Block &block, AtDollar const &atd, 
                                                     char const *suffix);
@@ -215,6 +216,7 @@ class Parser: public ParserBase
 
                                                                 // $$(
         bool dvalPar(int nElements, Block &block, AtDollar const &atd);
+        bool dvalUnionPar(int nElements, Block &block, AtDollar const &atd);
         bool dvalPolyPar(int nElements, Block &block, AtDollar const &atd);
 
                                                                 // $$.
@@ -262,6 +264,8 @@ class Parser: public ParserBase
 
         void constructorChecks() const;
         void warnTagMismatches() const;
+        std::string warnAutoTag(bool midRule, AtDollar const &atd, 
+                                char const *label) const;
 
         void addPolymorphic(std::string const &tag, 
                             std::string const &typeSpec);
