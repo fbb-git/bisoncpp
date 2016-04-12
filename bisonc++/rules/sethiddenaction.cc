@@ -7,7 +7,10 @@ void Rules::setHiddenAction(Block const &block)
                                             // the line nr to flag a hidden
                                             // action production rule
     Production *pp = new Production(d_nonTerminal.back(), 
-                                        90000 + s_lastLineNr);  
+                                        //90000 + 
+                                        s_lastLineNr);  
+    //FBB: 20160412 apparently the 90000 flag is nowhere used, so I decided
+    //              not to use it anymore
 
     d_production.push_back(pp);             // put production in production 
                                             // vector

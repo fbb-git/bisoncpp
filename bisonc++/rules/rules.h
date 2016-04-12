@@ -29,6 +29,11 @@ class Rules
             // unexpected conflicts
         typedef std::pair<std::string, size_t> FileInfo;
 
+        //FBB: 20160412 - see also sethiddenaction.cc for the use
+        //                of the 90000 line number flag that was used to flag
+        //                a hidden action. Apparently it was nowhere used
+        //                so I decided not to use it anymore.
+
     private:
         typedef std::unordered_map<NonTerminal const *, FileInfo> 
                                                             NFileInfoMap;
