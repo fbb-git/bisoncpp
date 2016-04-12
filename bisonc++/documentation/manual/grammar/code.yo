@@ -33,13 +33,3 @@ The class tt(SType) offers the following public interface:
 
 includefile(stypeinterface)
 
-bf(Additional Headers)
-
-When using tt(%polymorphic) three additional header files are included by
-tt(parserbase.h):
-    itemization(
-    itt(memory,) required for tt(std::shared_ptr);
-    itt(stdexcept,) required for tt(std::logic_error);
-    itt(type_traits,) required for the implementation of one of tt(SType)'s
-         overloaded assignment operators.
-    )

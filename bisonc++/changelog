@@ -1,12 +1,15 @@
 bisonc++ (5.00.00) (WIP)
 
-  * new member: setDebug(int), option --action-cases shows the action case
+  * new dollar-notations ($$(...), _$$, _$i) are available, $<tag>$, 
+    $<tag>i are not available anymore.
+
+  * new member: setDebug(DebugMode__), shows the action case
     just before executing the action block.
 
   * The SType::data() member is now obsolete and has been removed.
 
   * Type specifications in %type directives are verified. With %union the
-    check is a simple check whether \btype\b is found in the %union spec.
+    check is a simple check whether '\btype\b' is found in the %union spec.
 
   * `default-actions std' unconditionally adds $$ = $1 action blocks to
     empty rules and rules w/o final action block
@@ -14,17 +17,16 @@ bisonc++ (5.00.00) (WIP)
   * Reimplemented handling polymorphic semantic values. shared pointers are no
     longer used. Details: see README.polymorphic-technical
 
-  * The semantic value type STYPE__ (the class Meta__::SType) member operator
-    bool() const returns true if its member tag() returns a valid Tag__,
-    otherwise it returns false. 
-    False is returned for default constructed STYPE__ values.
-    Previous implementations of STYPE__ implemented an undocumented member
-    pointer (->) operator for calling get() and data(). This operator is no
-    longer available. Instead of -> the member selector operator (.) should be
-    used. E.g., stype.get<Tag__::INT>().
+  * The semantic value type STYPE__ (the class Meta__::SType) member `valid()
+    const' returns true if its member tag() returns a valid Tag__, otherwise
+    it returns false.  False is returned for default constructed STYPE__
+    values.  Previous implementations of STYPE__ implemented an undocumented
+    member pointer (->) operator for calling get() and data(). This operator
+    is no longer available. Instead of -> the member selector operator (.)
+    should be used. E.g., stype.get<Tag__::INT>().
 
-  * Added options/directives warn-tag-mismatches and no-constructor-checks, 
-    and added option --polymorphic-code (-L). 
+  * Added option/directive tag-mismatches. and option
+    --polymorphic-code-skeleton (-L).
 
   * Mismatches between the types of nonterminals and the types of the first
     elements of their production rules previously resulted in a `type clash of

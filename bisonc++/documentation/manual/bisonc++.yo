@@ -32,6 +32,9 @@ IFDEF(html)(
 chapter(Introduction)
 includefile(introduction.yo)
 
+    sect(What's new in version _CurVers_)
+    includefile(whatsnew.yo)
+
 chapter(Conditions for Using Bisonc++)
 includefile(conditions.yo)
 

@@ -27,8 +27,7 @@ includefile(directives/intro.yo)
     includefile(directives/debug.yo)
 
     lsubsect(DEFAULTACTION)
-        (%dfault-actions: specifying whether or not to use $$ = $1 default
-            actions)
+        (%default-actions: adding `$$ = $1' action blocks to production rules)
     includefile(directives/defaultactions.yo)
 
     subsect(%error-verbose: dumping the parser's state stack)
@@ -162,16 +161,16 @@ includefile(grammar/semantics.yo)
         subsubsect(A scanner using a polymorphic semantic value type)
         includefile(grammar/scanner.yo)
 
-    lsubsect(ACTIONS)(Actions)
+    lsubsect(ACTIONS)(Actions and shorthand ($) notations)
     includefile(grammar/actions.yo)
 
-        subsubsect(%stype shorthand notations ($-notations))
+        subsubsect(%stype shorthand notations)
         includefile(grammar/stypeshorthand.yo)
 
-        subsubsect(%union shorthand notations ($-notations))
+        subsubsect(%union shorthand notations)
         includefile(grammar/unionshorthand.yo)
 
-        subsubsect(%polymorphic shorthand notations ($-notations))
+        subsubsect(%polymorphic shorthand notations)
         includefile(grammar/polymorphicshorthand.yo)
 
 COMMENT(
@@ -181,7 +180,7 @@ COMMENT(
   includefile(grammar/polymorphictype.yo)
 END)
 
-        lsubsubsect(MIDACTIONS)(Actions in Mid-Rule)
+        lsubsubsect(MIDACTIONS)(Mid-Rule Action Blocks)
         includefile(grammar/midrule.yo)
 
 sect(Basic Grammatical Constructions)
