@@ -149,7 +149,7 @@ If the semantic value type of that element doesn't match the type that is
 associated with tt(tag) then a run-time fatal error results. If that happens,
 and the tt(debug) option/directive was specified when bic() wrote the
 program's tt(parse) member, then the program can be rerun after specifying
-tt(parser.setDebug(Parser::ACTIONCASES__)) to locate the tt(parse) function's
+tt(parser.setDebug(Parser::ACTIONCASES)) to locate the tt(parse) function's
 action block where the fatal error was encountered.
  
     itt($<tag>-1.)

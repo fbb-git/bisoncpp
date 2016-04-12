@@ -9,7 +9,7 @@ semantic value.
 If a mismatch is observed, then the parsing function aborts after displaying a
 fatal error message. If this happens, and if the option/directive tt(debug)
 was specified when bic() created the parser's parsing function, then the
-program can be rerun, specifying tt(parser.setDebug(Parser::ACTIONCASES__))
+program can be rerun, specifying tt(parser.setDebug(Parser::ACTIONCASES))
 before calling the parsing function. As a result the case-entry numbers of the
 tt(switch), defined in the parser's tt(executeAction) member, are inserted
 into the standard output stream. The action case number reported just before

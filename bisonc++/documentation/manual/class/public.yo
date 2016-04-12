@@ -8,21 +8,21 @@ tt(Parser::)) prefixes were omitted):
         option/directive was specified when bic() generated the parser's
         code). It has three values:
             
-        tt(OFF__): no debug information is displayed when the generated
+        tt(OFF): no debug information is displayed when the generated
         parser's tt(parse) function is called;
 
-        tt(ON__): extensive debug information about the parsing process is
+        tt(ON): extensive debug information about the parsing process is
         displayed when the generated parser's tt(parse) function is called;
 
-        tt(ACTIONCASES__): just before executing the grammar's action blocks
+        tt(ACTIONCASES): just before executing the grammar's action blocks
         the action block number is written to the standard output
         stream. These action block numbers refer to  case labels of the switch
         that is defined in the parser's tt(executeAction) function. It is
         commonly used to find the action block where a fatal semantic value
         mismatch was observed.
 
-        The tt(bit_or) operator can be used to combine tt(ON__) and
-        tt(ACTIONCASES__) (see the member function tt(setDebug(DebugMode__
+        The tt(bit_or) operator can be used to combine tt(ON) and
+        tt(ACTIONCASES) (see the member function tt(setDebug(DebugMode__
         mode)) below).
 
     it() bf(LTYPE__):nl() 
@@ -62,9 +62,9 @@ tt(Parser::)) prefixes were omitted):
         always defined but only operational if the tt(debug) directive option
         was specified when bic() generated the tt(parse) function. If so, it
         is em(not) active by default; to activate, call
-        tt(setDebug(Parser::ON__), setDebug(Parser::ACTIONCASES__)), or 
-        tt(setDebug(Parser::ON__ | Parser::ACTIONCASES__)). To suppress the
-        debug code output call tt(setDebug(Parser__::OFF__)) or simply
+        tt(setDebug(Parser::ON), setDebug(Parser::ACTIONCASES)), or 
+        tt(setDebug(Parser::ON | Parser::ACTIONCASES)). To suppress the
+        debug code output call tt(setDebug(Parser__::OFF)) or simply
         tt(setDebug(false)).
     )
 

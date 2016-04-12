@@ -10,9 +10,9 @@ Parser::Parser(Rules &rules)
 {
     d_options.setMatched(d_matched);
 
-    int debugMode = d_arg.option(0, "own-debug") ? ON__ : OFF__;
+    int debugMode = d_arg.option(0, "own-debug") ? ON : OFF;
     if (d_arg.option('a'))
-        debugMode |= ACTIONCASES__;
+        debugMode |= ACTIONCASES;
     setDebug(debugMode);
 
     d_scanner.setDebug(d_arg.option(0, "scanner-debug"));

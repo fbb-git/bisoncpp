@@ -101,7 +101,7 @@ try
 
     Parser parser(rules);
 
-//    parser.setDebug(Parser::ACTIONCASES__ |);
+//    parser.setDebug(Parser::ACTIONCASES |);
 
     parser.parse();        // parses the input, fills the data in the Rules
                             // read the grammar file, build required data

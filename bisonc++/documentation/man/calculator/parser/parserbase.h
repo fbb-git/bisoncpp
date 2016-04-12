@@ -20,9 +20,9 @@ class ParserBase
     public:
         enum DebugMode__
         {
-            OFF__           = 0,
-            ON__            = 1 << 0,
-            ACTIONCASES__   = 1 << 1
+            OFF           = 0,
+            ON            = 1 << 0,
+            ACTIONCASES   = 1 << 1
         };
 
 // $insert tokens
