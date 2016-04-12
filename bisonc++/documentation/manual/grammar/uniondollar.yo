@@ -1,0 +1,122 @@
+itemization(
+    itt($$ = ) 
+
+    A value is assigned to the rule's nonterminal's semantic value. If the
+rule's nonterminal was associated with one of the union's field types, then
+the matching union field receives the value of the assignment expression's
+right-hand side. If no association was defined then the variable representing
+the nonterminal's semantic value is a plain union (i.e., tt(STYPE__))
+variable.
+
+    itt($$(expr))
+
+    tt(Expr's) value is assigned to the rule's nonterminal's plain union
+(i.e., tt(STYPE__)) type. Any association that may have been defined between
+the nonterminal and a union field is ignored.
+
+    itt(_$$)
+
+    This refers to the rule's nonterminal's plain union (i.e., tt(STYPE__))
+type. Any association that may have been defined between the nonterminal and a
+union field is ignored.
+
+    itt($$)
+
+    This refers to the rule's nonterminal's semantic value. If it was
+associated with one of the union's types, then tt($$) refers to the associated
+union field. If no association was defined then tt($$) represents a plain
+union (i.e., tt(STYPE__)) type of variable.
+
+    itt($$.)
+
+    If the rule's nonterminal's semantic value was associated with one of the
+union's types, then tt($$.) is shorthand for the member selector operator,
+applied to the associated union field type. If no association was defined then
+tt($$.) is shorthand for the field selector operator, applied to the
+nonterminal's semantic value's plain union (i.e., tt(STYPE__)) type.
+
+    itt($$->)
+
+    If the rule's nonterminal's semantic value was associated with one of the
+union's types, then tt($$->) is shorthand for the pointer to member operator,
+applied to the associated union field type. If no association was defined then
+an error message is issued, as the pointer to member operator is not defined
+for plain union types.
+
+
+    itt(_$1)
+
+    This refers to the current production rule's first component's plain 
+union (tt(STYPE__)) value.
+
+    itt($1)
+
+    This shorthand refers to the semantic value of the production rule's
+first element. If it was associated with one of the union's types, then tt($1)
+refers to the associated union field. If no association was defined then
+tt($1) represents a plain union (i.e., tt(STYPE__)) type of variable.
+
+    itt($1.)
+
+    If the production rule's first component's semantic value was associated
+with one of the union's types, then tt($1.) is shorthand for the member
+selector operator, applied to the associated union field type. If no
+association was defined then tt($1.) is shorthand for the field selector
+operator, applied to the first component's semantic value's plain union (i.e.,
+tt(STYPE__)) type.
+
+    itt($1->)
+
+    If the production rule's first component's semantic value was associated
+with one of the union's types, then tt($1->) is shorthand for the pointer to
+member operator, applied to the associated union field type. If no association
+was defined then an error message is issued, as the pointer to member operator
+is not defined for plain union types.
+
+
+    itt(_$-1)
+
+    This refers to the plain union (tt(STYPE__)) value of a component in a
+production rule, listed immediately before the current rule's nonterminal ($-2
+refers to a component used two elements before the current nonterminal, etc.).
+
+    itt($-1)
+
+    Same: this refers to the plain union (tt(STYPE__)) value of a component in
+a production rule, listed immediately before the current rule's nonterminal
+($-2 refers to a component used two elements before the current nonterminal,
+etc.).
+ 
+    itt($-1.)
+
+    This is shorthand for the field selector operator applied to to the plain
+union (tt(STYPE__)) value of some production rule element, 1 element before
+the current rule's nonterminal.
+
+    itt($-1->)
+
+    This shorthand refers to tho pointer to member operator applied to the
+plain union (tt(STYPE__)) value of some production rule element, 1 element
+before the current rule's nonterminal. Its use results in an error message, as
+the pointer to member operator is not defined for plain union types.
+
+    itt($<field>-1)
+
+    This refers to the tt(field) union field of a component in a production
+rule, listed immediately before the current rule's nonterminal. Note that the
+validity of the specified field for that particular component cannot be
+verified by bic().
+
+    itt($<field>-1.)
+
+    This refers to the member selector operator of the tt(field) union field
+of a component in a production rule, listed immediately before the current
+rule's nonterminal. Note that the validity of the specified field for that
+particular component cannot be verified by bic().
+ 
+    itt($<field>-1->)
+    This refers to the pointer to member operator of the tt(field) union field
+of a component in a production rule, listed immediately before the current
+rule's nonterminal. Note that the validity of the specified field for that
+particular component cannot be verified by bic().
+    )

@@ -43,8 +43,8 @@ END)
 IFDEF(man)(\
             bf(POLYMORPHIC SEMANTIC VALUES)\
 )(\
-            ref(POLYMORPHIC)\
-)\
+            ref(POLYMORPHIC)
+) 
            for details about this directive). When the generated parser
             attempts to retrieve an incorrect polymorphic value a fatal error
             is generated, ending bic()'s run. The error message itself cannot

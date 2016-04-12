@@ -16,7 +16,7 @@ message). Different from bison's tt(error) implementation, b() proceeds on the
 assumption that whenever tt(error) is used in a production rule it is the
 grammar constructor's intention to have the parser continue parsing
 (therefore, a statement like `tt(yyerrok)', encountered in bison grammars is
-superfluous in b() grammars. The reserved symbol tt(error) itself causes the
+superfluous in b() grammars). The reserved symbol tt(error) itself causes the
 parsing function to skip all subsequent input until a token that can follow
 tt(error) has been encountered. In the above implementation that token is the
 newline character `tt(\n)' (see chapter ref(RECOVERY)).

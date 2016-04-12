@@ -17,7 +17,7 @@ tt(std::string) and tt(std::vector<double>):
                  VECT: std::vector<double>
         )
     The identifier to the left of the colon is called the em(type-tag) (or
-simply `em(tag)', and the type definition to the right of the colon is called
+simply `em(tag)'), and the type definition to the right of the colon is called
 the em(type-definition). Types specified at the tt(%polymorphic)
 type-definitions must be built-in types or class-type declarations. Since
 bic() version 4.12.00 the types no longer have to be default-constructible.

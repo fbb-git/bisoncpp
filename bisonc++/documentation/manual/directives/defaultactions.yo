@@ -15,19 +15,16 @@ an tt(int) field in a union, for another rule it might be a tt(std::string
 
 By default, b() mimics bison's behavior in that it adds a tt($$ = $1) action
 block to rules not having final action blocks, but not to empty production
-rules. This default behavior can also be explicitly configured using the
+rules. This default behavior can also explicitly be configured using the
 tt(default-actions std) option or directive. 
 
-However, b() can also be configured with alternate ways of handling rules not
-having final action blocks.  When tt(off) is specified, b() does not add tt($$
-= $1) action blocks; and when polymorphic semantic values are used
+B() also supports alternate ways of handling rules not having final action
+blocks.  When tt(off) is specified, b() does not add tt($$ = $1) action
+blocks; when polymorphic semantic values are used, then specifying
     itemization(
-    it() tt(warn) can be specified to add special  action blocks 
-        to production rules without final action blocks while issuing a
-        warning;
-    it() tt(quiet) can be specified to add special action blocks
-        to production rules without final action blocks without issuing 
-        warnings.
+    it() tt(warn) adds specialized action blocks, using the semantic types of
+the first elements of the production rules, while issuing a warning;
+    it() tt(quiet) adds these action blocks without issuing warnings.
     )    
 When either tt(warn) or tt(quiet) are specified the types of $$ and $1 must
 match. When b() detects a type mismatches it issues errors.

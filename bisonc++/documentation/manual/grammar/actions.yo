@@ -50,11 +50,10 @@ nonterminal's semantic value. Of course, the default action only is valid if
 the two data types match. Empty production rules are not provided with
 default action blocks.
 
-    Negative dollar indices (e.g., $-1) are allowed, and refer to
-semantic values of elements in rules before the component naming the current
-rule's nonterminal. This is a risky)practice, and you should use it only when
-you know what you're doing. Here is a case in
-which you can use this reliably:
+    Negative dollar indices (e.g., $-1) are allowed, and refer to semantic
+values of elements in rules before the component naming the current rule's
+nonterminal. This is a risky practice, and you should use it only when you
+know what you're doing. Here is a situation where you can use this reliably:
         verb(
     vardef:
         type varlist ';'

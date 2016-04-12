@@ -1,0 +1,81 @@
+    itemization(
+    itt($$ = ) 
+
+    A value is assigned to the rule's nonterminal's semantic value. The
+right-hand side (rhs) of the assignment expression must be an expression of a
+type that can be assigned to the tt(STYPE__) type.
+
+    itt($$(expr))
+
+    Same as the previous dollar-notation: tt(expr's) value is assigned to
+the rule's nonterminal's semantic value.
+
+    itt(_$$)
+
+    This refers to the semantic value of the rule's nonterminal.
+
+    itt($$)
+
+    Same as the previous item: this refers to the semantic value of the rule's
+nonterminal. 
+
+    itt($$.)
+
+    If tt(STYPE__) is a class-type then this dollar-notation is shorthand
+for the member selector operator, applied to the rule's nonterminal's semantic
+value.
+
+    itt($$->)
+
+    If tt(STYPE__) is a class-type then this dollar-notation is shorthand
+for the pointer to member operator, applied to the rule's nonterminal's
+semantic value.
+
+    itt(_$1)
+
+    This refers to the current production rule's first component's semantic
+value.
+
+    itt($1)
+
+    Same as the previous dollar-notation: this refers to the 
+current production rule's first component's semantic value.
+
+    itt($1.)
+
+    If tt(STYPE__) is a class-type then this dollar-notation is shorthand
+for the member selector operator, applied to the current production rule's
+first component's semantic value.
+
+    itt($1->)
+
+    If tt(STYPE__) is a class-type then this dollar-notation is shorthand
+for the pointer to member operator, applied to the current production rule's
+first component's semantic value.
+
+    itt(_$-1)
+
+    This refers to the semantic value of a component in a production rule,
+listed immediately before the current rule's nonterminal ($-2 refers to a
+component used two elements before the current nonterminal, etc.).
+
+    itt($-1)
+
+    Same as the previous item: this refers to the semantic value of a
+component in a production rule, listed immediately before the current rule's
+nonterminal.
+ 
+    itt($-1.)
+
+    If tt(STYPE__) is a class-type then this dollar-notation is shorthand
+for the member selector operator, applied to the semantic value
+of some production rule element, 1 element before the current rule's
+nonterminal.
+
+    itt($-1->)
+
+    If tt(STYPE__) is a class-type then this dollar-notation is shorthand
+for the pointer to member operator, applied to the semantic value
+of some production rule element, 1 element before the current rule's
+nonterminal.
+    )
