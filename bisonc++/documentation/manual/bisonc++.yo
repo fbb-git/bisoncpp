@@ -47,7 +47,7 @@ includefile(class.yo)
 chapter(Examples)
 includefile(examples.yo)
 
-lchapter(ALGORITHM)(The Bisonc++ Parser Algorithm)
+lchapter(ALGORITHM)(About Analyzing LALR(1) Grammars)
 includefile(algorithm.yo)
 
 lchapter(RECOVERY)(Error Recovery)

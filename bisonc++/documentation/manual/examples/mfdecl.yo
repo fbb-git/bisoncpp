@@ -25,7 +25,7 @@ part of the declaraction section as used in the actual grammar file):
 specification language, allowing semantic values to have different data types.
     itemization(
     it() The tt(%union) directive (given in lines 1 through 6) allows semantic
-values to have various data types (see section ref(MORETYPES)). It is used
+values to have various data types (see section ref(UNION)). It is used
 instead of tt(%stype), and defines tt(Parser::STYPE__) as a the union type:
 all semantic values now have this type. Now semantic values can have any of
 the types that are defined as the union's fields.
@@ -34,8 +34,7 @@ the types of the fields of the union:
     itemization(
     itt(double) (for tt(exp) and tt(NUM)); 
     it() a em(pointer) to a tt(double), being a pointer to entries in
-        tt(mfcalc)'s symbol table, used with tt(VAR) tokens (see section
-        ref(UNION)).
+        tt(mfcalc)'s symbol table, used with tt(VAR) tokens.
     it() a em(pointer to a function) expecting a tt(double) argument and
         returning a tt(double) value, used with tt(FNCT) tokens.
     )

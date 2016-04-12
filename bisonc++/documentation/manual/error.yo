@@ -6,7 +6,6 @@ includefile(error/syntactical.yo)
     subsect(Error Recovery)
     includefile(error/recovery.yo)
 
-
 sect(Semantical Error Recovery)
 includefile(error/semantical.yo)
 

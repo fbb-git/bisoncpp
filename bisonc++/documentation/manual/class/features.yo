@@ -6,6 +6,7 @@ defined by production rules and semantic values of components of production
 rules. Different `dollar-notations' are available for different types (single,
 union, or polymorphic) of semantic values. Refer to section ref(ACTIONS) for a
 complete description.
+
     itt(@@) and tt(@n): Usually these represent plain old data (a bf(C)-type
 structure) containing information about line numbers and column numbers that
 is associated with, respectively, the rule's nonterminal and the production

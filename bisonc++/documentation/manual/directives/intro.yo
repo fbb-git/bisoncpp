@@ -3,9 +3,9 @@ formulating the production rules and the data types of semantic values. See
 section ref(SYMBOLS).
 
 All token names (except for single-character literal tokens such as '+' and
-'*') must be declared. If data types must be associated with 
-semantic values of symbols (see section ref(MORETYPES)) then those
-symbols must also be declared.
+'*') must be declared. If data types must be associated with semantic values
+of symbols (see sections ref(SEMANTICS)) then those symbols must also be
+declared.
 
 By default the first rule in the rule section specifies the grammar's em(start
 symbol). The tt(%start) directive can be used to specify another rule (see

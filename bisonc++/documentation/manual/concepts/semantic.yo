@@ -9,7 +9,7 @@ But actual values are very important for understanding the input's meaning. A
 compiler is useless if it fails to distinguish between 4, 1 and 3989 as
 constants that are being used in a program. Therefore, each token in a b()
 grammar has both a token type and a em(semantic value). See section
-ref(DEFSEM) for details.
+ref(SEMANTICS) for details.
 
 A token is a terminal symbol defined in the grammar, such as tt(INTEGER),
 tt(IDENTIFIER) or 'tt(,)'. Tokens are used by the parser to make decisions

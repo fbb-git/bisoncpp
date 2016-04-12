@@ -1,4 +1,3 @@
-
     itemization(
     it() Constructors: 
 
@@ -21,7 +20,7 @@
         use. Casting can of course be used when formulating tt(value's)
         expression. 
 
-        When tt(operator=(Type const &value) is used, the left-hand side
+        When tt(operator=(Type const &value)) is used, the left-hand side
         tt(SType) object will receive a new value of the tt(Type) semantic
         type. 
 
@@ -41,14 +40,14 @@
 
         The member tt(assign) can be used to store a particular polymorphic
         semantic value in an tt(STYPE__) object. It differs from
-        tt(operator=(Type const &value) in that tt(assign) accepts multiple
+        tt(operator=(Type const &value)) in that tt(assign) accepts multiple
         arguments to construct the requested tt(SType) value, whereas
         tt(operator=) only accepts one argument. 
     
         To initialize an tt(STYPE__) object with a default tt(STYPE__) value,
         direct assignment can be used (e.g., tt(d_lval__ = STYPE__{})).
 
-    it(() tt(DataType &get<tag>(), DataType const &get<tag>() const)
+    it() tt(DataType &get<tag>(), DataType const &get<tag>() const)
 
         A reference to the object's semantic value. The tt(tag) is a defined
         tt(Tag__) value: it must be specified to allow the compiler to

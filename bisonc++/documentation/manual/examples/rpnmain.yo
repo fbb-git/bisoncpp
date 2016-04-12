@@ -2,6 +2,6 @@ In keeping with the spirit of this example, the calcuator's
 tt(main) function is a very small one.  It
 constructs a parser object and then calls its parsing function to
 start the calculator:
-    verbinclude(rpn/rpn.cc)
+    verbinclude(rpn/main.cc)
 
 

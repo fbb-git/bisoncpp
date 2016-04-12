@@ -143,7 +143,7 @@ includefile(directives/intro.yo)
                 be written)
         includefile(directives/targetdir.yo)
 
-lsect(DEFSEM)(The Meaning Of Things: Semantics)
+lsect(SEMANTICS)(The Meaning Of Things: Semantics)
 includefile(grammar/semantics.yo)
 
     lsubsect(POLYMORPHIC)(Polymorphism and Multiple Semantic Values:
@@ -169,7 +169,7 @@ includefile(grammar/semantics.yo)
         includefile(grammar/stypeshorthand.yo)
 
         subsubsect(%union shorthand notations ($-notations))
-        includefile(grammar/unioneshorthand.yo)
+        includefile(grammar/unionshorthand.yo)
 
         subsubsect(%polymorphic shorthand notations ($-notations))
         includefile(grammar/polymorphicshorthand.yo)

@@ -25,8 +25,8 @@ tt(%token). See section ref(TOKTYPENAMES).
     it() A tt(character token) (or tt(literal character token)) is written in
 the grammar using bf(C++)'s character constants syntax; for example, 'tt(+)'
 is a character token. A character token doesn't need to be declared unless you
-need to specify its semantic value data type (see section ref(SEMANTICTYPES)),
-associativity, or precedence (see section ref(PRECEDENCE)).
+need to specify its semantic value data type (cf. section ref(SEMANTICS)),
+associativity, or precedence (cf. section ref(PRECEDENCE)).
     )
     
       By convention, a character token is only used to represent that

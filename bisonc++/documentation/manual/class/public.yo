@@ -23,7 +23,7 @@ tt(Parser::)) prefixes were omitted):
 
         The tt(bit_or) operator can be used to combine tt(ON__) and
         tt(ACTIONCASES__) (see the member function tt(setDebug(DebugMode__
-        mode) below).
+        mode)) below).
 
     it() bf(LTYPE__):nl() 
            The parser's location type (user-definable). Available only when
@@ -54,7 +54,7 @@ tt(Parser::)) prefixes were omitted):
         operational if the tt(debug) directive option was specified when bic()
         generated the tt(parse) function. If so, it is em(not) active by
         default; to activate the debug output call tt(setDebug(true)), to
-        suppress the debug output call tt(setDebug(false).
+        suppress the debug output call tt(setDebug(false)).
 
     it() bf(void setDebug(DebugMode__ mode)):nl()
        This member can also be used to activate or deactivate the debug-code

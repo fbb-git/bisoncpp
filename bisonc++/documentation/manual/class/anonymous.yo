@@ -6,6 +6,7 @@ the parser.
     itemization(
     it() bf(char const author[]):nl()
        Defining the name and e-mail address of Bic()'s author.
+
     it() bf(ReservedTokens):nl()
        This enumeration defines some token values used internally by the
         parsing functions. They are:
@@ -18,6 +19,7 @@ the parser.
        These tokens are used by the parser to determine whether another token
         should be requested from the lexical scanner, and to handle
         error-conditions. 
+
     it() bf(StateType):nl()
        This enumeration defines several moe token values used internally by
         the parsing functions. They are:
@@ -33,13 +35,16 @@ the parser.
        )
        These tokens are used by the parser to define the types of the various
         states of the analyzed grammar.
+
     it() bf(PI__) (Production Info):nl()
        This tt(struct) provides information about production rules. It has two
         fields: tt(d_nonTerm) is the identification number of the production's
         nonterminal, tt(d_size) represents the number of elements of the
         productin rule.
+
     it() bf(static PI__ s_productionInfo):nl()
        Used internally by the parsing function.
+
     it() bf(SR__) (Shift-Reduce Info):nl()
        This tt(struct) provides the shift/reduce information for the various
         grammatic states. tt(SR__) values are collected in arrays, one array
@@ -60,12 +65,15 @@ the parser.
         an erroneous token has been retrieved. If the 2nd field is zero, no
         error or default action has been defined for the state, and
         error-recovery is attepted.
+
     it() bf(STACK_EXPANSION):nl()
        An enumeration value specifying the number of additional elements that
         are added to the state- and semantic value stacks when full.
+
     it() bf(static SR__ s_<nr>[]):nl()
        Here, tt(<nr>) is a numerical value representing a state number.
        Used internally by the parsing function.
+
     it() bf(static SR__ *s_state[]):nl()
        Used internally by the parsing function.
     )

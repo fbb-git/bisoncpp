@@ -31,7 +31,7 @@ with terminal or nonterminal symbols (see section ref(TYPE)).
         data fields properly. A discussion of how to use unrestricted unions
         is beyon this manual's scope, but can be found, e.g., in the url(C++
         Annotations)(http://cppannotations.sf.net). See also section
-        ref(MORETYPES). 
+        ref(SEMANTICS). 
     it() The tt(%union) directive is also a bit of an anachronism. In many
         situations using tt(%polymorphic) is more attractive than using
         tt(%union) (cf. section ref(POLYMORPHIC)).

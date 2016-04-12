@@ -5,6 +5,7 @@ internally'' is used should not be called by user-defined code.
     itemization(
     it() bf(Base::ParserBase()):nl()
        Used internally.
+
     it() bf(void Base::ABORT() const throw(Return__)):nl()
        This member can be called from any member function (called from any of
         the parser's action blocks) to indicate a failure while parsing thus
@@ -12,6 +13,7 @@ internally'' is used should not be called by user-defined code.
         offers a marked extension and improvement of the macro tt(YYABORT)
         defined by bf(bison++) in that tt(YYABORT) could not be called from
         outside of the parsing member function.
+
     it() bf(void Base::ACCEPT() const throw(Return__)):nl()
        This member can be called from any member function (called from any of
         the parser's action blocks) to indicate successful parsing and thus
@@ -19,6 +21,7 @@ internally'' is used should not be called by user-defined code.
         extension and improvement of the macro tt(YYACCEPT) defined by
         bf(bison++) in that tt(YYACCEPT) could not be called from outside of
         the parsing member function.
+
     it() bf(void Base::clearin+nop()()):nl()
        This member replaces bf(bison)(++)'s macro tt(yyclearin) and causes
         bf(bisonc++) to request another token from its tt(lex+nop()()) member,
@@ -26,8 +29,10 @@ internally'' is used should not be called by user-defined code.
         member when the parser should be reset to its initial state, e.g.,
         between successive calls of tt(parse). In this situation the scanner
         must probably be reloaded with new information as well.
+
     it() bf(bool Base::debug() const):nl()
        This member returns the current value of the debug variable.
+
     it() bf(void Base::ERROR+nop()() const throw(ErrorRecovery__)):nl()
        This member can be called from any member function (called from any of
         the parser's action blocks) to generate an error, and results in the
@@ -35,15 +40,19 @@ internally'' is used should not be called by user-defined code.
         marked extension and improvement of the macro tt(YYERROR) defined by
         bf(bison++) in that tt(YYERROR) could not be called from outside of
         the parsing member function.
+
     it() bf(void error(char const *msg)):nl()
       By default implemented inline in the tt(parser.ih) internal header file,
        it writes a simple message to the standard error stream. It is called
        when a syntactic error is encountered, and its default implementation
        may safely be altered.
+
     it() bf(void errorRecovery__+nop()()):nl()
        Used internally.
+
     it() bf(void Base::errorVerbose__+nop()()):nl()
        Used internally.
+
     it() bf(void exceptionHandler__(std::exception const &exc)):nl()
        This member's default implementation is provided inline in the
         tt(parser.ih) internal header file. It consists of a mere tt(throw)
@@ -106,6 +115,7 @@ internally'' is used should not be called by user-defined code.
         )
     it() bf(void executeAction+nop()(int)):nl()
        Used internally.
+
     it() bf(int lex()):nl()
       By default implemented inline in the tt(parser.ih) internal header file,
        it can be pre-implemented by bic() using the tt(scanner) option or
@@ -115,16 +125,22 @@ internally'' is used should not be called by user-defined code.
        or as one of the symbolic tokens defined in the tt(Parser::Tokens__)
        enumeration. Zero or negative token values are interpreted as `end of
        input'.
+
     it() bf(int lookup+nop()(bool)):nl()
        Used internally.
+
     it() bf(void nextToken+nop()()):nl()
        Used internally.
+
     it() bf(void Base::pop__+nop()()):nl()
        Used internally.
+
     it() bf(void Base::popToken__+nop()()):nl()
        Used internally.
+
     it() bf(void print__()()):nl()
        Used internally.
+
     it() bf(void print()):nl()
       By default implemented inline in the tt(parser.ih) internal header file,
        this member calls tt(print__) to display the last received token and
@@ -133,14 +149,19 @@ internally'' is used should not be called by user-defined code.
        used when the parsing function was generated. Calling tt(print__) from
        tt(print) is unconditional, but can easily be controlled by the using
        program, by defining, e.g., a command-line option.
+
     it() bf(void Base::push__+nop()()):nl()
        Used internally.
+
     it() bf(void Base::pushToken__+nop()()):nl()
        Used internally.
+
     it() bf(void Base::reduce__+nop()()):nl()
        Used internally.
+
     it() bf(void Base::symbol__+nop()()):nl()
        Used internally.
+
     it() bf(void Base::top__+nop()()):nl()
        Used internally.
     )
