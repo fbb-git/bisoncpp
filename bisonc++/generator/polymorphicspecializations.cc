@@ -5,7 +5,7 @@ void Generator::polymorphicSpecializations(ostream &out) const
     key(out);
 
     out <<
-        "enum { sizeofTag__ = " << d_polymorphic.size() << " };\n\n";
+        "enum { sizeofTag = " << d_polymorphic.size() << " };\n\n";
 
     if (d_options.tagMismatches().value == Options::ON)
         out << "extern char const *idOfTag__[];\n";

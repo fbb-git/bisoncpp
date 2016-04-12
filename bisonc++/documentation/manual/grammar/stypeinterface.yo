@@ -21,7 +21,7 @@
         use. Casting can of course be used when formulating tt(value's)
         expression. 
 
-        When tt(operator=(Type const &value) is used the left-hand side
+        When tt(operator=(Type const &value) is used, the left-hand side
         tt(SType) object will receive a new value of the tt(Type) semantic
         type. 
 

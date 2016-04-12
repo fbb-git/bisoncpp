@@ -7,9 +7,8 @@ a token value indicating what kind of token has been read. You don't need to
 know what the code value is; instead, its symbol should always be used.  By
 convention, it contains uppercase characters.
 
-A em(nonterminal symbol) represents syntactically equivalent
-groupings. The symbol name is used in writing grammar rules. By convention, it
-contains lowercase characters.
+em(Nonterminal symbol) define concepts of grammars. The symbol name is used in
+writing grammar rules. By convention, it contains lowercase characters.
 
 Symbol names consist of letters, digits (not at the beginning), and
 underscores. B() does not support periods in symbol names

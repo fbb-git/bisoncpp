@@ -1,6 +1,6 @@
-In the following sections several basic grammatical constructions are
-presented in their prototypical and generic forms. When these basic
-constructions are used to construct a grammar, the resulting grammar is
-usually accepted by b(). Moreover, these basic constructions are frequently
-encountered in programming languages. When designing your own grammar, try to
-stick as closely as possible to the following basic grammatical constructions.
+In the following sections several basic building blocks for writing grammars
+are presented in their prototypical forms. When these building blocks are
+used to write a grammar, the resulting grammar is usually accepted by
+b(). Moreover, these building blocks are frequently encountered in
+programming languages. When designing your own grammar, try to stick as
+closely as possible to the following basic forms.

@@ -35,3 +35,12 @@ the parser's base class.
         )
         (which are of course the tt(parse) function's return values).
      )
+
+When the tt(%polymorphic) directive is used:
+    itemization(
+    it() bf(Meta__::sizeofTag):nl()
+           tt(sizeofTag) defines the number of tags that were defined for 
+            polymorphic semantic values.
+    )
+
+    

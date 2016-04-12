@@ -32,9 +32,8 @@ when the symbol to the right of the dot has been recognized. In that case a
 em(transition) (a em(goto)) to the next state takes place, where the dot has
 moved one postition to the right, defining a kernel item of the new
 state. Once the dot has reached the end of the rule, a em(reduction) may take
-place. Following a reduction a transition based on the em(Left Hand Side)
-(tt(LHS)) of the reduced production rule is performed. This procedure is
-discussed in more detail in section ref(PARSING).
+place. Following a reduction a transition based on rule's LHS is
+performed. This procedure is discussed in more detail in section ref(PARSING).
 
     Looking at the current state's items, two actions are possible:
     itemization(

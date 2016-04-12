@@ -13,7 +13,7 @@ Next consider the definition of the tt(line) nonterminal:
 tt(rpn) accepts a blank line (and ignores it, since it has no associated
 action). The second alternative is an em(expression) (tt(expr)), followed by a
 newline. This alternative handles all expressions that are entered by the
-user. The semantic value of the tt(exp) grouping is the value of tt($1)
+user. The semantic value of the tt(exp) nonterminal is the value of tt($1)
 because the tt(exp) nonterminal is the first symbol of the production
 rule. The action simply prints the expression's value.
 

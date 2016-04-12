@@ -18,8 +18,7 @@ above example item 1 shifts when tt('*') is encountered, but tt('*') is also
 an element of the set of look-ahead tokens of item 0. B() must now decide what
 to do. In cases we've seen earlier b() could make the decision because the
 reducible item itself had a well known precedence. The precedence of a
-reducible item is defined as the precedence of the left-hand side
-nonterminal of the production rule to which the reducible item belongs. Item
+reducible item is defined as the precedence of the rule's LHS. Item
 0 in the above example is an item of the rule tt(expr -> term). 
 
     The precedence of a production rule is defined as follows:

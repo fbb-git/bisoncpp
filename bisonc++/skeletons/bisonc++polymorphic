@@ -109,7 +109,7 @@ class SType
 
 inline Base::Base()
 :
-    d_baseTag(static_cast<Tag__>(sizeofTag__))
+    d_baseTag(static_cast<Tag__>(sizeofTag))
 {}
 
 inline Tag__ Base::tag() const
@@ -177,7 +177,7 @@ inline Tag__ SType::tag() const
 
 inline bool SType::valid() const
 {
-    return tag() != static_cast<Tag__>(sizeofTag__);
+    return tag() != static_cast<Tag__>(sizeofTag);
 }
 
 template <Tag__ tag, typename ...Args>

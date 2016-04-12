@@ -1,15 +1,5 @@
-Grammar rules have the following general form:
-        verb( 
-    result: 
-        productions
-        ...
-    ;
-        )
-    where em(result) is the nonterminal symbol defined by  this rule and
-em(productions) are sequences of terminal and nonterminal symbols that define
-how tt(result) can be recognized (see section ref(SYMBOLS)). 
-With respect to the way
-rules are defined, note the following:
+Grammar rules have the following characteristics:
+
     itemization(
     it() The construction
         verb(
@@ -21,7 +11,7 @@ rules are defined, note the following:
 with a `+' token in between, have been recognized, these three elements
 themselves represent an tt(exp) gouping.
 
-    it() Whitespace in rules is only used for  separating symbols.
+    it() Whitespace in rules is only used for separating symbols.
 
     it() em(Action blocks) determining the
 semantics of the rule can be inserted between the elements of production
@@ -65,10 +55,10 @@ tt(result)) should have been tt(results). Therefore, b() generates a warning
 if the same nonterminal is used repeatedly when defining production rules.
 
     it() Production rules can be empty. This means that em(result) can match
-any token, which then isn't processed by the production rule, although its
-grouping symbol has been recognized. Such a alternative is called an em(empty
-production rule). For example, here is how to define a comma-separated
-sequence of zero or more tt(exp) groupings:
+any token, which then isn't processed by the production rule, although the
+rule's nonterminal has been recognized. Such a alternative is called an
+em(empty production rule). For example, here is how to define a
+comma-separated sequence of zero or more tt(exp) nonterminals:
         verb(
     expseq:   
         expseq1

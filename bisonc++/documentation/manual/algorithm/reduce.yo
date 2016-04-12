@@ -3,7 +3,7 @@ to the same sequence of input. This usually indicates a serious error in the
 grammar.
 
 For example, here is an erroneous attempt to define a sequence of zero or more
-word groupings:
+words:
         verbinsert(-as4)(examples/rr1)
     The error is an ambiguity: there is more than one way to parse a single
 word into a sequence. It could be reduced to a maybeword and then into a
@@ -53,8 +53,8 @@ Here is another common error that yields a reduce/reduce conflict:
     ;
     )
 
-The intention here is to define a sequence which can contain either word or
-redirect groupings. The individual definitions of sequence, words and
+The intention here is to define a sequence containing either tt(word) or
+tt(redirect) nonterminals. The individual definitions of sequence, words and
 redirects are error-free, but the three together make a subtle ambiguity: even
 an empty input can be parsed in infinitely many ways!
 

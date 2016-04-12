@@ -12,9 +12,9 @@ grammar has both a token type and a em(semantic value). See section
 ref(DEFSEM) for details.
 
 A token is a terminal symbol defined in the grammar, such as tt(INTEGER),
-tt(IDENTIFIER) or 'tt(,)'. It tells everything you need to know to decide
-where the token may validly appear and how to group it with other tokens. The
-grammar rules know nothing about tokens except their token-values.
+tt(IDENTIFIER) or 'tt(,)'. Tokens are used by the parser to make decisions
+about the continuation of the parsing process, but for that only the mere
+tokens are required, and nothing else.
 
 Semantic values represent any additionally available information about tokens,
 such as the values of integers, or the names of identifiers. (A token such as
@@ -28,9 +28,8 @@ combinations is acceptable because each token is tt(INTEGER). When the parser
 accepts the token, it may store the token's semantic value for future
 reference on a em(semantic value stack).
 
-Groupings can also have semantic values as well as nonterminal symbols. For
-example, in a calculator, an expression typically has a semantic value that is
-a number. In a compiler for a programming language, an expression typically
-has a semantic value that is a tree structure describing the meaning of the
-expression.
+Nonterminal symbols often also have semantic values. For example, in a
+calculator, an expression typically has a semantic value that is a number. In
+a compiler for a programming language, an expression typically has a semantic
+value that is a tree structure describing the meaning of the expression.
 

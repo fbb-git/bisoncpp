@@ -1,11 +1,12 @@
 A language's grammar rules define its syntax. Its semantics are defined
-through semantic values associated with various tokens and groupings, and
-generally by the actions taken when various groupings are recognized.
+through semantic values that can be associated with terminal and nonterminal
+symbols, and generally by the actions taken when nonterminals or parts of
+production rules have been recognized.
 
 For example, the calculator performs real-life calculations because the value
 associated with each expression is its computed numeric value; it correcly
-performs addition because the action for the grouping `x + y' is to add the
-numbers associated with x and y.
+performs addition because the action for an expression like `x + y' is to add
+those numbers and to return their sum.
 
 Two ways of defining semantics have already been discussed:
     itemization(

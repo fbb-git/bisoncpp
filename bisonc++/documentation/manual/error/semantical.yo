@@ -4,21 +4,22 @@ defined as
         verb(
     expr '=' expr
         )
-    The left-hand side must be a so-called em(lvalue). An em(lvalue) is simply
-an addressable location, like a variable's identifier, a dereferenced pointer
-expression or some other address-expression. The right-hand side is a
-so-called em(rvalue): this may be any value: any expression will do. 
+    The assignment operator's left-hand side must be a so-called
+em(lvalue). An em(lvalue) is simply an addressable location, like a variable's
+identifier, a dereferenced pointer expression or some other
+address-expression. The right-hand side is a so-called em(rvalue): this may be
+any value: any expression will do.
 
     A rule like the above leaves room for many different semantical errors:
     itemization(
-    it() Since the rule states tt(expr) at its left-hand side, em(any)
-expression is accepted by the parser. E.g.,
+    it() Since the rule's LHS equals tt(expr), em(any) expression is accepted
+by the parser. E.g.,
         verb(
     3 = 12
         )
     So, the action associated with this rule should em(check) whether the
-left-hand side is actually an lvalue. If not, a em(semantical) error should be
-reported;
+expression's left-hand side is actually an lvalue. If not, a em(semantical)
+error should be reported;
     it() In a typed language (like bf(C++)), not all assignments are
 possible. E.g., it is not acceptable to assign a bf(std:string) value
 to a bf(double) variable. When conflicting types are used, a em(semantical)

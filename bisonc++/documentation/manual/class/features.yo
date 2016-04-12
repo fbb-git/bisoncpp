@@ -1,19 +1,16 @@
 Here is an overview of special syntactic constructions that may be used
 inside action blocks:
     itemization(
-    itt($$): This acts like a variable that contains the semantic value for
-the grouping made by the current rule. See section ref(ACTIONS).
-    itt($n): This acts like a variable that contains the semantic value for
-the n-th component of the current rule. See section ref(ACTIONS).
-    itt($<typealt>$): This is like tt($$), but it specifies alternative
-tt(typealt) in the union specified by the tt(%union) directive.  See sections
-ref(SEMANTICTYPES) and ref(MORETYPES).
-    itt($<typealt>n): This is like tt($n) but it specifies an alternative
-tt(typealt) in the union specified by the tt(%union) directive.  See sections
-ref(SEMANTICTYPES) and ref(MORETYPES).
-    itt(@n): This acts like a structure variable containing information on the
-line numbers and column numbers of the nth component of the current rule. The
-default structure is defined like this (see section ref(LSPNEEDED)):
+    itt($$) and tt($i) notations represent semantic values of the nonterminal
+defined by production rules and semantic values of components of production
+rules. Different `dollar-notations' are available for different types (single,
+union, or polymorphic) of semantic values. Refer to section ref(ACTIONS) for a
+complete description.
+    itt(@@) and tt(@n): Usually these represent plain old data (a bf(C)-type
+structure) containing information about line numbers and column numbers that
+is associated with, respectively, the rule's nonterminal and the production
+rule's n+sups(th) component. The default structure is defined like this (see
+also section ref(LSPNEEDED)):
            verb(
     struct LTYPE__
     {

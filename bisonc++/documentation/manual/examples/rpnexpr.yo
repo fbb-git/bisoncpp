@@ -1,7 +1,7 @@
-The tt(exp) grouping has several rules, one for each kind of expression. The
-first rule handles the simplest kind of expression: just a single number. The
-second handles additions, which are two expressions followed by a
-plus-sign. The third handles subtractions, and so on.
+The tt(exp) nonterminal has several rules, one for each kind of
+expression. The first rule handles the simplest kind of expression: just a
+single number. The second handles additions, which are two expressions
+followed by a plus-sign. The third handles subtractions, and so on.
         verb(
     exp:      
             NUM             

@@ -7,7 +7,7 @@ void Parser::warnMissingSemval() const
     if (stype.empty() or d_options.tagMismatches().value != Options::ON)
         return;
 
-    wmsg << '`' << &d_rules.lastProduction() << 
+    wmsg << "`rule " << &d_rules.lastProduction() << 
                 "': confirm action block returns a required " << 
                 stype << " value" << endl;
 }

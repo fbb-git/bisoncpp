@@ -1,10 +1,18 @@
 B() can generate parsers for languages that are em(context-free). This means
-that you specify one or more em(syntactic groupings) and define rules for
-constructing them from their parts. For example, in the C language, one kind
-of grouping is called an `expression'. One rule for making an expression might
-be, "An expression can be made of a minus sign and another
-expression". Another could be "an expression can be an integer".  Rules are
-often recursive, but there must be at least one rule which ends a recursion.
+that you define one or more em(constructs), commonly called em(nonterminal
+symbols), and define em(rules) by which they are recognized (or defined).
+
+For example, bf(C++) defines an `tt(expression)' nonterminal. One rule 
+defining an expression might be, 
+    quote(
+    "An expression consists  of a minus sign and another expression".
+    )
+    Another rule could be 
+    quote(
+    "An expression can be an integer".
+    )
+    Rules often are recursive, but there must be at least one rule ending the
+recursion.
 
 A commonly used formal system for describing such rules is the em(Backus-Naur
 Form) or `BNF', which was developed for specifying the language Algol 60. Any
@@ -13,74 +21,87 @@ essentially machine-readable BNF.
 
 Not all context-free languages can be handled by b(), only those that are
 LALR(1). In brief, this means that it must be possible to tell how to parse
-any portion of an input string while `looking ahead' to just a single
-token. Strictly speaking, that is a description of an LR(1) grammar, and
-LALR(1) involves additional restrictions that are hard to explain simply; but
-it is rare in actual practice to find an LR(1) grammar that fails to be
-LALR(1). See section ref(MYSTERIOUS) for more information on this.
+input while `looking ahead' to just a single token. Strictly speaking, that is
+a description of an LR(1) grammar, and LALR(1) involves some additional
+restrictions which are not further elaborated in the current context; but it
+in real life almost all LR(1) grammars are also LALR(1) grammars. See section
+ref(MYSTERIOUS) for more information on this.
 
-In the formal rules defining a language's grammar, each syntactic unit or
-grouping is represented by a name, a em(symbol). Those which are built by
-grouping smaller constructs according to grammatical rules are called
-em(nonterminal symbols); those which can't be subdivided are called
-em(terminal symbols) or em(tokens). We call a piece of input corresponding to
-a single terminal symbol a token, and a piece corresponding to a single
-nonterminal symbol a em(grouping).
+In the formal rules defining a language's grammar, the grammar's constructs
+are called nonterminals. Some symbols are not further defined, but are
+directly made available when matching the input to a series of regular
+expressions. Matching the input to regular expressions is not the task of a
+parser, but of a em(lexical scanner) (e.g., bf(flexc++)(1)). Lexical scanners
+provide the parser with  symbols, called em(tokens) or em(terminal symbols),
+which are taken for granted by the parser.
 
-We can use the bf(C++) language as an example of what symbols, terminal and
-nonterminal, mean. The tokens of bf(C++) are identifiers, constants (numeric
-and string), and the various keywords, arithmetic operators and punctuation
-marks. So the terminal symbols of a grammar for bf(C++) include `identifier',
-`number', `string', including symbols for keywords, operators or punctuation
-marks: `if', `return', `const', `static', `int', `char', `plus-sign',
-`open-brace', `close-brace', `comma' and many more.
+Terminal and nonterminal symbols  are used to define the rules of grammars.
+
+
+We can use examples from bf(C++) to illustrate terminal and nonterminal
+symbols. bf(C++)'s terminal symbols are identifiers, constants (numeric and
+string), various keywords, arithmetic operators, and other simple character
+tokens. So the terminal symbols of a grammar for bf(C++) can thus be
+`IDENTIFIER', `NUMBER', `STRING', as wel as tokens for keywords 
+    (e.g., tt(FOR, SWITCH), operators (tt('+', BIT_OR)), 
+        and character tokens like  tt(';', ':', '(', ')') ).
 
 Here is a simple bf(C++) function subdivided into tokens:
         verb( 
-    int square(int x)   // keyword `int', identifier, open-paren, 
-                        // keyword `int', identifier, close-paren
-    {                   // open-brace 
-        return x * x;   // keyword `return', identifier,
-                        // asterisk, identifier, semicolon
-    }                   // close-brace
+    int square(int x)   // INT IDENTIFIER '(' INT IDENTIFIER ')'
+    {                   // '{'
+        return x * x;   // RETURN IDENTIFIER '*' IDENTIFIER ';'
+    }                   // '}'
         )
 
-The syntactic groupings used for bf(C++) include the expression, the
-statement, the declaration, and the function definition. These are represented
-in bf(C++)'s grammar by nonterminal symbols `expression', `statement',
-`declaration' and `function definition'. The full grammar uses dozens of
-additional language constructs, each with their own nonterminal symbol, in
-order to express the meanings of these four. The example above is a function
-definition; it contains one declaration, and one statement. In the statement,
-each `x' is an expression and so is `x * x'.
+bf(C++) rules include expression rules, statement rules, rules defining
+declarations, and rules defining functions. These are defined in bf(C++)'s
+grammar as nonterminal symbols `expression', `statement', `declaration' and
+`function_definition'. The above example shows a function definition as well
+as the sequence of tokens (starting from tt(INT), ending at tt('}')), received
+by the parser when that definition shows up in its input.
 
-Each nonterminal symbol must have grammatical rules showing how it is made out
-of simpler constructs. For example, one kind of bf(C++) statement is the
-return statement; this would be described with a grammar rule which reads
-informally as follows:
+Each nonterminal symbol must be defined by at least one so-called
+em(production rule), defining the sequence of symbols that must have been
+observed before it can be decided that the nonterminal symbol has been
+encountered. For example, one kind of bf(C++) statement is the return
+statement; it could be described by the following informal rule:
 
 quote(
     A `statement' can be made of a `return' keyword, an `expression' and a
     `semicolon'.
 )
 
-There would be many other rules for `statement', one for each kind of
-statement in bf(C++).
+Formally, such a rule is written like this:
+    verb(
+    statement:
+        RETURN expression ';'
+    ;
+    )
+    and in general grammar rules have the following form:
+        verb( 
+    nonterminal: 
+        production(s)
+    ;
+        )
+    where em(nonterminal) is the nonterminal symbol defined by the rule and
+em(productions(s)) are one or more sequences of terminal and nonterminal
+symbols that define how tt(nonterminal) can be recognized. Concentrating on a
+single production rule, the rule's nonterminal is called the rule's left-hand
+side (LHS), the production rule itself is called the rule's right-hand side
+(RHS). In the tt(statement) example the LHS equals tt(statement), the RHS
+equals tt(RETURN expression ';'). The RHS consists of three elements,
+numbered, respectively, 1 through 3.
 
-One nonterminal symbol must be distinguished as the special one which defines
-a complete utterance in the language. It is called the em(start symbol). In a
-compiler, this means a complete input program. In the bf(C++) language, the
-nonterminal symbol `sequence of definitions and declarations' plays this role.
+One nonterminal symbol is special in that it defines a syntactically correct
+specification of the defined language. It is called the em(start symbol). In a
+compiler this means a complete input program. In bf(C++), a nonterminal symbol
+`optional-sequence-of-definitions-and-declarations' could be used for this.
 
-For example, `1 + 2' is a valid bf(C++) expression--a valid part of a bf(C++)
-program--but it is not valid as an em(entire) bf(C++) program. In the
-context-free grammar of bf(C++), this follows from the fact that `expression'
-is not the start symbol.
-
-The b() parser reads a sequence of tokens as its input, and groups the
-tokens using the grammar rules. If the input is valid, the end result is that
-the entire token sequence reduces to a single grouping whose symbol is the
-grammar's start symbol. If we use a grammar for bf(C++), the entire input must
-be a `sequence of definitions and declarations'. If not, the parser reports a
-syntax error.
+The parser generated by b() reads a sequence of tokens, and combines the
+tokens using the rules of the specified grammar. If the input is valid, the
+end result is that the entire token sequence reduces to the start symbol
+nonterminal. If we use bf(C++)'s grammar, then the entire input must reducible
+to `optional-sequence-of-definitions-and-declarations'. If not, the parser
+reports a syntax error.
 

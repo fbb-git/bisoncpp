@@ -34,36 +34,35 @@ afterward. Here is how it is done:
     stmt:   
         LET '(' variable ')'
         {
-            _$$.assign<SYMTAB>(pushSymtab());
+            _$$.assign<SYMTAB>(symtab());
             addVariable($3); 
         }
         stmt    
         { 
             $$ = $6;
-            popSymtab($5); 
+            restoreSymtab($5); 
         }
         )
     As soon as `tt(let (variable))' has been recognized, the first action is
-executed. It saves a copy of the current symbol table as the mid-rule's
-semantic value, using the polymorphic tag tt(SYMTAB) (which could be
-associated with, e.g., an tt(std::unordered_map)).  Then tt(addVariable)
-receives the new variable's name, adding it to the current symbol table. Once
-the first action is finished, the embedded statement (tt(stmt)) is
-parsed. Note that the mid-rule action is component number 5, so `tt(stmt)' is
-component number 6.
+executed. It saves the current symbol table as the mid-rule's semantic value,
+using the polymorphic tag tt(SYMTAB) (which could be associated with, e.g., an
+tt(std::unordered_map)).  Then tt(addVariable) receives the new variable's
+name, adding it to the current symbol table. Once the first action is
+finished, the embedded statement (tt(stmt)) is parsed. Note that the mid-rule
+action is component number 5, so `tt(stmt)' is component number 6.
 
 Once tt(statement) has been parsed, its semantic value is returned as the
 semantic value of the production rule's nonterminal. Then the semantic value
-from the earlier action is used to restore the former symbol table. This
-removes the temporary tt(let)-variable from the list so that it won't appear
-to exist while the rest of the program is parsed.
+from the mid-rule action block is used to restore the symbol table to its
+original state. This removes the temporary tt(let)-variable from the list so
+that it won't appear to exist while the rest of the program is parsed.
 
-Defining mid-rule action blocks before a rule is completely recognized often
-leads to conflicts since the parser must commit to a parse in order to execute
-the action. For example, the following two rules, without mid-rule actions,
-can coexist in a working parser because the parser can shift the open-brace
-token and look at what follows before deciding whether there is a declaration
-or not:
+Defining mid-rule action blocks before a rule has completely been recognized
+often leads to conflicts since the parser, because of the single look-ahead
+tokoen, must make a decision about the parsing sequence to use.  For example,
+the following two rules, without mid-rule actions, can coexist because the
+parser can always process the open-brace token and only then look at the next
+token before deciding whether there is a declaration or not:
         verb(
     compound: 
         '{' declarations statements '}'
@@ -71,8 +70,8 @@ or not:
         '{' statements '}'
     ;
         )
-    But when we add a mid-rule action as follows, the rules become
-nonfunctional:
+    But when we an action block is inserted before the first open-parenthesis
+a conflict is introduced:
         verb(
     compound: 
         { 
@@ -83,15 +82,14 @@ nonfunctional:
         '{' statements '}'
     ;
         )
-    Now the parser is forced to decide whether to execute the mid-rule action
-when it has read no farther than the open-brace. In other words, it must
-commit to using one rule or the other, without sufficient information to do it
-correctly. (The open-brace token is what is called the look-ahead token at
-this time, since the parser is still deciding what to do about it. See section
-ref(LOOKAHEAD).
+    Now the parser, encountering the open-parenthesis, must decide whether the
+open-parenthesis belongs to the first or second production rule. It must make
+this decision because it must execute the statement in the action block if it
+selects the first production rule, while no action is required when selecting
+the second production rule (cf. section ref(LOOKAHEAD)).
 
-You might think that the problem can be solved by putting identical actions
-into the two rules, like this:
+This problem cannot be solved by putting identical actions into the two rules,
+like so:
         verb(
         { 
             prepareForLocalVariables(); 
@@ -104,31 +102,13 @@ into the two rules, like this:
         '{' statements '}'
     ;
         )
-    But this does not help, because b() em(never) parses the contents of
-actions, and so it does em(not) realize that the two actions are identical.
+    But this does not solve the issue, because b() considers all action blocks
+as unique elements of production rules, and does not inspect the action
+blocks' contents.
 
-    If the grammar is such that a declaration can be distinguished from a
-statement by the first token (which is true in bf(C), but em(not) in bf(C++),
-which allows statements and declarations to be mixed)), then one solution
-is to put the action after the open-brace, like this:
-        verb(
-    compound: 
-        '{'
-        { 
-            prepareForLocalVariables(); 
-        }
-        declarations statements '}'
-    | 
-        '{' statements '}'
-    ;
-        )
-    Now the next token following a recognized tt('{') token would be either
-the first tt(declarations) token or the first tt(statements) token, which
-would in any case tell b() which rule to use, thus solving the problem.
-
-Another (much used) solution is to bury the action inside a support
-nonterminal symbol which recognizes the first block-open brace and performs
-the required preparations:
+A solution to the above problem consists of hiding the action block in a
+support nonterminal symbol which recognizes the first block-open brace and
+then performs the required preparations:
         verb(
     openblock:
         '{'
@@ -147,30 +127,33 @@ the required preparations:
 deciding which rule for compound it eventually uses. Note that the action
 is now at the end of its rule. Any mid-rule action can be converted to an
 end-of-rule action in this way, and this is what b() actually does to
-implement mid-rule actions.
-
-    By the way, note that in a language like bf(C++) the above construction is
-obsolete anyway, since bf(C++) allows mid-block variable- and object
-declarations. In bf(C++) a compound statement could be defined, e.g., as
-follows:
+implement mid-rule actions. B() converts mid-rule action blocks to hash-tag
+numbered elements in production rules. In a rule like
         verb(
-    stmnt_or_decl:
-        declarations
-    |
-        pure_stmnt      // among which: compound_stmnt
-    ;
-
-    statements:
-        // empty
-    |
-        statements stmnt_or_decl
-    ;
-
-    compound_stmnt:                 
-        open_block statements '}'
+    string:
+        {
+            ...
+        }
+        TOKEN
+        ...
     ;
         )
-    Here, the tt(compound_stmnt) would begin with the necessary preparations
-for local declarations, which would then have been completed by the time they
-would really be needed by tt(declarations).
+    warning messages referring to the mid-rule action block could look like
+this: 
+        verb(
+    [grammar: warning] Line 10: `rule 3: string ->  #0001': ...
+        )
+    Here, `#0001' is the hidden nonterminal merely containing the mid-rule
+action block. It is as though we had written this grammar:
+        verb(
+    string:
+        #0001 TOKEN
+        ...
+    ;
 
+    #0001:
+        {
+            ...
+        }
+    ;
+        )
