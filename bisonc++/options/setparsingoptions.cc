@@ -4,9 +4,6 @@ void Options::setParsingOptions()
 {
     string value;
 
-    if (d_arg.option(&value, "constructor-checks"))
-        setConstructorChecks(value, "", 0);
-
     if (d_arg.option(&value, 'd'))
         setDefaultAction(value, "", 0);
 

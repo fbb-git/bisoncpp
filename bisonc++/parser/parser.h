@@ -359,21 +359,5 @@ inline std::unordered_map<std::string,
     return d_polymorphic;
 }
 
-
-//FBB        bool errNegative(int nElements, Block &block, AtDollar const &atd);
-//FBB        bool errNoRef(int nElements, Block &block, AtDollar const &atd);
-            // may generate error or warning:
-//FBB        void negativeIndex(AtDollar const &atd) const;
-
-//FBB        void warnAutoOverride(AtDollar const &atd) const;
-//FBB        void warnAutoIgnored(char const *typeOrField, 
-//                             AtDollar const &atd) const;
-//FBB        void warnUntaggedValue(AtDollar const &atd) const;
-
-//        void errNoSemantic(char const *label, AtDollar const &atd,
-// FBB?                                              std::string const &id) const;
-
-
-
 #endif
 

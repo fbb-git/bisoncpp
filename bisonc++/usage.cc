@@ -17,10 +17,6 @@ void usage(string const &program_name)
     "              parentheses. Short options require arguments if their\n"
     "              long option variants do too):\n"
 
-    "   --action-cases (-a): display (to std::cerr) the case-entry numbers "
-                                                                    "of\n"
-    "           actions just before execution by Parser::executeAction.\n"
-
     "   --analyze-only (-A): only analyze the grammar; except for possibly\n"
     "           the verbose grammar description file no files are written.\n"
 
@@ -47,15 +43,11 @@ void usage(string const &program_name)
     "   --construction:\n"
     "           write details about the grammar analysis to stdout.\n"
 
-//  "   --constructor-checks=<off|on>:\n"
-//  "           unless 'off', insert compile-time checks whether default\n"
-//  "           construction is supported by STYPE__ or polymorphic types\n"
-
     "   --debug:\n"
     "           generates debug output statements in the generated parse\n"
     "           function's source.\n"
 
-    "   --default-actions=<off|quiet|warn> (-d):\n"
+    "   --default-actions=<off|quiet|warn|std> (-d):\n"
     "           unless 'off', add a $$ = $1 action block to production "
                                                                     "rules\n" 
     "           not defining final action blocks.\n"

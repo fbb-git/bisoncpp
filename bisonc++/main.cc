@@ -11,7 +11,6 @@ namespace
 {
     Arg::LongOption longOptions[] = 
     {
-        Arg::LongOption{"action-cases", 'a'},
         Arg::LongOption{"analyze-only", 'A'},
                                                             
         Arg::LongOption{"baseclass-header", 'b'},           // also directive
@@ -27,8 +26,6 @@ namespace
             // the full set of states, including             
             // the non-kernel items                         
 
-//        {"constructor-checks", Arg::Required},              // also directive
-                                                            
         Arg::LongOption{"debug"},                           // also directive
         Arg::LongOption{"default-actions", 'd'},            // also directive
 
@@ -92,7 +89,7 @@ namespace
 int main(int argc, char **argv)
 try
 {
-    Arg &arg = Arg::initialize("aAB:b:C:c:d:Df:H:hI:i:L:M:n:p:P:s:S:tTVv", 
+    Arg &arg = Arg::initialize("AB:b:C:c:d:Df:H:hI:i:L:M:n:p:P:s:S:tTVv", 
                     longOptions, longEnd, argc, argv);
 
     arg.versionHelp(usage, version, 1);

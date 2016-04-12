@@ -94,7 +94,6 @@ class Generator
         void debug(std::ostream &out) const;
         void debugIncludes(std::ostream &out) const;
         void debugFunctions(std::ostream &out) const;
-//FBB        void debugInit(std::ostream &out) const;
         void debugDecl(std::ostream &out) const;
         void debugLookup(std::ostream &out) const;
         void defaultActionReturn(std::ostream &out) const;
