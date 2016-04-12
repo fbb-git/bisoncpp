@@ -1,11 +1,16 @@
 #include "parser.ih"
 
+    // see parser.h about refByScanner for info why midRule
+    // returns true.
+
 bool Parser::dvalReplace(bool midRule, Block &block, AtDollar const &atd, 
-                         char const *suffix, char const *label)
+                         char const *suffix)
 {
-    warnAutoTag(midRule, atd, label);
+    warnAutoTag(midRule, atd);
     
     block.replace(atd.pos(), atd.length(), s_semanticValue + suffix);
 
-    return block.assignment();
+    return midRule || block.assignment();   // midrule assumes assignments,
+                                            // to prevent warnings from
+                                            // warnMissingSemval
 }

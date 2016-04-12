@@ -3,7 +3,7 @@
 bool Parser::dvalPolyReplace(bool midRule, Block &block, AtDollar const &atd, 
                                                         char const *suffix)
 {
-    string tag = warnAutoTag(midRule, atd, "tag");  // get the element's tag
+    string tag = warnAutoTag(midRule, atd);     // get the element's tag
 
     block.replace(atd.pos(), atd.length(), 
                 s_semanticValue + 
@@ -14,6 +14,6 @@ bool Parser::dvalPolyReplace(bool midRule, Block &block, AtDollar const &atd,
                         ".get<Tag__::" + tag + ">()"
                 ) + suffix);
 
-    return block.assignment();
+    return midRule || block.assignment();
 }
 

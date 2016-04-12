@@ -27,12 +27,13 @@ class Parser: public ParserBase
     typedef ActionMap::iterator                             Iterator;
     typedef ActionMap::value_type                           Value;
 
-    enum SemType
-    {
+    enum SemType        // s_autoTypeLable must be synchronized with this
+    {                   // enum
         SINGLE,
         UNION,
         POLYMORPHIC
     };
+    static char const *s_autoTypeLabel[];
 
             // data members that are self-explanatory are not explicitly
             // described here.
@@ -176,9 +177,10 @@ class Parser: public ParserBase
         void substituteBlock(int nElements, Block &block);
 
             // replacement members (see also handleProductionElement)
-
+            // the dval*Replace return true for midRule actions, 
+            // because that prevents the missingSemval warning.
         bool dvalReplace(bool midRule, Block &block, AtDollar const &atd, 
-                                       char const *suffix, char const *label);
+                                       char const *suffix);
         bool svsReplace(int nElements, Block &block, AtDollar const &atd, 
                                                     char const *suffix);
         bool dvalUnionReplace(bool midRule, Block &block, AtDollar const &atd, 
@@ -207,6 +209,15 @@ class Parser: public ParserBase
 
                                                                 // @nr
         bool locEl(int nElements, Block &block, AtDollar const &atd);
+
+        // Wrt the dval* functions below:
+        // 'refByScanner' means that the syntax used $$, but the scanner
+        // changed that into _$$. In those cases mid-action rules should issue
+        // warnings if the terminal has an associated type. Otherwise, an
+        // explicit _$$ was used and no warning needs to be issued.
+        
+        // mid-rule actions (nElements < 0) should not issue missing Semval
+        // warnings This is realized by returning true if nElements < 0
 
                                                                 // $$
         bool dval(int nElements, Block &block, AtDollar const &atd);
@@ -264,8 +275,7 @@ class Parser: public ParserBase
 
         void constructorChecks() const;
         void warnTagMismatches() const;
-        std::string warnAutoTag(bool midRule, AtDollar const &atd, 
-                                char const *label) const;
+        std::string warnAutoTag(bool midRule, AtDollar const &atd) const;
 
         void addPolymorphic(std::string const &tag, 
                             std::string const &typeSpec);

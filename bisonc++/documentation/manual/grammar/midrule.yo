@@ -14,60 +14,56 @@ tt($6) in the final action block.
 
 Mid-rule action blocks can also have semantic values. When using tt(%union) or
 tt(%polymorphic) and a rule's nonterminal is associated with a union field or
-polymorphic token, then Mid-rule action blocks ...
+polymorphic token, then mid-rule action blocks loose those associations. When
+the tt($$, $$.) or tt($$->) shorthand notations appear in mid-action blocks of
+production rules whose nonterminal is associated with a polymorphic type or
+union field then a warning is issued that automatic type associations do not
+apply. Using the tt(_$$) shorthand notation prevents the warning from being
+issued. 
 
-
-can set their semantic values using assignments to tt($$), and actions later
-in the rule can refer to the value using the action block's
-dollar-index. Since types cannot be associated with mid-rule action blocks,
-using the tt(_$i) shorthand will probably be required to refer to the mid-rule
-action block's generic tt(STYPE__) value, to which the appropriate field
-selector (for union-type semantic values) or tt(.get<tag>()) member function
-can be applied to access the mid-rule action block's semantic value in a
-subsequent action block.
-
-There is no way to set the value of the entire rule with a mid-rule action,
-because assignments to tt($$) do not have that effect. The only way to set the
-value for the entire rule is with an ordinary action at the end of the rule.
-
-Here is an example from a hypothetical compiler, handling a tt(let) statement
-that looks like ``tt(let (variable) statement)' and serves to create a
-variable named tt(variable) temporarily for the duration of statement. To
-parse this construct, we must put tt(variable) into the symbol table while
-statement is parsed, then remove it afterward. Here is how it is done:
+Here is an example from a hypothetical grammar, defining a tt(let) statement
+that looks like `this:
+        verb(
+    let (variable) statement
+        )
+    Here, tt(variable) is the name of a variable that must only exists for the
+tt(statement's) lifetime. To parse this construct, we must insert tt(variable)
+into a symbol table before parsing tt(statement), and must remove it
+afterward. Here is how it is done:
         verb(
     stmt:   
-        LET '(' var ')'
+        LET '(' variable ')'
         {
-            $<u_context>$ = pushSymtab();
-            temporaryVariable($3); 
+            _$$.assign<SYMTAB>(pushSymtab());
+            addVariable($3); 
         }
         stmt    
         { 
             $$ = $6;
-            popSymtab($<u_context>5); 
+            popSymtab($5); 
         }
         )
     As soon as `tt(let (variable))' has been recognized, the first action is
-executed. It saves a copy of the current symbol table as its semantic value,
-using alternative tt(u_context) in the data-type union. Then it uses
-tt(temporaryVariable()) to add the new variable (using, e.g., a name that
-cannot normally be used in the parsed language) to the current symbol
-table. Once the first action is finished, the embedded statement (tt(stmt))
-can be parsed. Note that the mid-rule action is component number 5, so
-`tt(stmt)' is component number 6.
+executed. It saves a copy of the current symbol table as the mid-rule's
+semantic value, using the polymorphic tag tt(SYMTAB) (which could be
+associated with, e.g., an tt(std::unordered_map)).  Then tt(addVariable)
+receives the new variable's name, adding it to the current symbol table. Once
+the first action is finished, the embedded statement (tt(stmt)) is
+parsed. Note that the mid-rule action is component number 5, so `tt(stmt)' is
+component number 6.
 
-Once the embedded statement is parsed, its semantic value becomes the value of
-the entire tt(let)-statement. Then the semantic value from the earlier action
-is used to restore the former symbol table. This removes the temporary
-tt(let)-variable from the list so that it won't appear to exist while the rest
-of the program is parsed.
+Once tt(statement) has been parsed, its semantic value is returned as the
+semantic value of the production rule's nonterminal. Then the semantic value
+from the earlier action is used to restore the former symbol table. This
+removes the temporary tt(let)-variable from the list so that it won't appear
+to exist while the rest of the program is parsed.
 
-Taking action before a rule is completely recognized often leads to conflicts
-since the parser must commit to a parse in order to execute the action. For
-example, the following two rules, without mid-rule actions, can coexist in a
-working parser because the parser can shift the open-brace token and look at
-what follows before deciding whether there is a declaration or not:
+Defining mid-rule action blocks before a rule is completely recognized often
+leads to conflicts since the parser must commit to a parse in order to execute
+the action. For example, the following two rules, without mid-rule actions,
+can coexist in a working parser because the parser can shift the open-brace
+token and look at what follows before deciding whether there is a declaration
+or not:
         verb(
     compound: 
         '{' declarations statements '}'

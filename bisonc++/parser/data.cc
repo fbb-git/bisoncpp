@@ -20,6 +20,12 @@ string Parser::s_stype = "STYPE__"; // generic semantic value for POLYMORPHIC
 
 string const Parser::s_undefined{"<undefined>"};
 
+char const *Parser::s_autoTypeLabel[] = 
+    {
+        0,
+        "field",
+        "tag"
+    };
 
 Parser::ADmap Parser::s_single =
 {
