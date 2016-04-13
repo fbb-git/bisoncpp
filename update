@@ -22,7 +22,7 @@ if [ "$yesno" == "y" ] ; then
     git co gh-pages
 
     rm -rf manual
-    mv ../wip/changelog.txt ../wip/bisonc++man.html ../wip/manual .
+    mv ../wip/changelog.txt ../wip/bisonc++*.html ../wip/manual .
     rm -r manual/essence
 fi
 
