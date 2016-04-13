@@ -1,6 +1,9 @@
 %filenames parser
 %scanner ../scanner/scanner.h
 
+// can be activated with no ill effects:
+// %default-actions quiet
+
 %polymorphic INT: int; TEXT: std::string;
 
 %token INT IDENTIFIER 
@@ -54,6 +57,9 @@ rule:
     }
 |
     combi '\n'
+    {
+        process($1);
+    }
 ;
 
 rulePrompt:

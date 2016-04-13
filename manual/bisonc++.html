@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<title><div style="text-align: center"><strong>Bisonc++</strong> (Version 4.13.01) User Guide</div></title>
+<title><div style="text-align: center"><strong>Bisonc++</strong> (Version 5.00.00) User Guide</div></title>
 <style type="text/css">
     figure {text-align: center;}
     img {vertical-align: center;}
@@ -9,191 +9,197 @@
 </head>
 <body text="#27408B" bgcolor="#FFFAF0">
 <hr/>
-<h1 id="title"><div style="text-align: center"><strong>Bisonc++</strong> (Version 4.13.01) User Guide</div></h1>
+<h1 id="title"><div style="text-align: center"><strong>Bisonc++</strong> (Version 5.00.00) User Guide</div></h1>
 <h2 id="author"><div style="text-align: center">Frank B. Brokken</div></h2>
 
 <h2 id="affiliation"><div style="text-align: center">Center for Information Technology,<br/>
-        University of Groningen <br/>Nettelbosje 1,<br/>P.O. Box 11044,<br/>9700 CA Groningen <br/>The Netherlands <br/></div></h2><h2 id="date"><div style="text-align: center">2005-2015</div></h2>
+        University of Groningen <br/>Nettelbosje 1,<br/>P.O. Box 11044,<br/>9700 CA Groningen <br/>The Netherlands <br/></div></h2><h2 id="date"><div style="text-align: center">2005-2016</div></h2>
 
 <h1>Table of Contents</h1>
 <dl><dt><h2><a href="bisonc++01.html#l1">Chapter 1: Introduction</a></h2></dt>
-<dt><h2><a href="bisonc++02.html#l2">Chapter 2: Conditions for Using Bisonc++</a></h2></dt>
 <dd><dl>
-<dt><h3><a href="bisonc++02.html#l3">2.1: The `GNU General Public License' (GPL)</a></h3></dt>
+<dt><h3><a href="bisonc++01.html#l2">1.1: What's new in version 5.00.00</a></h3></dt>
 </dl></dd>
-<dt><h2><a href="bisonc++03.html#l4">Chapter 3: Bisonc++ concepts</a></h2></dt>
+<dt><h2><a href="bisonc++02.html#l3">Chapter 2: Conditions for Using Bisonc++</a></h2></dt>
 <dd><dl>
-<dt><h3><a href="bisonc++03.html#l5">3.1: Languages and Context-Free Grammars</a></h3></dt>
-<dt><h3><a href="bisonc++03.html#l6">3.2: From Formal Rules to Bisonc++ Input</a></h3></dt>
-<dt><h3><a href="bisonc++03.html#l7">3.3: Semantic Values</a></h3></dt>
-<dt><h3><a href="bisonc++03.html#l8">3.4: Semantic Actions</a></h3></dt>
-<dt><h3><a href="bisonc++03.html#l9">3.5: Bisonc++ output: the Parser class</a></h3></dt>
-<dd><dl>
-<dt><a href="bisonc++03.html#l10">3.5.1: Bisonc++: an optionally reentrant Parser</a></dt>
+<dt><h3><a href="bisonc++02.html#l4">2.1: The `GNU General Public License' (GPL)</a></h3></dt>
 </dl></dd>
-<dt><h3><a href="bisonc++03.html#l11">3.6: Stages in Using Bisonc++</a></h3></dt>
-<dt><h3><a href="bisonc++03.html#l12">3.7: The Overall Layout of a Bisonc++ Grammar File</a></h3></dt>
+<dt><h2><a href="bisonc++03.html#l5">Chapter 3: Bisonc++ concepts</a></h2></dt>
+<dd><dl>
+<dt><h3><a href="bisonc++03.html#l6">3.1: Languages and Context-Free Grammars</a></h3></dt>
+<dt><h3><a href="bisonc++03.html#l7">3.2: From Formal Rules to Bisonc++ Input</a></h3></dt>
+<dt><h3><a href="bisonc++03.html#l8">3.3: Semantic Values</a></h3></dt>
+<dt><h3><a href="bisonc++03.html#l9">3.4: Semantic Actions</a></h3></dt>
+<dt><h3><a href="bisonc++03.html#l10">3.5: Bisonc++ output: the Parser class</a></h3></dt>
+<dd><dl>
+<dt><a href="bisonc++03.html#l11">3.5.1: Bisonc++: an optionally reentrant Parser</a></dt>
 </dl></dd>
-<dt><h2><a href="bisonc++04.html#l13">Chapter 4: Examples</a></h2></dt>
-<dd><dl>
-<dt><h3><a href="bisonc++04.html#l14">4.1: rpn: a Reverse Polish Notation Calculator</a></h3></dt>
-<dd><dl>
-<dt><a href="bisonc++04.html#l15">4.1.1: Declarations for the `rpn' calculator</a></dt>
-<dt><a href="bisonc++04.html#l16">4.1.2: Grammar rules for the `rpn' calculator</a></dt>
-<dd><dl>
-<dt><a href="bisonc++04.html#l17">4.1.2.1: Explanation of `input'</a></dt>
-<dt><a href="bisonc++04.html#l18">4.1.2.2: Explanation of `line'</a></dt>
-<dt><a href="bisonc++04.html#l19">4.1.2.3: Explanation of `expr'</a></dt>
+<dt><h3><a href="bisonc++03.html#l12">3.6: Using Bisonc++: main steps</a></h3></dt>
+<dt><h3><a href="bisonc++03.html#l13">3.7: The Overall Layout of a Bisonc++ Grammar File</a></h3></dt>
 </dl></dd>
-<dt><a href="bisonc++04.html#l20">4.1.3: The Lexical Scanner used by `rpn'</a></dt>
-<dt><a href="bisonc++04.html#l21">4.1.4: The Controlling Function `main()'</a></dt>
-<dt><a href="bisonc++04.html#l22">4.1.5: The error reporting member `error()'</a></dt>
-<dt><a href="bisonc++04.html#l23">4.1.6: Running Bisonc++ to generate the Parser</a></dt>
-<dt><a href="bisonc++04.html#l24">4.1.7: Constructing and running `rpn'</a></dt>
+<dt><h2><a href="bisonc++04.html#l14">Chapter 4: Bisonc++ grammar files</a></h2></dt>
+<dd><dl>
+<dt><h3><a href="bisonc++04.html#l15">4.1: Outline of a Bisonc++ Grammar File</a></h3></dt>
+<dt><h3><a href="bisonc++04.html#l16">4.2: Symbols, Terminal and Nonterminal Symbols</a></h3></dt>
+<dt><h3><a href="bisonc++04.html#l17">4.3: Syntax of Grammar Rules</a></h3></dt>
+<dt><h3><a href="bisonc++04.html#l18">4.4: Writing recursive rules</a></h3></dt>
+<dt><h3><a href="bisonc++04.html#l19">4.5: Bisonc++ Directives</a></h3></dt>
+<dd><dl>
+<dt><a href="bisonc++04.html#l20">4.5.1: %baseclass-preinclude: specifying a header included by the             baseclass</a></dt>
+<dt><a href="bisonc++04.html#l21">4.5.2: %class-name: defining the name of the parser class</a></dt>
+<dt><a href="bisonc++04.html#l22">4.5.3: %debug: adding debugging code to the `parse()' member</a></dt>
+<dt><a href="bisonc++04.html#l23">4.5.4: %default-actions: adding `$$ = $1' action blocks to production rules</a></dt>
+<dt><a href="bisonc++04.html#l24">4.5.5: %error-verbose: dumping the parser's state stack</a></dt>
+<dt><a href="bisonc++04.html#l25">4.5.6: %expect: suppressing conflict warnings</a></dt>
+<dt><a href="bisonc++04.html#l26">4.5.7: %flex: using the traditional `flex++'  interface</a></dt>
+<dt><a href="bisonc++04.html#l27">4.5.8: %include: splitting the input file</a></dt>
+<dt><a href="bisonc++04.html#l28">4.5.9: %left, %right, %nonassoc: defining operator         precedence</a></dt>
+<dt><a href="bisonc++04.html#l29">4.5.10: %locationstruct: specifying a dedicated location struct</a></dt>
+<dt><a href="bisonc++04.html#l30">4.5.11: %lsp-needed: using the default location type</a></dt>
+<dt><a href="bisonc++04.html#l31">4.5.12: %ltype: using an existing location type</a></dt>
+<dt><a href="bisonc++04.html#l32">4.5.13: %namespace: using a namespace</a></dt>
+<dt><a href="bisonc++04.html#l33">4.5.14: %negative-dollar-indices: using constructions like $-1</a></dt>
+<dt><a href="bisonc++04.html#l34">4.5.15: %no-lines: suppressing `#line' directives</a></dt>
+<dt><a href="bisonc++04.html#l35">4.5.16: %prec: overruling default precedences</a></dt>
+<dt><a href="bisonc++04.html#l36">4.5.17: %polymorphic: using polymorphism to define multiple semantic             values</a></dt>
+<dt><a href="bisonc++04.html#l37">4.5.18: %print-tokens: displaying tokens and matched text</a></dt>
+<dt><a href="bisonc++04.html#l38">4.5.19: %required-tokens: defining the minimum number of tokens between         error reports</a></dt>
+<dt><a href="bisonc++04.html#l39">4.5.20: %scanner: using a standard scanner interface</a></dt>
+<dt><a href="bisonc++04.html#l40">4.5.21: %scanner-matched-text-function: define the name of the scanner's         member returning the matched texttoken</a></dt>
+<dt><a href="bisonc++04.html#l41">4.5.22: %scanner-token-function: define the name of the scanner's token             function</a></dt>
+<dt><a href="bisonc++04.html#l42">4.5.23: %start: defining the start rule</a></dt>
+<dt><a href="bisonc++04.html#l43">4.5.24: %stype: defining a single semantic value type</a></dt>
+<dt><a href="bisonc++04.html#l44">4.5.25: %tag-mismatches: check for tag-mismatches with polymorphic         semantic values</a></dt>
+<dt><a href="bisonc++04.html#l45">4.5.26: %token: defining token names</a></dt>
+<dd><dl>
+<dt><a href="bisonc++04.html#l46">4.5.26.1: Improper token names</a></dt>
 </dl></dd>
-<dt><h3><a href="bisonc++04.html#l25">4.2: `calc': an Infix Notation Calculator</a></h3></dt>
-<dt><h3><a href="bisonc++04.html#l26">4.3: Basic Error Recovery</a></h3></dt>
-<dt><h3><a href="bisonc++04.html#l27">4.4: `mfcalc': a Multi-Function Calculator</a></h3></dt>
+<dt><a href="bisonc++04.html#l47">4.5.27: %type: associating semantic values with (non)terminals</a></dt>
+<dt><a href="bisonc++04.html#l48">4.5.28: %union: using a 'union' to define multiple semantic values</a></dt>
+<dt><a href="bisonc++04.html#l49">4.5.29: %weak-tags: %polymorphic declaring 'enum Tag__'</a></dt>
+<dt><a href="bisonc++04.html#l50">4.5.30: Directives controlling the names of generated files</a></dt>
 <dd><dl>
-<dt><a href="bisonc++04.html#l28">4.4.1: The Declaration Section for `mfcalc'</a></dt>
-<dt><a href="bisonc++04.html#l29">4.4.2: Grammar Rules for `mfcalc'</a></dt>
-<dt><a href="bisonc++04.html#l30">4.4.3: The `mfcalc' Symbol- and Function Tables</a></dt>
-<dt><a href="bisonc++04.html#l31">4.4.4: The revised `lex()' member</a></dt>
-<dt><a href="bisonc++04.html#l32">4.4.5: Constructing `mfcalc'</a></dt>
-</dl></dd>
-<dt><h3><a href="bisonc++04.html#l33">4.5: Exercises</a></h3></dt>
-</dl></dd>
-<dt><h2><a href="bisonc++05.html#l34">Chapter 5: Bisonc++ grammar files</a></h2></dt>
-<dd><dl>
-<dt><h3><a href="bisonc++05.html#l35">5.1: Outline of a Bisonc++ Grammar File</a></h3></dt>
-<dt><h3><a href="bisonc++05.html#l36">5.2: Symbols, Terminal and Nonterminal Symbols</a></h3></dt>
-<dt><h3><a href="bisonc++05.html#l37">5.3: Syntax of Grammar Rules</a></h3></dt>
-<dt><h3><a href="bisonc++05.html#l38">5.4: Writing recursive rules</a></h3></dt>
-<dt><h3><a href="bisonc++05.html#l39">5.5: Bisonc++ Directives</a></h3></dt>
-<dd><dl>
-<dt><a href="bisonc++05.html#l40">5.5.1: %baseclass-preinclude: specifying a header included by the             baseclass</a></dt>
-<dt><a href="bisonc++05.html#l41">5.5.2: %class-name: defining the name of the parser class</a></dt>
-<dt><a href="bisonc++05.html#l42">5.5.3: %debug: adding debugging code to the `parse()' member</a></dt>
-<dt><a href="bisonc++05.html#l43">5.5.4: %error-verbose: dumping the parser's state stack</a></dt>
-<dt><a href="bisonc++05.html#l44">5.5.5: %expect: suppressing conflict warnings</a></dt>
-<dt><a href="bisonc++05.html#l45">5.5.6: %flex: using the traditional `flex++'  interface</a></dt>
-<dt><a href="bisonc++05.html#l46">5.5.7: %include: splitting the input file</a></dt>
-<dt><a href="bisonc++05.html#l47">5.5.8: %left, %right, %nonassoc: defining operator         precedence</a></dt>
-<dt><a href="bisonc++05.html#l48">5.5.9: %locationstruct: specifying a dedicated location struct</a></dt>
-<dt><a href="bisonc++05.html#l49">5.5.10: %lsp-needed: using the default location type</a></dt>
-<dt><a href="bisonc++05.html#l50">5.5.11: %ltype: using an existing location type</a></dt>
-<dt><a href="bisonc++05.html#l51">5.5.12: %namespace: using a namespace</a></dt>
-<dt><a href="bisonc++05.html#l52">5.5.13: %negative-dollar-indices: using constructions like $-1</a></dt>
-<dt><a href="bisonc++05.html#l53">5.5.14: %no-lines: suppressing `#line' directives</a></dt>
-<dt><a href="bisonc++05.html#l54">5.5.15: %prec: overruling default precedences</a></dt>
-<dt><a href="bisonc++05.html#l55">5.5.16: %polymorphic: using polymorphism to define multiple semantic             values</a></dt>
-<dt><a href="bisonc++05.html#l56">5.5.17: %print-tokens: displaying tokens and matched text</a></dt>
-<dt><a href="bisonc++05.html#l57">5.5.18: %required-tokens: defining the minimum number of tokens between         error reports</a></dt>
-<dt><a href="bisonc++05.html#l58">5.5.19: %scanner: using a standard scanner interface</a></dt>
-<dt><a href="bisonc++05.html#l59">5.5.20: %scanner-matched-text-function: define the name of the scanner's         member returning the matched texttoken</a></dt>
-<dt><a href="bisonc++05.html#l60">5.5.21: %scanner-token-function: define the name of the scanner's token             function</a></dt>
-<dt><a href="bisonc++05.html#l61">5.5.22: %start: defining the start rule</a></dt>
-<dt><a href="bisonc++05.html#l62">5.5.23: %stype: specifying the semantic stack type</a></dt>
-<dt><a href="bisonc++05.html#l63">5.5.24: %token: defining token names</a></dt>
-<dd><dl>
-<dt><a href="bisonc++05.html#l64">5.5.24.1: Improper token names</a></dt>
-</dl></dd>
-<dt><a href="bisonc++05.html#l65">5.5.25: %type: associating semantic values to (non)terminals</a></dt>
-<dt><a href="bisonc++05.html#l66">5.5.26: %union: using a 'union' to define multiple semantic values</a></dt>
-<dt><a href="bisonc++05.html#l67">5.5.27: %weak-tags: %polymorphic declaring 'enum Tag__'</a></dt>
-<dt><a href="bisonc++05.html#l68">5.5.28: Directives controlling the names of generated files</a></dt>
-<dd><dl>
-<dt><a href="bisonc++05.html#l69">5.5.28.1: %baseclass-header: defining the parser's base class header</a></dt>
-<dt><a href="bisonc++05.html#l70">5.5.28.2: %class-header: defining the parser's class header</a></dt>
-<dt><a href="bisonc++05.html#l71">5.5.28.3: %filenames: specifying a generic filename</a></dt>
-<dt><a href="bisonc++05.html#l72">5.5.28.4: %implementation-header: defining the implementation header</a></dt>
-<dt><a href="bisonc++05.html#l73">5.5.28.5: %parsefun-source: defining the parse() function's sourcefile</a></dt>
-<dt><a href="bisonc++05.html#l74">5.5.28.6: %target-directory: defining the directory where files must                 be written</a></dt>
+<dt><a href="bisonc++04.html#l51">4.5.30.1: %baseclass-header: defining the parser's base class header</a></dt>
+<dt><a href="bisonc++04.html#l52">4.5.30.2: %class-header: defining the parser's class header</a></dt>
+<dt><a href="bisonc++04.html#l53">4.5.30.3: %filenames: specifying a generic filename</a></dt>
+<dt><a href="bisonc++04.html#l54">4.5.30.4: %implementation-header: defining the implementation header</a></dt>
+<dt><a href="bisonc++04.html#l55">4.5.30.5: %parsefun-source: defining the parse() function's sourcefile</a></dt>
+<dt><a href="bisonc++04.html#l56">4.5.30.6: %target-directory: defining the directory where files must                 be written</a></dt>
 </dl></dd>
 </dl></dd>
-<dt><h3><a href="bisonc++05.html#l75">5.6: Defining Language Semantics</a></h3></dt>
+<dt><h3><a href="bisonc++04.html#l57">4.6: The Meaning Of Things: Semantics</a></h3></dt>
 <dd><dl>
-<dt><a href="bisonc++05.html#l76">5.6.1: Data Types of Semantic Values</a></dt>
-<dt><a href="bisonc++05.html#l77">5.6.2: More Than One Value Type</a></dt>
-<dt><a href="bisonc++05.html#l78">5.6.3: Polymorphism and multiple semantic values:                         `%polymorphic'</a></dt>
+<dt><a href="bisonc++04.html#l58">4.6.1: Polymorphism and Multiple Semantic Values:                         `%polymorphic'</a></dt>
 <dd><dl>
-<dt><a href="bisonc++05.html#l79">5.6.3.1: The %polymorphic directive</a></dt>
-<dt><a href="bisonc++05.html#l80">5.6.3.2: The %polymorphic and %type: associating semantic values                 with (non-)terminals</a></dt>
-<dt><a href="bisonc++05.html#l81">5.6.3.3: Code generated by %polymorphic</a></dt>
-<dt><a href="bisonc++05.html#l82">5.6.3.4: A parser using a polymorphic semantic value type</a></dt>
-<dt><a href="bisonc++05.html#l83">5.6.3.5: A scanner using a polymorphic semantic value type</a></dt>
+<dt><a href="bisonc++04.html#l59">4.6.1.1: The %polymorphic directive</a></dt>
+<dt><a href="bisonc++04.html#l60">4.6.1.2: Code generated by %polymorphic</a></dt>
+<dt><a href="bisonc++04.html#l61">4.6.1.3: A parser using a polymorphic semantic value type</a></dt>
+<dt><a href="bisonc++04.html#l62">4.6.1.4: A scanner using a polymorphic semantic value type</a></dt>
 </dl></dd>
-<dt><a href="bisonc++05.html#l84">5.6.4: Actions</a></dt>
-<dt><a href="bisonc++05.html#l85">5.6.5: Data Types of Values in Actions</a></dt>
-<dt><a href="bisonc++05.html#l86">5.6.6: Actions in Mid-Rule</a></dt>
-</dl></dd>
-<dt><h3><a href="bisonc++05.html#l87">5.7: Basic Grammatical Constructions</a></h3></dt>
+<dt><a href="bisonc++04.html#l63">4.6.2: Actions and shorthand ($) notations</a></dt>
 <dd><dl>
-<dt><a href="bisonc++05.html#l88">5.7.1: Plain Alternatives</a></dt>
-<dt><a href="bisonc++05.html#l89">5.7.2: One Or More Alternatives, No Separators</a></dt>
-<dt><a href="bisonc++05.html#l90">5.7.3: Zero Or More Alternatives, No Separators</a></dt>
-<dt><a href="bisonc++05.html#l91">5.7.4: One Or More Alternatives, Using Separators</a></dt>
-<dt><a href="bisonc++05.html#l92">5.7.5: Zero Or More Alternatives, Using Separators</a></dt>
-<dt><a href="bisonc++05.html#l93">5.7.6: Nested Blocks</a></dt>
-</dl></dd>
-<dt><h3><a href="bisonc++05.html#l94">5.8: Multiple Parsers in the Same Program</a></h3></dt>
-</dl></dd>
-<dt><h2><a href="bisonc++06.html#l95">Chapter 6: The Generated Parser Class' Members</a></h2></dt>
-<dd><dl>
-<dt><h3><a href="bisonc++06.html#l96">6.1: Public Members and Types</a></h3></dt>
-<dt><h3><a href="bisonc++06.html#l97">6.2: Protected Enumerations and Types</a></h3></dt>
-<dt><h3><a href="bisonc++06.html#l98">6.3: Non-public Member Functions</a></h3></dt>
-<dd><dl>
-<dt><a href="bisonc++06.html#l99">6.3.1: `lex()': Interfacing the Lexical Analyzer</a></dt>
-</dl></dd>
-<dt><h3><a href="bisonc++06.html#l100">6.4: Protected Data Members</a></h3></dt>
-<dt><h3><a href="bisonc++06.html#l101">6.5: Types and Variables in the Anonymous Namespace</a></h3></dt>
-<dt><h3><a href="bisonc++06.html#l102">6.6: Summary of Special Constructions for Actions</a></h3></dt>
-</dl></dd>
-<dt><h2><a href="bisonc++07.html#l103">Chapter 7: The Bisonc++ Parser Algorithm</a></h2></dt>
-<dd><dl>
-<dd><dl>
-<dt><a href="bisonc++07.html#l104">7.0.1: The FIRST Sets</a></dt>
-<dt><a href="bisonc++07.html#l105">7.0.2: The States</a></dt>
-<dt><a href="bisonc++07.html#l106">7.0.3: The Look-ahead Sets</a></dt>
-<dd><dl>
-<dt><a href="bisonc++07.html#l107">7.0.3.1: The look-ahead token</a></dt>
-<dt><a href="bisonc++07.html#l108">7.0.3.2: How look-ahead sets are determined</a></dt>
-</dl></dd>
-<dt><a href="bisonc++07.html#l109">7.0.4: The Final Transition Tables</a></dt>
-<dd><dl>
-<dt><a href="bisonc++07.html#l110">7.0.4.1: Preamble</a></dt>
-</dl></dd>
-<dt><a href="bisonc++07.html#l111">7.0.5: Processing Input</a></dt>
-</dl></dd>
-<dt><h3><a href="bisonc++07.html#l112">7.1: Shift/Reduce Conflicts</a></h3></dt>
-<dt><h3><a href="bisonc++07.html#l113">7.2: Operator Precedence</a></h3></dt>
-<dd><dl>
-<dt><a href="bisonc++07.html#l114">7.2.1: When Precedence is Needed</a></dt>
-<dt><a href="bisonc++07.html#l115">7.2.2: Specifying Operator Precedence</a></dt>
-<dt><a href="bisonc++07.html#l116">7.2.3: Precedence Examples</a></dt>
-<dt><a href="bisonc++07.html#l117">7.2.4: How Precedence Works</a></dt>
-<dt><a href="bisonc++07.html#l118">7.2.5: Rule precedence</a></dt>
-</dl></dd>
-<dt><h3><a href="bisonc++07.html#l119">7.3: Context-Dependent Precedence</a></h3></dt>
-<dt><h3><a href="bisonc++07.html#l120">7.4: Reduce/Reduce Conflicts</a></h3></dt>
-<dt><h3><a href="bisonc++07.html#l121">7.5: Mysterious Reduce/Reduce Conflicts</a></h3></dt>
-</dl></dd>
-<dt><h2><a href="bisonc++08.html#l122">Chapter 8: Error Recovery</a></h2></dt>
-<dd><dl>
-<dt><h3><a href="bisonc++08.html#l123">8.1: Syntactical Error Recovery</a></h3></dt>
-<dd><dl>
-<dt><a href="bisonc++08.html#l124">8.1.1: Error Recovery</a></dt>
-<dd><dl>
-<dt><a href="bisonc++08.html#l125">8.1.1.1: Error recovery --debug output</a></dt>
+<dt><a href="bisonc++04.html#l64">4.6.2.1: %stype shorthand notations</a></dt>
+<dt><a href="bisonc++04.html#l65">4.6.2.2: %union shorthand notations</a></dt>
+<dt><a href="bisonc++04.html#l66">4.6.2.3: %polymorphic shorthand notations</a></dt>
+<dt><a href="bisonc++04.html#l67">4.6.2.4: Mid-Rule Action Blocks</a></dt>
 </dl></dd>
 </dl></dd>
-<dt><h3><a href="bisonc++08.html#l126">8.2: Semantical Error Recovery</a></h3></dt>
-</dl></dd>
-<dt><h2><a href="bisonc++09.html#l127">Chapter 9: Invoking Bisonc++</a></h2></dt>
+<dt><h3><a href="bisonc++04.html#l68">4.7: Basic Grammatical Constructions</a></h3></dt>
 <dd><dl>
-<dt><h3><a href="bisonc++09.html#l128">9.1: Bisonc++ options</a></h3></dt>
-<dt><h3><a href="bisonc++09.html#l129">9.2: Bisonc++ usage</a></h3></dt>
+<dt><a href="bisonc++04.html#l69">4.7.1: Plain Alternatives</a></dt>
+<dt><a href="bisonc++04.html#l70">4.7.2: One Or More Alternatives, No Separators</a></dt>
+<dt><a href="bisonc++04.html#l71">4.7.3: Zero Or More Alternatives, No Separators</a></dt>
+<dt><a href="bisonc++04.html#l72">4.7.4: One Or More Alternatives, Using Separators</a></dt>
+<dt><a href="bisonc++04.html#l73">4.7.5: Zero Or More Alternatives, Using Separators</a></dt>
+<dt><a href="bisonc++04.html#l74">4.7.6: Nested Blocks</a></dt>
+</dl></dd>
+<dt><h3><a href="bisonc++04.html#l75">4.8: Multiple Parsers in the Same Program</a></h3></dt>
+</dl></dd>
+<dt><h2><a href="bisonc++05.html#l76">Chapter 5: The Generated Parser Class' Members</a></h2></dt>
+<dd><dl>
+<dt><h3><a href="bisonc++05.html#l77">5.1: Public Members and Types</a></h3></dt>
+<dt><h3><a href="bisonc++05.html#l78">5.2: Protected Enumerations and Types</a></h3></dt>
+<dt><h3><a href="bisonc++05.html#l79">5.3: Non-public Member Functions</a></h3></dt>
+<dd><dl>
+<dt><a href="bisonc++05.html#l80">5.3.1: `lex()': Interfacing the Lexical Analyzer</a></dt>
+</dl></dd>
+<dt><h3><a href="bisonc++05.html#l81">5.4: Protected Data Members</a></h3></dt>
+<dt><h3><a href="bisonc++05.html#l82">5.5: Types and Variables in the Anonymous Namespace</a></h3></dt>
+<dt><h3><a href="bisonc++05.html#l83">5.6: Summary of Special Constructions for Actions</a></h3></dt>
+</dl></dd>
+<dt><h2><a href="bisonc++06.html#l84">Chapter 6: Examples</a></h2></dt>
+<dd><dl>
+<dt><h3><a href="bisonc++06.html#l85">6.1: Rpn: a Reverse Polish Notation Calculator</a></h3></dt>
+<dd><dl>
+<dt><a href="bisonc++06.html#l86">6.1.1: Declarations for the `rpn' calculator</a></dt>
+<dt><a href="bisonc++06.html#l87">6.1.2: Grammar rules for the `rpn' calculator</a></dt>
+<dd><dl>
+<dt><a href="bisonc++06.html#l88">6.1.2.1: Explanation of `input'</a></dt>
+<dt><a href="bisonc++06.html#l89">6.1.2.2: Explanation of `line'</a></dt>
+<dt><a href="bisonc++06.html#l90">6.1.2.3: Explanation of `expr'</a></dt>
+</dl></dd>
+<dt><a href="bisonc++06.html#l91">6.1.3: The Lexical Scanner used by `rpn'</a></dt>
+<dt><a href="bisonc++06.html#l92">6.1.4: The Controlling Function `main()'</a></dt>
+<dt><a href="bisonc++06.html#l93">6.1.5: The error reporting member `error()'</a></dt>
+<dt><a href="bisonc++06.html#l94">6.1.6: Running Bisonc++ to generate the Parser</a></dt>
+<dt><a href="bisonc++06.html#l95">6.1.7: Constructing and running `rpn'</a></dt>
+</dl></dd>
+<dt><h3><a href="bisonc++06.html#l96">6.2: `calc': an Infix Notation Calculator</a></h3></dt>
+<dt><h3><a href="bisonc++06.html#l97">6.3: Basic Error Recovery</a></h3></dt>
+<dt><h3><a href="bisonc++06.html#l98">6.4: `mfcalc': a Multi-Function Calculator</a></h3></dt>
+<dd><dl>
+<dt><a href="bisonc++06.html#l99">6.4.1: The Declaration Section for `mfcalc'</a></dt>
+<dt><a href="bisonc++06.html#l100">6.4.2: Grammar Rules for `mfcalc'</a></dt>
+<dt><a href="bisonc++06.html#l101">6.4.3: The `mfcalc' Symbol- and Function Tables</a></dt>
+<dt><a href="bisonc++06.html#l102">6.4.4: The new `lex()' member</a></dt>
+<dt><a href="bisonc++06.html#l103">6.4.5: Constructing `mfcalc'</a></dt>
+</dl></dd>
+<dt><h3><a href="bisonc++06.html#l104">6.5: Exercises</a></h3></dt>
+</dl></dd>
+<dt><h2><a href="bisonc++07.html#l105">Chapter 7: About Analyzing LALR(1) Grammars</a></h2></dt>
+<dd><dl>
+<dd><dl>
+<dt><a href="bisonc++07.html#l106">7.0.1: The FIRST Sets</a></dt>
+<dt><a href="bisonc++07.html#l107">7.0.2: The States</a></dt>
+<dt><a href="bisonc++07.html#l108">7.0.3: The Look-ahead Sets</a></dt>
+<dd><dl>
+<dt><a href="bisonc++07.html#l109">7.0.3.1: The look-ahead token</a></dt>
+<dt><a href="bisonc++07.html#l110">7.0.3.2: How look-ahead sets are determined</a></dt>
+</dl></dd>
+<dt><a href="bisonc++07.html#l111">7.0.4: The Final Transition Tables</a></dt>
+<dd><dl>
+<dt><a href="bisonc++07.html#l112">7.0.4.1: Preamble</a></dt>
+</dl></dd>
+<dt><a href="bisonc++07.html#l113">7.0.5: Processing Input</a></dt>
+</dl></dd>
+<dt><h3><a href="bisonc++07.html#l114">7.1: Shift/Reduce Conflicts</a></h3></dt>
+<dt><h3><a href="bisonc++07.html#l115">7.2: Operator Precedence</a></h3></dt>
+<dd><dl>
+<dt><a href="bisonc++07.html#l116">7.2.1: When Precedence is Needed</a></dt>
+<dt><a href="bisonc++07.html#l117">7.2.2: Specifying Operator Precedence</a></dt>
+<dt><a href="bisonc++07.html#l118">7.2.3: Precedence Examples</a></dt>
+<dt><a href="bisonc++07.html#l119">7.2.4: How Precedence Works</a></dt>
+<dt><a href="bisonc++07.html#l120">7.2.5: Rule precedence</a></dt>
+</dl></dd>
+<dt><h3><a href="bisonc++07.html#l121">7.3: Context-Dependent Precedence</a></h3></dt>
+<dt><h3><a href="bisonc++07.html#l122">7.4: Reduce/Reduce Conflicts</a></h3></dt>
+<dt><h3><a href="bisonc++07.html#l123">7.5: Mysterious Reduce/Reduce Conflicts</a></h3></dt>
+</dl></dd>
+<dt><h2><a href="bisonc++08.html#l124">Chapter 8: Error Recovery</a></h2></dt>
+<dd><dl>
+<dt><h3><a href="bisonc++08.html#l125">8.1: Syntactical Error Recovery</a></h3></dt>
+<dd><dl>
+<dt><a href="bisonc++08.html#l126">8.1.1: Error Recovery</a></dt>
+<dd><dl>
+<dt><a href="bisonc++08.html#l127">8.1.1.1: Error recovery --debug output</a></dt>
+</dl></dd>
+</dl></dd>
+<dt><h3><a href="bisonc++08.html#l128">8.2: Semantical Error Recovery</a></h3></dt>
+</dl></dd>
+<dt><h2><a href="bisonc++09.html#l129">Chapter 9: Invoking Bisonc++</a></h2></dt>
+<dd><dl>
+<dt><h3><a href="bisonc++09.html#l130">9.1: Bisonc++ options</a></h3></dt>
+<dt><h3><a href="bisonc++09.html#l131">9.2: Bisonc++ usage</a></h3></dt>
 </dl></dd></dl>
 
 <p><hr/><p>

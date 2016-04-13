@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<title> <div style="text-align: center"><strong>Bisonc++</strong> (Version 4.13.01) User Guide</div> </title>
+<title> <div style="text-align: center"><strong>Bisonc++</strong> (Version 5.00.00) User Guide</div> </title>
 <style type="text/css">
     figure {text-align: center;}
     img {vertical-align: center;}
@@ -14,8 +14,8 @@
     <li> <a href="bisonc++08.html">Next Chapter</a>
 </ul>
 <hr>
-<a name="ALGORITHM"></a><a name="l103"></a>
-<h1>Chapter 7: The Bisonc++ Parser Algorithm</h1>
+<a name="ALGORITHM"></a><a name="l105"></a>
+<h1>Chapter 7: About Analyzing LALR(1) Grammars</h1>
 This chapter describes the algorithm that is used by <strong>bisonc++</strong>. Generating parsers
 of course begins with a grammar to be analyzed. The analysis consists of
 these steps:
@@ -112,7 +112,7 @@ grammar the following augmented grammar is derived:
 <strong>bisonc++</strong> itself produces an extensive analysis of any grammar it is offered
 when the option <code>--construction</code> is provided.
 <p>
-<a name="l104"></a>
+<a name="l106"></a>
 <h3>7.0.1: The FIRST Sets</h3>
     The <code>FIRST</code> set defines all terminal tokens that can be encountered when
 beginning to recognize a grammatical symbol. For each grammatical symbol
@@ -235,7 +235,7 @@ Applying the above algorithm to the rules of our grammar we get:
     
 </table>
 <p>
-<a name="l105"></a>
+<a name="l107"></a>
 <h3>7.0.2: The States</h3>
     Having determined the <code>FIRST</code> set, <strong>bisonc++</strong> determines the
 <em>states</em> of the grammar. The analysis starts at the augmented grammar rule
@@ -251,12 +251,12 @@ items of a state is called the set of <em>kernel items</em>. Except for the star
 rule, kernel items never have a dot before the very first symbol of a rule. In
 this particular state there's only one kernel item. Items are indexed, so this
 item receives index 0. Beyond, item indices are shown together with the items
-themselves. If a non-terminal follows immediately to the right of the dot,
-then all production rules of that non-terminal are added to the state as
+themselves. If a nonterminal follows immediately to the right of the dot,
+then all production rules of that nonterminal are added to the state as
 non-kernel items. Non-kernel items always have their dots at the very first
 position. Adding non-kernel items is a recursive process. If the rules of thus
-added items also show non-terminals to the right of the dot, then the
-production rules of those non-terminals are added too (unless they were
+added items also show nonterminals to the right of the dot, then the
+production rules of those nonterminals are added too (unless they were
 already added). 
 <p>
 The above kernel item results in the addition of the following non-kernel
@@ -271,9 +271,8 @@ when the symbol to the right of the dot has been recognized. In that case a
 <em>transition</em> (a <em>goto</em>) to the next state takes place, where the dot has
 moved one postition to the right, defining a kernel item of the new
 state. Once the dot has reached the end of the rule, a <em>reduction</em> may take
-place. Following a reduction a transition based on the <em>Left Hand Side</em>
-(<code>LHS</code>) of the reduced production rule is performed. This procedure is
-discussed in more detail in section <a href="bisonc++07.html#PARSING">7.0.5</a>.
+place. Following a reduction a transition based on rule's LHS is
+performed. This procedure is discussed in more detail in section <a href="bisonc++07.html#PARSING">7.0.5</a>.
 <p>
 Looking at the current state's items, two actions are possible:
     <ul>
@@ -286,7 +285,7 @@ Looking at the current state's items, two actions are possible:
         <li> item 0: <code>start_$ -&gt; start  .</code>
         <li> item 1: <code>start -&gt; start  . expr</code>
         </ul>
-        Since <code>expr</code> is a non-terminal to the right of the dot, we add
+        Since <code>expr</code> is a nonterminal to the right of the dot, we add
         all <code>expr</code> rules as this state's non-kernel items:
         <ul>
         <li> item 2: <code>expr -&gt;  . NR</code>
@@ -306,7 +305,7 @@ possible:
         <li> item 0: <code>start -&gt; start expr  .</code>
         <li> item 1: <code>expr -&gt; expr  . '+' expr</code>
         </ul>
-        No non-terminal symbols appear to the right of the dots in these
+        No nonterminal symbols appear to the right of the dots in these
 items, so no non-kernel items are added to this state. Transitions from this
 state are:
         <ul>
@@ -326,7 +325,7 @@ state are:
         <ul>
         <li> item 0: <code>expr -&gt; expr '+'  . expr</code>
         </ul>
-        Since <code>expr</code> is a non-terminal to the right of the dot, we add
+        Since <code>expr</code> is a nonterminal to the right of the dot, we add
         all <code>expr</code> rules as this state's non-kernel items:
         <ul>
         <li> item 1: <code>expr -&gt; . NR</code>
@@ -359,7 +358,7 @@ multiple kernel items, a new state would have been required, merely having the
         selected: in this state only the reduction is selected.
     </ul>
 <p>
-<a name="LOOKAHEAD"></a><a name="l106"></a>
+<a name="LOOKAHEAD"></a><a name="l108"></a>
 <h3>7.0.3: The Look-ahead Sets</h3>
     In the previous section a grammer was discussed whose fifth state contained
 two items: one resulting in a shift-action, the other resulting in a
@@ -404,7 +403,7 @@ In this case the grammar designer has provided <strong>bisonc++</strong> with a 
 <code>%left</code> directive tells <strong>bisonc++</strong> to favor a reduction over a shift, and so it
 removed <code>expr -&gt; expr . '+' expr</code> from its set of actions in state five.
 <p>
-<a name="l107"></a>
+<a name="l109"></a>
 <h4>7.0.3.1: The look-ahead token</h4>
         The <strong>bisonc++</strong> parser does <em>not</em> always perform a reduction when a state is reached
 where an item has its dot position beyond the last element of its production
@@ -468,7 +467,7 @@ sequence
 
     which is also syntactically incorrect.
 <p>
-<a name="l108"></a>
+<a name="l110"></a>
 <h4>7.0.3.2: How look-ahead sets are determined</h4>
         Once the items of all the grammar's states have been determined the LA sets
 for the states' items are computed. Starting from the LA set of the kernel
@@ -495,13 +494,13 @@ To compute the LA sets of a state's items the LA set of each of its kernel
 items is distributed (by the member <code>State::distributeLAsetOf</code>) over the
 items which are implied by the item being considered. E.g., for item <code>X: a
 . Y z</code>, where <code>a</code> and <code>z</code> are any sequence of grammar symbols and <code>X</code>
-and <code>Y</code> are non-terminal symbols, all of <code>Y's</code> production rules are added
+and <code>Y</code> are nonterminal symbols, all of <code>Y's</code> production rules are added
 as new items to the current state.
 <p>
 Then the member <code>distributeLAsetOfItem(idx)</code> matches the item's rule
 specification with the specification <code>a.Bc</code>, where <code>a</code> and <code>c</code> are
 (possibly empty) sequences of grammatical symbols, and <code>B</code> is a (possibly
-empty) non-terminal symbol appearing immediately to the right of the item's
+empty) nonterminal symbol appearing immediately to the right of the item's
 dot position. if <code>B</code> is empty then there are no additional production rules
 and <code>distributeLAsetOf</code> may return. Otherwise, the set <code>b = FIRST(c)</code> is
 computed. This set holds all symbols which may follow <code>B</code>. If <code>b</code> contains
@@ -651,9 +650,9 @@ transitions from state x to state x). If such transitions are encountered then
 they can be ignored by <code>inspectTransitions</code> as the LA sets of the items of a
 state have already be computed by the time <code>inspectTransitions</code> is called.
 <p>
-<a name="l109"></a>
+<a name="l111"></a>
 <h3>7.0.4: The Final Transition Tables</h3>
-        <a name="l110"></a>
+        <a name="l112"></a>
 <h4>7.0.4.1: Preamble</h4>
         The member function <code>parse()</code> is implemented using a finite-state
 machine. The values pushed on the parser stack are not simply token type
@@ -666,12 +665,13 @@ Each time a look-ahead token is read, the current parser state together with
 the current (not yet processed) token are looked up in a table. This table
 entry can say <em>Shift the token</em>. This also specifies a new parser state,
 which is then pushed onto the top of the parser stack. Or it can say <em>Reduce
-using rule number n</em>. This means that a certain number of tokens or groupings
-are taken off the top of the stack, and that the rule's grouping becomes the
-`next token' to be considered. That `next token' is then used in combination
-with the state then at the stack's top, to determine the next state to
-consider. This (next) state is then again pushed on the stack, and a new token
-is requested from the lexical scanner, and the process repeats itself.
+using rule number n</em>. This means that a certain number of tokens or
+nonterminals are removed from the stack, and that the rule's nonterminal
+becomes the `next token' to be considered. That `next token' is then used in
+combination with the state then at the stack's top, to determine the next
+state to consider. This (next) state is then again pushed on the stack, and a
+new token is requested from the lexical scanner, and the process repeats
+itself.
 <p>
 There are two special situations the parsing algorithm must consider:
     <ul>
@@ -825,7 +825,7 @@ as they are generated by <strong>bisonc++</strong> in the file containing the pa
 </pre>
 
 <p>
-<a name="PARSING"></a><a name="l111"></a>
+<a name="PARSING"></a><a name="l113"></a>
 <h3>7.0.5: Processing Input</h3>
     <strong>Bisonc++</strong> implements the parsing function in the member function <code>parse()</code>. This
 function obtains its tokens from the member <code>lex()</code> and processes all tokens
@@ -1125,7 +1125,7 @@ also (in more elaborate form) shown when the <code>--debug</code> option is prov
 
 </table>
 <p>
-<a name="SHIFTREDUCE"></a><a name="l112"></a>
+<a name="SHIFTREDUCE"></a><a name="l114"></a>
 <h2>7.1: Shift/Reduce Conflicts</h2>
 Suppose we are parsing a language which has <code>if</code> and <code>if-else</code>
 statements, with a pair of rules like this:
@@ -1140,7 +1140,7 @@ statements, with a pair of rules like this:
 </pre>
 
     Here we assume that <code>IF</code> and <code>ELSE</code> are terminal symbols for specific
-keywords, and that <code>expr</code> and <code>stmnt</code> are defined non-terminals.
+keywords, and that <code>expr</code> and <code>stmnt</code> are defined nonterminals.
 <p>
 When the <code>ELSE</code> token is read and becomes the look-ahead token, the contents
 of the stack (assuming the input is valid) are just right for <em>reduction</em> by
@@ -1194,7 +1194,7 @@ and is called the <em>dangling else</em> ambiguity.
 To avoid warnings from <strong>bisonc++</strong> about predictable, legitimate shift/reduce
 conflicts, use the <code>%expect n</code> directive. There will be no warning as long
 as the number of shift/reduce conflicts is exactly <code>n</code>. See section
-<a href="bisonc++05.html#EXPECT">5.5.5</a>.
+<a href="bisonc++04.html#EXPECT">4.5.6</a>.
 <p>
 The definition of <code>if_stmt</code> above is solely to blame for the conflict, but
 the plain <code>stmnt</code> rule, consisting of two recursive alternatives will of
@@ -1236,9 +1236,9 @@ associations, usually in the context of arithmetic expressions, as discussed
 in the next sections.
 <p>
 However, shift-reduce conflicts can also be observed in grammars where a state
-contains items that could be reduced to a certain non-terminal and items in
+contains items that could be reduced to a certain nonterminal and items in
 which a shift is possible in an item of a production rule of a completely
-different non-terminal. Here is an example of such a grammar:
+different nonterminal. Here is an example of such a grammar:
     <pre>
     %token  ID 
     %left  '-'
@@ -1269,14 +1269,14 @@ different non-terminal. Here is an example of such a grammar:
   Why these grammars show shift reduce conflicts and how these are solved is
 discussed in the next section.
 <p>
-<a name="l113"></a>
+<a name="l115"></a>
 <h2>7.2: Operator Precedence</h2>
 Shift/reduce conflicts are frequently encountered in grammars specifying rules
 of arithmetic expressions. Here shifting is not always the preferred
 resolution; the <strong>bisonc++</strong> directives for operator precedence allow you to specify
 when to shift and when to reduce. How and when to do so is discussed next.
 <p>
-<a name="l114"></a>
+<a name="l116"></a>
 <h3>7.2.1: When Precedence is Needed</h3>
     Consider the following ambiguous grammar fragment (ambiguous because the input
 `<code>1 - 2 * 3</code>' can be parsed in two different ways):
@@ -1320,7 +1320,7 @@ association is a matter of whether the parser chooses to shift or reduce when
 the stack contains `<code>1 - 2</code>' and the look-ahead token is `<code>-</code>': shifting
 results in right-associativity.
 <p>
-<a name="l115"></a>
+<a name="l117"></a>
 <h3>7.2.2: Specifying Operator Precedence</h3>
     <strong>Bisonc++</strong> allows you to specify these choices with the operator precedence
 directives <code>%left</code> and <code>%right</code>. Each such directive contains a list of
@@ -1338,7 +1338,7 @@ file declares the operators whose precedence is lowest, the next such
 directive declares the operators whose precedence is a little higher, and so
 on.
 <p>
-<a name="l116"></a>
+<a name="l118"></a>
 <h3>7.2.3: Precedence Examples</h3>
     In our example, we would want the following declarations:
         <pre>
@@ -1364,7 +1364,7 @@ declared with '<code>-</code>':
 on. We assume that these tokens are more than one character long and therefore
 are represented by names, not character literals.)
 <p>
-<a name="l117"></a>
+<a name="l119"></a>
 <h3>7.2.4: How Precedence Works</h3>
     The first effect of the precedence directives is to assign precedence levels
 to the terminal symbols declared. The second effect is to assign precedence
@@ -1383,7 +1383,7 @@ resolved.
 Not all rules and not all tokens have precedence. If either the rule or the
 look-ahead token has no precedence, then the default is to shift.
 <p>
-<a name="l118"></a>
+<a name="l120"></a>
 <h3>7.2.5: Rule precedence</h3>
     Consider the following (somewhat peculiar) grammar:
         <pre>
@@ -1434,8 +1434,7 @@ above example item 1 shifts when <code>'*'</code> is encountered, but <code>'*'<
 an element of the set of look-ahead tokens of item 0. <strong>Bisonc++</strong> must now decide what
 to do. In cases we've seen earlier <strong>bisonc++</strong> could make the decision because the
 reducible item itself had a well known precedence. The precedence of a
-reducible item is defined as the precedence of the left-hand side
-non-terminal of the production rule to which the reducible item belongs. Item
+reducible item is defined as the precedence of the rule's LHS. Item
 0 in the above example is an item of the rule <code>expr -&gt; term</code>. 
 <p>
 The precedence of a production rule is defined as follows:
@@ -1457,7 +1456,7 @@ than shifting.
 <p>
 Some final remark as to why the above grammar is peculiar. It is peculiar as
 it combines precedence and association specifying directives with auxiliary
-non-terminals that may be useful conceptually (or when implementing an
+nonterminals that may be useful conceptually (or when implementing an
 expression parser `by hand') but which are not required when defining grammars
 for <strong>bisonc++</strong>. The following grammar does not use <code>term</code> and <code>factor</code> but
 recognizes the same grammar as the above `peculiar' grammar without reporting
@@ -1486,7 +1485,7 @@ any shift/reduce conflict:
 </pre>
 
 <p>
-<a name="CONDEP"></a><a name="l119"></a>
+<a name="CONDEP"></a><a name="l121"></a>
 <h2>7.3: Context-Dependent Precedence</h2>
 Often the precedence of an operator depends on the context. This sounds
 outlandish at first, but it is really very common. For example, a minus sign
@@ -1538,14 +1537,14 @@ Now the precedence of UMINUS can be used in specific rules:
 </pre>
 
 <p>
-<a name="l120"></a>
+<a name="l122"></a>
 <h2>7.4: Reduce/Reduce Conflicts</h2>
 A <em>reduce/reduce conflict</em> occurs if there are two or more rules that apply
 to the same sequence of input. This usually indicates a serious error in the
 grammar.
 <p>
 For example, here is an erroneous attempt to define a sequence of zero or more
-word groupings:
+words:
         <pre>
 
     %stype char *
@@ -1636,8 +1635,8 @@ Here is another common error that yields a reduce/reduce conflict:
 </pre>
 
 <p>
-The intention here is to define a sequence which can contain either word or
-redirect groupings. The individual definitions of sequence, words and
+The intention here is to define a sequence containing either <code>word</code> or
+<code>redirect</code> nonterminals. The individual definitions of sequence, words and
 redirects are error-free, but the three together make a subtle ambiguity: even
 an empty input can be parsed in infinitely many ways!
 <p>
@@ -1681,7 +1680,7 @@ Second, to prevent either a words or a redirects from being empty:
 </pre>
 
 <p>
-<a name="MYSTERIOUS"></a><a name="l121"></a>
+<a name="MYSTERIOUS"></a><a name="l123"></a>
 <h2>7.5: Mysterious Reduce/Reduce Conflicts</h2>
 Sometimes reduce/reduce conflicts occur that are puzzling at first sight. Here
 is an example:
