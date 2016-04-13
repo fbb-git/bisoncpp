@@ -368,7 +368,7 @@ match. When bic() detects a type mismatches it issues errors.
 
     it() bf(%prec) tt(token) 
 
-           Overrules the defined precendence of an operator for a particular
+           Overrules the defined precedence of an operator for a particular
             grammatical rule. A well known application of tt(%prec) is:
                 verb(
     expression:
