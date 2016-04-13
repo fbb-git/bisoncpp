@@ -1,5 +1,5 @@
-#define MANPAGE "../../tmp/man/" ${PROGRAM} ".1"
-#define MANHTML "../../tmp/manhtml/" ${PROGRAM} "man.html"
+#define MANPAGE "../../tmp/man/" 
+#define MANHTML "../../tmp/manhtml/" 
 
 void manpage()
 {
@@ -7,8 +7,14 @@ void manpage()
 
     chdir("documentation/man");
 
-    run("yodl2man  -o " MANPAGE " "  PROGRAM);
-    run("yodl2html  -o " MANHTML " " PROGRAM);
+    run("yodl2man  -o " MANPAGE "bisonc++.1         bisonc++.yo");
+    run("yodl2html -o " MANHTML "bisonc++man.html   bisonc++.yo");
+
+    run("yodl2man  -o " MANPAGE "bisonc++api.3      bisonc++api.yo");
+    run("yodl2html -o " MANHTML "bisonc++api.html   bisonc++api.yo");
+
+    run("yodl2man  -o " MANPAGE "bisonc++input.7    bisonc++input.yo");
+    run("yodl2html -o " MANHTML "bisonc++input.html bisonc++input.yo");
 
     exit(0);
 }

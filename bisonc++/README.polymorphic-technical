@@ -71,13 +71,6 @@ The class Base is Semantic's base class. A pointer to a Base class can use
 
 Assignment (Stype = value) is handled by a member template operator=(Tp &&arg)
 
-===========================================================================
-
-Since version 4.14.00:
-
-    The Base class no longer offers get() etc. members: all access is handled
-through the class SType.
-
     The Base class implements polymorphism without using virtual
 functions. This is realized by defining interface functions that can be called
 from Base & or Base * objects. These functions then call a function via a
@@ -117,12 +110,9 @@ to a Semantic<Tag__::INT> *, if needed.
                                 parameter to a Semantic<Tag__> *
 
 
-
----------------------------------------------------------
-
-In addition to %prolymorphic %union also supports tags. Other STYPE__
-definitions do not. Correct type assignments for missing rules is checket in 
-parser/handleproductionelement.cc and parser/checkemptyblocktype.cc
+%polymorphic and %union support tag/field checks. Correct type assignments for
+missing rules is checked in parser/handleproductionelement.cc and
+parser/checkemptyblocktype.cc
 
 See also parser/indextooffset.cc for a description how $-indices are converted
 to offsets.

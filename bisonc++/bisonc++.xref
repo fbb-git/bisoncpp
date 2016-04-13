@@ -1,7 +1,7 @@
 oxref by Frank B. Brokken (f.b.brokken@rug.nl)
 oxref V1.00.06 2012-2015
 
-CREATED Sat, 26 Mar 2016 11:11:13 +0000
+CREATED Wed, 13 Apr 2016 07:02:04 +0000
 CROSS REFERENCE FOR: -fxs tmp/libmodules.a 
 ----------------------------------------------------------------------
 
@@ -77,19 +77,24 @@ assign(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<c
   Used By:
     parse.cc: Parser::executeAction(int)
 
-AtDollar(AtDollar::Type, unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int)
-  Full name: AtDollar::AtDollar(AtDollar::Type, unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int)
+assignment()
+  Full name: Scanner::assignment()
+  Source:    assignment.cc 
+  Used By:
+    lex.cc: Scanner::executeAction__(unsigned long)
+
+atDollar(unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, bool, bool)
+  Full name: Block::atDollar(unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, bool, bool)
+  Source:    atdollar.cc 
+  Used By:
+    assignment.cc: Scanner::assignment()
+    lex.cc: Scanner::executeAction__(unsigned long)
+
+AtDollar(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, bool)
+  Full name: AtDollar::AtDollar(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, bool)
   Source:    atdollar1.cc 
   Used By:
-    atindex.cc: Block::atIndex(unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
-    dollar.cc: Block::dollar(unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
-    dollarindex.cc: Block::dollarIndex(unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
-
-AtDollar(AtDollar::Type, unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int)
-  Full name: AtDollar::AtDollar(AtDollar::Type, unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int)
-  Source:    atdollar2.cc 
-  Used By:
-    idindex.cc: Block::IDindex(unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+    atdollar.cc: Block::atDollar(unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, bool, bool)
 
 atElse(bool&) const
   Full name: Generator::atElse(bool&) const
@@ -102,12 +107,6 @@ atEnd(bool&) const
   Source:    atend.cc 
   Used By:
     data.cc: GLOBALS data.cc 1data.o
-
-atIndex(unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
-  Full name: Block::atIndex(unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
-  Source:    atindex.cc 
-  Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
 
 augmentGrammar(Symbol*)
   Full name: Rules::augmentGrammar(Symbol*)
@@ -133,6 +132,79 @@ beyondDotIsNonTerminal() const
   Used By:
     distributelasetof.cc: State::distributeLAsetOf(StateItem&)
 
+blkAssign(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+  Full name: Parser::blkAssign(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+  Source:    blkassign.cc 
+  Used By:
+    blkassignw.cc: Parser::blkAssignW(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+    blkcheck.cc: Parser::blkCheck(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+    data.cc: GLOBALS data.cc 16data.o
+
+blkAssignW(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+  Full name: Parser::blkAssignW(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+  Source:    blkassignw.cc 
+  Used By:
+    blkcheckw.cc: Parser::blkCheckW(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+    data.cc: GLOBALS data.cc 16data.o
+
+blkCheck(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+  Full name: Parser::blkCheck(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+  Source:    blkcheck.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 16data.o
+
+blkCheckW(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+  Full name: Parser::blkCheckW(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+  Source:    blkcheckw.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 16data.o
+
+blkDirect(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+  Full name: Parser::blkDirect(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+  Source:    blkdirect.cc 
+  Used By:
+    blkdirectw.cc: Parser::blkDirectW(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+    data.cc: GLOBALS data.cc 16data.o
+
+blkDirectW(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+  Full name: Parser::blkDirectW(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+  Source:    blkdirectw.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 16data.o
+
+blkErr(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+  Full name: Parser::blkErr(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+  Source:    blkerr.cc 
+  Used By:
+    blkcheck.cc: Parser::blkCheck(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+    blkcheckw.cc: Parser::blkCheckW(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+    data.cc: GLOBALS data.cc 16data.o
+
+blkNop(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+  Full name: Parser::blkNop(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+  Source:    blknop.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 16data.o
+
+blkNopW(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+  Full name: Parser::blkNopW(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+  Source:    blknopw.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 16data.o
+
+blkSTYPE(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+  Full name: Parser::blkSTYPE(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+  Source:    blkstype.cc 
+  Used By:
+    blkstypew.cc: Parser::blkSTYPEW(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+    data.cc: GLOBALS data.cc 16data.o
+
+blkSTYPEW(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+  Full name: Parser::blkSTYPEW(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+  Source:    blkstypew.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 16data.o
+
 bolAt(std::ostream&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::istream&, bool&) const
   Full name: Generator::bolAt(std::ostream&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::istream&, bool&) const
   Source:    bolat.cc 
@@ -156,6 +228,12 @@ checkEndOfRawString()
   Source:    checkendofrawstring.cc 
   Used By:
     lex.cc: Scanner::executeAction__(unsigned long)
+
+checkField(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: Parser::checkField(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Source:    checkfield.cc 
+  Used By:
+    parse.cc: Parser::executeAction(int)
 
 checkFirstType()
   Full name: Parser::checkFirstType()
@@ -241,16 +319,22 @@ containsKernelItem(Item const&, unsigned long, std::vector<StateItem, std::alloc
     haskernel.cc: State::hasKernel(std::vector<Item, std::allocator<Item> > const&) const
 
 cxx11]
-  Full name: Parser::s_undefined[abi:cxx11]
+  Full name: Generator::s_insert[abi:cxx11]
   Source:    data.cc 
   Used By:
-    checkfirsttype.cc: Parser::checkFirstType()
+    insert.cc: Generator::insert(std::ostream&) const
 
 cxx11]
   Full name: Options::s_value[abi:cxx11]
   Source:    data.cc 
   Used By:
     valueof.cc: Options::valueOf(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Options::Value, unsigned int)
+
+cxx11]
+  Full name: Parser::s_defaultAction[abi:cxx11]
+  Source:    data.cc 
+  Used By:
+    defaultpolymorphicaction.cc: Parser::defaultPolymorphicAction(Production const&)
 
 cxx11]
   Full name: ScannerBase::s_out__[abi:cxx11]
@@ -265,6 +349,37 @@ cxx11]
     parse.cc: Parser::executeAction(int)
 
 cxx11]
+  Full name: Parser::s_undefined[abi:cxx11]
+  Source:    data.cc 
+  Used By:
+    blkerr.cc: Parser::blkErr(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+
+cxx11]
+  Full name: Parser::s_stype[abi:cxx11]
+  Source:    data.cc 
+  Used By:
+    blkstype.cc: Parser::blkSTYPE(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+    checkfield.cc: Parser::checkField(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+    svspolyreplace.cc: Parser::svsPolyReplace(int, Block&, AtDollar const&, char const*)
+    typeindex.cc: Parser::typeIndex(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+
+cxx11]
+  Full name: Parser::s_semanticValueStack[abi:cxx11]
+  Source:    data.cc 
+  Used By:
+    svselement.cc: Parser::svsElement[abi:cxx11](int, int) const
+
+cxx11]
+  Full name: Parser::s_semanticValue[abi:cxx11]
+  Source:    data.cc 
+  Used By:
+    dvalpolypar.cc: Parser::dvalPolyPar(int, Block&, AtDollar const&)
+    dvalpolyreplace.cc: Parser::dvalPolyReplace(bool, Block&, AtDollar const&, char const*)
+    dvalreplace.cc: Parser::dvalReplace(bool, Block&, AtDollar const&, char const*)
+    dvalunionreplace.cc: Parser::dvalUnionReplace(bool, Block&, AtDollar const&, char const*)
+    installdefaultaction.cc: Parser::installDefaultAction(Production const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+
+cxx11]
   Full name: Parser::s_hiddenName[abi:cxx11]
   Source:    data.cc 
   Used By:
@@ -276,22 +391,16 @@ cxx11]
   Used By:
     production1.cc: Production::Production(Symbol const*, unsigned long)
     storeFilename.cc: Production::storeFilename(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
-    checkfirsttype.cc: Parser::checkFirstType()
+    installdefaultaction.cc: Parser::installDefaultAction(Production const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
     showconflicts.cc: RRConflict::showConflicts(Rules const&) const
     showconflicts.cc: SRConflict::showConflicts(Rules const&) const
-
-cxx11]
-  Full name: Generator::s_insert[abi:cxx11]
-  Source:    data.cc 
-  Used By:
-    insert.cc: Generator::insert(std::ostream&) const
 
 cxx11]()
   Full name: Scanner::canonicalQuote[abi:cxx11]()
   Source:    canonicalquote.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
-    setprecedence.cc: Parser::setPrecedence(int)
+    setprecedence.cc: Parser::setPrecedence(unsigned long)
     useterminal.cc: Parser::useTerminal()
 
 cxx11]()
@@ -307,6 +416,18 @@ cxx11]() const
     data.cc: GLOBALS data.cc 1data.o
 
 cxx11]() const
+  Full name: Generator::atTokenFunction[abi:cxx11]() const
+  Source:    attokenfunction.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 1data.o
+
+cxx11]() const
+  Full name: Options::baseclassHeaderName[abi:cxx11]() const
+  Source:    baseclassheadername.cc 
+  Used By:
+    conflicts.cc: Generator::conflicts() const
+
+cxx11]() const
   Full name: Generator::atMatchedTextFunction[abi:cxx11]() const
   Source:    atmatchedtextfunction.cc 
   Used By:
@@ -319,34 +440,32 @@ cxx11]() const
     data.cc: GLOBALS data.cc 1data.o
 
 cxx11]() const
-  Full name: Generator::atTokenFunction[abi:cxx11]() const
-  Source:    attokenfunction.cc 
-  Used By:
-    data.cc: GLOBALS data.cc 1data.o
-
-cxx11]() const
   Full name: Generator::atClassname[abi:cxx11]() const
   Source:    atclassname.cc 
   Used By:
     data.cc: GLOBALS data.cc 1data.o
 
-cxx11]() const
-  Full name: Options::baseclassHeaderName[abi:cxx11]() const
-  Source:    baseclassheadername.cc 
+cxx11](bool, AtDollar const&) const
+  Full name: Parser::warnAutoTag[abi:cxx11](bool, AtDollar const&) const
+  Source:    warnautotag.cc 
   Used By:
-    conflicts.cc: Generator::conflicts() const
+    dvalpolypar.cc: Parser::dvalPolyPar(int, Block&, AtDollar const&)
+    dvalpolyreplace.cc: Parser::dvalPolyReplace(bool, Block&, AtDollar const&, char const*)
+    dvalreplace.cc: Parser::dvalReplace(bool, Block&, AtDollar const&, char const*)
+    dvalunionreplace.cc: Parser::dvalUnionReplace(bool, Block&, AtDollar const&, char const*)
 
-cxx11](AtDollar const&) const
-  Full name: Parser::returnPolymorphic[abi:cxx11](AtDollar const&) const
-  Source:    returnpolymorphic.cc 
+cxx11](int, int) const
+  Full name: Parser::svsElement[abi:cxx11](int, int) const
+  Source:    svselement.cc 
   Used By:
-    handledollar.cc: Parser::handleDollar(Block&, AtDollar const&, int)
-
-cxx11](AtDollar const&) const
-  Full name: Parser::returnUnion[abi:cxx11](AtDollar const&) const
-  Source:    returnunion.cc 
-  Used By:
-    handledollar.cc: Parser::handleDollar(Block&, AtDollar const&, int)
+    blkassign.cc: Parser::blkAssign(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+    blkdirect.cc: Parser::blkDirect(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+    checkfirsttype.cc: Parser::checkFirstType()
+    svspolyreplace.cc: Parser::svsPolyReplace(int, Block&, AtDollar const&, char const*)
+    svspolytagreplace.cc: Parser::svsPolyTagReplace(int, Block&, AtDollar const&, char const*)
+    svsreplace.cc: Parser::svsReplace(int, Block&, AtDollar const&, char const*)
+    svsunionreplace.cc: Parser::svsUnionReplace(int, Block&, AtDollar const&, char const*)
+    svsuniontagreplace.cc: Parser::svsUnionTagReplace(int, Block&, AtDollar const&, char const*)
 
 cxx11](Options::PathType, char const*)
   Full name: Options::accept[abi:cxx11](Options::PathType, char const*)
@@ -358,9 +477,9 @@ cxx11](unsigned long) const
   Full name: Rules::sType[abi:cxx11](unsigned long) const
   Source:    stype.cc 
   Used By:
-    returnpolymorphic.cc: Parser::returnPolymorphic[abi:cxx11](AtDollar const&) const
-    returnunion.cc: Parser::returnUnion[abi:cxx11](AtDollar const&) const
-    semtag.cc: Parser::semTag(char const*, AtDollar const&, bool (Parser::*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const) const
+    svspolyreplace.cc: Parser::svsPolyReplace(int, Block&, AtDollar const&, char const*)
+    svsunionreplace.cc: Parser::svsUnionReplace(int, Block&, AtDollar const&, char const*)
+    warnautotag.cc: Parser::warnAutoTag[abi:cxx11](bool, AtDollar const&) const
 
 debug(std::ostream&) const
   Full name: Generator::debug(std::ostream&) const
@@ -386,17 +505,17 @@ debugIncludes(std::ostream&) const
   Used By:
     data.cc: GLOBALS data.cc 1data.o
 
-debugInit(std::ostream&) const
-  Full name: Generator::debugInit(std::ostream&) const
-  Source:    debuginit.cc 
-  Used By:
-    data.cc: GLOBALS data.cc 1data.o
-
 debugLookup(std::ostream&) const
   Full name: Generator::debugLookup(std::ostream&) const
   Source:    debuglookup.cc 
   Used By:
     data.cc: GLOBALS data.cc 1data.o
+
+defaultPolymorphicAction(Production const&)
+  Full name: Parser::defaultPolymorphicAction(Production const&)
+  Source:    defaultpolymorphicaction.cc 
+  Used By:
+    checkfirsttype.cc: Parser::checkFirstType()
 
 defineNonTerminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Full name: Parser::defineNonTerminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
@@ -448,17 +567,111 @@ distributeLAsetOf(StateItem&)
   Used By:
     computelasets.cc: State::computeLAsets()
 
-dollar(unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
-  Full name: Block::dollar(unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
-  Source:    dollar.cc 
+dval(int, Block&, AtDollar const&)
+  Full name: Parser::dval(int, Block&, AtDollar const&)
+  Source:    dval.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    data.cc: GLOBALS data.cc 16data.o
 
-dollarIndex(unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
-  Full name: Block::dollarIndex(unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
-  Source:    dollarindex.cc 
+dvalMem(int, Block&, AtDollar const&)
+  Full name: Parser::dvalMem(int, Block&, AtDollar const&)
+  Source:    dvalmem.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    data.cc: GLOBALS data.cc 16data.o
+
+dvalPar(int, Block&, AtDollar const&)
+  Full name: Parser::dvalPar(int, Block&, AtDollar const&)
+  Source:    dvalpar.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 16data.o
+
+dvalPoly(int, Block&, AtDollar const&)
+  Full name: Parser::dvalPoly(int, Block&, AtDollar const&)
+  Source:    dvalpoly.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 16data.o
+
+dvalPolyMem(int, Block&, AtDollar const&)
+  Full name: Parser::dvalPolyMem(int, Block&, AtDollar const&)
+  Source:    dvalpolymem.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 16data.o
+
+dvalPolyPar(int, Block&, AtDollar const&)
+  Full name: Parser::dvalPolyPar(int, Block&, AtDollar const&)
+  Source:    dvalpolypar.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 16data.o
+
+dvalPolyPtr(int, Block&, AtDollar const&)
+  Full name: Parser::dvalPolyPtr(int, Block&, AtDollar const&)
+  Source:    dvalpolyptr.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 16data.o
+
+dvalPolyReplace(bool, Block&, AtDollar const&, char const*)
+  Full name: Parser::dvalPolyReplace(bool, Block&, AtDollar const&, char const*)
+  Source:    dvalpolyreplace.cc 
+  Used By:
+    dvalpoly.cc: Parser::dvalPoly(int, Block&, AtDollar const&)
+    dvalpolymem.cc: Parser::dvalPolyMem(int, Block&, AtDollar const&)
+    dvalpolyptr.cc: Parser::dvalPolyPtr(int, Block&, AtDollar const&)
+
+dvalPtr(int, Block&, AtDollar const&)
+  Full name: Parser::dvalPtr(int, Block&, AtDollar const&)
+  Source:    dvalptr.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 16data.o
+
+dvalRefUnion(int, Block&, AtDollar const&)
+  Full name: Parser::dvalRefUnion(int, Block&, AtDollar const&)
+  Source:    dvalrefunion.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 16data.o
+
+dvalReplace(bool, Block&, AtDollar const&, char const*)
+  Full name: Parser::dvalReplace(bool, Block&, AtDollar const&, char const*)
+  Source:    dvalreplace.cc 
+  Used By:
+    dval.cc: Parser::dval(int, Block&, AtDollar const&)
+    dvalmem.cc: Parser::dvalMem(int, Block&, AtDollar const&)
+    dvalpar.cc: Parser::dvalPar(int, Block&, AtDollar const&)
+    dvalptr.cc: Parser::dvalPtr(int, Block&, AtDollar const&)
+    dvalrefunion.cc: Parser::dvalRefUnion(int, Block&, AtDollar const&)
+    dvalunionpar.cc: Parser::dvalUnionPar(int, Block&, AtDollar const&)
+
+dvalUnion(int, Block&, AtDollar const&)
+  Full name: Parser::dvalUnion(int, Block&, AtDollar const&)
+  Source:    dvalunion.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 16data.o
+
+dvalUnionMem(int, Block&, AtDollar const&)
+  Full name: Parser::dvalUnionMem(int, Block&, AtDollar const&)
+  Source:    dvalunionmem.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 16data.o
+
+dvalUnionPar(int, Block&, AtDollar const&)
+  Full name: Parser::dvalUnionPar(int, Block&, AtDollar const&)
+  Source:    dvalunionpar.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 16data.o
+
+dvalUnionPtr(int, Block&, AtDollar const&)
+  Full name: Parser::dvalUnionPtr(int, Block&, AtDollar const&)
+  Source:    dvalunionptr.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 16data.o
+
+dvalUnionReplace(bool, Block&, AtDollar const&, char const*)
+  Full name: Parser::dvalUnionReplace(bool, Block&, AtDollar const&, char const*)
+  Source:    dvalunionreplace.cc 
+  Used By:
+    dvalrefunion.cc: Parser::dvalRefUnion(int, Block&, AtDollar const&)
+    dvalunion.cc: Parser::dvalUnion(int, Block&, AtDollar const&)
+    dvalunionmem.cc: Parser::dvalUnionMem(int, Block&, AtDollar const&)
+    dvalunionptr.cc: Parser::dvalUnionPtr(int, Block&, AtDollar const&)
 
 enlargeLA(LookaheadSet const&)
   Full name: StateItem::enlargeLA(LookaheadSet const&)
@@ -483,14 +696,20 @@ errIndexTooLarge(AtDollar const&, int) const
   Full name: Parser::errIndexTooLarge(AtDollar const&, int) const
   Source:    errindextoolarge.cc 
   Used By:
-    handleatsign.cc: Parser::handleAtSign(Block&, AtDollar const&, int)
-    handledollar.cc: Parser::handleDollar(Block&, AtDollar const&, int)
+    substituteblock.cc: Parser::substituteBlock(int, Block&)
 
-errNoSemantic(char const*, AtDollar const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const
-  Full name: Parser::errNoSemantic(char const*, AtDollar const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const
-  Source:    errnosemantic.cc 
+errNoTag(int, Block&, AtDollar const&)
+  Full name: Parser::errNoTag(int, Block&, AtDollar const&)
+  Source:    errnotag.cc 
   Used By:
-    semtag.cc: Parser::semTag(char const*, AtDollar const&, bool (Parser::*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const) const
+    data.cc: GLOBALS data.cc 16data.o
+
+errNoUnionPtr(AtDollar const&)
+  Full name: Parser::errNoUnionPtr(AtDollar const&)
+  Source:    errnounionptr.cc 
+  Used By:
+    dvalunionreplace.cc: Parser::dvalUnionReplace(bool, Block&, AtDollar const&, char const*)
+    svsunionreplace.cc: Parser::svsUnionReplace(int, Block&, AtDollar const&, char const*)
 
 error(char const*)
   Full name: Parser::error(char const*)
@@ -509,6 +728,18 @@ escape()
   Source:    escape.cc 
   Used By:
     lex.cc: Scanner::executeAction__(unsigned long)
+
+executeActionCases(std::ostream&) const
+  Full name: Generator::executeActionCases(std::ostream&) const
+  Source:    executeactioncases.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 1data.o
+
+existingTag(AtDollar const&) const
+  Full name: Parser::existingTag(AtDollar const&) const
+  Source:    existingtag.cc 
+  Used By:
+    svspolytagreplace.cc: Parser::svsPolyTagReplace(int, Block&, AtDollar const&, char const*)
 
 expectRules()
   Full name: Parser::expectRules()
@@ -560,18 +791,6 @@ grep(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<cha
   Used By:
     errexisting.cc: Generator::errExisting(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const
 
-handleAtSign(Block&, AtDollar const&, int)
-  Full name: Parser::handleAtSign(Block&, AtDollar const&, int)
-  Source:    handleatsign.cc 
-  Used By:
-    substituteblock.cc: Parser::substituteBlock(int, Block&)
-
-handleDollar(Block&, AtDollar const&, int)
-  Full name: Parser::handleDollar(Block&, AtDollar const&, int)
-  Source:    handledollar.cc 
-  Used By:
-    substituteblock.cc: Parser::substituteBlock(int, Block&)
-
 handleProductionElement(Meta__::SType&)
   Full name: Parser::handleProductionElement(Meta__::SType&)
   Source:    handleproductionelement.cc 
@@ -605,12 +824,6 @@ hasKernel(std::vector<Item, std::allocator<Item> > const&) const
 hexadecimal()
   Full name: Scanner::hexadecimal()
   Source:    hexadecimal.cc 
-  Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
-
-IDindex(unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
-  Full name: Block::IDindex(unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
-  Source:    idindex.cc 
   Used By:
     lex.cc: Scanner::executeAction__(unsigned long)
 
@@ -655,8 +868,8 @@ indexToOffset(int, int) const
   Full name: Parser::indexToOffset(int, int) const
   Source:    indextooffset.cc 
   Used By:
-    handleatsign.cc: Parser::handleAtSign(Block&, AtDollar const&, int)
-    handledollar.cc: Parser::handleDollar(Block&, AtDollar const&, int)
+    locel.cc: Parser::locEl(int, Block&, AtDollar const&)
+    svselement.cc: Parser::svsElement[abi:cxx11](int, int) const
 
 initialState()
   Full name: State::initialState()
@@ -674,13 +887,6 @@ insert(NonTerminal*)
     augmentgrammar.cc: Rules::augmentGrammar(Symbol*)
 
 insert(std::ostream&) const
-  Full name: FirstSet::insert(std::ostream&) const
-  Source:    oinsert.cc 
-  Used By:
-    showfirst.cc: GLOBALS showfirst.cc 21showfirst.o
-    insertext.cc: GLOBALS insertext.cc 3insertext.o
-
-insert(std::ostream&) const
   Full name: Generator::insert(std::ostream&) const
   Source:    insert.cc 
   Used By:
@@ -691,13 +897,6 @@ insert(std::ostream&) const
   Source:    insert.cc 
   Used By:
     operatorinsert.cc: operator<<(std::ostream&, LookaheadSet const&)
-
-insert(std::ostream&) const
-  Full name: SRConflict::insert(std::ostream&) const
-  Source:    insert.cc 
-  Used By:
-    insertext.cc: State::insertExt(std::ostream&) const
-    insertstd.cc: State::insertStd(std::ostream&) const
 
 insert(std::ostream&) const
   Full name: RRConflict::insert(std::ostream&) const
@@ -711,6 +910,20 @@ insert(std::ostream&) const
   Source:    v.cc 
   Used By:
     destructor.cc: NonTerminal::~NonTerminal()
+
+insert(std::ostream&) const
+  Full name: FirstSet::insert(std::ostream&) const
+  Source:    oinsert.cc 
+  Used By:
+    showfirst.cc: GLOBALS showfirst.cc 21showfirst.o
+    insertext.cc: GLOBALS insertext.cc 3insertext.o
+
+insert(std::ostream&) const
+  Full name: SRConflict::insert(std::ostream&) const
+  Source:    insert.cc 
+  Used By:
+    insertext.cc: State::insertExt(std::ostream&) const
+    insertstd.cc: State::insertStd(std::ostream&) const
 
 insert(std::ostream&, Production const*) const
   Full name: Item::insert(std::ostream&, Production const*) const
@@ -803,11 +1016,19 @@ installAction(Block&)
   Used By:
     handleproductionelement.cc: Parser::handleProductionElement(Meta__::SType&)
 
+installDefaultAction(Production const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: Parser::installDefaultAction(Production const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Source:    installdefaultaction.cc 
+  Used By:
+    blkassign.cc: Parser::blkAssign(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+    blkdirect.cc: Parser::blkDirect(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+    blkstype.cc: Parser::blkSTYPE(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+    checkfirsttype.cc: Parser::checkFirstType()
+
 instance()
   Full name: Options::instance()
   Source:    instance.cc 
   Used By:
-    scanner1.cc: Scanner::Scanner(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
     parser1.cc: Parser::Parser(Rules&)
     generator1.cc: Generator::Generator(Rules const&, std::unordered_map<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::hash<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::equal_to<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::pair<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > > const&)
 
@@ -868,9 +1089,9 @@ key(std::ostream&) const
     debugdecl.cc: Generator::debugDecl(std::ostream&) const
     debugfunctions.cc: Generator::debugFunctions(std::ostream&) const
     debugincludes.cc: Generator::debugIncludes(std::ostream&) const
-    debuginit.cc: Generator::debugInit(std::ostream&) const
     debuglookup.cc: Generator::debugLookup(std::ostream&) const
     errorverbose.cc: Generator::errorVerbose(std::ostream&) const
+    executeactioncases.cc: Generator::executeActionCases(std::ostream&) const
     idoftag.cc: Generator::idOfTag(std::ostream&) const
     lex.cc: Generator::lex(std::ostream&) const
     ltype.cc: Generator::ltype(std::ostream&) const
@@ -908,6 +1129,18 @@ lex__()
   Used By:
     parse.cc: Parser::nextToken()
 
+loc(int, Block&, AtDollar const&)
+  Full name: Parser::loc(int, Block&, AtDollar const&)
+  Source:    loc.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 16data.o
+
+locEl(int, Block&, AtDollar const&)
+  Full name: Parser::locEl(int, Block&, AtDollar const&)
+  Source:    locel.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 16data.o
+
 LookaheadSet(LookaheadSet const&)
   Full name: LookaheadSet::LookaheadSet(LookaheadSet const&)
   Source:    lookaheadset3.cc 
@@ -935,7 +1168,7 @@ lookup(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<c
     definenonterminal.cc: Parser::defineNonTerminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
     defineterminal.cc: Parser::defineTerminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Symbol::Type)
     requirenonterminal.cc: Parser::requireNonTerminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
-    setprecedence.cc: Parser::setPrecedence(int)
+    setprecedence.cc: Parser::setPrecedence(unsigned long)
     usesymbol.cc: Parser::useSymbol()
     useterminal.cc: Parser::useTerminal()
 
@@ -1015,13 +1248,6 @@ namespaceUse(std::ostream&) const
   Used By:
     data.cc: GLOBALS data.cc 1data.o
 
-negativeIndex(AtDollar const&) const
-  Full name: Parser::negativeIndex(AtDollar const&) const
-  Source:    negativeindex.cc 
-  Used By:
-    semtag.cc: Parser::semTag(char const*, AtDollar const&, bool (Parser::*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const) const
-    warnautoignored.cc: Parser::warnAutoIgnored(char const*, AtDollar const&) const
-
 nestedBlock(Block&)
   Full name: Parser::nestedBlock(Block&)
   Source:    nestedblock.cc 
@@ -1093,7 +1319,7 @@ open(unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std
   Source:    open.cc 
   Used By:
     lex.cc: Scanner::executeAction__(unsigned long)
-    checkfirsttype.cc: Parser::checkFirstType()
+    installdefaultaction.cc: Parser::installDefaultAction(Production const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
 
 openRule(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Full name: Parser::openRule(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
@@ -1221,16 +1447,16 @@ polymorphicSpecializations(std::ostream&) const
     data.cc: GLOBALS data.cc 1data.o
 
 popStream()
-  Full name: ScannerBase::popStream()
-  Source:    lex.cc 
-  Used By:
-    popstream.cc: Scanner::popStream()
-
-popStream()
   Full name: Scanner::popStream()
   Source:    popstream.cc 
   Used By:
     lex.cc: Scanner::lex__()
+
+popStream()
+  Full name: ScannerBase::popStream()
+  Source:    lex.cc 
+  Used By:
+    popstream.cc: Scanner::popStream()
 
 predefine(Terminal const*)
   Full name: Parser::predefine(Terminal const*)
@@ -1366,6 +1592,12 @@ requireNonTerminal(std::__cxx11::basic_string<char, std::char_traits<char>, std:
   Used By:
     openrule.cc: Parser::openRule(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
 
+reRead(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned long)
+  Full name: ScannerBase::Input::reRead(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned long)
+  Source:    lex.cc 
+  Used By:
+    assignment.cc: Scanner::assignment()
+
 reRead(unsigned long)
   Full name: ScannerBase::Input::reRead(unsigned long)
   Source:    lex.cc 
@@ -1377,12 +1609,6 @@ returnQuoted(void (Scanner::*)())
   Source:    returnquoted.cc 
   Used By:
     lex.cc: Scanner::executeAction__(unsigned long)
-
-returnSingle(AtDollar const&) const
-  Full name: Parser::returnSingle(AtDollar const&) const
-  Source:    returnsingle.cc 
-  Used By:
-    handledollar.cc: Parser::handleDollar(Block&, AtDollar const&, int)
 
 returnTypeSpec()
   Full name: Scanner::returnTypeSpec()
@@ -1445,6 +1671,12 @@ s_atFlag
   Source:    data.cc 
   Used By:
     replacebaseflag.cc: Generator::replaceBaseFlag(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) const
+
+s_autoTypeLabel
+  Full name: Parser::s_autoTypeLabel
+  Source:    data.cc 
+  Used By:
+    warnautotag.cc: Parser::warnAutoTag[abi:cxx11](bool, AtDollar const&) const
 
 s_counter
   Full name: NonTerminal::s_counter
@@ -1587,6 +1819,21 @@ s_insertPtr
     insert.cc: Item::insert(std::ostream&, Production const*) const
 
 s_insertPtr
+  Full name: StateItem::s_insertPtr
+  Source:    data.cc 
+  Used By:
+    insertext.cc: State::insertExt(std::ostream&) const
+    insertstd.cc: State::insertStd(std::ostream&) const
+
+s_insertPtr
+  Full name: Item::s_insertPtr
+  Source:    data.cc 
+  Used By:
+    insertext.cc: State::insertExt(std::ostream&) const
+    itemcontext.cc: StateItem::itemContext(std::ostream&) const
+    plainitem.cc: StateItem::plainItem(std::ostream&) const
+
+s_insertPtr
   Full name: Terminal::s_insertPtr
   Source:    data.cc 
   Used By:
@@ -1622,21 +1869,6 @@ s_insertPtr
     insertext.cc: State::insertExt(std::ostream&) const
     insertstd.cc: State::insertStd(std::ostream&) const
 
-s_insertPtr
-  Full name: Item::s_insertPtr
-  Source:    data.cc 
-  Used By:
-    insertext.cc: State::insertExt(std::ostream&) const
-    itemcontext.cc: StateItem::itemContext(std::ostream&) const
-    plainitem.cc: StateItem::plainItem(std::ostream&) const
-
-s_insertPtr
-  Full name: StateItem::s_insertPtr
-  Source:    data.cc 
-  Used By:
-    insertext.cc: State::insertExt(std::ostream&) const
-    insertstd.cc: State::insertStd(std::ostream&) const
-
 s_lastLineNr
   Full name: Rules::s_lastLineNr
   Source:    data.cc 
@@ -1649,13 +1881,13 @@ s_locationValue
   Full name: Parser::s_locationValue
   Source:    data.cc 
   Used By:
-    handleatsign.cc: Parser::handleAtSign(Block&, AtDollar const&, int)
+    loc.cc: Parser::loc(int, Block&, AtDollar const&)
 
 s_locationValueStack
   Full name: Parser::s_locationValueStack
   Source:    data.cc 
   Used By:
-    handleatsign.cc: Parser::handleAtSign(Block&, AtDollar const&, int)
+    locel.cc: Parser::locEl(int, Block&, AtDollar const&)
 
 s_maxValue
   Full name: Terminal::s_maxValue
@@ -1709,6 +1941,12 @@ s_options
   Used By:
     instance.cc: Options::instance()
 
+s_polymorphic
+  Full name: Parser::s_polymorphic
+  Source:    data.cc 
+  Used By:
+    setpolymorphicdecl.cc: Parser::setPolymorphicDecl()
+
 s_precedence
   Full name: Terminal::s_precedence
   Source:    data.cc 
@@ -1718,19 +1956,11 @@ s_precedence
     terminal1.cc: Terminal::Terminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Symbol::Type, unsigned long, Terminal::Association, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
     terminal2.cc: Terminal::Terminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Symbol::Type)
 
-s_semanticValue
-  Full name: Parser::s_semanticValue
+s_single
+  Full name: Parser::s_single
   Source:    data.cc 
   Used By:
-    checkfirsttype.cc: Parser::checkFirstType()
-    handledollar.cc: Parser::handleDollar(Block&, AtDollar const&, int)
-
-s_semanticValueStack
-  Full name: Parser::s_semanticValueStack
-  Source:    data.cc 
-  Used By:
-    checkfirsttype.cc: Parser::checkFirstType()
-    handledollar.cc: Parser::handleDollar(Block&, AtDollar const&, int)
+    parser1.cc: Parser::Parser(Rules&)
 
 s_startProduction
   Full name: Production::s_startProduction
@@ -1765,13 +1995,6 @@ s_stateName
   Used By:
     srtable.cc: Writer::srTable(State const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, FBB::Table&, std::ostream&)
 
-s_stype__
-  Full name: Parser::s_stype__
-  Source:    data.cc 
-  Used By:
-    checkfirsttype.cc: Parser::checkFirstType()
-    semtag.cc: Parser::semTag(char const*, AtDollar const&, bool (Parser::*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const) const
-
 s_threadConst
   Full name: Writer::s_threadConst
   Source:    data.cc 
@@ -1787,12 +2010,11 @@ s_undefined
     undefined.cc: NonTerminal::undefined(NonTerminal const*)
     showunusednonterminals.cc: Rules::showUnusedNonTerminals() const
 
-s_unused
-  Full name: NonTerminal::s_unused
+s_union
+  Full name: Parser::s_union
   Source:    data.cc 
   Used By:
-    unused.cc: NonTerminal::unused(NonTerminal const*)
-    showunusednonterminals.cc: Rules::showUnusedNonTerminals() const
+    setuniondecl.cc: Parser::setUnionDecl()
 
 s_unused
   Full name: Production::s_unused
@@ -1800,6 +2022,13 @@ s_unused
   Used By:
     unused.cc: Production::unused(Production const*)
     showunusedrules.cc: Rules::showUnusedRules() const
+
+s_unused
+  Full name: NonTerminal::s_unused
+  Source:    data.cc 
+  Used By:
+    unused.cc: NonTerminal::unused(NonTerminal const*)
+    showunusednonterminals.cc: Rules::showUnusedNonTerminals() const
 
 s_value
   Full name: Terminal::s_value
@@ -1857,18 +2086,17 @@ selectSymbolic(Terminal const*, std::vector<Terminal const*, std::allocator<Term
   Used By:
     tokens.cc: Generator::tokens(std::ostream&) const
 
-semTag(char const*, AtDollar const&, bool (Parser::*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const) const
-  Full name: Parser::semTag(char const*, AtDollar const&, bool (Parser::*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const) const
-  Source:    semtag.cc 
-  Used By:
-    returnsingle.cc: Parser::returnSingle(AtDollar const&) const
-    returnunion.cc: Parser::returnUnion[abi:cxx11](AtDollar const&) const
-
 setAccessorVariables()
   Full name: Options::setAccessorVariables()
   Source:    setaccessorvariables.cc 
   Used By:
     cleanup.cc: Parser::cleanup()
+
+setAtPatterns()
+  Full name: AtDollar::setAtPatterns()
+  Source:    setatpatterns.cc 
+  Used By:
+    atdollar1.cc: AtDollar::AtDollar(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, bool)
 
 setBasicStrings()
   Full name: Options::setBasicStrings()
@@ -1887,7 +2115,6 @@ setConstructorChecks(std::__cxx11::basic_string<char, std::char_traits<char>, st
   Source:    setconstructorchecks.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
-    setparsingoptions.cc: Options::setParsingOptions()
 
 setDebug(bool)
   Full name: ScannerBase::setDebug(bool)
@@ -1895,12 +2122,31 @@ setDebug(bool)
   Used By:
     parser1.cc: Parser::Parser(Rules&)
 
+setDebug(bool)
+  Full name: ParserBase::setDebug(bool)
+  Source:    parse.cc 
+  Used By:
+    parser1.cc: Parser::Parser(Rules&)
+
 setDefaultAction(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned long)
   Full name: Options::setDefaultAction(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned long)
   Source:    setdefaultaction.cc 
   Used By:
+    expectrules.cc: Parser::expectRules()
     parse.cc: Parser::executeAction(int)
     setparsingoptions.cc: Options::setParsingOptions()
+
+setDollarDollarPatterns()
+  Full name: AtDollar::setDollarDollarPatterns()
+  Source:    setdollardollarpatterns.cc 
+  Used By:
+    setdollarpatterns.cc: AtDollar::setDollarPatterns()
+
+setDollarPatterns()
+  Full name: AtDollar::setDollarPatterns()
+  Source:    setdollarpatterns.cc 
+  Used By:
+    atdollar1.cc: AtDollar::AtDollar(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, bool)
 
 setFirst(NonTerminal*)
   Full name: NonTerminal::setFirst(NonTerminal*)
@@ -1953,6 +2199,12 @@ setNonTerminalTypes()
   Used By:
     expectrules.cc: Parser::expectRules()
 
+setNumberPatterns()
+  Full name: AtDollar::setNumberPatterns()
+  Source:    setnumberpatterns.cc 
+  Used By:
+    setdollarpatterns.cc: AtDollar::setDollarPatterns()
+
 setOpt(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Full name: Options::setOpt(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    setopt.cc 
@@ -1978,28 +2230,22 @@ setPathStrings()
     setaccessorvariables.cc: Options::setAccessorVariables()
 
 setPolymorphicDecl()
-  Full name: Options::setPolymorphicDecl()
-  Source:    setpolymorphicdecl.cc 
-  Used By:
-    setpolymorphicdecl.cc: Parser::setPolymorphicDecl()
-
-setPolymorphicDecl()
   Full name: Parser::setPolymorphicDecl()
   Source:    setpolymorphicdecl.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
 
-setPrecedence(int)
-  Full name: Parser::setPrecedence(int)
-  Source:    setprecedence.cc 
+setPolymorphicDecl()
+  Full name: Options::setPolymorphicDecl()
+  Source:    setpolymorphicdecl.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    setpolymorphicdecl.cc: Parser::setPolymorphicDecl()
 
 setPrecedence(Terminal const*)
   Full name: Rules::setPrecedence(Terminal const*)
   Source:    setprecedence.cc 
   Used By:
-    setprecedence.cc: Parser::setPrecedence(int)
+    setprecedence.cc: Parser::setPrecedence(unsigned long)
 
 setPrecedence(Terminal const*)
   Full name: Production::setPrecedence(Terminal const*)
@@ -2007,6 +2253,12 @@ setPrecedence(Terminal const*)
   Used By:
     setprecedence.cc: Rules::setPrecedence(Terminal const*)
     updateprecedence.cc: Rules::updatePrecedence(Production*, std::vector<Terminal*, std::allocator<Terminal*> > const&)
+
+setPrecedence(unsigned long)
+  Full name: Parser::setPrecedence(unsigned long)
+  Source:    setprecedence.cc 
+  Used By:
+    parse.cc: Parser::executeAction(int)
 
 setPrintTokens()
   Full name: Options::setPrintTokens()
@@ -2019,6 +2271,12 @@ setQuotedStrings()
   Source:    setquotedstrings.cc 
   Used By:
     setaccessorvariables.cc: Options::setAccessorVariables()
+
+setRefPatterns()
+  Full name: AtDollar::setRefPatterns()
+  Source:    setrefpatterns.cc 
+  Used By:
+    atdollar1.cc: AtDollar::AtDollar(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, bool)
 
 setRequiredTokens(unsigned long)
   Full name: Options::setRequiredTokens(unsigned long)
@@ -2050,6 +2308,18 @@ setTagMismatches(std::__cxx11::basic_string<char, std::char_traits<char>, std::a
   Used By:
     parse.cc: Parser::executeAction(int)
     setparsingoptions.cc: Options::setParsingOptions()
+
+setTagNr(unsigned long)
+  Full name: AtDollar::setTagNr(unsigned long)
+  Source:    settagnr.cc 
+  Used By:
+    settagpatterns.cc: AtDollar::setTagPatterns()
+
+setTagPatterns()
+  Full name: AtDollar::setTagPatterns()
+  Source:    settagpatterns.cc 
+  Used By:
+    setdollarpatterns.cc: AtDollar::setDollarPatterns()
 
 setTags() const
   Full name: Scanner::setTags() const
@@ -2137,20 +2407,27 @@ srTables() const
   Used By:
     staticdata.cc: Generator::staticData(std::ostream&) const
 
+stackElement() const
+  Full name: AtDollar::stackElement() const
+  Source:    stackelement.cc 
+  Used By:
+    errindextoolarge.cc: Parser::errIndexTooLarge(AtDollar const&, int) const
+
 standard(std::ostream&) const
   Full name: Production::standard(std::ostream&) const
   Source:    standard.cc 
   Used By:
     unused.cc: Production::unused(Production const*)
-    checkfirsttype.cc: Parser::checkFirstType()
+    blkassignw.cc: Parser::blkAssignW(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+    blkdirectw.cc: Parser::blkDirectW(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+    blkerr.cc: Parser::blkErr(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+    blknopw.cc: Parser::blkNopW(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+    blkstypew.cc: Parser::blkSTYPEW(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
     errindextoolarge.cc: Parser::errIndexTooLarge(AtDollar const&, int) const
-    errnosemantic.cc: Parser::errNoSemantic(char const*, AtDollar const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const
-    negativeindex.cc: Parser::negativeIndex(AtDollar const&) const
-    returnpolymorphic.cc: Parser::returnPolymorphic[abi:cxx11](AtDollar const&) const
-    warnautoignored.cc: Parser::warnAutoIgnored(char const*, AtDollar const&) const
-    warnautooverride.cc: Parser::warnAutoOverride(AtDollar const&) const
+    stdemsg.cc: Parser::stdEmsg(AtDollar const&) const
+    stdwmsg.cc: Parser::stdWmsg(AtDollar const&) const
+    warndefaultaction.cc: Parser::warnDefaultAction(Production const&)
     warnmissingsemval.cc: Parser::warnMissingSemval() const
-    warnuntaggedvalue.cc: Parser::warnUntaggedValue(AtDollar const&) const
     showrules.cc: Rules::showRules() const
     productioninfo.cc: Writer::productionInfo(Production const*, std::ostream&)
 
@@ -2180,6 +2457,21 @@ staticData(std::ostream&) const
   Used By:
     data.cc: GLOBALS data.cc 1data.o
 
+stdEmsg(AtDollar const&) const
+  Full name: Parser::stdEmsg(AtDollar const&) const
+  Source:    stdemsg.cc 
+  Used By:
+    errnotag.cc: Parser::errNoTag(int, Block&, AtDollar const&)
+    errnounionptr.cc: Parser::errNoUnionPtr(AtDollar const&)
+    existingtag.cc: Parser::existingTag(AtDollar const&) const
+
+stdWmsg(AtDollar const&) const
+  Full name: Parser::stdWmsg(AtDollar const&) const
+  Source:    stdwmsg.cc 
+  Used By:
+    warnautotag.cc: Parser::warnAutoTag[abi:cxx11](bool, AtDollar const&) const
+    warnnegativedollarindices.cc: Parser::warnNegativeDollarIndices(AtDollar const&) const
+
 storeFilename(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Full name: Production::storeFilename(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    storeFilename.cc 
@@ -2199,18 +2491,149 @@ substituteBlock(int, Block&)
     installaction.cc: Parser::installAction(Block&)
     nestedblock.cc: Parser::nestedBlock(Block&)
 
-suffixAndMember()
-  Full name: AtDollar::suffixAndMember()
-  Source:    suffixandmember.cc 
-  Used By:
-    atdollar1.cc: AtDollar::AtDollar(AtDollar::Type, unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int)
-    atdollar2.cc: AtDollar::AtDollar(AtDollar::Type, unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int)
-
 summarizeActions()
   Full name: State::summarizeActions()
   Source:    summarizeactions.cc 
   Used By:
     define.cc: State::define(Rules const&)
+
+svs(int, Block&, AtDollar const&)
+  Full name: Parser::svs(int, Block&, AtDollar const&)
+  Source:    svs.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 16data.o
+
+svsMem(int, Block&, AtDollar const&)
+  Full name: Parser::svsMem(int, Block&, AtDollar const&)
+  Source:    svsmem.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 16data.o
+
+svsPoly(int, Block&, AtDollar const&)
+  Full name: Parser::svsPoly(int, Block&, AtDollar const&)
+  Source:    svspoly.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 16data.o
+
+svsPolyMem(int, Block&, AtDollar const&)
+  Full name: Parser::svsPolyMem(int, Block&, AtDollar const&)
+  Source:    svspolymem.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 16data.o
+
+svsPolyPtr(int, Block&, AtDollar const&)
+  Full name: Parser::svsPolyPtr(int, Block&, AtDollar const&)
+  Source:    svspolyptr.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 16data.o
+
+svsPolyReplace(int, Block&, AtDollar const&, char const*)
+  Full name: Parser::svsPolyReplace(int, Block&, AtDollar const&, char const*)
+  Source:    svspolyreplace.cc 
+  Used By:
+    svspoly.cc: Parser::svsPoly(int, Block&, AtDollar const&)
+    svspolymem.cc: Parser::svsPolyMem(int, Block&, AtDollar const&)
+    svspolyptr.cc: Parser::svsPolyPtr(int, Block&, AtDollar const&)
+
+svsPolyTag(int, Block&, AtDollar const&)
+  Full name: Parser::svsPolyTag(int, Block&, AtDollar const&)
+  Source:    svspolytag.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 16data.o
+
+svsPolyTagMem(int, Block&, AtDollar const&)
+  Full name: Parser::svsPolyTagMem(int, Block&, AtDollar const&)
+  Source:    svspolytagmem.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 16data.o
+
+svsPolyTagPtr(int, Block&, AtDollar const&)
+  Full name: Parser::svsPolyTagPtr(int, Block&, AtDollar const&)
+  Source:    svspolytagptr.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 16data.o
+
+svsPolyTagReplace(int, Block&, AtDollar const&, char const*)
+  Full name: Parser::svsPolyTagReplace(int, Block&, AtDollar const&, char const*)
+  Source:    svspolytagreplace.cc 
+  Used By:
+    svspolytag.cc: Parser::svsPolyTag(int, Block&, AtDollar const&)
+    svspolytagmem.cc: Parser::svsPolyTagMem(int, Block&, AtDollar const&)
+    svspolytagptr.cc: Parser::svsPolyTagPtr(int, Block&, AtDollar const&)
+
+svsPtr(int, Block&, AtDollar const&)
+  Full name: Parser::svsPtr(int, Block&, AtDollar const&)
+  Source:    svsptr.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 16data.o
+
+svsRefUnion(int, Block&, AtDollar const&)
+  Full name: Parser::svsRefUnion(int, Block&, AtDollar const&)
+  Source:    svsrefunion.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 16data.o
+
+svsReplace(int, Block&, AtDollar const&, char const*)
+  Full name: Parser::svsReplace(int, Block&, AtDollar const&, char const*)
+  Source:    svsreplace.cc 
+  Used By:
+    svs.cc: Parser::svs(int, Block&, AtDollar const&)
+    svsmem.cc: Parser::svsMem(int, Block&, AtDollar const&)
+    svsptr.cc: Parser::svsPtr(int, Block&, AtDollar const&)
+    svsrefunion.cc: Parser::svsRefUnion(int, Block&, AtDollar const&)
+
+svsUnion(int, Block&, AtDollar const&)
+  Full name: Parser::svsUnion(int, Block&, AtDollar const&)
+  Source:    svsunion.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 16data.o
+
+svsUnionMem(int, Block&, AtDollar const&)
+  Full name: Parser::svsUnionMem(int, Block&, AtDollar const&)
+  Source:    svsunionmem.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 16data.o
+
+svsUnionPtr(int, Block&, AtDollar const&)
+  Full name: Parser::svsUnionPtr(int, Block&, AtDollar const&)
+  Source:    svsunionptr.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 16data.o
+
+svsUnionReplace(int, Block&, AtDollar const&, char const*)
+  Full name: Parser::svsUnionReplace(int, Block&, AtDollar const&, char const*)
+  Source:    svsunionreplace.cc 
+  Used By:
+    svsrefunion.cc: Parser::svsRefUnion(int, Block&, AtDollar const&)
+    svsunion.cc: Parser::svsUnion(int, Block&, AtDollar const&)
+    svsunionmem.cc: Parser::svsUnionMem(int, Block&, AtDollar const&)
+    svsunionptr.cc: Parser::svsUnionPtr(int, Block&, AtDollar const&)
+
+svsUnionTag(int, Block&, AtDollar const&)
+  Full name: Parser::svsUnionTag(int, Block&, AtDollar const&)
+  Source:    svsuniontag.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 16data.o
+
+svsUnionTagMem(int, Block&, AtDollar const&)
+  Full name: Parser::svsUnionTagMem(int, Block&, AtDollar const&)
+  Source:    svsuniontagmem.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 16data.o
+
+svsUnionTagPtr(int, Block&, AtDollar const&)
+  Full name: Parser::svsUnionTagPtr(int, Block&, AtDollar const&)
+  Source:    svsuniontagptr.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 16data.o
+
+svsUnionTagReplace(int, Block&, AtDollar const&, char const*)
+  Full name: Parser::svsUnionTagReplace(int, Block&, AtDollar const&, char const*)
+  Source:    svsuniontagreplace.cc 
+  Used By:
+    svsuniontag.cc: Parser::svsUnionTag(int, Block&, AtDollar const&)
+    svsuniontagmem.cc: Parser::svsUnionTagMem(int, Block&, AtDollar const&)
+    svsuniontagptr.cc: Parser::svsUnionTagPtr(int, Block&, AtDollar const&)
 
 Symbol(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Symbol::Type, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Full name: Symbol::Symbol(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Symbol::Type, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
@@ -2286,6 +2709,12 @@ transitions(FBB::Table&, std::vector<Next, std::allocator<Next> > const&)
   Source:    transitions.cc 
   Used By:
     srtable.cc: Writer::srTable(State const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, FBB::Table&, std::ostream&)
+
+typeIndex(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: Parser::typeIndex(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Source:    typeindex.cc 
+  Used By:
+    defaultpolymorphicaction.cc: Parser::defaultPolymorphicAction(Production const&)
 
 undefined(NonTerminal const*)
   Full name: NonTerminal::undefined(NonTerminal const*)
@@ -2369,8 +2798,11 @@ vectorIdx(unsigned long) const
   Full name: Production::vectorIdx(unsigned long) const
   Source:    vectoridx.cc 
   Used By:
-    checkfirsttype.cc: Parser::checkFirstType()
-    warnautooverride.cc: Parser::warnAutoOverride(AtDollar const&) const
+    blkassign.cc: Parser::blkAssign(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+    blkcheck.cc: Parser::blkCheck(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+    blkcheckw.cc: Parser::blkCheckW(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+    blkerr.cc: Parser::blkErr(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+    defaultpolymorphicaction.cc: Parser::defaultPolymorphicAction(Production const&)
     stype.cc: Rules::sType[abi:cxx11](unsigned long) const
     notreducible.cc: State::notReducible(unsigned long)
     beyonddotisnonterminal.cc: Item::beyondDotIsNonTerminal() const
@@ -2385,28 +2817,23 @@ version
     filter.cc: Generator::filter(std::istream&, std::ostream&, bool) const
 
 visitReduction(unsigned long)
-  Full name: SRConflict::visitReduction(unsigned long)
-  Source:    visitreduction.cc 
-  Used By:
-    inspect.cc: SRConflict::inspect()
-
-visitReduction(unsigned long)
   Full name: RRConflict::visitReduction(unsigned long)
   Source:    visitreduction.cc 
   Used By:
     inspect.cc: RRConflict::inspect()
 
-warnAutoIgnored(char const*, AtDollar const&) const
-  Full name: Parser::warnAutoIgnored(char const*, AtDollar const&) const
-  Source:    warnautoignored.cc 
+visitReduction(unsigned long)
+  Full name: SRConflict::visitReduction(unsigned long)
+  Source:    visitreduction.cc 
   Used By:
-    semtag.cc: Parser::semTag(char const*, AtDollar const&, bool (Parser::*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const) const
+    inspect.cc: SRConflict::inspect()
 
-warnAutoOverride(AtDollar const&) const
-  Full name: Parser::warnAutoOverride(AtDollar const&) const
-  Source:    warnautooverride.cc 
+warnForceLSP(unsigned long) const
+  Full name: Parser::warnForceLSP(unsigned long) const
+  Source:    warnforcelsp.cc 
   Used By:
-    semtag.cc: Parser::semTag(char const*, AtDollar const&, bool (Parser::*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const) const
+    loc.cc: Parser::loc(int, Block&, AtDollar const&)
+    locel.cc: Parser::locEl(int, Block&, AtDollar const&)
 
 warnMissingSemval() const
   Full name: Parser::warnMissingSemval() const
@@ -2414,17 +2841,17 @@ warnMissingSemval() const
   Used By:
     substituteblock.cc: Parser::substituteBlock(int, Block&)
 
+warnNegativeDollarIndices(AtDollar const&) const
+  Full name: Parser::warnNegativeDollarIndices(AtDollar const&) const
+  Source:    warnnegativedollarindices.cc 
+  Used By:
+    svsreplace.cc: Parser::svsReplace(int, Block&, AtDollar const&, char const*)
+
 warnTagMismatches(std::ostream&) const
   Full name: Generator::warnTagMismatches(std::ostream&) const
   Source:    warntagmismatches.cc 
   Used By:
     data.cc: GLOBALS data.cc 1data.o
-
-warnUntaggedValue(AtDollar const&) const
-  Full name: Parser::warnUntaggedValue(AtDollar const&) const
-  Source:    warnuntaggedvalue.cc 
-  Used By:
-    semtag.cc: Parser::semTag(char const*, AtDollar const&, bool (Parser::*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const) const
 
 Writer(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Rules const&)
   Full name: Writer::Writer(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Rules const&)

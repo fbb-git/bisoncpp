@@ -104,11 +104,19 @@ void install(string request, string dest)
 
     if (components & 8)
     {
-        target = base + "m/" MAN "/";
+        target = base + "m/" MAN;
         printf("  installing the manual pages below `", target, "'\n");
     
+        target = base + "m/" MAN "/man1/";
         logZip("tmp/man", "bisonc++.1", target);
+        destInstall(dest, base + "m");
 
+        target = base + "m/" MAN "/man3/";
+        logZip("tmp/man", "bisonc++api.3", target);
+        destInstall(dest, base + "m");
+
+        target = base + "m/" MAN "/man7/";
+        logZip("tmp/man", "bisonc++input.7", target);
         destInstall(dest, base + "m");
     }
 

@@ -23,6 +23,7 @@ example()
     orgdir=`pwd`
 
     echo 
+    echo Running example $1
 
     case $2 in
         ("go")

@@ -53,8 +53,8 @@
     // the directory where the standard documentation is stored 
 #define DOC     "/usr/share/doc/"${PROGRAM}
 
-    // the directory whre the manual page is stored
-#define MAN     "/usr/share/man/man1"
+    // the directory below where the man pages are stored
+#define MAN     "/usr/share/man"
 
     // the directory whre the user-guide is stored
 #define UGUIDE   "/usr/share/doc/"${PROGRAM}"-doc/manual"
