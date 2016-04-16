@@ -7,7 +7,7 @@ void Parser::installDefaultAction(Production const &prod,
     block.open(prod.lineNr(), prod.fileName());
 
     block += "\n"
-        "    " + s_semanticValue + " = " + rhs + ";\n"
+        "    " + s_semanticValue + " = std::move(" + rhs + ");\n"
         "}";
 
     d_rules.setAction(block);
