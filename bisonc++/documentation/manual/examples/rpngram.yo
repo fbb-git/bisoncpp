@@ -1,5 +1,5 @@
 Here are the grammar rules for the reverse polish notation calculator.
-        verbinsert(//RULES)(rpn/parser/grammar)
+        verbinsert(//RULES rpn/parser/grammar)
     The rules of the tt(rpn) `language' defined here are the expression
 (using the name tt(exp)), the line of input (tt(line)), and the complete input
 transcript (tt(input)). Each of these nonterminal symbols has several

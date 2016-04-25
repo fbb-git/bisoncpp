@@ -66,9 +66,6 @@ DEFINEMACRO(lshift)(0)(\
     )\
 )
 
-DEFINEMACRO(verbinsert)(2)(\
-    PIPETHROUGH(yodlverbinsert ARG1 ARG2)()\
-)
 DEFINEMACRO(rshift)(0)(\
     IFDEF(latex)(\
         NOTRANS($>>$)\

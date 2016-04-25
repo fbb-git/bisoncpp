@@ -1,3 +1,15 @@
+bisonc++ (5.00.01)
+
+  * Fixed verbinsert calls: yodl 3.07.01 implements a macro 'verbinsert'
+    rendering bisonc++'s own definition superfluous. The new definition
+    requires 1 argument, and the old one 2, so the verbinsert calls were
+    updated accordingly.
+
+  * Alexander Sedov noticed that line numbers in the default actions were off
+    by one, and provided a patch, which was implemented in this version.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 25 Apr 2016 10:26:46 +0530
+
 bisonc++ (5.00.00)
 
   * Options/directives:

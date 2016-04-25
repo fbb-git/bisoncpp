@@ -1,6 +1,6 @@
 Here are the directives that are used for the reverse polish notation
 calculator. As in bf(C++), end-of-line comments may be used.
-        verbinsert(//DECL)(rpn/parser/grammar)
+        verbinsert(//DECL rpn/parser/grammar)
     The grammar file's first (directive) configures b() by specifying the
 tokens (see section The b() Declarations Section). Each terminal symbol that
 is not a single-character literal must be declared here (Single-character

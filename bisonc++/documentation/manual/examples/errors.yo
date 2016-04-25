@@ -6,7 +6,7 @@ calculator. Now we show how to recover from erroneous input.
 The b() grammar-specification language includes the reserved symbol tt(error),
 which can be used in production rules. In the example below it has been added
 as a new alternative for recognizing the tt(line) nonterminal:
-        verbinsert(//LINE)(errorcalc/parser/grammar)
+        verbinsert(//LINE errorcalc/parser/grammar)
     This addition to the grammar allows the calculator to recover from syntax
 errors. If a syntax error is encountered, the third production rule is
 activated, skipping all tokens until a newline token has been encounters. At

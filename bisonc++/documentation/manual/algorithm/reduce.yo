@@ -4,7 +4,7 @@ grammar.
 
 For example, here is an erroneous attempt to define a sequence of zero or more
 words:
-        verbinsert(-as4)(examples/rr1)
+        verbinsert(-as4 examples/rr1)
     The error is an ambiguity: there is more than one way to parse a single
 word into a sequence. It could be reduced to a maybeword and then into a
 sequence via the second rule. Alternatively, nothing-at-all could be reduced
