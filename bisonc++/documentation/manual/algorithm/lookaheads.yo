@@ -1,4 +1,4 @@
-In the previous section a grammer was discussed whose fifth state contained
+In the previous section a grammar was discussed whose fifth state contained
 two items: one resulting in a shift-action, the other resulting in a
 reduce-action. This state contained these two items:
         itemization(

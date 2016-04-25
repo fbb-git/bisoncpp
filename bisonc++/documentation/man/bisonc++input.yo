@@ -87,7 +87,7 @@ This manual page contains the following sections:
             to bic();
     it() bf(EXAMPLE): an example of using bic();
     it() bf(USING PARSER-CLASS SYMBOLS IN LEXICAL SCANNERS): how to refer
-            to tokens defined in the grammer from within a lexical scanner;
+            to tokens defined in the grammar from within a lexical scanner;
     it() bf(AUTHOR): at the end of this man-page.
     )
 

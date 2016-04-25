@@ -7,7 +7,7 @@ tt(cos), etc..
 It is easy to add new operators to the infix calculator as long as they are
 only single-character literals. The parser's member tt(lex) returns all
 non-number characters as tokens, so only some new grammar production rules
-need to be added to the grammer when such tokens must be recognized. But we
+need to be added to the grammar when such tokens must be recognized. But we
 want something more flexible: built-in functions that can be called like this:
         verb(
     function_name (argument)

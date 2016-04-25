@@ -123,7 +123,7 @@ grammar-specification file. This man-page offers these sections:
             to bic();
     it() bf(EXAMPLE): an example of using bic();
     it() bf(USING PARSER-CLASS SYMBOLS IN LEXICAL SCANNERS): how to refer
-            to tokens defined in the grammer from within a lexical scanner;
+            to tokens defined in the grammar from within a lexical scanner;
     it() bf(SEE ALSO): references to other programs and documentation;
     it() bf(AUTHOR): at the end of this man-page.
     )

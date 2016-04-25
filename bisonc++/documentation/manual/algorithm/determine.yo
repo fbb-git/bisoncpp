@@ -71,7 +71,7 @@ chapter. Its augmented grammar consists of the following production rules:
     4.  expr:       expr '+' expr
     5.  start_$:    start
         )
-When analyzing this grammer, we found the following five states, consisting of 
+When analyzing this grammar, we found the following five states, consisting of 
 several items and transitions (kernel items are marked with K following their
 item indices). Next to the items, where applicable, the goto-table is shown:
 the state to go to when the mentioned grammatical symbol has been recognized:
