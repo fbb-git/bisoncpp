@@ -12,7 +12,7 @@ void Production::insertAction(Production const *prod, std::ostream &out,
     Block const &block = prod->action();
 
     if (lineDirectives)
-        out << "#line " << block.line() << " \"" << block.source() <<
+        out << "#line " << block.lineNr() << " \"" << block.source() <<
                        "\"\n";
 
     while (true)

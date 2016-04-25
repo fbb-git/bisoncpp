@@ -5,10 +5,14 @@ bisonc++ (5.00.01)
     requires 1 argument, and the old one 2, so the verbinsert calls were
     updated accordingly.
 
-  * Alexander Sedov noticed that line numbers in the default actions were off
-    by one, and provided a patch, which was implemented in this version.
+  * Alexander Sedov noticed that line numbers in the default actions were
+    incorrect. Line numbers of default actions are now set to the line of the
+    '|' or ';' character following the production rule receiving a default
+    action block.
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 25 Apr 2016 10:26:46 +0530
+  * Updated the 'required' file.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 25 Apr 2016 15:47:27 +0530
 
 bisonc++ (5.00.00)
 

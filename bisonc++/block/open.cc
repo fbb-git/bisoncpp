@@ -8,7 +8,7 @@ void Block::open(size_t lineno, string const &source)
     {                       // assign line if no braces were open yet
         clear();
         this->string::operator=("{");
-        d_line = lineno;
+        d_lineNr = lineno;
         d_source = source;
     }
         

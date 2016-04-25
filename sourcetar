@@ -1,6 +1,8 @@
 #!/bin/bash
 PROJECT=bisonc++
 
+cd ~/git/bisonc++/src
+
 if [ -e /usr/share/common-licenses/GPL ] ; then
     cp /usr/share/common-licenses/GPL ${PROJECT}/LICENSE
 fi

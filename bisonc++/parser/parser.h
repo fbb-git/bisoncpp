@@ -111,6 +111,8 @@ class Parser: public ParserBase
                            std::string> const &polymorphic() const;
 
     private:
+        void updateDefaultActionLineNr();
+
         void checkField(std::string const &field);  // see inc/typename
 
         static void warnDefaultAction(Production const &prod);

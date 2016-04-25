@@ -72,6 +72,8 @@ class Production: private std::vector<Symbol *>
         Production(Symbol const *nonTerminal, size_t lineNr);
 
         Block const &action() const;
+        void setBlockLineNr(size_t lineNr);
+
         Symbol const &operator[](size_t idx) const;
         Symbol const *rhs(size_t idx) const;    // idx-ed symbol in the rhs
         Symbol const *lhs() const;
@@ -107,6 +109,11 @@ class Production: private std::vector<Symbol *>
         Symbol *vectorIdx(size_t idx) const;
         std::ostream &standard(std::ostream &out) const;
 };
+
+inline void Production::setBlockLineNr(size_t lineNr)
+{
+    d_action.setLineNr(lineNr);
+}
 
 inline void Production::setLineNr(size_t lineNr)
 {

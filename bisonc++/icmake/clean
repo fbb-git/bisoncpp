@@ -11,7 +11,7 @@ void clean(int dist)
 
 
     if (dist)
-        run("rm -rf tmp" );
+        run("rm -rf tmp a */a" );
 
     chdir("documentation");
 

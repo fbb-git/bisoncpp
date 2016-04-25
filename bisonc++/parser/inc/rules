@@ -90,6 +90,9 @@ _rule:
     _ruleName
     _productionList
     ';'
+    {
+        updateDefaultActionLineNr();
+    }
 ;
 
 rules:

@@ -9,6 +9,10 @@ void Rules::addProduction(size_t lineNr)
                                                         // that case there's
                                                         // also no production.
 
+// cerr << "addProduction: PRODUCTION at line " << lineNr << '\n';
+
+    updateDefaultActionLineNr(lineNr);
+
     s_lastLineNr = lineNr;
 
                                                         // create production
@@ -26,4 +30,5 @@ void Rules::addProduction(size_t lineNr)
 //              " (" << d_production.size() << " productions in total)" << 
 //              endl;
 }
+
 

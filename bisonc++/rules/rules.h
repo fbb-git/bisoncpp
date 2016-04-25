@@ -20,6 +20,9 @@
     // iterators into the symbol table
 class Rules
 { 
+    bool d_defaultAction;       // last action was default action:
+                                // requires line update at the next
+                                // rule definition
     public:
             // For each rule, maintain a record of file/line combinations
             // indicating where the rule was first seen. This allows me to
@@ -96,6 +99,7 @@ class Rules
                 // add the symbol as the next element of the 
                 // rule-production that's currently being defined. 
 
+        void updateDefaultActionLineNr(size_t lineNr);
         void addProduction(size_t lineNr);
                 // add a new production to the set of productions of the
                 // rule currently being defined
@@ -143,7 +147,7 @@ class Rules
 
                 // associate an action with the currently defined rule
                 // production 
-        void setAction(Block const &block);
+        void setAction(Block const &block, bool defaultAction = false);
 
         void setHiddenAction(Block const &block);
 
@@ -255,8 +259,9 @@ inline size_t Rules::nElements() const
     return d_currentProduction->size();
 }
 
-inline void Rules::setAction(Block const &block)
+inline void Rules::setAction(Block const &block, bool defaultAction)
 {
+    d_defaultAction = defaultAction;
     d_currentProduction->setAction(block);
 }
 

@@ -11,7 +11,8 @@ class Block: private std::string
 {
     friend std::ostream &operator<<(std::ostream &out, Block const &blk);
 
-    size_t  d_line;
+    size_t  d_lineNr;
+
     std::string d_source;               // the source in which the block 
                                         // was found. The block's text itself
                                         // is in the Block's base class
@@ -53,7 +54,8 @@ class Block: private std::string
         std::vector<AtDollar>::const_reverse_iterator rbeginAtDollar() const;
         std::vector<AtDollar>::const_reverse_iterator rendAtDollar() const;
 
-        size_t line() const;
+        size_t lineNr() const;
+        void   setLineNr(size_t lineNr);
         std::string const &source() const;  // the block's source file
         std::string const &str() const;     // the block's contents
 
@@ -87,9 +89,14 @@ Block::rendAtDollar() const
     return d_atDollar.rend();
 }
 
-inline size_t Block::line() const
+inline size_t Block::lineNr() const
 {
-    return d_line;
+    return d_lineNr;
+}
+
+inline void Block::setLineNr(size_t lineNr)
+{
+    d_lineNr = lineNr;
 }
 
 inline std::string const &Block::source() const
