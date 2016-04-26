@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<title> <div style="text-align: center"><strong>Bisonc++</strong> (Version 5.00.00) User Guide</div> </title>
+<title> <div style="text-align: center"><strong >Bisonc++</strong> (Version 5.00.01) User Guide</div> </title>
 <style type="text/css">
     figure {text-align: center;}
     img {vertical-align: center;}
@@ -15,16 +15,16 @@
 </ul>
 <hr>
 <a name="l84"></a>
-<h1>Chapter 6: Examples</h1>
-Now we show and explain three sample programs written using <strong>bisonc++</strong>: a reverse
+<h1 >Chapter 6: Examples</h1>
+Now we show and explain three sample programs written using <strong >bisonc++</strong>: a reverse
 polish notation calculator, an algebraic (infix) notation calculator, and a
-multi-function calculator. All three have been tested using the Gnu <strong>C++</strong>
+multi-function calculator. All three have been tested using the Gnu <strong >C++</strong>
 compiler version 5.3.1. Each example results in a usable, though limited,
 interactive desk-top calculator.
 <p>
-These examples are simple, but <strong>bisonc++</strong> grammars for real programming languages are
+These examples are simple, but <strong >bisonc++</strong> grammars for real programming languages are
 written the same way. You can copy the examples from this document into source
-files to create your own versions of these programs. In addition, the <strong>bisonc++</strong>
+files to create your own versions of these programs. In addition, the <strong >bisonc++</strong>
 source archive contains the various source files ready for use.
 <p>
 <ul>
@@ -43,7 +43,7 @@ source archive contains the various source files ready for use.
     </ul>
 <p>
 <a name="RPN"></a><a name="l85"></a>
-<h2>6.1: Rpn: a Reverse Polish Notation Calculator</h2>
+<h2 >6.1: Rpn: a Reverse Polish Notation Calculator</h2>
 The first example is about a simple double-precision reverse polish notation
 calculator (a calculator using postfix operators). This example provides a
 good starting point, since operator precedence is not an issue. The second
@@ -53,11 +53,10 @@ All sources for this calculator are found in the <a href="examples/rpn/">example
 directory.
 <p>
 <a name="l86"></a>
-<h3>6.1.1: Declarations for the `rpn' calculator</h3>
+<h3 >6.1.1: Declarations for the `rpn' calculator</h3>
     Here are the directives that are used for the reverse polish notation
-calculator. As in <strong>C++</strong>, end-of-line comments may be used.
+calculator. As in <strong >C++</strong>, end-of-line comments may be used.
         <pre>
-
 %baseclass-preinclude cmath
 
 %token NUM
@@ -66,22 +65,21 @@ calculator. As in <strong>C++</strong>, end-of-line comments may be used.
 </pre>
 
 <p>
-The grammar file's first (directive) configures <strong>bisonc++</strong> by specifying the
-tokens (see section The <strong>bisonc++</strong> Declarations Section). Each terminal symbol that
+The grammar file's first (directive) configures <strong >bisonc++</strong> by specifying the
+tokens (see section The <strong >bisonc++</strong> Declarations Section). Each terminal symbol that
 is not a single-character literal must be declared here (Single-character
 literals are normally not declared, but are represented by literal character
 constants). In the current example, all arithmetic operators are designated by
 single-character literals, so the only terminal symbol that needs to be
-declared is <code>NUM</code>, the token type for numeric constants. As <strong>bisonc++</strong> by default
-uses the type <code>int</code> as the semantic value type, but a calculator usually
-uses floating point values the directive <code>%stype double</code> is used to indicate
-that the calculator uses `<code>double</code>' as the type for its semantic values.
+declared is <code >NUM</code>, the token type for numeric constants. As <strong >bisonc++</strong> by default
+uses the type <code >int</code> as the semantic value type, but a calculator usually
+uses floating point values the directive <code >%stype double</code> is used to indicate
+that the calculator uses `<code >double</code>' as the type for its semantic values.
 <p>
 <a name="l87"></a>
-<h3>6.1.2: Grammar rules for the `rpn' calculator</h3>
+<h3 >6.1.2: Grammar rules for the `rpn' calculator</h3>
     Here are the grammar rules for the reverse polish notation calculator.
         <pre>
-
 input:    
         // empty 
 | 
@@ -136,28 +134,28 @@ exp:
 </pre>
 
 <p>
-The rules of the <code>rpn</code> `language' defined here are the expression
-(using the name <code>exp</code>), the line of input (<code>line</code>), and the complete input
-transcript (<code>input</code>). Each of these nonterminal symbols has several
-alternate rules, joined by the `<code>|</code>' separator, separating the various
+The rules of the <code >rpn</code> `language' defined here are the expression
+(using the name <code >exp</code>), the line of input (<code >line</code>), and the complete input
+transcript (<code >input</code>). Each of these nonterminal symbols has several
+alternate rules, joined by the `<code >|</code>' separator, separating the various
 production rules. The various rules are explained next.
 <p>
 The semantics of the language are determined by the actions taken once
-nonterminals have been recognized. The actions consist of <strong>C++</strong> code that
+nonterminals have been recognized. The actions consist of <strong >C++</strong> code that
 appears inside braces. See section <a href="bisonc++04.html#ACTIONS">4.6.2</a>.
 <p>
-Actions are specified using <strong>C++</strong>, but <strong>bisonc++</strong> provides the means for passing
+Actions are specified using <strong >C++</strong>, but <strong >bisonc++</strong> provides the means for passing
 semantic values between rules. Refer to section <a href="bisonc++04.html#ACTIONS">4.6.2</a> below for an
 extensive coverage of the various possibilities. As a short introduction, the
-pseudo-variable <code>$$</code> can be used in rules to represent the semantic value
+pseudo-variable <code >$$</code> can be used in rules to represent the semantic value
 for the nonterminal that the production rule is defining. Assigning a value to
-<code>$$</code> is the main task of many actions. The semantic values of the elements
-of production rules are referred to as <code>$1</code> (the first element of a
-production rule), <code>$2</code> (the second element), and so on.
+<code >$$</code> is the main task of many actions. The semantic values of the elements
+of production rules are referred to as <code >$1</code> (the first element of a
+production rule), <code >$2</code> (the second element), and so on.
 <p>
 <a name="l88"></a>
-<h4>6.1.2.1: Explanation of `input'</h4>
-        Consider the definition of <code>input</code>:
+<h4 >6.1.2.1: Explanation of `input'</h4>
+        Consider the definition of <code >input</code>:
         <pre>
 
     input:    
@@ -168,20 +166,20 @@ production rule), <code>$2</code> (the second element), and so on.
         
 </pre>
 
-    This definition should be read as follows: <em>A complete input is either
+    This definition should be read as follows: <em >A complete input is either
 an empty string, or a complete input followed by an input line</em>. Notice that
 `complete input' is defined in terms of itself. This definition is said to be
-<em>left recursive</em> since the rule's nonterminal (<code>input</code>) appears as the
+<em >left recursive</em> since the rule's nonterminal (<code >input</code>) appears as the
 leftmost symbol in the production rule. See section <a href="bisonc++04.html#RECURSIVE">4.4</a>.
 <p>
 The first alternative is empty: there are no symbols between the colon and the
-first `<code>|</code>'; this means that input can match an empty string of input (no
+first `<code >|</code>'; this means that input can match an empty string of input (no
 tokens). We write the rules this way because it is legitimate to type
-<code>Ctrl-d</code> (end of input) immediately after starting the calculator. By
-convention empty alternatives are provided with the comment `<code>// empty</code>'.
+<code >Ctrl-d</code> (end of input) immediately after starting the calculator. By
+convention empty alternatives are provided with the comment `<code >// empty</code>'.
 <p>
-The second production rule (`<code>input line</code>') handles all nontrivial input. It
-means <em>after reading any number of lines, read one more line</em>. The left
+The second production rule (`<code >input line</code>') handles all nontrivial input. It
+means <em >after reading any number of lines, read one more line</em>. The left
 recursion turns this rule into a loop: it processes any number of lines.
 <p>
 The parser's parsing function continues to process input until a grammatical
@@ -189,8 +187,8 @@ error is encountered or untilthe lexical analyzer returns the end-of-file
 token. 
 <p>
 <a name="l89"></a>
-<h4>6.1.2.2: Explanation of `line'</h4>
-        Next consider the definition of the <code>line</code> nonterminal:
+<h4 >6.1.2.2: Explanation of `line'</h4>
+        Next consider the definition of the <code >line</code> nonterminal:
         <pre>
 
     line:   
@@ -205,22 +203,22 @@ token.
 </pre>
 
     The first alternative is a newline character token; this means that
-<code>rpn</code> accepts a blank line (and ignores it, since it has no associated
-action). The second alternative is an <em>expression</em> (<code>expr</code>), followed by a
+<code >rpn</code> accepts a blank line (and ignores it, since it has no associated
+action). The second alternative is an <em >expression</em> (<code >expr</code>), followed by a
 newline. This alternative handles all expressions that are entered by the
-user. The semantic value of the <code>exp</code> nonterminal is the value of <code>$1</code>
-because the <code>exp</code> nonterminal is the first symbol of the production
+user. The semantic value of the <code >exp</code> nonterminal is the value of <code >$1</code>
+because the <code >exp</code> nonterminal is the first symbol of the production
 rule. The action simply prints the expression's value.
 <p>
-This action is unusual because it does not assign a value to <code>$$</code>. As a
-consequence, the semantic value associated with <code>line</code> is not defined. This
-becomes a bug if that value is ever used, but we don't use it: once <code>rpn</code>
+This action is unusual because it does not assign a value to <code >$$</code>. As a
+consequence, the semantic value associated with <code >line</code> is not defined. This
+becomes a bug if that value is ever used, but we don't use it: once <code >rpn</code>
 has printed the value of the user's input line, that value is no longer
 needed.
 <p>
 <a name="l90"></a>
-<h4>6.1.2.3: Explanation of `expr'</h4>
-        The <code>exp</code> nonterminal has several rules, one for each kind of
+<h4 >6.1.2.3: Explanation of `expr'</h4>
+        The <code >exp</code> nonterminal has several rules, one for each kind of
 expression. The first rule handles the simplest kind of expression: just a
 single number. The second handles additions, which are two expressions
 followed by a plus-sign. The third handles subtractions, and so on.
@@ -242,7 +240,7 @@ followed by a plus-sign. The third handles subtractions, and so on.
         
 </pre>
 
-    Normally the production rule separator `<code>|</code>' is used to separate the
+    Normally the production rule separator `<code >|</code>' is used to separate the
 various production rules, but the rules could equally well have separately
 been defined:
         <pre>
@@ -271,51 +269,51 @@ been defined:
 
     Most rules have actions assoicated with them computing the value of the
 expression using the values of the elements of production rules. For example,
-in the rule for addition, <code>$1</code> refers to the first component <code>exp</code> and
-<code>$2</code> refers to the second one. The third component, '<code>+</code>', has no semantic
-value associated with it, but if it had you could refer to it as <code>$3</code>. When
+in the rule for addition, <code >$1</code> refers to the first component <code >exp</code> and
+<code >$2</code> refers to the second one. The third component, '<code >+</code>', has no semantic
+value associated with it, but if it had you could refer to it as <code >$3</code>. When
 the parser's parsing function recognizes a sum expression using this rule, the
 sum of the two subexpressions' values is produced as the value of the entire
 expression. See section <a href="bisonc++04.html#ACTIONS">4.6.2</a>.
 <p>
 You don't have to define actions for every rule. When a rule has no action,
-<strong>bisonc++</strong> by default copies the value of <code>$1</code> into <code>$$</code>. This is what happens
-in the first rule (the one that uses <code>NUM</code>).
+<strong >bisonc++</strong> by default copies the value of <code >$1</code> into <code >$$</code>. This is what happens
+in the first rule (the one that uses <code >NUM</code>).
 <p>
-The formatting shown here shows  the recommended layout, but <strong>bisonc++</strong> does not
+The formatting shown here shows  the recommended layout, but <strong >bisonc++</strong> does not
 require it. You can alter whitespace as much as you like.
 <p>
 <a name="RPNLEX"></a><a name="l91"></a>
-<h3>6.1.3: The Lexical Scanner used by `rpn'</h3>
+<h3 >6.1.3: The Lexical Scanner used by `rpn'</h3>
     The lexical analyzer's job is to convert characters or sequences of characters
-read from the input stream into tokens. <strong>Bisonc++</strong>'s parser obtains its tokens by
-calling its lexical analyzer member (<code>lex</code>), which is a predefined member
+read from the input stream into tokens. <strong >Bisonc++</strong>'s parser obtains its tokens by
+calling its lexical analyzer member (<code >lex</code>), which is a predefined member
 of the parser class. See section <a href="bisonc++05.html#LEX">5.3.1</a>.
 <p>
 Our calculator only needs a simple lexical analyzer. It skips blanks and tabs,
-then reads numbers, returning them as <code>NUM</code> tokens. Any other character that
+then reads numbers, returning them as <code >NUM</code> tokens. Any other character that
 isn't part of a number is a separate token. Note that the token-value for such
 a single-character token is the character itself.
 <p>
 The lexical analyzer function's return value is a numeric value representing a
 token. If the token is a literal character, then its numeric code is the
-character's <code>ASCII</code> code; if the token is the name of a token defined by <strong>bisonc++</strong>
-in a grammar specification file, then such named tokens are defined by <strong>bisonc++</strong> in
-a <strong>C++</strong> enumeration. In the current example, therefore, <code>NUM</code> becomes an
-enumeration value, returned by the <code>lex</code> member as the `value' <code>NUM</code>.
+character's <code >ASCII</code> code; if the token is the name of a token defined by <strong >bisonc++</strong>
+in a grammar specification file, then such named tokens are defined by <strong >bisonc++</strong> in
+a <strong >C++</strong> enumeration. In the current example, therefore, <code >NUM</code> becomes an
+enumeration value, returned by the <code >lex</code> member as the `value' <code >NUM</code>.
 <p>
 Semantic values of nonterminals are stored in the parser's data member
-<code>d_val__</code> (comparable to the variable <code>yylval</code> used by, e.g., Bison). This
-data member has <code>int</code> as its default type, but by specifying <code>%stype</code> in
+<code >d_val__</code> (comparable to the variable <code >yylval</code> used by, e.g., Bison). This
+data member has <code >int</code> as its default type, but by specifying <code >%stype</code> in
 the grammar file's directive section this default type is modified (to, e.g.,
-<code>double</code>).
+<code >double</code>).
 <p>
 A token value of zero is returned once end-of-file is encountered (the parsing
-function produced by <strong>bisonc++</strong> interprets any nonpositive token value as
+function produced by <strong >bisonc++</strong> interprets any nonpositive token value as
 end-of-input).
 <p>
 Here is the lexical scanner's implementation:
-    <pre>
+    <pre >
 #include "Parser.ih"
 
 /*
@@ -349,12 +347,12 @@ int Parser::lex()
 
 <p>
 <a name="l92"></a>
-<h3>6.1.4: The Controlling Function `main()'</h3>
+<h3 >6.1.4: The Controlling Function `main()'</h3>
     In keeping with the spirit of this example, the calcuator's
-<code>main</code> function is a very small one.  It
+<code >main</code> function is a very small one.  It
 constructs a parser object and then calls its parsing function to
 start the calculator:
-    <pre>
+    <pre >
 #include "main.ih"
 
 int main()
@@ -367,33 +365,33 @@ int main()
 
 <p>
 <a name="l93"></a>
-<h3>6.1.5: The error reporting member `error()'</h3>
-    When <code>parse</code> encounters a <em>syntax error</em>, it calls the error reporting
-member function (<code>error</code>) to print an error message. A very basic in-line
-implementation is provided by <strong>bisonc++</strong> in the parser class internal header file
+<h3 >6.1.5: The error reporting member `error()'</h3>
+    When <code >parse</code> encounters a <em >syntax error</em>, it calls the error reporting
+member function (<code >error</code>) to print an error message. A very basic in-line
+implementation is provided by <strong >bisonc++</strong> in the parser class internal header file
 (see chapter <a href="bisonc++05.html#INTERFACE">5</a>), which can easily be redefined by the
-programmer. The <code>error</code> member's default implementation is OK for
-<code>rpn</code>.
+programmer. The <code >error</code> member's default implementation is OK for
+<code >rpn</code>.
 <p>
-Once <code>error</code> returns, <strong>bisonc++</strong>'s parser may recover from the error and continue
+Once <code >error</code> returns, <strong >bisonc++</strong>'s parser may recover from the error and continue
 parsing if the grammar contains a suitable error rule (see chapter
-<a href="bisonc++08.html#RECOVERY">8</a>).  Otherwise, the parsing function <code>parse</code> returns a non-zero
-value. No error production rules were used for <code>rpn</code>, so the calculator
+<a href="bisonc++08.html#RECOVERY">8</a>).  Otherwise, the parsing function <code >parse</code> returns a non-zero
+value. No error production rules were used for <code >rpn</code>, so the calculator
 terminates at the first syntax error.. Not very nice in a real-life
 calculator, but it is acceptable for this first example.
 <p>
 <a name="l94"></a>
-<h3>6.1.6: Running Bisonc++ to generate the Parser</h3>
-    Before running <strong>bisonc++</strong>, we should decide how to organize the program's source
+<h3 >6.1.6: Running Bisonc++ to generate the Parser</h3>
+    Before running <strong >bisonc++</strong>, we should decide how to organize the program's source
 code, using one or more source files. Even though the example is simple, it is
 good practice to define all user-defined functions in source files of their
-own. For <code>rpn</code> this means that a source file (<code>main.cc</code>) is constructed
-holding <code>main</code>, and a file <code>parser/lex.cc</code> containing the lexical
+own. For <code >rpn</code> this means that a source file (<code >main.cc</code>) is constructed
+holding <code >main</code>, and a file <code >parser/lex.cc</code> containing the lexical
 scanner's implementation. Note that I've put all the parser's files in a
 separate directory as well (also see section <a href="bisonc++03.html#LAYOUT">3.7</a>).
 <p>
-In  <a href="examples/rpn/parser">rpn's parser</a> directory the file <code>grammar</code>
-contains the grammar specification. <strong>Bisonc++</strong> constructs a parser class and a
+In  <a href="examples/rpn/parser">rpn's parser</a> directory the file <code >grammar</code>
+contains the grammar specification. <strong >Bisonc++</strong> constructs a parser class and a
 parsing member function from this file after issuing the command:
         <pre>
 
@@ -401,24 +399,24 @@ parsing member function from this file after issuing the command:
         
 </pre>
 
-    From this, <strong>bisonc++</strong> produced the following files:
+    From this, <strong >bisonc++</strong> produced the following files:
     <ul>
-    <li><code>Parser.h</code>, the parser class definition;
-    <li><code>Parserbase.h</code>, the parser's <em>base</em> class definition, defining, among
+    <li><code >Parser.h</code>, the parser class definition;
+    <li><code >Parserbase.h</code>, the parser's <em >base</em> class definition, defining, among
 other, the grammatical tokens to be used by externally defined lexical
 scanners;
-    <li><code>Parser.ih</code>, the <em>internal header file</em>, to be included by all
+    <li><code >Parser.ih</code>, the <em >internal header file</em>, to be included by all
 implementations of the parser class' members;
-    <li><code>parse.cc</code>, the parsing member function.
+    <li><code >parse.cc</code>, the parsing member function.
     </ul>
-    By default, <code>Parserbase.h</code> and <code>parse.cc</code> will be <em>re-created</em> each
-time <strong>bisonc++</strong> is re-run. <code>Parser.h</code> and <code>Parser.ih</code> may safely be modified
+    By default, <code >Parserbase.h</code> and <code >parse.cc</code> will be <em >re-created</em> each
+time <strong >bisonc++</strong> is re-run. <code >Parser.h</code> and <code >Parser.ih</code> may safely be modified
 by the programmer, e.g., to add new members to to the parser class. These two
-files will not be overwritten by <strong>bisonc++</strong>, unless explicitly instructed to do
+files will not be overwritten by <strong >bisonc++</strong>, unless explicitly instructed to do
 so. 
 <p>
 <a name="l95"></a>
-<h3>6.1.7: Constructing and running `rpn'</h3>
+<h3 >6.1.7: Constructing and running `rpn'</h3>
     Here is how to compile and run the parser file:
         <pre>
 
@@ -465,12 +463,12 @@ Here is an example session using the calculator:
 
 <p>
 <a name="CALC"></a><a name="l96"></a>
-<h2>6.2: `calc': an Infix Notation Calculator</h2>
-We now modify <code>rpn</code> to handle infix operators instead of postfix. Infix
+<h2 >6.2: `calc': an Infix Notation Calculator</h2>
+We now modify <code >rpn</code> to handle infix operators instead of postfix. Infix
 notation requires us to define operator precedence and to extend the grammar
-with nested expressions. Here is <strong>bisonc++</strong>'s grammar specification for <code>calc</code>, an
+with nested expressions. Here is <strong >bisonc++</strong>'s grammar specification for <code >calc</code>, an
 infix calculator:
-        <pre>
+        <pre >
 %baseclass-preinclude   cmath
 %stype double
 
@@ -539,32 +537,32 @@ exp:
 
 </pre>
 
-    The functions <code>lex</code>, <code>error</code> and <code>main</code> are identical to the ones 
-used with <code>rpn</code>.
+    The functions <code >lex</code>, <code >error</code> and <code >main</code> are identical to the ones 
+used with <code >rpn</code>.
 <p>
 This example illustrates  several important new features:
     <ul>
-    <li> In the first section (<strong>bisonc++</strong> directives), <code>%left</code> declares token types
+    <li> In the first section (<strong >bisonc++</strong> directives), <code >%left</code> declares token types
 stating that the mentioned operators are left-associative. The directives
-<code>%left</code> and <code>%right</code> (right associativity) are used instead of <code>%token</code>,
+<code >%left</code> and <code >%right</code> (right associativity) are used instead of <code >%token</code>,
 which is merely used to declare a token identifier. The tokens mentioned with
-<code>%left</code> and <code>%right</code> are single-character tokens, which ordinarily don't
+<code >%left</code> and <code >%right</code> are single-character tokens, which ordinarily don't
 need to be declared. We declare them here to specify their priority and
 associativity.
     <li> Operator precedence is determined by the ordering of the directives;
-the earlier <code>%left</code> and <code>%right</code> are specified, the lower the priority of
+the earlier <code >%left</code> and <code >%right</code> are specified, the lower the priority of
 the operators that are following these keywords. So addition/subtraction have
 the lowest precedence, multiplication and division are next, then unary minus
-(<code>NEG</code>), and exponentiation has the highest precedence. See section
+(<code >NEG</code>), and exponentiation has the highest precedence. See section
 <a href="bisonc++04.html#PRECEDENCE">4.5.9</a>.
-    <li> Another important new feature is the <code>%prec</code> directive encountered
+    <li> Another important new feature is the <code >%prec</code> directive encountered
 in the grammar section at the definition of the unary minus operator
-production rule. The <code>%prec</code> directive indicates that the minus operator in
-the production rule `<code>'-' exp</code>' has <code>NEG's</code>, rather than the minus
-(<code>'-'</code>) operator's precedence. See section <a href="bisonc++07.html#CONDEP">7.3</a>.
+production rule. The <code >%prec</code> directive indicates that the minus operator in
+the production rule `<code >'-' exp</code>' has <code >NEG's</code>, rather than the minus
+(<code >'-'</code>) operator's precedence. See section <a href="bisonc++07.html#CONDEP">7.3</a>.
     </ul>
 <p>
-Here is a sample run of <code>calc</code>:
+Here is a sample run of <code >calc</code>:
         <pre>
 
     % calc
@@ -579,17 +577,16 @@ Here is a sample run of <code>calc</code>:
 
 <p>
 <a name="ERROR"></a><a name="l97"></a>
-<h2>6.3: Basic Error Recovery</h2>
+<h2 >6.3: Basic Error Recovery</h2>
 Up to this point, error-recovery hasn't yet been covered i.e., how to continue
-parsing after the parser detects a syntax error. By default <code>parse</code> returns
-after calling <code>error</code>. This means that an erroneous input line ends the
+parsing after the parser detects a syntax error. By default <code >parse</code> returns
+after calling <code >error</code>. This means that an erroneous input line ends the
 calculator. Now we show how to recover from erroneous input.
 <p>
-The <strong>bisonc++</strong> grammar-specification language includes the reserved symbol <code>error</code>,
+The <strong >bisonc++</strong> grammar-specification language includes the reserved symbol <code >error</code>,
 which can be used in production rules. In the example below it has been added
-as a new alternative for recognizing the <code>line</code> nonterminal:
+as a new alternative for recognizing the <code >line</code> nonterminal:
         <pre>
-
 line:   
         '\n'
 | 
@@ -607,40 +604,40 @@ line:
 This addition to the grammar allows the calculator to recover from syntax
 errors. If a syntax error is encountered, the third production rule is
 activated, skipping all tokens until a newline token has been encounters. At
-that point <code>line</code> has been recognized, and parsing continues afresh at the
-next input line (the <code>error</code> member function is also called, printing its
-message). Different from bison's <code>error</code> implementation, <strong>bisonc++</strong> proceeds on the
-assumption that whenever <code>error</code> is used in a production rule it is the
+that point <code >line</code> has been recognized, and parsing continues afresh at the
+next input line (the <code >error</code> member function is also called, printing its
+message). Different from bison's <code >error</code> implementation, <strong >bisonc++</strong> proceeds on the
+assumption that whenever <code >error</code> is used in a production rule it is the
 grammar constructor's intention to have the parser continue parsing
-(therefore, a statement like `<code>yyerrok</code>', encountered in bison grammars is
-superfluous in <strong>bisonc++</strong> grammars). The reserved symbol <code>error</code> itself causes the
+(therefore, a statement like `<code >yyerrok</code>', encountered in bison grammars is
+superfluous in <strong >bisonc++</strong> grammars). The reserved symbol <code >error</code> itself causes the
 parsing function to skip all subsequent input until a token that can follow
-<code>error</code> has been encountered. In the above implementation that token is the
-newline character `<code>\n</code>' (see chapter <a href="bisonc++08.html#RECOVERY">8</a>).
+<code >error</code> has been encountered. In the above implementation that token is the
+newline character `<code >\n</code>' (see chapter <a href="bisonc++08.html#RECOVERY">8</a>).
 <p>
 This form of error recovery deals with syntax errors. There are other
 kinds of errors; for example, divisions by zero, which raises an exception
 signal that is normally fatal. A real calculator program must handle this
 signal and use whatever it takes to discard the rest of the current line of
 input and resume parsing thereafter. Handling such signals and other forms of
-semantic errors is not discussed here, as it is not specific to <strong>bisonc++</strong>
+semantic errors is not discussed here, as it is not specific to <strong >bisonc++</strong>
 programs. But once a semantic error has been encountered, handling functions
-may call <code>ERROR()</code>, resulting in the same procedure as the one that's used
+may call <code >ERROR()</code>, resulting in the same procedure as the one that's used
 for syntax errors: all subsequenct tokens are skipped until a token has been
-encountered that can follow the reserved symbol <code>error</code>.
+encountered that can follow the reserved symbol <code >error</code>.
 <p>
 <a name="MFCALC"></a><a name="l98"></a>
-<h2>6.4: `mfcalc': a Multi-Function Calculator</h2>
-Now that the basics of using <strong>bisonc++</strong> have been discussed, it is time to move on to
+<h2 >6.4: `mfcalc': a Multi-Function Calculator</h2>
+Now that the basics of using <strong >bisonc++</strong> have been discussed, it is time to move on to
 a more advanced problem. The above calculators provided only offer the
-operators <code>+, - * /</code> and <code>^</code>. It would be nice to have a calculator that
-allows us to use some other mathematical functions as well, such as <code>sin</code>,
-<code>cos</code>, etc..
+operators <code >+, - * /</code> and <code >^</code>. It would be nice to have a calculator that
+allows us to use some other mathematical functions as well, such as <code >sin</code>,
+<code >cos</code>, etc..
 <p>
 It is easy to add new operators to the infix calculator as long as they are
-only single-character literals. The parser's member <code>lex</code> returns all
+only single-character literals. The parser's member <code >lex</code> returns all
 non-number characters as tokens, so only some new grammar production rules
-need to be added to the grammer when such tokens must be recognized. But we
+need to be added to the grammar when such tokens must be recognized. But we
 want something more flexible: built-in functions that can be called like this:
         <pre>
 
@@ -670,9 +667,9 @@ variables. Here is a sample session with the multi-function calculator:
 Note that multiple assignment and nested function calls are supported.
 <p>
 <a name="l99"></a>
-<h3>6.4.1: The Declaration Section for `mfcalc'</h3>
-    The grammar specification file for the <code>mfcalc</code> calculator shows several new
-features. Here is the <strong>bisonc++</strong> directive section for the <code>mfcalc</code> multi-function
+<h3 >6.4.1: The Declaration Section for `mfcalc'</h3>
+    The grammar specification file for the <code >mfcalc</code> calculator shows several new
+features. Here is the <strong >bisonc++</strong> directive section for the <code >mfcalc</code> multi-function
 calculator (line numbers were added for referential purposes, they are not
 part of the declaraction section as used in the actual grammar file):
         <pre>
@@ -697,41 +694,41 @@ part of the declaraction section as used in the actual grammar file):
         
 </pre>
 
-    The above specifications show  two new features of <strong>bisonc++</strong>'s grammar
+    The above specifications show  two new features of <strong >bisonc++</strong>'s grammar
 specification language, allowing semantic values to have different data types.
     <ul>
-    <li> The <code>%union</code> directive (given in lines 1 through 6) allows semantic
+    <li> The <code >%union</code> directive (given in lines 1 through 6) allows semantic
 values to have various data types (see section <a href="bisonc++04.html#UNION">4.5.28</a>). It is used
-instead of <code>%stype</code>, and defines <code>Parser::STYPE__</code> as a the union type:
+instead of <code >%stype</code>, and defines <code >Parser::STYPE__</code> as a the union type:
 all semantic values now have this type. Now semantic values can have any of
 the types that are defined as the union's fields.
-    <li> The <code>%type</code> directive is used to associate (non)terminal tokens with
+    <li> The <code >%type</code> directive is used to associate (non)terminal tokens with
 the types of the fields of the union:
     <ul>
-    <li><code>double</code> (for <code>exp</code> and <code>NUM</code>); 
-    <li> a <em>pointer</em> to a <code>double</code>, being a pointer to entries in
-        <code>mfcalc</code>'s symbol table, used with <code>VAR</code> tokens.
-    <li> a <em>pointer to a function</em> expecting a <code>double</code> argument and
-        returning a <code>double</code> value, used with <code>FNCT</code> tokens.
+    <li><code >double</code> (for <code >exp</code> and <code >NUM</code>); 
+    <li> a <em >pointer</em> to a <code >double</code>, being a pointer to entries in
+        <code >mfcalc</code>'s symbol table, used with <code >VAR</code> tokens.
+    <li> a <em >pointer to a function</em> expecting a <code >double</code> argument and
+        returning a <code >double</code> value, used with <code >FNCT</code> tokens.
     </ul>
     Since semantic values no longer are of one single type, each grammar
 symbol whose semantic value is used must explicitly be associated with one of
-the types of the fields of the union. This holds true for the symbols <code>NUM,
-VAR, FNCT</code>, and <code>exp</code>. The <code>%type</code> directive first specifies (between
+the types of the fields of the union. This holds true for the symbols <code >NUM,
+VAR, FNCT</code>, and <code >exp</code>. The <code >%type</code> directive first specifies (between
 angle brackets) one of the union's field types, followed by a list of (blank
 or comma separated) nonterminal or terminal symbols which are associated with
 the specified union field type.
     </ul>
-    Finally note the <em>right associative</em> operator `<code>=</code>', defined in line
+    Finally note the <em >right associative</em> operator `<code >=</code>', defined in line
 13: by making the assignment operator right-associative we can allow
-<em>sequential assignments</em> of the form <code>a = b = c = expression</code>.
+<em >sequential assignments</em> of the form <code >a = b = c = expression</code>.
 <p>
 <a name="l100"></a>
-<h3>6.4.2: Grammar Rules for `mfcalc'</h3>
+<h3 >6.4.2: Grammar Rules for `mfcalc'</h3>
     Here are the grammar rules for the multi-function calculator. Most of them are
-copied directly from <code>calc</code>. Three rules, mentioning <code>VAR</code> or
-<code>FNCT</code>, are new:
-        <pre>
+copied directly from <code >calc</code>. Three rules, mentioning <code >VAR</code> or
+<code >FNCT</code>, are new:
+        <pre >
 input:    
         // empty 
 | 
@@ -807,22 +804,22 @@ exp:
 
 <p>
 <a name="l101"></a>
-<h3>6.4.3: The `mfcalc' Symbol- and Function Tables</h3>
+<h3 >6.4.3: The `mfcalc' Symbol- and Function Tables</h3>
     The multi-function calculator needs a symbol table for keeping track of the
 names and meanings of variables and functions. This doesn't affect the grammar
 rules or the calculator's directives, but it requires that the parser class
-defines some additional <strong>C++</strong> types as well as several additional data
+defines some additional <strong >C++</strong> types as well as several additional data
 members.
 <p>
-The symbol table itself varies in size and contents once <code>mfcalc</code> is
-used. It is defined as the <em>data member</em>
-<code>d_symbols</code> in the Parser's header file. In contrast, the <em>function table</em>
-has a <em>fixed</em> size and contents. Because of this the function table is
-defined as a <em>static</em> data member. Both tables are defined as 
-<code>std::unordered_map</code> containers: their keys are
-<code>std::string</code> objects, their values, respecively, <code>double</code>s and <code>double
-(*)(double)</code>s. Here is the declaration of <code>d_symbols</code> and <code>s_functions</code> as
-used in <code>mfcalc</code>'s parser:
+The symbol table itself varies in size and contents once <code >mfcalc</code> is
+used. It is defined as the <em >data member</em>
+<code >d_symbols</code> in the Parser's header file. In contrast, the <em >function table</em>
+has a <em >fixed</em> size and contents. Because of this the function table is
+defined as a <em >static</em> data member. Both tables are defined as 
+<code >std::unordered_map</code> containers: their keys are
+<code >std::string</code> objects, their values, respecively, <code >double</code>s and <code >double
+(*)(double)</code>s. Here is the declaration of <code >d_symbols</code> and <code >s_functions</code> as
+used in <code >mfcalc</code>'s parser:
         <pre>
 
     std::unordered_map&lt;std::string, double&gt; d_symbols;
@@ -831,9 +828,9 @@ used in <code>mfcalc</code>'s parser:
         
 </pre>
 
-    As <code>s_functions</code> is a static member, it can be initialized <em>compile
-time</em> from an <em>array of pairs</em>. To ease the definition of such an array a
-<code>private typedef</code>
+    As <code >s_functions</code> is a static member, it can be initialized <em >compile
+time</em> from an <em >array of pairs</em>. To ease the definition of such an array a
+<code >private typedef</code>
         <pre>
 
     typedef std::pair&lt;char const *, double (*)(double)&gt; FunctionPair;
@@ -847,9 +844,9 @@ time</em> from an <em>array of pairs</em>. To ease the definition of such an arr
         
 </pre>
 
-    These definitions allow us to initialize <code>s_functions</code> in a separate
-source file (<code>data.cc</code>):
-        <pre>
+    These definitions allow us to initialize <code >s_functions</code> in a separate
+source file (<code >data.cc</code>):
+        <pre >
 #include "Parser.ih"
 
 Parser::FunctionPair Parser::s_funTab[] =
@@ -872,16 +869,16 @@ unordered_map&lt;string, double (*)(double)&gt; Parser::s_functions
 
 </pre>
 
-    By simply editing the definition of <code>s_funTab</code>, additional
+    By simply editing the definition of <code >s_funTab</code>, additional
 functions can be added to the calculator.
 <p>
 <a name="MFLEX"></a><a name="l102"></a>
-<h3>6.4.4: The new `lex()' member</h3>
-    In <code>mfcalc</code>, the parser's member function <code>lex()</code> must now recognize
+<h3 >6.4.4: The new `lex()' member</h3>
+    In <code >mfcalc</code>, the parser's member function <code >lex()</code> must now recognize
 variables, function names, numeric values, and the single-character arithmetic
 operators. Strings of alphanumeric characters not starting with a digit are
 recognized as either variables or functions depending on the table in which
-they are found. By arranging <code>lex</code>'s logic such that the function table is
+they are found. By arranging <code >lex</code>'s logic such that the function table is
 searched first it is simple to ensure that no variable can ever have the name
 of a predefined function. The implementation used here, in which two
 different tables are used for the arithmetic functions and the variable
@@ -891,37 +888,37 @@ e.g., different data types and different types of functions. In such
 situations a single symbol table is more preferable, where the keys are the
 identifiers (variables, function names, predefined constants, etc.) while the
 values are objects describing their characteristics. A re-implementation of
-<code>mfcalc</code> using an integrated symbol table is suggested in one of the
+<code >mfcalc</code> using an integrated symbol table is suggested in one of the
 exercises of the next section <a href="bisonc++06.html#EXERCISES">6.5</a>.
 <p>
-The parser's <code>lex</code> member has these characteristics:
+The parser's <code >lex</code> member has these characteristics:
     <ul>
     <li> All leading blanks and tabs are skipped
     <li> If no (other) character could be obtained 0 is returned, indicating
         End-Of-File. 
     <li> If the first non-blank character is a dot or number, a number is
         extracted from the standard input. Since the semantic value data
-        member of <code>mfcalc</code>'s parser (<code>d_val</code>) is itself also a <code>union</code>,
-        the numerical value can be extracted into <code>d_val__.u_val</code>, and a
-        <code>NUM</code> token can be returned.
+        member of <code >mfcalc</code>'s parser (<code >d_val</code>) is itself also a <code >union</code>,
+        the numerical value can be extracted into <code >d_val__.u_val</code>, and a
+        <code >NUM</code> token can be returned.
     <li> If the first non-blank character is not a letter, then a
         single-character token was received and the character's value is
         returned as the next token.
     <li> Otherwise the read character is a letter. This character and all
         subsequent alpha-numeric characters are extracted to construct the
         name of an identifier. Then this identifier is searched for in the
-        <code>s_functions</code> map. If found, <code>d_val__.u_fun</code> is given the function's
-        address, found as the value of the <code>s_functions</code> map element
-        corresponding to the read identifier, and token <code>FNCT</code> is returned.
-        If the symbol is not found in <code>s_functions</code> the address of the
-        value ofn <code>d_symbols</code> associated with the received identifier is
-        assigned to <code>d_val__.u_symbol</code> and token <code>VAR</code> is returned. Note
+        <code >s_functions</code> map. If found, <code >d_val__.u_fun</code> is given the function's
+        address, found as the value of the <code >s_functions</code> map element
+        corresponding to the read identifier, and token <code >FNCT</code> is returned.
+        If the symbol is not found in <code >s_functions</code> the address of the
+        value ofn <code >d_symbols</code> associated with the received identifier is
+        assigned to <code >d_val__.u_symbol</code> and token <code >VAR</code> is returned. Note
         that this automatically defines newly used variables, since
-        <code>d_symbols[name]</code> automatically inserts a new element in a map if
-        <code>d_symbol[name]</code> wasn't already there.
+        <code >d_symbols[name]</code> automatically inserts a new element in a map if
+        <code >d_symbol[name]</code> wasn't already there.
     </ul>
-    Here is the parser's <code>lex</code> member function:
-        <pre>
+    Here is the parser's <code >lex</code> member function:
+        <pre >
 #include "Parser.ih"
 
 /*
@@ -988,26 +985,26 @@ int Parser::lex()
 
 <p>
 <a name="l103"></a>
-<h3>6.4.5: Constructing `mfcalc'</h3>
-    In order to construct <code>mfcalc</code>, the following steps are suggested:
+<h3 >6.4.5: Constructing `mfcalc'</h3>
+    In order to construct <code >mfcalc</code>, the following steps are suggested:
     <ul>
-    <li> Construct a program <code>mfcalc.cc</code>. Actually, it is already available,
-        since all implementations of <code>main()</code> used so far are identical to
+    <li> Construct a program <code >mfcalc.cc</code>. Actually, it is already available,
+        since all implementations of <code >main()</code> used so far are identical to
         each other.
-    <li> Construct the parser in a subdirectory <code>parser</code>:
+    <li> Construct the parser in a subdirectory <code >parser</code>:
         <ul>
-        <li> First, construct <strong>bisonc++</strong>'s input file as indicated above. Name
-            this file <code>grammar</code>;
-        <li> Run <code>bisonc++ grammar</code> to produce the files <code>Parser.h</code>,
-            <code>Parserbase.h</code>, <code>Parser.ih</code> and <code>parse.cc</code>;
-        <li> Modify <code>Parser.h</code> so as to include <code>FunctionPair, 
-            s_functions, s_funTab</code> and <code>d_symbols</code>;
-        <li> Modify <code>Parser.ih</code> so as to include <code>cmath</code> and optionally
-            `<code>using namespace std</code>', which is commented out by default;
-        <li> Implement <code>data.cc</code> and <code>lex.cc</code> to initialize the static
+        <li> First, construct <strong >bisonc++</strong>'s input file as indicated above. Name
+            this file <code >grammar</code>;
+        <li> Run <code >bisonc++ grammar</code> to produce the files <code >Parser.h</code>,
+            <code >Parserbase.h</code>, <code >Parser.ih</code> and <code >parse.cc</code>;
+        <li> Modify <code >Parser.h</code> so as to include <code >FunctionPair, 
+            s_functions, s_funTab</code> and <code >d_symbols</code>;
+        <li> Modify <code >Parser.ih</code> so as to include <code >cmath</code> and optionally
+            `<code >using namespace std</code>', which is commented out by default;
+        <li> Implement <code >data.cc</code> and <code >lex.cc</code> to initialize the static
             data and to contain the lexical scanner, respectively.
         </ul>
-    <li> Now construct <code>mfcalc</code> in <code>mfcalc.cc</code>'s directory using the
+    <li> Now construct <code >mfcalc</code> in <code >mfcalc.cc</code>'s directory using the
         following command: 
             <pre>
 
@@ -1018,25 +1015,25 @@ int Parser::lex()
     </ul>
 <p>
 <a name="EXERCISES"></a><a name="l104"></a>
-<h2>6.5: Exercises</h2>
-Here are some suggestions for you to consider to improve <code>mfcalc</code>'s
+<h2 >6.5: Exercises</h2>
+Here are some suggestions for you to consider to improve <code >mfcalc</code>'s
 implementation and operating mode:
     <ul>
-    <li> Add some additional functions from `<code>cmath</code>' to the
-        <code>Parser::s_functions</code>;
-    <li> Define a class <code>Symbol</code> in which the symbol type, and an
-appropriate value for the symbol is stored. Define only one map <code>d_symbols</code>
-in the Parser, and provide the <code>Symbol</code> class with means to obtain the
+    <li> Add some additional functions from `<code >cmath</code>' to the
+        <code >Parser::s_functions</code>;
+    <li> Define a class <code >Symbol</code> in which the symbol type, and an
+appropriate value for the symbol is stored. Define only one map <code >d_symbols</code>
+in the Parser, and provide the <code >Symbol</code> class with means to obtain the
 appropriate values for the various token types.
-    <li> Remove the <code>%union</code> directive, and change it into <code>%stype
-Symbol</code>. Hint: use the <code>%preinclude-header</code> directive to make
-<code>Symbol</code> known to the parser's base class.
-    <li> Define a token <code>CONST</code> for numerical constants (like <code>PI</code>, (E)),
+    <li> Remove the <code >%union</code> directive, and change it into <code >%stype
+Symbol</code>. Hint: use the <code >%preinclude-header</code> directive to make
+<code >Symbol</code> known to the parser's base class.
+    <li> Define a token <code >CONST</code> for numerical constants (like <code >PI</code>, (E)),
 and pre-define some numerical constants;
     <li> Make the program report an error if the user refers to an
 uninitialized variable in any way except to store a value in it. Hints: use a
-<code>get()</code> and <code>set()</code> member pair in <code>Symbol</code>, and use the appropriate
-member in the appropriate <code>expr</code> rule; use <code>ERROR()</code> to initiate error
+<code >get()</code> and <code >set()</code> member pair in <code >Symbol</code>, and use the appropriate
+member in the appropriate <code >expr</code> rule; use <code >ERROR()</code> to initiate error
 recovery.
     </ul>
 <p>

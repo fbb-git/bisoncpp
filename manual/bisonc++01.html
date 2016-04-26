@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<title> <div style="text-align: center"><strong>Bisonc++</strong> (Version 5.00.00) User Guide</div> </title>
+<title> <div style="text-align: center"><strong >Bisonc++</strong> (Version 5.00.01) User Guide</div> </title>
 <style type="text/css">
     figure {text-align: center;}
     img {vertical-align: center;}
@@ -14,81 +14,81 @@
 </ul>
 <hr>
 <a name="l1"></a>
-<h1>Chapter 1: Introduction</h1>
-<strong>Bisonc++</strong> is a general-purpose parser generator converting grammar descriptions for
-LALR(1) context-free grammars into <strong>C++</strong> classes whose members can parse
-such grammars.  Once you are a proficient <strong>bisonc++</strong> user, you may use it to develop
+<h1 >Chapter 1: Introduction</h1>
+<strong >Bisonc++</strong> is a general-purpose parser generator converting grammar descriptions for
+LALR(1) context-free grammars into <strong >C++</strong> classes whose members can parse
+such grammars.  Once you are a proficient <strong >bisonc++</strong> user, you may use it to develop
 a wide range of language parsers, from those used in simple desk calculators
 to complex programming languages.
 <p>
-<strong>Bisonc++</strong> is highly comparable to the program bison++, written by Alain Coetmeur:
-all properly-written bison++ grammars ought to be convertible to <strong>bisonc++</strong> grammars
+<strong >Bisonc++</strong> is highly comparable to the program bison++, written by Alain Coetmeur:
+all properly-written bison++ grammars ought to be convertible to <strong >bisonc++</strong> grammars
 requiring very little or no modifications.  Anyone familiar with bison++ or
-its precursor, bison, should quickly be able to use <strong>bisonc++</strong> as well. <strong>Bisonc++</strong>
-generates <strong>C++</strong> code, rather than <strong>C</strong> code, and so a fair knowledge of the
-<strong>C++</strong> programming language is required before <strong>bisonc++</strong> can profitably be used.
+its precursor, bison, should quickly be able to use <strong >bisonc++</strong> as well. <strong >Bisonc++</strong>
+generates <strong >C++</strong> code, rather than <strong >C</strong> code, and so a fair knowledge of the
+<strong >C++</strong> programming language is required before <strong >bisonc++</strong> can profitably be used.
 <p>
-This manual closely resembles <strong>bison</strong>(1)'s userguide. In fact, many sections
-of that manual were copied straight into this manual. With <strong>bisonc++</strong> distributions
-(both the full source distribution and the binary <code>.deb</code> distributions)
-<strong>bison</strong>'s orginal manual is included in both <em>PostScript</em> and (converted
-from the <code>texi</code> format) <code>HTML</code> format. Where necessary sections of the
-original manual were adapted to <strong>bisonc++</strong>'s characteristics. Some sections were
+This manual closely resembles <strong >bison</strong>(1)'s userguide. In fact, many sections
+of that manual were copied straight into this manual. With <strong >bisonc++</strong> distributions
+(both the full source distribution and the binary <code >.deb</code> distributions)
+<strong >bison</strong>'s orginal manual is included in both <em >PostScript</em> and (converted
+from the <code >texi</code> format) <code >HTML</code> format. Where necessary sections of the
+original manual were adapted to <strong >bisonc++</strong>'s characteristics. Some sections were
 removed, and some new sections were added to the current manual. Expect
 upgrades of the manual to appear without further notice. Upgrades will be
 announced in the manual's title.
 <p>
 The current manual starts with tutorial chapters that explain the basic
-concepts of using <strong>bisonc++</strong> and use three examples illustrating some of the core
+concepts of using <strong >bisonc++</strong> and use three examples illustrating some of the core
 issues of LALR(1) grammars, each example building on the previous example
-(where available).  If you don't know <strong>bisonc++</strong>, bison++ or bison, start by reading
-these chapters.  Reference chapters follow describing specific aspects of <strong>bisonc++</strong>
+(where available).  If you don't know <strong >bisonc++</strong>, bison++ or bison, start by reading
+these chapters.  Reference chapters follow describing specific aspects of <strong >bisonc++</strong>
 in detail.
 <p>
-<strong>Bisonc++</strong> was designed and built by <a href="mailto:f.b.brokken@rug.nl">Frank
+<strong >Bisonc++</strong> was designed and built by <a href="mailto:f.b.brokken@rug.nl">Frank
 B. Brokken</a>. The program's first version was 
 constructed between November 2004 and May 2005.
 <p>
 <a name="l2"></a>
-<h2>1.1: What's new in version 5.00.00</h2>
-    If you're new to <strong>bisonc++</strong>, you can safely skip this section. If you used <strong>bisonc++</strong>
+<h2 >1.1: What's new in version 5.00.01</h2>
+    If you're new to <strong >bisonc++</strong>, you can safely skip this section. If you used <strong >bisonc++</strong>
 before, please note the following new and modified features:
     <ul>
-    <li> New option/directive <code>default-actions</code> controlling the addition of a
-<code>$$ = $1</code> action blocks to non-empty production rules that do not themselves
-define final action blocks. Option/directive <code>no-default-action-return</code> is
+    <li> New option/directive <code >default-actions</code> controlling the addition of a
+<code >$$ = $1</code> action blocks to non-empty production rules that do not themselves
+define final action blocks. Option/directive <code >no-default-action-return</code> is
 not supported anymore.
 <p>
-<li> New option/directive <code>tag-mismatches</code> issuing a warning if no
-<code>$$</code> assignment was detected in the last (action block) elements of
+<li> New option/directive <code >tag-mismatches</code> issuing a warning if no
+<code >$$</code> assignment was detected in the last (action block) elements of
 production rules.
 <p>
-<li> New parser class enumeration <code>DebugMode__</code> and a new member
-<code>setDebug(DebugMode__ mode)</code> that can be used to control debug output and to
-show case label numbers of the parser's <code>executeAction</code> member just before
+<li> New parser class enumeration <code >DebugMode__</code> and a new member
+<code >setDebug(DebugMode__ mode)</code> that can be used to control debug output and to
+show case label numbers of the parser's <code >executeAction</code> member just before
 execution. This is useful in cases where a run-time mismatch between tags of
 polymorphic semantic values are observed.
 <p>
-<li> The <code>SType::data</code> member functions are obsolete and were removed
-from <code>SType's</code> class's interface (section <a href="bisonc++04.html#POLYMORPHIC">4.6.1</a> fully covers the
+<li> The <code >SType::data</code> member functions are obsolete and were removed
+from <code >SType's</code> class's interface (section <a href="bisonc++04.html#POLYMORPHIC">4.6.1</a> fully covers the
 use and characteristics of polymorphic semantic values).
 <p>
-<li> The <code>SType::operator bool</code> member was replaced by a new member
-function <code>bool SType::valid()</code>.
+<li> The <code >SType::operator bool</code> member was replaced by a new member
+function <code >bool SType::valid()</code>.
 <p>
-<li> The previously defined member <code>SType::emplace</code> was replaced by
-<code>SType::assign</code>: it should be used to assign values to <code>SType</code> objects. If
-only one argument is required, <code>operatpr=</code> can also be used (but may require
+<li> The previously defined member <code >SType::emplace</code> was replaced by
+<code >SType::assign</code>: it should be used to assign values to <code >SType</code> objects. If
+only one argument is required, <code >operatpr=</code> can also be used (but may require
 casting).
 <p>
 <li> Dollar-notations have been altered. The standard dollar-notations are
-of course still available, but <code>$$(...), _$$, _$i</code> are new, while
-<code>$&lt;tag&gt;$</code> and <code>$&lt;tag&gt;i</code> (for positive values of i) are no longer
+of course still available, but <code >$$(...), _$$, _$i</code> are new, while
+<code >$&lt;tag&gt;$</code> and <code >$&lt;tag&gt;i</code> (for positive values of i) are no longer
 supported. See section <a href="bisonc++04.html#ACTIONS">4.6.2</a> for a full overview.
     </ul>
 <p>
 At the implementation level polymorphic semantic values are not implemented
-using <code>std::shared_ptr</code> objects. Moreover, polymorphic semantic value types
+using <code >std::shared_ptr</code> objects. Moreover, polymorphic semantic value types
 do not have to be default constructible anymore.
 <p>
 <hr>

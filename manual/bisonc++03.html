@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<title> <div style="text-align: center"><strong>Bisonc++</strong> (Version 5.00.00) User Guide</div> </title>
+<title> <div style="text-align: center"><strong >Bisonc++</strong> (Version 5.00.01) User Guide</div> </title>
 <style type="text/css">
     figure {text-align: center;}
     img {vertical-align: center;}
@@ -15,36 +15,36 @@
 </ul>
 <hr>
 <a name="l5"></a>
-<h1>Chapter 3: Bisonc++ concepts</h1>
+<h1 >Chapter 3: Bisonc++ concepts</h1>
 This chapter introduces many of the basic concepts without which the details
-of <strong>bisonc++</strong> do not make sense. If you do not already know how to use
-<strong>bisonc++</strong>, bison++ or bison, it is advised to start by reading this chapter
+of <strong >bisonc++</strong> do not make sense. If you do not already know how to use
+<strong >bisonc++</strong>, bison++ or bison, it is advised to start by reading this chapter
 carefully. 
 <p>
 <a name="LANGUAGES"></a><a name="l6"></a>
-<h2>3.1: Languages and Context-Free Grammars</h2>
-<strong>Bisonc++</strong> can generate parsers for languages that are <em>context-free</em>. This means
-that you define one or more <em>constructs</em>, commonly called <em>nonterminal
-symbols</em>, and define <em>rules</em> by which they are recognized (or defined).
+<h2 >3.1: Languages and Context-Free Grammars</h2>
+<strong >Bisonc++</strong> can generate parsers for languages that are <em >context-free</em>. This means
+that you define one or more <em >constructs</em>, commonly called <em >nonterminal
+symbols</em>, and define <em >rules</em> by which they are recognized (or defined).
 <p>
-For example, <strong>C++</strong> defines an `<code>expression</code>' nonterminal. One rule 
+For example, <strong >C++</strong> defines an `<code >expression</code>' nonterminal. One rule 
 defining an expression might be, 
-    <blockquote>
+    <blockquote >
     "An expression consists  of a minus sign and another expression".
     </blockquote>
     Another rule could be 
-    <blockquote>
+    <blockquote >
     "An expression can be an integer".
     </blockquote>
     Rules often are recursive, but there must be at least one rule ending the
 recursion.
 <p>
-A commonly used formal system for describing such rules is the <em>Backus-Naur
+A commonly used formal system for describing such rules is the <em >Backus-Naur
 Form</em> or `BNF', which was developed for specifying the language Algol 60. Any
-grammar expressed in BNF is a context-free grammar. The input to <strong>bisonc++</strong> is
+grammar expressed in BNF is a context-free grammar. The input to <strong >bisonc++</strong> is
 essentially machine-readable BNF.
 <p>
-Not all context-free languages can be handled by <strong>bisonc++</strong>, only those that are
+Not all context-free languages can be handled by <strong >bisonc++</strong>, only those that are
 LALR(1). In brief, this means that it must be possible to tell how to parse
 input while `looking ahead' to just a single token. Strictly speaking, that is
 a description of an LR(1) grammar, and LALR(1) involves some additional
@@ -56,21 +56,21 @@ In the formal rules defining a language's grammar, the grammar's constructs
 are called nonterminals. Some symbols are not further defined, but are
 directly made available when matching the input to a series of regular
 expressions. Matching the input to regular expressions is not the task of a
-parser, but of a <em>lexical scanner</em> (e.g., <strong>flexc++</strong>(1)). Lexical scanners
-provide the parser with  symbols, called <em>tokens</em> or <em>terminal symbols</em>,
+parser, but of a <em >lexical scanner</em> (e.g., <strong >flexc++</strong>(1)). Lexical scanners
+provide the parser with  symbols, called <em >tokens</em> or <em >terminal symbols</em>,
 which are taken for granted by the parser.
 <p>
 Terminal and nonterminal symbols  are used to define the rules of grammars.
 <p>
-We can use examples from <strong>C++</strong> to illustrate terminal and nonterminal
-symbols. <strong>C++</strong>'s terminal symbols are identifiers, constants (numeric and
+We can use examples from <strong >C++</strong> to illustrate terminal and nonterminal
+symbols. <strong >C++</strong>'s terminal symbols are identifiers, constants (numeric and
 string), various keywords, arithmetic operators, and other simple character
-tokens. So the terminal symbols of a grammar for <strong>C++</strong> can thus be
+tokens. So the terminal symbols of a grammar for <strong >C++</strong> can thus be
 `IDENTIFIER', `NUMBER', `STRING', as wel as tokens for keywords 
-    (e.g., <code>FOR, SWITCH</code>, operators (<code>'+', BIT_OR</code>), 
-        and character tokens like  <code>';', ':', '(', ')'</code> ).
+    (e.g., <code >FOR, SWITCH</code>, operators (<code >'+', BIT_OR</code>), 
+        and character tokens like  <code >';', ':', '(', ')'</code> ).
 <p>
-Here is a simple <strong>C++</strong> function subdivided into tokens:
+Here is a simple <strong >C++</strong> function subdivided into tokens:
         <pre>
  
     int square(int x)   // INT IDENTIFIER '(' INT IDENTIFIER ')'
@@ -81,20 +81,20 @@ Here is a simple <strong>C++</strong> function subdivided into tokens:
 </pre>
 
 <p>
-<strong>C++</strong> rules include expression rules, statement rules, rules defining
-declarations, and rules defining functions. These are defined in <strong>C++</strong>'s
+<strong >C++</strong> rules include expression rules, statement rules, rules defining
+declarations, and rules defining functions. These are defined in <strong >C++</strong>'s
 grammar as nonterminal symbols `expression', `statement', `declaration' and
 `function_definition'. The above example shows a function definition as well
-as the sequence of tokens (starting from <code>INT</code>, ending at <code>'}'</code>), received
+as the sequence of tokens (starting from <code >INT</code>, ending at <code >'}'</code>), received
 by the parser when that definition shows up in its input.
 <p>
 Each nonterminal symbol must be defined by at least one so-called
-<em>production rule</em>, defining the sequence of symbols that must have been
+<em >production rule</em>, defining the sequence of symbols that must have been
 observed before it can be decided that the nonterminal symbol has been
-encountered. For example, one kind of <strong>C++</strong> statement is the return
+encountered. For example, one kind of <strong >C++</strong> statement is the return
 statement; it could be described by the following informal rule:
 <p>
-<blockquote>
+<blockquote >
     A `statement' can be made of a `return' keyword, an `expression' and a
     `semicolon'.
 </blockquote>
@@ -117,56 +117,56 @@ Formally, such a rule is written like this:
         
 </pre>
 
-    where <em>nonterminal</em> is the nonterminal symbol defined by the rule and
-<em>productions(s)</em> are one or more sequences of terminal and nonterminal
-symbols that define how <code>nonterminal</code> can be recognized. Concentrating on a
+    where <em >nonterminal</em> is the nonterminal symbol defined by the rule and
+<em >productions(s)</em> are one or more sequences of terminal and nonterminal
+symbols that define how <code >nonterminal</code> can be recognized. Concentrating on a
 single production rule, the rule's nonterminal is called the rule's left-hand
 side (LHS), the production rule itself is called the rule's right-hand side
-(RHS). In the <code>statement</code> example the LHS equals <code>statement</code>, the RHS
-equals <code>RETURN expression ';'</code>. The RHS consists of three elements,
+(RHS). In the <code >statement</code> example the LHS equals <code >statement</code>, the RHS
+equals <code >RETURN expression ';'</code>. The RHS consists of three elements,
 numbered, respectively, 1 through 3.
 <p>
 One nonterminal symbol is special in that it defines a syntactically correct
-specification of the defined language. It is called the <em>start symbol</em>. In a
-compiler this means a complete input program. In <strong>C++</strong>, a nonterminal symbol
+specification of the defined language. It is called the <em >start symbol</em>. In a
+compiler this means a complete input program. In <strong >C++</strong>, a nonterminal symbol
 `optional-sequence-of-definitions-and-declarations' could be used for this.
 <p>
-The parser generated by <strong>bisonc++</strong> reads a sequence of tokens, and combines the
+The parser generated by <strong >bisonc++</strong> reads a sequence of tokens, and combines the
 tokens using the rules of the specified grammar. If the input is valid, the
 end result is that the entire token sequence reduces to the start symbol
-nonterminal. If we use <strong>C++</strong>'s grammar, then the entire input must reducible
+nonterminal. If we use <strong >C++</strong>'s grammar, then the entire input must reducible
 to `optional-sequence-of-definitions-and-declarations'. If not, the parser
 reports a syntax error.
 <p>
 <a name="l7"></a>
-<h2>3.2: From Formal Rules to Bisonc++ Input</h2>
+<h2 >3.2: From Formal Rules to Bisonc++ Input</h2>
 A formal grammar is a mathematical construct. To define the language for
-<strong>Bisonc++</strong>, you must write a file expressing the grammar in <strong>bisonc++</strong> syntax: a
-<em><strong>Bisonc++</strong> grammar file</em>. See chapter <a href="bisonc++04.html#GRAMMARFILES">4</a>.
+<strong >Bisonc++</strong>, you must write a file expressing the grammar in <strong >bisonc++</strong> syntax: a
+<em ><strong >Bisonc++</strong> grammar file</em>. See chapter <a href="bisonc++04.html#GRAMMARFILES">4</a>.
 <p>
-A nonterminal symbol in the formal grammar is represented in <strong>bisonc++</strong> input as
-an identifier, like an identifier in <strong>C++</strong>. By convention, it should be in
-lower case, such as <code>expr</code>, <code>stmt</code> or <code>declaration</code>. 
+A nonterminal symbol in the formal grammar is represented in <strong >bisonc++</strong> input as
+an identifier, like an identifier in <strong >C++</strong>. By convention, it should be in
+lower case, such as <code >expr</code>, <code >stmt</code> or <code >declaration</code>. 
 <p>
-The <strong>bisonc++</strong> representation for a terminal symbol is also called a token
-type. Token types as well can be represented as <strong>C++</strong>-like identifiers. By
+The <strong >bisonc++</strong> representation for a terminal symbol is also called a token
+type. Token types as well can be represented as <strong >C++</strong>-like identifiers. By
 convention, these identifiers should be upper case to distinguish them from
-nonterminals: for example, <code>INTEGER</code>, <code>IDENTIFIER</code>, <code>IF</code> or
-<code>RETURN</code>. A terminal symbol that stands for a particular keyword in the
+nonterminals: for example, <code >INTEGER</code>, <code >IDENTIFIER</code>, <code >IF</code> or
+<code >RETURN</code>. A terminal symbol that stands for a particular keyword in the
 language should be named after that keyword converted to upper case. The
-terminal symbol <code>error</code> is reserved for error recovery. See section 
+terminal symbol <code >error</code> is reserved for error recovery. See section 
 <a href="bisonc++04.html#SYMBOLS">4.2</a>, which also describes the current restrictions on the names of
 terminal symbols.
 <p>
 A terminal symbol can also be represented as a character literal, just like a
-<strong>C++</strong> character constant. You should do this whenever a token is just a
+<strong >C++</strong> character constant. You should do this whenever a token is just a
 single character (parenthesis, plus-sign, etc.): use that same character in a
 literal as the terminal symbol for that token.
 <p>
-The grammar rules also have an expression in <strong>bisonc++</strong> syntax. For example, here is
-the <strong>bisonc++</strong> rule for a <strong>C++</strong> return statement. The semicolon in quotes is a
-literal character token, representing part of the <strong>C++</strong> syntax for the
-statement; the naked semicolon, and the colon, are <strong>bisonc++</strong> punctuation used in
+The grammar rules also have an expression in <strong >bisonc++</strong> syntax. For example, here is
+the <strong >bisonc++</strong> rule for a <strong >C++</strong> return statement. The semicolon in quotes is a
+literal character token, representing part of the <strong >C++</strong> syntax for the
+statement; the naked semicolon, and the colon, are <strong >bisonc++</strong> punctuation used in
 every rule.
         <pre>
 
@@ -179,36 +179,36 @@ every rule.
     See section <a href="bisonc++04.html#RULES">4.3</a>.
 <p>
 <a name="l8"></a>
-<h2>3.3: Semantic Values</h2>
+<h2 >3.3: Semantic Values</h2>
 A formal grammar selects tokens only by their classifications: for example, if
-a rule mentions the terminal symbol `integer constant', it means that <em>any</em>
+a rule mentions the terminal symbol `integer constant', it means that <em >any</em>
 integer constant is grammatically valid in that position. The precise value of
-the constant is irrelevant when input is being parsed: if `<code>x + 4</code>' is
-grammatically correct then `<code>x + 1</code>' or `<code>x + 3989</code>' is also
+the constant is irrelevant when input is being parsed: if `<code >x + 4</code>' is
+grammatically correct then `<code >x + 1</code>' or `<code >x + 3989</code>' is also
 grammatically correct.
 <p>
 But actual values are very important for understanding the input's meaning. A
 compiler is useless if it fails to distinguish between 4, 1 and 3989 as
-constants that are being used in a program. Therefore, each token in a <strong>bisonc++</strong>
-grammar has both a token type and a <em>semantic value</em>. See section
+constants that are being used in a program. Therefore, each token in a <strong >bisonc++</strong>
+grammar has both a token type and a <em >semantic value</em>. See section
 <a href="bisonc++04.html#SEMANTICS">4.6</a> for details.
 <p>
-A token is a terminal symbol defined in the grammar, such as <code>INTEGER</code>,
-<code>IDENTIFIER</code> or '<code>,</code>'. Tokens are used by the parser to make decisions
+A token is a terminal symbol defined in the grammar, such as <code >INTEGER</code>,
+<code >IDENTIFIER</code> or '<code >,</code>'. Tokens are used by the parser to make decisions
 about the continuation of the parsing process, but for that only the mere
 tokens are required, and nothing else.
 <p>
 Semantic values represent any additionally available information about tokens,
 such as the values of integers, or the names of identifiers. (A token such as
-'<code>,</code>' which is just punctuation normally doesn't have a particular semantic
+'<code >,</code>' which is just punctuation normally doesn't have a particular semantic
 value.)
 <p>
-For example, an token might be an <code>INTEGER</code>, having the semantic value
-4. Another <code>INTEGER</code> token could have semantic value 3989. When a grammar
-rule indicates that <code>INTEGER</code> is allowed, either of these token/value
-combinations is acceptable because each token is <code>INTEGER</code>. When the parser
+For example, an token might be an <code >INTEGER</code>, having the semantic value
+4. Another <code >INTEGER</code> token could have semantic value 3989. When a grammar
+rule indicates that <code >INTEGER</code> is allowed, either of these token/value
+combinations is acceptable because each token is <code >INTEGER</code>. When the parser
 accepts the token, it may store the token's semantic value for future
-reference on a <em>semantic value stack</em>.
+reference on a <em >semantic value stack</em>.
 <p>
 Nonterminal symbols often also have semantic values. For example, in a
 calculator, an expression typically has a semantic value that is a number. In
@@ -216,10 +216,10 @@ a compiler for a programming language, an expression typically has a semantic
 value that is a tree structure describing the meaning of the expression.
 <p>
 <a name="l9"></a>
-<h2>3.4: Semantic Actions</h2>
+<h2 >3.4: Semantic Actions</h2>
 A program usually must do more than just parse its input; it must also produce
-some output based on the input. In a <strong>bisonc++</strong> grammar, a grammar rule can have an
-action consisting of <strong>C++</strong> statements. Each time the parser recognizes a
+some output based on the input. In a <strong >bisonc++</strong> grammar, a grammar rule can have an
+action consisting of <strong >C++</strong> statements. Each time the parser recognizes a
 match for that rule, its associated action is executed. See section
 <a href="bisonc++04.html#ACTIONS">4.6.2</a>.
 <p>
@@ -228,7 +228,7 @@ construct from the semantic values of its parts. For example, suppose we have
 a rule stating that an expression can be the sum of two expressions. Once the
 parser has recognized the rule's parts, each of its subexpressions has a
 semantic value of its own. The action for this rule
-could consist of a <strong>C++</strong> expression computing the rule's semantic value from
+could consist of a <strong >C++</strong> expression computing the rule's semantic value from
 its subexpressions.
 <p>
 Actions usually compute semantic values and refer to semantic values of
@@ -250,72 +250,72 @@ subexpressions:
 </pre>
 
     The action defines how the semantic value of the rule (using shorthand
-<code>$$</code>) is computed from the values of the two sub-expressions (shorthands
-<code>$1</code> and <code>$3</code>).
+<code >$$</code>) is computed from the values of the two sub-expressions (shorthands
+<code >$1</code> and <code >$3</code>).
 <p>
 <a name="l10"></a>
-<h2>3.5: Bisonc++ output: the Parser class</h2>
-When <strong>bisonc++</strong> is run, it processes a grammar file. If the grammar is error-free <strong>bisonc++</strong>
-produces a <strong>C++</strong> <em>class</em>, in which several <em>members</em> have already been
-defined. Therefore, <strong>bisonc++</strong>'s <em>output</em> consists of <em>header files</em> and a
-<strong>C++</strong> source file, defining a member (<code>parse</code>) that parses the language
-described by the grammar. The class and its implementation is called a <strong>bisonc++</strong>
-<em>parser class</em>. Keep in mind that the <strong>bisonc++</strong> utility and the produced parser
-classes are distinct pieces of software: the <strong>bisonc++</strong> utility is a program whose
-output is the <strong>bisonc++</strong> parser class that is used by your program.
+<h2 >3.5: Bisonc++ output: the Parser class</h2>
+When <strong >bisonc++</strong> is run, it processes a grammar file. If the grammar is error-free <strong >bisonc++</strong>
+produces a <strong >C++</strong> <em >class</em>, in which several <em >members</em> have already been
+defined. Therefore, <strong >bisonc++</strong>'s <em >output</em> consists of <em >header files</em> and a
+<strong >C++</strong> source file, defining a member (<code >parse</code>) that parses the language
+described by the grammar. The class and its implementation is called a <strong >bisonc++</strong>
+<em >parser class</em>. Keep in mind that the <strong >bisonc++</strong> utility and the produced parser
+classes are distinct pieces of software: the <strong >bisonc++</strong> utility is a program whose
+output is the <strong >bisonc++</strong> parser class that is used by your program.
 <p>
-More specifically, <strong>bisonc++</strong> generates the following files from a <strong>bisonc++</strong>
+More specifically, <strong >bisonc++</strong> generates the following files from a <strong >bisonc++</strong>
 grammar file:
     <ul>
-    <li> A <em>baseclass header</em>, which can be included by <em>lexical scanners</em>
-(see below), primarily defining the <em>lexical tokens</em> that the parser expects
+    <li> A <em >baseclass header</em>, which can be included by <em >lexical scanners</em>
+(see below), primarily defining the <em >lexical tokens</em> that the parser expects
 the lexical scanner to return;
-    <li> A <em>class header</em>, defining the <strong>bisonc++</strong> parser class interface;
-    <li> An <em>implementation header</em>, which is used to declare all entities
-which are <em>only</em> used by <strong>bisonc++</strong>'s parser class <em>implementation</em> (and not
+    <li> A <em >class header</em>, defining the <strong >bisonc++</strong> parser class interface;
+    <li> An <em >implementation header</em>, which is used to declare all entities
+which are <em >only</em> used by <strong >bisonc++</strong>'s parser class <em >implementation</em> (and not
 required by the remaining parts of your program);
-    <li> The <em>parsing member</em>, actually performing the parsing of a
-provided input according to the rules of the defined <strong>bisonc++</strong> grammar (that
-you, as <strong>bisonc++</strong>'s user, defined).
+    <li> The <em >parsing member</em>, actually performing the parsing of a
+provided input according to the rules of the defined <strong >bisonc++</strong> grammar (that
+you, as <strong >bisonc++</strong>'s user, defined).
     </ul>
 <p>
-The task of <strong>bisonc++</strong>'s <code>parse</code> member is to group tokens according to rules
+The task of <strong >bisonc++</strong>'s <code >parse</code> member is to group tokens according to rules
 defined in the grammar -- for example, to combine identifiers and operators
 into expressions. As it does this, it executes the actions of the grammar
 rules it has recognized.
 <p>
-The tokens processed by the parser produced by <strong>bisonc++</strong> are made available by an
-object called the <em>lexical analyzer</em> or <em>lexical scanner</em>. The scanner is
-not produced by <strong>bisonc++</strong>, but must somehow be supplied (e.g., by writing it
-yourself). The <code>parse</code> member requests the next token from the lexical
+The tokens processed by the parser produced by <strong >bisonc++</strong> are made available by an
+object called the <em >lexical analyzer</em> or <em >lexical scanner</em>. The scanner is
+not produced by <strong >bisonc++</strong>, but must somehow be supplied (e.g., by writing it
+yourself). The <code >parse</code> member requests the next token from the lexical
 analyzer whenever it needs another token. The parser itself doesn't know the
 semantic values of the received tokens. Typically the lexical scanner produces
 tokens by parsing the characters of the program's input text. This, however,
-is not something that <strong>bisonc++</strong> concerns itself with. See also section <a href="bisonc++05.html#LEX">5.3.1</a>.
+is not something that <strong >bisonc++</strong> concerns itself with. See also section <a href="bisonc++05.html#LEX">5.3.1</a>.
 <p>
-<strong>Bisonc++</strong>'s parsing function is a member function named <code>parse</code>. This parsing
+<strong >Bisonc++</strong>'s parsing function is a member function named <code >parse</code>. This parsing
 function nor the parser object for which it is called defines a complete
-<strong>C++</strong> program: you must supply some additional details. One `detail' to be
+<strong >C++</strong> program: you must supply some additional details. One `detail' to be
 supplied is is the lexical analyzer. The parser class itself declares several
 additional members which can easily be redefined to fit your needs. One of
-these additional members is the error-reporting function called by <code>parse</code>
-to report errors. By default <strong>bisonc++</strong> provides simple, but sensible,
+these additional members is the error-reporting function called by <code >parse</code>
+to report errors. By default <strong >bisonc++</strong> provides simple, but sensible,
 implementations for such members.
 <p>
-Having constructed a parser class and a lexical scanner class, <em>objects</em> of
-those classes must be defined in a complete <strong>C++</strong> program. Usually such
-objects are defined in <code>main</code>; you have to provide this function, and
-arrange for it to call the parser's <code>parse</code> function, lest the parser never
+Having constructed a parser class and a lexical scanner class, <em >objects</em> of
+those classes must be defined in a complete <strong >C++</strong> program. Usually such
+objects are defined in <code >main</code>; you have to provide this function, and
+arrange for it to call the parser's <code >parse</code> function, lest the parser never
 run. See chapter <a href="bisonc++05.html#INTERFACE">5</a>.
 <p>
-Note that, different from conventions used by Bison and Bison++, <strong>bisonc++</strong> does not
-impose a particular name convention. In particular, there is <em>no</em> need to
-begin all variable and function names used in the <strong>bisonc++</strong> parser with `yy' or
+Note that, different from conventions used by Bison and Bison++, <strong >bisonc++</strong> does not
+impose a particular name convention. In particular, there is <em >no</em> need to
+begin all variable and function names used in the <strong >bisonc++</strong> parser with `yy' or
 `YY'. However, some name restrictions on symbolic tokens exist. See section
 <a href="bisonc++04.html#IMPROPER">4.5.26.1</a> for details.
 <p>
 <a name="l11"></a>
-<h3>3.5.1: Bisonc++: an optionally reentrant Parser</h3>
+<h3 >3.5.1: Bisonc++: an optionally reentrant Parser</h3>
     A computer program or routine is called `reentrant' if it can safely
 recursively and concurrently be called from multiple processes. To be
 reentrant, a function must modify no static data, must not return a pointer to
@@ -323,45 +323,45 @@ static data, must work only on the data provided to it by the caller, and must
 not call non-reentrant functions (Source:
 <a href="http://en.wikipedia.org/wiki/Reentrant">http://en.wikipedia.org/wiki/Reentrant</a>).
 <p>
-Currently, <strong>bisonc++</strong>'s parsing member function <code>parse</code> may or may not be
+Currently, <strong >bisonc++</strong>'s parsing member function <code >parse</code> may or may not be
 reentrant, depending on whether or not the option <a href="bisonc++09.html#OPTIONS">--thread-safe</a>
 is specified.
 <p>
-The source file generated by <strong>bisonc++</strong> containing the parsing member function not
+The source file generated by <strong >bisonc++</strong> containing the parsing member function not
 only contains this function, but also various tables (e.g., state transition
-tables) defined in the anonymous namespace. When the option <code>--thread-safe</code>
-is provided, these tables are <code>const</code> tables: their elements are not changed
+tables) defined in the anonymous namespace. When the option <code >--thread-safe</code>
+is provided, these tables are <code >const</code> tables: their elements are not changed
 by the parsing function and so the parsing function, as it only manipulates
 its own local data, becomes reentrant.
 <p>
 <a name="l12"></a>
-<h2>3.6: Using Bisonc++: main steps</h2>
-The design process when using <strong>bisonc++</strong>, from grammar specification
+<h2 >3.6: Using Bisonc++: main steps</h2>
+The design process when using <strong >bisonc++</strong>, from grammar specification
 to a working compiler or interpreter, consists of the following steps:
     <ul>
-    <li> First a grammar is apecified in a form recognized by <strong>bisonc++</strong> (see
+    <li> First a grammar is apecified in a form recognized by <strong >bisonc++</strong> (see
 chapter <a href="bisonc++04.html#GRAMMARFILES">4</a>).
 <p>
 For each grammatical rule in the language, an action can be defined that
 is performed when a production rule has completely been recognized. The action
-is described using <strong>C++</strong> statements.
-    <li> Run <strong>bisonc++</strong> on the grammar, producing the parser class and several of its
-member functions (among which the parsing member function `<code>parse</code>').
+is described using <strong >C++</strong> statements.
+    <li> Run <strong >bisonc++</strong> on the grammar, producing the parser class and several of its
+member functions (among which the parsing member function `<code >parse</code>').
     <li> Design a lexical scanner to process input, passing tokens to the
 parser. The lexical scanner may be written by hand (see section <a href="bisonc++05.html#LEX">5.3.1</a>), but
-it can also be produced by, e.g., <strong>flex</strong>(1) (using <strong>flex</strong>(1) is not
+it can also be produced by, e.g., <strong >flex</strong>(1) (using <strong >flex</strong>(1) is not
 covered in this manual).
-    <li> All the parser's members (except for the member <code>parse()</code> and its
+    <li> All the parser's members (except for the member <code >parse()</code> and its
 support functions) 1must be implemented by the programmer. Commonly additional
 member functions are also be declared in the parser class' header.  At the
-very least the member <code>int lex()</code>, calling the lexecal scanner to produce
-the next available token, <em>must</em> be implemented (although a standardized
-implementation can optionallu be generated by <strong>bisonc++</strong>). The member <code>lex</code> is
-called by <code>parse's</code> support functions to obtain the next available
-token. The member function <code>void error(char const *msg)</code> may also be
+very least the member <code >int lex()</code>, calling the lexecal scanner to produce
+the next available token, <em >must</em> be implemented (although a standardized
+implementation can optionallu be generated by <strong >bisonc++</strong>). The member <code >lex</code> is
+called by <code >parse's</code> support functions to obtain the next available
+token. The member function <code >void error(char const *msg)</code> may also be
 re-implemented by the programmer (a simple in-line implementation is
-provided by default). The member function <code>error</code> is called when
-<code>parse</code> encounters (syntactic) errors.
+provided by default). The member function <code >error</code> is called when
+<code >parse</code> encounters (syntactic) errors.
     <li> The parser can now be used in a program. A simple example would
 be: 
         <pre>
@@ -379,10 +379,10 @@ be:
 linked togrether, producing the  final program.
 <p>
 <a name="LAYOUT"></a><a name="l13"></a>
-<h2>3.7: The Overall Layout of a Bisonc++ Grammar File</h2>
-<strong>Bisonc++</strong> processes a file containing a grammar definition. Different
-from Bison++ and Bison grammar files, <strong>bisonc++</strong>'s grammar file consists of only
-two sections. The general form of a <strong>bisonc++</strong> grammar file is as follows:
+<h2 >3.7: The Overall Layout of a Bisonc++ Grammar File</h2>
+<strong >Bisonc++</strong> processes a file containing a grammar definition. Different
+from Bison++ and Bison grammar files, <strong >bisonc++</strong>'s grammar file consists of only
+two sections. The general form of a <strong >bisonc++</strong> grammar file is as follows:
         <pre>
 
     Bisonc++ directives
@@ -391,18 +391,18 @@ two sections. The general form of a <strong>bisonc++</strong> grammar file is as
         
 </pre>
 
-    Readers familiar with Bison may note that there is no <em>C declaration
-section</em> and no section to define <em>Additional C code</em>. With <strong>bisonc++</strong> these
-sections are superfluous since, due to the fact that a <strong>bisonc++</strong> parser is a class,
+    Readers familiar with Bison may note that there is no <em >C declaration
+section</em> and no section to define <em >Additional C code</em>. With <strong >bisonc++</strong> these
+sections are superfluous since, due to the fact that a <strong >bisonc++</strong> parser is a class,
 all additionally required code can be incorporated into the parser class
-itself. Also, <strong>C++</strong> classes normally only require declarations that can be
+itself. Also, <strong >C++</strong> classes normally only require declarations that can be
 provided in the classes' header files, so also the `additional C code' section
 was omitted from the grammar file.
 <p>
-The `%%' is a punctuation that appears in every <strong>bisonc++</strong> grammar file to
+The `%%' is a punctuation that appears in every <strong >bisonc++</strong> grammar file to
 separate the two sections.
 <p>
-The <strong>bisonc++</strong> directives section contains all necessary directive specifications,
+The <strong >bisonc++</strong> directives section contains all necessary directive specifications,
 like directives declaring the names of the terminal and nonterminal symbols,
 and directives describing operator precedence, and the data types of semantic
 values of various symbols. 
@@ -411,9 +411,9 @@ The file's second section (grammar rules) is used to define how to construct
 each nonterminal symbol from its parts.
 <p>
 One special directive is availble that may be used in both the directives
-section and in the grammar rules section. This directive is <code>%include</code>,
+section and in the grammar rules section. This directive is <code >%include</code>,
 allowing you to split long grammar specifications into smaller, more
-comprehensible and accessible chunks. The <code>%include</code> directive is discussed
+comprehensible and accessible chunks. The <code >%include</code> directive is discussed
 in more detail in section <a href="bisonc++04.html#INCLUDE">4.5.8</a>.
 <p>
 <hr>

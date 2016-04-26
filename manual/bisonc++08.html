@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<title> <div style="text-align: center"><strong>Bisonc++</strong> (Version 5.00.00) User Guide</div> </title>
+<title> <div style="text-align: center"><strong >Bisonc++</strong> (Version 5.00.01) User Guide</div> </title>
 <style type="text/css">
     figure {text-align: center;}
     img {vertical-align: center;}
@@ -15,37 +15,37 @@
 </ul>
 <hr>
 <a name="RECOVERY"></a><a name="l124"></a>
-<h1>Chapter 8: Error Recovery</h1>
+<h1 >Chapter 8: Error Recovery</h1>
     Usually it is not acceptable to have a program terminate on a parse
 error. For example, a compiler should recover sufficiently to parse the rest
 of the input file and check it for errors; a calculator should accept another
 expression. Such errors violate the grammar for which the parser was
-constructed and are called <em>syntactic errors</em>. Other types of errors are
-called <em>semantical errors</em>: here the intended <em>meaning</em> of the language is
+constructed and are called <em >syntactic errors</em>. Other types of errors are
+called <em >semantical errors</em>: here the intended <em >meaning</em> of the language is
 not observed. For example, a division by too small a numeric constant (e.g.,
-0) may be detected by the parser <em>compile time</em>. In general, what <em>can</em> be
+0) may be detected by the parser <em >compile time</em>. In general, what <em >can</em> be
 detected compile time should not left for the run-time to detect, and so the
 parser should flag an error when it detects a division by a very small
-numerical constant. <strong>Bisonc++</strong>'s parsers may detect both syntactic <em>and</em>
+numerical constant. <strong >Bisonc++</strong>'s parsers may detect both syntactic <em >and</em>
 semantical errors. Syntactical errors are detected automatically, while
 the parser performs its parsing-job, semantical errors must explicitly be
 defined when the grammar is constructed. The following sections cover the way
-<strong>Bisonc++</strong>'s parser may handle syntactic errors and semantical errors, respectively.
+<strong >Bisonc++</strong>'s parser may handle syntactic errors and semantical errors, respectively.
 <p>
 <a name="l125"></a>
-<h2>8.1: Syntactical Error Recovery</h2>
+<h2 >8.1: Syntactical Error Recovery</h2>
     In a simple interactive command parser where each input is one line, it
-may be sufficient to allow <code>parse()</code> to return <code>PARSE_ABORT</code> on error and
+may be sufficient to allow <code >parse()</code> to return <code >PARSE_ABORT</code> on error and
 have the caller ignore the rest of the input line when that happens (and then
-call <code>parse()</code> again). But this is inadequate for a compiler, because it
+call <code >parse()</code> again). But this is inadequate for a compiler, because it
 forgets all the syntactic context leading up to the error. A syntactic error
 deep within a function in the compiler input should not cause the compiler to
 treat the following line like the beginning of a source file.
 <p>
 It is possible to specify how to recover from a syntactic error by
-writing rules recognizing the special token <code>error</code>. This is a terminal
-symbol that is always defined (it must <em>not</em> be declared) and is reserved
-for error handling. The <strong>bisonc++</strong> parser generates an <code>error</code> token whenever a
+writing rules recognizing the special token <code >error</code>. This is a terminal
+symbol that is always defined (it must <em >not</em> be declared) and is reserved
+for error handling. The <strong >bisonc++</strong> parser generates an <code >error</code> token whenever a
 syntactic error is detected; if a rule was provided recognizing this token
 in the current context, the parse can continue. For example:
         <pre>
@@ -62,27 +62,27 @@ in the current context, the parse can continue. For example:
 </pre>
 
     The fourth rule in this example says that an error followed by a newline
-makes a valid addition to any <code>statements</code>.
+makes a valid addition to any <code >statements</code>.
 <p>
 What happens if a syntactic error occurs in the middle of an
-<code>expression</code>?  The error recovery rule, interpreted strictly, applies to the
-precise sequence of a <code>statements</code>, an error and a newline. If an error
-occurs in the middle of an <code>expression</code>, there will probably be some
+<code >expression</code>?  The error recovery rule, interpreted strictly, applies to the
+precise sequence of a <code >statements</code>, an error and a newline. If an error
+occurs in the middle of an <code >expression</code>, there will probably be some
 additional tokens and subexpressions on the parser's stack after the last
-<code>statements</code>, and there will be tokens waiting to be read before the next
+<code >statements</code>, and there will be tokens waiting to be read before the next
 newline. So the rule is not applicable in the ordinary way.
 <p>
-<strong>bisonc++</strong>, however, can force the situation to fit the rule, by <em>discarding</em>
+<strong >bisonc++</strong>, however, can force the situation to fit the rule, by <em >discarding</em>
 part of the semantic context and part of the input. When a (syntactic) error
 occurs the parsing algorithm tries to recover from the error in the
 following way: First it discards states from the stack until it encounters a
-state in which the <code>error</code> token is acceptable (meaning that the
+state in which the <code >error</code> token is acceptable (meaning that the
 subexpressions already parsed are discarded, back to the last complete
-<code>statements</code>). At this point the error token is shifted. Then, if the
+<code >statements</code>). At this point the error token is shifted. Then, if the
 available look-ahead token is not acceptable to be shifted next, the parser
 continues to read tokens and to discard them until it finds a token which
-<em>is</em> acceptable. I.e., a token which <em>can</em> follow an <code>error</code> token in
-the current state. In this example, <strong>bisonc++</strong> reads and discards input until the
+<em >is</em> acceptable. I.e., a token which <em >can</em> follow an <code >error</code> token in
+the current state. In this example, <strong >bisonc++</strong> reads and discards input until the
 next newline was read so that the fourth rule can apply.
 <p>
 The choice of error rules in the grammar is a choice of strategies for
@@ -123,33 +123,33 @@ To prevent an outpouring of error messages, the parser may be configured
 in such a way that no error message are generated for another syntactic error
 that happens shortly after the first. E.g., only after three consecutive input
 tokens have been successfully shifted error messages may again be
-generated. This configuration is currently not available in <strong>bisonc++</strong>'s parsers.
+generated. This configuration is currently not available in <strong >bisonc++</strong>'s parsers.
 <p>
-Note that rules using the <code>error</code> token may have actions, just as any
+Note that rules using the <code >error</code> token may have actions, just as any
 other rules can.
 <p>
 The token causing an error is re-analyzed immediately when an error
-occurs. If this is unacceptable, then the member function <code>clearin()</code> may be
+occurs. If this is unacceptable, then the member function <code >clearin()</code> may be
 called to skip this token. The function can be called by any member function
 of the Parser class. For example, suppose that on a parse error, an error
 handling routine is called that advances the input stream to some point where
 parsing should once again commence. The next symbol returned by the lexical
 scanner is probably correct. The previous token ought to be discarded using
-<code>clearin()</code>.
+<code >clearin()</code>.
 <p>
 <a name="l126"></a>
-<h3>8.1.1: Error Recovery</h3>
-    <strong>Bisonc++</strong> implements a simple error recovery mechanism. When the <code>lookup()</code>
+<h3 >8.1.1: Error Recovery</h3>
+    <strong >Bisonc++</strong> implements a simple error recovery mechanism. When the <code >lookup()</code>
 function cannot find an action for the current token in the current state it
-throws an <code>UNEXPECTED_TOKEN__</code> exception. 
+throws an <code >UNEXPECTED_TOKEN__</code> exception. 
 <p>
 This exception is caught by the parsing function, calling the
-<code>errorRecovery()</code> member function. By default, this member function 
+<code >errorRecovery()</code> member function. By default, this member function 
 terminates the parsing process. The non-default recovery procedure is
-available once an <code>error</code> token is used in a production rule. When the
-parsing process throws <strong>UNEXPECTED_TOKEN__</strong> the recovery procedure is
+available once an <code >error</code> token is used in a production rule. When the
+parsing process throws <strong >UNEXPECTED_TOKEN__</strong> the recovery procedure is
 started (i.e., it is started whenever a syntactical error is encountered or
-<code>ERROR()</code> is called).
+<code >ERROR()</code> is called).
 <p>
 The recovery procedure consists of 
     <ul>
@@ -175,7 +175,7 @@ error is reported (and counted).
 The option <a href="bisonc++09.html#ERRORVERBOSE">--error-verbose</a> may be specified to obtain the
 contents of the state stack when a syntactic error is reported.
 <p>
-The example grammar may be provided with an <code>error</code> production rule:
+The example grammar may be provided with an <code >error</code> production rule:
         <pre>
 
     %token NR
@@ -201,12 +201,12 @@ The example grammar may be provided with an <code>error</code> production rule:
 </pre>
 
     The resulting grammar has one additional state (handling the error
-production) and one state in which the <code>ERR_ITEM</code> flag has been set. When
+production) and one state in which the <code >ERR_ITEM</code> flag has been set. When
 and error is encountered, this state obtains tokens until a token having a
 valid continuation was received, after which normal processing continues. 
 <p>
-The following output from the <code>parse()</code> function, generated by <strong>bisonc++</strong> using the
-<code>--debug</code> option illustrates error recovery for the above grammar, entering
+The following output from the <code >parse()</code> function, generated by <strong >bisonc++</strong> using the
+<code >--debug</code> option illustrates error recovery for the above grammar, entering
 the input 
         <pre>
 
@@ -217,7 +217,7 @@ the input
 
 <p>
 The program defining the parser and calling the parsing member was:
-    <pre>
+    <pre >
 #include "Parser.h"
 
 int main()
@@ -229,7 +229,7 @@ int main()
 </pre>
 
 <p>
-For this example the following implementation of the <code>lex()</code> member 
+For this example the following implementation of the <code >lex()</code> member 
 was used:
         <pre>
 
@@ -250,7 +250,7 @@ was used:
 
 <p>
 <a name="l127"></a>
-<h4>8.1.1.1: Error recovery --debug output</h4>
+<h4 >8.1.1.1: Error recovery --debug output</h4>
 <p>
 <pre>
 
@@ -329,7 +329,7 @@ Syntax error
 
 <p>
 <a name="l128"></a>
-<h2>8.2: Semantical Error Recovery</h2>
+<h2 >8.2: Semantical Error Recovery</h2>
 Semantical error recovery once again requires judgment on the part of the
 grammar-writer. For example, an assignment expression may be syntactically
 defined as
@@ -340,14 +340,14 @@ defined as
 </pre>
 
     The assignment operator's left-hand side must be a so-called
-<em>lvalue</em>. An <em>lvalue</em> is simply an addressable location, like a variable's
+<em >lvalue</em>. An <em >lvalue</em> is simply an addressable location, like a variable's
 identifier, a dereferenced pointer expression or some other
-address-expression. The right-hand side is a so-called <em>rvalue</em>: this may be
+address-expression. The right-hand side is a so-called <em >rvalue</em>: this may be
 any value: any expression will do.
 <p>
 A rule like the above leaves room for many different semantical errors:
     <ul>
-    <li> Since the rule's LHS equals <code>expr</code>, <em>any</em> expression is accepted
+    <li> Since the rule's LHS equals <code >expr</code>, <em >any</em> expression is accepted
 by the parser. E.g.,
         <pre>
 
@@ -355,28 +355,28 @@ by the parser. E.g.,
         
 </pre>
 
-    So, the action associated with this rule should <em>check</em> whether the
-expression's left-hand side is actually an lvalue. If not, a <em>semantical</em>
+    So, the action associated with this rule should <em >check</em> whether the
+expression's left-hand side is actually an lvalue. If not, a <em >semantical</em>
 error should be reported;
-    <li> In a typed language (like <strong>C++</strong>), not all assignments are
-possible. E.g., it is not acceptable to assign a <strong>std:string</strong> value
-to a <strong>double</strong> variable. When conflicting types are used, a <em>semantical</em>
+    <li> In a typed language (like <strong >C++</strong>), not all assignments are
+possible. E.g., it is not acceptable to assign a <strong >std:string</strong> value
+to a <strong >double</strong> variable. When conflicting types are used, a <em >semantical</em>
 error should be reported;
     <li> In a language requiring variables to be defined or declared before
-they are used (like <strong>C++</strong>) the parser should check whether a variable is
+they are used (like <strong >C++</strong>) the parser should check whether a variable is
 actually defined or declared when it is used in an expression. If not, a
-<em>semantical</em> error should be reported
+<em >semantical</em> error should be reported
     </ul>
     A parser that should be able to detect semantic errors normally uses a
-counter counting the number of semantic errors, e.g., <code>size_t
+counter counting the number of semantic errors, e.g., <code >size_t
 d_nSemanticErrors</code>. It may be possible to test this counter's value once the
-input has been parsed, calling <code>ABORT()</code> (see section <a href="bisonc++05.html#PRIVMEM">5.3</a>) if the
+input has been parsed, calling <code >ABORT()</code> (see section <a href="bisonc++05.html#PRIVMEM">5.3</a>) if the
 counter isn't zero anymore. When the grammar's start symbol itself has
 multiple alternatives, it is probably easiest to augment the grammar with an
 additional rule, becoming the augmented grammar's start symbol which simply
-calls the former start symbol. For example, if <code>input</code> was the name of the
+calls the former start symbol. For example, if <code >input</code> was the name of the
 original start-symbol, augment the grammar as follows to ensure a
-<strong>PARSE_ABORT</strong> return value of the <code>parse()</code> member when either syntactic
+<strong >PARSE_ABORT</strong> return value of the <code >parse()</code> member when either syntactic
 or semantical errors were detected:
         <pre>
 
@@ -389,7 +389,7 @@ or semantical errors were detected:
         
 </pre>
 
-    Returning from the parser's <code>parse()</code> member the number of syntactic
+    Returning from the parser's <code >parse()</code> member the number of syntactic
 and semantical errors could then be printed, whereupon the program might
 terminate. 
 <p>

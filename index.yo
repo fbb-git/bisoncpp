@@ -30,6 +30,9 @@ lurl(https://github.com/fbb-git/bisoncpp/releases) or direct from its
 release page):
 
         itemization(
+        it() url(5.00.01)
+                    (https://github.com/fbb-git/bisoncpp/releases/tag/5.00.01)
+Apr 26 2016;
         it() url(5.00.00)
                     (https://github.com/fbb-git/bisoncpp/releases/tag/5.00.00)
 Apr 13 2016;
@@ -41,10 +44,7 @@ Dec 19 2015;
 Dec 13 2015;
         it() url(4.12.03)
                     (https://github.com/fbb-git/bisoncpp/releases/tag/4.11.03)
-Oct  6 2015;
-        it() url(4.12.02)
-                    (https://github.com/fbb-git/bisoncpp/releases/tag/4.11.02)
-Oct 01 2015.
+Oct  6 2015.
         )
     COMMENT(NOTE: LAST ITEM SHOULD END IN . )
 
