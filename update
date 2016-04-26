@@ -1,6 +1,7 @@
 #!/bin/bash
 
-echo if any modified or untracked files are shown, handle these first:
+echo if any modified or untracked files are shown, then they MUST 
+echo be handled first:
 echo
 git st
 echo -n "Continue [Yn] ? "
@@ -8,23 +9,18 @@ read yesno
 [ "$yesno" == "y" -o "$yesno" == "" ]   ||   exit 0
 
 
-echo -n "Need to (re)create bisoncpp's wip files for gh-pages [y/N] ? "
-read yesno
+git co master
+cd bisonc++
+./build man
+./build manual
+./build github
+./build distclean
+cd ..    
+git co gh-pages
 
-if [ "$yesno" == "y" ] ; then
-    git co master
-    cd bisonc++
-    ./build man
-    ./build manual
-    ./build github
-    ./build distclean
-    cd ..    
-    git co gh-pages
-
-    rm -rf manual
-    mv ../wip/changelog.txt ../wip/bisonc++*.html ../wip/manual .
-    rm -r manual/essence
-fi
+rm -rf manual
+mv ../wip/changelog.txt ../wip/bisonc++*.html ../wip/manual .
+rm -r manual/essence
 
 echo
 echo -n "Check index.yo: version and last 5 releases [y/n] ? "
