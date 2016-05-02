@@ -5,6 +5,9 @@ bisonc++ (5.00.02)
     DebugMode__ operator&(DebugMode__, DebugMode__) function was added to
     the parserbase-skeleton.
 
+  * The documentation erroneously referred to an undefined --action-cases
+    option. Instead, --debug should be used and setDebug(Parser::ACTIONCASES)
+    should be called. Code and documentation modified accordingly.
 
 
 bisonc++ (5.00.01)

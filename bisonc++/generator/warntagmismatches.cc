@@ -15,8 +15,8 @@ void Generator::warnTagMismatches(ostream &out) const
         std::cerr << "[Fatal] calling `.get<Tag__::" << 
             idOfTag__[static_cast<int>(tg)] << 
             ">()', but Tag " <<
-            idOfTag__[static_cast<int>(tag())] << " is available. "
-            " Try option --action-cases\n";
+            idOfTag__[static_cast<int>(tag())] << " is encountered. "
+            " Try option --debug and call setDebug(Parser::ACTIONCASES)\n";
         throw 1;        // ABORTs
     }
     )" << '\n';
