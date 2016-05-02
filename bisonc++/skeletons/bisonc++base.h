@@ -117,6 +117,12 @@ $insert 4 debug "ERROR(): Forced error condition"
     throw UNEXPECTED_TOKEN__;
 }
 
+inline \@Base::DebugMode__ operator&(\@Base::DebugMode__ lhs,
+                                     \@Base::DebugMode__ rhs)
+{
+    return static_cast<\@Base::DebugMode__>(lhs &rhs);
+}
+
 // For convenience, when including ParserBase.h its symbols are available as
 // symbols in the class Parser, too.
 #define \@ \@Base

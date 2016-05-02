@@ -1,3 +1,12 @@
+bisonc++ (5.00.02)
+
+  * Some templated operator& functions cannot handle two DebugMode__
+    arguments. To prevent compilation errors in those cases a 
+    DebugMode__ operator&(DebugMode__, DebugMode__) function was added to
+    the parserbase-skeleton.
+
+
+
 bisonc++ (5.00.01)
 
   * Fixed verbinsert calls: yodl 3.07.01 implements a macro 'verbinsert'
