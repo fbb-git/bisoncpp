@@ -120,7 +120,8 @@ $insert 4 debug "ERROR(): Forced error condition"
 inline \@Base::DebugMode__ operator&(\@Base::DebugMode__ lhs,
                                      \@Base::DebugMode__ rhs)
 {
-    return static_cast<\@Base::DebugMode__>(lhs &rhs);
+    return static_cast<\@Base::DebugMode__>(
+            static_cast<int>(lhs) & rhs);
 }
 
 // For convenience, when including ParserBase.h its symbols are available as

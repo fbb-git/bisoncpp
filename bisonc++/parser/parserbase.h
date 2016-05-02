@@ -309,7 +309,7 @@ typename TypeOf<tg>::type &SType::get()
             idOfTag__[static_cast<int>(tg)] << 
             ">()', but Tag " <<
             idOfTag__[static_cast<int>(tag())] << " is available. "
-            " Try option --rule-numbers\n";
+            " Try option --action-cases\n";
         throw 1;        // ABORTs
     }
     
@@ -327,7 +327,7 @@ typename TypeOf<tg>::type const &SType::get() const
             idOfTag__[static_cast<int>(tg)] << 
             ">()', but Tag " <<
             idOfTag__[static_cast<int>(tag())] << " is available. "
-            " Try option --rule-numbers\n";
+            " Try option --action-cases\n";
         throw 1;        // ABORTs
     }
     
