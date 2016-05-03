@@ -42,16 +42,39 @@ class Base
         static Base *defaultClone(Base const *obj);
 };
 
+namespace // anonymous
+{
+    template <typename Tp_>
+    using ConstRefType = typename std::conditional< std::is_copy_constructible<Tp_>::value,
+          Tp_ const &,
+          Tp_ >::type;
+    template <typename Tp_>
+    using RefType = typename std::conditional< std::is_copy_constructible<Tp_>::value,
+          Tp_ &,
+          Tp_ && >::type;
+
+    template<class T> RefType<T> maybe_move(T &obj)
+    {
+        return static_cast<RefType<T>>(obj);  // std::move is nothing more than a static cast, too!
+    }
+}
+
+template<Tag__, bool> struct try_clone
+{
+    static Base *clone(Base const *obj);
+};
+
     // The class Semantic is derived from Base. It stores a particular
     // semantic value type. 
 template <Tag__ tg_>
 class Semantic: public Base
 {
     typename TypeOf<tg_>::type d_data;
+    using Copyable = std::is_copy_constructible<typename TypeOf<tg_>::type>;
     
     public:
         Semantic();
-        Semantic(Semantic<tg_> const &other);
+        Semantic(Semantic<tg_> &&other);
 
             // The constructor member template forwards its arguments to
             // d_data, allowing it to be initialized using whatever
@@ -86,7 +109,7 @@ class SType
             // A template member operator= is used because it allows
             // the compiler to deduce the appropriate typename
         template <typename Type>
-        SType &operator=(Type const &value);
+        SType &operator=(Type &&value);
 
         template <Tag__ tag, typename ...Args>
         void assign(Args &&...args);
@@ -94,11 +117,12 @@ class SType
             // By default the get()-members check whether the specified <tag>
             // matches the tag returned by SType::tag (d_data's tag). If they
             // don't match a run-time fatal error results.
+            // Sadly, std::forward cannot do work for us here.
         template <Tag__ tag>
         typename TypeOf<tag>::type &get();
 
         template <Tag__ tag>
-        typename TypeOf<tag>::type const &get() const;
+        ConstRefType<typename TypeOf<tag>::type> get() const;
 
         Tag__ tag() const;
 
@@ -148,9 +172,9 @@ Semantic<tg_>::Semantic()
 }
 
 template <Tag__ tg_>
-Semantic<tg_>::Semantic(Semantic<tg_> const &other)
+Semantic<tg_>::Semantic(Semantic<tg_> &&other)
 :
-    d_data(other.d_data)
+    d_data(std::forward<typename TypeOf<tg_>::type>(other).d_data)
 {
         // Setting Base's data members:
     d_baseTag = other.d_baseTag;
@@ -196,10 +220,10 @@ $insert warnTagMismatches
 }
 
 template <Tag__ tg>
-typename TypeOf<tg>::type const &SType::get() const
+ConstRefType<typename TypeOf<tg>::type> SType::get() const
 {
 $insert warnTagMismatches
-    return *static_cast<typename TypeOf<tg>::type *>(d_base->data());
+    return maybe_move(*static_cast<typename TypeOf<tg>::type *>(d_base->data()));
 }
 
 inline SType::SType()
@@ -233,16 +257,16 @@ inline SType &SType::operator=(SType &&tmp)
     // A template assignment function is used because it allows
     // the compiler to deduce the appropriate typename
 template <typename Type>
-inline SType &SType::operator=(Type const &value)
+inline SType &SType::operator=(Type &&value)
 {
-    assign< TagOf<Type>::tag >(value);
+    assign< TagOf<typename std::remove_reference<Type>::type>::tag >(maybe_move(value));
     return *this;
 }
 
 template <Tag__ tg_>
 inline Base *Semantic<tg_>::clone(Base const *obj) // static
 {
-    return new Semantic<tg_>{*static_cast<Semantic<tg_> const *>(obj)};
+    return try_clone<tg_, Semantic<tg_>::Copyable::value>::clone(obj);
 }
 
 template <Tag__ tg_>
@@ -250,5 +274,28 @@ inline void *Semantic<tg_>::data(Base const *obj) // static
 {
     return &static_cast<Semantic<tg_> *>(const_cast<Base *>(obj))->d_data;
 }
+
+template <Tag__ tg_>
+struct try_clone<tg_, true>
+{
+    inline static Base *clone(Base const *obj)
+    {
+        return new Semantic<tg_>{*static_cast<Semantic<tg_> const*>(obj)};
+    }
+};
+
+template <Tag__ tg_>
+struct try_clone<tg_, false>
+{
+    // TODO Add an option?
+    inline static Base *clone(Base const *obj)
+    {
+        std::cerr << "[Fatal] calling `.clone<Tag__::" << 
+            idOfTag__[static_cast<int>(tg_)] << 
+            ">()', but corresponding type is not copy-constructible. " <<
+            " Try option --rule-numbers\n";
+        throw 1;        // ABORTs
+    }
+};
 
 }  // namespace Meta__

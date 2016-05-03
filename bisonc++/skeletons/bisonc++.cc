@@ -162,7 +162,7 @@ $insert 8 LTYPEresize
     }
     ++d_stackIdx__;
     d_stateStack__[d_stackIdx__] = d_state__ = state;
-    *(d_vsp__ = &d_valueStack__[d_stackIdx__]) = d_val__;
+    *(d_vsp__ = &d_valueStack__[d_stackIdx__]) = std::move(d_val__);
 $insert 4 LTYPEpush
 $insert 4 debug  "push(state " << state << stype__(", semantic TOS = ", d_val__, ")") << ')'
 }
@@ -171,7 +171,7 @@ void \@Base::popToken__()
 {
     d_token__ = d_nextToken__;
 
-    d_val__ = d_nextVal__;
+    d_val__ = std::move(d_nextVal__);
     d_nextVal__ = STYPE__();
 
     d_nextToken__ = _UNDETERMINED_;
@@ -180,7 +180,7 @@ void \@Base::popToken__()
 void \@Base::pushToken__(int token)
 {
     d_nextToken__ = d_token__;
-    d_nextVal__ = d_val__;
+    d_nextVal__ = std::move(d_val__);
     d_token__ = token;
 }
      
