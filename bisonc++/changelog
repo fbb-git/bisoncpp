@@ -1,5 +1,8 @@
 bisonc++ (5.00.02)
 
+  * Reimplemented polymorphic semantic values: the Meta__::Base class now is
+    a virtual bease class.
+
   * Some templated operator& functions cannot handle two DebugMode__
     arguments. To prevent compilation errors in those cases a 
     DebugMode__ operator&(DebugMode__, DebugMode__) function was added to

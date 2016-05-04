@@ -8,42 +8,53 @@ template <typename Tp_>
 struct TagOf;
 
 $insert polymorphicSpecializations
-    // The Base class: 
-    // Individual semantic value classes are derived from this class.
-    // This class offers a member returning the value's Tag__,
-    // a member cloning the object of its derived Semantic<Tag__> 
-    // and a member returning a pointerr to its derived Semantic<Tag__> 
-    // data, used by SType. Since SType's user knows what data type 
-    // he/she looks at, the user can do a static cast to that type.
-    // See also Bisonc++'s distribution file README.polymorphic-techical
+
+    // Individual semantic value classes are derived from Base, offering a
+    // member returning the value's Tag__, a member cloning the object of its
+    // derived Semantic<Tag__> and a member returning a pointerr to its
+    // derived Semantic<Tag__> data. See also Bisonc++'s distribution file
+    // README.polymorphic-techical
 class Base
 {
     protected:
-
-        Tag__ d_baseTag;    // Base should not be used for Tag__ values
-                            // outside of the enum class Tag__ range.
-
-            // these members implement polymorphism without using
-            // virtual functions. 
-        Base *(*d_baseClone)(Base const *thisObj) = defaultClone;
-        void *(*d_baseData)(Base const *thisObj) = noData;
+        Tag__ d_baseTag;    // The tag is assigned by Semantic.
 
     public:
         Base();
-
         Base(Base const &other) = delete;
+
+        virtual ~Base();
 
         Tag__ tag() const;
         Base *clone() const;
         void *data() const;        
 
     private:
-        static void *noData(Base const *thisObj);
-        static Base *defaultClone(Base const *obj);
+        virtual void *vData() const;
+        virtual Base *vClone() const;
 };
 
-    // The class Semantic is derived from Base. It stores a particular
-    // semantic value type. 
+inline Base *Base::clone() const
+{
+    return vClone();
+}
+
+inline void *Base::data() const
+{
+    return vData();
+}
+
+inline Base::Base()
+:
+    d_baseTag(static_cast<Tag__>(sizeofTag))
+{}
+
+inline Tag__ Base::tag() const
+{
+    return d_baseTag;
+}
+
+    // The class Semantic stores a semantic value of the type matching tg_
 template <Tag__ tg_>
 class Semantic: public Base
 {
@@ -53,21 +64,20 @@ class Semantic: public Base
         Semantic();
         Semantic(Semantic<tg_> const &other);
 
-            // The constructor member template forwards its arguments to
+            // This constructor member template forwards its arguments to
             // d_data, allowing it to be initialized using whatever
             // constructor is available for DataType
         template <typename ...Params>
         Semantic(Params &&...params);
 
     private:
-        static Base *clone(Base const *obj);
-        static void *data(Base const *obj);
+        Base *vClone() const override;
+        void *vData() const override;
 };
 
     // The class SType wraps a pointer to Base.  It becomes the polymorphic
-    // STYPE__ type It also defines a get member, allowing constructions like
-    // $$.get<INT> to be used.  Instantiations of its operator= member
-    // template are used to assign semantic values to the SType object.
+    // STYPE__ type. It also defines get members, allowing constructions like
+    // $$.get<INT> to be used.  
 class SType
 {
     Base *d_base;
@@ -107,44 +117,10 @@ class SType
         void swap(SType &other);
 };
 
-inline Base::Base()
-:
-    d_baseTag(static_cast<Tag__>(sizeofTag))
-{}
-
-inline Tag__ Base::tag() const
-{
-    return d_baseTag;
-}
-
-inline Base *Base::clone() const
-{
-    return d_baseClone(this);
-}
-
-inline void *Base::data() const
-{
-    return d_baseData(this);
-}
-
-inline void *Base::noData(Base const *obj)              // static
-{
-    std::runtime_error("Default STYPE__ has no value");
-    return 0;
-}
-
-inline Base *Base::defaultClone(Base const *obj)        // static
-{
-    return new Base;
-}
-
 template <Tag__ tg_>
 Semantic<tg_>::Semantic()
 {
-        // Setting Base's data members:
-    d_baseTag = tg_;
-    d_baseClone = clone;
-    d_baseData =  data;
+    d_baseTag = tg_;                // Base's data member:
 }
 
 template <Tag__ tg_>
@@ -152,10 +128,7 @@ Semantic<tg_>::Semantic(Semantic<tg_> const &other)
 :
     d_data(other.d_data)
 {
-        // Setting Base's data members:
     d_baseTag = other.d_baseTag;
-    d_baseClone = other.d_baseClone;
-    d_baseData =  other.d_baseData;
 }
 
 template <Tag__ tg_>
@@ -164,10 +137,7 @@ Semantic<tg_>::Semantic(Params &&...params)
 :
     d_data(std::forward<Params>(params) ...)
 {
-        // Setting Base's data members:
     d_baseTag = tg_;
-    d_baseClone = clone;
-    d_baseData =  data;
 }
 
 inline Tag__ SType::tag() const
@@ -240,15 +210,15 @@ inline SType &SType::operator=(Type const &value)
 }
 
 template <Tag__ tg_>
-inline Base *Semantic<tg_>::clone(Base const *obj) // static
+Base *Semantic<tg_>::vClone() const
 {
-    return new Semantic<tg_>{*static_cast<Semantic<tg_> const *>(obj)};
+    return new Semantic<tg_>{*this};
 }
 
 template <Tag__ tg_>
-inline void *Semantic<tg_>::data(Base const *obj) // static
+void *Semantic<tg_>::vData() const 
 {
-    return &static_cast<Semantic<tg_> *>(const_cast<Base *>(obj))->d_data;
+    return const_cast<typename TypeOf<tg_>::type *>(&d_data);
 }
 
 }  // namespace Meta__

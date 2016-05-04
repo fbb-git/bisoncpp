@@ -1,6 +1,6 @@
-Bic() offers em(polymorphic semantic values). Polymorphic semantic values were
-developed as an alternative to using unions. Unions are still supported by
-b(), but are considered to be somewhat `old school'. Polymorphic semantic
+Bic() also supports em(polymorphic semantic values). Polymorphic semantic
+values were developed as an alternative to using unions. Using unions is still
+possible, but are now considered somewhat `old school'. Polymorphic semantic
 values were added to b() as the result of a suggestion originally made by
 Dallas A. Clement in September 2007.
 
@@ -18,17 +18,8 @@ needlessly impede backward compatibility.
 
 The preferred alternative to a tt(union), however, is a polymorphic base
 class. The example program (cf. lurl(poly)) uses a polymorphic semantic value
-type, supporting either tt(int) or tt(std::string)
-semantic values. These types are asociated with tags (resp. tt(INT) and
-tt(TEXT)) using the tt(%polymorphic) directive, discussed next.
-
-As a technical side-note: although the directive for using polymorphic
-semantic values is called tt(%polymorphic) this does not imply that the
-generated parser uses bf(C++) dynamic polymorphism. Instead, meta-template
-programming techniques are used to create the various semantic value types
-whenever necessary. It isn't `static polymorphism' either, but the term
-`polymorphic' refers to the fact that the commonly used shorthand notations
-($$, $1, etc.) in action blocks may refer to different (hence polymorphic)
-data types.
+type, supporting either tt(int) or tt(std::string) semantic values. These
+types are asociated with tags (resp. tt(INT) and tt(TEXT)) using the
+tt(%polymorphic) directive, discussed next.
 
 

@@ -14,15 +14,14 @@
         (copy and move assignment operators) are available. 
 
         In addition the member template tt(SType &operator=(Type const
-        &value)) can be used for all polymorphic value types. tt(Type) must,
-        not using a cast, exactly match one of the defined polymorphic types,
-        because tt(Type) is used to determine the tt(Meta__::Tag__) value to
-        use. Casting can of course be used when formulating tt(value's)
-        expression. 
+        &value)) can be used for all polymorphic value types. tt(Type) must
+        (if no cast is used) exactly match one of the defined polymorphic
+        types, because tt(Type) is used to determine the tt(Meta__::Tag__)
+        value to use. Casting can of course be used when formulating
+        tt(value's) expression.
 
         When tt(operator=(Type const &value)) is used, the left-hand side
-        tt(SType) object will receive a new value of the tt(Type) semantic
-        type. 
+        tt(SType) object receives a new value of the tt(Type) semantic type.
 
     it() tt(void assign<tag>(Args &&...args)) 
 
@@ -33,10 +32,9 @@
         construction). The constructed value is then stored in the tt(STYPE__)
         object for which tt(assign) has been called.
 
-        As a tt(Meta__::Tag__) value must be specified when using 
-        tt(assign) the compiler can use implicit tags to convert tt(assign's)
-        arguments to an tt(SType) object of the type matching the specified
-        tag. 
+        As a tt(Meta__::Tag__) value must be specified when using tt(assign)
+        the compiler can use the explicit tag to convert tt(assign's) arguments
+        to an tt(SType) object of the type matching the specified tag.
 
         The member tt(assign) can be used to store a particular polymorphic
         semantic value in an tt(STYPE__) object. It differs from

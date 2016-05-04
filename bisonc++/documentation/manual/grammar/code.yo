@@ -22,8 +22,8 @@ bf(The namespace Meta__)
 Below, tt(DataType) refers to the semantic value's data type that is
 associated with a tt(Tag__) identifier.
 
-Several classes are defined in the namespace tt(Meta__). The most import class
-is the class tt(SType), defining the interface to the semantic value
+Several classes are defined in the namespace tt(Meta__). The most important
+class is tt(SType), providing the interface to the semantic value
 types. The class tt(SType) becomes the parser's tt(STYPE__) type. Each
 tt(SType) object is either a default tt(SType) object, not containing a
 semantic value, or it contains a semantic value of a single tt(DataType).  All

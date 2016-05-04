@@ -156,19 +156,21 @@ members inherited from the parser's base class.
         tt(d_val__)'s address should be passed to the scanner. This can be
         realized, for example, by passing tt(d_val__)'s address to the lexical
         scanner's constructor.
+
        Subsequently, the lexical scanner may assign a value to the parser's
         tt(d_val__) variable through the pointer to tt(d_val__) stored in a
         data member of the lexical scanner.
+
        Note that in some cases this approach em(must) be used to make
-        available the correct semantic value to the parser. In particular,
+        the correct semantic value available to the parser. In particular,
         when a grammar state defines multiple reductions, depending on the
         next token, the reduction's action only takes place following the
         retrieval of the next token, thus losing the initially matched token
         text. 
-       If tt(STYPE) is a polymorphic semantic value, direct assignment of
-        values to tt(d_val__) is not possible. In that case em(tagged
-        assignment) must be 
-        used+IFDEF(MANUAL)(, as explained in section ref(POLYTYPE))().
+
+       If tt(STYPE) is a polymorphic semantic value, specific requirements for
+        assigning values to  tt(d_val__) apply.
+        IFDEF(MANUAL)((cf.  section ref(POLYTYPE)))().
 
     it() bf(LTYPE__ d_vsp__):nl()
        The semantic value stack pointer. 

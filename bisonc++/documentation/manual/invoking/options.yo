@@ -18,24 +18,6 @@ error condition: if a previously used option is omitted, then bic() does not
 detect the inconsistency. In those cases compilation errors may be
 encountered.
 
-
-COMMENT(
-    class header:           warn for class-name mismatch
-                            warn for not including baseclass-header
-                            warn for namespace mismatch
-                            if the 'scanner' option was provided:
-                                warn for missing "scanner" include-spec
-                                warn for missing Scanner d_scanner spec.
-
-    implementation header:  warn for class-name mismatch 
-                                (in inline defined members)
-                            warn for not including the class header
-                            warn for namespace mismatch
-                            warn for a mismatch in the scanner-token-function
-                                     name
-END)
-
-
     itemization(
     it() loption(analyze-only) (soption(A))nl()
            Only analyze the grammar. No files are (re)written. This option can

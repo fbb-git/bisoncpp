@@ -30,89 +30,145 @@ namespace Meta__
             typedef std::vector<std::string> type;
         };
 
-
-
-The semantic polymorphic value is available as STYPE__ inside the parser:
-
-         typedef Meta__::SType STYPE__;
-
-	The struct Stype holds a shared_ptr to a Base class object.
-    
-    SType::get<Tag__>() returns the data type of the stored value
-    (so, the tag is available). 
-
-    Given an Stype variable (like d_val__), it can be used to assign a value
-    of the requested type:
-
-        d_val__.get<Tag__::TEXTTYPE>() = d_matched.
-
-	If a rhs value is available, then it is known as a Semantic *, and it can
-    be assigned to the SType object. 
-
-    The free functions (in the parser's namespace (if defined)) semantic__ can
-    be used to obtain a Semantic *.
-
-
-All semantic values are stored in class template Semantic objects. Semantic is
-    derived from Base, and must be initialized with a Tag__. The Tag__ allows
-    Semantic to define a DataType (via TypeOf<Tag__>) and
-    Semantic has as data() const member returning a const reference to its
-    value
-
-The class Base is Semantic's base class. A pointer to a Base class can use
-    members 
-
-            tag()   to obtain the value's tag;
-
-            get<Tag__>()  to obtain a (const or non-const) reference to the
-    data stored in the Semantic object. Internallly, as the known, and since
-    Base is a base class of Semantic, it can statically cast this (the Base
-    class pointer to a Semantic<tag> pointer.
-
-Assignment (Stype = value) is handled by a member template operator=(Tp &&arg)
-
-    The Base class implements polymorphism without using virtual
-functions. This is realized by defining interface functions that can be called
-from Base & or Base * objects. These functions then call a function via a
-pointer to function (e.g., clone() calls the function pointed to by
-d_baseClone. Those functions are static functions, expecting a pointer to a
-Base const object. Derived classes initialize the pointers to function with
-the address of their own function. When clone() is called, the Base object
-passes its own address as argument to d_baseClone. If the Base object was
-derived from, e.g., Semantic<Tag__::INT>, then the Base pointer is also a
-pointer to Semantic<Tag__::INT>. As the derived class (Semantic<Tag__::INT>)
-has assigned the address of its own clone function to d_baseClone,
-Semantic<Tag__::INT>'s clone function is called. It defines a Base const *
-parameter, but it knows that it has been called with a pointer to a 
-Semantic<Tag__::INT>, and therefore it can safely static_cast the Base const *
-to a Semantic<Tag__::INT> *, if needed.
-
-        Base:
-            d_baseClone:    ptr to static member function
-
-            clone():        calls d_baseClone(this)
-
-        Semantic<Tag__>
-            implements static member clone, having Base::d_baseClone's
-            prototype. 
-
-            at construction time: assigns &clone to d_baseClone
-
-        run-time call:
-            Base::clone()       is called, calling
-
-            d_basClone(this)    where 'this' is the address of the actual
-                                Semantic object
-
-                                d_baseClone points to Semantic<Tag__>'s clone,
-
-            Semantic<Tag__>::clone is called, statically casting its Base *
-                                parameter to a Semantic<Tag__> *
-
-
 %polymorphic and %union support tag/field checks. Correct type assignments for
 missing rules is checked in parser/handleproductionelement.cc and
 parser/checkemptyblocktype.cc
 
 See also parser/indextooffset.cc for a description how $-indices are converted
 to offsets.
+
+
+Class organization and inner working of polymorphic values
+==========================================================
+
+    During a short time interval the Meta__ class Base implemented polymorphic
+behavior without using virtual members. Although this is possible, it also
+results in a somewhat artificial implementation, as C++ offers a clean
+definition and implentation of polymorphism. Therefore, shortly after
+releasing bisonc++ 5.00.00 bisonc++ now generates a standard polymorphic
+implementation of the class Meta__::Base.
+
+The class Meta__::Base has the following interface:
+
+    class Base
+    {
+        protected:
+            Tag__ d_baseTag;    // The tag is assigned by Semantic.
+    
+        public:
+            Base();
+            Base(Base const &other) = delete;
+    
+            virtual ~Base();
+    
+            Tag__ tag() const;
+            Base *clone() const;
+            void *data() const;        
+    
+        private:
+            virtual void *vData() const;
+            virtual Base *vClone() const;
+    };
+
+Base is used as Semantic<Tag__> class template's base class, where the various
+semantic value types are distinguished by their associated
+Tags. Semantic<Tag__>'s interface is:
+
+    template <Tag__ tg_>
+    class Semantic: public Base
+    {
+        typedef typename TypeOf<tg_>::type SemType;
+        SemType d_data;
+        
+        public:
+            Semantic();
+            Semantic(Semantic<tg_> const &other);
+    
+            template <typename ...Params>
+            Semantic(Params &&...params);
+    
+        private:
+            Base *vClone() const override;
+            void *vData() const override;
+    };
+
+Semantic<Tag__> implementations implement a wrapper class around the various
+semantic values. Each instantiation offers a SemType semantic value data type
+(explicitly defined here to simplify references to it) and a SemType d_data
+member.
+
+The data member can be initialized by default (using SemType's default
+constructor) or any available other constructor can be used (through
+Semantic(Params)'s constructor, perfectly forwarding its arguments to d_data's
+constructor. 
+
+
+The generated parser's STYPE__ is the class Meta__::SType. It is a wrapper
+aound a Base *d_base data member. The d_base pointer either points to a plain
+Base object (not offering any usable data, but simplifying SType's
+implementation somewhat because tests for 0-pointers can be omitted) ) or to a
+Semantic<Tag__> object, containing an associated SemType value. Meta__::SType
+offers this interface:
+
+    class SType
+    {
+        Base *d_base;
+    
+        public:
+            SType();
+            SType(SType const &other);
+            SType(SType &&tmp);
+    
+            ~SType();
+    
+                // Specific overloads are needed for SType = SType assignments
+            SType &operator=(SType const &rhs);
+            SType &operator=(SType &&tmp);
+    
+                // A template member operator= is used because it allows
+                // the compiler to deduce the appropriate typename
+            template <typename Type>
+            SType &operator=(Type const &value);
+    
+            template <Tag__ tag, typename ...Args>
+            void assign(Args &&...args);
+        
+            template <Tag__ tag>
+            typename TypeOf<tag>::type &get();
+    
+            template <Tag__ tag>
+            typename TypeOf<tag>::type const &get() const;
+    
+            Tag__ tag() const;
+    
+            bool valid() const;
+    
+            void swap(SType &other);
+    };
+
+SType offers the usual arsenal of constructors and assignment operators, SType
+objects can be constructed by default (initializing d_base to point to a Base
+object), from an existing SType object, or from an existing SemType object, in
+which case d_base will point to a new, copy constructed SemType. In the latter
+case Type must be a defined polymorphic semantic type, as this allows the
+compiler to deduct the correct Tag__. If raw arguments are available from
+which a SemType can be constructed the assign member can be used, which
+requires an explicit Tag__ template value argument.
+
+The two get members call the same Base::data member. This member calls the
+virtual member vData, returning the SemType value stored in the
+Semantic<Tag__> object to where d_base points, or throwing an
+exception. Once the SType object goes out of scope it calls delete d_base,
+destroying the object to where d_base points. 
+
+
+
+    // The class SType wraps a pointer to Base.  It becomes the polymorphic
+    // STYPE__ type It also defines a get member, allowing constructions like
+    // $$.get<INT> to be used.  Instantiations of its operator= member
+    // template are used to assign semantic values to the SType object.
+
+
+            // By default the get()-members check whether the specified <tag>
+            // matches the tag returned by SType::tag (d_data's tag). If they
+            // don't match a run-time fatal error results.
