@@ -82,7 +82,6 @@ not involved in the actual parsing process may always be (re)implemented
 directly by the programmer. Thus there is no need to apply or define virtual
 member functions.
 
-
     Before version 5.00.00 bic() offered one single manual page. The advantage
 of one man-page is of course that you never have to look for which manual page
 contains which information. But on the other hand, bic()'s man-page grew into
