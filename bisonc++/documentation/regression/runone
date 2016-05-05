@@ -1,0 +1,118 @@
+#!/bin/bash
+
+    # Modifiy the COMMAND variable to your taste, if your shell isn't
+    # mentioned.  By specifying your COMMAND-shell last it will be used;
+COMMAND="/usr/bin/tcsh -f"
+#COMMAND=/bin/bash
+
+    # Assuming bisonc++ is in your computer's search-path. If not, define
+    # BISONCPP as the full path to bisconc++:
+#BISONCPP=/home/frank/git/bisonc++/src/bisonc++/tmp/bin/binary
+BISONCPP=bisonc++
+
+    # UNCOMMENT the following variables if you want to run the examples from
+    # the source distribution's documentation/regression directory rather than
+    # from bisonc++ documentation's `regression' subdirectory.
+SKEL=../../../../skeletons
+BISONCPP="../../../../tmp/bin/binary -S ${SKEL}"
+
+example()
+{
+    orgdir=`pwd`
+
+    echo 
+    echo Running example $1
+
+    cd $1
+    cwd=`pwd`
+
+    echo --------------------------------
+    echo
+    cat doc
+    echo
+    echo '(waiting for the compilation to complete ...)'
+    echo --------------------------------
+    
+    cd parser
+    echo $BISONCPP --construction $3 grammar
+
+    $BISONCPP --construction --debug $3 grammar
+
+    echo    
+    if [ -s ../demo.cc ] 
+    then
+        cd ../scanner
+        flexc++  lexer
+        cd ..
+        g++ --std=c++0x -Wall -o demo *.cc */*.cc
+        echo "ENTERING A SHELL: \`demo' runs the program, use \`exit' to return"
+        echo "      (the grammar analysis is in the \`parser' subdirectory)"
+    else    
+        echo "ENTERING A SHELL: Inspect the results, use \`exit' to return"
+    fi
+
+    echo "bison's output is in \`bgram.output', bisonc++'s output in \`grammar.output'"
+    echo
+    $COMMAND
+
+    cd $cwd
+
+        # the doc-test is a safequard agains accidentally removing files
+
+    [ -s doc ]                      &&  \
+    find ./ -type f                     \
+        \(                              \
+            -name Parser*h      -or     \
+            -name parserbase.h  -or     \
+            -name scannerbase.h         \
+        \)                              \
+        -exec rm '{}' ';'           &&  \
+    find ./ -type f                     \
+        -not -regex '.*/_.*'            \
+        -not -name doc                  \
+        -not -name demo.cc              \
+        -not -name bgram                \
+        -not -name grammar              \
+        -not -regex '.*/*h'             \
+        -not -regex '.*/dallas.*'       \
+        -not -name input                \
+        -not -name lexer                \
+        -exec rm '{}' ';'
+
+    cd $orgdir
+    tput clear
+}
+
+tput clear
+
+if [ $# == 0 ] ; then
+    echo Provide the name of a regression-test subdirectory as argument to
+    echo run that regression test.
+    exit 0
+fi
+
+echo "
+    $1/parser/grammar is processed by bisonc++.  Bisonc++'s output is 
+provided in the file \`grammar.output' 
+
+    From $1/parser, bisonc++ should be accessible as
+
+$BISONCPP
+
+    If that's not true for you, consider changing the BISONCPP variable in
+this script.
+
+    Press Enter to create the parser and \(if available\) build the
+demo-program; press strl-C to stop.
+
+[press Enter to continue]
+"
+
+read RUN
+tput clear
+echo
+
+example $1
+
+tput clear
+

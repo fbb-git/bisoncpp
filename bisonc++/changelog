@@ -12,6 +12,8 @@ bisonc++ (5.00.02)
     option. Instead, --debug should be used and setDebug(Parser::ACTIONCASES)
     should be called. Code and documentation modified accordingly.
 
+  * Added the script documentation/regression/runone to run a single
+    regression test.
 
 bisonc++ (5.00.01)
 
