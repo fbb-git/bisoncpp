@@ -1,4 +1,4 @@
-bisonc++ (5.00.02)
+bisonc++ (5.01.00)
 
   * Reimplemented polymorphic semantic values: the Meta__::Base class now is
     a virtual bease class.
@@ -14,6 +14,8 @@ bisonc++ (5.00.02)
 
   * Added the script documentation/regression/runone to run a single
     regression test.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Thu, 05 May 2016 20:35:39 +0530
 
 bisonc++ (5.00.01)
 

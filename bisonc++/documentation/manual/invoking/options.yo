@@ -114,8 +114,8 @@ encountered.
 IFDEF(man)(\
             bf(POLYMORPHIC SEMANTIC VALUES)\
 )(\
-            ref(POLYMORPHIC)
-) 
+            ref(POLYMORPHIC)\
+))
            then the generated parser might attempt to retrieve an incorrect
             polymorphic value. In that case a fatal error is generated, ending
             bic()'s run. The error message itself cannot refer to the action
