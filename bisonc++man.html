@@ -11,7 +11,7 @@
 <body>
 <hr/>
 <h1 id="title">bisonc++</h1>
-<h2 id="author">bisonc++.5.00.01.tar.gz</h2>
+<h2 id="author">bisonc++.5.01.00.tar.gz</h2>
 <h2 id="date">2005-2016</h2>
 
 <!DOCTYPE html><html><head>
@@ -46,7 +46,7 @@
 <body>
 <hr/>
 <h1 id="title">bisonc++(1)</h1>
-<h2 id="author">bisonc++.5.00.01.tar.gz bisonc++ parser generator</h2>
+<h2 id="author">bisonc++.5.01.00.tar.gz bisonc++ parser generator</h2>
 <h2 id="date">2005-2016</h2>
 
 
@@ -179,20 +179,7 @@ detect the inconsistency. In those cases compilation errors may be
 encountered.
 <p>
 <ul>
-    <li> <strong >--action-cases</strong> (<strong >-a</strong>)<br/>
-           This option is only interpreted when polymorphic semantic values
-            are used (see section
-??
-<p>
-for details about this directive). When the generated parser
-            attempts to retrieve an incorrect polymorphic value a fatal error
-            is generated, ending <strong >bisonc++</strong>'s run. The error message itself cannot
-            refer to the action block where the error occurred. If this
-            situation is encountered, <strong >bisonc++</strong> can be rerun with this option to
-            find the executeAction switch's case entry where the fatal error
-            is encountered.
-<p>
-<li> <strong >--analyze-only</strong> (<strong >-A</strong>)<br/>
+    <li> <strong >--analyze-only</strong> (<strong >-A</strong>)<br/>
            Only analyze the grammar. No files are (re)written. This option can
             be used to test the grammatic correctness of modification `in
             situ', without overwriting previously generated files. If the
@@ -281,6 +268,18 @@ Note that this option does <em >not</em> show the actions of <strong >bisonc++</
             case-entries executed by the parser's <em >parse</em> function. If that
             is what you want, use the <em >--own-debug, --action-cases,
             --scanner-debug</em> and/or <em >--own-tokens</em> options.
+<p>
+When polymorphic semantic values
+            are used (see section
+??)
+           then the generated parser might attempt to retrieve an incorrect
+            polymorphic value. In that case a fatal error is generated, ending
+            <strong >bisonc++</strong>'s run. The error message itself cannot refer to the action
+            block where the error occurred. If this situation is encountered,
+            rerun <strong >bisonc++</strong>, specifying <em >--debug</em> and call
+            <em >parser.setDebug(Parser::ACTIONCASES)</em>: as a debugging aid the
+            generated parser then shows the executeAction switch's case entry
+            numbers just before their execution.
 <p>
 <li> <strong >--default-actions</strong>=<em >off|quiet|warn</em> (<strong >-d</strong>)<br/>
            When <em >warn</em> is specified (which is the default) an action block

@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<title> <div style="text-align: center"><strong >Bisonc++</strong> (Version 5.00.01) User Guide</div> </title>
+<title> <div style="text-align: center"><strong >Bisonc++</strong> (Version 5.01.00) User Guide</div> </title>
 <style type="text/css">
     figure {text-align: center;}
     img {vertical-align: center;}
@@ -38,20 +38,7 @@ detect the inconsistency. In those cases compilation errors may be
 encountered.
 <p>
 <ul>
-    <li> <strong >--action-cases</strong> (<strong >-a</strong>)<br/>
-           This option is only interpreted when polymorphic semantic values
-            are used (see section
-<a href="bisonc++04.html#POLYMORPHIC">4.6.1</a>
-<p>
-for details about this directive). When the generated parser
-            attempts to retrieve an incorrect polymorphic value a fatal error
-            is generated, ending <strong >bisonc++</strong>'s run. The error message itself cannot
-            refer to the action block where the error occurred. If this
-            situation is encountered, <strong >bisonc++</strong> can be rerun with this option to
-            find the executeAction switch's case entry where the fatal error
-            is encountered.
-<p>
-<li> <strong >--analyze-only</strong> (<strong >-A</strong>)<br/>
+    <li> <strong >--analyze-only</strong> (<strong >-A</strong>)<br/>
            Only analyze the grammar. No files are (re)written. This option can
             be used to test the grammatic correctness of modification `in
             situ', without overwriting previously generated files. If the
@@ -140,6 +127,18 @@ Note that this option does <em >not</em> show the actions of <strong >bisonc++</
             case-entries executed by the parser's <code >parse</code> function. If that
             is what you want, use the <code >--own-debug, --action-cases,
             --scanner-debug</code> and/or <code >--own-tokens</code> options.
+<p>
+When polymorphic semantic values
+            are used (see section
+<a href="bisonc++04.html#POLYMORPHIC">4.6.1</a>)
+           then the generated parser might attempt to retrieve an incorrect
+            polymorphic value. In that case a fatal error is generated, ending
+            <strong >bisonc++</strong>'s run. The error message itself cannot refer to the action
+            block where the error occurred. If this situation is encountered,
+            rerun <strong >bisonc++</strong>, specifying <code >--debug</code> and call
+            <code >parser.setDebug(Parser::ACTIONCASES)</code>: as a debugging aid the
+            generated parser then shows the executeAction switch's case entry
+            numbers just before their execution.
 <p>
 <li> <strong >--default-actions</strong>=<code >off|quiet|warn</code> (<strong >-d</strong>)<br/>
            When <code >warn</code> is specified (which is the default) an action block
@@ -450,7 +449,7 @@ information:
 
 bisonc++ by Frank B. Brokken (f.b.brokken@rug.nl)
 
-LALR(1) Parser Generator V 5.00.01
+LALR(1) Parser Generator V 5.01.00
 Copyright (c) GPL 2005-2016. NO WARRANTY.
 Designed after `bison++' (1.21.9-1) by Alain Coetmeur &lt;coetmeur@icdc.fr&gt;
 

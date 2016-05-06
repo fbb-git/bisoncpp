@@ -11,7 +11,7 @@
 <body>
 <hr/>
 <h1 id="title">bisonc++input</h1>
-<h2 id="author">bisonc++.5.00.01.tar.gz</h2>
+<h2 id="author">bisonc++.5.01.00.tar.gz</h2>
 <h2 id="date">2005-2016</h2>
 
 <!DOCTYPE html><html><head>
@@ -46,7 +46,7 @@
 <body>
 <hr/>
 <h1 id="title">bisonc++input(7)</h1>
-<h2 id="author">bisonc++.5.00.01.tar.gz bisonc++ grammar file organization</h2>
+<h2 id="author">bisonc++.5.01.00.tar.gz bisonc++ grammar file organization</h2>
 <h2 id="date">2005-2016</h2>
 
 
@@ -684,15 +684,14 @@ the standard overloaded assignment operator
         (copy and move assignment operators) are available. 
 <p>
 In addition the member template <em >SType &amp;operator=(Type const
-        &amp;value)</em> can be used for all polymorphic value types. <em >Type</em> must,
-        not using a cast, exactly match one of the defined polymorphic types,
-        because <em >Type</em> is used to determine the <em >Meta__::Tag__</em> value to
-        use. Casting can of course be used when formulating <em >value's</em>
-        expression. 
+        &amp;value)</em> can be used for all polymorphic value types. <em >Type</em> must
+        (if no cast is used) exactly match one of the defined polymorphic
+        types, because <em >Type</em> is used to determine the <em >Meta__::Tag__</em>
+        value to use. Casting can of course be used when formulating
+        <em >value's</em> expression.
 <p>
 When <em >operator=(Type const &amp;value)</em> is used, the left-hand side
-        <em >SType</em> object will receive a new value of the <em >Type</em> semantic
-        type. 
+        <em >SType</em> object receives a new value of the <em >Type</em> semantic type.
 <p>
 <li> <em >void assign&lt;tag&gt;(Args &amp;&amp;...args)</em> 
 <p>
@@ -703,10 +702,9 @@ The <em >tag</em> template argument must be a <em >Tag__</em> value. This member
         construction). The constructed value is then stored in the <em >STYPE__</em>
         object for which <em >assign</em> has been called.
 <p>
-As a <em >Meta__::Tag__</em> value must be specified when using 
-        <em >assign</em> the compiler can use implicit tags to convert <em >assign's</em>
-        arguments to an <em >SType</em> object of the type matching the specified
-        tag. 
+As a <em >Meta__::Tag__</em> value must be specified when using <em >assign</em>
+        the compiler can use the explicit tag to convert <em >assign's</em> arguments
+        to an <em >SType</em> object of the type matching the specified tag.
 <p>
 The member <em >assign</em> can be used to store a particular polymorphic
         semantic value in an <em >STYPE__</em> object. It differs from

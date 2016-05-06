@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<title> <div style="text-align: center"><strong >Bisonc++</strong> (Version 5.00.01) User Guide</div> </title>
+<title> <div style="text-align: center"><strong >Bisonc++</strong> (Version 5.01.00) User Guide</div> </title>
 <style type="text/css">
     figure {text-align: center;}
     img {vertical-align: center;}
@@ -1163,9 +1163,9 @@ blocks</em>.
 <a name="POLYMORPHIC"></a><a name="l58"></a>
 <h3 >4.6.1: Polymorphism and Multiple Semantic Values:
                         `%polymorphic'</h3> 
-    <strong >Bisonc++</strong> offers <em >polymorphic semantic values</em>. Polymorphic semantic values were
-developed as an alternative to using unions. Unions are still supported by
-<strong >bisonc++</strong>, but are considered to be somewhat `old school'. Polymorphic semantic
+    <strong >Bisonc++</strong> also supports <em >polymorphic semantic values</em>. Polymorphic semantic
+values were developed as an alternative to using unions. Using unions is still
+possible, but are now considered somewhat `old school'. Polymorphic semantic
 values were added to <strong >bisonc++</strong> as the result of a suggestion originally made by
 Dallas A. Clement in September 2007.
 <p>
@@ -1183,18 +1183,9 @@ needlessly impede backward compatibility.
 <p>
 The preferred alternative to a <code >union</code>, however, is a polymorphic base
 class. The example program (cf. <a href="poly">poly</a>) uses a polymorphic semantic value
-type, supporting either <code >int</code> or <code >std::string</code>
-semantic values. These types are asociated with tags (resp. <code >INT</code> and
-<code >TEXT</code>) using the <code >%polymorphic</code> directive, discussed next.
-<p>
-As a technical side-note: although the directive for using polymorphic
-semantic values is called <code >%polymorphic</code> this does not imply that the
-generated parser uses <strong >C++</strong> dynamic polymorphism. Instead, meta-template
-programming techniques are used to create the various semantic value types
-whenever necessary. It isn't `static polymorphism' either, but the term
-`polymorphic' refers to the fact that the commonly used shorthand notations
-($$, $1, etc.) in action blocks may refer to different (hence polymorphic)
-data types.
+type, supporting either <code >int</code> or <code >std::string</code> semantic values. These
+types are asociated with tags (resp. <code >INT</code> and <code >TEXT</code>) using the
+<code >%polymorphic</code> directive, discussed next.
 <p>
 <a name="l59"></a>
 <h4 >4.6.1.1: The %polymorphic directive</h4>
@@ -1266,8 +1257,8 @@ directive can be used to declare a pre C++-11 standard `<code >enum Tag__</code>
 Below, <code >DataType</code> refers to the semantic value's data type that is
 associated with a <code >Tag__</code> identifier.
 <p>
-Several classes are defined in the namespace <code >Meta__</code>. The most import class
-is the class <code >SType</code>, defining the interface to the semantic value
+Several classes are defined in the namespace <code >Meta__</code>. The most important
+class is <code >SType</code>, providing the interface to the semantic value
 types. The class <code >SType</code> becomes the parser's <code >STYPE__</code> type. Each
 <code >SType</code> object is either a default <code >SType</code> object, not containing a
 semantic value, or it contains a semantic value of a single <code >DataType</code>.  All
@@ -1291,15 +1282,14 @@ the standard overloaded assignment operator
         (copy and move assignment operators) are available. 
 <p>
 In addition the member template <code >SType &amp;operator=(Type const
-        &amp;value)</code> can be used for all polymorphic value types. <code >Type</code> must,
-        not using a cast, exactly match one of the defined polymorphic types,
-        because <code >Type</code> is used to determine the <code >Meta__::Tag__</code> value to
-        use. Casting can of course be used when formulating <code >value's</code>
-        expression. 
+        &amp;value)</code> can be used for all polymorphic value types. <code >Type</code> must
+        (if no cast is used) exactly match one of the defined polymorphic
+        types, because <code >Type</code> is used to determine the <code >Meta__::Tag__</code>
+        value to use. Casting can of course be used when formulating
+        <code >value's</code> expression.
 <p>
 When <code >operator=(Type const &amp;value)</code> is used, the left-hand side
-        <code >SType</code> object will receive a new value of the <code >Type</code> semantic
-        type. 
+        <code >SType</code> object receives a new value of the <code >Type</code> semantic type.
 <p>
 <li> <code >void assign&lt;tag&gt;(Args &amp;&amp;...args)</code> 
 <p>
@@ -1310,10 +1300,9 @@ The <code >tag</code> template argument must be a <code >Tag__</code> value. Thi
         construction). The constructed value is then stored in the <code >STYPE__</code>
         object for which <code >assign</code> has been called.
 <p>
-As a <code >Meta__::Tag__</code> value must be specified when using 
-        <code >assign</code> the compiler can use implicit tags to convert <code >assign's</code>
-        arguments to an <code >SType</code> object of the type matching the specified
-        tag. 
+As a <code >Meta__::Tag__</code> value must be specified when using <code >assign</code>
+        the compiler can use the explicit tag to convert <code >assign's</code> arguments
+        to an <code >SType</code> object of the type matching the specified tag.
 <p>
 The member <code >assign</code> can be used to store a particular polymorphic
         semantic value in an <code >STYPE__</code> object. It differs from

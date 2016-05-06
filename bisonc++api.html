@@ -11,7 +11,7 @@
 <body>
 <hr/>
 <h1 id="title">bisonc++api</h1>
-<h2 id="author">bisonc++.5.00.01.tar.gz</h2>
+<h2 id="author">bisonc++.5.01.00.tar.gz</h2>
 <h2 id="date">2005-2016</h2>
 
 <!DOCTYPE html><html><head>
@@ -46,7 +46,7 @@
 <body>
 <hr/>
 <h1 id="title">bisonc++api(3)</h1>
-<h2 id="author">bisonc++.5.00.01.tar.gz bisonc++ API</h2>
+<h2 id="author">bisonc++.5.01.00.tar.gz bisonc++ API</h2>
 <h2 id="date">2005-2016</h2>
 
 
@@ -477,19 +477,21 @@ members inherited from the parser's base class.
         <em >d_val__</em>'s address should be passed to the scanner. This can be
         realized, for example, by passing <em >d_val__</em>'s address to the lexical
         scanner's constructor.
-       Subsequently, the lexical scanner may assign a value to the parser's
+<p>
+Subsequently, the lexical scanner may assign a value to the parser's
         <em >d_val__</em> variable through the pointer to <em >d_val__</em> stored in a
         data member of the lexical scanner.
-       Note that in some cases this approach <em >must</em> be used to make
-        available the correct semantic value to the parser. In particular,
+<p>
+Note that in some cases this approach <em >must</em> be used to make
+        the correct semantic value available to the parser. In particular,
         when a grammar state defines multiple reductions, depending on the
         next token, the reduction's action only takes place following the
         retrieval of the next token, thus losing the initially matched token
         text. 
-       If <em >STYPE</em> is a polymorphic semantic value, direct assignment of
-        values to <em >d_val__</em> is not possible. In that case <em >tagged
-        assignment</em> must be 
-        used.
+<p>
+If <em >STYPE</em> is a polymorphic semantic value, specific requirements for
+        assigning values to  <em >d_val__</em> apply.
+        .
 <p>
 <li> <strong >LTYPE__ d_vsp__</strong>:<br/>
        The semantic value stack pointer. 
