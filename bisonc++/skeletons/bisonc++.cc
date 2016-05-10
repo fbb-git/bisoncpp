@@ -162,16 +162,16 @@ $insert 8 LTYPEresize
     }
     ++d_stackIdx__;
     d_stateStack__[d_stackIdx__] = d_state__ = state;
-    *(d_vsp__ = &d_valueStack__[d_stackIdx__]) = d_val__;
 $insert 4 LTYPEpush
 $insert 4 debug  "push(state " << state << stype__(", semantic TOS = ", d_val__, ")") << ')'
+    *(d_vsp__ = &d_valueStack__[d_stackIdx__]) = std::move(d_val__);
 }
 
 void \@Base::popToken__()
 {
     d_token__ = d_nextToken__;
 
-    d_val__ = d_nextVal__;
+    d_val__ = std::move(d_nextVal__);
     d_nextVal__ = STYPE__();
 
     d_nextToken__ = _UNDETERMINED_;
@@ -180,7 +180,7 @@ void \@Base::popToken__()
 void \@Base::pushToken__(int token)
 {
     d_nextToken__ = d_token__;
-    d_nextVal__ = d_val__;
+    d_nextVal__ = std::move(d_val__);
     d_token__ = token;
 }
      
@@ -198,7 +198,7 @@ $insert 8 debug "Terminating parse(): unrecoverable input error at token " << sy
     d_vsp__ = &d_valueStack__[d_stackIdx__];
 $insert 4 LTYPEpop
 $insert 4 debug "pop(): next state: " << d_state__ << ", token: " << symbol__(d_token__) +
-$insert 4 debug stype__("semantic: ", d_val__)
+$insert 4 debug stype__("semantic: ", *d_vsp__)
 }
 
 inline size_t \@Base::top__() const
@@ -213,14 +213,14 @@ try
         pushToken__(d_token__);     // save an already available token
 
 $insert 4 debug "executeAction of rule " << production +
-$insert 4 debug  stype__(", semantic [TOS]: ", d_val__) << " ..."
+$insert 4 debug  stype__(", semantic [TOS]: ", *d_vsp__) << " ..."
 $insert executeactioncases
     switch (production)
     {
 $insert 8 actioncases
     }
 $insert 4 debug "... action of rule " << production << " completed" +
-$insert 4 debug  stype__(", semantic: ", d_val__)
+$insert 4 debug  stype__(", semantic: ", *d_vsp__)
 }
 catch (std::exception const &exc)
 {
