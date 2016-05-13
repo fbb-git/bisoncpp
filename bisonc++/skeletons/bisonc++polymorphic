@@ -123,6 +123,8 @@ class SType: public std::unique_ptr<Base>
 
             // Specific overloads are needed for SType = SType assignments
         SType &operator=(SType const &rhs);
+        SType &operator=(SType &rhs);           // required so it is used
+                                                // instead of the template op=
         SType &operator=(SType &&tmp);
 
             // A template member operator= can be used when the compiler is
@@ -159,9 +161,15 @@ inline SType::SType(SType &&tmp)
     BasePtr{std::move(tmp)}
 {}
 
-inline SType &SType::operator=(SType const &other)
+inline SType &SType::operator=(SType const &rhs)
 {
-    reset(other->clone());
+    reset(rhs->clone());
+    return *this;
+}
+
+inline SType &SType::operator=(SType &rhs)
+{
+    reset(rhs->clone());
     return *this;
 }
 
@@ -183,7 +191,12 @@ inline SType &SType::operator=(Type const &value)
 template <typename Type>
 inline SType &SType::operator=(Type &&tmp)
 {
-    assign< TagOf<Type>::tag >(std::move(tmp));
+    assign< 
+        TagOf<
+            typename std::remove_reference<Type>::type
+        >::tag 
+    >(std::move(tmp));
+
     return *this;
 }
 
