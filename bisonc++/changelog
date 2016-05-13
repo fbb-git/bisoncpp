@@ -1,3 +1,14 @@
+bisonc++ (5.02.00-pre)
+
+  * The polymorphic semantic values implementation uses a unique_ptr when
+    transferring semantic values inside the geerated parser (including
+    bisonc++'s own parser). See the documentation for details.
+
+  * This is a pre- (beta-)release, still in a testing phase; Bisonc++ rebis
+    and Flexc++'s reflex completed successfully, though.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri, 13 May 2016 13:46:18 +0530
+
 bisonc++ (5.01.00)
 
   * Reimplemented polymorphic semantic values: the Meta__::Base class now is
