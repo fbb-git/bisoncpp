@@ -7,7 +7,14 @@ void Parser::installDefaultAction(Production const &prod,
     block.open(prod.lineNr(), prod.fileName());
 
     block += "\n"
-        "    " + s_semanticValue + " = " + rhs + ";\n"
+        "    " + s_semanticValue + " = " + 
+                (
+                    d_semType == POLYMORPHIC ?
+                        "std::move(" + rhs + ")"
+                    :
+                        rhs 
+                ) 
+                + ";\n"
         "}";
 
     d_rules.setAction(block, true);     // true: last actionblock was default

@@ -2,6 +2,7 @@
 
 void Parser::defaultPolymorphicAction(Production const &prod)
 {
+cerr<< "polym. action\n";
     Options::Value actionType = d_options.defaultActions().value;
     
     if (actionType == Options::OFF)     // no default action block if 
@@ -9,7 +10,7 @@ void Parser::defaultPolymorphicAction(Production const &prod)
 
                                         // semantic value of the rule's rhs
     string const &ruleType = d_rules.sType();
-    
+
                                         // try to add a default action block
     (this->*s_defaultAction             
             [actionType == Options::WARN]   // 0: action block w/o warning

@@ -17,10 +17,10 @@ $insert polymorphicSpecializations
 class Base
 {
     protected:
-        Tag__ d_baseTag;    // The tag is assigned by Semantic.
+        Tag__ d_baseTag;        // d_baseTag is assigned by Semantic.
 
     public:
-        Base();
+        Base() = default;
         Base(Base const &other) = delete;
 
         virtual ~Base();
@@ -30,8 +30,8 @@ class Base
         void *data() const;        
 
     private:
-        virtual void *vData() const;
-        virtual Base *vClone() const;
+        virtual Base *vClone() const = 0;
+        virtual void *vData() const = 0;
 };
 
 inline Base *Base::clone() const
@@ -43,11 +43,6 @@ inline void *Base::data() const
 {
     return vData();
 }
-
-inline Base::Base()
-:
-    d_baseTag(static_cast<Tag__>(sizeofTag))
-{}
 
 inline Tag__ Base::tag() const
 {
@@ -62,7 +57,7 @@ class Semantic: public Base
     
     public:
         Semantic();
-        Semantic(Semantic<tg_> const &other);
+        Semantic(Semantic<tg_> const &other);   // req'd for cloning
 
             // This constructor member template forwards its arguments to
             // d_data, allowing it to be initialized using whatever
@@ -73,48 +68,6 @@ class Semantic: public Base
     private:
         Base *vClone() const override;
         void *vData() const override;
-};
-
-    // The class SType wraps a pointer to Base.  It becomes the polymorphic
-    // STYPE__ type. It also defines get members, allowing constructions like
-    // $$.get<INT> to be used.  
-class SType
-{
-    Base *d_base;
-
-    public:
-        SType();
-        SType(SType const &other);
-        SType(SType &&tmp);
-
-        ~SType();
-
-            // Specific overloads are needed for SType = SType assignments
-        SType &operator=(SType const &rhs);
-        SType &operator=(SType &&tmp);
-
-            // A template member operator= is used because it allows
-            // the compiler to deduce the appropriate typename
-        template <typename Type>
-        SType &operator=(Type const &value);
-
-        template <Tag__ tag, typename ...Args>
-        void assign(Args &&...args);
-    
-            // By default the get()-members check whether the specified <tag>
-            // matches the tag returned by SType::tag (d_data's tag). If they
-            // don't match a run-time fatal error results.
-        template <Tag__ tag>
-        typename TypeOf<tag>::type &get();
-
-        template <Tag__ tag>
-        typename TypeOf<tag>::type const &get() const;
-
-        Tag__ tag() const;
-
-        bool valid() const;
-
-        void swap(SType &other);
 };
 
 template <Tag__ tg_>
@@ -140,74 +93,6 @@ Semantic<tg_>::Semantic(Params &&...params)
     d_baseTag = tg_;
 }
 
-inline Tag__ SType::tag() const
-{
-    return d_base->tag();
-}
-
-inline bool SType::valid() const
-{
-    return tag() != static_cast<Tag__>(sizeofTag);
-}
-
-template <Tag__ tag, typename ...Args>
-void SType::assign(Args &&...args)
-{
-    Semantic<tag> *semPtr = new Semantic<tag>(std::forward<Args>(args) ...);
-    delete d_base;
-    d_base = semPtr;
-}
-
-template <Tag__ tg>
-typename TypeOf<tg>::type &SType::get()
-{
-$insert warnTagMismatches
-    return *static_cast<typename TypeOf<tg>::type *>(d_base->data());
-}
-
-template <Tag__ tg>
-typename TypeOf<tg>::type const &SType::get() const
-{
-$insert warnTagMismatches
-    return *static_cast<typename TypeOf<tg>::type *>(d_base->data());
-}
-
-inline SType::SType()
-:
-    d_base(new Base)        // default Base object doesn't do anyting
-{}                          // but prevents tests for d_base == 0
-
-inline SType::SType(SType const &other)
-:
-    d_base(other.d_base->clone())
-{}
-
-inline SType::SType(SType &&tmp)
-:
-    d_base(tmp.d_base)
-{
-    tmp.d_base = 0;
-}
-
-inline SType::~SType()
-{
-    delete d_base;
-}
-
-inline SType &SType::operator=(SType &&tmp)
-{
-    swap(tmp);
-    return *this;
-}
-
-    // A template assignment function is used because it allows
-    // the compiler to deduce the appropriate typename
-template <typename Type>
-inline SType &SType::operator=(Type const &value)
-{
-    assign< TagOf<Type>::tag >(value);
-    return *this;
-}
 
 template <Tag__ tg_>
 Base *Semantic<tg_>::vClone() const
@@ -219,6 +104,117 @@ template <Tag__ tg_>
 void *Semantic<tg_>::vData() const 
 {
     return const_cast<typename TypeOf<tg_>::type *>(&d_data);
+}
+
+
+    // The class SType wraps a pointer to Base.  It becomes the polymorphic
+    // STYPE__ type. It also defines get members, allowing constructions like
+    // $$.get<INT> to be used.  
+class SType: public std::unique_ptr<Base>
+{
+    typedef std::unique_ptr<Base> BasePtr;
+
+    public:
+        SType() = default;
+        SType(SType const &other);
+        SType(SType &&tmp);
+
+        ~SType() = default;
+
+            // Specific overloads are needed for SType = SType assignments
+        SType &operator=(SType const &rhs);
+        SType &operator=(SType &&tmp);
+
+            // A template member operator= can be used when the compiler is
+            // able to deduce the appropriate typename. Otherwise use assign.
+        template <typename Type>
+        SType &operator=(Type const &value);
+
+        template <typename Type>                // same, now moving
+        SType &operator=(Type &&tmp);
+
+        template <Tag__ tag, typename ...Args>
+        void assign(Args &&...args);
+    
+            // By default the get()-members check whether the specified <tag>
+            // matches the tag returned by SType::tag (d_data's tag). If they
+            // don't match a run-time fatal error results.
+        template <Tag__ tag>
+        typename TypeOf<tag>::type &get();
+
+        template <Tag__ tag>
+        typename TypeOf<tag>::type const &get() const;
+
+        Tag__ tag() const;
+        bool valid() const;
+};
+
+inline SType::SType(SType const &other)
+:
+    BasePtr{other ? other->clone() : 0}
+{}
+
+inline SType::SType(SType &&tmp)
+:
+    BasePtr{std::move(tmp)}
+{}
+
+inline SType &SType::operator=(SType const &other)
+{
+    reset(other->clone());
+    return *this;
+}
+
+inline SType &SType::operator=(SType &&tmp)
+{
+    BasePtr::operator=(std::move(tmp));
+    return *this;
+}
+
+    // A template assignment function can be used when the compiler is 
+    // able to deduce the appropriate typename
+template <typename Type>
+inline SType &SType::operator=(Type const &value)
+{
+    assign< TagOf<Type>::tag >(value);
+    return *this;
+}
+
+template <typename Type>
+inline SType &SType::operator=(Type &&tmp)
+{
+    assign< TagOf<Type>::tag >(std::move(tmp));
+    return *this;
+}
+
+template <Tag__ tag, typename ...Args>
+void SType::assign(Args &&...args)
+{
+    reset(new Semantic<tag>(std::forward<Args>(args) ...));
+}
+
+template <Tag__ tg>
+typename TypeOf<tg>::type &SType::get()
+{
+$insert warnTagMismatches
+    return *static_cast<typename TypeOf<tg>::type *>( (*this)->data() );
+}
+
+template <Tag__ tg>
+typename TypeOf<tg>::type const &SType::get() const
+{
+$insert warnTagMismatches
+    return *static_cast<typename TypeOf<tg>::type *>( (*this)->data() );
+}
+
+inline Tag__ SType::tag() const
+{
+    return valid() ? (*this)->tag() : static_cast<Tag__>(sizeofTag);
+}
+
+inline bool SType::valid() const
+{
+    return BasePtr::get() != 0;
 }
 
 }  // namespace Meta__

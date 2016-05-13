@@ -2,8 +2,10 @@
 
 void Parser::blkDirect(string const &ruleType, Production const &prod)
 {
+cerr << "blkDirect\n";
+
     installDefaultAction(
         prod, 
-        svsElement(prod.size(), 1)
+        "std::move(" + svsElement(prod.size(), 1) + ")"
     );
 }
