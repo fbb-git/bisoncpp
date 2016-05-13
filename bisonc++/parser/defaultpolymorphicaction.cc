@@ -2,7 +2,6 @@
 
 void Parser::defaultPolymorphicAction(Production const &prod)
 {
-cerr<< "polym. action\n";
     Options::Value actionType = d_options.defaultActions().value;
     
     if (actionType == Options::OFF)     // no default action block if 
