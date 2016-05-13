@@ -1,6 +1,6 @@
 %no-lines
 %filenames parser
-%default-actions quiet
+%default-actions off
 %scanner ../scanner/scanner.h
 
 %baseclass-preinclude preheaders.h
