@@ -110,7 +110,7 @@ void *Semantic<tg_>::vData() const
     // The class SType wraps a pointer to Base.  It becomes the polymorphic
     // STYPE__ type. It also defines get members, allowing constructions like
     // $$.get<INT> to be used.  
-class SType: public std::unique_ptr<Base>
+class SType: private std::unique_ptr<Base>
 {
     typedef std::unique_ptr<Base> BasePtr;
 

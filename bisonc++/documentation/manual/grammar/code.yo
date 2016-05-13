@@ -29,7 +29,7 @@ tt(SType) object is either a default tt(SType) object, not containing a
 semantic value, or it contains a semantic value of a single tt(DataType).  All
 operations related to semantic values are handled by this class.
 
-The class tt(SType) offers the following public interface:
+The class tt(SType) provides the following public interface:
 
 includefile(stypeinterface)
 
