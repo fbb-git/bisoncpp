@@ -6,6 +6,13 @@ void Generator::staticData(ostream &out) const
 
     key(out);
 
+    out << R"(
+    enum                        // size to expand the state-stack with when
+    {                           // full
+        STACK_EXPANSION = )" << d_options.stackExpansion() << R"(
+    };
+)";
+
     d_writer.productions();
     d_writer.srTables();
     d_writer.statesArray();

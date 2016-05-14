@@ -3,6 +3,8 @@
 #include "options.ih"
 #include "SKEL"
 
+size_t Options::s_defaultStackExpansion = 10;
+
 char Options::s_defaultSkeletonDirectory[]      = _Skel_;
 char Options::s_defaultClassName[]              = "Parser";
 char Options::s_defaultParsefunSource[]         = "parse.cc";

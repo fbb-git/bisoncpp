@@ -62,6 +62,7 @@ struct Options
         bool        d_strongTags        = true;
     
         size_t      d_requiredTokens = 0;
+        size_t      d_stackExpansion = 0;
 
         std::set<std::string> d_warnOptions;// contains the names of options 
                                             // for which Generator may warn
@@ -92,6 +93,8 @@ struct Options
         std::string d_stackDecl;
         std::string d_targetDirectory;
         std::string d_verboseName;
+
+        static size_t s_defaultStackExpansion;
     
         static char s_defaultBaseClassSkeleton[];
         static char s_defaultPolymorphicCodeSkeleton[];
@@ -147,6 +150,7 @@ struct Options
         void setScannerInclude();
         void setScannerMatchedTextFunction();
         void setScannerTokenFunction();
+        void setStackExpansion(size_t nr);
         void setStype();
         void setTargetDirectory();
         void setUnionDecl(std::string const &block);
@@ -179,6 +183,7 @@ struct Options
         OptInfo const &defaultActions() const;
 
         size_t requiredTokens() const;
+        size_t stackExpansion() const;
 
         std::string const &baseClassSkeleton() const;
         std::string const &baseClassHeader() const;
@@ -362,6 +367,11 @@ inline bool Options::printTokens() const
 inline size_t Options::requiredTokens() const
 {
     return d_requiredTokens;
+}
+
+inline size_t Options::stackExpansion() const
+{
+    return d_stackExpansion == 0 ? s_defaultStackExpansion : d_stackExpansion;
 }
 
 inline std::string const &Options::scannerClassName() const

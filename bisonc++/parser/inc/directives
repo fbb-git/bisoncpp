@@ -147,6 +147,13 @@ _scanner_matched_text_function:
     }
 ;
 
+_stack_expansion:
+    STACK_EXPANSION
+    {
+        d_expect = "Stack expansion size";
+    }
+;
+
 _start:
     START
     {
@@ -423,6 +430,12 @@ _directiveSpec:
     STRING
     {
         d_options.setScannerMatchedTextFunction();
+    }
+|
+    _stack_expansion
+    NUMBER
+    {
+        d_options.setStackExpansion(d_scanner.number());
     }
 |
     _start

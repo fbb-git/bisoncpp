@@ -56,12 +56,6 @@ namespace // anonymous
 {
     char const author[] = "Frank B. Brokken (f.b.brokken@rug.nl)";
 
-    enum 
-    {
-        STACK_EXPANSION = 5     // size to expand the state-stack with when
-                                // full
-    };
-
     enum ReservedTokens
     {
         PARSE_ACCEPT     = 0,   // `ACCEPT' TRANSITION

@@ -171,6 +171,7 @@ NR      [[:digit:]]+
                                     return 
                                         Parser::SCANNER_MATCHED_TEXT_FUNCTION;
                                 }
+%stack-expansion[ \t]+          return Parser::STACK_EXPANSION;
 %start                          return Parser::START;
 %stype[ \t]+                    {
                                     begin(StartCondition__::xstring);

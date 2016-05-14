@@ -69,6 +69,7 @@ namespace
         Arg::LongOption{"scanner-token-function", Arg::Required},
         Arg::LongOption{"show-filenames"},
         Arg::LongOption{"skeleton-directory", 'S'},
+        Arg::LongOption{"stack-expansion", Arg::Required},
 
         Arg::LongOption{"tag-mismatches", Arg::Required},   // also directive
         Arg::LongOption{"target-directory", Arg::Required}, // also directive
