@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<title> <div style="text-align: center"><strong >Bisonc++</strong> (Version 5.01.00) User Guide</div> </title>
+<title> <div style="text-align: center"><strong >Bisonc++</strong> (Version 5.02.00) User Guide</div> </title>
 <style type="text/css">
     figure {text-align: center;}
     img {vertical-align: center;}
@@ -14,7 +14,7 @@
     <li> <a href="bisonc++09.html">Next Chapter</a>
 </ul>
 <hr>
-<a name="RECOVERY"></a><a name="l124"></a>
+<a name="RECOVERY"></a><a name="l125"></a>
 <h1 >Chapter 8: Error Recovery</h1>
     Usually it is not acceptable to have a program terminate on a parse
 error. For example, a compiler should recover sufficiently to parse the rest
@@ -32,7 +32,7 @@ the parser performs its parsing-job, semantical errors must explicitly be
 defined when the grammar is constructed. The following sections cover the way
 <strong >Bisonc++</strong>'s parser may handle syntactic errors and semantical errors, respectively.
 <p>
-<a name="l125"></a>
+<a name="l126"></a>
 <h2 >8.1: Syntactical Error Recovery</h2>
     In a simple interactive command parser where each input is one line, it
 may be sufficient to allow <code >parse()</code> to return <code >PARSE_ABORT</code> on error and
@@ -137,7 +137,7 @@ parsing should once again commence. The next symbol returned by the lexical
 scanner is probably correct. The previous token ought to be discarded using
 <code >clearin()</code>.
 <p>
-<a name="l126"></a>
+<a name="l127"></a>
 <h3 >8.1.1: Error Recovery</h3>
     <strong >Bisonc++</strong> implements a simple error recovery mechanism. When the <code >lookup()</code>
 function cannot find an action for the current token in the current state it
@@ -249,7 +249,7 @@ was used:
 </pre>
 
 <p>
-<a name="l127"></a>
+<a name="l128"></a>
 <h4 >8.1.1.1: Error recovery --debug output</h4>
 <p>
 <pre>
@@ -328,7 +328,7 @@ Syntax error
 </pre>
 
 <p>
-<a name="l128"></a>
+<a name="l129"></a>
 <h2 >8.2: Semantical Error Recovery</h2>
 Semantical error recovery once again requires judgment on the part of the
 grammar-writer. For example, an assignment expression may be syntactically

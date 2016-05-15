@@ -11,7 +11,7 @@
 <body>
 <hr/>
 <h1 id="title">bisonc++input</h1>
-<h2 id="author">bisonc++.5.01.00.tar.gz</h2>
+<h2 id="author">bisonc++.5.02.00.tar.gz</h2>
 <h2 id="date">2005-2016</h2>
 
 <!DOCTYPE html><html><head>
@@ -46,13 +46,13 @@
 <body>
 <hr/>
 <h1 id="title">bisonc++input(7)</h1>
-<h2 id="author">bisonc++.5.01.00.tar.gz bisonc++ grammar file organization</h2>
+<h2 id="author">bisonc++.5.02.00.tar.gz bisonc++ grammar file organization</h2>
 <h2 id="date">2005-2016</h2>
 
 
 <p>
 
-<h2 >NAME</h2>bisonc++input - Organization of bisonc++'s grammar <strong >s</strong>
+<h2 >NAME</h2>bisonc++input - Organization of bisonc++'s grammar file(s)
 <p>
 <h2 >DESCRIPTION</h2>
 <p>
@@ -61,7 +61,7 @@
 grammar. <strong >Bisonc++</strong> generates <strong >C++</strong> code: an expandable <strong >C++</strong> class.
 <p>
 Refer to <strong >bisonc++</strong>(1) for a general overview. This manual page covers the
-structure and organization of <strong >bisonc++</strong>'s grammar <strong >s</strong>. 
+structure and organization of <strong >bisonc++</strong>'s grammar file(s). 
 <p>
 <strong >Bisonc++</strong>'s grammar file has the following generic outline:
         <pre>
@@ -109,11 +109,11 @@ This manual page contains the following sections:
 <p>
 <h2 >DIRECTIVES</h2>
 <p>
-The following directives can be specified in the initial section of the
-grammar specification file. If command-line options for directives exist, then
-their specifications overrule the corresponding directives in the grammar
-file.  Once class header or implementation header files exist directives
-affecting those files are ignored.
+Quite a few directives can be specified in the initial section of the
+grammar specification file. If command-line options for directives are
+available, then their specifications take precedence over the corresponding
+directives in the grammar file.  Once class header or implementation header
+files exist directives affecting those files are ignored.
 <p>
 Directives accepting a `filename' do not accept path names, i.e., they
 cannot contain directory separators (<em >/</em>); directives accepting a 'pathname'
@@ -501,6 +501,13 @@ It is an error if this directive is used and the scanner token
             function is not called from the code in an already
             existing implementation header.
 <p>
+<li> <strong >%stack-expansion</strong> <em >size</em> 
+           Defines the number of elements to be added to the generated
+            parser's semantic value stack when it must be enlarged. By default
+            10 elements are added to the stack. This option/directive is
+            interpreted only once, and only if <em >size</em> at least equals the
+            default stack expansion size of 10. 
+<p>
 <li> <strong >%start</strong> <em >nonterminal</em> 
 <p>
 The nonterminal <em >nonterminal</em> should be used as the grammar's 
@@ -589,11 +596,11 @@ traditional <strong >C</strong>-type unions as semantic values. These types of s
 values are covered in <strong >bisonc++</strong>'s manual.
 <p>
 In addition, the <em >%polymorphic</em> directive can be specified to generate a
-parser that uses `polymorphic' semantic values. In this case semantic values
-are specified as pairs, consisting of <em >tags</em> (which are <strong >C++</strong>
-identifiers), and <strong >C++</strong> type names. Tags and type names are separated by
-colons. Multiple tag and type name combinations are separated by semicolons,
-and an optional semicolon ends the final tag/type pair.
+parser using `polymorphic' semantic values. In this case semantic values are
+specified as pairs, consisting of <em >tags</em> (which are <strong >C++</strong> identifiers),
+and <strong >C++</strong> (pointer or value) type names. Tags and type names are separated
+by colons. Multiple tag and type name combinations are separated by
+semicolons, and an optional semicolon ends the final tag/type pair.
 <p>
 Here is an example, defining three semantic values: an <em >int</em>, a
 <em >std::string</em> and a <em >std::vector&lt;double&gt;</em>:
@@ -607,14 +614,14 @@ Here is an example, defining three semantic values: an <em >int</em>, a
     The identifier to the left of the colon is called the <em >tag-identifier</em>
 (or simply <em >tag</em>), and the type name to the right of the colon is called the
 <em >type-name</em>. Starting with <strong >bisonc++</strong> version 4.12.00 the types no longer have to
-have default constructors. 
+provide default constructors. 
 <p>
 When polymorphic type-names refer to types that have not yet been declared
 by the parser's base class header, then these types must be (directly or
 indirectly) declared in a header file whose location is specified using the
 <em >%baseclass-preinclude</em> directive.
 <p>
-<em >%type</em> directives is used to associate (non-)terminals with semantic
+<em >%type</em> directives are used to associate (non-)terminals with semantic
 value types.  E.g., after:
         <pre>
 
@@ -635,6 +642,10 @@ rule like:
         
 </pre>
 
+    symbols <em >$$, $1,</em> and <em >$3</em> represent <em >int</em> values, and 
+can be used that way in the <strong >C++</strong> action block.
+<p>
+<strong >Definitions and declarations</strong>
 <p>
 The <em >%polymorphic</em> directive adds the following definitions and
 declarations to the generated base class header and parser source
@@ -665,98 +676,111 @@ implementing polymorphic values.
 The namespace  <em >Meta__</em> contains, among other classes the class <em >SType</em>.
 The parser's semantic value type <em >STYPE__</em> is equal to <em >Meta__::SType</em>.
 <p>
-<em >SType</em> provides the standard user interface for using polymorphic semantic
-data types. It offers the following public interface:
+<strong >STYPE__ equals Meta__::SType</strong>
+<p>
+<em >Meta__::SType</em> provides the standard user interface for using polymorphic
+semantic data types. It declares the following public interface:
 <p>
     <ul>
     <li> Constructors: 
-<p>
-Default, copy and move constructors.  The default constructor does not
-        contain usable data, but occasionally acts as a stub, accepting values
-        of defined polymorphic types, which may then be retrieved from the
-        <em >SType</em> object.
+       Default, copy and move constructors. No data can be retrieved from
+        <em >SType</em> objects that were constructed by <em >SType</em>'s default
+        constructors, but they can accept values of defined polymorphic types,
+        which may then be retrieved from those objects.
 <p>
 <li> Operators:
+       The standard overloaded assignment operators (copy and move assignment
+        operators) are available.
 <p>
-Assignment operators: 
-<p>
-the standard overloaded assignment operator
-        (copy and move assignment operators) are available. 
-<p>
-In addition the member template <em >SType &amp;operator=(Type const
-        &amp;value)</em> can be used for all polymorphic value types. <em >Type</em> must
-        (if no cast is used) exactly match one of the defined polymorphic
-        types, because <em >Type</em> is used to determine the <em >Meta__::Tag__</em>
-        value to use. Casting can of course be used when formulating
-        <em >value's</em> expression.
+In addition the member templates 
+    <pre>
+
+    SType &amp;operator=(Type const &amp;value)
+and 
+    SType &amp;operator=(Type &amp;&amp;tmp)
+    
+</pre>
+
+       can be used for all polymorphic semantic value types. <em >Type</em> must
+        (maybe after casting) exactly match one of the defined polymorphic
+        semantic types, because <em >Type</em> is used to determine the appropriate
+        <em >Meta__::Tag__</em> value.
 <p>
 When <em >operator=(Type const &amp;value)</em> is used, the left-hand side
-        <em >SType</em> object receives a new value of the <em >Type</em> semantic type.
+        <em >SType</em> object receives a copy of <em >value</em>; when <em >operator=(Type
+        &amp;&amp;tmp)</em> is used, <em >tmp</em> is move-assigned to the left-hand side 
+        <em >SType</em> object;
 <p>
 <li> <em >void assign&lt;tag&gt;(Args &amp;&amp;...args)</em> 
-<p>
-The <em >tag</em> template argument must be a <em >Tag__</em> value. This member
+       The <em >tag</em> template argument must be a <em >Tag__</em> value. This member
         function constructs a semantic value of the type matching <em >tag</em> from
-        the arguments that are passed to this member (zero arguments are OK
-        if the type associated with <em >tag</em> supports default
-        construction). The constructed value is then stored in the <em >STYPE__</em>
-        object for which <em >assign</em> has been called.
+        the arguments that are passed to this member (zero arguments are OK if
+        the type associated with <em >tag</em> supports default construction). The
+        constructed value (not a copy of this value) is then stored in the
+        <em >STYPE__</em> object for which <em >assign</em> has been called.
 <p>
 As a <em >Meta__::Tag__</em> value must be specified when using <em >assign</em>
         the compiler can use the explicit tag to convert <em >assign's</em> arguments
         to an <em >SType</em> object of the type matching the specified tag.
 <p>
-The member <em >assign</em> can be used to store a particular polymorphic
-        semantic value in an <em >STYPE__</em> object. It differs from
-        <em >operator=(Type const &amp;value)</em> in that <em >assign</em> accepts multiple
-        arguments to construct the requested <em >SType</em> value, whereas
-        <em >operator=</em> only accepts one argument. 
+The member <em >assign</em> can be used to store a specific polymorphic
+        semantic value in an <em >STYPE__</em> object. It differs from the set of
+        <em >operator=(Type)</em> members in that <em >assign</em> accepts multiple
+        arguments to construct the requested <em >SType</em> value from, whereas the
+        <em >operator=</em> members only accept single arguments of defined
+        polymorphic types.
 <p>
 To initialize an <em >STYPE__</em> object with a default <em >STYPE__</em> value,
         direct assignment can be used (e.g., <em >d_lval__ = STYPE__{}</em>).
 <p>
-<li> <em >DataType &amp;get&lt;tag&gt;(), DataType const &amp;get&lt;tag&gt;() const</em>
-<p>
-A reference to the object's semantic value. The <em >tag</em> is a defined
-        <em >Tag__</em> value: it must be specified to allow the compiler to
-        determine the semantic value data type it must use.
+<li> <em >DataType &amp;get&lt;tag&gt;()</em>, and <em >DataType const &amp;get&lt;tag&gt;() const</em>
+       These members return references to the object's semantic values. The
+        <em >tag</em> must be a <em >Tag__</em> value: its specification tells the
+        compiler which semantic value type it must use.
 <p>
 When the option/directive <em >tag-mismatches on</em> was specified then
         <em >get</em>, when called from the generated <em >parse</em> function, performs a
         run-time check to confirm that the specified tag corresponds to
         object's actual <em >Tag__</em> value. If a mismatch is observed, then the
-        parsing function aborts with a fatal error message. When using
-        shorthand notations (like <em >$$</em> and <em >$1</em>) in production
-        rules' action blocks  <strong >bisonc++</strong> can determine the correct <em >tag</em>,
-        thus preventing the run-time check from failing.
+        parsing function aborts with a fatal error message. When 
+        shorthand notations (like <em >$$</em> and <em >$1</em>) are used in production
+        rules' action blocks, then <strong >bisonc++</strong> can determine the correct <em >tag</em>,
+        preventing the run-time check from failing.
 <p>
-If, however, a fatal error was issued, and the option/directive
-        <em >debug</em> was specified when <strong >bisonc++</strong> created the <em >parse</em> parsing
-        function, the program can be rerun, specifying
-        <em >parser.setDebug(Parser::ACTIONCASES)</em> before calling the parser's
-        <em >parse</em> function. This will show (to the standard output stream) the
-        case-entry numbers of the <em >switch</em> which is defined in the parser's
-        <em >executeAction</em> member. The action case number that's reported just
-        before the program reports the fatal error tells you in which of the
-        grammar's action block the error was encountered.
+But once a fatal error <em >is</em> encountered, it can be difficult to
+        determine which action block generated the error. If this happens,
+        then consider regenerating the parser specifying the <em >--debug</em>
+        option, calling
+       <pre>
+parser.setDebug(Parser::ACTIONCASES)
+</pre>
+ 
+       before calling the parser's <em >parse</em> function. 
 <p>
-<li>
+Following this the case-entry numbers of the <em >switch</em> which is
+        defined in the parser's <em >executeAction</em> member are inserted into the
+        standard output stream just before the matching statements are
+        executed. The action case number that's reported just before the
+        program reports the fatal error tells you in which of the grammar's
+        action block the error was encountered.
 <p>
-The tag matching the semantic value's polymorphic type. The returned
-        value is a valid <em >Tag__</em> value when the <em >SType</em> object's
-        <em >operator bool</em> returns <em >true</em>;
+<li> <em >Tag__ tag() const</em>
+       The tag matching the semantic value's polymorphic type is returned. The
+        returned value is a valid <em >Tag__</em> value when the <em >SType</em> object's
+        <em >valid</em> member returns <em >true</em>;
+<p>
+By default, or after assigning a plain (default) <em >STYPE__</em> object to
+        an <em >STYPE__</em> object (e.g., using a statement like <em >$$ =
+        STYPE__{}</em>), <em >valid</em> returns <em >false</em>, and the <em >tag</em> member
+        returns <em >Meta__::sizeofTag__</em>.
 <p>
 <li> <em >bool valid() const</em> 
 <p>
-The value <em >true</em> is returned if the object stores a value of a type
-        that is defined by the <em >%polymorphic</em> directive. The value <em >false</em>
-        is returned when its object represents a default <em >STYPE__</em>
-        object. After assigning a non-default <em >STYPE__</em> value its
-        <em >operator bool</em> returns <em >true</em>;
-<p>
-<li> <em >void swap(SType &amp;other)</em> 
-<p>
-The current and other <em >SType</em> objects are swapped.
+The value <em >true</em> is returned if the object contains a semantic
+        value. Otherwise <em >false</em> is returned. Note that default <em >STYPE__</em>
+        values can be assigned to <em >STYPE__</em> objects, but they do not
+        represent valid semantic values. See also the previous description of
+        the <em >tag</em> member.
    </ul>
 <p>
 <h2 >DOLLAR NOTATIONS</h2> 

@@ -1,3 +1,24 @@
+bisonc++ (5.02.00)
+
+  * The polymorphic semantic values implementation uses a unique_ptr when
+    transferring semantic values inside the geerated parser (including
+    bisonc++'s own parser). See the documentation for details.
+
+  * Added new option/directive stack-expansion defining the number of elements
+    to add to a completely full semantic value stack.
+
+  * Enlarging the semantic value stack does not require copying existing
+    semantic values to the enlarged semantic value stack. Either resizing is
+    used (when the capacity allows it) or the stored semantic values are moved
+    to the enlarged stack, which is then swapped with the parser's semantic
+    values stack.
+
+  * More in general: the generated parser itself does not internally copy
+    semantic values anymore. Copying is only used in the grammar's action
+    blocks .
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri, 13 May 2016 13:46:18 +0530
+
 bisonc++ (5.01.00)
 
   * Reimplemented polymorphic semantic values: the Meta__::Base class now is

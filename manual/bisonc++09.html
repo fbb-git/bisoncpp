@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<title> <div style="text-align: center"><strong >Bisonc++</strong> (Version 5.01.00) User Guide</div> </title>
+<title> <div style="text-align: center"><strong >Bisonc++</strong> (Version 5.02.00) User Guide</div> </title>
 <style type="text/css">
     figure {text-align: center;}
     img {vertical-align: center;}
@@ -13,9 +13,9 @@
     <li> <a href="bisonc++08.html">Previous Chapter</a>
 </ul>
 <hr>
-<a name="INVOKING"></a><a name="l129"></a>
+<a name="INVOKING"></a><a name="l130"></a>
 <h1 >Chapter 9: Invoking Bisonc++</h1>
-<a name="OPTIONS"></a><a name="l130"></a>
+<a name="OPTIONS"></a><a name="l131"></a>
 <h2 >9.1: Bisonc++ options</h2>
     Where available, single letter options are listed between parentheses
 beyond their associated long-option variants. Single letter options require
@@ -25,17 +25,18 @@ files already exist. Options accepting a `filename' do not accept path names,
 i.e., they cannot contain directory separators (<code >/</code>); options accepting a
 'pathname' may contain directory separators.
 <p>
-Some options may produce errors. This happens when they conflict with the
+Some options may cause errors. This happens when they conflict with the
 contents of a file which <strong >bisonc++</strong> cannot modify (e.g., a parser class header file
 exists, but doesn't define a namespace, but a <code >--namespace</code> option was
-provided).
+specified).
 <p>
-To solve the error the offending option could be omitted, the existing file
-could be removed, or the existing file could be hand-edited according to the
-option's specification. Note that <strong >bisonc++</strong> currently does not handle the opposite
-error condition: if a previously used option is omitted, then <strong >bisonc++</strong> does not
-detect the inconsistency. In those cases compilation errors may be
-encountered.
+To solve the error the offending option could be omitted; the existing file
+could be removed; or the existing file could be hand-edited according to the
+option's specification. 
+<p>
+Note that <strong >bisonc++</strong> currently does not handle the opposite error condition: if a
+previously used option is omitted, then <strong >bisonc++</strong> does not report an
+inconsistency. In those cases compilation errors may be observed.
 <p>
 <ul>
     <li> <strong >--analyze-only</strong> (<strong >-A</strong>)<br/>
@@ -406,6 +407,13 @@ It is an error if this option is used and the scanner token
             of individual skeleton files can be specified using the options
             (<code >-B -C, -H, -I, -L</code> and <code >-M</code>).
 <p>
+<li> <strong >--stack-expansion</strong>(size)<br/> 
+           Defines the number of elements to be added to the generated
+            parser's semantic value stack when it must be enlarged. By default
+            10 elements are added to the stack. This option/directive is
+            interpreted only once, and only if <code >size</code> at least equals the
+            default stack expansion size of 10.
+<p>
 <li> <strong >--tag-mismatches</strong> <code >off|on</code><br/>
            When <code >on</code> is specified (which is the default), a warning is
             issued if no $$ assignment was detected in an action block, or if
@@ -438,7 +446,7 @@ It is an error if this option is used and the scanner token
 <p>
 </ul>
 <p>
-<a name="l131"></a>
+<a name="l132"></a>
 <h2 >9.2: Bisonc++ usage</h2>
 When <strong >bisonc++</strong> is called without any arguments it generates the following usage
 information: 
@@ -449,7 +457,7 @@ information:
 
 bisonc++ by Frank B. Brokken (f.b.brokken@rug.nl)
 
-LALR(1) Parser Generator V 5.01.00
+LALR(1) Parser Generator V 5.02.00
 Copyright (c) GPL 2005-2016. NO WARRANTY.
 Designed after `bison++' (1.21.9-1) by Alain Coetmeur &lt;coetmeur@icdc.fr&gt;
 

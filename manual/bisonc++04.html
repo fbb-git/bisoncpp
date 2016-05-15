@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<title> <div style="text-align: center"><strong >Bisonc++</strong> (Version 5.01.00) User Guide</div> </title>
+<title> <div style="text-align: center"><strong >Bisonc++</strong> (Version 5.02.00) User Guide</div> </title>
 <style type="text/css">
     figure {text-align: center;}
     img {vertical-align: center;}
@@ -100,7 +100,7 @@ There are two ways terminal symbols can be referred to:
     <ul>
     <li> A <em >named token</em> is an identifier, like an identifier in
 <strong >C++</strong>. Each token name must be defined with a <strong >bisonc++</strong> directive such as
-<code >%token</code>. See section <a href="bisonc++04.html#TOKTYPENAMES">4.5.26</a>.
+<code >%token</code>. See section <a href="bisonc++04.html#TOKTYPENAMES">4.5.27</a>.
     <li> A <code >character token</code> (or <code >literal character token</code>) is written in
 the grammar using <strong >C++</strong>'s character constants syntax; for example, '<code >+</code>'
 is a character token. A character token doesn't need to be declared unless you
@@ -141,7 +141,7 @@ The symbol `<code >error</code>' is a reserved <em >terminal</em> symbol reserve
 error recovery purposes (see chapter <a href="bisonc++08.html#RECOVERY">8</a>). The <code >error</code> symbol
 should not be used for other purposes. In particular, the parser's member
 function <code >lex</code> should never return <code >error</code>. Several more identifiers
-should not be used as terminal symbols either. See section <a href="bisonc++04.html#IMPROPER">4.5.26.1</a> for
+should not be used as terminal symbols either. See section <a href="bisonc++04.html#IMPROPER">4.5.27.1</a> for
 an overview.
 <p>
 <a name="RULES"></a><a name="l17"></a>
@@ -401,7 +401,7 @@ the debugging code.
     Syntax: <strong >%default-actions</strong> <code >off|quiet|warn|std</code>
 <p>
 By default, production rules without final action blocks are augmented by the
-<strong >bison</strong>(1) parser generator with <code >$$ = $1</code> action block: the semantic
+<strong >bison</strong>(1) parser generator with <code >$$ = $1</code> action blocks: the semantic
 value of the first component is returned as the rule's semantic value. Its
 manual also states that for empty rules there is no meaningful default
 action. However, it could be argued that empty production rules could return
@@ -427,7 +427,18 @@ the first elements of the production rules, while issuing a warning;
     <li> <code >quiet</code> adds these action blocks without issuing warnings.
     </ul>    
 When either <code >warn</code> or <code >quiet</code> are specified the types of $$ and $1 must
-match. When <strong >bisonc++</strong> detects a type mismatches it issues errors.
+match. When <strong >bisonc++</strong> detects a type mismatches it issues errors. 
+<p>
+When polymorphic semantic values are used then the default <code >$$ = $1</code> action
+probably is less useful than when, e.g., plain <code >%stype</code> semantic values are
+used. After all, no semantic values are associated with <code >$$</code>. Furthermore,
+once the production rule has been recognized, the production rule is reduced
+to the rule's left-hand side non-terminal. Thus, <code >$1</code> ceases to exists,
+immediately following the <code >$$ = $1</code> statement. Therefore, <em >if</em> default
+actions are used in combination with polymorphic semantic value types they are
+implemented using move-operations: <code >$$ = std::move($1)</code>. However, in this
+situation default actions can frequently be suppressed, slightly improving the
+efficency of the generated parser.
 <p>
 When a default action block can be added to a production rule and either
 <code >warn</code> or <code >quiet</code> was specified,  <strong >bisonc++</strong> compares the types associated with
@@ -563,7 +574,7 @@ is grouped <em >first</em>.
 semantic value when a token specified to the right of a <code >&lt;type&gt;</code>
 specification is received. The pointed arrows are part of the type
 specification; the type itself must be a field of a <code >%union</code> 
-(see section <a href="bisonc++04.html#UNION">4.5.28</a>) or it must be a polymorphic <em >tag</em> (see section
+(see section <a href="bisonc++04.html#UNION">4.5.29</a>) or it must be a polymorphic <em >tag</em> (see section
 <a href="bisonc++04.html#POLYMORPHIC">4.6.1</a>).
 <p>
 When multiple tokens are listed they must be separated by whitespace or by
@@ -732,7 +743,7 @@ semantic value class offering either an <code >int</code>, a <code >std::string<
                 
 </pre>
 
-    and use <code >%type</code> specifications (cf. section <a href="bisonc++04.html#TYPE">4.5.27</a>) to associate
+    and use <code >%type</code> specifications (cf. section <a href="bisonc++04.html#TYPE">4.5.28</a>) to associate
 (non-)terminals with specific semantic value types.
 <p>
 <code >%stype, %union</code> and <code >%polymorphic</code> are mutually exclusive: only one
@@ -842,7 +853,17 @@ Note that an expression is expected, not an expression <em >statement</em>: do n
 include a final semicolon in the specification.
 <p>
 <a name="l42"></a>
-<h3 >4.5.23: %start: defining the start rule</h3>
+<h3 >4.5.23: %stack-expansion: the number of elements added to the semantic
+                                value stack</h3>
+    Syntax: <strong >%stack-expansion</strong> <code >size</code>
+<p>
+Defines the number of elements to be added to the generated parser's semantic
+value stack when it must be enlarged. By default 10 elements are added to the
+stack. This option/directive is interpreted only once, and only if <code >size</code> at
+least equals the default stack expansion size of 10.
+<p>
+<a name="l43"></a>
+<h3 >4.5.24: %start: defining the start rule</h3>
     Syntax: <strong >%start</strong> <code >nonterminal symbol</code>
 <p>
 By default <strong >bisonc++</strong> uses the nonterminal that is defined by the first rule in a
@@ -855,8 +876,8 @@ anywhere in the rules section of the grammar specification file. This
 nonterminal then 
 becomes the grammar's start symbol.
 <p>
-<a name="STYPE"></a><a name="l43"></a>
-<h3 >4.5.24: %stype: defining a single semantic value type</h3>
+<a name="STYPE"></a><a name="l44"></a>
+<h3 >4.5.25: %stype: defining a single semantic value type</h3>
     Syntax: <strong >%stype typename</strong> <br/>    
 <p>
 This directive defines the type of the semantic value of tokens.  The
@@ -880,16 +901,15 @@ of these directives can be used.
 Sources including the generated parser class header file should refer to the
 semantic value typename as <strong >STYPE__</strong>.
 <p>
-<a name="l44"></a>
-<h3 >4.5.25: %tag-mismatches: check for tag-mismatches with polymorphic
+<a name="l45"></a>
+<h3 >4.5.26: %tag-mismatches: check for tag-mismatches with polymorphic
         semantic values</h3>
     Syntax: <strong >%tag-mismatches</strong> <code >on|off</code>
 <p>
 This directive is only interpreted when polymorphic semantic values are
 used. When <code >on</code> is specified (which is used by default) the <code >parse</code> member
-of the generated parser dynamically checks that the tag that is used when
-calling a semantic value's <code >get</code> member matches the actual tag of the
-semantic value. 
+of the generated parser dynamically checks that the tag used when calling a
+semantic value's <code >get</code> member matches the actual tag of the semantic value.
 <p>
 If a mismatch is observed, then the parsing function aborts after displaying a
 fatal error message. If this happens, and if the option/directive <code >debug</code>
@@ -901,8 +921,8 @@ into the standard output stream. The action case number reported just before
 the program displays the fatal error message tells you in which of the
 grammar's action block the error was encountered.
 <p>
-<a name="TOKTYPENAMES"></a><a name="l45"></a>
-<h3 >4.5.26: %token: defining token names</h3>
+<a name="TOKTYPENAMES"></a><a name="l46"></a>
+<h3 >4.5.27: %token: defining token names</h3>
     Syntax: <blockquote >
     <strong >%token</strong> <code >terminal token(s)</code> <br/>
     <strong >%token</strong> [ &lt;type&gt; ] <code >terminal token(s)</code> 
@@ -915,7 +935,7 @@ or by commas.
 The <code >&lt;type&gt;</code> specification is optional, and specifies the type of the
 semantic value when receiving one of the subsequently named tokens is
 received. The pointed arrows are part of the type specification; the type
-itself must be a field of a <code >%union</code> specification (see section <a href="bisonc++04.html#UNION">4.5.28</a>)
+itself must be a field of a <code >%union</code> specification (see section <a href="bisonc++04.html#UNION">4.5.29</a>)
 or a tag defined at the <code >%polymorphic</code> directive (see section
 <a href="bisonc++04.html#POLYMORPHIC">4.6.1</a>).
 <p>
@@ -930,8 +950,8 @@ can include that header file to have access to those enumeration values.
 Token names can be returned as <code >Parser::name</code>: it's not necessary to
 refer to token names as <code >ParserBase::name</code>.
 <p>
-<a name="IMPROPER"></a><a name="l46"></a>
-<h4 >4.5.26.1: Improper token names</h4>
+<a name="IMPROPER"></a><a name="l47"></a>
+<h4 >4.5.27.1: Improper token names</h4>
         Several identifiers cannot be used as token names as their use would collide
 with identifiers that are defined in the parser's base class. 
 <p>
@@ -950,8 +970,8 @@ identifiers are traditionally used names of functions in the parser class
 defined by <strong >bisonc++</strong>.
     </ul>
 <p>
-<a name="TYPE"></a><a name="l47"></a>
-<h3 >4.5.27: %type: associating semantic values with (non)terminals</h3>
+<a name="TYPE"></a><a name="l48"></a>
+<h3 >4.5.28: %type: associating semantic values with (non)terminals</h3>
     Syntax: <strong >%type</strong> <code >&lt;type&gt; symbol-list</code>
 <p>
 To associate (non-)terminals with specific semantic value types
@@ -978,8 +998,8 @@ appropriate semantic value to <a href="bisonc++05.html#DVAL">d_val__</a> just pr
 token. To associate terminal symbols with semantic values, terminal symbols
 can also be specified in a <code >%type</code> directive.
 <p>
-<a name="UNION"></a><a name="l48"></a>
-<h3 >4.5.28: %union: using a 'union' to define multiple semantic values</h3> 
+<a name="UNION"></a><a name="l49"></a>
+<h3 >4.5.29: %union: using a 'union' to define multiple semantic values</h3> 
         Syntax: <strong >%union</strong> <code >union-definition body</code>
 <p>
 In the grammars of many programs different types of data are used for different
@@ -1003,7 +1023,7 @@ pair of braces containing one or more field definitions. For example:
     In this example the two fields represent a <code >double</code> and a <code >symrec
 *</code>. The associated field names are <code >u_val</code> and <code >u_tptr</code>, which are used in
 the <code >%token</code> and <code >%type</code> directives to specify  types that are associated
-with terminal or nonterminal symbols (see section <a href="bisonc++04.html#TYPE">4.5.27</a>).
+with terminal or nonterminal symbols (see section <a href="bisonc++04.html#TYPE">4.5.28</a>).
 <p>
 Notes:
     <ul>
@@ -1031,8 +1051,8 @@ errors.
 <code >%stype, %union</code> and <code >%polymorphic</code> are mutually exclusive: only one
 of these directives can be used.  
 <p>
-<a name="l49"></a>
-<h3 >4.5.29: %weak-tags: %polymorphic declaring 'enum Tag__'</h3>
+<a name="l50"></a>
+<h3 >4.5.30: %weak-tags: %polymorphic declaring 'enum Tag__'</h3>
     Syntax: <strong >%weak-tags</strong>
 <p>
 By default, the <code >%polymorphic</code> directive declares a strongly typed enum:
@@ -1049,26 +1069,26 @@ The <code >%weak-tags</code> directive can be specified when the <code >Tag__</c
 <em >not</em> be declared as a strongly typed enum. This directive should not be
 used, unless you know what you're doing.
 <p>
-<a name="l50"></a>
-<h3 >4.5.30: Directives controlling the names of generated files</h3>
+<a name="l51"></a>
+<h3 >4.5.31: Directives controlling the names of generated files</h3>
     Unless otherwise specified, <strong >bisonc++</strong> uses the name of the parser-class to derive
 the names of most of the files it may generate. Below <code >&lt;CLASS&gt;</code> should be
 interpreted as the name of the parser's class, <code >Parser</code> by default, but
 configurable using <code >%class-name</code> (see section <a href="bisonc++04.html#PARSERCLASS">4.5.2</a>).
     <ul>
     <li> The parser's base class header: <code >&lt;Class&gt;base.h</code>, configurable using
-        <code >%baseclass-header</code> (see section <a href="bisonc++04.html#BCHEADER">4.5.30.1</a>) or <code >%filenames</code>
-        (see section <a href="bisonc++04.html#FILES">4.5.30.3</a>);
+        <code >%baseclass-header</code> (see section <a href="bisonc++04.html#BCHEADER">4.5.31.1</a>) or <code >%filenames</code>
+        (see section <a href="bisonc++04.html#FILES">4.5.31.3</a>);
     <li> The parser's class header: <code >&lt;Class&gt;.h</code>, configurable using
-        <code >%class-header</code> (see section <a href="bisonc++04.html#CHEADER">4.5.30.2</a>) or <code >%filenames</code>
-        (see section <a href="bisonc++04.html#FILES">4.5.30.3</a>);
+        <code >%class-header</code> (see section <a href="bisonc++04.html#CHEADER">4.5.31.2</a>) or <code >%filenames</code>
+        (see section <a href="bisonc++04.html#FILES">4.5.31.3</a>);
     <li> The parser's implementation header file: <code >&lt;Class&gt;.ih</code>, configurable
-        using <code >%implementation-header</code> (see section <a href="bisonc++04.html#IHEADER">4.5.30.4</a>) or
-        <code >%filenames</code> (see section <a href="bisonc++04.html#FILES">4.5.30.3</a>);
+        using <code >%implementation-header</code> (see section <a href="bisonc++04.html#IHEADER">4.5.31.4</a>) or
+        <code >%filenames</code> (see section <a href="bisonc++04.html#FILES">4.5.31.3</a>);
     </ul>
 <p>
-<a name="BCHEADER"></a><a name="l51"></a>
-<h4 >4.5.30.1: %baseclass-header: defining the parser's base class header</h4>
+<a name="BCHEADER"></a><a name="l52"></a>
+<h4 >4.5.31.1: %baseclass-header: defining the parser's base class header</h4>
             Syntax: <strong >%baseclass-header</strong> <code >filename</code> 
 <p>
 <code >Filename</code> defines the name of the file to contain the parser's base
@@ -1081,8 +1101,8 @@ the <strong >--baseclass-header</strong> (<strong >-b</strong>) command-line opt
 It is an error to use  this directive while an already existing parser class
 header file does not contain <code >#include "filename"</code>.
 <p>
-<a name="CHEADER"></a><a name="l52"></a>
-<h4 >4.5.30.2: %class-header: defining the parser's class header</h4>
+<a name="CHEADER"></a><a name="l53"></a>
+<h4 >4.5.31.2: %class-header: defining the parser's class header</h4>
             Syntax: <strong >%class-header</strong> <code >filename</code> 
 <p>
 <code >Filename</code> defines the name of the file to contain the parser
@@ -1094,15 +1114,15 @@ header file does not define <code >class `className'</code> and/or if an already
 existing implementation header file does not define members of the class
 <code >`className'</code>.
 <p>
-<a name="FILES"></a><a name="l53"></a>
-<h4 >4.5.30.3: %filenames: specifying a generic filename</h4>
+<a name="FILES"></a><a name="l54"></a>
+<h4 >4.5.31.3: %filenames: specifying a generic filename</h4>
         Syntax:     <strong >%filenames</strong> <code >filename</code> 
 <p>
 <code >Filename</code> is a generic filename, used for all header files generated
 by <strong >bisonc++</strong>.  
 <p>
-<a name="IHEADER"></a><a name="l54"></a>
-<h4 >4.5.30.4: %implementation-header: defining the implementation header</h4>
+<a name="IHEADER"></a><a name="l55"></a>
+<h4 >4.5.31.4: %implementation-header: defining the implementation header</h4>
         Syntax:    <strong >%implementation-header</strong> <code >filename</code> 
 <p>
 <code >Filename</code> defines the name of the file to contain the implementation
@@ -1117,22 +1137,22 @@ may use the same convention, thus concentrating all directives and
 declarations that are required for the compilation of other source files
 belonging to the parser class in one header file.<br/>
 <p>
-<a name="PARSESOURCE"></a><a name="l55"></a>
-<h4 >4.5.30.5: %parsefun-source: defining the parse() function's sourcefile</h4>
+<a name="PARSESOURCE"></a><a name="l56"></a>
+<h4 >4.5.31.5: %parsefun-source: defining the parse() function's sourcefile</h4>
         Syntax: <strong >%parsefun-source</strong> <code >filename</code> 
 <p>
 <code >Filename</code> defines the name of the source file to contain the parser member
 function <code >parse</code>. Defaults to <code >parse.cc</code>.  
 <p>
-<a name="l56"></a>
-<h4 >4.5.30.6: %target-directory: defining the directory where files must
+<a name="l57"></a>
+<h4 >4.5.31.6: %target-directory: defining the directory where files must
                 be written</h4>
         Syntax: <strong >%target-directory</strong> <code >pathname</code> 
 <p>
 <code >Pathname</code> defines the directory where generated files should be written.
 By default this is the directory where <strong >bisonc++</strong> is called.
 <p>
-<a name="SEMANTICS"></a><a name="l57"></a>
+<a name="SEMANTICS"></a><a name="l58"></a>
 <h2 >4.6: The Meaning Of Things: Semantics</h2>
 A language's grammar rules define its syntax. Its semantics are defined
 through semantic values that can be associated with terminal and nonterminal
@@ -1160,14 +1180,14 @@ anywhere in production rules. Refer to this section's final subsection
 (section <a href="bisonc++04.html#MIDACTIONS">4.6.2.4</a>) for the characteristics of such <em >mid-rule action
 blocks</em>.
 <p>
-<a name="POLYMORPHIC"></a><a name="l58"></a>
+<a name="POLYMORPHIC"></a><a name="l59"></a>
 <h3 >4.6.1: Polymorphism and Multiple Semantic Values:
                         `%polymorphic'</h3> 
     <strong >Bisonc++</strong> also supports <em >polymorphic semantic values</em>. Polymorphic semantic
-values were developed as an alternative to using unions. Using unions is still
-possible, but are now considered somewhat `old school'. Polymorphic semantic
-values were added to <strong >bisonc++</strong> as the result of a suggestion originally made by
-Dallas A. Clement in September 2007.
+values were developed as an alternative to using unions. Traditional unions
+can still be used, but are now considered somewhat `old school'. Polymorphic
+semantic values were added to <strong >bisonc++</strong> as the result of a suggestion originally
+made by Dallas A. Clement in September 2007.
 <p>
 In this section a simple example program is developed illustrating the use of
 polymorphic semantic values.  The sources of the example can be retrieved from
@@ -1187,7 +1207,7 @@ type, supporting either <code >int</code> or <code >std::string</code> semantic 
 types are asociated with tags (resp. <code >INT</code> and <code >TEXT</code>) using the
 <code >%polymorphic</code> directive, discussed next.
 <p>
-<a name="l59"></a>
+<a name="l60"></a>
 <h4 >4.6.1.1: The %polymorphic directive</h4>
             Specifying the <code >%polymorphic</code> directive results in a parser using
 polymorphic semantic values. Polymorphic semantic value specifications
@@ -1231,12 +1251,12 @@ by the parser's base class header, then these types must be declared in a
 separate header file, included into the parser's base class header file
 through the <code >%baseclass-preinclude</code> directive.
 <p>
-<a name="l60"></a>
+<a name="l61"></a>
 <h4 >4.6.1.2: Code generated by %polymorphic</h4>
         When polymorphic semantic values are used then, in addition to the parser and
-parse-base classes several more classes are defined. Several of these are 
-class templates; most additions are  defined in <code >parserbase.h</code>; some
-implementations are added to the <code >parse.cc</code> source file.
+parse-base classes, several more classes are defined. Some of them are class
+templates; most are defined in <code >parserbase.h</code>; an occasional implementation
+is added to the <code >parse.cc</code> source file.
 <p>
 To minimize namespace pollution most of the extra code is contained in a
 namespace of its own: <code >Meta__</code>. If the <code >%namespace</code> directive was used
@@ -1264,100 +1284,111 @@ types. The class <code >SType</code> becomes the parser's <code >STYPE__</code> 
 semantic value, or it contains a semantic value of a single <code >DataType</code>.  All
 operations related to semantic values are handled by this class.
 <p>
-The class <code >SType</code> offers the following public interface:
+The class <code >SType</code> provides the following public interface:
 <p>
     <ul>
     <li> Constructors: 
-<p>
-Default, copy and move constructors.  The default constructor does not
-        contain usable data, but occasionally acts as a stub, accepting values
-        of defined polymorphic types, which may then be retrieved from the
-        <code >SType</code> object.
+       Default, copy and move constructors. No data can be retrieved from
+        <code >SType</code> objects that were constructed by <code >SType</code>'s default
+        constructors, but they can accept values of defined polymorphic types,
+        which may then be retrieved from those objects.
 <p>
 <li> Operators:
+       The standard overloaded assignment operators (copy and move assignment
+        operators) are available.
 <p>
-Assignment operators: 
-<p>
-the standard overloaded assignment operator
-        (copy and move assignment operators) are available. 
-<p>
-In addition the member template <code >SType &amp;operator=(Type const
-        &amp;value)</code> can be used for all polymorphic value types. <code >Type</code> must
-        (if no cast is used) exactly match one of the defined polymorphic
-        types, because <code >Type</code> is used to determine the <code >Meta__::Tag__</code>
-        value to use. Casting can of course be used when formulating
-        <code >value's</code> expression.
+In addition the member templates 
+    <pre>
+
+    SType &amp;operator=(Type const &amp;value)
+and 
+    SType &amp;operator=(Type &amp;&amp;tmp)
+    
+</pre>
+
+       can be used for all polymorphic semantic value types. <code >Type</code> must
+        (maybe after casting) exactly match one of the defined polymorphic
+        semantic types, because <code >Type</code> is used to determine the appropriate
+        <code >Meta__::Tag__</code> value.
 <p>
 When <code >operator=(Type const &amp;value)</code> is used, the left-hand side
-        <code >SType</code> object receives a new value of the <code >Type</code> semantic type.
+        <code >SType</code> object receives a copy of <code >value</code>; when <code >operator=(Type
+        &amp;&amp;tmp)</code> is used, <code >tmp</code> is move-assigned to the left-hand side 
+        <code >SType</code> object;
 <p>
 <li> <code >void assign&lt;tag&gt;(Args &amp;&amp;...args)</code> 
-<p>
-The <code >tag</code> template argument must be a <code >Tag__</code> value. This member
+       The <code >tag</code> template argument must be a <code >Tag__</code> value. This member
         function constructs a semantic value of the type matching <code >tag</code> from
-        the arguments that are passed to this member (zero arguments are OK
-        if the type associated with <code >tag</code> supports default
-        construction). The constructed value is then stored in the <code >STYPE__</code>
-        object for which <code >assign</code> has been called.
+        the arguments that are passed to this member (zero arguments are OK if
+        the type associated with <code >tag</code> supports default construction). The
+        constructed value (not a copy of this value) is then stored in the
+        <code >STYPE__</code> object for which <code >assign</code> has been called.
 <p>
 As a <code >Meta__::Tag__</code> value must be specified when using <code >assign</code>
         the compiler can use the explicit tag to convert <code >assign's</code> arguments
         to an <code >SType</code> object of the type matching the specified tag.
 <p>
-The member <code >assign</code> can be used to store a particular polymorphic
-        semantic value in an <code >STYPE__</code> object. It differs from
-        <code >operator=(Type const &amp;value)</code> in that <code >assign</code> accepts multiple
-        arguments to construct the requested <code >SType</code> value, whereas
-        <code >operator=</code> only accepts one argument. 
+The member <code >assign</code> can be used to store a specific polymorphic
+        semantic value in an <code >STYPE__</code> object. It differs from the set of
+        <code >operator=(Type)</code> members in that <code >assign</code> accepts multiple
+        arguments to construct the requested <code >SType</code> value from, whereas the
+        <code >operator=</code> members only accept single arguments of defined
+        polymorphic types.
 <p>
 To initialize an <code >STYPE__</code> object with a default <code >STYPE__</code> value,
         direct assignment can be used (e.g., <code >d_lval__ = STYPE__{}</code>).
 <p>
-<li> <code >DataType &amp;get&lt;tag&gt;(), DataType const &amp;get&lt;tag&gt;() const</code>
-<p>
-A reference to the object's semantic value. The <code >tag</code> is a defined
-        <code >Tag__</code> value: it must be specified to allow the compiler to
-        determine the semantic value data type it must use.
+<li> <code >DataType &amp;get&lt;tag&gt;()</code>, and <code >DataType const &amp;get&lt;tag&gt;() const</code>
+       These members return references to the object's semantic values. The
+        <code >tag</code> must be a <code >Tag__</code> value: its specification tells the
+        compiler which semantic value type it must use.
 <p>
 When the option/directive <code >tag-mismatches on</code> was specified then
         <code >get</code>, when called from the generated <code >parse</code> function, performs a
         run-time check to confirm that the specified tag corresponds to
         object's actual <code >Tag__</code> value. If a mismatch is observed, then the
-        parsing function aborts with a fatal error message. When using
-        shorthand notations (like <code >$$</code> and <code >$1</code>) in production
-        rules' action blocks  <strong >bisonc++</strong> can determine the correct <code >tag</code>,
-        thus preventing the run-time check from failing.
+        parsing function aborts with a fatal error message. When 
+        shorthand notations (like <code >$$</code> and <code >$1</code>) are used in production
+        rules' action blocks, then <strong >bisonc++</strong> can determine the correct <code >tag</code>,
+        preventing the run-time check from failing.
 <p>
-If, however, a fatal error was issued, and the option/directive
-        <code >debug</code> was specified when <strong >bisonc++</strong> created the <code >parse</code> parsing
-        function, the program can be rerun, specifying
-        <code >parser.setDebug(Parser::ACTIONCASES)</code> before calling the parser's
-        <code >parse</code> function. This will show (to the standard output stream) the
-        case-entry numbers of the <code >switch</code> which is defined in the parser's
-        <code >executeAction</code> member. The action case number that's reported just
-        before the program reports the fatal error tells you in which of the
-        grammar's action block the error was encountered.
+But once a fatal error <em >is</em> encountered, it can be difficult to
+        determine which action block generated the error. If this happens,
+        then consider regenerating the parser specifying the <code >--debug</code>
+        option, calling
+       <pre>
+parser.setDebug(Parser::ACTIONCASES)
+</pre>
+ 
+       before calling the parser's <code >parse</code> function. 
 <p>
-<li>
+Following this the case-entry numbers of the <code >switch</code> which is
+        defined in the parser's <code >executeAction</code> member are inserted into the
+        standard output stream just before the matching statements are
+        executed. The action case number that's reported just before the
+        program reports the fatal error tells you in which of the grammar's
+        action block the error was encountered.
 <p>
-The tag matching the semantic value's polymorphic type. The returned
-        value is a valid <code >Tag__</code> value when the <code >SType</code> object's
-        <code >operator bool</code> returns <code >true</code>;
+<li> <code >Tag__ tag() const</code>
+       The tag matching the semantic value's polymorphic type is returned. The
+        returned value is a valid <code >Tag__</code> value when the <code >SType</code> object's
+        <code >valid</code> member returns <code >true</code>;
+<p>
+By default, or after assigning a plain (default) <code >STYPE__</code> object to
+        an <code >STYPE__</code> object (e.g., using a statement like <code >$$ =
+        STYPE__{}</code>), <code >valid</code> returns <code >false</code>, and the <code >tag</code> member
+        returns <code >Meta__::sizeofTag__</code>.
 <p>
 <li> <code >bool valid() const</code> 
 <p>
-The value <code >true</code> is returned if the object stores a value of a type
-        that is defined by the <code >%polymorphic</code> directive. The value <code >false</code>
-        is returned when its object represents a default <code >STYPE__</code>
-        object. After assigning a non-default <code >STYPE__</code> value its
-        <code >operator bool</code> returns <code >true</code>;
-<p>
-<li> <code >void swap(SType &amp;other)</code> 
-<p>
-The current and other <code >SType</code> objects are swapped.
+The value <code >true</code> is returned if the object contains a semantic
+        value. Otherwise <code >false</code> is returned. Note that default <code >STYPE__</code>
+        values can be assigned to <code >STYPE__</code> objects, but they do not
+        represent valid semantic values. See also the previous description of
+        the <code >tag</code> member.
    </ul>
 <p>
-<a name="l61"></a>
+<a name="l62"></a>
 <h4 >4.6.1.3: A parser using a polymorphic semantic value type</h4>
         In this section a small demo-parser is developed using polymorphic semantic
 values.  Its <code >%polymorphic</code> directive looks like this:
@@ -1478,7 +1509,7 @@ semantic value. Here is its implementation:
 </pre>
 
 <p>
-<a name="l62"></a>
+<a name="l63"></a>
 <h4 >4.6.1.4: A scanner using a polymorphic semantic value type</h4>
         The scanner recognizes input patterns, and returns Parser tokens (e.g.,
 Parser::INT) matching the recognized input. 
@@ -1509,7 +1540,7 @@ It is easily created by
 The reader may refer to <strong >flexc++</strong>(1) documentation for details about
 <strong >flexc++</strong>(1) specification files.
 <p>
-<a name="ACTIONS"></a><a name="l63"></a>
+<a name="ACTIONS"></a><a name="l64"></a>
 <h3 >4.6.2: Actions and shorthand ($) notations</h3>
     Often an action accompanies a production rule. It contains <strong >C++</strong> code that
 is executed once that production rule is recognized. The task of most actions
@@ -1604,7 +1635,7 @@ dollar-notations. The next three subsections describe the dollar-notations
 that are available after specifying, respectively, the <code >%stype, %union</code> or
 <code >%polymorphic</code> directives.
 <p>
-<a name="l64"></a>
+<a name="l65"></a>
 <h4 >4.6.2.1: %stype shorthand notations</h4>
         The <code >%stype</code> directive is used to specify a single semantic value type. By
 default the semantic value type is <code >int</code>. For single type semantic values
@@ -1699,7 +1730,7 @@ of some production rule element, 1 element before the current rule's
 nonterminal.
     </ul>
 <p>
-<a name="l65"></a>
+<a name="l66"></a>
 <h4 >4.6.2.2: %union shorthand notations</h4>
         The <code >%union</code> directive is used to specify a union of semantic value types.
 Although each semantic value type can be used for each <code >STYPE__</code> variable,
@@ -1716,7 +1747,7 @@ In the next overview the notation $1 is used as a generic reference to
 semantic values of production rule components. Instead of $1 other available
 numbered dollar references can also be used.
 <p>
-<a name="l66"></a>
+<a name="l67"></a>
 <h4 >4.6.2.3: %polymorphic shorthand notations</h4>
         The <code >%polymorphic</code> directive is used to specify a series of semantic value
 types. (Non)terminals can be associated with exactly one of these types, or
@@ -1873,7 +1904,7 @@ suggested at the previous (<code >$&lt;tag&gt;-1</code>) item for solving such e
 applied here as well.
      </ul>
 <p>
-<a name="MIDACTIONS"></a><a name="l67"></a>
+<a name="MIDACTIONS"></a><a name="l68"></a>
 <h4 >4.6.2.4: Mid-Rule Action Blocks</h4>
         Occasionally it is useful to insert an action block somewhere in the middle of
 a production rule. These so-called mid-rule action blocks are comparable to
@@ -2062,7 +2093,7 @@ action block. It is as though we had written this grammar:
 </pre>
 
 <p>
-<a name="l68"></a>
+<a name="l69"></a>
 <h2 >4.7: Basic Grammatical Constructions</h2>
 In the following sections several basic building blocks for writing grammars
 are presented in their prototypical forms. When these building blocks are
@@ -2071,7 +2102,7 @@ used to write a grammar, the resulting grammar is usually accepted by
 programming languages. When designing your own grammar, try to stick as
 closely as possible to the following basic forms.
 <p>
-<a name="l69"></a>
+<a name="l70"></a>
 <h3 >4.7.1: Plain Alternatives</h3>
     Simple alternatives can be specified using the vertical bar (<code >|</code>). Each
 alternative should begin with a unique identifying terminal token. The
@@ -2123,7 +2154,7 @@ differ over different alternatives. Here are some examples:
 </pre>
 
 <p>
-<a name="l70"></a>
+<a name="l71"></a>
 <h3 >4.7.2: One Or More Alternatives, No Separators</h3>
     A series of elements normally use left-recursion. For example, <strong >C++</strong>
 supports <em >string concatenation</em>: series of double quote delimited <code >ASCII</code>
@@ -2166,7 +2197,7 @@ generic form of this rule could be formulated as follows:
     Note that the single element is <em >first</em> recognized, whereafter the
 left-recursive alternative may be recognized repeatedly.
 <p>
-<a name="OPTSERIES"></a><a name="l71"></a>
+<a name="OPTSERIES"></a><a name="l72"></a>
 <h3 >4.7.3: Zero Or More Alternatives, No Separators</h3>
     An <em >optional</em> series of elements also use left-recursion, but the single
 element alternative remains empty. For example, in <strong >C++</strong> a compound
@@ -2198,7 +2229,7 @@ alternative, which is then executed prior to the left-recursive
 alternative. Such an action block could be used to perform initializations
 necessary for the proper handling of the left-recursive alternative.
 <p>
-<a name="l72"></a>
+<a name="l73"></a>
 <h3 >4.7.4: One Or More Alternatives, Using Separators</h3>
     A series of elements which are separated from each other using some delimiter
 again normally uses left-recursion. For example, a <strong >C++</strong> variable definition
@@ -2232,7 +2263,7 @@ not really different from the standard rule for a series, which does not hold
 true for the rule to recognize an <em >optional</em> series of delimited elements,
 covered in the next section.
 <p>
-<a name="l73"></a>
+<a name="l74"></a>
 <h3 >4.7.5: Zero Or More Alternatives, Using Separators</h3>
     An optional series of elements, separated from each other using delimiters
 occurs frequently in programming languages. For example, <strong >C++</strong> functions
@@ -2293,7 +2324,7 @@ case from the case were elements are present. Usually these two cases need to
 be handled quite differently, and the <code >opt_series</code> rules empty alternative
 easily allows us to recognize the no-elements case.
 <p>
-<a name="l74"></a>
+<a name="l75"></a>
 <h3 >4.7.6: Nested Blocks</h3>
     Finally, we add the <em >nested</em> rule to our bag of rule-tricks. Again, nested
 rules appear frequently: parenthesized expressions and compound statements are
@@ -2352,7 +2383,7 @@ accordingly:
 </pre>
 
 <p>
-<a name="l75"></a>
+<a name="l76"></a>
 <h2 >4.8: Multiple Parsers in the Same Program</h2>
 Most programs that use <strong >bisonc++</strong> parse only one language and therefore contain
 only one <strong >bisonc++</strong> parser. But what if you want to parse more than one language

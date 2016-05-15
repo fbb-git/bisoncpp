@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<title> <div style="text-align: center"><strong >Bisonc++</strong> (Version 5.01.00) User Guide</div> </title>
+<title> <div style="text-align: center"><strong >Bisonc++</strong> (Version 5.02.00) User Guide</div> </title>
 <style type="text/css">
     figure {text-align: center;}
     img {vertical-align: center;}
@@ -50,46 +50,23 @@ B. Brokken</a>. The program's first version was
 constructed between November 2004 and May 2005.
 <p>
 <a name="l2"></a>
-<h2 >1.1: What's new in version 5.01.00</h2>
+<h2 >1.1: What's new in version 5.02.00</h2>
     If you're new to <strong >bisonc++</strong>, you can safely skip this section. If you used <strong >bisonc++</strong>
 before, please note the following new and modified features:
     <ul>
-    <li> New option/directive <code >default-actions</code> controlling the addition of a
-<code >$$ = $1</code> action blocks to non-empty production rules that do not themselves
-define final action blocks. Option/directive <code >no-default-action-return</code> is
-not supported anymore.
+    <li> New option/directive <code >stack_expansion</code> defining the number of
+elements which are added to the semantic value stack when it's completely
+full. By default room for 10 new elements are added.
 <p>
-<li> New option/directive <code >tag-mismatches</code> issuing a warning if no
-<code >$$</code> assignment was detected in the last (action block) elements of
-production rules.
+<li> Polymorphic semantic values are accessed via <code >STYPE__</code> objects,
+privately derived from <code >std::unique_ptr&lt;Base&gt;</code> objects. Inside the parser,
+semantic values are not copied but only moved.
 <p>
-<li> New parser class enumeration <code >DebugMode__</code> and a new member
-<code >setDebug(DebugMode__ mode)</code> that can be used to control debug output and to
-show case label numbers of the parser's <code >executeAction</code> member just before
-execution. This is useful in cases where a run-time mismatch between tags of
-polymorphic semantic values are observed.
-<p>
-<li> The <code >SType::data</code> member functions are obsolete and were removed
-from <code >SType's</code> class's interface (section <a href="bisonc++04.html#POLYMORPHIC">4.6.1</a> fully covers the
-use and characteristics of polymorphic semantic values).
-<p>
-<li> The <code >SType::operator bool</code> member was replaced by a new member
-function <code >bool SType::valid()</code>.
-<p>
-<li> The previously defined member <code >SType::emplace</code> was replaced by
-<code >SType::assign</code>: it should be used to assign values to <code >SType</code> objects. If
-only one argument is required, <code >operatpr=</code> can also be used (but may require
-casting).
-<p>
-<li> Dollar-notations have been altered. The standard dollar-notations are
-of course still available, but <code >$$(...), _$$, _$i</code> are new, while
-<code >$&lt;tag&gt;$</code> and <code >$&lt;tag&gt;i</code> (for positive values of i) are no longer
-supported. See section <a href="bisonc++04.html#ACTIONS">4.6.2</a> for a full overview.
+<li> When polymorphic semantic values are used default actions are
+implemented as <code >$$ = std::move($1)</code>, thus preventing needless copies. In
+combination with polymorphic values, however, default actions can frequently
+be suppressed, slightly improving the efficency of the generated parser.
     </ul>
-<p>
-At the implementation level polymorphic semantic values are not implemented
-using <code >std::shared_ptr</code> objects. Moreover, polymorphic semantic value types
-do not have to be default constructible anymore.
 <p>
 <hr>
 <ul>
