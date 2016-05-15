@@ -1,7 +1,7 @@
 When polymorphic semantic values are used then, in addition to the parser and
-parse-base classes several more classes are defined. Several of these are 
-class templates; most additions are  defined in tt(parserbase.h); some
-implementations are added to the tt(parse.cc) source file.
+parse-base classes, several more classes are defined. Some of them are class
+templates; most are defined in tt(parserbase.h); an occasional implementation
+is added to the tt(parse.cc) source file.
 
 To minimize namespace pollution most of the extra code is contained in a
 namespace of its own: tt(Meta__). If the tt(%namespace) directive was used

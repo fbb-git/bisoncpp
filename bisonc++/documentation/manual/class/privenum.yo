@@ -38,8 +38,8 @@ the parser's base class.
 
 When the tt(%polymorphic) directive is used:
     itemization(
-    it() bf(Meta__::sizeofTag):nl()
-           tt(sizeofTag) defines the number of tags that were defined for 
+    it() bf(Meta__::sizeofTag__):nl()
+           tt(sizeofTag__) defines the number of tags that were defined for 
             polymorphic semantic values.
     )
 

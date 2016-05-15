@@ -1,8 +1,8 @@
 Bic() also supports em(polymorphic semantic values). Polymorphic semantic
-values were developed as an alternative to using unions. Using unions is still
-possible, but are now considered somewhat `old school'. Polymorphic semantic
-values were added to b() as the result of a suggestion originally made by
-Dallas A. Clement in September 2007.
+values were developed as an alternative to using unions. Traditional unions
+can still be used, but are now considered somewhat `old school'. Polymorphic
+semantic values were added to b() as the result of a suggestion originally
+made by Dallas A. Clement in September 2007.
 
 In this section a simple example program is developed illustrating the use of
 polymorphic semantic values.  The sources of the example can be retrieved from

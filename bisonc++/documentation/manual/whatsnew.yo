@@ -1,40 +1,17 @@
 If you're new to b(), you can safely skip this section. If you used b()
 before, please note the following new and modified features:
     itemization(
-    it() New option/directive tt(default-actions) controlling the addition of a
-tt($$ = $1) action blocks to non-empty production rules that do not themselves
-define final action blocks. Option/directive tt(no-default-action-return) is
-not supported anymore.
+    it() New option/directive tt(stack_expansion) defining the number of
+elements which are added to the semantic value stack when it's completely
+full. By default room for 10 new elements are added.
 
-    it() New option/directive tt(tag-mismatches) issuing a warning if no
-tt($$) assignment was detected in the last (action block) elements of
-production rules.
+    it() Polymorphic semantic values are accessed via tt(STYPE__) objects,
+privately derived from tt(std::unique_ptr<Base>) objects. Inside the parser,
+semantic values are not copied but only moved.
 
-    it() New parser class enumeration tt(DebugMode__) and a new member
-tt(setDebug(DebugMode__ mode)) that can be used to control debug output and to
-show case label numbers of the parser's tt(executeAction) member just before
-execution. This is useful in cases where a run-time mismatch between tags of
-polymorphic semantic values are observed.
-
-    it() The tt(SType::data) member functions are obsolete and were removed
-from tt(SType's) class's interface (section ref(POLYMORPHIC) fully covers the
-use and characteristics of polymorphic semantic values).
-
-    it() The tt(SType::operator bool) member was replaced by a new member
-function tt(bool SType::valid()).
-
-    it() The previously defined member tt(SType::emplace) was replaced by
-tt(SType::assign): it should be used to assign values to tt(SType) objects. If
-only one argument is required, tt(operatpr=) can also be used (but may require
-casting).
-
-    it() Dollar-notations have been altered. The standard dollar-notations are
-of course still available, but tt($$(...), _$$, _$i) are new, while
-tt($<tag>$) and tt($<tag>i) (for positive values of i) are no longer
-supported. See section ref(ACTIONS) for a full overview.
+    it() When polymorphic semantic values are used default actions are
+implemented as tt($$ = std::move($1)), thus preventing needless copies. In
+combination with polymorphic values, however, default actions can frequently
+be suppressed, slightly improving the efficency of the generated parser.
     )
-
-At the implementation level polymorphic semantic values are not implemented
-using tt(std::shared_ptr) objects. Moreover, polymorphic semantic value types
-do not have to be default constructible anymore.
 

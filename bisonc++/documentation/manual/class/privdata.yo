@@ -114,10 +114,11 @@ members inherited from the parser's base class.
         recognizes a token. Consequently the parser's tt(d_val__) data member
         must be made available to the scanner.
 
-       If tt(STYPE__) is a polymorphic semantic value, direct assignment of
-        values to tt(d_val__) is not possible. In that case em(tagged
-        assignment) must be 
-        used+IFDEF(MANUAL)(, as explained in section ref(POLYTYPE))().
+       If tt(STYPE__) is a wrapper type for polymorphic semantic values, then
+        direct assignment of values to tt(d_val__) is is only possible from
+        values of the defined polymorphic data types. More complex assignments
+        are also possible, using em(tagged assignments)+IFDEF(MANUAL)(, as
+        explained in section ref(POLYTYPE))().
 
     it() bf(LTYPE__ d_vsp__):nl()
        The semantic value stack pointer. 

@@ -1,0 +1,9 @@
+Syntax: bf(%stack-expansion) tt(size)
+
+Defines the number of elements to be added to the generated parser's semantic
+value stack when it must be enlarged. By default 10 elements are added to the
+stack. This option/directive is interpreted only once, and only if tt(size) at
+least equals the default stack expansion size of 10.
+
+
+

@@ -1,4 +1,7 @@
-NOUSERMACRO(LALR lex yylex valid swap setDebug YYText specification input)
+DELETEMACRO(file)
+
+NOUSERMACRO(LALR lex yylex valid swap setDebug YYText specification input
+            file tag)
 
 includefile(../../release.yo)
 
@@ -94,11 +97,11 @@ This manual page contains the following sections:
 
 manpagesection(DIRECTIVES)
 
-    The following directives can be specified in the initial section of the
-grammar specification file. If command-line options for directives exist, then
-their specifications overrule the corresponding directives in the grammar
-file.  Once class header or implementation header files exist directives
-affecting those files are ignored.
+    Quite a few directives can be specified in the initial section of the
+grammar specification file. If command-line options for directives are
+available, then their specifications take precedence over the corresponding
+directives in the grammar file.  Once class header or implementation header
+files exist directives affecting those files are ignored.
 
     Directives accepting a `filename' do not accept path names, i.e., they
 cannot contain directory separators (tt(/)); directives accepting a 'pathname'
@@ -472,6 +475,13 @@ match. When bic() detects a type mismatches it issues errors.
             function is not called from the code in an already
             existing implementation header.
 
+    it() bf(%stack-expansion) tt(size) 
+           Defines the number of elements to be added to the generated
+            parser's semantic value stack when it must be enlarged. By default
+            10 elements are added to the stack. This option/directive is
+            interpreted only once, and only if tt(size) at least equals the
+            default stack expansion size of 10. 
+
     it() bf(%start) tt(nonterminal) 
 
             The nonterminal tt(nonterminal) should be used as the grammar's 
@@ -560,11 +570,11 @@ traditional bf(C)-type unions as semantic values. These types of semantic
 values are covered in bic()'s manual.
 
     In addition, the tt(%polymorphic) directive can be specified to generate a
-parser that uses `polymorphic' semantic values. In this case semantic values
-are specified as pairs, consisting of em(tags) (which are bf(C++)
-identifiers), and bf(C++) type names. Tags and type names are separated by
-colons. Multiple tag and type name combinations are separated by semicolons,
-and an optional semicolon ends the final tag/type pair.
+parser using `polymorphic' semantic values. In this case semantic values are
+specified as pairs, consisting of em(tags) (which are bf(C++) identifiers),
+and bf(C++) (pointer or value) type names. Tags and type names are separated
+by colons. Multiple tag and type name combinations are separated by
+semicolons, and an optional semicolon ends the final tag/type pair.
 
 Here is an example, defining three semantic values: an tt(int), a
 tt(std::string) and a tt(std::vector<double>):
@@ -575,14 +585,14 @@ tt(std::string) and a tt(std::vector<double>):
     The identifier to the left of the colon is called the em(tag-identifier)
 (or simply em(tag)), and the type name to the right of the colon is called the
 em(type-name). Starting with bic() version 4.12.00 the types no longer have to
-have default constructors. 
+provide default constructors. 
 
     When polymorphic type-names refer to types that have not yet been declared
 by the parser's base class header, then these types must be (directly or
 indirectly) declared in a header file whose location is specified using the
 tt(%baseclass-preinclude) directive.
 
-    tt(%type) directives is used to associate (non-)terminals with semantic
+    tt(%type) directives are used to associate (non-)terminals with semantic
 value types.  E.g., after:
         verb(
     %polymorphic INT: int; TEXT: std::string
@@ -597,6 +607,10 @@ rule like:
             // Action block: C++ statements here.
         }
         )
+    symbols tt($$, $1,) and tt($3) represent tt(int) values, and 
+can be used that way in the bf(C++) action block.
+
+bf(Definitions and declarations)
 
     The tt(%polymorphic) directive adds the following definitions and
 declarations to the generated base class header and parser source
@@ -624,8 +638,10 @@ implementing polymorphic values.
 The namespace  tt(Meta__) contains, among other classes the class tt(SType).
 The parser's semantic value type tt(STYPE__) is equal to tt(Meta__::SType).
 
-tt(SType) provides the standard user interface for using polymorphic semantic
-data types. It offers the following public interface:
+bf(STYPE__ equals Meta__::SType)
+
+tt(Meta__::SType) provides the standard user interface for using polymorphic
+semantic data types. It declares the following public interface:
 
     includefile(../manual/grammar/stypeinterface)
 

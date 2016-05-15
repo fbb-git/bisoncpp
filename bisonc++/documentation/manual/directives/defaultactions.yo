@@ -27,7 +27,18 @@ the first elements of the production rules, while issuing a warning;
     it() tt(quiet) adds these action blocks without issuing warnings.
     )    
 When either tt(warn) or tt(quiet) are specified the types of $$ and $1 must
-match. When b() detects a type mismatches it issues errors.
+match. When b() detects a type mismatches it issues errors. 
+
+When polymorphic semantic values are used then the default tt($$ = $1) action
+probably is less useful than when, e.g., plain tt(%stype) semantic values are
+used. After all, no semantic values are associated with tt($$). Furthermore,
+once the production rule has been recognized, the production rule is reduced
+to the rule's left-hand side non-terminal. Thus, tt($1) ceases to exists,
+immediately following the tt($$ = $1) statement. Therefore, em(if) default
+actions are used in combination with polymorphic semantic value types they are
+implemented using move-operations: tt($$ = std::move($1)). However, in this
+situation default actions can frequently be suppressed, slightly improving the
+efficency of the generated parser.
 
 When a default action block can be added to a production rule and either
 tt(warn) or tt(quiet) was specified,  b() compares the types associated with

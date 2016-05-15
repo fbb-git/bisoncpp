@@ -2,9 +2,8 @@ Syntax: bf(%tag-mismatches) tt(on|off)
 
     This directive is only interpreted when polymorphic semantic values are
 used. When tt(on) is specified (which is used by default) the tt(parse) member
-of the generated parser dynamically checks that the tag that is used when
-calling a semantic value's tt(get) member matches the actual tag of the
-semantic value. 
+of the generated parser dynamically checks that the tag used when calling a
+semantic value's tt(get) member matches the actual tag of the semantic value.
 
 If a mismatch is observed, then the parsing function aborts after displaying a
 fatal error message. If this happens, and if the option/directive tt(debug)

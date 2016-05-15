@@ -1,5 +1,7 @@
+DELETEMACRO(file)
+
 NOUSERMACRO(LALR setDebug ParserBase ABORT throw ACCEPT debug error lex print
-            parse setLoc api)
+            parse setLoc api file)
 
 includefile(../../release.yo)
 

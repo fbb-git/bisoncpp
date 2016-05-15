@@ -90,6 +90,10 @@ includefile(directives/intro.yo)
             function) 
     includefile(directives/scannertokenfunction.yo)
 
+    subsect(%stack-expansion: the number of elements added to the semantic
+                                value stack)
+    includefile(directives/stackexpansion.yo)
+
     subsect(%start: defining the start rule)
     includefile(directives/start.yo)
 

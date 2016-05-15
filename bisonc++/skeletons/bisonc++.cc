@@ -150,7 +150,7 @@ void \@Base::push__(size_t state)
     size_t currentSize = d_stateStack__.size();
     if (static_cast<size_t>(d_stackIdx__ + 1) == currentSize)
     {
-        size_t newSize = currentSize + STACK_EXPANSION;
+        size_t newSize = currentSize + STACK_EXPANSION__;
         d_stateStack__.resize(newSize);
 $insert 8 LTYPEresize
         if (d_valueStack__.capacity() >= newSize)

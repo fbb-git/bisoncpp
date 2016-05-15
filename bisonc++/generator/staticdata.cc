@@ -9,7 +9,7 @@ void Generator::staticData(ostream &out) const
     out << R"(
     enum                        // size to expand the state-stack with when
     {                           // full
-        STACK_EXPANSION = )" << d_options.stackExpansion() << R"(
+        STACK_EXPANSION__ = )" << d_options.stackExpansion() << R"(
     };
 )";
 

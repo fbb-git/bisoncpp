@@ -222,7 +222,7 @@ $insert warnTagMismatches
 
 inline Tag__ SType::tag() const
 {
-    return valid() ? (*this)->tag() : static_cast<Tag__>(sizeofTag);
+    return valid() ? (*this)->tag() : static_cast<Tag__>(sizeofTag__);
 }
 
 inline bool SType::valid() const
