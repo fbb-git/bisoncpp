@@ -6,17 +6,18 @@ files already exist. Options accepting a `filename' do not accept path names,
 i.e., they cannot contain directory separators (tt(/)); options accepting a
 'pathname' may contain directory separators.
 
-Some options may produce errors. This happens when they conflict with the
+Some options may cause errors. This happens when they conflict with the
 contents of a file which bic() cannot modify (e.g., a parser class header file
 exists, but doesn't define a namespace, but a tt(--namespace) option was
-provided).
+specified).
 
-To solve the error the offending option could be omitted, the existing file
-could be removed, or the existing file could be hand-edited according to the
-option's specification. Note that bic() currently does not handle the opposite
-error condition: if a previously used option is omitted, then bic() does not
-detect the inconsistency. In those cases compilation errors may be
-encountered.
+To solve the error the offending option could be omitted; the existing file
+could be removed; or the existing file could be hand-edited according to the
+option's specification. 
+
+Note that bic() currently does not handle the opposite error condition: if a
+previously used option is omitted, then bic() does not report an
+inconsistency. In those cases compilation errors may be observed.
 
     itemization(
     it() loption(analyze-only) (soption(A))nl()
@@ -381,6 +382,13 @@ IFDEF(man)(\
             to specifying a common names for the skeleton files the locations
             of individual skeleton files can be specified using the options
             (tt(-B -C, -H, -I, -L) and tt(-M)).
+
+    it() loption(stack-expansion)(size)nl() 
+           Defines the number of elements to be added to the generated
+            parser's semantic value stack when it must be enlarged. By default
+            10 elements are added to the stack. This option/directive is
+            interpreted only once, and only if tt(size) at least equals the
+            default stack expansion size of 10.
 
     it() loption(tag-mismatches) tt(off|on)nl()
            When tt(on) is specified (which is the default), a warning is

@@ -147,12 +147,21 @@ void \@Base::clearin()
 
 void \@Base::push__(size_t state)
 {
-    if (static_cast<size_t>(d_stackIdx__ + 1) == d_stateStack__.size())
+    size_t currentSize = d_stateStack__.size();
+    if (static_cast<size_t>(d_stackIdx__ + 1) == currentSize)
     {
-        size_t newSize = d_stackIdx__ + STACK_EXPANSION;
+        size_t newSize = currentSize + STACK_EXPANSION;
         d_stateStack__.resize(newSize);
-        d_valueStack__.resize(newSize);
 $insert 8 LTYPEresize
+        if (d_valueStack__.capacity() >= newSize)
+            d_valueStack__.resize(newSize);
+        else
+        {
+            std::vector<STYPE__> enlarged(newSize);
+            for (size_t idx = 0; idx != currentSize; ++idx)
+                enlarged[idx] = std::move(d_valueStack__[idx]);
+            d_valueStack__.swap(enlarged);
+        }
     }
     ++d_stackIdx__;
     d_stateStack__[d_stackIdx__] = d_state__ = state;
