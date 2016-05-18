@@ -1,8 +1,28 @@
+int g_components;
+
+string testRequest(string request, string key, int value)
+{
+    int idx = strfind(request, key);    
+    if (idx == -1)
+        return request;
+
+    int len = strlen(request);
+
+    string ret;
+
+    if (idx > 0)
+        ret = substr(request, 0, idx);
+
+    if (++idx < len)
+        ret += substr(request, idx, len);
+    g_components |= value;
+
+    return ret;
+}
 
 void install(string request, string dest)
 {
     string target;
-    int components = 0;
     list pathsplit;
     string base;
     base = "tmp/install/";
@@ -10,27 +30,25 @@ void install(string request, string dest)
     md(base);
 
     if (request == "x")
-        components = 63;
+    {
+        g_components = 63;
+        request = "";
+    }
     else 
     {
-        if (strfind(request, "a") != -1)    // additional documentation
-            components |= 1;
-        if (strfind(request, "b") != -1)    // binary program
-            components |= 2;
-        if (strfind(request, "d") != -1)    // standard documentation
-            components |= 4;
-        if (strfind(request, "m") != -1)    // man-pages
-            components |= 8;                
-        if (strfind(request, "s") != -1)    // skeleton
-            components |= 16;
-        if (strfind(request, "u") != -1)    // user guide
-            components |= 32;
+        request = testRequest(request, "a",  1);    // additional info
+        request = testRequest(request, "b",  2);    // binary program
+        request = testRequest(request, "d",  4);    // std documentation
+        request = testRequest(request, "m",  8);    // man-pages
+        request = testRequest(request, "s", 16);    // skeleton files
+        request = testRequest(request, "u", 32);    // use guide
     }
 
-    if (components == 0)
+    if (g_components == 0 || strlen(request) != 0)
     {
-        printf("build install: section(s) to install not specified\n");
-        exit(0);
+        printf("'build install selection ...': 'selection' must be x or "
+                                                    "chars. of [abdsmu]\n");
+        exit(1);
     }
 
     chdir(g_cwd);                       // determine the destination path
@@ -44,7 +62,7 @@ void install(string request, string dest)
     if (g_logPath != "")
         exec(P_NOCHECK, "rm -f " + g_logPath);
 
-    if (components & 1)
+    if (g_components & 1)
     {
         printf("\n  installing additional documentation\n");
 
@@ -74,7 +92,7 @@ void install(string request, string dest)
         logInstalled(dest, "a");
     }
 
-    if (components & 2)
+    if (g_components & 2)
     {
         target = base + "b/" BINARY;
         pathsplit = path_file(target);
@@ -88,10 +106,10 @@ void install(string request, string dest)
         logInstalled(dest, "b");
     }
 
-    if (components & (4 | 8))
+    if (g_components & (4 | 8))
     {
         target = base + "d/" DOC "/";
-        if (components & 4)
+        if (g_components & 4)
         {
             printf("  installing the changelog at `", target, "\n");
             logZip("", "changelog", target );
@@ -99,7 +117,7 @@ void install(string request, string dest)
             destInstall(dest, base + "d");
         }
 
-        if (components & 8)
+        if (g_components & 8)
         {
             printf("  installing the html-manual pages at `", target, "\n");
             logInstall("tmp/manhtml", "", target);
@@ -111,7 +129,7 @@ void install(string request, string dest)
     }
 
 
-    if (components & 8)
+    if (g_components & 8)
     {
         target = base + "m/" MAN;
         printf("  installing the manual pages below `", target, "'\n");
@@ -131,7 +149,7 @@ void install(string request, string dest)
         logInstalled(dest, "m");
     }
 
-    if (components & 16)
+    if (g_components & 16)
     {
         target = base + "s/" SKEL "/";
         printf("  installing skeleton files at `" + target + "'\n");
@@ -143,7 +161,7 @@ void install(string request, string dest)
     }
 
 
-    if (components & 32)
+    if (g_components & 32)
     {
         target = base + "u/" UGUIDE "/";
         printf("  installing the user-guide at `", target, "'\n");

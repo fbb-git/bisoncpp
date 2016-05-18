@@ -1,9 +1,11 @@
-bisonc++ (5.02.01-pre)
+bisonc++ (5.02.01)
 
-  * Repaired an error in 'build install LOG...' (preliminary release,
-    TODO: more extensive tests)
+  * Repaired an error in 'build install LOG...'.
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Wed, 18 May 2016 08:23:59 +0530
+  * Verified that 'selection' in 'build install selection' was correctly
+    specified. 
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Wed, 18 May 2016 17:34:28 +0530
 
 bisonc++ (5.02.00)
 
