@@ -3,5 +3,8 @@ void logFile(string srcdir, string src, string destdir, string dest)
     chdir(g_cwd);
     md(destdir);
 
+    // copy srdir/src to destdir/dest, where destdir also contains the
+    // topic-icentifier (e.g., b in tmp/install/b)
+
     run("cp " + srcdir + "/" + src + " " + destdir + "/" + dest);
 }

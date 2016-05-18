@@ -27,6 +27,12 @@ void install(string request, string dest)
             components |= 32;
     }
 
+    if (components == 0)
+    {
+        printf("build install: section(s) to install not specified\n");
+        exit(0);
+    }
+
     chdir(g_cwd);                       // determine the destination path
     if (dest == "")
         dest = "/";
@@ -36,8 +42,7 @@ void install(string request, string dest)
     dest = cutEoln(backtick("readlink -f " + dest)[0]);
 
     if (g_logPath != "")
-        backtick("icmake/log " + dest + " " + g_logPath);
-
+        exec(P_NOCHECK, "rm -f " + g_logPath);
 
     if (components & 1)
     {
@@ -64,9 +69,9 @@ void install(string request, string dest)
                                                     target + "/essence/'\n");
         logRecursive("tmp/manual/essence", target + "/essence/");
 
-        chdir(base);                        // go to the base directory
-
         destInstall(dest, base + "a");
+
+        logInstalled(dest, "a");
     }
 
     if (components & 2)
@@ -74,12 +79,14 @@ void install(string request, string dest)
         target = base + "b/" BINARY;
         pathsplit = path_file(target);
 
-        printf("  installing the executable `", target, "'\n");
+            // copy srdir/src to destdir/dest, where destdir also contains 
+            // the topic-icentifier (e.g., b in tmp/install/b)
         logFile("tmp/bin", "binary", pathsplit[0], pathsplit[1]);
 
         destInstall(dest, base + "b");
-    }
 
+        logInstalled(dest, "b");
+    }
 
     if (components & (4 | 8))
     {
@@ -99,6 +106,8 @@ void install(string request, string dest)
 
             destInstall(dest, base + "d");
         }
+
+        logInstalled(dest, "d");
     }
 
 
@@ -118,6 +127,8 @@ void install(string request, string dest)
         target = base + "m/" MAN "/man7/";
         logZip("tmp/man", "bisonc++input.7", target);
         destInstall(dest, base + "m");
+
+        logInstalled(dest, "m");
     }
 
     if (components & 16)
@@ -127,6 +138,8 @@ void install(string request, string dest)
         logInstall("skeletons", "", target);
 
         destInstall(dest, base + "s");
+
+        logInstalled(dest, "s");
     }
 
 
@@ -137,10 +150,16 @@ void install(string request, string dest)
         logInstall("tmp/manual", "", target);
 
         destInstall(dest, base + "u");
-    }
 
+        logInstalled(dest, "u");
+    }
 
     printf("\n  Installation completed\n");
 
     exit(0);
 }
+
+
+
+
+

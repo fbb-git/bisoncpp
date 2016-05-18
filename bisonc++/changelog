@@ -1,3 +1,10 @@
+bisonc++ (5.02.01-pre)
+
+  * Repaired an error in 'build install LOG...' (preliminary release,
+    TODO: more extensive tests)
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Wed, 18 May 2016 08:23:59 +0530
+
 bisonc++ (5.02.00)
 
   * The polymorphic semantic values implementation uses a unique_ptr when

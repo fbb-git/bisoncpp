@@ -1,5 +1,11 @@
 void destInstall(string dest, string base)
 {
-    chdir(g_cwd + base);                            // go to the base directory
+    chdir(g_cwd + base);                // go to the base directory
+                                        // (e.g., install/b)
+
+    // install the entries under the base directory to (= below) dest,
+    // which could be / or /tmp/whatever/
+    // They are not yet logged: to log installed entries call 
+    // logInstalled(dest, section)
     run(g_cwd + "icmake/installer " + dest + "/ "); // install the files
 }    

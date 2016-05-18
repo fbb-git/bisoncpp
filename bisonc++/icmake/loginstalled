@@ -1,0 +1,13 @@
+void logInstalled(string dest, string section)
+{
+    if (g_logPath != "")
+    {
+        chdir(g_cwd);
+
+            // The log-script is a bash script writing the log-info of
+            // files, links and dirs to g_logpath
+            // Files to install are under tmp/install/section.
+            //
+        backtick("icmake/log " + section + " " + dest + " " + g_logPath);
+    }
+}

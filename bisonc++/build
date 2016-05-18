@@ -30,6 +30,7 @@ int g_echo = ON;
 #include "icmake/manual"
 #include "icmake/github"
 #include "icmake/destinstall"
+#include "icmake/loginstalled"
 #include "icmake/install"
 
 void main(int argc, list argv)
