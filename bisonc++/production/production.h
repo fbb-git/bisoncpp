@@ -74,7 +74,7 @@ class Production: private std::vector<Symbol *>
         Block const &action() const;
         void setBlockLineNr(size_t lineNr);
 
-        Symbol const &operator[](size_t idx) const;
+        Symbol const &operator[](size_t idx) const; // same as rhs(idx)
         Symbol const *rhs(size_t idx) const;    // idx-ed symbol in the rhs
         Symbol const *lhs() const;
         Terminal const *precedence() const;
@@ -99,7 +99,6 @@ class Production: private std::vector<Symbol *>
 
         static void unused(Production const *production);
         static bool notUsed();
-        static bool isTerminal();
 
         static void storeFilename(std::string const &filename);
 
@@ -198,11 +197,6 @@ inline Production const *Production::start()
 inline std::ostream &operator<<(std::ostream &out, Production const *prod)
 {
     return prod->standard(out);
-}
-
-inline bool isTerminal(Symbol const *symbol)
-{
-    return symbol->isTerminal();
 }
 
 inline void Production::termToNonterm(Production *pPtr, 

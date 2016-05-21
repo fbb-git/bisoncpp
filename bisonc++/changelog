@@ -1,3 +1,7 @@
+  * %prec only useful if 1st token is terminal, 2nd token non-terminal
+    This is now checked in rules/updateprecedence.cc
+
+
 bisonc++ (5.02.01)
 
   * Repaired an error in 'build install LOG...'.

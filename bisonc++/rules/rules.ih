@@ -11,3 +11,8 @@
 using namespace std;
 using namespace FBB;
 
+inline bool Rules::isTerminal(Symbol const *symbol)
+{
+    return symbol->isTerminal();
+}
+
