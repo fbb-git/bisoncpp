@@ -64,11 +64,3 @@ void SRConflict::visitReduction(size_t reducibleIdx)
         ++nextIter;
     }
 }
-
-
-
-
-
-
-
-

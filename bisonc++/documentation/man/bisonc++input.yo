@@ -388,6 +388,18 @@ match. When bic() detects a type mismatches it issues errors.
                 )
             (see below) following, e.g., the tt('*') and tt('/') operators.
 
+            The tt(%prec) operator can only be used in rules starting with an
+            operator, followed by a non-terminal, as it changes the configured
+            precedence of the rule's initial terminal.
+
+            tt(%prec) cannot be used to modify the precedence of rules
+            defining postfix operators such as tt(expression '!') for
+            computing factorials. In those cases priority and association for
+            the operator must explicitly be defined. 
+
+            Bic()'s user manual contains some additional information on this
+            issue. 
+
     it() bf(%print-tokens)
 
            The tt(print) directive provides an implementation of the Parser
