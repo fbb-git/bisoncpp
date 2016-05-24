@@ -1,5 +1,8 @@
 #include "rules.ih"
 
+// called from parser/setprecedence to set the precedence of the 
+// current production rule
+
 void Rules::setPrecedence(Terminal const *terminal)
 {
     if (!d_currentProduction->precedence())

@@ -1,10 +1,8 @@
-bisonc++ (5.03.00)
+bisonc++ (5.02.02)
 
-  * %prec only useful if 1st token is terminal, and 2nd token is a
-    non-terminal.  This is now checked in rules/updateprecedence.cc (man-page
-    and manual updated accordingly)
+  * Updated the description of the %prec directive.
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 23 May 2016 10:09:21 +0530
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 24 May 2016 16:33:48 +0530
 
 bisonc++ (5.02.01)
 

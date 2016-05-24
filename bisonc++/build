@@ -108,7 +108,7 @@ void main(int argc, list argv)
     {
         precompileHeaders();
         system("icmbuild program " + strip);
-        run("oxref -fxs tmp/lib" LIBRARY ".a > " PROGRAM ".xref");
+        run("oxref -fxs tmp/main.o tmp/lib" LIBRARY ".a > " PROGRAM ".xref");
         exit(0);
     }
 

@@ -28,14 +28,14 @@ class Symbol: public Element
 
         std::string d_stype;        
                                 // Type assigned by explicit symbol type 
-                                // association, e.g. %type <int> symbol
-                                // but there's also a type association with
-                                // symbols when no %union is specified. In
-                                // that case it's either the default (int) or
-                                // %stype-defined type.
+                                // association, e.g. %type <int> symbol but
+                                // there's also a type association with
+                                // symbols when no %union or %polymorphic is
+                                // specified. In that case it's either the
+                                // default (int) or %stype-defined type.
     
         int d_type;             // type of the symbol using the enum values of
-                                // the Type enum. Type's values are bit
+                                // the above Type enum. Type's values are bit
                                 // values, and multiple values may therefore
                                 // be assigned.
 

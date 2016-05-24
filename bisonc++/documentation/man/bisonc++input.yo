@@ -371,8 +371,12 @@ match. When bic() detects a type mismatches it issues errors.
 
     it() bf(%prec) tt(token) 
 
-           Overrules the defined precedence of an operator for a particular
-            grammatical rule. A well known application of tt(%prec) is:
+           Defines the precedence of a production rule. By default, production
+rules have priorities that are equal to the priorities of their first terminal
+tokens, or they receive the maximum possible priority if they don't contain
+terminal tokens. To change a production rule's default priority the tt(%prec)
+directive is used, which assigns the directive's token's priority to the
+production rule's priority. A well known application of tt(%prec) is:
                 verb(
     expression:
         '-' expression %prec UMINUS
@@ -388,17 +392,8 @@ match. When bic() detects a type mismatches it issues errors.
                 )
             (see below) following, e.g., the tt('*') and tt('/') operators.
 
-            The tt(%prec) operator can only be used in rules starting with an
-            operator, followed by a non-terminal, as it changes the configured
-            precedence of the rule's initial terminal.
-
-            tt(%prec) cannot be used to modify the precedence of rules
-            defining postfix operators such as tt(expression '!') for
-            computing factorials. In those cases priority and association for
-            the operator must explicitly be defined. 
-
-            Bic()'s user manual contains some additional information on this
-            issue. 
+            Refer to bic()'s user manual for a more elaborate coverage of the
+            tt(%prec) directive.
 
     it() bf(%print-tokens)
 

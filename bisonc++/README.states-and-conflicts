@@ -140,6 +140,8 @@ Defining states proceeds as follows:
            for in the LA set of itemVector[0]).
         2. In this case, all are found and depending on the token's priority
            and the rule's priority either a shift or a reduce is selected. 
+
+
      
      Production rules received their priority setting either explicitly (using
      %prec) or from their first terminal token. See also
@@ -193,4 +195,78 @@ Defining states proceeds as follows:
     used, rather than 'shift'. Since there is no explicit basis for this
     choice the choice between shift and reduce is flagged as a conflict.
 
+
+Here is another illustration. Consider the familiar unary minus operator, but
+with a somewhat different grammar than usual:
+
+    %left '-'
+    %right UNARY
+    
+    expr:
+        NR
+    |
+        expr '-' expr
+    |
+        expr '-'
+    ;
+
+When this grammar is analyzed one of its states looks like this (the items are
+reordered so that items transiting to identical next states are clustered:
+
+    0: [P2 2] expr -> expr '-'  . expr   { '-' <EOF> }  0
+    3: [P2 0] expr ->  . expr '-' expr   { '-' <EOF> }  0
+    4: [P3 0] expr ->  . expr '-'   { '-' <EOF> }  0
+    
+      0:   On expr to state 4 with (0 3 4 )
+    
+    2: [P1 0] expr ->  . NR   { '-' <EOF> }  1
+      1:   On NR to state 2 with (2 )
+    
+    1: [P3 2] expr -> expr '-'  .   { '-' <EOF> }  -1
+      Reduce item(s): 1 
+
+Even though the rule    
+        expr: expr '-'   
+has a higher priority than the binary minus operator it is not automatically
+selected. To see why look at the nextVector's symbols: for items 0, 3, and 4
+this is 'expr'; for item 2 this is NR. But the look-ahead set does not contain
+these symbols, and so there is no conflict. So, when encountering the
+following input:
+
+        expr '-' expr '-'
+
+the parser will, after processing the leftmost minus, parse the second expr,
+followed by a transition to another state, where expr '-' expr is reduced to
+expr. Only then the second minus is processed.
+
+After changing the grammar so that we get the familiar unary minus
+specification (expr: '-' expr %prec UMINUS) the comparable state looks like
+this: 
+
+    0: [P3 2] expr -> '-' expr  .   { '-' <EOF> }  -1
+    1: [P2 1] expr -> expr  . '-' expr   { '-' <EOF> }  0
+      0 (removed by precedence):   On '-' to state 4 with (1 )
+      Reduce item(s): 0 
+
+In this case there *is* a conflict: item 1 would transit to state 4 when the
+minus is the next symbol to process. But the minus is also in item 0's
+lookahead set, hence the conflict. Now the priorities of the two rules
+determines which one is selected. As the priority of the production rule
+referred to by item 0 is higher than the priority of the production rule
+referred to by item 1, item 1 is removed from the set of items, and the unary
+minus is processed (a reduce action), while the shift implied by item 1 never
+occurs as item 1 is reoved from the set of items.
+
+As a further illustration consider what happens if the unary minus's priority
+is set to a lower priority than the binary minus operator. In that case we
+encounter this state:
+
+    0: [P3 2] expr -> '-' expr  .   { <EOF> }  -1
+    1: [P2 1] expr -> expr  . '-' expr   { '-' <EOF> }  0
+      0:   On '-' to state 4 with (1 )
+      Reduce item(s): 0 
+
+Here the minus has disappeared from the LA set of the reducible item; there is
+no conflict anymore, and a minus token results in a shift to state 4. In other
+cases item 0 is selected, reducing expr '-' to an expr.
 

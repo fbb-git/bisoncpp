@@ -16,6 +16,8 @@ void Parser::setPrecedence(size_t type)
         break;
     }        
 
+        // set the precedence of the current production rule.
+        //
     if (sp && sp->isTerminal())
         d_rules.setPrecedence(Terminal::downcast(sp));
     else
