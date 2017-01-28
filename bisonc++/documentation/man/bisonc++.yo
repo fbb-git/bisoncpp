@@ -134,8 +134,8 @@ grammar-specification file. This man-page offers these sections:
     itemization(
     it() bf(DESCRIPTION): a short description of bic() and its application
             programmer's interface;
-    it() bf(PUBLIC MEMBERS AND -TYPES): members and types that can be used
-           by calling software;
+    it() bf(PUBLIC SYMBOLS): constructor, enums, members, and types that can
+           be used by calling software;
     it() bf(PRIVATE ENUMS AND -TYPES): enumerations and types only
            available to the tt(Parser) class;
     it() bf(PRIVATE MEMBER FUNCTIONS): member functions that are only
@@ -269,6 +269,7 @@ manpagesection(FILES)
     )
 
 manpagesection(SEE ALSO)
+    DEFINESYMBOL(manalso)(bf(bisonc++api)(3), bf(bisonc++input)(7))
     includefile(seealso.yo)
 
 manpagesection(BUGS)

@@ -12,6 +12,7 @@ class \@: public \@Base
 $insert 4 scannerobject
         
     public:
+        \@() = default;
         int parse();
 
     private:

@@ -62,8 +62,8 @@ the following sections:
 
     itemization(
     it() bf(DESCRIPTION): this section;
-    it() bf(PUBLIC MEMBERS AND -TYPES): members and types that can be used
-           by calling software;
+    it() bf(PUBLIC SYMBOLS): constructor, enums, members, and types that can
+           be used by calling software;
     it() bf(PRIVATE ENUMS AND -TYPES): enumerations and types only
            available to the tt(Parser) class;
     it() bf(PRIVATE MEMBER FUNCTIONS): member functions that are only
@@ -77,7 +77,7 @@ the following sections:
     it() bf(AUTHOR): at the end of this man-page.
     )
 
-manpagesection(PUBLIC MEMBERS, TYPES, AND ENUMS)
+manpagesection(PUBLIC SYMBOLS)
 
     includefile(../manual/class/public.yo)
     
@@ -184,6 +184,7 @@ manpagesection(TYPES AND VARIABLES IN THE ANONYMOUS NAMESPACE)
     includefile(../manual/class/anonymous.yo)
 
 manpagesection(SEE ALSO)
+    DEFINESYMBOL(manalso)(bf(bisonc++)(1), bf(bisonc++input)(7))
     includefile(seealso.yo)
     
 manpageauthor()

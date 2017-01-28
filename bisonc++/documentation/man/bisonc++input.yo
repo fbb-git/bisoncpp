@@ -772,6 +772,7 @@ the time the the lexical scanner is being defined, avoiding circular class
 dependencies.
 
 manpagesection(SEE ALSO)
+    DEFINESYMBOL(manalso)(bf(bisonc++)(1), bf(bisonc++api)(3))
     includefile(seealso.yo)
 
 manpageauthor()

@@ -1,5 +1,5 @@
     bf(bison)(1), bf(bison++)(1), 
-    bf(bison++api)(3), bf(bison++input)(7), 
+    SYMBOLVALUE(manalso),
     bf(bison.info) (using texinfo),
     bf(flexc++)(1),
     bf(https://fbb-git.github.io/bisoncpp/)

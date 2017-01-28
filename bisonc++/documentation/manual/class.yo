@@ -1,6 +1,6 @@
 includefile(class/intro.yo)
 
-sect(Public Members and Types)
+sect(Public Symbols)
 includefile(class/public.yo)
 
 sect(Protected Enumerations and Types)
