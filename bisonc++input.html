@@ -11,8 +11,8 @@
 <body>
 <hr/>
 <h1 id="title">bisonc++input</h1>
-<h2 id="author">bisonc++.5.02.01.tar.gz</h2>
-<h2 id="date">2005-2016</h2>
+<h2 id="author">bisonc++.5.03.00.tar.gz</h2>
+<h2 id="date">2005-2017</h2>
 
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
@@ -46,8 +46,8 @@
 <body>
 <hr/>
 <h1 id="title">bisonc++input(7)</h1>
-<h2 id="author">bisonc++.5.02.01.tar.gz bisonc++ grammar file organization</h2>
-<h2 id="date">2005-2016</h2>
+<h2 id="author">bisonc++.5.03.00.tar.gz bisonc++ grammar file organization</h2>
+<h2 id="date">2005-2017</h2>
 
 
 <p>
@@ -385,8 +385,12 @@ The <em >%polymorphic</em> directive defines a polymorphic semantic
 <p>
 <li> <strong >%prec</strong> <em >token</em> 
 <p>
-Overrules the defined precedence of an operator for a particular
-            grammatical rule. A well known application of <em >%prec</em> is:
+Defines the precedence of a production rule. By default, production
+rules have priorities that are equal to the priorities of their first terminal
+tokens, or they receive the maximum possible priority if they don't contain
+terminal tokens. To change a production rule's default priority the <em >%prec</em>
+directive is used, which assigns the directive's token's priority to the
+production rule's priority. A well known application of <em >%prec</em> is:
                 <pre>
 
     expression:
@@ -407,6 +411,9 @@ Overrules the defined precedence of an operator for a particular
 </pre>
 
             (see below) following, e.g., the <em >'*'</em> and <em >'/'</em> operators.
+<p>
+Refer to <strong >bisonc++</strong>'s user manual for a more elaborate coverage of the
+            <em >%prec</em> directive.
 <p>
 <li> <strong >%print-tokens</strong>
 <p>
@@ -1585,8 +1592,9 @@ the time the the lexical scanner is being defined, avoiding circular class
 dependencies.
 <p>
 <h2 >SEE ALSO</h2>
+    
         <strong >bison</strong>(1), <strong >bison++</strong>(1), 
-    <strong >bison++api</strong>(3), <strong >bison++input</strong>(7), 
+    <strong >bisonc++</strong>(1), <strong >bisonc++api</strong>(3),
     <strong >bison.info</strong> (using texinfo),
     <strong >flexc++</strong>(1),
     <strong >https://fbb-git.github.io/bisoncpp/</strong>

@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<title> <div style="text-align: center"><strong >Bisonc++</strong> (Version 5.02.01) User Guide</div> </title>
+<title> <div style="text-align: center"><strong >Bisonc++</strong> (Version 5.03.00) User Guide</div> </title>
 <style type="text/css">
     figure {text-align: center;}
     img {vertical-align: center;}
@@ -689,8 +689,8 @@ rule. Well known is the construction
                 
 </pre>
  
-    Here, the default priority and precedence of the <code >`-'</code> token as the
-subtraction operator is overruled by the precedence and priority of the
+    Here, the default precedence and precedence of the <code >`-'</code> token as the
+subtraction operator is overruled by the precedence and precedence of the
 <code >UMINUS</code> token, which is frequently defined as:
                 <pre>
 
@@ -707,8 +707,8 @@ subtraction operator is overruled by the precedence and priority of the
         
 </pre>
 
-    giving <code >* /</code> and <code >%</code> a higher priority than <code >+</code> and <code >-</code>,
-ensuring at the same time that <code >UMINUS</code> is given both the highest priority
+    giving <code >* /</code> and <code >%</code> a higher precedence than <code >+</code> and <code >-</code>,
+ensuring at the same time that <code >UMINUS</code> is given both the highest precedence
 and a right-associativity.
 <p>
 In the above production rule the operator order would result in the
@@ -721,6 +721,149 @@ construction
 
     being evaluated from right to left, having a higher precedence than either
 the multiplication or the addition operators.
+<p>
+The <code >%prec</code> directive associates priorities to rules. These priorities are
+interpreted whenever there are (shift-reduce) conflicts. If there are no
+conflicts, priorities are not required, and are ignored.
+<p>
+When the parser analyzes the above grammar, a conflict <em >is</em>
+encountered. Consider the following simple grammar, in which only the minus
+(<code >'-'</code>) operator is used, albeit in beinary and unary form:
+<p>
+<pre>
+
+    %token NR
+    %left '-'
+    %right UNARY
+
+    expr:
+        NR
+    |
+        expr '-' expr
+    |
+        '-' expr %prec UNARY
+    ;
+        
+</pre>
+
+    When analuzing this grammar, <strong >bisonc++</strong> defines <em >states</em> (cf. chapter
+<a href="bisonc++07.html#ALGORITHM">7</a>) defining what to do when encountering certain input
+tokens. Each possibility is defined by an <em >item</em>, in which a dot (<code >.</code>) is
+commonly used to show to which point a production rule has been
+recognized. For the above grammar one such state looks like this:
+        <pre>
+
+    0: expr -&gt; '-' expr  .        { '-' &lt;EOF&gt; }
+    1: expr -&gt; expr  . '-' expr
+        
+</pre>
+
+    The elements between parentheses define the <em >look-ahead</em> tokens: the
+token that may appear next for <em >reducible</em> rules. Item 0 is such a reducible
+rule, and it is used to reduce <code >'-' expr</code> to an expression (<code >expr</code>).
+<p>
+The second item shows the production rule defining the binary minus
+operator. Its left-hand side expression has been recognized, and the parser
+expects to see a minus operator next. 
+<p>
+The conflict is caused by the expected minus operator in item 1, and a
+minus operator that may follow item 0. As there is only one look-ahead symbol
+(since <strong >bisonc++</strong> can only handle LALR(1) grammars) the grammer contains a
+shift-reduce conflict: shift, and continue with item 1; or reduce, and
+continue with item 0. In this case, <code >%prec</code> solves the issue, by giving item
+0 a higher precedence than item 1 (whose precedence is equal to the precedence
+of its first terminal token, which is the binary minus operator's
+precedence). 
+<p>
+Although never encountered in real life, it's also possible to give the
+unary minus operator a <em >lower</em> priority than the binary minus operator. The
+grammar, in this case, looks like this:
+        <pre>
+
+    %token NR
+    %right UNARY
+    %left '-'
+
+    expr:
+        NR
+    |
+        expr '-' expr
+    |
+        '-' expr %prec UNARY
+    ;
+        
+</pre>
+
+<p>
+With this grammar we encounter a state with these two items:
+        <pre>
+
+    0:  expr -&gt; '-' expr  .   { &lt;EOF&gt; } 
+    1:  expr -&gt; expr  . '-' expr
+        
+</pre>
+
+    Here, the conflict no longer manifests itself, as the minus operator no
+longer appears in item 0's look-ahead set. The resulting parser will, when
+encountering a minus, shift the minus, and proceed according to item 1, and
+when anything else is encountered reduce the <code >'-' expr</code> production to
+<code >expr</code>. In real life this means that an expression like <code >-4 - 3</code>
+evaluates to -1. 
+<p>
+To illustrate a situation where <code >%prec</code> won't work consider this
+grammar: 
+        <pre>
+
+    %token NR
+    %left '-'
+    %right POSTFIX
+
+    expr:
+        NR
+    |
+        expr '-' expr
+    |
+        expr '-' %prec POSTFIX
+    ;
+        
+</pre>
+
+    When this grammar is analyzed the following state is encountered:
+        <pre>
+
+    0:  expr -&gt; expr '-'  . expr   
+    1:  expr -&gt; expr '-'  .         { '-' &lt;EOF&gt; }
+    2:  expr -&gt;  . NR   
+    3:  expr -&gt;  . expr '-' expr   
+    4:  expr -&gt;  . expr '-'   
+      
+</pre>
+
+    To appreciate why <code >%prec</code> doesn't work here, consider the various
+look-ahead tokens. For items 0, 3, and 4 the look-ahead token is the
+non-terminal <code >expr</code>; for item 2 the look-ahead token is the terminal <code >NR</code>,
+and for item 1, handling the postfix minus operator, it is a minus
+character. Thus, there  isn't any conflict between the shiftable items and the
+reducible item 1, and consequently the <code >%prec</code> specification isn't
+used. Any attempt to define a grammar handling a postfix minus operator will
+fail. A common solution consists of defining a separate operator, explicitly
+giving it its appropriate priority and associativity. E.g.,
+        <pre>
+
+    %token NR
+    %left '-'
+    %right '_'  // underscore
+
+    expr:
+        NR
+    |
+        expr '-' expr
+    |
+        expr '_'    // underscore as postfix minus
+    ;
+        
+</pre>
+
 <p>
 <a name="l36"></a>
 <h3 >4.5.17: %polymorphic: using polymorphism to define multiple semantic
