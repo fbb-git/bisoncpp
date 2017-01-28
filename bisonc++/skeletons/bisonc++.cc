@@ -274,8 +274,8 @@ $insert 0 threading
     {
         if (elementPtr->d_action < 0)   // default reduction
         {
-$insert 8 debug "lookup(" << d_state__ << ", " << symbol__(d_token__) +
-$insert 8 debug "): default reduction by rule " << -elementPtr->d_action
+$insert 12 debug "lookup(" << d_state__ << ", " << symbol__(d_token__) +
+$insert 12 debug "): default reduction by rule " << -elementPtr->d_action
             return elementPtr->d_action;                
         }
 $insert 8 debug "lookup(" << d_state__ << ", " << symbol__(d_token__) << "): Not " +
