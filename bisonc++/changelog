@@ -1,3 +1,6 @@
+  * Added a warning to skeleton/binsonc++.h that until the #undef instruction
+    Parser will be read as ParserBase.
+
 bisonc++ (5.03.00)
 
   * Added a declaration like 'Parser() = default' to the generated parser
