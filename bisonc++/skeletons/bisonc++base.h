@@ -32,6 +32,7 @@ $insert LTYPE
 $insert STYPE
 
     private:
+        size_t d_msgIdx__ = 0;
         int d_stackIdx__ = -1;
         std::vector<std::pair<size_t, size_t>> d_stateStack__;
         std::vector<STYPE__>  d_valueStack__;
@@ -74,6 +75,7 @@ $insert debugdecl
         bool debug() const;
         void pop__(size_t count = 1);
         void push__(size_t nextState);
+        void acceptMsgIdx__();
         void popToken__();
         void pushToken__(int token);
         void reduce__(PI__ const &productionInfo);
@@ -94,6 +96,11 @@ inline \@Base::DebugMode__ operator|(\@Base::DebugMode__ lhs,
     return static_cast<\@Base::DebugMode__>(static_cast<int>(lhs) | rhs);
 };
 
+inline void \@Base::acceptMsgIdx__() 
+{
+    d_stateStack__[d_stackIdx__].second = d_msgIdx__;
+}
+
 inline size_t \@Base::msgIdx__() const
 {
     return d_stateStack__[d_stackIdx__].second;
@@ -101,7 +108,7 @@ inline size_t \@Base::msgIdx__() const
 
 inline void \@Base::msgIdx__(size_t idx)
 {
-    d_stateStack__[d_stackIdx__ - 1].second = idx;
+    d_msgIdx__ = idx;
 }
 
 inline bool \@Base::debug() const

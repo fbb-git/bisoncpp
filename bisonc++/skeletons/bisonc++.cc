@@ -453,6 +453,7 @@ $insert 8 debug " "
             if (action > 0)                 // SHIFT: push a new state
             {
                 push__(action);
+                acceptMsgIdx__();
                 popToken__();               // token processed
             }
             else if (action < 0)            // REDUCE: execute and pop.
