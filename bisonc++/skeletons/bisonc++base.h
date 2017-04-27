@@ -33,7 +33,7 @@ $insert STYPE
 
     private:
         int d_stackIdx__ = -1;
-        std::vector<size_t>   d_stateStack__;
+        std::vector<std::pair<size_t, size_t>> d_stateStack__;
         std::vector<STYPE__>  d_valueStack__;
 $insert LTYPEstack
 
@@ -48,6 +48,7 @@ $insert LTYPEstack
             DEFAULT_RECOVERY_MODE__,
             UNEXPECTED_TOKEN__,
         };
+        size_t const *d_s_nErrors__;            // saves Meta__::s_nErrors__
         bool        d_actionCases__ = false;
         bool        d_debug__ = true;
         size_t      d_nErrors__ = 0;
@@ -61,6 +62,7 @@ $insert LTYPEstack
         STYPE__     d_nextVal__;
 $insert LTYPEdata
 
+    protected:
         \@Base();
 
 $insert debugdecl
@@ -78,6 +80,9 @@ $insert debugdecl
         void errorVerbose__();
         size_t top__() const;
 
+        size_t msgIdx__() const;
+        void msgIdx__(size_t idx);
+
     public:
         void setDebug(bool mode);
         void setDebug(DebugMode__ mode);
@@ -88,6 +93,16 @@ inline \@Base::DebugMode__ operator|(\@Base::DebugMode__ lhs,
 {
     return static_cast<\@Base::DebugMode__>(static_cast<int>(lhs) | rhs);
 };
+
+inline size_t \@Base::msgIdx__() const
+{
+    return d_stateStack__[d_stackIdx__].second;
+}
+
+inline void \@Base::msgIdx__(size_t idx)
+{
+    d_stateStack__[d_stackIdx__ - 1].second = idx;
+}
 
 inline bool \@Base::debug() const
 {

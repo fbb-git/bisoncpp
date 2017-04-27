@@ -163,10 +163,14 @@ $insert 8 LTYPEresize
             d_valueStack__.swap(enlarged);
         }
     }
+    size_t previous = 
+            d_stackIdx__ == -1 ? 0 : d_stateStack__[d_stackIdx__].second;
     ++d_stackIdx__;
-    d_stateStack__[d_stackIdx__] = d_state__ = state;
+    d_stateStack__[d_stackIdx__] = 
+            std::pair<size_t, size_t>{d_state__ = state, previous};
+
 $insert 4 LTYPEpush
-$insert 4 debug  "push(state " << state << stype__(", semantic TOS = ", d_val__, ")") << ')'
+$insert 4 debug  "\npush state " << state << stype__(". Semantic TOS value = ", d_val__, ".") << ". Stack size: " << d_stackIdx__
     *(d_vsp__ = &d_valueStack__[d_stackIdx__]) = std::move(d_val__);
 }
 
@@ -189,24 +193,23 @@ void \@Base::pushToken__(int token)
      
 void \@Base::pop__(size_t count)
 {
-$insert 4 debug "pop(" << count << ") from stack having size " << (d_stackIdx__ + 1)
+$insert 4 debug "removing " << count << " elements from the state-stack. Stack size: " << (d_stackIdx__ + 1 - count)
     if (d_stackIdx__ < static_cast<int>(count))
     {
-$insert 8 debug "Terminating parse(): unrecoverable input error at token " << symbol__(d_token__)
+$insert 8 debug "Terminating parse(): stack underflow at token " << symbol__(d_token__)
         ABORT();
     }
 
     d_stackIdx__ -= count;
-    d_state__ = d_stateStack__[d_stackIdx__];
+    d_state__ = d_stateStack__[d_stackIdx__].first;
     d_vsp__ = &d_valueStack__[d_stackIdx__];
 $insert 4 LTYPEpop
-$insert 4 debug "pop(): next state: " << d_state__ << ", token: " << symbol__(d_token__) +
-$insert 4 debug stype__("semantic: ", *d_vsp__)
+$insert 4 debug "new state: " << d_state__ << ", token to process: " << symbol__(d_token__) << stype__(", semantic: ", *d_vsp__)
 }
 
 inline size_t \@Base::top__() const
 {
-    return d_stateStack__[d_stackIdx__];
+    return d_stateStack__[d_stackIdx__].first;
 }
 
 void \@::executeAction(int production)
@@ -215,15 +218,13 @@ try
     if (d_token__ != _UNDETERMINED_)
         pushToken__(d_token__);     // save an already available token
 
-$insert 4 debug "executeAction of rule " << production +
-$insert 4 debug  stype__(", semantic [TOS]: ", *d_vsp__) << " ..."
+$insert 4 debug "executing the action block of rule " << production <<  stype__(", top value of the semantic stack: ", *d_vsp__)
 $insert executeactioncases
     switch (production)
     {
 $insert 8 actioncases
     }
-$insert 4 debug "... action of rule " << production << " completed" +
-$insert 4 debug  stype__(", semantic: ", *d_vsp__)
+$insert 4 debug "executed the action block of rule " << production <<  stype__(", returning semantic value ", *d_vsp__) << '\n'
 }
 catch (std::exception const &exc)
 {
@@ -235,8 +236,8 @@ inline void \@Base::reduce__(PI__ const &pi)
     d_token__ = pi.d_nonTerm;
     pop__(pi.d_size);
 
-$insert 4 debug "reduce(): by rule " << (&pi - s_productionInfo) +
-$insert 4 debug " to N-terminal " << symbol__(d_token__) << stype__(", semantic = ", d_val__)
+$insert 4 debug "\nreduced rule " << (&pi - s_productionInfo) << " to non-terminal " << symbol__(d_token__) << stype__(", semantic = ", d_val__) +
+$insert 4 debug ", stack size: " << d_stackIdx__ << '\n'
 }
 
 // If d_token__ is _UNDETERMINED_ then if d_nextToken__ is _UNDETERMINED_ another
@@ -249,7 +250,7 @@ void \@::nextToken()
     if (d_nextToken__ != _UNDETERMINED_)
     {
         popToken__();                       // consume pending token
-$insert 8 debug "nextToken(): popped " << symbol__(d_token__) << stype__(", semantic = ", d_val__)
+$insert 8 debug "using pending token: " << symbol__(d_token__) << stype__(", semantic = ", d_val__)
     }
     else
     {
@@ -260,7 +261,7 @@ $insert 8 debug "nextToken(): popped " << symbol__(d_token__) << stype__(", sema
             d_token__ = _EOF_;
     }
     print();
-$insert 4 debug "nextToken(): using " << symbol__(d_token__) << stype__(", semantic = ", d_val__)
+$insert 4 debug "next token `" << symbol__(d_token__) << stype__(", semantic = ", d_val__) << '\''
 }
 
 // if the final transition is negative, then we should reduce by the rule
@@ -274,12 +275,13 @@ $insert 0 threading
     {
         if (elementPtr->d_action < 0)   // default reduction
         {
-$insert 12 debug "lookup(" << d_state__ << ", " << symbol__(d_token__) +
-$insert 12 debug "): default reduction by rule " << -elementPtr->d_action
+$insert 12 debug "in state " << d_state__ <<  (d_token__ == _UNDETERMINED_ ? "" : " at " + symbol__(d_token__)) +
+$insert 12 debug ": default reduction by rule " << -elementPtr->d_action
+
             return elementPtr->d_action;                
         }
-$insert 8 debug "lookup(" << d_state__ << ", " << symbol__(d_token__) << "): Not " +
-$insert 8 debug "found. " << (recovery ? "Continue" : "Start") << " error recovery." 
+$insert 12 debug (recovery ? "Continuing" : "\nSTARTING") << " error recovery." 
+$insert 12 debug "in state " << d_state__ << ": unexpected token " << symbol__(d_token__)
 
         // No default reduction, so token not found, so error.
         throw UNEXPECTED_TOKEN__;
@@ -313,15 +315,15 @@ try
 $insert 8 errorverbose
     }
 
-$insert 4 debug "errorRecovery(): " << d_nErrors__ << " error(s) so far. State = " << top__()
+$insert 4 debug "errorecovery: " << d_nErrors__ << " error(s) so far. State = " << top__()
 
     // get the error state
     while (not (s_state[top__()][0].d_type & ERR_ITEM))
-    {
-$insert 8 debug "errorRecovery(): pop state " << top__()
+    { 
+$insert 8 debug "    errorrecovery: popping state " << top__()
         pop__();
     }
-$insert 4 debug "errorRecovery(): state " << top__() << " is an ERROR state"
+$insert 4 debug "\nerrorrecovery: found ERROR state " << top__()
 
     // In the error state, lookup a token allowing us to proceed.
     // Continuation may be possible following multiple reductions,
@@ -359,13 +361,12 @@ $insert 4 debug "errorRecovery(): state " << top__() << " is an ERROR state"
             {
                 push__(action);
                 popToken__();
-$insert 16 debug "errorRecovery() SHIFT state " << action +
-$insert 16 debug ", continue with " << symbol__(d_token__)
+$insert 16 debug "\n    errorRecovery: continue (SHIFT) in  state " << action +
+$insert 16 debug (d_token__ == _UNDETERMINED_ ? ", next token: to retrieve" : (", current token: " + symbol__(d_token__)))
 
                 if (gotToken)
                 {
-$insert 20 debug "errorRecovery() COMPLETED: next state " +
-$insert 20 debug action << ", no token yet"
+$insert 20 debug "errorRecovery COMPLETED in state " << action << ". To determine: next token"
 
                     d_acceptedTokens__ = 0;
                     return;
@@ -380,8 +381,7 @@ $insert 20 debug action << ", no token yet"
  
                                             // next token is the rule's LHS
                 reduce__(s_productionInfo[-action]); 
-$insert 16 debug "errorRecovery() REDUCE by rule " << -action +
-$insert 16 debug ", token = " << symbol__(d_token__)
+$insert 16 debug "errorRecovery: REDUCED by rule " << -action << ", next token: " << symbol__(d_token__)
             }
             else
                 ABORT();                    // abort when accepting during
@@ -432,13 +432,16 @@ catch (ErrorRecovery__)       // This is: DEFAULT_RECOVERY_MODE
 int \@::parse()
 try 
 {
+    d_s_nErrors__ = Meta__::s_nErrors__;          // save current ptr
+    Meta__::s_nErrors__ = &d_nErrors__;           // set it to d_nErrors__
+
 $insert 4 debug "parse(): Parsing starts"
     push__(0);                              // initial state
     clearin();                              // clear the tokens.
 
     while (true)
     {
-$insert 8 debug "=="
+$insert 8 debug " "
         try
         {
             if (s_state[d_state__]->d_type & REQ_TOKEN)
@@ -469,6 +472,8 @@ $insert 8 debug "=="
 }
 catch (Return__ retValue)
 {
+    Meta__::s_nErrors__ = d_s_nErrors__;
+
 $insert 4 debug "parse(): returns " << retValue
     return retValue;
 }

@@ -1,6 +1,27 @@
   * Added a warning to skeleton/binsonc++.h that until the #undef instruction
     Parser will be read as ParserBase.
 
+  * With Polymorphic semantic values a tag mismatch is no considered fatal
+    anymore if errors were already encountered. In that case the semantic
+    value showing a tag mismatch is replaced by the default value of the
+    semantic value of the expected polymorphic type.
+
+TODO  * The build script now properly recognizes the 'strip' option
+
+  * Compilation now starts with the construction of precompiled headers,
+    significantly reducing the compilation time.
+
+  * The state stack elements now consist of two size_t values: the first
+    element holds the stack index, the second element can be used as index to
+    an error message to display. 
+
+  * The member functions msgIdx__() and msgIdx(size_t) can be used by the
+    parser to (resp.) retrieve and set the current state's message index. The
+    message index is initialized to 0 for the 1st parsing-state.
+
+
+TODO: * Documentation was updated to reflect the above modifications
+
 bisonc++ (5.03.00)
 
   * Added a declaration like 'Parser() = default' to the generated parser

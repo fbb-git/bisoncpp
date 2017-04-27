@@ -31,3 +31,6 @@
 #define COMPILER            ""
 #define COMPILER_OPTIONS    ""
 #define LINKER_OPTIONS      ""
+#define IH                  ".ih"
+#define PRECOMP             "-x c++-header"
+#define DEFCOM              "program"

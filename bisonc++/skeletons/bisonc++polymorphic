@@ -1,6 +1,8 @@
 namespace Meta__
 {
 
+extern size_t const *s_nErrors__;
+
 template <Tag__ tag>
 struct TypeOf;
 
