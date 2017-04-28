@@ -14,6 +14,7 @@ void Generator::staticData(ostream &out) const
 )";
 
     d_writer.productions();
+    d_writer.sErrorLA();
     d_writer.srTables();
     d_writer.statesArray();
 

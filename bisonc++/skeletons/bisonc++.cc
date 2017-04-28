@@ -51,6 +51,7 @@ $insert class.ih
 // as const, since the lookup() function below will modify them
 
 $insert debugincludes
+#include <unordered_set>
 
 namespace // anonymous
 {
@@ -99,7 +100,8 @@ namespace // anonymous
                                     // postive (shift), or 0 (accept)
             size_t d_errorState;    // used with Error states
         };
-    };
+        size_t d_error = 0;         // Idx in s_errorLA__, used by 
+    };                              // error-states
 
 $insert 4 staticdata 
 

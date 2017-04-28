@@ -108,6 +108,8 @@ class State
 
         int type() const;               // StateType accessor
 
+        void insertLAset(std::ostream &out) const;
+
     private:
         State(size_t idx);
 

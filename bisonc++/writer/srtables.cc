@@ -2,25 +2,24 @@
 
 void Writer::srTables() const
 {
-    *d_out << "\n"
-        "// State info and SR__ transitions for each state.\n"
-        "\n";
-
     TableSupport support;
 
     support <<  "    { { "  
             <<  "}, { "  
-            <<  "} }, ";
+            <<  "}"
+            <<  " }, ";
 
-    Table   table(support, 3, Table::ROWWISE);
+    Table   table(support, 4, Table::ROWWISE);
 
-    table << Align(2, std::left);
+    table << Align(3, std::left);
+
+    size_t errorLAidx = 0;
 
     for_each(
         State::begin(), State::end(),
         [&](State const *state)
         {
-            srTable(state, d_baseclass, table, *d_out);
+            srTable(&errorLAidx, state, d_baseclass, table, *d_out);
         }
     );
 
