@@ -42,7 +42,7 @@ class LookaheadSet: private FirstSet
         bool operator<(LookaheadSet const &other) const;
         bool operator==(LookaheadSet const &other) const;
 
-        void basicLAset(std::ostream &out) const;
+        bool basicLAset(std::ostream &out) const;
 
         std::ostream &insert(std::ostream &out) const;
 

@@ -46,7 +46,8 @@ class Writer
         static void srTable(size_t *errorLAidx, State const *state, 
                             std::string const &baseclassScope,
                             FBB::Table &table, std::ostream &out);
-        static void errorLAset(State const *state, std::ostream &out);
+        static void errorLAset(size_t *idx, State const *state, 
+                               std::ostream &out);
         static void transitions(size_t *errorLAidx, FBB::Table &table, 
                                 Next::Vector const &next);
         static void transition(size_t *errorLAidx,

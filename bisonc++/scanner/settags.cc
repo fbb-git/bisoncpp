@@ -4,7 +4,7 @@ void Scanner::setTags() const
 {
     emsg.setTag(filename() + ": error");
     fmsg.setTag(filename() + ": fatal");
-    imsg.setTag(filename() + " (info)\n\n");
+    imsg.setTag(filename() + " (info)");
     wmsg.setTag(filename() + ": warning");
     setLineNrs();
 }

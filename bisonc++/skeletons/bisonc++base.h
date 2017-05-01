@@ -11,6 +11,7 @@ $insert debugincludes
 namespace // anonymous
 {
     struct PI__;
+    struct SR__;
 }
 
 $insert namespace-open
@@ -63,6 +64,10 @@ $insert LTYPEstack
         STYPE__     d_nextVal__;
 $insert LTYPEdata
 
+    public:
+        void setDebug(bool mode);
+        void setDebug(DebugMode__ mode);
+
     protected:
         \@Base();
 
@@ -82,12 +87,8 @@ $insert debugdecl
         void errorVerbose__();
         size_t top__() const;
 
-        size_t msgIdx__() const;
+        size_t msgIdx__() const;            // WIP
         void msgIdx__(size_t idx);
-
-    public:
-        void setDebug(bool mode);
-        void setDebug(DebugMode__ mode);
 }; 
 
 inline \@Base::DebugMode__ operator|(\@Base::DebugMode__ lhs, 

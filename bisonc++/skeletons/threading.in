@@ -15,7 +15,13 @@ SR__ *lastElementPtr = sr + lastIdx;
 lastElementPtr->d_token = d_token__;    // set search-token
 
 SR__ *elementPtr = sr + 1;              // start the search at s_xx[1]
+SR__ *errorPtr = 0;
 while (elementPtr->d_token != d_token__)
+{
+    if (elementPtr->d_token == _error_)
+        errorPtr = elementPtr;
+
     ++elementPtr;
+}
 @end
 

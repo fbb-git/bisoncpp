@@ -42,7 +42,14 @@ void Writer::srTable(size_t *errorLAidx, State const *sp,
     if (acceptState)
         table << Rules::eofTerminal() << "PARSE_ACCEPT" << def;
 
-    reductions(table, *sp);        
+// The following function is not called anymore: there are no multiple
+// reductions and this function attempts to insert non-default reductions into
+// SR tables States may have multiple _error_ .  items, which appear to imply
+// multiple reductions, but these states are never reached as the error
+// recovery procedure processes error-input and pushes an appropriate
+// continuation instead.
+//
+//    reductions(table, *sp);        
 
     table << 0 << 
         (defaultReduction ? -static_cast<int>(defaultReduction->nr()) : 0) <<

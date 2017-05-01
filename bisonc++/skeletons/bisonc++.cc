@@ -172,7 +172,7 @@ $insert 8 LTYPEresize
             std::pair<size_t, size_t>{d_state__ = state, previous};
 
 $insert 4 LTYPEpush
-$insert 4 debug  "\npush state " << state << stype__(". Semantic TOS value = ", d_val__, ".") << ". Stack size: " << d_stackIdx__
+$insert 4 debug  "\npush state " << state << stype__(". Semantic TOS value = ", d_val__, ".") << ". Stack size: " << (d_stackIdx__ + 1)
     *(d_vsp__ = &d_valueStack__[d_stackIdx__]) = std::move(d_val__);
 }
 
@@ -239,7 +239,7 @@ inline void \@Base::reduce__(PI__ const &pi)
     pop__(pi.d_size);
 
 $insert 4 debug "\nreduced rule " << (&pi - s_productionInfo) << " to non-terminal " << symbol__(d_token__) << stype__(", semantic = ", d_val__) +
-$insert 4 debug ", stack size: " << d_stackIdx__ << '\n'
+$insert 4 debug ", stack size: " << (d_stackIdx__ + 1) << '\n'
 }
 
 // If d_token__ is _UNDETERMINED_ then if d_nextToken__ is _UNDETERMINED_ another
@@ -275,15 +275,55 @@ $insert 0 threading
 
     if (elementPtr == lastElementPtr)   // reached the last element
     {
+//        try
+//        {
+            if (errorPtr != 0)       // error continuation is available
+            {
+
+std::cerr << "ERROR continuation in state " << d_state__ << 
+", s_errorLA element to use = " << errorPtr->d_error <<
+", ignoring unexpected token " << symbol__(d_token__) << '\n';
+
+                std::unordered_set<int> &us = s_errorLA[ errorPtr->d_error ];
+
+                do
+                {
+                    d_token__ = _UNDETERMINED_;
+                    nextToken();
+    
+                    if (d_token__ == _EOF_)
+                    {
+                        std::cerr << "INPUT EXHAUSTED\n";
+                        throw 0;
+                    }
+                }
+                while (us.find(d_token__) == us.end());
+    
+                int action = errorPtr->d_action;
+
+            std::cerr <<  "encountered " << symbol__(d_token__) << " in state " <<
+                    d_state__ << ": next state: " << action << '\n';
+            std::cerr << "Error count now: " << ++d_nErrors__ << '\n';
+
+                return action;
+            }
+        }
+        catch (...)
+        {}
+
+
+//////////////////////////////////////////////////////////////////////////
+
+
         if (elementPtr->d_action < 0)   // default reduction
         {
-$insert 12 debug "in state " << d_state__ <<  (d_token__ == _UNDETERMINED_ ? "" : " at " + symbol__(d_token__)) +
-$insert 12 debug ": default reduction by rule " << -elementPtr->d_action
+$insert 16 debug "in state " << d_state__ <<  (d_token__ == _UNDETERMINED_ ? "" : " at " + symbol__(d_token__)) +
+$insert debug ": default reduction by rule " << -elementPtr->d_action
 
             return elementPtr->d_action;                
         }
 $insert 12 debug (recovery ? "Continuing" : "\nSTARTING") << " error recovery." 
-$insert 12 debug "in state " << d_state__ << ": unexpected token " << symbol__(d_token__)
+$insert debug "in state " << d_state__ << ": unexpected token " << symbol__(d_token__)
 
         // No default reduction, so token not found, so error.
         throw UNEXPECTED_TOKEN__;
@@ -312,7 +352,7 @@ try
     if (d_acceptedTokens__ >= d_requiredTokens__)// only generate an error-
     {                                           // message if enough tokens 
         ++d_nErrors__;                          // were accepted. Otherwise
-        error("Syntax error");                  // simply skip input
+        error();                                // simply skip input
 
 $insert 8 errorverbose
     }
@@ -434,8 +474,8 @@ catch (ErrorRecovery__)       // This is: DEFAULT_RECOVERY_MODE
 int \@::parse()
 try 
 {
-    d_s_nErrors__ = Meta__::s_nErrors__;          // save current ptr
-    Meta__::s_nErrors__ = &d_nErrors__;           // set it to d_nErrors__
+//    d_s_nErrors__ = Meta__::s_nErrors__;          // save current ptr
+//    Meta__::s_nErrors__ = &d_nErrors__;           // set it to d_nErrors__
 
 $insert 4 debug "parse(): Parsing starts"
     push__(0);                              // initial state
@@ -475,7 +515,7 @@ $insert 8 debug " "
 }
 catch (Return__ retValue)
 {
-    Meta__::s_nErrors__ = d_s_nErrors__;
+//    Meta__::s_nErrors__ = d_s_nErrors__;
 
 $insert 4 debug "parse(): returns " << retValue
     return retValue;

@@ -9,13 +9,14 @@ void Writer::sErrorLA() const
         "{\n"
         "    {},\n";
 
+    size_t idx = 0;
     for_each(
         State::begin(), State::end(),
         [&](State const *state)
         {
-            errorLAset(state, *d_out);
-        }
-    );
+            errorLAset(&idx, state, *d_out);    // write this State's _error_ 
+        }                                       // LA set, if it is an ERROR 
+    );                                          // state
 
     *d_out << "};\n"
               "\n";

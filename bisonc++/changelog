@@ -1,3 +1,10 @@
+  * The function Writer::reductions() is not called anymore from
+    Writer::srTable: there are no multiple reductions and reductions()
+    attempts to insert non-default reductions into SR tables. States may have
+    multiple `_error_ .'  items, which appear to imply multiple reductions,
+    but these states are never reached as the error recovery procedure
+    processes error-input and pushes an appropriate continuation instead.
+    
   * Added a warning to skeleton/binsonc++.h that until the #undef instruction
     Parser will be read as ParserBase.
 

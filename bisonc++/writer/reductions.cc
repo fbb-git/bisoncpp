@@ -2,6 +2,9 @@
 
 void Writer::reductions(Table &table, State const &state)
 {
+    return;
+    cerr << "State: " << state.idx() << ", default reduction: " <<
+            state.defaultReduction() << '\n';
     for 
     (
         size_t idx = 0, 
@@ -12,6 +15,9 @@ void Writer::reductions(Table &table, State const &state)
     )
     {
         if (idx != defaultReduction)
+        {
+            cerr << "   Insert non default reduction " << idx << '\n';
             reduction(table, *state.reduction(idx));
+        }
     }
 }

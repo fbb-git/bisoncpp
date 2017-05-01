@@ -4,9 +4,9 @@ $insert class.h
 
 $insert namespace-open
 
-inline void \@::error(char const *msg)
+inline void \@::error()
 {
-    std::cerr << msg << '\n';
+    std::cerr << "Syntax error\n";
 }
 
 $insert lex
