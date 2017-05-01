@@ -28,13 +28,18 @@ $insert 4 scannerobject
                                         // lexical scanner. 
         void print();                   // use, e.g., d_token, d_loc
 
+
     // support functions for parse():
-        void executeAction(int ruleNr);
-        int lookup(bool recovery);
-        void nextToken();
-        void print__();
-        void errorRecovery();
         void exceptionHandler__(std::exception const &exc);
+        void executeAction__(int ruleNr);
+        void getToken__();
+        void action__(SR__ const *elementPtr);
+        void nextCycle__();
+        void errorRecovery__();
+        bool defaultReduce__();
+//        int lookup(bool recovery);
+//        void nextToken();
+
 };
 
 $insert namespace-close

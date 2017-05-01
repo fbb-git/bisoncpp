@@ -43,13 +43,16 @@ $insert LTYPEstack
         enum Return__
         {
             PARSE_ACCEPT__ = 0,   // values used as parse()'s return values
-            PARSE_ABORT__  = 1
+            PARSE_ABORT__  = 1,
+            PARSE_ERROR__  
         };
-        enum ErrorRecovery__
+        enum TokenType__
         {
-            DEFAULT_RECOVERY_MODE__,
-            UNEXPECTED_TOKEN__,
+            UNDEFINED__,
+            TERMINAL__,
+            NON_TERMINAL__
         };
+        TokenType__ d_tokenType__ = UNDEFINED__;
         size_t const *d_s_nErrors__;            // saves Meta__::s_nErrors__
         bool        d_actionCases__ = false;
         bool        d_debug__ = true;
@@ -75,20 +78,30 @@ $insert debugdecl
         void ABORT() const;
         void ACCEPT() const;
         void ERROR() const;
-        void clearin();
+
+        void clearin__();
+
         bool actionCases() const;
         bool debug() const;
-        void pop__(size_t count = 1);
-        void push__(size_t nextState);
+
         void acceptMsgIdx__();
-        void popToken__();
-        void pushToken__(int token);
         void reduce__(PI__ const &productionInfo);
         void errorVerbose__();
         size_t top__() const;
+        void pop__(size_t count = 1);
+        void print__();
+        void push__(size_t nextState);
+        SR__ const *findToken__() const;
+        SR__ const *errorItem__();
 
         size_t msgIdx__() const;            // WIP
         void msgIdx__(size_t idx);
+
+//        void popToken__();
+//        void pushToken__(int token);
+    
+    private:
+        void checkStackSize();
 }; 
 
 inline \@Base::DebugMode__ operator|(\@Base::DebugMode__ lhs, 
@@ -137,7 +150,7 @@ $insert 4 debug "ACCEPT(): Parsing successful"
 inline void \@Base::ERROR() const
 {
 $insert 4 debug "ERROR(): Forced error condition"
-    throw UNEXPECTED_TOKEN__;
+    throw PARSE_ERROR__;
 }
 
 inline \@Base::DebugMode__ operator&(\@Base::DebugMode__ lhs,
