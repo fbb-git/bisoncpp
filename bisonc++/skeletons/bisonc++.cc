@@ -92,6 +92,22 @@ void \@Base::print__()
 $insert print
 }
 
+void \@Base::push__(size_t state)
+{
+    checkStackSize();
+
+    size_t previous = 
+            d_stackIdx__ == -1 ? 0 : d_stateStack__[d_stackIdx__].second;
+    ++d_stackIdx__;
+    d_stateStack__[d_stackIdx__] = 
+            std::pair<size_t, size_t>{d_state__ = state, previous};
+
+$insert 4 LTYPEpush
+$insert 4 debug  "\npush state " << state << " with token: " << symbol__(d_token__) +
+$insert 4 debug "; stack size = " << (d_stackIdx__ + 1) << stype__(". Semantic TOS value = ", d_val__)
+    *(d_vsp__ = &d_valueStack__[d_stackIdx__]) = std::move(d_val__);
+}
+
 void \@Base::clearin__()
 {
     d_tokenType__ = UNDEFINED__;
@@ -100,7 +116,6 @@ void \@Base::clearin__()
 
 void \@Base::checkStackSize()
 {
-std::cerr << "checkStackSize__()" << '\n';
     size_t currentSize = d_stateStack__.size();
 
     if (static_cast<size_t>(d_stackIdx__ + 1) == currentSize)
@@ -119,67 +134,46 @@ std::cerr << "checkStackSize__()" << '\n';
     }
 }
 
-void \@Base::push__(size_t state)
-{
-std::cerr << "push__()" << '\n';
-    checkStackSize();
-
-    size_t previous = 
-            d_stackIdx__ == -1 ? 0 : d_stateStack__[d_stackIdx__].second;
-    ++d_stackIdx__;
-    d_stateStack__[d_stackIdx__] = 
-            std::pair<size_t, size_t>{d_state__ = state, previous};
-
-$insert 4 LTYPEpush
-$insert 4 debug  "\npush state " << state << stype__(". Semantic TOS value = ", d_val__, ".") << ". Stack size: " << (d_stackIdx__ + 1)
-
-    *(d_vsp__ = &d_valueStack__[d_stackIdx__]) = std::move(d_val__);
-}
-
 void \@Base::pop__(size_t count)
 {
-std::cerr << "pop__()" << '\n';
-
-$insert 4 debug "removing " << count << " elements from the state-stack. New stack size: " << (d_stackIdx__ + 1 - count)
+$insert 4 debug "\npop " << count << " state(s) " +
     if (d_stackIdx__ < static_cast<int>(count))
     {
-$insert 8 debug "Terminating parse(): stack underflow at token " << symbol__(d_token__) << '\n'
+$insert 8 debug ": internal error: stack underflow at token " << symbol__(d_token__)
         ABORT();
     }
 
     d_stackIdx__ -= count;
     d_state__ = d_stateStack__[d_stackIdx__].first;
     d_vsp__ = &d_valueStack__[d_stackIdx__];
+$insert 4 debug ", state: " << d_state__ << ", token: " << symbol__(d_token__) << ", stack size: " << (d_stackIdx__ + 1)
 $insert 4 LTYPEpop
-$insert debug "new state: " << d_state__ << ", with token: " << symbol__(d_token__) << stype__(", semantic: ", *d_vsp__)
 }
 
 inline size_t \@Base::top__() const
 {
-std::cerr << "top__()" << '\n';
     return d_stateStack__[d_stackIdx__].first;
 }
 
 void \@::executeAction__(int production)
 try
 {
-std::cerr << "executeAction__()" << '\n';
-
-$insert 4 debug "executing the action block of rule " << production <<  stype__(", top value of the semantic stack: ", *d_vsp__)
+$insert 4 debug "\n    (actions for rule " << production <<  stype__(", top value of the semantic stack: ", *d_vsp__) << "..."
 $insert executeactioncases
     switch (production)
     {
 $insert 8 actioncases
     }
-
-$insert 4 debug "executed the action block of rule " << production <<  stype__(", returning semantic value ", *d_vsp__) << '\n'
+$insert 4 debug "... completed " <<   stype__(", returning semantic value ", *d_vsp__) << ')'
 }
 catch (std::exception const &exc)
 {
+$insert 4 debug "exception for rule " << production
     exceptionHandler__(exc);             // user code exception handler
 }
 catch (Return__ ret)
 {
+$insert 4 debug "rule " << production << " ends the parsing process"
     if (ret == PARSE_ERROR__)
         return;
     throw;
@@ -187,30 +181,29 @@ catch (Return__ ret)
 
 void \@::getToken__()
 { 
-std::cerr << "getToken__()" << '\n';
-
     if (d_nextToken__ == _UNDETERMINED_)
+    {
         d_token__ = lex();
+        if (d_token__ <= 0)
+            d_token__ = _EOF_;
+$insert 8 debug "got lex()" +
+    }
     else
     {
         d_token__ = d_nextToken__;
         d_nextToken__ = _UNDETERMINED_;
+$insert 8 debug "return saved" +
     }
 
+$insert 4 debug " token " << symbol__(d_token__) << stype__(", semantic = ", d_val__)
     d_tokenType__ = TERMINAL__;
     ++d_acceptedTokens__;               // accept another token (see
                                         // errorRecover())
-    if (d_token__ <= 0)
-        d_token__ = _EOF_;
-
     print();
-$insert 4 debug "   got " << symbol__(d_token__) << stype__(", semantic = ", d_val__)
 }
 
 SR__ const *\@Base::findToken__() const // find the item defining an action for
 {                                       // d_token__
-std::cerr << "findToken__()" << ", state = " << d_state__ << '\n';
-
     for (                           // visit all but the last SR entries
         SR__ const *sr = s_state[d_state__], *last = sr + sr->d_lastIdx;
             sr != last;
@@ -220,12 +213,12 @@ std::cerr << "findToken__()" << ", state = " << d_state__ << '\n';
         if (sr->d_token == d_token__)
             return sr;
     }
+
     return 0;
 }
 
 SR__ const *\@Base::errorItem__()
 {
-std::cerr << "errorItem__()" << '\n';
     d_token__ = _error_;
     return findToken__();
 }
@@ -235,18 +228,15 @@ inline void \@Base::reduce__(PI__ const &pi)
     d_token__ = pi.d_nonTerm;
     d_tokenType__ = NON_TERMINAL__;
     pop__(pi.d_size);
-
-$insert 4 debug "\nreduce by rule " << (&pi - s_productionInfo) << ". Next token: " << symbol__(d_token__) << stype__(", semantic = ", d_val__)
 }
 
 void \@::action__(SR__ const *elementPtr)
 {
-//    std::cerr << "action__(elementPtr)" << '\n';
-
     int action = elementPtr->d_action;
 
     if (action == 0)            // accepting state
     {
+$insert 8 debug "\nstate " << d_state__ << " with " << symbol__(d_token__) << ": normal end\n"
         if (d_nErrors__ == 0)
             ACCEPT();
         else
@@ -263,7 +253,10 @@ void \@::action__(SR__ const *elementPtr)
     push__(action);
 
     if (d_tokenType__ == TERMINAL__)        // terminal tokens are consumed.
+    {
+$insert 8 debug "   (consumed token " << symbol__(d_token__) << ')'
         d_tokenType__ = UNDEFINED__;
+    }
 }
 
 void \@::errorRecovery__()
@@ -276,8 +269,7 @@ void \@::errorRecovery__()
     // then the error recovery will fall back to the default recovery mode.
     // (i.e., parsing terminates)
 
-std::cerr << "errorRecovery__()" << '\n';
-
+$insert 4 debug "\nStarting error recovery in state " << d_state__ << " with token " << symbol__(d_token__)
     if (d_acceptedTokens__ >= d_requiredTokens__)// only generate an error-
     {                                           // message if enough tokens 
         ++d_nErrors__;                          // were accepted. Otherwise
@@ -295,37 +287,43 @@ std::cerr << "errorRecovery__()" << '\n';
     do
         getToken__();
     while (us.find(d_token__) == us.end()); // find a continuation
-        
+
+$insert 4 debug "error recovered in state " << d_state__ << " with token " << symbol__(d_token__)
     action__(elementPtr);                   // perform the matching action
 }
 
 bool \@::defaultReduce__()
 {
-std::cerr << "defaultReduce__()" << '\n';
-
     SR__ const *sr = s_state[ d_state__ ];
 
-std::cerr << "In state " << d_state__ << ": type = " << (int)
-sr->d_type << ", DEF_RED = " << (int)DEF_RED << '\n';
+$insert 4 debug "\n    state " << d_state__ << ": no action for token " << symbol__(d_token__)
 
     if (sr->d_type < DEF_RED)    // no default reduce
+    {
+$insert 8 debug "no default reduction in state " << d_state__
         return false;
+    }
+
+$insert 4 debug "\n    default reduction: state " << d_state__
 
     int action = -sr[ sr->d_lastIdx ].d_action;
 
     if (d_tokenType__ == TERMINAL__)    // push-back retrieved token
+    {
         d_nextToken__ = d_token__;
+$insert 8 debug "       saving available token " << symbol__(d_token__)
+    }
 
     executeAction__(action);
     reduce__(s_productionInfo[ action ]);
     
+$insert 4 debug "default reduction completed"
     return true;
 }
 
 void \@::nextCycle__()
 {
-std::cerr << "nextCycle__()" << '\n';
-
+$insert 4 debug ' '
     if (d_tokenType__ == UNDEFINED__)
         getToken__();
 
@@ -338,6 +336,7 @@ std::cerr << "nextCycle__()" << '\n';
                                         // if a token can be requested:
         if (s_state[ d_state__ ]->d_type & REQ_TOKEN)
         {
+$insert 12 debug "get token in state " << d_state__
             getToken__();               // get it.
 
                                         // find an action for this token    
@@ -355,13 +354,11 @@ std::cerr << "nextCycle__()" << '\n';
 int \@::parse()
 try 
 {
-std::cerr << "parse()" << '\n';
-$insert 4 debug "parse(): Parsing starts"
+$insert 4 debug "parse(): starts"
     clearin__();                            // clear the tokens.
 
     while (true)
     {
-$insert 8 debug ' '
         nextCycle__();
     }
 }
