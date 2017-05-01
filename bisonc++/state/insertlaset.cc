@@ -9,16 +9,23 @@ void State::insertLAset(ostream &out) const
 
     bool hasEOF = false;
 
+    ostringstream ostr;
     for (StateItem const &item: d_itemVector)
     {
         Symbol const *symbol = item.symbolAtDot();
 
         if (symbol != 0 and symbol->value() == 0) // item at dot is _error_
-            hasEOF |= item.lookaheadSet().basicLAset(out);
+            hasEOF |= item.lookaheadSet().basicLAset(ostr);
     }
 
     if (hasEOF)
-        out << "_EOF_";
+        out << ostr.str() << "_EOF_";
+    else
+    {
+        out << ostr.str().substr(0, ostr.str().length() - 2);
+    }
 
     out << "},";
 }
+
+

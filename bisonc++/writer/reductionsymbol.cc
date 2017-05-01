@@ -10,7 +10,7 @@ void Writer::reductionSymbol(Element const *symb, size_t ruleNr,
     NonTerminal::inserter(&NonTerminal::value);
 
     out << symbol;
-    table << out.str() << -static_cast<int>(ruleNr);
+    table << out.str() << -static_cast<int>(ruleNr) << ' ';
 
     out.str("");
 
