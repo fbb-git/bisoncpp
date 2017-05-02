@@ -3,6 +3,7 @@
 
 #include <iosfwd>
 #include <string>
+#include <vector>
 
 #include <bobcat/table>
 
@@ -14,9 +15,12 @@ class Production;
 class StateItem;
 class State;
 class Rules;
+class LookaheadSet;
 
 class Writer
 {
+    typedef std::vector< LookaheadSet > LAsetVector;
+
     std::ostream *d_out;
     std::string const &d_baseclass;
     Rules const &d_rules;
@@ -28,7 +32,7 @@ class Writer
         void useStream(std::ostream &out);
 
         void productions() const;
-        void sErrorLA() const;          // error-transitions look-aheads
+        void sErrorLA() const;            // error-transitions look-aheads
         void srTables() const;
         void statesArray() const;
         void symbolicNames() const;
@@ -43,14 +47,13 @@ class Writer
                                     std::ostream &out);
         static void productionInfo(Production const *production, 
                                    std::ostream &out);
-        static void srTable(size_t *errorLAidx, State const *state, 
+        static void srTable(State const *state, 
                             std::string const &baseclassScope,
                             FBB::Table &table, std::ostream &out);
-        static void errorLAset(size_t *idx, State const *state, 
-                               std::ostream &out);
-        static void transitions(size_t *errorLAidx, FBB::Table &table, 
+        static void errorLAset(LAsetVector &laSet, State *state);
+        static void transitions(size_t errorLAidx, FBB::Table &table, 
                                 Next::Vector const &next);
-        static void transition(size_t *errorLAidx,
+        static void transition(size_t errorLAidx,
                                 Next const &next, FBB::Table &table);
         static void reductions(FBB::Table &, State const &state);
         static void reduction(FBB::Table &, StateItem const &stateItem);

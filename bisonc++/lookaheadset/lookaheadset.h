@@ -1,6 +1,8 @@
 #ifndef _INCLUDED_LOOKAHEADSET_
 #define _INCLUDED_LOOKAHEADSET_
 
+#include <unordered_set>
+
 #include "../firstset/firstset.h"
 #include "../terminal/terminal.h"
 
@@ -21,6 +23,7 @@ class LookaheadSet: private FirstSet
 
     public:
         FirstSet &firstSet();
+        FirstSet const &firstSet() const;
 
         LookaheadSet(EndStatus eof = e_withoutEOF);
         LookaheadSet(FirstSet const &firstSet);
@@ -42,7 +45,9 @@ class LookaheadSet: private FirstSet
         bool operator<(LookaheadSet const &other) const;
         bool operator==(LookaheadSet const &other) const;
 
-        bool basicLAset(std::ostream &out) const;
+//FBB       void basicLAset(std::unordered_set<int> &laSet) const;
+
+        void listElements(std::ostream &out, char const *sep = " ") const;
 
         std::ostream &insert(std::ostream &out) const;
 
@@ -58,12 +63,22 @@ class LookaheadSet: private FirstSet
         LookaheadSet(Element const **begin, Element const **end);
 };
 
+inline bool LookaheadSet::operator==(LookaheadSet const &other) const
+{
+    return *static_cast<FirstSet const *>(this) == other;
+}
+
 inline LookaheadSet::LookaheadSet(Element const **begin, Element const **end)
 :
     FirstSet(begin, end)
 {}
 
 inline FirstSet &LookaheadSet::firstSet()
+{
+    return *this;
+}
+
+inline FirstSet const &LookaheadSet::firstSet() const
 {
     return *this;
 }

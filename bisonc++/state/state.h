@@ -14,10 +14,12 @@ class Item;
 class Production;
 class StateItem;
 class Rules;
+class LookaheadSet;
 
 class State
 {
     typedef std::vector<State *> Vector;
+    typedef std::vector< LookaheadSet > LAsetVector;
     
     public:
         typedef Vector::const_iterator  ConstIter;
@@ -60,6 +62,10 @@ class State
 
         size_t              d_nTerminalTransitions;
 
+        size_t              d_LAsetIdx = 0; // index in s_errorLA if this 
+                                            // state is an ERR_ITEM.
+
+
         SRConflict          d_srConflict;
         RRConflict          d_rrConflict;
     
@@ -77,6 +83,7 @@ class State
 
         size_t idx() const;
         size_t nextOn(Symbol const *token) const;        
+        size_t errorLAsetIdx() const;
 
             // All reduction members operate with indices in d_reducible,
             // so *not* with d_stateItem indices
@@ -108,7 +115,9 @@ class State
 
         int type() const;               // StateType accessor
 
-        void insertLAset(std::ostream &out) const;
+                                        // index of the error item's LA set
+                                        // in laSet
+        void errorLAset(LAsetVector &laSet);
 
     private:
         State(size_t idx);
@@ -174,6 +183,11 @@ inline int State::type() const
 inline size_t State::idx() const
 {
     return d_idx;
+}
+
+inline size_t State::errorLAsetIdx() const
+{
+    return d_LAsetIdx;
 }
 
 inline size_t State::nStates() 

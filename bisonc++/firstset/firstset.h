@@ -8,28 +8,27 @@
 
 class FirstSet: private std::set<Element const *>
 {
-    typedef std::set<Element const *> Inherit;
-
     friend std::ostream &operator<<(std::ostream &out, FirstSet const &fset);
 
     bool d_epsilon;             // true if epsilon (the empty set indicator) 
                                 // is in {First}
 
     protected:
-        typedef std::set<Element const *> Baseclass;
+        typedef std::set<Element const *> ElementSet;
+//FBB        typedef std::set<Element const *> Baseclass;
         FirstSet(Element const **begin, Element const **end);
 
     public:
-        using Inherit::find;
-        using Inherit::begin;
-        using Inherit::end;
-        using Inherit::size;
+        using ElementSet::find;
+        using ElementSet::begin;
+        using ElementSet::end;
+        using ElementSet::size;
 
         FirstSet();
         FirstSet(Element const *terminal);
 
         FirstSet &operator+=(FirstSet const &other);
-        FirstSet &operator+=(std::set<Element const *> const &terminalSet);
+        FirstSet &operator+=(ElementSet const &terminalSet);
 
         bool empty() const;
         bool hasEpsilon() const;
@@ -46,6 +45,12 @@ class FirstSet: private std::set<Element const *>
         std::ostream &insert(std::ostream &out) const;
 };
 
+inline bool FirstSet::operator==(FirstSet const &other) const
+{
+    return d_epsilon == other.d_epsilon && 
+            *static_cast<std::set<Element const *> const *>(this) == other;
+}
+
 inline std::set<Element const *> const &FirstSet::set() const
 {
     return *this;
@@ -53,7 +58,7 @@ inline std::set<Element const *> const &FirstSet::set() const
 
 inline FirstSet::FirstSet(Element const **begin, Element const **end)
 :
-    Baseclass(begin, end),
+    ElementSet{ begin, end },
     d_epsilon(false)
 {}
 
@@ -84,7 +89,7 @@ inline bool FirstSet::hasEpsilon() const
 
 inline bool FirstSet::empty() const
 {
-    return !d_epsilon && Baseclass::empty();
+    return !d_epsilon && ElementSet::empty();
 }
 
 inline std::ostream &operator<<(std::ostream &out, FirstSet const &firstSet)

@@ -13,13 +13,11 @@ void Writer::srTables() const
 
     table << Align(3, std::left);
 
-    size_t errorLAidx = 0;
-
     for_each(
         State::begin(), State::end(),
         [&](State const *state)
         {
-            srTable(&errorLAidx, state, d_baseclass, table, *d_out);
+            srTable(state, d_baseclass, table, *d_out);
         }
     );
 

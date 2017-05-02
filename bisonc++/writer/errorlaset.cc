@@ -1,14 +1,12 @@
 #include "writer.ih"
 
 // static
-void Writer::errorLAset(size_t *idx, State const *sp, std::ostream &out)
+void Writer::errorLAset(LAsetVector &laSets, State *sp)
 {
     if (sp->type() & StateType::ERR_ITEM)
-    {
-        sp->insertLAset(out);               // insert this State's _error_ 
-        out << " // " << ++*idx << '\n';    // LA set
-    }
-} 
+        sp->errorLAset(laSets);             // insert this State's _error_ 
+}                                           // LA set
+  
 
 
 

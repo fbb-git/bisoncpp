@@ -1,6 +1,6 @@
 #include "writer.ih"
 
-void Writer::srTable(size_t *errorLAidx, State const *sp,  
+void Writer::srTable(State const *sp,  
                      std::string const &baseclassScope,
                      FBB::Table &table, std::ostream &out)
 {
@@ -37,7 +37,7 @@ void Writer::srTable(size_t *errorLAidx, State const *sp,
 //      " = " << sp->transitions() << ' ' << sp->reductionsLAsize() << ' ' << 
 //      acceptState << " 1\n";
 
-    transitions(errorLAidx, table, sp->next());
+    transitions(sp->errorLAsetIdx(), table, sp->next());
 
     if (acceptState)
         table << Rules::eofTerminal() << "PARSE_ACCEPT" << def;
