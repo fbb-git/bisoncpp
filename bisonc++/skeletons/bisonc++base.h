@@ -1,9 +1,11 @@
 #ifndef \@$Base_h_included
 #define \@$Base_h_included
 
+#include <iostream>
 #include <exception>
 #include <vector>
-#include <iostream>
+#include <stack>
+#include <tuple>
 $insert polyincludes
 $insert preincludes
 $insert debugincludes
@@ -11,6 +13,7 @@ $insert debugincludes
 namespace // anonymous
 {
     struct PI__;
+    struct SR__;
 }
 
 $insert namespace-open
@@ -32,10 +35,11 @@ $insert LTYPE
 $insert STYPE
 
     private:
-        size_t d_msgIdx__ = 0;
-        int d_stackIdx__ = -1;
-        std::vector<std::pair<size_t, size_t>> d_stateStack__;
-        std::vector<STYPE__>  d_valueStack__;
+        typedef std::tuple<size_t, size_t, size_t> StateTuple;
+
+        int d_stackIdx__;
+        std::vector<StateTuple> d_stateStack__;
+        std::vector<STYPE__> d_valueStack__;
 $insert LTYPEstack
 
     protected:
@@ -49,19 +53,23 @@ $insert LTYPEstack
             DEFAULT_RECOVERY_MODE__,
             UNEXPECTED_TOKEN__,
         };
+        std::stack<int> d_tokenStack__;
         size_t const *d_s_nErrors__;            // saves Meta__::s_nErrors__
         bool        d_actionCases__ = false;
         bool        d_debug__ = true;
-        size_t      d_nErrors__ = 0;
+        size_t      d_nErrors__;
         size_t      d_requiredTokens__;
         size_t      d_acceptedTokens__;
         int         d_token__;
-        int         d_nextToken__;
         size_t      d_state__;
         STYPE__    *d_vsp__;
         STYPE__     d_val__;
         STYPE__     d_nextVal__;
 $insert LTYPEdata
+
+    public:
+        void setDebug(bool mode);
+        void setDebug(DebugMode__ mode);
 
     protected:
         \@Base();
@@ -70,25 +78,48 @@ $insert debugdecl
         void ABORT() const;
         void ACCEPT() const;
         void ERROR() const;
-        void clearin();
-        bool actionCases() const;
         bool debug() const;
-        void pop__(size_t count = 1);
-        void push__(size_t nextState);
-        void acceptMsgIdx__();
-        void popToken__();
-        void pushToken__(int token);
-        void reduce__(PI__ const &productionInfo);
-        void errorVerbose__();
-        size_t top__() const;
 
+        SR__ const *findToken__() const;
         size_t msgIdx__() const;
+        void done__();
+        void errorVerbose__();
         void msgIdx__(size_t idx);
+        void pop__(size_t count = 1);
+        void print__();
+        void pushToken__(int token);
+        void push__(size_t nextState);
+        void reduce__(PI__ const &pi);
+        void reset__();
 
-    public:
-        void setDebug(bool mode);
-        void setDebug(DebugMode__ mode);
+        template<int>                           // elements fm the stateStack:
+        size_t top__(size_t shift = 0) const;   // <0>: state, <1>: msg idx, 
+                                                // <2>: org msg idx
+        template<int>   
+        size_t &top__();
+
+    private:
+        void checkStackSize();
+
+        StateTuple &top();
 }; 
+
+template<int idx>
+inline size_t \@Base::top__(size_t shift) const
+{
+    return std::get<idx>(d_stateStack__[ d_stackIdx__ - shift ]);
+}
+
+template<int idx>
+inline size_t &\@Base::top__()
+{
+    return std::get<idx>(d_stateStack__[ d_stackIdx__ ]);
+}
+
+inline \@Base::StateTuple &\@Base::top()
+{
+    return d_stateStack__[d_stackIdx__];
+}
 
 inline \@Base::DebugMode__ operator|(\@Base::DebugMode__ lhs, 
                                      \@Base::DebugMode__ rhs)
@@ -96,29 +127,19 @@ inline \@Base::DebugMode__ operator|(\@Base::DebugMode__ lhs,
     return static_cast<\@Base::DebugMode__>(static_cast<int>(lhs) | rhs);
 };
 
-inline void \@Base::acceptMsgIdx__() 
-{
-    d_stateStack__[d_stackIdx__].second = d_msgIdx__;
-}
-
 inline size_t \@Base::msgIdx__() const
 {
-    return d_stateStack__[d_stackIdx__].second;
+    return top__<1>();
 }
 
 inline void \@Base::msgIdx__(size_t idx)
 {
-    d_msgIdx__ = idx;
+    top__<1>() = idx;
 }
 
 inline bool \@Base::debug() const
 {
     return d_debug__;
-}
-
-inline bool \@Base::actionCases() const
-{
-    return d_actionCases__;
 }
 
 inline void \@Base::ABORT() const
@@ -153,5 +174,3 @@ inline \@Base::DebugMode__ operator&(\@Base::DebugMode__ lhs,
 $insert namespace-close
 
 #endif
-
-

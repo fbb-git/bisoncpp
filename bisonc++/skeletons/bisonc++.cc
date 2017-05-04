@@ -80,7 +80,6 @@ namespace // anonymous
                             // non-terminal 
         size_t d_size;    // number of elements in this production 
     };
-
     struct SR__     // Shift Reduce info, see its description above
     {
         union
@@ -97,7 +96,6 @@ namespace // anonymous
             int d_lastIdx;          // if negative, the state uses SHIFT
             int d_action;           // may be negative (reduce), 
                                     // postive (shift), or 0 (accept)
-            size_t d_errorState;    // used with Error states
         };
     };
 
@@ -116,9 +114,6 @@ $insert polymorphicCode
 \@Base::\@Base()
 :
 $insert 4 requiredtokens
-    d_acceptedTokens__(d_requiredTokens__),
-    d_token__(_UNDETERMINED_),
-    d_nextToken__(_UNDETERMINED_)
 {}
 
 $insert debugfunctions
@@ -140,19 +135,65 @@ void \@::print__()
 $insert print
 }
 
-void \@Base::clearin()
-{
-    d_token__ = d_nextToken__ = _UNDETERMINED_;
-}
-
 void \@Base::push__(size_t state)
 {
+    checkStackSize();
+
+    if (++d_stackIdx__ > 0)
+        top() = d_stateStack__[d_stackIdx__ - 1];
+
+    top__<0>() = d_state__ = state;
+
+$insert 4 debug "\nin state " << top__<0>(1) << "with token: " << symbol__(d_token__) +
+$insert 4 debug ": push state " << state << "; stack size = " << (d_stackIdx__ + 1) << stype__(". Semantic TOS value = ", d_val__) << "\n   (consumed token " << symbol__(d_token__) << ')'
+
+    *(d_vsp__ = &d_valueStack__[d_stackIdx__]) = std::move(d_val__);
+}
+
+void \@Base::pop__(size_t count)
+{
+$insert 4 debug "\n pop " << count << " state(s)" +
+    if (d_stackIdx__ < static_cast<int>(count))
+    {
+$insert 8 debug ":internal error: stack underflow at token " << symbol__(d_token__)
+        ABORT();
+    }
+
+    d_stackIdx__ -= count;
+    d_state__ = top__<0>();
+    d_vsp__ = &d_valueStack__[d_stackIdx__];
+$insert 4 LTYPEpop
+$insert 4 debug ", top state now: " << d_state__ << ", stack size: " << (d_stackIdx__ + 1) 
+}
+
+void \@Base::reset__()
+{
+//FBB: define a function to call this, and make it an empty function unless
+//      pollymorphic
+//    d_s_nErrors__ = Meta__::s_nErrors__;          // save current ptr
+//    Meta__::s_nErrors__ = &d_nErrors__;           // set it to d_nErrors__
+
+    d_acceptedTokens__ = d_requiredTokens__;
+    d_nErrors__ = 0;
+
+    d_stackIdx__ = -1;
+    d_stateStack__.clear();
+    d_valueStack__.clear();
+    d_tokenStack__ = std::stack<int>{};
+    d_state__ = 0;
+    d_token__ = _UNDETERMINED_;
+
+    push__(0);
+}
+
+void \@Base::checkStackSize()
+{
     size_t currentSize = d_stateStack__.size();
+
     if (static_cast<size_t>(d_stackIdx__ + 1) == currentSize)
     {
         size_t newSize = currentSize + STACK_EXPANSION__;
         d_stateStack__.resize(newSize);
-$insert 8 LTYPEresize
         if (d_valueStack__.capacity() >= newSize)
             d_valueStack__.resize(newSize);
         else
@@ -163,322 +204,168 @@ $insert 8 LTYPEresize
             d_valueStack__.swap(enlarged);
         }
     }
-    size_t previous = 
-            d_stackIdx__ == -1 ? 0 : d_stateStack__[d_stackIdx__].second;
-    ++d_stackIdx__;
-    d_stateStack__[d_stackIdx__] = 
-            std::pair<size_t, size_t>{d_state__ = state, previous};
-
-$insert 4 LTYPEpush
-$insert 4 debug  "\npush state " << state << stype__(". Semantic TOS value = ", d_val__, ".") << ". Stack size: " << d_stackIdx__
-    *(d_vsp__ = &d_valueStack__[d_stackIdx__]) = std::move(d_val__);
 }
 
-void \@Base::popToken__()
-{
-    d_token__ = d_nextToken__;
-
-    d_val__ = std::move(d_nextVal__);
-    d_nextVal__ = STYPE__();
-
-    d_nextToken__ = _UNDETERMINED_;
-}
-     
 void \@Base::pushToken__(int token)
 {
-    d_nextToken__ = d_token__;
-    d_nextVal__ = std::move(d_val__);
-    d_token__ = token;
-}
-     
-void \@Base::pop__(size_t count)
-{
-$insert 4 debug "removing " << count << " elements from the state-stack. Stack size: " << (d_stackIdx__ + 1 - count)
-    if (d_stackIdx__ < static_cast<int>(count))
-    {
-$insert 8 debug "Terminating parse(): stack underflow at token " << symbol__(d_token__)
-        ABORT();
-    }
-
-    d_stackIdx__ -= count;
-    d_state__ = d_stateStack__[d_stackIdx__].first;
-    d_vsp__ = &d_valueStack__[d_stackIdx__];
-$insert 4 LTYPEpop
-$insert 4 debug "new state: " << d_state__ << ", token to process: " << symbol__(d_token__) << stype__(", semantic: ", *d_vsp__)
+    d_tokenStack__.push(token);
+$insert 4 debug "saved token " << symbol__(token) << ", token stack size: " << d_tokenStack__.size()
 }
 
-inline size_t \@Base::top__() const
-{
-    return d_stateStack__[d_stackIdx__].first;
-}
-
-void \@::executeAction(int production)
+void \@::executeAction__(int production)
 try
 {
-    if (d_token__ != _UNDETERMINED_)
-        pushToken__(d_token__);     // save an already available token
-
-$insert 4 debug "executing the action block of rule " << production <<  stype__(", top value of the semantic stack: ", *d_vsp__)
+$insert 4 debug "\n    (actions for rule " << production <<  stype__(", top value of the semantic stack: ", *d_vsp__) << "..."
 $insert executeactioncases
     switch (production)
     {
 $insert 8 actioncases
     }
-$insert 4 debug "executed the action block of rule " << production <<  stype__(", returning semantic value ", *d_vsp__) << '\n'
+$insert 4 debug "... completed " <<   stype__(", returning semantic value ", *d_vsp__) << ')'
 }
 catch (std::exception const &exc)
 {
-    exceptionHandler__(exc);
+    exceptionHandler(exc);
 }
 
-inline void \@Base::reduce__(PI__ const &pi)
+void \@Base::reduce__(PI__ const &pi)
 {
-    d_token__ = pi.d_nonTerm;
+    pushToken__(d_token__);
+    pushToken__(pi.d_nonTerm);
+    size_t msgIdx = top__<1>();
     pop__(pi.d_size);
-
-$insert 4 debug "\nreduced rule " << (&pi - s_productionInfo) << " to non-terminal " << symbol__(d_token__) << stype__(", semantic = ", d_val__) +
-$insert 4 debug ", stack size: " << d_stackIdx__ << '\n'
+    top__<1>() = msgIdx;
 }
 
-// If d_token__ is _UNDETERMINED_ then if d_nextToken__ is _UNDETERMINED_ another
-// token is obtained from lex(). Then d_nextToken__ is assigned to d_token__.
-void \@::nextToken()
-{
-    if (d_token__ != _UNDETERMINED_)        // no need for a token: got one
-        return;                             // already
-
-    if (d_nextToken__ != _UNDETERMINED_)
+void \@::getToken__()
+{ 
+    if (d_tokenStack__.empty())
     {
-        popToken__();                       // consume pending token
-$insert 8 debug "using pending token: " << symbol__(d_token__) << stype__(", semantic = ", d_val__)
-    }
-    else
-    {
-        ++d_acceptedTokens__;               // accept another token (see
-                                            // errorRecover())
         d_token__ = lex();
         if (d_token__ <= 0)
             d_token__ = _EOF_;
+$insert 8 debug "LEX" +
     }
-    print();
-$insert 4 debug "next token `" << symbol__(d_token__) << stype__(", semantic = ", d_val__) << '\''
-}
-
-// if the final transition is negative, then we should reduce by the rule
-// given by its positive value. Note that the `recovery' parameter is only
-// used with the --debug option
-int \@::lookup(bool recovery)
-{
-$insert 0 threading
-
-    if (elementPtr == lastElementPtr)   // reached the last element
+    else
     {
-        if (elementPtr->d_action < 0)   // default reduction
-        {
-$insert 12 debug "in state " << d_state__ <<  (d_token__ == _UNDETERMINED_ ? "" : " at " + symbol__(d_token__)) +
-$insert 12 debug ": default reduction by rule " << -elementPtr->d_action
+        d_token__ = d_tokenStack__.top();
+        d_tokenStack__.pop();
 
-            return elementPtr->d_action;                
-        }
-$insert 12 debug (recovery ? "Continuing" : "\nSTARTING") << " error recovery." 
-$insert 12 debug "in state " << d_state__ << ": unexpected token " << symbol__(d_token__)
-
-        // No default reduction, so token not found, so error.
-        throw UNEXPECTED_TOKEN__;
+$insert 8 debug "STACKED" +
     }
+$insert 4 debug " token " << symbol__(d_token__) << stype__(", semantic = ", d_val__)
 
-    // not at the last element: inspect the nature of the action
-    // (< 0: reduce, 0: ACCEPT, > 0: shift)
-
-    int action = elementPtr->d_action;
-
-$insert 0 debuglookup
-
-    return action;
+    ++d_acceptedTokens__;               // accept another token (see
+                                        // errorRecover())
+    print();
 }
 
-    // When an error has occurred, pop elements off the stack until the top
-    // state has an error-item. If none is found, the default recovery
-    // mode (which is to abort) is activated. 
-    //
-    // If EOF is encountered without being appropriate for the current state,
-    // then the error recovery will fall back to the default recovery mode.
-    // (i.e., parsing terminates)
-void \@::errorRecovery()
-try
+SR__ const *\@Base::findToken__() const // find the item defining an 
+{                                       // action for d_token__
+    SR__ const *sr = s_state[d_state__];
+    SR__ const *last = sr + sr->d_lastIdx;
+
+    for ( ; sr != last; ++sr)         // visit all but the last SR entries
+    {
+        if (sr->d_token == d_token__)
+            return sr;
+    }
+
+$insert 4 debug "state " << d_state__ << ": " +
+    if (sr->d_action < 0)
+    {
+$insert 8 debug "default reduce"
+    }
+    else 
+    {
+$insert 8 debug "no action for token " << symbol__(d_token__)
+        sr = 0;
+    }
+       
+    return sr;
+}
+
+void \@::errorRecovery__()
 {
+$insert 4 debug "\nStarting error recovery in state " << d_state__ << " with token " << symbol__(d_token__)
     if (d_acceptedTokens__ >= d_requiredTokens__)// only generate an error-
     {                                           // message if enough tokens 
         ++d_nErrors__;                          // were accepted. Otherwise
-        error("Syntax error");                  // simply skip input
-
-$insert 8 errorverbose
+        error();                                // simply skip input
     }
-
-$insert 4 debug "errorecovery: " << d_nErrors__ << " error(s) so far. State = " << top__()
-
-    // get the error state
-    while (not (s_state[top__()][0].d_type & ERR_ITEM))
-    { 
-$insert 8 debug "    errorrecovery: popping state " << top__()
+                                                // find the topmost ERR_ITEM
+    while (not (s_state[top__<0>()]->d_type & ERR_ITEM))
         pop__();
-    }
-$insert 4 debug "\nerrorrecovery: found ERROR state " << top__()
 
-    // In the error state, lookup a token allowing us to proceed.
-    // Continuation may be possible following multiple reductions,
-    // but eventuall a shift will be used, requiring the retrieval of
-    // a terminal token. If a retrieved token doesn't match, the catch below 
-    // will ensure the next token is requested in the while(true) block
-    // implemented below:
+    top__<1>() = top__<2>();
 
-    int lastToken = d_token__;                  // give the unexpected token a
-                                                // chance to be processed
-                                                // again.
+    pushToken__(d_token__);
+    pushToken__(_error_);
 
-    pushToken__(_error_);                       // specify _error_ as next token
-    push__(lookup(true));                       // push the error state
-
-    d_token__ = lastToken;                      // reactivate the unexpected
-                                                // token (we're now in an
-                                                // ERROR state).
-
-    bool gotToken = true;                       // the next token is a terminal
-
-    while (true)
-    {
-        try
-        {
-            if (s_state[d_state__]->d_type & REQ_TOKEN)
-            {
-                gotToken = d_token__ == _UNDETERMINED_;
-                nextToken();                    // obtain next token
-            }
-            
-            int action = lookup(true);
-
-            if (action > 0)                 // push a new state
-            {
-                push__(action);
-                popToken__();
-$insert 16 debug "\n    errorRecovery: continue (SHIFT) in  state " << action +
-$insert 16 debug (d_token__ == _UNDETERMINED_ ? ", next token: to retrieve" : (", current token: " + symbol__(d_token__)))
-
-                if (gotToken)
-                {
-$insert 20 debug "errorRecovery COMPLETED in state " << action << ". To determine: next token"
-
-                    d_acceptedTokens__ = 0;
-                    return;
-                }
-            }
-            else if (action < 0)
-            {
-                // no actions executed on recovery but save an already 
-                // available token:
-                if (d_token__ != _UNDETERMINED_)
-                    pushToken__(d_token__);
- 
-                                            // next token is the rule's LHS
-                reduce__(s_productionInfo[-action]); 
-$insert 16 debug "errorRecovery: REDUCED by rule " << -action << ", next token: " << symbol__(d_token__)
-            }
-            else
-                ABORT();                    // abort when accepting during
-                                            // error recovery
-        }
-        catch (...)
-        {
-            if (d_token__ == _EOF_)
-                ABORT();                    // saw inappropriate _EOF_
-                      
-            popToken__();                   // failing token now skipped
-        }
-    }
+$insert 4 debug "Error recovery: pop to error state: " << d_state__
 }
-catch (ErrorRecovery__)       // This is: DEFAULT_RECOVERY_MODE
+
+void \@Base::done__()
 {
-    ABORT();
+$insert 4 debug "\nstate " << d_state__ << " with " <<  symbol__(d_token__) << ": normal end\n"
+    if (d_nErrors__ == 0)
+        ACCEPT();
+    else
+        ABORT();
 }
 
-    // The parsing algorithm:
-    // Initially, state 0 is pushed on the stack, and d_token__ as well as
-    // d_nextToken__ are initialized to _UNDETERMINED_. 
-    //
-    // Then, in an eternal loop:
-    //
-    //  1. If a state does not have REQ_TOKEN no token is assigned to
-    //     d_token__. If the state has REQ_TOKEN, nextToken() is called to
-    //      determine d_nextToken__ and d_token__ is set to
-    //     d_nextToken__. nextToken() will not call lex() unless d_nextToken__ is 
-    //     _UNDETERMINED_. 
-    //
-    //  2. lookup() is called: 
-    //     d_token__ is stored in the final element's d_token field of the
-    //     state's SR_ array. 
-    //
-    //  3. The current token is looked up in the state's SR_ array
-    //
-    //  4. Depending on the result of the lookup() function the next state is
-    //     shifted on the parser's stack, a reduction by some rule is applied,
-    //     or the parsing function returns ACCEPT(). When a reduction is
-    //     called for, any action that may have been defined for that
-    //     reduction is executed.
-    //
-    //  5. An error occurs if d_token__ is not found, and the state has no
-    //     default reduction. Error handling was described at the top of this
-    //     file.
+void \@::nextCycle__()
+{
+//FBB
+//    if (d_debug__)
+//    {
+//        std::string s;
+//        std::cout << "? ";
+//        getline(std::cin, s);
+//    }
+
+$insert 4 debug ' '
+
+    getToken__();
+
+    SR__ const *sr = findToken__(); 
+
+    if (sr == 0)                // no action: recovery
+    {
+        errorRecovery__();
+        return;
+    }
+
+    int action = sr->d_action;
+
+    if (action == 0)            // accepting state
+        done__();
+
+    if (action > 0)             // push the next state
+        push__(action);
+    else
+    {
+        executeAction__(-action);
+        reduce__(s_productionInfo[ -sr->d_action ]);    // or reduce
+    }
+}
 
 int \@::parse()
 try 
 {
-    d_s_nErrors__ = Meta__::s_nErrors__;          // save current ptr
-    Meta__::s_nErrors__ = &d_nErrors__;           // set it to d_nErrors__
-
-$insert 4 debug "parse(): Parsing starts"
-    push__(0);                              // initial state
-    clearin();                              // clear the tokens.
+$insert 4 debug "parsing starts"
+    reset__();                              // clear the tokens.
 
     while (true)
-    {
-$insert 8 debug " "
-        try
-        {
-            if (s_state[d_state__]->d_type & REQ_TOKEN)
-                nextToken();                // obtain next token
-
-
-            int action = lookup(false);     // lookup d_token__ in d_state__
-
-            if (action > 0)                 // SHIFT: push a new state
-            {
-                push__(action);
-                acceptMsgIdx__();
-                popToken__();               // token processed
-            }
-            else if (action < 0)            // REDUCE: execute and pop.
-            {
-                executeAction(-action);
-                                            // next token is the rule's LHS
-                reduce__(s_productionInfo[-action]); 
-            }
-            else 
-                ACCEPT();
-        }
-        catch (ErrorRecovery__)
-        {
-            errorRecovery();
-        }
-    }
+        nextCycle__();
 }
 catch (Return__ retValue)
 {
-    Meta__::s_nErrors__ = d_s_nErrors__;
+//FBB: use a function, see before
+//    Meta__::s_nErrors__ = d_s_nErrors__;
 
 $insert 4 debug "parse(): returns " << retValue
     return retValue;
 }
 
 $insert namespace-close
-
-
