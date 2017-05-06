@@ -35,11 +35,21 @@ $insert LTYPE
 $insert STYPE
 
     private:
-        typedef std::tuple<size_t, size_t, size_t> StateTuple;
+                        // state   msgidx  orgidx  semval
+        typedef std::tuple<size_t, size_t, size_t, STYPE__> StateTuple;
+        typedef std::pair<int, std::string> TokenPair;
 
-        int d_stackIdx__;
-        std::vector<StateTuple> d_stateStack__;
-        std::vector<STYPE__> d_valueStack__;
+        int d_stackIdx;
+        std::vector<StateTuple> d_stateStack;
+        StateTuple *d_vsp;              // points to the topmost value stack
+                                        // element
+
+        std::stack<TokenPair> d_tokenStack;
+        std::string d_matched;
+        TokenPair   d_tp;
+
+        size_t      d_state;
+
 $insert LTYPEstack
 
     protected:
@@ -50,21 +60,16 @@ $insert LTYPEstack
         };
         enum ErrorRecovery__
         {
-            DEFAULT_RECOVERY_MODE__,
             UNEXPECTED_TOKEN__,
         };
-        std::stack<int> d_tokenStack__;
+
         size_t const *d_s_nErrors__;            // saves Meta__::s_nErrors__
         bool        d_actionCases__ = false;
         bool        d_debug__ = true;
         size_t      d_nErrors__;
         size_t      d_requiredTokens__;
         size_t      d_acceptedTokens__;
-        int         d_token__;
-        size_t      d_state__;
-        STYPE__    *d_vsp__;
         STYPE__     d_val__;
-        STYPE__     d_nextVal__;
 $insert LTYPEdata
 
     public:
@@ -80,6 +85,19 @@ $insert debugdecl
         void ERROR() const;
         bool debug() const;
 
+        bool pendingTokens__();
+        int token__() const;
+
+        STYPE__ &vs__(size_t idx);      // value stack element idx 
+                                        // counting back fm the current 
+                                        // element in the production rule
+        std::string &matched__();
+
+        void lex__(int token, std::string const &matchedText);
+        void nextMatched__();
+
+
+
         SR__ const *findToken__() const;
         size_t msgIdx__() const;
         void done__();
@@ -91,12 +109,13 @@ $insert debugdecl
         void push__(size_t nextState);
         void reduce__(PI__ const &pi);
         void reset__();
+        size_t stackSize__() const;
 
-        template<int>                           // elements fm the stateStack:
-        size_t top__(size_t shift = 0) const;   // <0>: state, <1>: msg idx, 
-                                                // <2>: org msg idx
+        template<int>                   // elements fm the stateStack:
+        auto top__(size_t shift = 0) const;
+
         template<int>   
-        size_t &top__();
+        auto &top__();
 
     private:
         void checkStackSize();
@@ -105,20 +124,40 @@ $insert debugdecl
 }; 
 
 template<int idx>
-inline size_t \@Base::top__(size_t shift) const
+inline auto ParserBase::top__(size_t shift) const
 {
-    return std::get<idx>(d_stateStack__[ d_stackIdx__ - shift ]);
+    return std::get<idx>(d_stateStack[ d_stackIdx - shift ]);
 }
 
 template<int idx>
-inline size_t &\@Base::top__()
+inline auto &ParserBase::top__()
 {
-    return std::get<idx>(d_stateStack__[ d_stackIdx__ ]);
+    return std::get<idx>(d_stateStack[ d_stackIdx ]);
 }
 
-inline \@Base::StateTuple &\@Base::top()
+inline int \@Base::token__() const
 {
-    return d_stateStack__[d_stackIdx__];
+    return d_tp.first;
+}
+
+inline std::string &\@Base::matched__()
+{
+    return d_matched;
+}
+
+inline size_t \@Base::stackSize__() const
+{
+    return d_stackIdx + 1;
+}
+
+inline \@Base::STYPE__ &\@Base::vs__(size_t idx) 
+{
+    return std::get<3>(*(d_vsp - idx));
+}
+
+inline ParserBase::StateTuple &ParserBase::top()
+{
+    return d_stateStack[d_stackIdx];
 }
 
 inline \@Base::DebugMode__ operator|(\@Base::DebugMode__ lhs, 

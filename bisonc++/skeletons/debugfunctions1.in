@@ -13,11 +13,27 @@ std::string \@Base::stype__(char const *pre,
                  STYPE__ const &semVal, char const *post) const
 {
 @insert-stype
-    using namespace std;
-    ostringstream ostr;
-    ostr << pre << semVal << post;
+    std::ostringstream ostr;
+    std::ostr << pre << semVal << post;
     return ostr.str();
 @else
     return "";
 @end
 }
+
+inline size_t \@Base::state__() const
+{
+    return d_state;
+}
+
+inline size_t \@Base::vspIndex__() const
+{
+    return d_vsp -  &d_stateStack.front();
+}
+
+template<int field>
+inline auto const &\@Base::stackEl__(size_t idx) const
+{
+    return std::get<field>(d_stateStack[idx]);
+}
+

@@ -135,93 +135,82 @@ void \@::print__()
 $insert print
 }
 
+void \@Base::checkStackSize()
+{
+    size_t currentSize = d_stateStack.size();
+
+    if (static_cast<size_t>(stackSize__()) == currentSize)
+        d_stateStack.resize(currentSize + STACK_EXPANSION__);
+}
+
 void \@Base::push__(size_t state)
 {
     checkStackSize();
 
-    if (++d_stackIdx__ > 0)
-        top() = d_stateStack__[d_stackIdx__ - 1];
+    if (++d_stackIdx > 0)
+        top() = d_stateStack[d_stackIdx - 1];
 
-    top__<0>() = d_state__ = state;
+    top__<0>() = d_state = state;
+    d_vsp = &top();
+    top__<3>() = std::move(d_val__);
 
-$insert 4 debug "\nin state " << top__<0>(1) << "with token: " << symbol__(d_token__) +
-$insert 4 debug ": push state " << state << "; stack size = " << (d_stackIdx__ + 1) << stype__(". Semantic TOS value = ", d_val__) << "\n   (consumed token " << symbol__(d_token__) << ')'
-
-    *(d_vsp__ = &d_valueStack__[d_stackIdx__]) = std::move(d_val__);
+$insert 4 debug "\nin state " << top__<0>(1) << " with token: " << symbol__(d_tp.first) << ": push state " << state << "; stack size = " << stackSize__() << ".\nAssign semantic TOS value " << d_val__ << " to stack index " << d_stackIdx << ". consumed token " << symbol__(d_tp.first)
 }
 
 void \@Base::pop__(size_t count)
 {
 $insert 4 debug "\n pop " << count << " state(s)" +
-    if (d_stackIdx__ < static_cast<int>(count))
+    if (d_stackIdx < static_cast<int>(count))
     {
-$insert 8 debug ":internal error: stack underflow at token " << symbol__(d_token__)
+$insert 8 debug ":internal error: stack underflow at token " << symbol__(d_tp.first)
         ABORT();
     }
 
-    d_stackIdx__ -= count;
-    d_state__ = top__<0>();
-    d_vsp__ = &d_valueStack__[d_stackIdx__];
-$insert 4 LTYPEpop
-$insert 4 debug ", top state now: " << d_state__ << ", stack size: " << (d_stackIdx__ + 1) 
+    d_stackIdx -= count;
+
+    d_state =  top__<0>();
+    d_vsp -= count;
+
+$insert 4 debug ", top state now: " << d_state << ", stack size: " << stackSize__()
 }
 
 void \@Base::reset__()
 {
 //FBB: define a function to call this, and make it an empty function unless
-//      pollymorphic
+//      polymorphic
 //    d_s_nErrors__ = Meta__::s_nErrors__;          // save current ptr
 //    Meta__::s_nErrors__ = &d_nErrors__;           // set it to d_nErrors__
 
     d_acceptedTokens__ = d_requiredTokens__;
     d_nErrors__ = 0;
 
-    d_stackIdx__ = -1;
-    d_stateStack__.clear();
-    d_valueStack__.clear();
-    d_tokenStack__ = std::stack<int>{};
-    d_state__ = 0;
-    d_token__ = _UNDETERMINED_;
+    d_stackIdx = -1;
+    d_stateStack.clear();
+    d_tokenStack = std::stack<TokenPair>{};
+    d_state = 0;
+    d_tp.first = _UNDETERMINED_;
+    d_val__ = STYPE__{};
+    d_matched.erase();
 
     push__(0);
 }
 
-void \@Base::checkStackSize()
+inline void \@Base::pushToken__(int token)
 {
-    size_t currentSize = d_stateStack__.size();
-
-    if (static_cast<size_t>(d_stackIdx__ + 1) == currentSize)
-    {
-        size_t newSize = currentSize + STACK_EXPANSION__;
-        d_stateStack__.resize(newSize);
-        if (d_valueStack__.capacity() >= newSize)
-            d_valueStack__.resize(newSize);
-        else
-        {
-            std::vector<STYPE__> enlarged(newSize);
-            for (size_t idx = 0; idx != currentSize; ++idx)
-                enlarged[idx] = std::move(d_valueStack__[idx]);
-            d_valueStack__.swap(enlarged);
-        }
-    }
-}
-
-void \@Base::pushToken__(int token)
-{
-    d_tokenStack__.push(token);
-$insert 4 debug "saved token " << symbol__(token) << ", token stack size: " << d_tokenStack__.size()
+    d_tokenStack.push(TokenPair{ token, "" });
+$insert 4 debug "saved token " << symbol__(token) << ", token stack size: " << d_tokenStack.size()
 }
 
 void \@::executeAction__(int production)
 try
 {
-$insert 4 debug "\n    (actions for rule " << production <<  stype__(", top value of the semantic stack: ", *d_vsp__) << "..."
+$insert 4 debug "\n    (actions for rule " << production << stype__(", stack top semantic value: ", top__<3>())
 $insert executeactioncases
     switch (production)
     {
 $insert 8 actioncases
     }
-$insert 4 debug "... completed " <<   stype__(", returning semantic value ", *d_vsp__) << ')'
+$insert 4 debug "... completed " << stype__(", returning semantic value ", d_val__)
 }
 catch (std::exception const &exc)
 {
@@ -230,55 +219,61 @@ catch (std::exception const &exc)
 
 void \@Base::reduce__(PI__ const &pi)
 {
-    pushToken__(d_token__);
     pushToken__(pi.d_nonTerm);
     size_t msgIdx = top__<1>();
     pop__(pi.d_size);
     top__<1>() = msgIdx;
 }
 
-void \@::getToken__()
-{ 
-    if (d_tokenStack__.empty())
-    {
-        d_token__ = lex();
-        if (d_token__ <= 0)
-            d_token__ = _EOF_;
-$insert 8 debug "LEX" +
-    }
-    else
-    {
-        d_token__ = d_tokenStack__.top();
-        d_tokenStack__.pop();
+void \@Base::lex__(int token, std::string const &matchedText)
+{
+    d_tp.first = token <= 0 ? _EOF_ : token;
+    d_tp.second = matchedText;
 
-$insert 8 debug "STACKED" +
-    }
-$insert 4 debug " token " << symbol__(d_token__) << stype__(", semantic = ", d_val__)
+$insert 4 debug "LEX token " << symbol__(d_tp.first) << stype__(", semantic = ", d_val__)
+}
 
+bool \@Base::pendingTokens__()
+{
     ++d_acceptedTokens__;               // accept another token (see
                                         // errorRecover())
-    print();
+
+    if (d_tokenStack.empty())           // no pending tokens
+        return false;
+
+    d_tp = d_tokenStack.top();
+    d_tokenStack.pop();
+
+$insert 4 debug "PENDING token " << symbol__(d_tp.first) << stype__(", semantic = ", d_val__)
+
+    return true;
+}
+
+void \@::getToken__()
+{ 
+    if (not pendingTokens__())
+        lex();
 }
 
 SR__ const *\@Base::findToken__() const // find the item defining an 
-{                                       // action for d_token__
-    SR__ const *sr = s_state[d_state__];
+{                                       // action for d_tp.first
+    SR__ const *sr = s_state[d_state];
     SR__ const *last = sr + sr->d_lastIdx;
 
     for ( ; sr != last; ++sr)         // visit all but the last SR entries
     {
-        if (sr->d_token == d_token__)
+        if (sr->d_token == d_tp.first)
             return sr;
     }
 
-$insert 4 debug "state " << d_state__ << ": " +
+$insert 4 debug "state " << d_state << ": " +
     if (sr->d_action < 0)
-    {
+    {   // the compound stmnt is here to accomodate an optional debug stmnt
 $insert 8 debug "default reduce"
     }
     else 
     {
-$insert 8 debug "no action for token " << symbol__(d_token__)
+$insert 8 debug "no action for token " << symbol__(d_tp.first)
         sr = 0;
     }
        
@@ -287,7 +282,8 @@ $insert 8 debug "no action for token " << symbol__(d_token__)
 
 void \@::errorRecovery__()
 {
-$insert 4 debug "\nStarting error recovery in state " << d_state__ << " with token " << symbol__(d_token__)
+$insert 4 debug "\nStarting error recovery in state " << state__() << " with token " << symbol__(token__())
+
     if (d_acceptedTokens__ >= d_requiredTokens__)// only generate an error-
     {                                           // message if enough tokens 
         ++d_nErrors__;                          // were accepted. Otherwise
@@ -299,15 +295,14 @@ $insert 4 debug "\nStarting error recovery in state " << d_state__ << " with tok
 
     top__<1>() = top__<2>();
 
-    pushToken__(d_token__);
     pushToken__(_error_);
 
-$insert 4 debug "Error recovery: pop to error state: " << d_state__
+$insert 4 debug "Error recovery: pop to error state: " << state__()
 }
 
 void \@Base::done__()
 {
-$insert 4 debug "\nstate " << d_state__ << " with " <<  symbol__(d_token__) << ": normal end\n"
+$insert 4 debug "\nstate " << d_state << " with " << symbol__(d_tp.first) << ": normal end\n"
     if (d_nErrors__ == 0)
         ACCEPT();
     else
@@ -332,6 +327,7 @@ $insert 4 debug ' '
 
     if (sr == 0)                // no action: recovery
     {
+        pushToken__(token__());
         errorRecovery__();
         return;
     }
@@ -345,9 +341,15 @@ $insert 4 debug ' '
         push__(action);
     else
     {
+        pushToken__(token__());
         executeAction__(-action);
         reduce__(s_productionInfo[ -sr->d_action ]);    // or reduce
     }
+}
+
+inline void \@Base::nextMatched__()
+{
+    d_matched = d_tp.second;
 }
 
 int \@::parse()
@@ -357,7 +359,10 @@ $insert 4 debug "parsing starts"
     reset__();                              // clear the tokens.
 
     while (true)
+    {
         nextCycle__();
+        nextMatched__();
+    }
 }
 catch (Return__ retValue)
 {

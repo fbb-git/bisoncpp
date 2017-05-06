@@ -26,4 +26,3 @@ void Generator::insert(ostream &out) const
 
 
 
-

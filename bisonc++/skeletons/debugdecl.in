@@ -1,6 +1,12 @@
-static std::ostringstream s_out__;
-
 std::string symbol__(int value) const;
 std::string stype__(char const *pre, STYPE__ const &semVal,
                     char const *post = "") const;
+size_t vspIndex__() const;
+size_t state__() const;
+
+template<int field>
+auto const &stackEl__(size_t idx) const;
+
 static std::ostream &dflush__(std::ostream &out);
+static std::ostringstream s_out__;
+

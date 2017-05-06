@@ -7,7 +7,7 @@ ostringstream Parser::s_hiddenName;
 string Parser::s_semanticValue {"d_val__"};   
                                     // name of the semantic value variable
                                     // used by the generated parser.
-string Parser::s_semanticValueStack {"d_vsp__"};  
+string Parser::s_semanticValueStack {"vs__("};  
                                     // name of the semantic value stack
                                     // used by the generated parser
 char Parser::s_locationValueStack[] = "d_lsp__";  

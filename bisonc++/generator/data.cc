@@ -52,6 +52,8 @@ vector<Generator::AtBool> Generator::s_atBol =
 
 char const *Generator::s_atFlag = "\\@";
 
+    // NOTE: ALL AT LABELS USE LC CHARS!!
+
 vector<Generator::At> Generator::s_at =
 {
     At("\\@tokenfunction",          &Generator::atTokenFunction),
