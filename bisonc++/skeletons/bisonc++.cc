@@ -154,7 +154,7 @@ void \@Base::push__(size_t state)
     d_vsp = &top();
     top__<3>() = std::move(d_val__);
 
-$insert 4 debug "\nin state " << top__<0>(1) << " with token: " << symbol__(d_tp.first) << ": push state " << state << "; stack size = " << stackSize__() << ".\nAssign semantic TOS value " << d_val__ << " to stack index " << d_stackIdx << ". consumed token " << symbol__(d_tp.first)
+$insert 4 debug "\nin state " << top__<0>(1) << " with token: " << symbol__(d_tp.first) << ": push state " << state << "; stack size = " << stackSize__() << ".\nAssign semantic TOS value" << stype__(" ", d_val__, "") << " to stack index " << d_stackIdx << ". consumed token " << symbol__(d_tp.first)
 }
 
 void \@Base::pop__(size_t count)
