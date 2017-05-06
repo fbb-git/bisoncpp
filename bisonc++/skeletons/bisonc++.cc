@@ -148,7 +148,18 @@ void \@Base::push__(size_t state)
     checkStackSize();
 
     if (++d_stackIdx > 0)
-        top() = d_stateStack[d_stackIdx - 1];
+    {
+        top__<0>() = top__<0>(1);
+        top__<1>() = top__<1>(1);
+        top__<2>() = top__<2>(1);
+        top__<3>() = STYPE__{};
+
+//        std::get<1>(d_stateStack[d_stackIdx ]) = std::get<1>(d_stateStack[d_stackIdx - 1]);
+//        std::get<2>(d_stateStack[d_stackIdx ]) = std::get<2>(d_stateStack[d_stackIdx - 1]);
+//        std::get<3>(d_stateStack[d_stackIdx ]) = STYPE__{};
+
+        //top() = d_stateStack[d_stackIdx - 1];
+    }
 
     top__<0>() = d_state = state;
     d_vsp = &top();
@@ -195,10 +206,13 @@ void \@Base::reset__()
     push__(0);
 }
 
-inline void \@Base::pushToken__(int token)
+inline void \@Base::pushToken__(bool error)
 {
-    d_tokenStack.push(TokenPair{ token, "" });
-$insert 4 debug "saved token " << symbol__(token) << ", token stack size: " << d_tokenStack.size()
+    if (error)
+        d_tp = TokenPair{_error_, ""};
+
+    d_tokenStack.push(d_tp);
+$insert 4 debug "saved token " << symbol__(d_tp.first) << ", text: " << d_tp.second << ", token stack size: " << d_tokenStack.size()
 }
 
 void \@::executeAction__(int production)
@@ -219,7 +233,9 @@ catch (std::exception const &exc)
 
 void \@Base::reduce__(PI__ const &pi)
 {
-    pushToken__(pi.d_nonTerm);
+    d_tp = TokenPair{pi.d_nonTerm, ""};
+    pushToken__();
+
     size_t msgIdx = top__<1>();
     pop__(pi.d_size);
     top__<1>() = msgIdx;
@@ -230,7 +246,7 @@ void \@Base::lex__(int token, std::string const &matchedText)
     d_tp.first = token <= 0 ? _EOF_ : token;
     d_tp.second = matchedText;
 
-$insert 4 debug "LEX token " << symbol__(d_tp.first) << stype__(", semantic = ", d_val__)
+$insert 4 debug "LEX token " << symbol__(d_tp.first) << ", text: " << d_tp.second
 }
 
 bool \@Base::pendingTokens__()
@@ -244,7 +260,7 @@ bool \@Base::pendingTokens__()
     d_tp = d_tokenStack.top();
     d_tokenStack.pop();
 
-$insert 4 debug "PENDING token " << symbol__(d_tp.first) << stype__(", semantic = ", d_val__)
+$insert 4 debug "PENDING token " << symbol__(d_tp.first) << ", text: " << d_tp.second
 
     return true;
 }
@@ -295,7 +311,7 @@ $insert 4 debug "\nStarting error recovery in state " << state__() << " with tok
 
     top__<1>() = top__<2>();
 
-    pushToken__(_error_);
+    pushToken__(false);                     // _error_
 
 $insert 4 debug "Error recovery: pop to error state: " << state__()
 }
@@ -327,7 +343,7 @@ $insert 4 debug ' '
 
     if (sr == 0)                // no action: recovery
     {
-        pushToken__(token__());
+        pushToken__();
         errorRecovery__();
         return;
     }
@@ -341,7 +357,7 @@ $insert 4 debug ' '
         push__(action);
     else
     {
-        pushToken__(token__());
+        pushToken__();
         executeAction__(-action);
         reduce__(s_productionInfo[ -sr->d_action ]);    // or reduce
     }
@@ -350,6 +366,7 @@ $insert 4 debug ' '
 inline void \@Base::nextMatched__()
 {
     d_matched = d_tp.second;
+    cerr << "End of cycle: matched = " << d_matched << '\n';
 }
 
 int \@::parse()

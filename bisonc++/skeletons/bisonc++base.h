@@ -91,7 +91,7 @@ $insert debugdecl
         STYPE__ &vs__(size_t idx);      // value stack element idx 
                                         // counting back fm the current 
                                         // element in the production rule
-        std::string &matched__();
+        std::string const &matched__() const;
 
         void lex__(int token, std::string const &matchedText);
         void nextMatched__();
@@ -105,7 +105,7 @@ $insert debugdecl
         void msgIdx__(size_t idx);
         void pop__(size_t count = 1);
         void print__();
-        void pushToken__(int token);
+        void pushToken__(bool error = false);
         void push__(size_t nextState);
         void reduce__(PI__ const &pi);
         void reset__();
@@ -140,7 +140,7 @@ inline int \@Base::token__() const
     return d_tp.first;
 }
 
-inline std::string &\@Base::matched__()
+inline std::string const &\@Base::matched__() const
 {
     return d_matched;
 }
