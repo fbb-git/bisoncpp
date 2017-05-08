@@ -1,17 +1,14 @@
 #include "generator.ih"
 
-void Generator::prompt(ostream &out) const
-{
-    key(out);
+namespace {
+    char const *noPrompt = 
+R"(
+    if (d_debug__)
+        s_out__ << '\n';
+)";
 
-    if (d_genDebug)
-    {
-        if (not d_options.prompt())
-            out << R"(s_out << '\n';)" << '\n';
-        else
-            out << 
-    // BEGIN RAW STRING LITERAL
-    R"(
+    char const *doPrompt = 
+R"(
     if (d_debug__)
     {
         s_out__ << "================\n"
@@ -19,8 +16,14 @@ void Generator::prompt(ostream &out) const
         std::string s;
         getline(std::cin, s);
     }
-)"  
-    // END RAW STRING LITERAL
-            << '\n';        
-    }
+)";
+
+} // anonymous namespace
+
+void Generator::prompt(ostream &out) const
+{
+    key(out);
+
+    if (d_genDebug)
+        out << (d_options.prompt() ? doPrompt : noPrompt) << '\n';        
 }

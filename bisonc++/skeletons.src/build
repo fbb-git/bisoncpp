@@ -6,13 +6,14 @@ for x in base/comment \
     base/checkstacksize \
     base/consumed \
     base/done \
+    base/error \
     base/findtoken \
     base/pop \
     base/push \
     base/reduce \
     base/reset \
     base/setdebug \
-    base/error
+    base/trydefaultreduce
 do
     cat $x >> bisonc++.cc
 done

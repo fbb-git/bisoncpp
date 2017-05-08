@@ -12,7 +12,7 @@ SR__ const *\@Base::findToken__() const // find the item defining an
 $insert 4 debug "state " << d_state << ": " +
     if (sr->d_action < 0)
     {   // the compound stmnt is here to accomodate an optional debug stmnt
-$insert 8 debug "default reduce"
+$insert 8 debug "reduce"
     }
     else 
     {

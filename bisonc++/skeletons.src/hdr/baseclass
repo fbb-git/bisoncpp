@@ -87,6 +87,7 @@ $insert debugdecl
                                         // element in the production rule
 
 
+        SR__ const *tryDefaultReduce__() const;
         SR__ const *findToken__() const;
         size_t msgIdx__() const;
         void done__();

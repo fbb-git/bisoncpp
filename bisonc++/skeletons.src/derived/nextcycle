@@ -1,8 +1,13 @@
 void \@::nextCycle__()
 {
 $insert prompt
-    getToken__();
-    SR__ const *sr = findToken__(); 
+    SR__ const *sr = tryDefaultReduce__();
+
+    if (sr == 0)
+    {
+        getToken__();
+        sr = findToken__(); 
+    }
 
     if (sr == 0)                // no action: recovery
     {

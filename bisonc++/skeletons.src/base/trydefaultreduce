@@ -1,0 +1,14 @@
+SR__ const *\@Base::tryDefaultReduce__() const
+{
+    if (token__() != _UNDETERMINED_)
+        return 0;
+
+    SR__ const *sr = s_state[d_state];
+
+    if (sr->d_type == DEF_RED)
+    {
+$insert 8 debug "state " << d_state << ": default reduce"
+        return  sr + sr->d_lastIdx;
+    }
+    return 0;
+}

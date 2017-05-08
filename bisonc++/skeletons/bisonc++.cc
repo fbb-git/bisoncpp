@@ -133,6 +133,16 @@ $insert 4 debug "\nstate " << d_state << " with " << symbol__(token__()) << ": n
     else
         ABORT();
 }
+void \@::error__()
+{
+    if (d_recovery)
+    {
+        d_token = _UNDETERMINED_;
+        getToken__();
+    }   
+    d_reducedToken = _error_;
+    d_recovery = true;
+}
 SR__ const *\@Base::findToken__() const // find the item defining an 
 {                                       // action for token__()
     SR__ const *sr = s_state[d_state];
@@ -147,7 +157,7 @@ SR__ const *\@Base::findToken__() const // find the item defining an
 $insert 4 debug "state " << d_state << ": " +
     if (sr->d_action < 0)
     {   // the compound stmnt is here to accomodate an optional debug stmnt
-$insert 8 debug "default reduce"
+$insert 8 debug "reduce"
     }
     else 
     {
@@ -237,15 +247,19 @@ void \@Base::setDebug(DebugMode__ mode)
     d_debug__ =       mode & ON;
 }
 
-void \@::error__()
+SR__ const *\@Base::tryDefaultReduce__() const
 {
-    if (d_recovery)
+    if (token__() != _UNDETERMINED_)
+        return 0;
+
+    SR__ const *sr = s_state[d_state];
+
+    if (sr->d_type == DEF_RED)
     {
-        d_token = _UNDETERMINED_;
-        getToken__();
-    }   
-    d_reducedToken = _error_;
-    d_recovery = true;
+$insert 8 debug "state " << d_state << ": default reduce"
+        return  sr + sr->d_lastIdx;
+    }
+    return 0;
 }
 void \@::errorRecovery__()
 {
@@ -299,8 +313,13 @@ $insert 4 debug "getToken: token " << symbol__(token__()) << ", text: " << d_sca
 void \@::nextCycle__()
 {
 $insert prompt
-    getToken__();
-    SR__ const *sr = findToken__(); 
+    SR__ const *sr = tryDefaultReduce__();
+
+    if (sr == 0)
+    {
+        getToken__();
+        sr = findToken__(); 
+    }
 
     if (sr == 0)                // no action: recovery
     {
