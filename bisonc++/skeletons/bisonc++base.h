@@ -37,18 +37,17 @@ $insert STYPE
     private:
                         // state   msgidx  orgidx  semval
         typedef std::tuple<size_t, size_t, size_t, STYPE__> StateTuple;
-        typedef std::pair<int, std::string> TokenPair;
 
         int d_stackIdx;
         std::vector<StateTuple> d_stateStack;
         StateTuple *d_vsp;              // points to the topmost value stack
                                         // element
 
-        std::stack<TokenPair> d_tokenStack;
-        std::string d_matched;
-        TokenPair   d_tp;
-
-        size_t      d_state;
+protected:  //FBB TEMPO
+        int     d_reducedToken;
+        int     d_token;
+        size_t  d_state;
+        bool    d_recovery;
 
 $insert LTYPEstack
 
@@ -85,17 +84,11 @@ $insert debugdecl
         void ERROR() const;
         bool debug() const;
 
-        bool pendingTokens__();
         int token__() const;
 
         STYPE__ &vs__(size_t idx);      // value stack element idx 
                                         // counting back fm the current 
                                         // element in the production rule
-        std::string const &matched__() const;
-
-        void lex__(int token, std::string const &matchedText);
-        void nextMatched__();
-
 
 
         SR__ const *findToken__() const;
@@ -104,13 +97,11 @@ $insert debugdecl
         void errorVerbose__();
         void msgIdx__(size_t idx);
         void pop__(size_t count = 1);
-        void print__();
-        void pushToken__(bool error = false);
         void push__(size_t nextState);
         void reduce__(PI__ const &pi);
         void reset__();
         size_t stackSize__() const;
-
+        
         template<int>                   // elements fm the stateStack:
         auto top__(size_t shift = 0) const;
 
@@ -119,6 +110,7 @@ $insert debugdecl
 
     private:
         void checkStackSize();
+        void consumed();
 
         StateTuple &top();
 }; 
@@ -133,16 +125,6 @@ template<int idx>
 inline auto &ParserBase::top__()
 {
     return std::get<idx>(d_stateStack[ d_stackIdx ]);
-}
-
-inline int \@Base::token__() const
-{
-    return d_tp.first;
-}
-
-inline std::string const &\@Base::matched__() const
-{
-    return d_matched;
 }
 
 inline size_t \@Base::stackSize__() const

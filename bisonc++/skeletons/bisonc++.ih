@@ -13,7 +13,7 @@ $insert lex
 
 inline void \@::print()         
 {
-    print__();           // displays tokens if --print was specified
+    //print__();           // displays tokens if --print was specified
 }
 
 inline void \@::exceptionHandler(std::exception const &exc)         

@@ -24,8 +24,8 @@ $insert 4 scannerobject
 
     private:
         void error();                   // called on (syntax) errors
-        int lex();                      // returns the next token and matching
-                                        // text from the lexical scanner. 
+        int lex();                      // return the next token obtained 
+                                        // from the lexical scanner. 
         void print();                   // use, e.g., d_token, d_loc
 
         void exceptionHandler(std::exception const &exc);
@@ -33,9 +33,10 @@ $insert 4 scannerobject
     // support functions for parse():
         void errorRecovery__();
         void nextCycle__();
-        void getToken__();
         void executeAction__(int ruleNr);
-        void print__();
+        void lex__();               // calls lex, passes the token to Base
+        void error__();
+        void getToken__();
 };
 
 $insert namespace-close

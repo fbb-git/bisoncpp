@@ -1,0 +1,59 @@
+parser.h:
+=========
+
+int lex()                       -> void lex()
+void error(char const *)        -> void error()
+void exceptionHandler__(...)    -> void exceptionHandler(..)
+
+void executeAction(int ruleNr)  -> void executeAction__(int ruleNr) 
+void errorRecovery()            -> void errorRecovery__();
+
+
+Add:    
+
+void nextCycle__();
+void getToken__();
+
+
+DROP:
+
+void nextToken();
+int lookup(bool recovery);
+
+parser.ih
+=========
+
+Default implementation for lex():
+
+    inline void Parser::lex()
+    {
+        int token = d_scanner.lex();
+        lex__(token, d_scanner.matched());
+    }
+
+Default implementation for exceptionHandler:
+
+    inline void Parser::exceptionHandler(std::exception const &exc)         
+    {
+        throw;      // re-implement to handle exceptions thrown by actions
+    }
+
+Default implementation for error:
+
+    inline void Parser::error()
+    {
+        std::cerr << "Syntax error\n";
+    }
+
+
+Code using the generated parser must probably be completely recompiled
+======================================================================
+
+In Parser-code:
+
+    d_token__ must be accessed as token__()
+    d_state__ must be accessed as state__()
+
+d_scanner.matched() should no longer be used (except for in the lex()
+implementation in parser.ih). Instead, use matched__();
+

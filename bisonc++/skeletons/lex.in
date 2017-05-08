@@ -1,9 +1,4 @@
-inline void \@::lex()
+inline int \@::lex()
 {
-    int token = \@tokenfunction;
-@printtokens
-    print();
-@end
-    lex__(token, \@matchedtextfunction);
-
+    return \@tokenfunction;
 }

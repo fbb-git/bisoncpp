@@ -130,17 +130,20 @@ void \@Base::setDebug(DebugMode__ mode)
     d_debug__ =       mode & ON;
 }
 
-void \@::print__()
-{
-$insert print
-}
-
 void \@Base::checkStackSize()
 {
     size_t currentSize = d_stateStack.size();
 
     if (static_cast<size_t>(stackSize__()) == currentSize)
         d_stateStack.resize(currentSize + STACK_EXPANSION__);
+}
+
+void \@Base::consumed()
+{
+    if (d_reducedToken != _UNDETERMINED_)
+        d_reducedToken = _UNDETERMINED_;
+    else
+        d_token = _UNDETERMINED_;
 }
 
 void \@Base::push__(size_t state)
@@ -153,19 +156,15 @@ void \@Base::push__(size_t state)
         top__<1>() = top__<1>(1);
         top__<2>() = top__<2>(1);
         top__<3>() = STYPE__{};
-
-//        std::get<1>(d_stateStack[d_stackIdx ]) = std::get<1>(d_stateStack[d_stackIdx - 1]);
-//        std::get<2>(d_stateStack[d_stackIdx ]) = std::get<2>(d_stateStack[d_stackIdx - 1]);
-//        std::get<3>(d_stateStack[d_stackIdx ]) = STYPE__{};
-
-        //top() = d_stateStack[d_stackIdx - 1];
     }
 
     top__<0>() = d_state = state;
     d_vsp = &top();
     top__<3>() = std::move(d_val__);
 
-$insert 4 debug "\nin state " << top__<0>(1) << " with token: " << symbol__(d_tp.first) << ": push state " << state << "; stack size = " << stackSize__() << ".\nAssign semantic TOS value" << stype__(" ", d_val__, "") << " to stack index " << d_stackIdx << ". consumed token " << symbol__(d_tp.first)
+$insert 4 debug "\nin state " << top__<0>(1) << " with token: " << symbol__(token__()) << ": push state " << state << "; stack size = " << stackSize__() << ".\nAssign semantic TOS value" << stype__(" ", d_val__, "") << " to stack index " << d_stackIdx << ". Consumed token " << symbol__(token__())
+
+    consumed();
 }
 
 void \@Base::pop__(size_t count)
@@ -173,7 +172,7 @@ void \@Base::pop__(size_t count)
 $insert 4 debug "\n pop " << count << " state(s)" +
     if (d_stackIdx < static_cast<int>(count))
     {
-$insert 8 debug ":internal error: stack underflow at token " << symbol__(d_tp.first)
+$insert 8 debug ":internal error: stack underflow at token " << symbol__(token__())
         ABORT();
     }
 
@@ -192,27 +191,20 @@ void \@Base::reset__()
 //    d_s_nErrors__ = Meta__::s_nErrors__;          // save current ptr
 //    Meta__::s_nErrors__ = &d_nErrors__;           // set it to d_nErrors__
 
-    d_acceptedTokens__ = d_requiredTokens__;
     d_nErrors__ = 0;
 
     d_stackIdx = -1;
     d_stateStack.clear();
-    d_tokenStack = std::stack<TokenPair>{};
     d_state = 0;
-    d_tp.first = _UNDETERMINED_;
+
+    d_acceptedTokens__ = d_requiredTokens__;
+    d_token = _UNDETERMINED_;
+    d_reducedToken = _UNDETERMINED_;
+    d_recovery = false;
+
     d_val__ = STYPE__{};
-    d_matched.erase();
 
     push__(0);
-}
-
-inline void \@Base::pushToken__(bool error)
-{
-    if (error)
-        d_tp = TokenPair{_error_, ""};
-
-    d_tokenStack.push(d_tp);
-$insert 4 debug "saved token " << symbol__(d_tp.first) << ", text: " << d_tp.second << ", token stack size: " << d_tokenStack.size()
 }
 
 void \@::executeAction__(int production)
@@ -233,52 +225,42 @@ catch (std::exception const &exc)
 
 void \@Base::reduce__(PI__ const &pi)
 {
-    d_tp = TokenPair{pi.d_nonTerm, ""};
-    pushToken__();
+    d_reducedToken = pi.d_nonTerm;
 
     size_t msgIdx = top__<1>();
     pop__(pi.d_size);
     top__<1>() = msgIdx;
 }
 
-void \@Base::lex__(int token, std::string const &matchedText)
-{
-    d_tp.first = token <= 0 ? _EOF_ : token;
-    d_tp.second = matchedText;
-
-$insert 4 debug "LEX token " << symbol__(d_tp.first) << ", text: " << d_tp.second
-}
-
-bool \@Base::pendingTokens__()
-{
-    ++d_acceptedTokens__;               // accept another token (see
-                                        // errorRecover())
-
-    if (d_tokenStack.empty())           // no pending tokens
-        return false;
-
-    d_tp = d_tokenStack.top();
-    d_tokenStack.pop();
-
-$insert 4 debug "PENDING token " << symbol__(d_tp.first) << ", text: " << d_tp.second
-
-    return true;
-}
 
 void \@::getToken__()
 { 
-    if (not pendingTokens__())
-        lex();
+    if (d_token == _UNDETERMINED_ and d_reducedToken == _UNDETERMINED_)
+    {
+        d_token = lex();
+
+        if (d_token <= 0)
+            d_token = _EOF_;
+$insert print
+        ++d_acceptedTokens__;           // accept another token (see
+                                    // errorRecovery())
+    }
+$insert 4 debug "getToken: token " << symbol__(token__()) << ", text: " << d_scanner.matched()
+}
+
+int \@Base::token__() const
+{
+    return d_reducedToken != _UNDETERMINED_ ? d_reducedToken : d_token;
 }
 
 SR__ const *\@Base::findToken__() const // find the item defining an 
-{                                       // action for d_tp.first
+{                                       // action for token__()
     SR__ const *sr = s_state[d_state];
     SR__ const *last = sr + sr->d_lastIdx;
 
-    for ( ; sr != last; ++sr)         // visit all but the last SR entries
+    for ( ; sr != last; ++sr)           // visit all but the last SR entries
     {
-        if (sr->d_token == d_tp.first)
+        if (sr->d_token == token__())
             return sr;
     }
 
@@ -289,36 +271,48 @@ $insert 8 debug "default reduce"
     }
     else 
     {
-$insert 8 debug "no action for token " << symbol__(d_tp.first)
+$insert 8 debug "no action for token " << symbol__(token__())
         sr = 0;
     }
        
     return sr;
 }
 
+void \@::error__()
+{
+    if (d_recovery)
+    {
+        d_token = _UNDETERMINED_;
+        getToken__();
+    }   
+    d_reducedToken = _error_;
+    d_recovery = true;
+}
+
 void \@::errorRecovery__()
 {
-$insert 4 debug "\nStarting error recovery in state " << state__() << " with token " << symbol__(token__())
+$insert 4 debug "\nError recovery in state " << state__() << " with token " << symbol__(token__())
 
     if (d_acceptedTokens__ >= d_requiredTokens__)// only generate an error-
     {                                           // message if enough tokens 
         ++d_nErrors__;                          // were accepted. Otherwise
         error();                                // simply skip input
     }
+
                                                 // find the topmost ERR_ITEM
     while (not (s_state[top__<0>()]->d_type & ERR_ITEM))
         pop__();
 
     top__<1>() = top__<2>();
 
-    pushToken__(false);                     // _error_
+    error__();                                  // continue at _exxor_
 
 $insert 4 debug "Error recovery: pop to error state: " << state__()
 }
 
 void \@Base::done__()
 {
-$insert 4 debug "\nstate " << d_state << " with " << symbol__(d_tp.first) << ": normal end\n"
+$insert 4 debug "\nstate " << d_state << " with " << symbol__(token__()) << ": normal end\n"
     if (d_nErrors__ == 0)
         ACCEPT();
     else
@@ -328,22 +322,23 @@ $insert 4 debug "\nstate " << d_state << " with " << symbol__(d_tp.first) << ": 
 void \@::nextCycle__()
 {
 //FBB
-//    if (d_debug__)
-//    {
-//        std::string s;
-//        std::cout << "? ";
-//        getline(std::cin, s);
-//    }
-
-$insert 4 debug ' '
+    if (d_debug__)
+    {
+        std::string s;
+        std::cout << "? ";
+        getline(std::cin, s);
+$insert 8 debug "================"
+    }
+    else
+    {
+$insert 8 debug ' '
+    }
 
     getToken__();
-
     SR__ const *sr = findToken__(); 
 
     if (sr == 0)                // no action: recovery
     {
-        pushToken__();
         errorRecovery__();
         return;
     }
@@ -357,16 +352,9 @@ $insert 4 debug ' '
         push__(action);
     else
     {
-        pushToken__();
         executeAction__(-action);
         reduce__(s_productionInfo[ -sr->d_action ]);    // or reduce
     }
-}
-
-inline void \@Base::nextMatched__()
-{
-    d_matched = d_tp.second;
-    cerr << "End of cycle: matched = " << d_matched << '\n';
 }
 
 int \@::parse()
@@ -374,12 +362,10 @@ try
 {
 $insert 4 debug "parsing starts"
     reset__();                              // clear the tokens.
+    getToken__();
 
     while (true)
-    {
         nextCycle__();
-        nextMatched__();
-    }
 }
 catch (Return__ retValue)
 {
@@ -391,3 +377,8 @@ $insert 4 debug "parse(): returns " << retValue
 }
 
 $insert namespace-close
+
+
+
+
+
