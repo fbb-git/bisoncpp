@@ -38,8 +38,6 @@ $insert STYPE
         std::vector<StateTuple> d_stateStack;
         StateTuple *d_vsp;              // points to the topmost value stack
                                         // element
-
-protected:  //FBB TEMPO
         int     d_reducedToken;
         int     d_token;
         size_t  d_state;
