@@ -170,9 +170,21 @@ inline int \@Base::token__() const
 {
     return d_reducedToken != _UNDETERMINED_ ? d_reducedToken : d_token;
 }
-inline ParserBase::StateTuple &ParserBase::top()
+inline \@Base::StateTuple &\@Base::top()
 {
     return d_stateStack[d_stackIdx];
+}
+
+template<int idx>
+inline auto \@Base::top__(size_t shift) const
+{
+    return std::get<idx>(d_stateStack[ d_stackIdx - shift ]);
+}
+
+template<int idx>
+inline auto &\@Base::top__()
+{
+    return std::get<idx>(d_stateStack[ d_stackIdx ]);
 }
 
 inline \@Base::STYPE__ &\@Base::vs__(size_t idx) 

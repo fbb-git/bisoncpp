@@ -1,39 +1,47 @@
 #!/bin/bash
 
-for x in comment declarations base1 \
-    checkstacksize \
-    consumed \
-    done \
-    findtoken \
-    pop \
-    push \
-    reduce \
-    reset \
-    setdebug \
-    error \
-errorrecovery \
-    executeaction \
-    gettoken \
-    nextcycle \
-    parse
+for x in base/comment \
+         base/declarations \
+         base/base1 \
+    base/checkstacksize \
+    base/consumed \
+    base/done \
+    base/findtoken \
+    base/pop \
+    base/push \
+    base/reduce \
+    base/reset \
+    base/setdebug \
+    base/error
 do
     cat $x >> bisonc++.cc
 done
 
 
-for x in includes baseclass \
-    abort.i \
-    accept.i \
-    debug.i \
-    error.i \
-    msgidx.i \
-    opbitand.i \
-    opbitor.i \
-    stacksize.i \
-    token.i \
-    top.i \
-    vs.i \
-    tail.i
+for x in derived/errorrecovery \
+    derived/executeaction \
+    derived/gettoken \
+    derived/nextcycle \
+    derived/parse
+do
+    cat $x >> bisonc++.cc
+done
+
+
+for x in hdr/includes \
+         hdr/baseclass \
+    hdr/abort \
+    hdr/accept \
+    hdr/debug \
+    hdr/error \
+    hdr/msgidx \
+    hdr/opbitand \
+    hdr/opbitor \
+    hdr/stacksize \
+    hdr/token \
+    hdr/top \
+    hdr/vs \
+    hdr/tail
 do
     cat $x >> bisonc++base.h
 done
