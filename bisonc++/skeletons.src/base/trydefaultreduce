@@ -1,6 +1,6 @@
 SR__ const *\@Base::tryDefaultReduce__() const
 {
-    if (token__() != _UNDETERMINED_)
+    if (token__() != _UNDETERMINED_)        // tokens are waiting
         return 0;
 
     SR__ const *sr = s_state[d_state];

@@ -138,7 +138,7 @@ void \@::error__()
     if (d_recovery)
     {
         d_token = _UNDETERMINED_;
-        getToken__();
+//        getToken__();
     }   
     d_reducedToken = _error_;
     d_recovery = true;
@@ -249,7 +249,7 @@ void \@Base::setDebug(DebugMode__ mode)
 
 SR__ const *\@Base::tryDefaultReduce__() const
 {
-    if (token__() != _UNDETERMINED_)
+    if (token__() != _UNDETERMINED_)        // tokens are waiting
         return 0;
 
     SR__ const *sr = s_state[d_state];
