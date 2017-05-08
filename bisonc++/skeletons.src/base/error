@@ -1,4 +1,4 @@
-void \@::error__()
+void \@Base::error__()
 {
     if (d_recovery)
         d_token = _UNDETERMINED_;

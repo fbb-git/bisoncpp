@@ -133,13 +133,11 @@ $insert 4 debug "\nstate " << d_state << " with " << symbol__(token__()) << ": n
     else
         ABORT();
 }
-void \@::error__()
+void \@Base::error__()
 {
     if (d_recovery)
-    {
         d_token = _UNDETERMINED_;
-//        getToken__();
-    }   
+
     d_reducedToken = _error_;
     d_recovery = true;
 }
@@ -167,6 +165,16 @@ $insert 8 debug "no action for token " << symbol__(token__())
        
     return sr;
 }
+void \@Base::newToken__(int token)
+{
+    d_token = token;
+
+    if (d_token <= 0)
+        d_token = _EOF_;
+$insert print
+    ++d_acceptedTokens__;           // accept another token (see
+}                                   // errorRecovery())
+
 void \@Base::pop__(size_t count)
 {
 $insert 4 debug "\n pop " << count << " state(s)" +
@@ -298,16 +306,20 @@ catch (std::exception const &exc)
 }
 void \@::getToken__()
 { 
-    if (d_token == _UNDETERMINED_ and d_reducedToken == _UNDETERMINED_)
-    {
-        d_token = lex();
+    if (token__() == _UNDETERMINED_)
+        newToken__(lex());
 
-        if (d_token <= 0)
-            d_token = _EOF_;
-$insert print
-        ++d_acceptedTokens__;           // accept another token (see
-                                    // errorRecovery())
-    }
+//    if (d_token == _UNDETERMINED_ and d_reducedToken == _UNDETERMINED_)
+//    {
+//        d_token = lex();
+//
+//        if (d_token <= 0)
+//            d_token = _EOF_;
+//$insert print
+//        ++d_acceptedTokens__;           // accept another token (see
+//                                    // errorRecovery())
+//    }
+
 $insert 4 debug "getToken: token " << symbol__(token__()) << ", text: " << d_scanner.matched()
 }
 void \@::nextCycle__()

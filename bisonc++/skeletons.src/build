@@ -8,6 +8,7 @@ for x in base/comment \
     base/done \
     base/error \
     base/findtoken \
+    base/newtoken \
     base/pop \
     base/push \
     base/reduce \

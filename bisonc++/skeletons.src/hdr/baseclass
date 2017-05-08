@@ -91,6 +91,8 @@ $insert debugdecl
         SR__ const *findToken__() const;
         size_t msgIdx__() const;
         void done__();
+        void error__();
+        void newToken__(int token);
         void errorVerbose__();
         void msgIdx__(size_t idx);
         void pop__(size_t count = 1);

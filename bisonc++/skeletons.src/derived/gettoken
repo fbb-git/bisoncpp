@@ -1,14 +1,7 @@
 void \@::getToken__()
 { 
-    if (d_token == _UNDETERMINED_ and d_reducedToken == _UNDETERMINED_)
-    {
-        d_token = lex();
+    if (token__() == _UNDETERMINED_)
+        newToken__(lex());
 
-        if (d_token <= 0)
-            d_token = _EOF_;
-$insert print
-        ++d_acceptedTokens__;           // accept another token (see
-                                    // errorRecovery())
-    }
 $insert 4 debug "getToken: token " << symbol__(token__()) << ", text: " << d_scanner.matched()
 }
