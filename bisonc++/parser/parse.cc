@@ -2517,12 +2517,12 @@ int Parser::lookup(bool recovery)
     {
         if (elementPtr->d_action < 0)   // default reduction
         {
-        // $insert debug
-        if (d_debug__)
-            s_out__ <<  "lookup(" << d_state__ << ", " << symbol__(d_token__) ;
-        // $insert debug
-        if (d_debug__)
-            s_out__ <<  "): default reduction by rule " << -elementPtr->d_action << "\n" << dflush__;
+            // $insert debug
+            if (d_debug__)
+                s_out__ <<  "lookup(" << d_state__ << ", " << symbol__(d_token__) ;
+            // $insert debug
+            if (d_debug__)
+                s_out__ <<  "): default reduction by rule " << -elementPtr->d_action << "\n" << dflush__;
             return elementPtr->d_action;                
         }
         // $insert debug
