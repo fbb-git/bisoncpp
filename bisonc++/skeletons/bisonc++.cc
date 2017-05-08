@@ -171,7 +171,6 @@ void \@Base::newToken__(int token)
 
     if (d_token <= 0)
         d_token = _EOF_;
-$insert print
     ++d_acceptedTokens__;           // accept another token (see
 }                                   // errorRecovery())
 
@@ -307,18 +306,10 @@ catch (std::exception const &exc)
 void \@::getToken__()
 { 
     if (token__() == _UNDETERMINED_)
+    {
         newToken__(lex());
-
-//    if (d_token == _UNDETERMINED_ and d_reducedToken == _UNDETERMINED_)
-//    {
-//        d_token = lex();
-//
-//        if (d_token <= 0)
-//            d_token = _EOF_;
-//$insert print
-//        ++d_acceptedTokens__;           // accept another token (see
-//                                    // errorRecovery())
-//    }
+$insert print
+    }
 
 $insert 4 debug "getToken: token " << symbol__(token__()) << ", text: " << d_scanner.matched()
 }

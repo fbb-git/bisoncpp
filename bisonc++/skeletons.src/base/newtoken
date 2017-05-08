@@ -4,7 +4,6 @@ void \@Base::newToken__(int token)
 
     if (d_token <= 0)
         d_token = _EOF_;
-$insert print
     ++d_acceptedTokens__;           // accept another token (see
 }                                   // errorRecovery())
 
