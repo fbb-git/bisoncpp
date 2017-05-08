@@ -116,20 +116,6 @@ $insert polymorphicCode
 $insert 4 requiredtokens
 {}
 
-$insert debugfunctions
-
-void \@Base::setDebug(bool mode)
-{
-    d_actionCases__ = false;
-    d_debug__ = mode;
-}
-
-void \@Base::setDebug(DebugMode__ mode)
-{
-    d_actionCases__ = mode & ACTIONCASES;
-    d_debug__ =       mode & ON;
-}
-
 void \@Base::checkStackSize()
 {
     size_t currentSize = d_stateStack.size();
@@ -146,113 +132,14 @@ void \@Base::consumed()
         d_token = _UNDETERMINED_;
 }
 
-void \@Base::push__(size_t state)
+void \@Base::done__()
 {
-    checkStackSize();
-
-    if (++d_stackIdx > 0)
-    {
-        top__<0>() = top__<0>(1);
-        top__<1>() = top__<1>(1);
-        top__<2>() = top__<2>(1);
-        top__<3>() = STYPE__{};
-    }
-
-    top__<0>() = d_state = state;
-    d_vsp = &top();
-    top__<3>() = std::move(d_val__);
-
-$insert 4 debug "\nin state " << top__<0>(1) << " with token: " << symbol__(token__()) << ": push state " << state << "; stack size = " << stackSize__() << ".\nAssign semantic TOS value" << stype__(" ", d_val__, "") << " to stack index " << d_stackIdx << ". Consumed token " << symbol__(token__())
-
-    consumed();
-}
-
-void \@Base::pop__(size_t count)
-{
-$insert 4 debug "\n pop " << count << " state(s)" +
-    if (d_stackIdx < static_cast<int>(count))
-    {
-$insert 8 debug ":internal error: stack underflow at token " << symbol__(token__())
+$insert 4 debug "\nstate " << d_state << " with " << symbol__(token__()) << ": normal end\n"
+    if (d_nErrors__ == 0)
+        ACCEPT();
+    else
         ABORT();
-    }
-
-    d_stackIdx -= count;
-
-    d_state =  top__<0>();
-    d_vsp -= count;
-
-$insert 4 debug ", top state now: " << d_state << ", stack size: " << stackSize__()
 }
-
-void \@Base::reset__()
-{
-//FBB: define a function to call this, and make it an empty function unless
-//      polymorphic
-//    d_s_nErrors__ = Meta__::s_nErrors__;          // save current ptr
-//    Meta__::s_nErrors__ = &d_nErrors__;           // set it to d_nErrors__
-
-    d_nErrors__ = 0;
-
-    d_stackIdx = -1;
-    d_stateStack.clear();
-    d_state = 0;
-
-    d_acceptedTokens__ = d_requiredTokens__;
-    d_token = _UNDETERMINED_;
-    d_reducedToken = _UNDETERMINED_;
-    d_recovery = false;
-
-    d_val__ = STYPE__{};
-
-    push__(0);
-}
-
-void \@::executeAction__(int production)
-try
-{
-$insert 4 debug "\n    (actions for rule " << production << stype__(", stack top semantic value: ", top__<3>())
-$insert executeactioncases
-    switch (production)
-    {
-$insert 8 actioncases
-    }
-$insert 4 debug "... completed " << stype__(", returning semantic value ", d_val__)
-}
-catch (std::exception const &exc)
-{
-    exceptionHandler(exc);
-}
-
-void \@Base::reduce__(PI__ const &pi)
-{
-    d_reducedToken = pi.d_nonTerm;
-
-    size_t msgIdx = top__<1>();
-    pop__(pi.d_size);
-    top__<1>() = msgIdx;
-}
-
-
-void \@::getToken__()
-{ 
-    if (d_token == _UNDETERMINED_ and d_reducedToken == _UNDETERMINED_)
-    {
-        d_token = lex();
-
-        if (d_token <= 0)
-            d_token = _EOF_;
-$insert print
-        ++d_acceptedTokens__;           // accept another token (see
-                                    // errorRecovery())
-    }
-$insert 4 debug "getToken: token " << symbol__(token__()) << ", text: " << d_scanner.matched()
-}
-
-int \@Base::token__() const
-{
-    return d_reducedToken != _UNDETERMINED_ ? d_reducedToken : d_token;
-}
-
 SR__ const *\@Base::findToken__() const // find the item defining an 
 {                                       // action for token__()
     SR__ const *sr = s_state[d_state];
@@ -277,6 +164,86 @@ $insert 8 debug "no action for token " << symbol__(token__())
        
     return sr;
 }
+void \@Base::pop__(size_t count)
+{
+$insert 4 debug "\n pop " << count << " state(s)" +
+    if (d_stackIdx < static_cast<int>(count))
+    {
+$insert 8 debug ":internal error: stack underflow at token " << symbol__(token__())
+        ABORT();
+    }
+
+    d_stackIdx -= count;
+
+    d_state =  top__<0>();
+    d_vsp -= count;
+
+$insert 4 debug ", top state now: " << d_state << ", stack size: " << stackSize__()
+}
+void \@Base::push__(size_t state)
+{
+    checkStackSize();
+
+    if (++d_stackIdx > 0)
+    {
+        top__<0>() = top__<0>(1);
+        top__<1>() = top__<1>(1);
+        top__<2>() = top__<2>(1);
+        top__<3>() = STYPE__{};
+    }
+
+    top__<0>() = d_state = state;
+    d_vsp = &top();
+    top__<3>() = std::move(d_val__);
+
+$insert 4 debug "\nin state " << top__<0>(1) << " with token: " << symbol__(token__()) << ": push state " << state << "; stack size = " << stackSize__() << ".\nAssign semantic TOS value" << stype__(" ", d_val__, "") << " to stack index " << d_stackIdx << ". Consumed token " << symbol__(token__())
+
+    consumed();
+}
+
+void \@Base::reduce__(PI__ const &pi)
+{
+    d_reducedToken = pi.d_nonTerm;
+
+    size_t msgIdx = top__<1>();
+    pop__(pi.d_size);
+    top__<1>() = msgIdx;
+}
+void \@Base::reset__()
+{
+//FBB: define a function to call this, and make it an empty function unless
+//      polymorphic
+//    d_s_nErrors__ = Meta__::s_nErrors__;          // save current ptr
+//    Meta__::s_nErrors__ = &d_nErrors__;           // set it to d_nErrors__
+
+    d_nErrors__ = 0;
+
+    d_stackIdx = -1;
+    d_stateStack.clear();
+    d_state = 0;
+
+    d_acceptedTokens__ = d_requiredTokens__;
+    d_token = _UNDETERMINED_;
+    d_reducedToken = _UNDETERMINED_;
+    d_recovery = false;
+
+    d_val__ = STYPE__{};
+
+    push__(0);
+}
+$insert debugfunctions
+
+void \@Base::setDebug(bool mode)
+{
+    d_actionCases__ = false;
+    d_debug__ = mode;
+}
+
+void \@Base::setDebug(DebugMode__ mode)
+{
+    d_actionCases__ = mode & ACTIONCASES;
+    d_debug__ =       mode & ON;
+}
 
 void \@::error__()
 {
@@ -288,7 +255,6 @@ void \@::error__()
     d_reducedToken = _error_;
     d_recovery = true;
 }
-
 void \@::errorRecovery__()
 {
 $insert 4 debug "\nError recovery in state " << state__() << " with token " << symbol__(token__())
@@ -309,31 +275,38 @@ $insert 4 debug "\nError recovery in state " << state__() << " with token " << s
 
 $insert 4 debug "Error recovery: pop to error state: " << state__()
 }
-
-void \@Base::done__()
+void \@::executeAction__(int production)
+try
 {
-$insert 4 debug "\nstate " << d_state << " with " << symbol__(token__()) << ": normal end\n"
-    if (d_nErrors__ == 0)
-        ACCEPT();
-    else
-        ABORT();
+$insert 4 debug "\n    (actions for rule " << production << stype__(", stack top semantic value: ", top__<3>())
+$insert executeactioncases
+    switch (production)
+    {
+$insert 8 actioncases
+    }
+$insert 4 debug "... completed " << stype__(", returning semantic value ", d_val__)
 }
+catch (std::exception const &exc)
+{
+    exceptionHandler(exc);
+}
+void \@::getToken__()
+{ 
+    if (d_token == _UNDETERMINED_ and d_reducedToken == _UNDETERMINED_)
+    {
+        d_token = lex();
 
+        if (d_token <= 0)
+            d_token = _EOF_;
+$insert print
+        ++d_acceptedTokens__;           // accept another token (see
+                                    // errorRecovery())
+    }
+$insert 4 debug "getToken: token " << symbol__(token__()) << ", text: " << d_scanner.matched()
+}
 void \@::nextCycle__()
 {
-//FBB
-    if (d_debug__)
-    {
-        std::string s;
-        std::cout << "? ";
-        getline(std::cin, s);
-$insert 8 debug "================"
-    }
-    else
-    {
-$insert 8 debug ' '
-    }
-
+$insert prompt
     getToken__();
     SR__ const *sr = findToken__(); 
 
@@ -356,7 +329,6 @@ $insert 8 debug ' '
         reduce__(s_productionInfo[ -sr->d_action ]);    // or reduce
     }
 }
-
 int \@::parse()
 try 
 {
@@ -377,8 +349,3 @@ $insert 4 debug "parse(): returns " << retValue
 }
 
 $insert namespace-close
-
-
-
-
-

@@ -1,2 +1,4 @@
 - %nonassoc should probably produce an error when %nonassoc operators are used
   repeatedly. 
+
+Add documentation about --prompt/%prompt

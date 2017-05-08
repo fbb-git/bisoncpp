@@ -116,6 +116,7 @@ class Generator
         void polymorphicSpecializations(std::ostream &out) const;
         void preIncludes(std::ostream &out) const;
         void print(std::ostream &out) const;
+        void prompt(std::ostream &out) const;
         void requiredTokens(std::ostream &out) const;
         void scannerH(std::ostream &out) const;
         void scannerObject(std::ostream &out) const;

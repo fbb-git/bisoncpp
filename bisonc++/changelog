@@ -19,6 +19,9 @@ TODO  * The build script now properly recognizes the 'strip' option
     parser to (resp.) retrieve and set the current state's message index. The
     message index is initialized to 0 for the 1st parsing-state.
 
+  * Added option and directive 'prompt': the generated parser shows a ?-prompt 
+    at each cycle when processing its input (which should not be provided on
+    the standard input stream).
 
 TODO: * Documentation was updated to reflect the above modifications
 

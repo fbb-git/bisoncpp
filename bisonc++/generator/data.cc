@@ -25,6 +25,7 @@ Generator::Map Generator::s_insert =
     {"polymorphicSpecializations",  &Generator::polymorphicSpecializations},
     {"preincludes",                 &Generator::preIncludes},
     {"print",                       &Generator::print},
+    {"prompt",                      &Generator::prompt},
     {"requiredtokens",              &Generator::requiredTokens},
     {"actioncases",                 &Generator::actionCases},
     {"staticdata",                  &Generator::staticData},

@@ -56,6 +56,7 @@ namespace
         Arg::LongOption{"polymorphic-code-skeleton", 'L'},
         Arg::LongOption{"polymorphic-skeleton", 'M'},
         Arg::LongOption{"print-tokens", 't'},               // also directive
+        Arg::LongOption{"prompt"},                          // also directive
 
         Arg::LongOption{"required-tokens", Arg::Required},  // also directive
 

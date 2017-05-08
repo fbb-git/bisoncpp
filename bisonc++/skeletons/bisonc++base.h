@@ -115,54 +115,6 @@ $insert debugdecl
         StateTuple &top();
 }; 
 
-template<int idx>
-inline auto ParserBase::top__(size_t shift) const
-{
-    return std::get<idx>(d_stateStack[ d_stackIdx - shift ]);
-}
-
-template<int idx>
-inline auto &ParserBase::top__()
-{
-    return std::get<idx>(d_stateStack[ d_stackIdx ]);
-}
-
-inline size_t \@Base::stackSize__() const
-{
-    return d_stackIdx + 1;
-}
-
-inline \@Base::STYPE__ &\@Base::vs__(size_t idx) 
-{
-    return std::get<3>(*(d_vsp - idx));
-}
-
-inline ParserBase::StateTuple &ParserBase::top()
-{
-    return d_stateStack[d_stackIdx];
-}
-
-inline \@Base::DebugMode__ operator|(\@Base::DebugMode__ lhs, 
-                                     \@Base::DebugMode__ rhs)
-{
-    return static_cast<\@Base::DebugMode__>(static_cast<int>(lhs) | rhs);
-};
-
-inline size_t \@Base::msgIdx__() const
-{
-    return top__<1>();
-}
-
-inline void \@Base::msgIdx__(size_t idx)
-{
-    top__<1>() = idx;
-}
-
-inline bool \@Base::debug() const
-{
-    return d_debug__;
-}
-
 inline void \@Base::ABORT() const
 {
 $insert 4 debug "ABORT(): Parsing unsuccessful"
@@ -175,10 +127,25 @@ $insert 4 debug "ACCEPT(): Parsing successful"
     throw PARSE_ACCEPT__;
 }
 
+inline bool \@Base::debug() const
+{
+    return d_debug__;
+}
+
 inline void \@Base::ERROR() const
 {
 $insert 4 debug "ERROR(): Forced error condition"
     throw UNEXPECTED_TOKEN__;
+}
+
+inline size_t \@Base::msgIdx__() const
+{
+    return top__<1>();
+}
+
+inline void \@Base::msgIdx__(size_t idx)
+{
+    top__<1>() = idx;
 }
 
 inline \@Base::DebugMode__ operator&(\@Base::DebugMode__ lhs,
@@ -186,6 +153,31 @@ inline \@Base::DebugMode__ operator&(\@Base::DebugMode__ lhs,
 {
     return static_cast<\@Base::DebugMode__>(
             static_cast<int>(lhs) & rhs);
+}
+
+inline \@Base::DebugMode__ operator|(\@Base::DebugMode__ lhs, 
+                                     \@Base::DebugMode__ rhs)
+{
+    return static_cast<\@Base::DebugMode__>(static_cast<int>(lhs) | rhs);
+};
+
+inline size_t \@Base::stackSize__() const
+{
+    return d_stackIdx + 1;
+}
+
+inline int \@Base::token__() const
+{
+    return d_reducedToken != _UNDETERMINED_ ? d_reducedToken : d_token;
+}
+inline ParserBase::StateTuple &ParserBase::top()
+{
+    return d_stateStack[d_stackIdx];
+}
+
+inline \@Base::STYPE__ &\@Base::vs__(size_t idx) 
+{
+    return std::get<3>(*(d_vsp - idx));
 }
 
 // For convenience, when including ParserBase.h its symbols are available as

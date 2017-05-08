@@ -1,18 +1,6 @@
 void \@::nextCycle__()
 {
-//FBB
-    if (d_debug__)
-    {
-        std::string s;
-        std::cout << "? ";
-        getline(std::cin, s);
-$insert 8 debug "================"
-    }
-    else
-    {
-$insert 8 debug ' '
-    }
-
+$insert prompt
     getToken__();
     SR__ const *sr = findToken__(); 
 

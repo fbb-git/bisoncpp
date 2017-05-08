@@ -123,6 +123,12 @@ void usage(string const &program_name)
     "           the print() member of the generated parser class displays\n"
     "           the tokens and their corresponding matched text.\n"
 
+    "   --prompt (-t):\n"
+    "           with --debug or %debug: the generated parser shows a "
+                                                                "?-prompt\n"
+    "           at each cycle when processing its input (caveat: the iput to\n"
+    "           parse should not be provided at the standard input stream).\n"
+
     "   --required-tokens=<value>:\n"
     "           minimum number of successfully processed tokens between\n"
     "           errors (default: 0).\n"

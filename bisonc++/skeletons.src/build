@@ -17,7 +17,7 @@ errorrecovery \
     nextcycle \
     parse
 do
-    cat $x >> bisoonc++.cc
+    cat $x >> bisonc++.cc
 done
 
 
@@ -35,7 +35,7 @@ for x in includes baseclass \
     vs.i \
     tail.i
 do
-    cat $x >> bisoonc++base.h
+    cat $x >> bisonc++base.h
 done
 
 mv bisonc++* ../skeletons/

@@ -53,6 +53,7 @@ struct Options
         OptInfo d_defaultActions{UNKNOWN, "", 0};
 
         bool        d_genDebug          = false;
+        bool        d_prompt            = false;
         bool        d_errorVerbose      = false;
         bool        d_flex              = false;
         bool        d_lines             = true;
@@ -133,6 +134,7 @@ struct Options
         void setClassHeader();
         void setClassName();
         void setGenDebug();
+        void setPrompt();
         void setErrorVerbose();
         void setFlex();
         void setGenericFilename();
@@ -171,6 +173,7 @@ struct Options
 
         bool printTokens() const;
         bool genDebug() const;
+        bool prompt() const;
 
         bool errorVerbose() const;
         bool lines() const;
@@ -247,6 +250,11 @@ struct Options
 inline bool Options::genDebug() const
 {
     return d_genDebug;
+}
+
+inline bool Options::prompt() const
+{
+    return d_prompt;
 }
 
 inline Options::OptInfo const &Options::defaultActions() const
@@ -417,6 +425,11 @@ inline void Options::setErrorVerbose()
 inline void Options::setGenDebug()
 {
     d_genDebug = true;
+}
+
+inline void Options::setPrompt()
+{
+    d_prompt = true;
 }
 
 inline void Options::setGenericFilename()
