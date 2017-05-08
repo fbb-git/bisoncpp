@@ -34,12 +34,12 @@ for x in hdr/includes \
     hdr/accept \
     hdr/debug \
     hdr/error \
+    hdr/top \
     hdr/msgidx \
     hdr/opbitand \
     hdr/opbitor \
     hdr/stacksize \
     hdr/token \
-    hdr/top \
     hdr/vs \
     hdr/tail
 do

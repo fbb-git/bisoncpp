@@ -26,6 +26,7 @@ Generator::Map Generator::s_insert =
     {"preincludes",                 &Generator::preIncludes},
     {"print",                       &Generator::print},
     {"prompt",                      &Generator::prompt},
+    {"push",                        &Generator::push},
     {"requiredtokens",              &Generator::requiredTokens},
     {"actioncases",                 &Generator::actionCases},
     {"staticdata",                  &Generator::staticData},

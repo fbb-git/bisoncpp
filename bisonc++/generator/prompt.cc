@@ -17,7 +17,7 @@ void Generator::prompt(ostream &out) const
         std::string s;
         std::cout << "? ";
         getline(std::cin, s);
-        s_out << "================\n";
+        s_out__ << "================\n";
     }
 )"  
     // END RAW STRING LITERAL

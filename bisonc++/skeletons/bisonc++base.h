@@ -14,6 +14,14 @@ namespace // anonymous
 {
     struct PI__;
     struct SR__;
+
+    enum ReservedTokens
+    {
+        PARSE_ACCEPT     = 0,   // `ACCEPT' TRANSITION
+        _UNDETERMINED_   = -2,
+        _EOF_            = -1,
+        _error_          = 256
+    };
 }
 
 $insert namespace-open
@@ -138,6 +146,23 @@ $insert 4 debug "ERROR(): Forced error condition"
     throw UNEXPECTED_TOKEN__;
 }
 
+inline \@Base::StateTuple &\@Base::top()
+{
+    return d_stateStack[d_stackIdx];
+}
+
+template<int idx>
+inline auto \@Base::top__(size_t shift) const
+{
+    return std::get<idx>(d_stateStack[ d_stackIdx - shift ]);
+}
+
+template<int idx>
+inline auto &\@Base::top__()
+{
+    return std::get<idx>(d_stateStack[ d_stackIdx ]);
+}
+
 inline size_t \@Base::msgIdx__() const
 {
     return top__<1>();
@@ -170,23 +195,6 @@ inline int \@Base::token__() const
 {
     return d_reducedToken != _UNDETERMINED_ ? d_reducedToken : d_token;
 }
-inline \@Base::StateTuple &\@Base::top()
-{
-    return d_stateStack[d_stackIdx];
-}
-
-template<int idx>
-inline auto \@Base::top__(size_t shift) const
-{
-    return std::get<idx>(d_stateStack[ d_stackIdx - shift ]);
-}
-
-template<int idx>
-inline auto &\@Base::top__()
-{
-    return std::get<idx>(d_stateStack[ d_stackIdx ]);
-}
-
 inline \@Base::STYPE__ &\@Base::vs__(size_t idx) 
 {
     return std::get<3>(*(d_vsp - idx));

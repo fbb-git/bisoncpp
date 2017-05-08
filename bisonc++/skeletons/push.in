@@ -1,0 +1,18 @@
+if (d_debug__)
+{
+    if (d_stackIdx == 0)
+        s_out__ << \ninitializing the state-stack";
+    else
+        s_out__ << "\nin state " << top__<0>(1) << " with token: " << 
+                    symbol__(token__());
+
+    s_out__ << ": push state " << state << "; stack size = " << 
+               stackSize__() << ".\n"
+               "Assign semantic TOS value" << stype__(" ", d_val__, "") << 
+               " to stack index " << d_stackIdx << '.';
+
+    if (d_stackIdx > 0)
+        s_out__ " Consumed token " << symbol__(token__());
+
+    s_out__ << '\n' << dflush__;
+}

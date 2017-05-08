@@ -2,6 +2,14 @@ namespace // anonymous
 {
     struct PI__;
     struct SR__;
+
+    enum ReservedTokens
+    {
+        PARSE_ACCEPT     = 0,   // `ACCEPT' TRANSITION
+        _UNDETERMINED_   = -2,
+        _EOF_            = -1,
+        _error_          = 256
+    };
 }
 
 $insert namespace-open
