@@ -34,8 +34,9 @@ $insert 4 scannerobject
         void errorRecovery__();
         void nextCycle__();
         void executeAction__(int ruleNr);
-        void lex__();               // calls lex, passes the token to Base
+        void lex__();           // calls lex, passes the token to Base
         void error__();
+        void print__() const;   // to cout when %print-tokens was specified
         void getToken__();
 };
 

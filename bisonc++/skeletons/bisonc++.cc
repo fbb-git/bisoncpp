@@ -374,3 +374,8 @@ $insert 4 debug "parse(): returns " << retValue
 }
 
 $insert namespace-close
+// derived/print
+void \@::print__() const
+{
+$insert print    
+}

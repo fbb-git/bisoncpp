@@ -25,7 +25,8 @@ for x in derived/errorrecovery \
     derived/executeaction \
     derived/gettoken \
     derived/nextcycle \
-    derived/parse
+    derived/parse \
+    derived/print
 do
     echo "// $x" >> bisonc++.cc
     cat $x >> bisonc++.cc
