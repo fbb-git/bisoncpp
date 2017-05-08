@@ -24,9 +24,10 @@ $insert 4 scannerobject
 
     private:
         void error();                   // called on (syntax) errors
-        int lex();                      // return the next token obtained 
+        int lex();                      // returns the next token obtained 
                                         // from the lexical scanner. 
-        void print();                   // use, e.g., d_token, d_loc
+        void print();                   // use, e.g., print__(), token__(), 
+                                        // d_loc
 
         void exceptionHandler(std::exception const &exc);
 
