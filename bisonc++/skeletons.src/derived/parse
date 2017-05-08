@@ -3,7 +3,6 @@ try
 {
 $insert 4 debug "parsing starts"
     reset__();                              // clear the tokens.
-    getToken__();
 
     while (true)
         nextCycle__();

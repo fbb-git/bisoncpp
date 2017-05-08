@@ -175,6 +175,7 @@ $insert 4 debug ", top state now: " << d_state << ", stack size: " << stackSize_
 }
 void \@Base::push__(size_t state)
 {
+$insert 4 debug "\nPUSH: " +
     checkStackSize();
 
     if (++d_stackIdx > 0)
@@ -188,16 +189,14 @@ void \@Base::push__(size_t state)
     top__<0>() = d_state = state;
     d_vsp = &top();
     top__<3>() = std::move(d_val__);
-
-$insert 4 debug "\nin state " << top__<0>(1) << " with token: " << symbol__(token__()) << ": push state " << state << "; stack size = " << stackSize__() << ".\nAssign semantic TOS value" << stype__(" ", d_val__, "") << " to stack index " << d_stackIdx << ". Consumed token " << symbol__(token__())
-
+$insert push
     consumed();
 }
 
 void \@Base::reduce__(PI__ const &pi)
 {
     d_reducedToken = pi.d_nonTerm;
-
+$insert 4 debug "setting reduced token to " << symbol__(d_reducedToken)
     size_t msgIdx = top__<1>();
     pop__(pi.d_size);
     top__<1>() = msgIdx;
@@ -250,7 +249,7 @@ void \@::error__()
 }
 void \@::errorRecovery__()
 {
-$insert 4 debug "\nError recovery in state " << state__() << " with token " << symbol__(token__())
+$insert 4 debug "\nERROR recovery in state " << state__() << " with token " << symbol__(token__())
 
     if (d_acceptedTokens__ >= d_requiredTokens__)// only generate an error-
     {                                           // message if enough tokens 
@@ -262,22 +261,22 @@ $insert 4 debug "\nError recovery in state " << state__() << " with token " << s
     while (not (s_state[top__<0>()]->d_type & ERR_ITEM))
         pop__();
 
-    top__<1>() = top__<2>();
+$insert 4 debug "\n    found error state " << state__() << ", providing token _error_"
 
-    error__();                                  // continue at _exxor_
+    top__<1>() = top__<2>();                    // reset orig. error msg. idx
 
-$insert 4 debug "Error recovery: pop to error state: " << state__()
+    error__();                                  // continue at _error_
 }
 void \@::executeAction__(int production)
 try
 {
-$insert 4 debug "\n    (actions for rule " << production << stype__(", stack top semantic value: ", top__<3>())
+$insert 4 debug "\nREDUCE:\n    (actions for rule " << production << stype__(", stack top semantic value: ", top__<3>())
 $insert executeactioncases
     switch (production)
     {
 $insert 8 actioncases
     }
-$insert 4 debug "... completed " << stype__(", returning semantic value ", d_val__)
+$insert 4 debug "... completed" << stype__(", returning semantic value ", d_val__) << ')'
 }
 catch (std::exception const &exc)
 {
@@ -327,7 +326,6 @@ try
 {
 $insert 4 debug "parsing starts"
     reset__();                              // clear the tokens.
-    getToken__();
 
     while (true)
         nextCycle__();

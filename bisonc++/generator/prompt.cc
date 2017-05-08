@@ -14,10 +14,10 @@ void Generator::prompt(ostream &out) const
     R"(
     if (d_debug__)
     {
+        s_out__ << "================\n"
+                   "? " << dflush__;
         std::string s;
-        std::cout << "? ";
         getline(std::cin, s);
-        s_out__ << "================\n";
     }
 )"  
     // END RAW STRING LITERAL
