@@ -1,0 +1,45 @@
+#!/bin/bash
+
+for x in comment declarations base1 \
+    checkstacksize \
+    consumed \
+    done \
+    findtoken \
+    pop \
+    push \
+    reduce \
+    reset \
+    setdebug \
+    error \
+errorrecovery \
+    executeaction \
+    gettoken \
+    nextcycle \
+    parse
+do
+    cat $x >> bisoonc++.cc
+done
+
+
+for x in includes baseclass \
+    abort.i \
+    accept.i \
+    debug.i \
+    error.i \
+    msgidx.i \
+    opbitand.i \
+    opbitor.i \
+    stacksize.i \
+    token.i \
+    top.i \
+    vs.i \
+    tail.i
+do
+    cat $x >> bisoonc++base.h
+done
+
+mv bisonc++* ../skeletons/
+
+
+
+

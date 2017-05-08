@@ -1,0 +1,16 @@
+void \@Base::pop__(size_t count)
+{
+$insert 4 debug "\n pop " << count << " state(s)" +
+    if (d_stackIdx < static_cast<int>(count))
+    {
+$insert 8 debug ":internal error: stack underflow at token " << symbol__(token__())
+        ABORT();
+    }
+
+    d_stackIdx -= count;
+
+    d_state =  top__<0>();
+    d_vsp -= count;
+
+$insert 4 debug ", top state now: " << d_state << ", stack size: " << stackSize__()
+}

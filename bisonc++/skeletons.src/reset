@@ -1,0 +1,22 @@
+void \@Base::reset__()
+{
+//FBB: define a function to call this, and make it an empty function unless
+//      polymorphic
+//    d_s_nErrors__ = Meta__::s_nErrors__;          // save current ptr
+//    Meta__::s_nErrors__ = &d_nErrors__;           // set it to d_nErrors__
+
+    d_nErrors__ = 0;
+
+    d_stackIdx = -1;
+    d_stateStack.clear();
+    d_state = 0;
+
+    d_acceptedTokens__ = d_requiredTokens__;
+    d_token = _UNDETERMINED_;
+    d_reducedToken = _UNDETERMINED_;
+    d_recovery = false;
+
+    d_val__ = STYPE__{};
+
+    push__(0);
+}

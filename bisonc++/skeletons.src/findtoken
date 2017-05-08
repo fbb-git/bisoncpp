@@ -1,0 +1,24 @@
+SR__ const *\@Base::findToken__() const // find the item defining an 
+{                                       // action for token__()
+    SR__ const *sr = s_state[d_state];
+    SR__ const *last = sr + sr->d_lastIdx;
+
+    for ( ; sr != last; ++sr)           // visit all but the last SR entries
+    {
+        if (sr->d_token == token__())
+            return sr;
+    }
+
+$insert 4 debug "state " << d_state << ": " +
+    if (sr->d_action < 0)
+    {   // the compound stmnt is here to accomodate an optional debug stmnt
+$insert 8 debug "default reduce"
+    }
+    else 
+    {
+$insert 8 debug "no action for token " << symbol__(token__())
+        sr = 0;
+    }
+       
+    return sr;
+}

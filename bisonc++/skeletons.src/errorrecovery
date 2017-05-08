@@ -1,0 +1,20 @@
+void \@::errorRecovery__()
+{
+$insert 4 debug "\nError recovery in state " << state__() << " with token " << symbol__(token__())
+
+    if (d_acceptedTokens__ >= d_requiredTokens__)// only generate an error-
+    {                                           // message if enough tokens 
+        ++d_nErrors__;                          // were accepted. Otherwise
+        error();                                // simply skip input
+    }
+
+                                                // find the topmost ERR_ITEM
+    while (not (s_state[top__<0>()]->d_type & ERR_ITEM))
+        pop__();
+
+    top__<1>() = top__<2>();
+
+    error__();                                  // continue at _exxor_
+
+$insert 4 debug "Error recovery: pop to error state: " << state__()
+}

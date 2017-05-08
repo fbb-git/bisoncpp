@@ -1,0 +1,20 @@
+int \@::parse()
+try 
+{
+$insert 4 debug "parsing starts"
+    reset__();                              // clear the tokens.
+    getToken__();
+
+    while (true)
+        nextCycle__();
+}
+catch (Return__ retValue)
+{
+//FBB: use a function, see before
+//    Meta__::s_nErrors__ = d_s_nErrors__;
+
+$insert 4 debug "parse(): returns " << retValue
+    return retValue;
+}
+
+$insert namespace-close

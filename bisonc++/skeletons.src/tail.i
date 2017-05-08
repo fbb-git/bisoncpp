@@ -1,0 +1,7 @@
+// For convenience, when including ParserBase.h its symbols are available as
+// symbols in the class Parser, too.
+#define \@ \@Base
+
+$insert namespace-close
+
+#endif

@@ -1,0 +1,37 @@
+void \@::nextCycle__()
+{
+//FBB
+    if (d_debug__)
+    {
+        std::string s;
+        std::cout << "? ";
+        getline(std::cin, s);
+$insert 8 debug "================"
+    }
+    else
+    {
+$insert 8 debug ' '
+    }
+
+    getToken__();
+    SR__ const *sr = findToken__(); 
+
+    if (sr == 0)                // no action: recovery
+    {
+        errorRecovery__();
+        return;
+    }
+
+    int action = sr->d_action;
+
+    if (action == 0)            // accepting state
+        done__();
+
+    if (action > 0)             // push the next state
+        push__(action);
+    else
+    {
+        executeAction__(-action);
+        reduce__(s_productionInfo[ -sr->d_action ]);    // or reduce
+    }
+}

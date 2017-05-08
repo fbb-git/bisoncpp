@@ -1,0 +1,8 @@
+void \@Base::consumed()
+{
+    if (d_reducedToken != _UNDETERMINED_)
+        d_reducedToken = _UNDETERMINED_;
+    else
+        d_token = _UNDETERMINED_;
+}
+

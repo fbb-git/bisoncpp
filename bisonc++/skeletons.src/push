@@ -1,0 +1,21 @@
+void \@Base::push__(size_t state)
+{
+    checkStackSize();
+
+    if (++d_stackIdx > 0)
+    {
+        top__<0>() = top__<0>(1);
+        top__<1>() = top__<1>(1);
+        top__<2>() = top__<2>(1);
+        top__<3>() = STYPE__{};
+    }
+
+    top__<0>() = d_state = state;
+    d_vsp = &top();
+    top__<3>() = std::move(d_val__);
+
+$insert 4 debug "\nin state " << top__<0>(1) << " with token: " << symbol__(token__()) << ": push state " << state << "; stack size = " << stackSize__() << ".\nAssign semantic TOS value" << stype__(" ", d_val__, "") << " to stack index " << d_stackIdx << ". Consumed token " << symbol__(token__())
+
+    consumed();
+}
+

@@ -1,0 +1,11 @@
+// If the parsing function call uses arguments, then provide an overloaded
+// function.  The code below doesn't rely on parameters, so no arguments are
+// required.  Furthermore, parse uses a function try block to allow us to do
+// ACCEPT and ABORT from anywhere, even from within members called by actions,
+// simply throwing the appropriate exceptions.
+
+\@Base::\@Base()
+:
+$insert 4 requiredtokens
+{}
+

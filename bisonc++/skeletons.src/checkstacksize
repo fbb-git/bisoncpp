@@ -1,0 +1,8 @@
+void \@Base::checkStackSize()
+{
+    size_t currentSize = d_stateStack.size();
+
+    if (static_cast<size_t>(stackSize__()) == currentSize)
+        d_stateStack.resize(currentSize + STACK_EXPANSION__);
+}
+

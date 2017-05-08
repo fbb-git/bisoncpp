@@ -1,0 +1,6 @@
+inline void \@Base::ERROR() const
+{
+$insert 4 debug "ERROR(): Forced error condition"
+    throw UNEXPECTED_TOKEN__;
+}
+

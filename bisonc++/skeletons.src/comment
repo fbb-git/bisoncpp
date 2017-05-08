@@ -1,0 +1,53 @@
+$insert class.ih
+
+// The FIRST element of SR arrays shown below uses `d_type', defining the
+// state's type, and `d_lastIdx' containing the last element's index. If
+// d_lastIdx contains the REQ_TOKEN bitflag (see below) then the state needs
+// a token: if in this state d_token__ is _UNDETERMINED_, nextToken() will be
+// called
+
+// The LAST element of SR arrays uses `d_token' containing the last retrieved
+// token to speed up the (linear) seach.  Except for the first element of SR
+// arrays, the field `d_action' is used to determine what to do next. If
+// positive, it represents the next state (used with SHIFT); if zero, it
+// indicates `ACCEPT', if negative, -d_action represents the number of the
+// rule to reduce to.
+
+// `lookup()' tries to find d_token__ in the current SR array. If it fails, and
+// there is no default reduction UNEXPECTED_TOKEN__ is thrown, which is then
+// caught by the error-recovery function.
+
+// The error-recovery function will pop elements off the stack until a state
+// having bit flag ERR_ITEM is found. This state has a transition on _error_
+// which is applied. In this _error_ state, while the current token is not a
+// proper continuation, new tokens are obtained by nextToken(). If such a
+// token is found, error recovery is successful and the token is
+// handled according to the error state's SR table and parsing continues.
+// During error recovery semantic actions are ignored.
+
+// A state flagged with the DEF_RED flag will perform a default
+// reduction if no other continuations are available for the current token.
+
+// The ACCEPT STATE never shows a default reduction: when it is reached the
+// parser returns ACCEPT(). During the grammar
+// analysis phase a default reduction may have been defined, but it is
+// removed during the state-definition phase.
+
+// So:
+//      s_x[] = 
+//      {
+//                  [_field_1_]         [_field_2_]
+//
+// First element:   {state-type,        idx of last element},
+// Other elements:  {required token,    action to perform},
+//                                      ( < 0: reduce, 
+//                                          0: ACCEPT,
+//                                        > 0: next state)
+// Last element:    {set to d_token__,    action to perform}
+//      }
+
+// When the --thread-safe option is specified, all static data are defined as
+// const. If --thread-safe is not provided, the state-tables are not defined
+// as const, since the lookup() function below will modify them
+
+$insert debugincludes

@@ -1,0 +1,12 @@
+#ifndef \@$Base_h_included
+#define \@$Base_h_included
+
+#include <iostream>
+#include <exception>
+#include <vector>
+#include <stack>
+#include <tuple>
+$insert polyincludes
+$insert preincludes
+$insert debugincludes
+

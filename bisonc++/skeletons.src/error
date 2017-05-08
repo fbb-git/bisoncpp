@@ -1,0 +1,10 @@
+void \@::error__()
+{
+    if (d_recovery)
+    {
+        d_token = _UNDETERMINED_;
+        getToken__();
+    }   
+    d_reducedToken = _error_;
+    d_recovery = true;
+}
