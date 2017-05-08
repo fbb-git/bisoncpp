@@ -1,3 +1,4 @@
+// hdr/includes
 #ifndef \@$Base_h_included
 #define \@$Base_h_included
 
@@ -10,6 +11,7 @@ $insert polyincludes
 $insert preincludes
 $insert debugincludes
 
+// hdr/baseclass
 namespace // anonymous
 {
     struct PI__;
@@ -124,29 +126,34 @@ $insert debugdecl
         StateTuple &top();
 }; 
 
+// hdr/abort
 inline void \@Base::ABORT() const
 {
 $insert 4 debug "ABORT(): Parsing unsuccessful"
     throw PARSE_ABORT__;
 }
 
+// hdr/accept
 inline void \@Base::ACCEPT() const
 {
 $insert 4 debug "ACCEPT(): Parsing successful"
     throw PARSE_ACCEPT__;
 }
 
+// hdr/debug
 inline bool \@Base::debug() const
 {
     return d_debug__;
 }
 
+// hdr/error
 inline void \@Base::ERROR() const
 {
 $insert 4 debug "ERROR(): Forced error condition"
     throw UNEXPECTED_TOKEN__;
 }
 
+// hdr/top
 inline \@Base::StateTuple &\@Base::top()
 {
     return d_stateStack[d_stackIdx];
@@ -164,6 +171,7 @@ inline auto &\@Base::top__()
     return std::get<idx>(d_stateStack[ d_stackIdx ]);
 }
 
+// hdr/msgidx
 inline size_t \@Base::msgIdx__() const
 {
     return top__<1>();
@@ -174,6 +182,7 @@ inline void \@Base::msgIdx__(size_t idx)
     top__<1>() = idx;
 }
 
+// hdr/opbitand
 inline \@Base::DebugMode__ operator&(\@Base::DebugMode__ lhs,
                                      \@Base::DebugMode__ rhs)
 {
@@ -181,26 +190,31 @@ inline \@Base::DebugMode__ operator&(\@Base::DebugMode__ lhs,
             static_cast<int>(lhs) & rhs);
 }
 
+// hdr/opbitor
 inline \@Base::DebugMode__ operator|(\@Base::DebugMode__ lhs, 
                                      \@Base::DebugMode__ rhs)
 {
     return static_cast<\@Base::DebugMode__>(static_cast<int>(lhs) | rhs);
 };
 
+// hdr/stacksize
 inline size_t \@Base::stackSize__() const
 {
     return d_stackIdx + 1;
 }
 
+// hdr/token
 inline int \@Base::token__() const
 {
     return d_reducedToken != _UNDETERMINED_ ? d_reducedToken : d_token;
 }
+// hdr/vs
 inline \@Base::STYPE__ &\@Base::vs__(size_t idx) 
 {
     return std::get<3>(*(d_vsp - idx));
 }
 
+// hdr/tail
 // For convenience, when including ParserBase.h its symbols are available as
 // symbols in the class Parser, too.
 #define \@ \@Base

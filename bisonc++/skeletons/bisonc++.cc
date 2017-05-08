@@ -1,3 +1,4 @@
+// base/comment
 $insert class.ih
 
 // The FIRST element of SR arrays shown below uses `d_type', defining the
@@ -51,6 +52,7 @@ $insert class.ih
 // as const, since the lookup() function below will modify them
 
 $insert debugincludes
+// base/declarations
 
 namespace // anonymous
 {
@@ -98,6 +100,7 @@ $insert namespace-open
 
 $insert polymorphicCode
 
+// base/base1
 // If the parsing function call uses arguments, then provide an overloaded
 // function.  The code below doesn't rely on parameters, so no arguments are
 // required.  Furthermore, parse uses a function try block to allow us to do
@@ -106,9 +109,10 @@ $insert polymorphicCode
 
 \@Base::\@Base()
 :
-$insert 4 requiredtokens
-{}
+$insert 4 baseclasscode
+}
 
+// base/checkstacksize
 void \@Base::checkStackSize()
 {
     size_t currentSize = d_stateStack.size();
@@ -117,6 +121,7 @@ void \@Base::checkStackSize()
         d_stateStack.resize(currentSize + STACK_EXPANSION__);
 }
 
+// base/consumed
 void \@Base::consumed()
 {
     if (d_reducedToken != _UNDETERMINED_)
@@ -125,6 +130,7 @@ void \@Base::consumed()
         d_token = _UNDETERMINED_;
 }
 
+// base/done
 void \@Base::done__()
 {
 $insert 4 debug "\nstate " << d_state << " with " << symbol__(token__()) << ": normal end\n"
@@ -133,6 +139,7 @@ $insert 4 debug "\nstate " << d_state << " with " << symbol__(token__()) << ": n
     else
         ABORT();
 }
+// base/error
 void \@Base::error__()
 {
     if (d_recovery)
@@ -141,12 +148,13 @@ void \@Base::error__()
     d_reducedToken = _error_;
     d_recovery = true;
 }
+// base/findtoken
 SR__ const *\@Base::findToken__() const // find the item defining an 
 {                                       // action for token__()
     SR__ const *sr = s_state[d_state];
     SR__ const *last = sr + sr->d_lastIdx;
 
-    for ( ; sr != last; ++sr)           // visit all but the last SR entries
+    for ( ; ++sr != last; )           // visit all but the last SR entries
     {
         if (sr->d_token == token__())
             return sr;
@@ -165,6 +173,7 @@ $insert 8 debug "no action for token " << symbol__(token__())
        
     return sr;
 }
+// base/newtoken
 void \@Base::newToken__(int token)
 {
     d_token = token;
@@ -174,6 +183,7 @@ void \@Base::newToken__(int token)
     ++d_acceptedTokens__;           // accept another token (see
 }                                   // errorRecovery())
 
+// base/pop
 void \@Base::pop__(size_t count)
 {
 $insert 4 debug "\n pop " << count << " state(s)" +
@@ -190,6 +200,7 @@ $insert 8 debug ":internal error: stack underflow at token " << symbol__(token__
 
 $insert 4 debug ", top state now: " << d_state << ", stack size: " << stackSize__()
 }
+// base/push
 void \@Base::push__(size_t state)
 {
 $insert 4 debug "\nPUSH: " +
@@ -210,6 +221,7 @@ $insert push
     consumed();
 }
 
+// base/reduce
 void \@Base::reduce__(PI__ const &pi)
 {
     d_reducedToken = pi.d_nonTerm;
@@ -218,13 +230,9 @@ $insert 4 debug "setting reduced token to " << symbol__(d_reducedToken)
     pop__(pi.d_size);
     top__<1>() = msgIdx;
 }
+// base/reset
 void \@Base::reset__()
 {
-//FBB: define a function to call this, and make it an empty function unless
-//      polymorphic
-//    d_s_nErrors__ = Meta__::s_nErrors__;          // save current ptr
-//    Meta__::s_nErrors__ = &d_nErrors__;           // set it to d_nErrors__
-
     d_nErrors__ = 0;
 
     d_stackIdx = -1;
@@ -240,6 +248,7 @@ void \@Base::reset__()
 
     push__(0);
 }
+// base/setdebug
 $insert debugfunctions
 
 void \@Base::setDebug(bool mode)
@@ -254,6 +263,7 @@ void \@Base::setDebug(DebugMode__ mode)
     d_debug__ =       mode & ON;
 }
 
+// base/trydefaultreduce
 SR__ const *\@Base::tryDefaultReduce__() const
 {
     if (token__() != _UNDETERMINED_)        // tokens are waiting
@@ -268,6 +278,7 @@ $insert 8 debug "state " << d_state << ": default reduce"
     }
     return 0;
 }
+// derived/errorrecovery
 void \@::errorRecovery__()
 {
 $insert 4 debug "\nERROR recovery in state " << state__() << " with token " << symbol__(token__())
@@ -288,6 +299,7 @@ $insert 4 debug "\n    found error state " << state__() << ", providing token _e
 
     error__();                                  // continue at _error_
 }
+// derived/executeaction
 void \@::executeAction__(int production)
 try
 {
@@ -303,6 +315,7 @@ catch (std::exception const &exc)
 {
     exceptionHandler(exc);
 }
+// derived/gettoken
 void \@::getToken__()
 { 
     if (token__() == _UNDETERMINED_)
@@ -313,6 +326,7 @@ $insert print
 
 $insert 4 debug "getToken: token " << symbol__(token__()) << ", text: " << d_scanner.matched()
 }
+// derived/nextcycle
 void \@::nextCycle__()
 {
 $insert prompt
@@ -343,6 +357,7 @@ $insert prompt
         reduce__(s_productionInfo[ -sr->d_action ]);    // or reduce
     }
 }
+// derived/parse
 int \@::parse()
 try 
 {
@@ -354,9 +369,6 @@ $insert 4 debug "parsing starts"
 }
 catch (Return__ retValue)
 {
-//FBB: use a function, see before
-//    Meta__::s_nErrors__ = d_s_nErrors__;
-
 $insert 4 debug "parse(): returns " << retValue
     return retValue;
 }

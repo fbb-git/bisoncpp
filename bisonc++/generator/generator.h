@@ -42,6 +42,7 @@ class Generator
     mutable std::string d_line;
     bool d_genDebug;
     bool d_printTokens;
+    bool d_threadSafe;
 
     std::unordered_map<std::string, std::string> const &d_polymorphic; 
 
@@ -89,6 +90,7 @@ class Generator
 
         void actionCases(std::ostream &out) const;
         void baseClass(std::ostream &out) const;
+        void baseClassCode(std::ostream &out) const;
         void classH(std::ostream &out) const;
         void classIH(std::ostream &out) const;
         void debug(std::ostream &out) const;
@@ -118,19 +120,16 @@ class Generator
         void print(std::ostream &out) const;
         void prompt(std::ostream &out) const;
         void push(std::ostream &out) const;
-        void requiredTokens(std::ostream &out) const;
         void scannerH(std::ostream &out) const;
         void scannerObject(std::ostream &out) const;
         void staticData(std::ostream &out) const;
         void stype(std::ostream &out) const;
-        void threading(std::ostream &out) const;
         void tokens(std::ostream &out) const;
         void warnTagMismatches(std::ostream &out) const;
 
         void ifInsertStype(bool &accept) const;
         void ifPrintTokens(bool &accept) const;
         void ifLtype(bool &accept) const;
-        void ifThreadSafe(bool &accept) const;
         void atElse(bool &accept) const;
         void atEnd(bool &accept) const;
 

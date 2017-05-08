@@ -6,8 +6,6 @@
     value showing a tag mismatch is replaced by the default value of the
     semantic value of the expected polymorphic type.
 
-TODO  * The build script now properly recognizes the 'strip' option
-
   * Compilation now starts with the construction of precompiled headers,
     significantly reducing the compilation time.
 
@@ -22,6 +20,8 @@ TODO  * The build script now properly recognizes the 'strip' option
   * Added option and directive 'prompt': the generated parser shows a ?-prompt 
     at each cycle when processing its input (which should not be provided on
     the standard input stream).
+
+TODO  * The build script now properly recognizes the 'strip' option
 
 TODO: * Documentation was updated to reflect the above modifications
 

@@ -6,6 +6,6 @@
 
 \@Base::\@Base()
 :
-$insert 4 requiredtokens
-{}
+$insert 4 baseclasscode
+}
 

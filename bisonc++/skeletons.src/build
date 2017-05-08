@@ -16,6 +16,7 @@ for x in base/comment \
     base/setdebug \
     base/trydefaultreduce
 do
+    echo "// $x" >> bisonc++.cc
     cat $x >> bisonc++.cc
 done
 
@@ -26,6 +27,7 @@ for x in derived/errorrecovery \
     derived/nextcycle \
     derived/parse
 do
+    echo "// $x" >> bisonc++.cc
     cat $x >> bisonc++.cc
 done
 
@@ -45,6 +47,7 @@ for x in hdr/includes \
     hdr/vs \
     hdr/tail
 do
+    echo "// $x" >> bisonc++base.h
     cat $x >> bisonc++base.h
 done
 

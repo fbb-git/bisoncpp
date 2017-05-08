@@ -16,11 +16,23 @@ void Generator::polymorphic(ostream &out) const
 
     out << 
         "};\n"
-        "\n";
+        "\n"
+        "namespace Meta__\n"
+        "{\n"
+        "\n"
+        "extern ";
 
+    if (d_threadSafe)
+        out << "std::thread_local ";
+
+    out << "size_t const *t_nErrors;\n";
 
     ifstream in;
     Exception::open(in,  d_options.polymorphicSkeleton()); 
 
     filter(in, out, false);
 }
+
+
+
+

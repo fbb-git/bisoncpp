@@ -12,7 +12,7 @@ void Generator::warnTagMismatches(ostream &out) const
     out << R"(
     if (tag() != tg)
     {
-        if (*s_nErrors__ != 0)
+        if (*t_nErrors != 0)
             const_cast<SType *>(this)->assign<tg>();
         else
         {

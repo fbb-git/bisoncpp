@@ -3,7 +3,7 @@ SR__ const *\@Base::findToken__() const // find the item defining an
     SR__ const *sr = s_state[d_state];
     SR__ const *last = sr + sr->d_lastIdx;
 
-    for ( ; sr != last; ++sr)           // visit all but the last SR entries
+    for ( ; ++sr != last; )           // visit all but the last SR entries
     {
         if (sr->d_token == token__())
             return sr;
