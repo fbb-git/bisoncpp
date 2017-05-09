@@ -2,10 +2,11 @@ void \@::errorRecovery__()
 {
 $insert 4 debug "\nERROR recovery in state " << state__() << " with token " << symbol__(token__())
 
-    if (d_acceptedTokens__ >= d_requiredTokens__)// only generate an error-
+    if (d_acceptedTokens__ > d_requiredTokens__)// only generate an error-
     {                                           // message if enough tokens 
         ++d_nErrors__;                          // were accepted. Otherwise
         error();                                // simply skip input
+        d_acceptedTokens__ = 0;
     }
 
                                                 // find the topmost ERR_ITEM

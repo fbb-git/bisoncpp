@@ -142,11 +142,18 @@ $insert 4 debug "\nstate " << d_state << " with " << symbol__(token__()) << ": n
 // base/error
 void \@Base::error__()
 {
-    if (d_recovery)
+$insert 4 debug "\nERROR with d_recovery " << d_recovery
+
+    if (not d_recovery)
+        d_recovery = true;
+    else
+    {
+$insert 8 debug "cannot process " << symbol__(d_token) << ", requesting the next token"
         d_token = _UNDETERMINED_;
+        d_recovery = false;
+    }
 
     d_reducedToken = _error_;
-    d_recovery = true;
 }
 // base/findtoken
 SR__ const *\@Base::findToken__() const // find the item defining an 
@@ -174,14 +181,16 @@ $insert 8 debug "no action for token " << symbol__(token__())
     return sr;
 }
 // base/newtoken
-void \@Base::newToken__(int token)
+void \@Base::newToken__(int lexToken)
 {
-    d_token = token;
+    d_token = lexToken;
 
     if (d_token <= 0)
         d_token = _EOF_;
+
     ++d_acceptedTokens__;           // accept another token (see
-}                                   // errorRecovery())
+                                    // errorRecovery())
+}
 
 // base/pop
 void \@Base::pop__(size_t count)
@@ -283,10 +292,11 @@ void \@::errorRecovery__()
 {
 $insert 4 debug "\nERROR recovery in state " << state__() << " with token " << symbol__(token__())
 
-    if (d_acceptedTokens__ >= d_requiredTokens__)// only generate an error-
+    if (d_acceptedTokens__ > d_requiredTokens__)// only generate an error-
     {                                           // message if enough tokens 
         ++d_nErrors__;                          // were accepted. Otherwise
         error();                                // simply skip input
+        d_acceptedTokens__ = 0;
     }
 
                                                 // find the topmost ERR_ITEM

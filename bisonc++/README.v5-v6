@@ -28,8 +28,7 @@ new members (implemented in parse.cc):
 --------------------------------------
 
     void nextCycle__();             
-    void lex__();
-    void error__();
+//    void lex__();
     void getToken__();
 
 
