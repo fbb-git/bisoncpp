@@ -9,7 +9,7 @@ $insert 8 debug ":internal error: stack underflow at token " << symbol__(token__
 
     d_stackIdx -= count;
 
-    d_state =  top__<0>();
+    d_state =  top().first;
     d_vsp -= count;
 
 $insert 4 debug ", top state now: " << d_state << ", stack size: " << stackSize__()

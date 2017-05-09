@@ -10,12 +10,10 @@ $insert 4 debug "\nERROR recovery in state " << state__() << " with token " << s
     }
 
                                                 // find the topmost ERR_ITEM
-    while (not (s_state[top__<0>()]->d_type & ERR_ITEM))
+    while (not (s_state[top__().first]->d_type & ERR_ITEM))
         pop__();
 
 $insert 4 debug "\n    found error state " << state__() << ", providing token _error_"
-
-    top__<1>() = top__<2>();                    // reset orig. error msg. idx
 
     error__();                                  // continue at _error_
 }

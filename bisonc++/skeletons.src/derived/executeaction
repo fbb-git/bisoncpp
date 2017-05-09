@@ -1,7 +1,7 @@
 void \@::executeAction__(int production)
 try
 {
-$insert 4 debug "\nREDUCE:\n    (actions for rule " << production << stype__(", stack top semantic value: ", top__<3>())
+$insert 4 debug "\nREDUCE:\n    (actions for rule " << production << stype__(", stack top semantic value: ", top__().second)
 $insert executeactioncases
     switch (production)
     {

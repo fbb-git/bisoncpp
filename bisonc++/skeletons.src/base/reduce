@@ -2,7 +2,5 @@ void \@Base::reduce__(PI__ const &pi)
 {
     d_reducedToken = pi.d_nonTerm;
 $insert 4 debug "setting reduced token to " << symbol__(d_reducedToken)
-    size_t msgIdx = top__<1>();
     pop__(pi.d_size);
-    top__<1>() = msgIdx;
 }

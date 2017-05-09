@@ -1,17 +1,10 @@
-inline \@Base::StateTuple &\@Base::top()
+inline \@Base::StatePair &\@Base::top(size_t idx) 
+{
+    return d_stateStack[d_stackIdx - idx];
+}
+
+inline \@Base::StatePair const &\@Base::top__() const
 {
     return d_stateStack[d_stackIdx];
-}
-
-template<int idx>
-inline auto \@Base::top__(size_t shift) const
-{
-    return std::get<idx>(d_stateStack[ d_stackIdx - shift ]);
-}
-
-template<int idx>
-inline auto &\@Base::top__()
-{
-    return std::get<idx>(d_stateStack[ d_stackIdx ]);
 }
 

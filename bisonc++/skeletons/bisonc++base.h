@@ -5,8 +5,6 @@
 #include <iostream>
 #include <exception>
 #include <vector>
-#include <stack>
-#include <tuple>
 $insert polyincludes
 $insert preincludes
 $insert debugincludes
@@ -45,12 +43,12 @@ $insert LTYPE
 $insert STYPE
 
     private:
-                        // state   msgidx  orgidx  semval
-        typedef std::tuple<size_t, size_t, size_t, STYPE__> StateTuple;
+                        // state   semval
+        typedef std::pair<size_t, STYPE__> StatePair;
 
         int d_stackIdx;
-        std::vector<StateTuple> d_stateStack;
-        StateTuple *d_vsp;              // points to the topmost value stack
+        std::vector<StatePair> d_stateStack;
+        StatePair *d_vsp;              // points to the topmost value stack
                                         // element
         int     d_reducedToken;
         int     d_token;
@@ -101,29 +99,23 @@ $insert debugdecl
 
         SR__ const *tryDefaultReduce__() const;
         SR__ const *findToken__() const;
-        size_t msgIdx__() const;
         void done__();
         void error__();
         void newToken__(int token);
         void errorVerbose__();
-        void msgIdx__(size_t idx);
         void pop__(size_t count = 1);
         void push__(size_t nextState);
         void reduce__(PI__ const &pi);
         void reset__();
         size_t stackSize__() const;
+
+        StatePair const &top__() const;
         
-        template<int>                   // elements fm the stateStack:
-        auto top__(size_t shift = 0) const;
-
-        template<int>   
-        auto &top__();
-
     private:
         void checkStackSize();
         void consumed();
 
-        StateTuple &top();
+        StatePair &top(size_t idx = 0);
 }; 
 
 // hdr/abort
@@ -154,34 +146,27 @@ $insert 4 debug "ERROR(): Forced error condition"
 }
 
 // hdr/top
-inline \@Base::StateTuple &\@Base::top()
+inline \@Base::StatePair &\@Base::top(size_t idx) 
+{
+    return d_stateStack[d_stackIdx - idx];
+}
+
+inline \@Base::StatePair const &\@Base::top__() const
 {
     return d_stateStack[d_stackIdx];
 }
 
-template<int idx>
-inline auto \@Base::top__(size_t shift) const
-{
-    return std::get<idx>(d_stateStack[ d_stackIdx - shift ]);
-}
-
-template<int idx>
-inline auto &\@Base::top__()
-{
-    return std::get<idx>(d_stateStack[ d_stackIdx ]);
-}
-
 // hdr/msgidx
-inline size_t \@Base::msgIdx__() const
-{
-    return top__<1>();
-}
-
-inline void \@Base::msgIdx__(size_t idx)
-{
-    top__<1>() = idx;
-}
-
+//inline size_t \@Base::msgIdx__() const
+//{
+//    return top__<1>();
+//}
+//
+//inline void \@Base::msgIdx__(size_t idx)
+//{
+//    top__<1>() = idx;
+//}
+//
 // hdr/opbitand
 inline \@Base::DebugMode__ operator&(\@Base::DebugMode__ lhs,
                                      \@Base::DebugMode__ rhs)
@@ -211,7 +196,7 @@ inline int \@Base::token__() const
 // hdr/vs
 inline \@Base::STYPE__ &\@Base::vs__(size_t idx) 
 {
-    return std::get<3>(*(d_vsp - idx));
+    return (d_vsp - idx)->second;
 }
 
 // hdr/tail

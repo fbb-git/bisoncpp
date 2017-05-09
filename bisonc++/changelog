@@ -1,3 +1,7 @@
+bisonc++ (5.04.00)
+
+TODO:   * The generated code was rewritten.
+
   * Added a warning to skeleton/binsonc++.h that until the #undef instruction
     Parser will be read as ParserBase.
 
@@ -9,13 +13,8 @@
   * Compilation now starts with the construction of precompiled headers,
     significantly reducing the compilation time.
 
-  * The state stack elements now consist of two size_t values: the first
-    element holds the stack index, the second element can be used as index to
-    an error message to display. 
-
-  * The member functions msgIdx__() and msgIdx(size_t) can be used by the
-    parser to (resp.) retrieve and set the current state's message index. The
-    message index is initialized to 0 for the 1st parsing-state.
+  * The state stack elements now consist of two values: the first
+    element holds the state index, the second element the semantic value.
 
   * Added option and directive 'prompt': the generated parser shows a ?-prompt 
     at each cycle when processing its input (which should not be provided on

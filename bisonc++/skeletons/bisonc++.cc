@@ -143,7 +143,6 @@ $insert 4 debug "\nstate " << d_state << " with " << symbol__(token__()) << ": n
 void \@Base::error__()
 {
 $insert 4 debug "\nERROR with d_recovery " << d_recovery
-
     if (not d_recovery)
         d_recovery = true;
     else
@@ -151,7 +150,6 @@ $insert 4 debug "\nERROR with d_recovery " << d_recovery
 $insert 8 debug "cannot process " << symbol__(d_token) << ", requesting the next token"
         d_token = _UNDETERMINED_;
     }
-
     d_reducedToken = _error_;
 }
 // base/findtoken
@@ -210,7 +208,7 @@ $insert 8 debug ":internal error: stack underflow at token " << symbol__(token__
 
     d_stackIdx -= count;
 
-    d_state =  top__<0>();
+    d_state =  top().first;
     d_vsp -= count;
 
 $insert 4 debug ", top state now: " << d_state << ", stack size: " << stackSize__()
@@ -221,18 +219,27 @@ void \@Base::push__(size_t state)
 $insert 4 debug "\nPUSH: " +
     checkStackSize();
 
-    if (++d_stackIdx > 0)
-    {
-        top__<0>() = top__<0>(1);
-        top__<1>() = top__<1>(1);
-        top__<2>() = top__<2>(1);
-        top__<3>() = STYPE__{};
-    }
+    ++d_stackIdx;
+    top() = StatePair{ d_state = state, std::move(d_val__) };
 
-    top__<0>() = d_state = state;
+// FBB
+//    if (++d_stackIdx > 0)
+//        
+//    {
+//        top__<0>() = top__<0>(1);
+//        top__<1>() = top__<1>(1);
+//        top__<2>() = top__<2>(1);
+//        top__<3>() = STYPE__{};
+//    }
+//
+//    top__<0>() = d_state = state;
+
     d_vsp = &top();
-    top__<3>() = std::move(d_val__);
+
+//    top__<3>() = std::move(d_val__);
+
 $insert push
+
     consumed();
 }
 
@@ -241,9 +248,7 @@ void \@Base::reduce__(PI__ const &pi)
 {
     d_reducedToken = pi.d_nonTerm;
 $insert 4 debug "setting reduced token to " << symbol__(d_reducedToken)
-    size_t msgIdx = top__<1>();
     pop__(pi.d_size);
-    top__<1>() = msgIdx;
 }
 // base/reset
 void \@Base::reset__()
@@ -306,12 +311,10 @@ $insert 4 debug "\nERROR recovery in state " << state__() << " with token " << s
     }
 
                                                 // find the topmost ERR_ITEM
-    while (not (s_state[top__<0>()]->d_type & ERR_ITEM))
+    while (not (s_state[top__().first]->d_type & ERR_ITEM))
         pop__();
 
 $insert 4 debug "\n    found error state " << state__() << ", providing token _error_"
-
-    top__<1>() = top__<2>();                    // reset orig. error msg. idx
 
     error__();                                  // continue at _error_
 }
@@ -319,7 +322,7 @@ $insert 4 debug "\n    found error state " << state__() << ", providing token _e
 void \@::executeAction__(int production)
 try
 {
-$insert 4 debug "\nREDUCE:\n    (actions for rule " << production << stype__(", stack top semantic value: ", top__<3>())
+$insert 4 debug "\nREDUCE:\n    (actions for rule " << production << stype__(", stack top semantic value: ", top__().second)
 $insert executeactioncases
     switch (production)
     {

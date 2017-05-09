@@ -3,7 +3,7 @@ if (d_debug__)
     if (d_stackIdx == 0)
         s_out__ << "initializing the state-stack";
     else
-        s_out__ << "in state " << top__<0>(1) << " with token: " << 
+        s_out__ << "in state " << top(1).first << " with token: " << 
                     symbol__(token__());
 
     s_out__ << "\n    push state " << state << "; stack size = " << 
