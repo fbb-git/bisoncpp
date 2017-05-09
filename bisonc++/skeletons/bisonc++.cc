@@ -150,7 +150,6 @@ $insert 4 debug "\nERROR with d_recovery " << d_recovery
     {
 $insert 8 debug "cannot process " << symbol__(d_token) << ", requesting the next token"
         d_token = _UNDETERMINED_;
-        d_recovery = false;
     }
 
     d_reducedToken = _error_;
@@ -183,6 +182,13 @@ $insert 8 debug "no action for token " << symbol__(token__())
 // base/newtoken
 void \@Base::newToken__(int lexToken)
 {
+    if (d_recovery)                     // when recovering fm an error:
+        d_recovery = d_token != _EOF_;  // if the current token isn't EOF 
+                                        // then there is another token and
+                                        // recovery is complete. If _EOF_
+                                        // was already encountered then
+                                        // there's no new token, so d_recovery
+                                        // isn't reset.
     d_token = lexToken;
 
     if (d_token <= 0)
