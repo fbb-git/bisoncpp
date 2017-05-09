@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-void Parser::error(char const *msg)
+void Parser::error()
 {
     static bool repeated;
     static string lastMsg;

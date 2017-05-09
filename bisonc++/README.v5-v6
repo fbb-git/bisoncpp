@@ -28,9 +28,7 @@ new members (implemented in parse.cc):
 --------------------------------------
 
     void nextCycle__();             
-//    void lex__();
     void getToken__();
-
 
 Code using the generated parser must probably be completely recompiled
 ======================================================================
