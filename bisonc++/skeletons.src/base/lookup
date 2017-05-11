@@ -1,0 +1,21 @@
+int \@Base::lookup__() const    // find the item with an action for d_token
+{
+    SR__ const *sr = s_state[d_state];
+    SR__ const *last = sr + sr->d_lastIdx;
+
+    for ( ; ++sr != last; )           // visit all but the last SR entries
+    {
+        if (sr->d_token == token__())
+            return sr->d_action;
+    }
+
+$insert 4 debug "state " << d_state << ": " +
+    if (sr->d_action < 0)
+    {   // the compound stmnt is here to accomodate an optional debug stmnt
+$insert 8 debug "reduce"
+        return sr->d_action;
+    }
+
+$insert 4 debug "no action for token " << symbol__(token__())
+    throw UNEXPECTED_TOKEN__;
+}

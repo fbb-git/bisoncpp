@@ -1,0 +1,11 @@
+void \@Base::shift__(int nextState)
+{
+    push(nextState);
+    popToken__();               // token processed
+
+    if (d_recovery and d_terminalToken)
+    {
+        d_recovery = false;
+        d_skipToken = false;
+    }
+}

@@ -1,0 +1,11 @@
+bool \@Base::recovering__()
+{
+    if (not d_recovery)
+        return false;
+
+    if (d_token != _UNDETERMINED_)
+        pushToken__(d_token);
+
+    return true;
+}
+

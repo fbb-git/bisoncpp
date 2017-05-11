@@ -1,0 +1,19 @@
+bool \@::needToken__()
+{
+    if (token__() == _FORCED_GET_)
+        return true;
+
+    if (not (s_state[state__()]->d_type & REQ_TOKEN))
+        return false;
+
+    if (token__() != _UNDETERMINED_)        // no need for a token: got one
+        return false;                       // already
+
+    if (nextToken__() != _UNDETERMINED_)
+    {
+        popToken__();                       // consume pending token
+$insert 8 debug "nextToken(): popped " << symbol__(token__()) << stype__(", semantic = ", d_val__)
+        return false;
+    }
+    return true;
+}

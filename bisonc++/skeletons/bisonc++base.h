@@ -18,6 +18,7 @@ namespace // anonymous
     enum ReservedTokens
     {
         PARSE_ACCEPT     = 0,   // `ACCEPT' TRANSITION
+        _FORCED_GET_     = -3,
         _UNDETERMINED_   = -2,
         _EOF_            = -1,
         _error_          = 256
@@ -43,17 +44,24 @@ $insert LTYPE
 $insert STYPE
 
     private:
-                        // state   semval
+                    //    state   semval
         typedef std::pair<size_t, STYPE__> StatePair;
+                    //    token   semval
+        typedef std::pair<int,    STYPE__> ValuePair;
 
         int d_stackIdx;
         std::vector<StatePair> d_stateStack;
-        StatePair *d_vsp;              // points to the topmost value stack
+        StatePair *d_vsp;               // points to the topmost value stack
                                         // element
-        int     d_reducedToken;
-        int     d_token;
-        size_t  d_state;
-        bool    d_recovery;
+
+        int         d_token;
+        size_t      d_state;
+
+        ValuePair d_next;
+
+        bool        d_recovery;
+        bool        d_skipToken;        // force the next token on error recov.
+        bool        d_terminalToken;
 
 $insert LTYPEstack
 
@@ -91,32 +99,38 @@ $insert debugdecl
         bool debug() const;
 
         int token__() const;
+        int nextToken__() const;
+
+        bool terminalToken__() const;
 
         STYPE__ &vs__(size_t idx);      // value stack element idx 
                                         // counting back fm the current 
                                         // element in the production rule
 
+        void errorVerbose__();
+        size_t stackSize__() const;
+        StatePair const &top__() const;
 
-        SR__ const *tryDefaultReduce__() const;
-        SR__ const *findToken__() const;
+        bool recovering__();
+        int lookup__() const;
         void done__();
         void error__();
-        void newToken__(int token);
-        void errorVerbose__();
+        void lex__(int token);
         void pop__(size_t count = 1);
-        void push__(size_t nextState);
-        void reduce__(PI__ const &pi);
+        void popToken__();
+        void pushToken__(int token);
+        void reduce__(int rule);
         void reset__();
-        size_t stackSize__() const;
+        void shift__(int nextState);
 
-        StatePair const &top__() const;
-        
     private:
+        void push(size_t nextState);
         void checkStackSize();
-        void consumed();
 
         StatePair &top(size_t idx = 0);
 }; 
+
+
 
 // hdr/abort
 inline void \@Base::ABORT() const
@@ -156,17 +170,6 @@ inline \@Base::StatePair const &\@Base::top__() const
     return d_stateStack[d_stackIdx];
 }
 
-// hdr/msgidx
-//inline size_t \@Base::msgIdx__() const
-//{
-//    return top__<1>();
-//}
-//
-//inline void \@Base::msgIdx__(size_t idx)
-//{
-//    top__<1>() = idx;
-//}
-//
 // hdr/opbitand
 inline \@Base::DebugMode__ operator&(\@Base::DebugMode__ lhs,
                                      \@Base::DebugMode__ rhs)
@@ -188,10 +191,20 @@ inline size_t \@Base::stackSize__() const
     return d_stackIdx + 1;
 }
 
+// hdr/terminaltoken
+inline bool \@Base::terminalToken__() const
+{
+    return d_terminalToken;
+}
 // hdr/token
 inline int \@Base::token__() const
 {
-    return d_reducedToken != _UNDETERMINED_ ? d_reducedToken : d_token;
+    return d_token;
+}
+// hdr/nexttoken
+inline int \@Base::nextToken__() const
+{
+    return d_next.first;
 }
 // hdr/vs
 inline \@Base::STYPE__ &\@Base::vs__(size_t idx) 

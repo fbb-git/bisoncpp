@@ -1,6 +1,10 @@
-void \@Base::reduce__(PI__ const &pi)
+void \@Base::reduce__(int rule)
 {
-    d_reducedToken = pi.d_nonTerm;
-$insert 4 debug "setting reduced token to " << symbol__(d_reducedToken)
+    PI__ const &pi = s_productionInfo[rule];
+
+    d_token = pi.d_nonTerm;
+    d_terminalToken = false;
+
+$insert 4 debug "setting reduced token to " << symbol__(d_token)
     pop__(pi.d_size);
 }

@@ -1,0 +1,5 @@
+void \@Base::pushToken__(int token)
+{
+    d_next = ValuePair{ d_token, std::move(d_val__) };
+    d_token = token;
+}

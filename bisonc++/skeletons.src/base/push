@@ -1,4 +1,4 @@
-void \@Base::push__(size_t state)
+void \@Base::push(size_t state)
 {
 $insert 4 debug "\nPUSH: " +
     checkStackSize();
@@ -6,24 +6,8 @@ $insert 4 debug "\nPUSH: " +
     ++d_stackIdx;
     top() = StatePair{ d_state = state, std::move(d_val__) };
 
-// FBB
-//    if (++d_stackIdx > 0)
-//        
-//    {
-//        top__<0>() = top__<0>(1);
-//        top__<1>() = top__<1>(1);
-//        top__<2>() = top__<2>(1);
-//        top__<3>() = STYPE__{};
-//    }
-//
-//    top__<0>() = d_state = state;
-
     d_vsp = &top();
 
-//    top__<3>() = std::move(d_val__);
-
 $insert push
-
-    consumed();
 }
 

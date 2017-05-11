@@ -1,12 +1,24 @@
 void \@::errorRecovery__()
 {
+    // When an error has occurred, pop elements off the stack until the top
+    // state has an error-item. If none is found, the default recovery
+    // mode (which is to abort) is activated. 
+    //
+    // If EOF is encountered without being appropriate for the current state,
+    // then the error recovery will fall back to the default recovery mode.
+    // (i.e., parsing terminates)
+
 $insert 4 debug "\nERROR recovery in state " << state__() << " with token " << symbol__(token__())
 
-    if (d_acceptedTokens__ > d_requiredTokens__)// only generate an error-
+                                                // only generate an error-
+                                                // message if enough tokens 
+                                                // were accepted. Otherwise
+                                                // simply skip input
+    if (terminalToken__() and d_acceptedTokens__ >= d_requiredTokens__)
     {                                           // message if enough tokens 
         ++d_nErrors__;                          // were accepted. Otherwise
         error();                                // simply skip input
-        d_acceptedTokens__ = 0;
+$insert 8 errorverbose
     }
 
                                                 // find the topmost ERR_ITEM
@@ -16,4 +28,13 @@ $insert 4 debug "\nERROR recovery in state " << state__() << " with token " << s
 $insert 4 debug "\n    found error state " << state__() << ", providing token _error_"
 
     error__();                                  // continue at _error_
+
+    // In the error state, looking up a token allows the parsing process to 
+    // continue. Continuation may be possible following multiple reductions,
+    // but eventually a terminal token shift will be used, requiring the 
+    // next terminal token. If a retrieved token doesn't match, the error
+    // recovery catch ensures that next token is requested in the subsequent
+    // nextCycle call.
 }
+
+

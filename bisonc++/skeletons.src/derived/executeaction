@@ -1,13 +1,13 @@
 void \@::executeAction__(int production)
 try
 {
-$insert 4 debug "\nREDUCE:\n    (actions for rule " << production << stype__(", stack top semantic value: ", top__().second)
+$insert 4 debug "\nREDUCE:\n    (actions for rule " << production << stype__(", stack top semantic value: ", vs__(0))
 $insert executeactioncases
     switch (production)
     {
 $insert 8 actioncases
     }
-$insert 4 debug "... completed" << stype__(", returning semantic value ", d_val__) << ')'
+$insert 4 debug "... completed" << stype__(", returning semantic value ", vs__(0)) << ')'
 }
 catch (std::exception const &exc)
 {

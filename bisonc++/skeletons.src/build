@@ -4,26 +4,30 @@ for x in base/comment \
          base/declarations \
          base/base1 \
     base/checkstacksize \
-    base/consumed \
     base/done \
     base/error \
-    base/findtoken \
-    base/newtoken \
+    base/lex \
+    base/lookup \
     base/pop \
+    base/poptoken \
     base/push \
+    base/pushtoken \
+    base/recovering \
     base/reduce \
     base/reset \
     base/setdebug \
-    base/trydefaultreduce
+    base/shift
 do
     echo "// $x" >> bisonc++.cc
     cat $x >> bisonc++.cc
 done
 
 
-for x in derived/errorrecovery \
+for x in \
+    derived/errorrecovery \
     derived/executeaction \
     derived/gettoken \
+    derived/needtoken \
     derived/nextcycle \
     derived/parse \
     derived/print
@@ -40,11 +44,12 @@ for x in hdr/includes \
     hdr/debug \
     hdr/error \
     hdr/top \
-    hdr/msgidx \
     hdr/opbitand \
     hdr/opbitor \
     hdr/stacksize \
+    hdr/terminaltoken \
     hdr/token \
+    hdr/nexttoken \
     hdr/vs \
     hdr/tail
 do

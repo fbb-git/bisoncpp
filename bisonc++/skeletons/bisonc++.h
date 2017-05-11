@@ -32,8 +32,10 @@ $insert 4 scannerobject
         void exceptionHandler(std::exception const &exc);
 
     // support functions for parse():
-        void errorRecovery__();
         void nextCycle__();
+
+
+        void errorRecovery__();
         void executeAction__(int ruleNr);
         void lex__();           // calls lex, passes the token to Base
         void error__();

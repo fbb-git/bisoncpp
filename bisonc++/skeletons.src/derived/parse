@@ -1,7 +1,12 @@
 int \@::parse()
 try 
-{
-$insert 4 debug "parsing starts"
+{ 
+    // If the parse function call uses arguments, then provide an overloaded
+    // function, calling this one.  This member function uses a function try
+    // block so ACCEPT and ABORT calls from anywhere, even from within members
+    // called by actions, are caught here.
+
+$insert 4 debug "Parsing starts"
     reset__();                              // clear the tokens.
 
     while (true)
@@ -9,8 +14,8 @@ $insert 4 debug "parsing starts"
 }
 catch (Return__ retValue)
 {
-$insert 4 debug "parse(): returns " << retValue
-    return retValue;
+$insert 4 debug "parse(): returns " << retValue << " or " << d_nErrors__
+    return retValue or d_nErrors__;
 }
 
 $insert namespace-close

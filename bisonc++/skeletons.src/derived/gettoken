@@ -1,10 +1,5 @@
-void \@::getToken__()
+inline void \@::getToken__()
 { 
-    if (token__() == _UNDETERMINED_)
-    {
-        newToken__(lex());
-$insert print
-    }
-
-$insert 4 debug "getToken: token " << symbol__(token__()) << ", text: " << d_scanner.matched()
+    lex__(lex());
+$insert 4 debug "\nGETTOKEN returns token " << symbol__(token__())
 }

@@ -3,7 +3,7 @@ $insert class.ih
 // The FIRST element of SR arrays shown below uses `d_type', defining the
 // state's type, and `d_lastIdx' containing the last element's index. If
 // d_lastIdx contains the REQ_TOKEN bitflag (see below) then the state needs
-// a token: if in this state d_token__ is _UNDETERMINED_, nextToken() will be
+// a token: if in this state d_token is _UNDETERMINED_, nextToken() will be
 // called
 
 // The LAST element of SR arrays uses `d_token' containing the last retrieved
@@ -13,7 +13,7 @@ $insert class.ih
 // indicates `ACCEPT', if negative, -d_action represents the number of the
 // rule to reduce to.
 
-// `lookup()' tries to find d_token__ in the current SR array. If it fails, and
+// `lookup()' tries to find d_token in the current SR array. If it fails, and
 // there is no default reduction UNEXPECTED_TOKEN__ is thrown, which is then
 // caught by the error-recovery function.
 
@@ -43,11 +43,7 @@ $insert class.ih
 //                                      ( < 0: reduce, 
 //                                          0: ACCEPT,
 //                                        > 0: next state)
-// Last element:    {set to d_token__,    action to perform}
+// Last element:    {set to d_token,    action to perform}
 //      }
-
-// When the --thread-safe option is specified, all static data are defined as
-// const. If --thread-safe is not provided, the state-tables are not defined
-// as const, since the lookup() function below will modify them
 
 $insert debugincludes

@@ -1,0 +1,4 @@
+inline bool \@Base::terminalToken__() const
+{
+    return d_terminalToken;
+}

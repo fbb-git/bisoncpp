@@ -1,0 +1,10 @@
+void \@Base::lex__(int token)
+{
+    d_token = token;
+    if (d_token <= 0)
+        d_token = _EOF_;
+
+    ++d_acceptedTokens__;
+    d_terminalToken = true;
+}
+    

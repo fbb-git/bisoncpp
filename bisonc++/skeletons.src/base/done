@@ -1,8 +1,8 @@
 void \@Base::done__()
 {
 $insert 4 debug "\nstate " << d_state << " with " << symbol__(token__()) << ": normal end\n"
-    if (d_nErrors__ == 0)
-        ACCEPT();
-    else
+    if (d_recovery)
         ABORT();
+    else
+        ACCEPT();
 }
