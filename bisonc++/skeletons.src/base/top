@@ -1,0 +1,4 @@
+inline size_t \@Base::top__() const
+{
+    return d_stateStack__[d_stackIdx__];
+}

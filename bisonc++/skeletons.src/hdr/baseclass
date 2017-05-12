@@ -1,14 +1,3 @@
-// hdr/includes
-#ifndef \@$Base_h_included
-#define \@$Base_h_included
-
-#include <exception>
-#include <vector>
-#include <iostream>
-$insert polyincludes
-$insert preincludes
-$insert debugincludes
-// hdr/baseclass
 
 namespace // anonymous
 {
@@ -84,55 +73,3 @@ $insert debugdecl
         void setDebug(bool mode);
         void setDebug(DebugMode__ mode);
 }; 
-// hdr/abort
-inline void \@Base::ABORT() const
-{
-$insert 4 debug "ABORT(): Parsing unsuccessful"
-    throw PARSE_ABORT__;
-}
-// hdr/actioncases
-inline bool \@Base::actionCases() const
-{
-    return d_actionCases__;
-}
-// hdr/accept
-inline void \@Base::ACCEPT() const
-{
-$insert 4 debug "ACCEPT(): Parsing successful"
-    throw PARSE_ACCEPT__;
-}
-
-// hdr/debug
-inline bool \@Base::debug() const
-{
-    return d_debug__;
-}
-// hdr/error
-inline void \@Base::ERROR() const
-{
-$insert 4 debug "ERROR(): Forced error condition"
-    throw UNEXPECTED_TOKEN__;
-}
-// hdr/opbitand
-inline \@Base::DebugMode__ operator&(\@Base::DebugMode__ lhs,
-                                     \@Base::DebugMode__ rhs)
-{
-    return static_cast<\@Base::DebugMode__>(
-            static_cast<int>(lhs) & rhs);
-}
-// hdr/opbitor
-inline \@Base::DebugMode__ operator|(\@Base::DebugMode__ lhs, 
-                                     \@Base::DebugMode__ rhs)
-{
-    return static_cast<\@Base::DebugMode__>(static_cast<int>(lhs) | rhs);
-};
-// hdr/tail
-// For convenience, when including ParserBase.h its symbols are available as
-// symbols in the class Parser, too.
-#define \@ \@Base
-
-$insert namespace-close
-
-#endif
-
-

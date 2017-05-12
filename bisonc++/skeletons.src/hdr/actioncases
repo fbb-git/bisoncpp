@@ -1,0 +1,4 @@
+inline bool \@Base::actionCases() const
+{
+    return d_actionCases__;
+}

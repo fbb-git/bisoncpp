@@ -1,0 +1,4 @@
+void \@Base::clearin()
+{
+    d_token__ = d_nextToken__ = _UNDETERMINED_;
+}

@@ -1,0 +1,63 @@
+$insert debugincludes
+
+namespace // anonymous
+{
+    char const author[] = "Frank B. Brokken (f.b.brokken@rug.nl)";
+
+    enum ReservedTokens
+    {
+        PARSE_ACCEPT     = 0,   // `ACCEPT' TRANSITION
+        _UNDETERMINED_   = -2,
+        _EOF_            = -1,
+        _error_          = 256
+    };
+    enum StateType       // modify statetype/data.cc when this enum changes
+    {
+        NORMAL,
+        ERR_ITEM,
+        REQ_TOKEN,
+        ERR_REQ,    // ERR_ITEM | REQ_TOKEN
+        DEF_RED,    // state having default reduction
+        ERR_DEF,    // ERR_ITEM | DEF_RED
+        REQ_DEF,    // REQ_TOKEN | DEF_RED
+        ERR_REQ_DEF // ERR_ITEM | REQ_TOKEN | DEF_RED
+    };    
+    struct PI__     // Production Info
+    {
+        size_t d_nonTerm; // identification number of this production's
+                            // non-terminal 
+        size_t d_size;    // number of elements in this production 
+    };
+
+    struct SR__     // Shift Reduce info, see its description above
+    {
+        union
+        {
+            int _field_1_;      // initializer, allowing initializations 
+                                // of the SR s_[] arrays
+            int d_type;
+            int d_token;
+        };
+        union
+        {
+            int _field_2_;
+
+            int d_lastIdx;          // if negative, the state uses SHIFT
+            int d_action;           // may be negative (reduce), 
+                                    // postive (shift), or 0 (accept)
+            size_t d_errorState;    // used with Error states
+        };
+    };
+
+$insert 4 staticdata 
+
+$insert namespace-open
+
+$insert polymorphicCode
+
+// If the parsing function call (i.e., parse()' needs arguments, then provide
+// an overloaded function.  The code below doesn't rely on parameters, so no
+// arguments are required.  Furthermore, parse uses a function try block to
+// allow us to do ACCEPT and ABORT from anywhere, even from within members
+// called by actions, simply throwing the appropriate exceptions.
+

@@ -1,0 +1,9 @@
+void \@Base::popToken__()
+{
+    d_token__ = d_nextToken__;
+
+    d_val__ = std::move(d_nextVal__);
+    d_nextVal__ = STYPE__();
+
+    d_nextToken__ = _UNDETERMINED_;
+}

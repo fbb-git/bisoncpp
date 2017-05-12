@@ -1,0 +1,25 @@
+void \@::nextToken()
+{
+    // If d_token__ is _UNDETERMINED_ then if d_nextToken__ is _UNDETERMINED_ 
+    // another token is obtained from lex(). Then d_nextToken__ is assigned to
+    // d_token__.
+
+    if (d_token__ != _UNDETERMINED_)        // no need for a token: got one
+        return;                             // already
+
+    if (d_nextToken__ != _UNDETERMINED_)
+    {
+        popToken__();                       // consume pending token
+$insert 8 debug "nextToken(): popped " << symbol__(d_token__) << stype__(", semantic = ", d_val__)
+    }
+    else
+    {
+        ++d_acceptedTokens__;               // accept another token (see
+                                            // errorRecover())
+        d_token__ = lex();
+        if (d_token__ <= 0)
+            d_token__ = _EOF_;
+    }
+    print();
+$insert 4 debug "nextToken(): using " << symbol__(d_token__) << stype__(", semantic = ", d_val__)
+}
