@@ -4,7 +4,7 @@
 string Parser::svsElement(int nElements, int nr) const
 {
     ostringstream os;
-    os << s_semanticValueStack << "[" << 
-                                indexToOffset(nr, nElements) << "]";
+    os << s_semanticValueStack << (nElements - nr) << ')';
+
     return os.str();
 }

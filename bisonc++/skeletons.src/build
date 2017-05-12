@@ -38,6 +38,7 @@ for x in hdr/includes \
     hdr/error \
     hdr/opbitand \
     hdr/opbitor \
+    hdr/vs \
     hdr/tail
 do
     echo "// $x" >> bisonc++base.h

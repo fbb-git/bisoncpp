@@ -1,0 +1,5 @@
+inline \@Base::STYPE__ &\@Base::vs__(size_t idx) 
+{
+    return *(d_vsp__ - idx);
+//    return (d_vsp - idx)->second;
+}

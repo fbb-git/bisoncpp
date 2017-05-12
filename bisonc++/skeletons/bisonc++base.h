@@ -79,6 +79,10 @@ $insert debugdecl
         void reduce__(PI__ const &productionInfo);
         void errorVerbose__();
         size_t top__() const;
+        STYPE__ &vs__(size_t idx);      // value stack element idx 
+            // counts back fm the current element in the production rule.
+            // E.g.:    rule: item1 item2 item3 {}
+            //                  3     2     1    0
 
     public:
         void setDebug(bool mode);
@@ -126,6 +130,12 @@ inline \@Base::DebugMode__ operator|(\@Base::DebugMode__ lhs,
 {
     return static_cast<\@Base::DebugMode__>(static_cast<int>(lhs) | rhs);
 };
+// hdr/vs
+inline \@Base::STYPE__ &\@Base::vs__(size_t idx) 
+{
+    return *(d_vsp__ - idx);
+//    return (d_vsp - idx)->second;
+}
 // hdr/tail
 // For convenience, when including ParserBase.h its symbols are available as
 // symbols in the class Parser, too.
