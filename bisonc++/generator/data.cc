@@ -26,7 +26,7 @@ Generator::Map Generator::s_insert =
     {"preincludes",                 &Generator::preIncludes},
     {"print",                       &Generator::print},
 //FBB
-    {"requiredtokens",              &Generator::requiredTokens},
+//    {"requiredtokens",              &Generator::requiredTokens},
     {"baseclasscode",               &Generator::baseClassCode},
 
     {"actioncases",                 &Generator::actionCases},

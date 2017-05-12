@@ -118,11 +118,13 @@ $insert polymorphicCode
 // base/base1
 \@Base::\@Base()
 :
-$insert 4 requiredtokens
-    d_acceptedTokens__(d_requiredTokens__),
-    d_token__(_UNDETERMINED_),
-    d_nextToken__(_UNDETERMINED_)
-{}
+$insert 4 baseclasscode
+
+    Meta__::t_nErrors = &d_nErrors__;
+    d_acceptedTokens__ = d_requiredTokens__;
+    d_token__ = _UNDETERMINED_;
+    d_nextToken__ = _UNDETERMINED_;
+}
 // base/clearin
 void \@Base::clearin()
 {
