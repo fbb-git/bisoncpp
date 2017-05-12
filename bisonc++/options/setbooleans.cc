@@ -19,4 +19,7 @@ void Options::setBooleans()
 
     if (d_arg.option(0, "no-lines"))
         d_lines = false;
+
+    if (d_arg.option(0, "prompt"))
+        d_prompt = true;
 }

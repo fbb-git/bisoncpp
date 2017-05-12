@@ -441,7 +441,7 @@ $insert 4 debug "parse(): Parsing starts"
 
     while (true)
     {
-$insert 8 debug "=="
+$insert prompt
         try
         {
             if (s_state[d_state__]->d_type & REQ_TOKEN)

@@ -314,6 +314,11 @@ _directiveSpec:
         d_options.setGenDebug();
     }
 |
+    PROMPT
+    {
+        d_options.setPrompt();
+    }
+|
     ERROR_VERBOSE
     {
         d_options.setErrorVerbose();

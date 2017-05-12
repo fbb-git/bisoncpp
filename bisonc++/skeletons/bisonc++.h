@@ -7,10 +7,11 @@ $insert scanner.h
 $insert namespace-open
 
 #undef \@
-    // Be careful: between the baseclass-include directive and the #undef
-    // directive in the previous line references to \@ will be read as \@Base
-    // If you need to include additional headers, you probably want to to
-    // that following this comment.
+    // CAVEAT: between the baseclass-include directive and the 
+    // #undef directive in the previous line references to \@ 
+    // are read as \@Base.
+    // If you need to include additional headers in this file 
+    // you should do so after these comment-lines.
 
 
 class \@: public \@Base
