@@ -25,7 +25,10 @@ Generator::Map Generator::s_insert =
     {"polymorphicSpecializations",  &Generator::polymorphicSpecializations},
     {"preincludes",                 &Generator::preIncludes},
     {"print",                       &Generator::print},
+//FBB
     {"requiredtokens",              &Generator::requiredTokens},
+    {"baseclasscode",               &Generator::baseClassCode},
+
     {"actioncases",                 &Generator::actionCases},
     {"staticdata",                  &Generator::staticData},
     {"threading",                   &Generator::threading},

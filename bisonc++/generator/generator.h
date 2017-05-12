@@ -42,6 +42,7 @@ class Generator
     mutable std::string d_line;
     bool d_genDebug;
     bool d_printTokens;
+    bool d_threadSafe;
 
     std::unordered_map<std::string, std::string> const &d_polymorphic; 
 
@@ -116,7 +117,10 @@ class Generator
         void polymorphicSpecializations(std::ostream &out) const;
         void preIncludes(std::ostream &out) const;
         void print(std::ostream &out) const;
+//FBB
         void requiredTokens(std::ostream &out) const;
+        void baseClassCode(std::ostream &out) const;
+
         void scannerH(std::ostream &out) const;
         void scannerObject(std::ostream &out) const;
         void staticData(std::ostream &out) const;
