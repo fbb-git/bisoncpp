@@ -34,9 +34,12 @@ $insert LTYPE
 $insert STYPE
 
     private:
+                        // state   semval
+        typedef std::pair<size_t, STYPE__> StatePair;
+
         int d_stackIdx__ = -1;
-        std::vector<size_t>   d_stateStack__;
-        std::vector<STYPE__>  d_valueStack__;
+        std::vector<StatePair>   d_stateStack__;
+
 $insert LTYPEstack
 
     protected:
@@ -58,7 +61,9 @@ $insert LTYPEstack
         int         d_token__;
         int         d_nextToken__;
         size_t      d_state__;
-        STYPE__    *d_vsp__;
+
+        StatePair *d_vsp__;           // points to the topmost value stack
+
         STYPE__     d_val__;
         STYPE__     d_nextVal__;
 $insert LTYPEdata
@@ -133,8 +138,8 @@ inline \@Base::DebugMode__ operator|(\@Base::DebugMode__ lhs,
 // hdr/vs
 inline \@Base::STYPE__ &\@Base::vs__(size_t idx) 
 {
-    return *(d_vsp__ - idx);
-//    return (d_vsp - idx)->second;
+//    return *(d_vsp__ - idx);
+    return (d_vsp__ - idx)->second;
 }
 // hdr/tail
 // For convenience, when including ParserBase.h its symbols are available as

@@ -5,14 +5,14 @@ try
         pushToken__(d_token__);     // save an already available token
 
 $insert 4 debug "executeAction of rule " << production +
-$insert 4 debug  stype__(", semantic [TOS]: ", *d_vsp__) << " ..."
+$insert 4 debug  stype__(", semantic [TOS]: ", vs__(0)) << " ..."
 $insert executeactioncases
     switch (production)
     {
 $insert 8 actioncases
     }
 $insert 4 debug "... action of rule " << production << " completed" +
-$insert 4 debug  stype__(", semantic: ", *d_vsp__)
+$insert 4 debug  stype__(", semantic: ", vs__(0))
 }
 catch (std::exception const &exc)
 {

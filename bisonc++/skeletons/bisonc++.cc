@@ -119,8 +119,6 @@ $insert polymorphicCode
 \@Base::\@Base()
 :
 $insert 4 baseclasscode
-
-    Meta__::t_nErrors = &d_nErrors__;
     d_acceptedTokens__ = d_requiredTokens__;
     d_token__ = _UNDETERMINED_;
     d_nextToken__ = _UNDETERMINED_;
@@ -150,16 +148,17 @@ void \@Base::pop__(size_t count)
 $insert 4 debug "pop(" << count << ") from stack having size " << (d_stackIdx__ + 1)
     if (d_stackIdx__ < static_cast<int>(count))
     {
-$insert 8 debug "Terminating parse(): unrecoverable input error at token " << symbol__(d_token__)
+$insert 8 debug "Terminating parse(): state stack underflow  at token " << symbol__(d_token__)
         ABORT();
     }
 
     d_stackIdx__ -= count;
-    d_state__ = d_stateStack__[d_stackIdx__];
-    d_vsp__ = &d_valueStack__[d_stackIdx__];
+    d_state__ = d_stateStack__[d_stackIdx__].first;
+    d_vsp__ = &d_stateStack__[d_stackIdx__];
+
 $insert 4 LTYPEpop
 $insert 4 debug "pop(): next state: " << d_state__ << ", token: " << symbol__(d_token__) +
-$insert 4 debug stype__("semantic: ", *d_vsp__)
+$insert 4 debug stype__("semantic: ", vs__(0))
 }
 // base/poptoken
 void \@Base::popToken__()
@@ -180,21 +179,16 @@ void \@Base::push__(size_t state)
         size_t newSize = currentSize + STACK_EXPANSION__;
         d_stateStack__.resize(newSize);
 $insert 8 LTYPEresize
-        if (d_valueStack__.capacity() >= newSize)
-            d_valueStack__.resize(newSize);
-        else
-        {
-            std::vector<STYPE__> enlarged(newSize);
-            for (size_t idx = 0; idx != currentSize; ++idx)
-                enlarged[idx] = std::move(d_valueStack__[idx]);
-            d_valueStack__.swap(enlarged);
-        }
     }
-    ++d_stackIdx__;
-    d_stateStack__[d_stackIdx__] = d_state__ = state;
+
 $insert 4 LTYPEpush
 $insert 4 debug  "push(state " << state << stype__(", semantic TOS = ", d_val__, ")") << ')'
-    *(d_vsp__ = &d_valueStack__[d_stackIdx__]) = std::move(d_val__);
+
+    ++d_stackIdx__;
+    d_stateStack__[d_stackIdx__] = 
+                    StatePair{ d_state__ = state, std::move(d_val__) };
+
+    d_vsp__ = &d_stateStack__[d_stackIdx__];
 }
 // base/pushtoken
 void \@Base::pushToken__(int token)
@@ -215,7 +209,7 @@ $insert 4 debug " to N-terminal " << symbol__(d_token__) << stype__(", semantic 
 // base/top
 inline size_t \@Base::top__() const
 {
-    return d_stateStack__[d_stackIdx__];
+    return d_stateStack__[d_stackIdx__].first;
 }
 // derived/errorrecovery
 void \@::errorRecovery()
@@ -332,14 +326,14 @@ try
         pushToken__(d_token__);     // save an already available token
 
 $insert 4 debug "executeAction of rule " << production +
-$insert 4 debug  stype__(", semantic [TOS]: ", *d_vsp__) << " ..."
+$insert 4 debug  stype__(", semantic [TOS]: ", vs__(0)) << " ..."
 $insert executeactioncases
     switch (production)
     {
 $insert 8 actioncases
     }
 $insert 4 debug "... action of rule " << production << " completed" +
-$insert 4 debug  stype__(", semantic: ", *d_vsp__)
+$insert 4 debug  stype__(", semantic: ", vs__(0))
 }
 catch (std::exception const &exc)
 {

@@ -3,14 +3,15 @@ void \@Base::pop__(size_t count)
 $insert 4 debug "pop(" << count << ") from stack having size " << (d_stackIdx__ + 1)
     if (d_stackIdx__ < static_cast<int>(count))
     {
-$insert 8 debug "Terminating parse(): unrecoverable input error at token " << symbol__(d_token__)
+$insert 8 debug "Terminating parse(): state stack underflow  at token " << symbol__(d_token__)
         ABORT();
     }
 
     d_stackIdx__ -= count;
-    d_state__ = d_stateStack__[d_stackIdx__];
-    d_vsp__ = &d_valueStack__[d_stackIdx__];
+    d_state__ = d_stateStack__[d_stackIdx__].first;
+    d_vsp__ = &d_stateStack__[d_stackIdx__];
+
 $insert 4 LTYPEpop
 $insert 4 debug "pop(): next state: " << d_state__ << ", token: " << symbol__(d_token__) +
-$insert 4 debug stype__("semantic: ", *d_vsp__)
+$insert 4 debug stype__("semantic: ", vs__(0))
 }

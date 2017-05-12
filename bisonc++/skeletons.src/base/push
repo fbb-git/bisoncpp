@@ -6,19 +6,14 @@ void \@Base::push__(size_t state)
         size_t newSize = currentSize + STACK_EXPANSION__;
         d_stateStack__.resize(newSize);
 $insert 8 LTYPEresize
-        if (d_valueStack__.capacity() >= newSize)
-            d_valueStack__.resize(newSize);
-        else
-        {
-            std::vector<STYPE__> enlarged(newSize);
-            for (size_t idx = 0; idx != currentSize; ++idx)
-                enlarged[idx] = std::move(d_valueStack__[idx]);
-            d_valueStack__.swap(enlarged);
-        }
     }
-    ++d_stackIdx__;
-    d_stateStack__[d_stackIdx__] = d_state__ = state;
+
 $insert 4 LTYPEpush
 $insert 4 debug  "push(state " << state << stype__(", semantic TOS = ", d_val__, ")") << ')'
-    *(d_vsp__ = &d_valueStack__[d_stackIdx__]) = std::move(d_val__);
+
+    ++d_stackIdx__;
+    d_stateStack__[d_stackIdx__] = 
+                    StatePair{ d_state__ = state, std::move(d_val__) };
+
+    d_vsp__ = &d_stateStack__[d_stackIdx__];
 }
