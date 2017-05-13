@@ -40,8 +40,8 @@ $insert STYPE
                        // token   semval
         typedef std::pair<int,    STYPE__> TokenPair;
 
-        int d_stackIdx__ = -1;
-        std::vector<StatePair>   d_stateStack__;
+        int d_stackIdx = -1;
+        std::vector<StatePair> d_stateStack;
 
 $insert LTYPEstack
 

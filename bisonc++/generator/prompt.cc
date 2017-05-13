@@ -11,7 +11,7 @@ R"(
 R"(
         if (d_debug__)
         {
-            s_out__ << "================\n"
+            s_out__ << "\n================\n"
                        "? " << dflush__;
             std::string s;
             getline(std::cin, s);

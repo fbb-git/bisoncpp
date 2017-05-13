@@ -336,15 +336,14 @@ class Parser: public ParserBase
         int lex();                      // returns the next token from the
                                         // lexical scanner. 
         void print();                   // use, e.g., d_token, d_loc
-
-
-    // support functions for parse():
-        void executeAction__(int ruleNr);
-        void errorRecovery__();
-        void nextCycle__();
-        void nextToken__();
-        void print__();
-
+                                                         
+                                                         
+    // support functions for parse():                    
+        void executeAction__(int ruleNr);                
+        void errorRecovery__();                          
+        void nextCycle__();                              
+        void nextToken__();                              
+        void print__();                                     
                                         // used in, e.g., handleDollar
                                         // to obtain # elements for
                                         // end- or mid-rule actions

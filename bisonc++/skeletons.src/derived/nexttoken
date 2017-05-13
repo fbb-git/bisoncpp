@@ -5,12 +5,15 @@ void \@::nextToken__()
     // d_token__.
 
     if (d_token__ != _UNDETERMINED_)        // no need for a token: got one
+    {
+$insert 8 debug "available token " << symbol__(d_token__)
         return;                             // already
+    }
 
     if (d_next__.first != _UNDETERMINED_)
     {
         popToken__();                       // consume pending token
-$insert 8 debug "nextToken(): popped " << symbol__(d_token__) << stype__(", semantic = ", d_val__)
+$insert 8 debug "retrieved token " << symbol__(d_token__) << stype__(", semantic = ", d_val__)
     }
     else
     {
@@ -20,7 +23,8 @@ $insert 8 debug "nextToken(): popped " << symbol__(d_token__) << stype__(", sema
         if (d_token__ <= 0)
             d_token__ = _EOF_;
         d_terminalToken__ = true;
+        print__();
+$insert 8 debug "scanner token " << symbol__(d_token__)
     }
     print();
-$insert 4 debug "nextToken(): using " << symbol__(d_token__) << stype__(", semantic = ", d_val__)
 }

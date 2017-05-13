@@ -34,7 +34,7 @@ $insert prompt
 }
 catch (Return__ retValue)
 {
-$insert 4 debug "parse(): returns " << retValue
-    return retValue;
+$insert 4 debug "parse(): returns " << retValue << " or " << d_nErrors__ 
+    return retValue or d_nErrors__;
 }
 

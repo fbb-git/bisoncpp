@@ -16,10 +16,9 @@ int \@Base::lookup__() const
     {
         if (sr->d_action < 0)   // default reduction
         {
-$insert 12 debug "lookup(" << d_state__ << ", " << symbol__(d_token__) << "): default reduction by rule " << -sr->d_action
+$insert 12 debug "\nLOOKUP: [" << d_state__ << ", " << symbol__(d_token__) << "] -> default reduce using rule " << -sr->d_action
             return sr->d_action;                
         }
-$insert 8 debug "lookup(" << d_state__ << ", " << symbol__(d_token__) << "): Not found. " << (d_recovery__ ? "Continue" : "Start") << " error recovery." 
 
         // No default reduction, so token not found, so error.
         throw UNEXPECTED_TOKEN__;

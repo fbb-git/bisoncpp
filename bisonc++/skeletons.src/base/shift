@@ -5,7 +5,7 @@ void \@Base::shift__(int action)
 
     if (d_recovery__ and d_terminalToken__)
     {
-$insert 8 debug "errorRecovery() COMPLETED: next state " << action
+$insert 8 debug "ERROR RECOVERED: next state " << action
         d_recovery__ = false;
         d_acceptedTokens__ = 0;
     }

@@ -10,5 +10,5 @@ if (d_debug__)
         s_out__ <<  "): shift " << action << " (" << symbol__(d_token__) <<
                     " processed)";
 
-    s_out__ << "\n" << dflush__;
+    s_out__ << '\n' << dflush__;
 }

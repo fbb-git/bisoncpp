@@ -8,23 +8,23 @@ void \@::errorRecovery__()
     // then the error recovery will fall back to the default recovery mode.
     // (i.e., parsing terminates)
 
+$insert 4 debug "\nERROR:  [" << top__() << ", " << symbol__(d_token__) << "] -> ??. Errors: " << (d_nErrors__ + 1)
+
+
     if (d_acceptedTokens__ >= d_requiredTokens__)// only generate an error-
     {                                           // message if enough tokens 
         ++d_nErrors__;                          // were accepted. Otherwise
         error();                                // simply skip input
-
 $insert 8 errorverbose
     }
-
-$insert 4 debug "errorRecovery(): " << d_nErrors__ << " error(s) so far. State = " << top__()
 
     // get the error state
     while (not (s_state[top__()][0].d_type & ERR_ITEM))
     {
-$insert 8 debug "errorRecovery(): pop state " << top__()
+$insert 8 debug "pop state: " << top__() << " (not an ERROR state)"
         pop__();
     }
-$insert 4 debug "errorRecovery(): state " << top__() << " is an ERROR state"
+$insert 4 debug "Reached ERROR state " << top__()
 
     // In the error state, looking up a token allows us to proceed.
     // Continuation may be require multiple reductions, but eventually a
