@@ -24,7 +24,7 @@ try
     //     default reduction.
 
 $insert 4 debug "parse(): Parsing starts"
-    clearin();                              // initialize, push(0)
+    clearin__();                            // initialize, push(0)
 
     while (true)
     {

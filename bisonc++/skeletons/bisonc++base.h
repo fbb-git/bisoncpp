@@ -8,6 +8,7 @@
 $insert polyincludes
 $insert preincludes
 $insert debugincludes
+
 // hdr/baseclass
 
 namespace // anonymous
@@ -82,15 +83,17 @@ $insert debugdecl
         void ABORT() const;
         void ACCEPT() const;
         void ERROR() const;
-        void clearin();
-        bool actionCases() const;
         bool debug() const;
+
+        void clearin__();
         int  lookup__() const;
         void pop__(size_t count = 1);
         void push__(size_t nextState);
         void popToken__();
         void pushToken__(int token);
-        void reduce__(PI__ const &productionInfo);
+        void redoToken__();
+        void reduce__(int rule);
+        void shift__(int state);
         void errorVerbose__();
         size_t top__() const;
         STYPE__ &vs__(size_t idx);      // value stack element idx 
@@ -102,17 +105,14 @@ $insert debugdecl
         void setDebug(bool mode);
         void setDebug(DebugMode__ mode);
 }; 
+
 // hdr/abort
 inline void \@Base::ABORT() const
 {
 $insert 4 debug "ABORT(): Parsing unsuccessful"
     throw PARSE_ABORT__;
 }
-// hdr/actioncases
-inline bool \@Base::actionCases() const
-{
-    return d_actionCases__;
-}
+
 // hdr/accept
 inline void \@Base::ACCEPT() const
 {
@@ -120,17 +120,20 @@ $insert 4 debug "ACCEPT(): Parsing successful"
     throw PARSE_ACCEPT__;
 }
 
+
 // hdr/debug
 inline bool \@Base::debug() const
 {
     return d_debug__;
 }
+
 // hdr/error
 inline void \@Base::ERROR() const
 {
 $insert 4 debug "ERROR(): Forced error condition"
     throw UNEXPECTED_TOKEN__;
 }
+
 // hdr/opbitand
 inline \@Base::DebugMode__ operator&(\@Base::DebugMode__ lhs,
                                      \@Base::DebugMode__ rhs)
@@ -138,18 +141,21 @@ inline \@Base::DebugMode__ operator&(\@Base::DebugMode__ lhs,
     return static_cast<\@Base::DebugMode__>(
             static_cast<int>(lhs) & rhs);
 }
+
 // hdr/opbitor
 inline \@Base::DebugMode__ operator|(\@Base::DebugMode__ lhs, 
                                      \@Base::DebugMode__ rhs)
 {
     return static_cast<\@Base::DebugMode__>(static_cast<int>(lhs) | rhs);
 };
+
 // hdr/vs
 inline \@Base::STYPE__ &\@Base::vs__(size_t idx) 
 {
 //    return *(d_vsp__ - idx);
     return (d_vsp__ - idx)->second;
 }
+
 // hdr/tail
 // For convenience, when including ParserBase.h its symbols are available as
 // symbols in the class Parser, too.
@@ -158,5 +164,6 @@ inline \@Base::STYPE__ &\@Base::vs__(size_t idx)
 $insert namespace-close
 
 #endif
+
 
 

@@ -51,6 +51,7 @@ $insert class.ih
 // When the --thread-safe option is specified, all static data are defined as
 // const. If --thread-safe is not provided, the state-tables are not defined
 // as const, since the lookup() function below will modify them
+
 // base/declarations
 $insert debugincludes
 
@@ -89,8 +90,8 @@ namespace // anonymous
         {
             int _field_1_;      // initializer, allowing initializations 
                                 // of the SR s_[] arrays
-            int d_type;
-            int d_token;
+            StateType d_type;
+            int       d_token;
         };
         union
         {
@@ -99,7 +100,6 @@ namespace // anonymous
             int d_lastIdx;          // if negative, the state uses SHIFT
             int d_action;           // may be negative (reduce), 
                                     // postive (shift), or 0 (accept)
-            size_t d_errorState;    // used with Error states
         };
     };
 
@@ -115,13 +115,15 @@ $insert polymorphicCode
 // allow us to do ACCEPT and ABORT from anywhere, even from within members
 // called by actions, simply throwing the appropriate exceptions.
 
+
 // base/base1
 \@Base::\@Base()
 :
 $insert 4 baseclasscode
 }
+
 // base/clearin
-void \@Base::clearin()
+void \@Base::clearin__()
 {
     d_nErrors__ = 0;
     d_stackIdx__ = -1;
@@ -134,6 +136,7 @@ void \@Base::clearin()
 
     push__(0);
 }
+
 // base/debugfunctions
 $insert debugfunctions
 
@@ -148,6 +151,7 @@ void \@Base::setDebug(DebugMode__ mode)
     d_actionCases__ = mode & ACTIONCASES;
     d_debug__ =       mode & ON;
 }
+
 // base/lookup
 int \@Base::lookup__() const
 {
@@ -185,6 +189,7 @@ $insert 0 debuglookup
 
     return action;
 }
+
 // base/pop
 void \@Base::pop__(size_t count)
 {
@@ -203,6 +208,7 @@ $insert 4 LTYPEpop
 $insert 4 debug "pop(): next state: " << d_state__ << ", token: " << symbol__(d_token__) +
 $insert 4 debug stype__("semantic: ", vs__(0))
 }
+
 // base/poptoken
 void \@Base::popToken__()
 {
@@ -211,6 +217,7 @@ void \@Base::popToken__()
 
     d_next__.first = _UNDETERMINED_;
 }
+
 // base/push
 void \@Base::push__(size_t state)
 {
@@ -231,15 +238,26 @@ $insert 4 debug  "push(state " << state << stype__(", semantic TOS = ", d_val__,
 
     d_vsp__ = &d_stateStack__[d_stackIdx__];
 }
+
 // base/pushtoken
 void \@Base::pushToken__(int token)
 {
     d_next__ = TokenPair{ d_token__, std::move(d_val__) };
     d_token__ = token;
 }
-// base/reduce
-void \@Base::reduce__(PI__ const &pi)
+
+// base/redotoken
+void \@Base::redoToken__()
 {
+    if (d_token__ != _UNDETERMINED_)
+        pushToken__(d_token__);
+}
+
+// base/reduce
+void \@Base::reduce__(int rule)
+{
+    PI__ const &pi = s_productionInfo[rule];
+
     d_token__ = pi.d_nonTerm;
     pop__(pi.d_size);
 
@@ -248,13 +266,29 @@ void \@Base::reduce__(PI__ const &pi)
 $insert 4 debug "reduce(): by rule " << (&pi - s_productionInfo) +
 $insert 4 debug " to N-terminal " << symbol__(d_token__) << stype__(", semantic = ", d_val__)
 }
+
+// base/shift
+void \@Base::shift__(int action)
+{
+    push__(action);
+    popToken__();               // token processed
+
+    if (d_recovery__ and d_terminalToken__)
+    {
+$insert 8 debug "errorRecovery() COMPLETED: next state " << action
+        d_recovery__ = false;
+        d_acceptedTokens__ = 0;
+    }
+}
+
 // base/top
 inline size_t \@Base::top__() const
 {
     return d_stateStack__[d_stackIdx__].first;
 }
+
 // derived/errorrecovery
-void \@::errorRecovery()
+void \@::errorRecovery__()
 {
     // When an error has occurred, pop elements off the stack until the top
     // state has an error-item. If none is found, the default recovery
@@ -267,7 +301,7 @@ void \@::errorRecovery()
     if (d_acceptedTokens__ >= d_requiredTokens__)// only generate an error-
     {                                           // message if enough tokens 
         ++d_nErrors__;                          // were accepted. Otherwise
-        error("Syntax error");                  // simply skip input
+        error();                                // simply skip input
 
 $insert 8 errorverbose
     }
@@ -299,8 +333,9 @@ $insert 4 debug "errorRecovery(): state " << top__() << " is an ERROR state"
 
     d_recovery__ = true;
 }
+
 // derived/executeaction
-void \@::executeAction(int production)
+void \@::executeAction__(int production)
 try
 {
     if (d_token__ != _UNDETERMINED_)
@@ -318,44 +353,33 @@ $insert 4 debug  stype__(", semantic: ", vs__(0))
 }
 catch (std::exception const &exc)
 {
-    exceptionHandler__(exc);
+    exceptionHandler(exc);
 }
+
 // derived/nextcycle
 void \@::nextCycle__()
 try
 {
     if (s_state[d_state__]->d_type & REQ_TOKEN)
-        nextToken();                // obtain next token
+        nextToken__();              // obtain next token
 
 
     int action = lookup__();        // lookup d_token__ in d_state__
 
     if (action > 0)                 // SHIFT: push a new state
     {
-        push__(action);
-        popToken__();               // token processed
-
-        if (d_recovery__ and d_terminalToken__)
-        {
-$insert 12 debug "errorRecovery() COMPLETED: next state " << action
-            d_recovery__ = false;
-            d_acceptedTokens__ = 0;
-        }
+        shift__(action);
         return;
     }
 
     if (action < 0)            // REDUCE: execute and pop.
     {
-        if (not d_recovery__)
-            executeAction(-action);
-        else 
-        {
-            if (d_token__ != _UNDETERMINED_)
-                pushToken__(d_token__);
-$insert 12 debug "errorRecovery() REDUCE by rule " << -action << ", token = " << symbol__(d_token__)
-        }
-                                    // next token is the rule's LHS
-        reduce__(s_productionInfo[-action]); 
+        if (d_recovery__)
+            redoToken__();
+        else
+            executeAction__(-action);
+                                            // next token is the rule's LHS
+        reduce__(-action); 
         return;
     }
 
@@ -367,7 +391,7 @@ $insert 12 debug "errorRecovery() REDUCE by rule " << -action << ", token = " <<
 catch (ErrorRecovery__)
 {
     if (not d_recovery__)
-        errorRecovery();
+        errorRecovery__();
     else
     {
         if (d_token__ == _EOF_)
@@ -376,8 +400,9 @@ catch (ErrorRecovery__)
     }
 }
 
+
 // derived/nexttoken
-void \@::nextToken()
+void \@::nextToken__()
 {
     // If d_token__ is _UNDETERMINED_ then if d_nextToken__ is _UNDETERMINED_ 
     // another token is obtained from lex(). Then d_nextToken__ is assigned to
@@ -403,11 +428,13 @@ $insert 8 debug "nextToken(): popped " << symbol__(d_token__) << stype__(", sema
     print();
 $insert 4 debug "nextToken(): using " << symbol__(d_token__) << stype__(", semantic = ", d_val__)
 }
+
 // derived/print
 void \@::print__()
 {
 $insert print
 }
+
 // derived/parse
 int \@::parse()
 try 
@@ -435,7 +462,7 @@ try
     //     default reduction.
 
 $insert 4 debug "parse(): Parsing starts"
-    clearin();                              // initialize, push(0)
+    clearin__();                            // initialize, push(0)
 
     while (true)
     {
@@ -449,6 +476,8 @@ $insert 4 debug "parse(): returns " << retValue
     return retValue;
 }
 
+
 // derived/tail
 
 $insert namespace-close
+

@@ -1,5 +1,7 @@
-void \@Base::reduce__(PI__ const &pi)
+void \@Base::reduce__(int rule)
 {
+    PI__ const &pi = s_productionInfo[rule];
+
     d_token__ = pi.d_nonTerm;
     pop__(pi.d_size);
 

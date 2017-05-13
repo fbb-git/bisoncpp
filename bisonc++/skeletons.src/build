@@ -10,11 +10,14 @@ for x in base/comment \
     base/poptoken \
     base/push \
     base/pushtoken \
+    base/redotoken \
     base/reduce \
+    base/shift \
     base/top
 do
     echo "// $x" >> bisonc++.cc
     cat $x >> bisonc++.cc
+    echo >> bisonc++.cc
 done
 
 for x in \
@@ -28,12 +31,12 @@ for x in \
 do
     echo "// $x" >> bisonc++.cc
     cat $x >> bisonc++.cc
+    echo >> bisonc++.cc
 done
 
 for x in hdr/includes \
          hdr/baseclass \
     hdr/abort \
-    hdr/actioncases \
     hdr/accept \
     hdr/debug \
     hdr/error \
@@ -44,6 +47,7 @@ for x in hdr/includes \
 do
     echo "// $x" >> bisonc++base.h
     cat $x >> bisonc++base.h
+    echo >> bisonc++base.h
 done
 
 mv bisonc++* ../skeletons/

@@ -1,4 +1,4 @@
-void \@::executeAction(int production)
+void \@::executeAction__(int production)
 try
 {
     if (d_token__ != _UNDETERMINED_)
@@ -16,5 +16,5 @@ $insert 4 debug  stype__(", semantic: ", vs__(0))
 }
 catch (std::exception const &exc)
 {
-    exceptionHandler__(exc);
+    exceptionHandler(exc);
 }

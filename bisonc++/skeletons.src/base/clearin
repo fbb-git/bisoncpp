@@ -1,4 +1,4 @@
-void \@Base::clearin()
+void \@Base::clearin__()
 {
     d_nErrors__ = 0;
     d_stackIdx__ = -1;

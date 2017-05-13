@@ -35,8 +35,8 @@ namespace // anonymous
         {
             int _field_1_;      // initializer, allowing initializations 
                                 // of the SR s_[] arrays
-            int d_type;
-            int d_token;
+            StateType d_type;
+            int       d_token;
         };
         union
         {
@@ -45,7 +45,6 @@ namespace // anonymous
             int d_lastIdx;          // if negative, the state uses SHIFT
             int d_action;           // may be negative (reduce), 
                                     // postive (shift), or 0 (accept)
-            size_t d_errorState;    // used with Error states
         };
     };
 

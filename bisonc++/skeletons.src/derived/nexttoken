@@ -1,4 +1,4 @@
-void \@::nextToken()
+void \@::nextToken__()
 {
     // If d_token__ is _UNDETERMINED_ then if d_nextToken__ is _UNDETERMINED_ 
     // another token is obtained from lex(). Then d_nextToken__ is assigned to

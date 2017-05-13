@@ -71,15 +71,17 @@ $insert debugdecl
         void ABORT() const;
         void ACCEPT() const;
         void ERROR() const;
-        void clearin();
-        bool actionCases() const;
         bool debug() const;
+
+        void clearin__();
         int  lookup__() const;
         void pop__(size_t count = 1);
         void push__(size_t nextState);
         void popToken__();
         void pushToken__(int token);
-        void reduce__(PI__ const &productionInfo);
+        void redoToken__();
+        void reduce__(int rule);
+        void shift__(int state);
         void errorVerbose__();
         size_t top__() const;
         STYPE__ &vs__(size_t idx);      // value stack element idx 
