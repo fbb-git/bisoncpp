@@ -7,17 +7,12 @@ try
     //
     // Then, in an eternal loop:
     //
-    //  1. If a state does not have REQ_TOKEN no token is assigned to
-    //     d_token__. If the state has REQ_TOKEN, nextToken() is called to
-    //      determine d_nextToken__ and d_token__ is set to
-    //     d_nextToken__. nextToken() will not call lex() unless d_nextToken__
-    //     is  _UNDETERMINED_. 
+    //  1. If a state is a REQ_TOKEN type, then the next token is obtained
+    //     from nextToken().  This may very well be the currently available
+    //     token. When retrieving a terminal token d_terminal is set to true.
     //
-    //  2. lookup() is called: 
-    //     d_token__ is stored in the final element's d_token field of the
-    //     state's SR_ array. 
-    //
-    //  3. The current token is looked up in the state's SR_ array
+    //  2. lookup() is called, d_token__ is looked up in the current state's
+    //     SR_ array.
     //
     //  4. Depending on the result of the lookup() function the next state is
     //     shifted on the parser's stack, a reduction by some rule is applied,
@@ -26,8 +21,7 @@ try
     //     reduction is executed.
     //
     //  5. An error occurs if d_token__ is not found, and the state has no
-    //     default reduction. Error handling was described at the top of this
-    //     file.
+    //     default reduction.
 
 $insert 4 debug "parse(): Parsing starts"
     clearin();                              // initialize, push(0)
@@ -37,37 +31,6 @@ $insert 4 debug "parse(): Parsing starts"
 $insert prompt
         nextCycle__();
     }
-
-
-//        try
-//        {
-//            if (s_state[d_state__]->d_type & REQ_TOKEN)
-//                nextToken();                // obtain next token
-//
-//
-//            int action = lookup(false);     // lookup d_token__ in d_state__
-//
-//            if (action > 0)                 // SHIFT: push a new state
-//            {
-//                push__(action);
-//                popToken__();               // token processed
-//            }
-//            else if (action < 0)            // REDUCE: execute and pop.
-//            {
-//                executeAction(-action);
-//                                            // next token is the rule's LHS
-//                reduce__(s_productionInfo[-action]); 
-//            }
-//            else 
-//                ACCEPT();
-//        }
-//        catch (ErrorRecovery__)
-//        {
-//            errorRecovery();
-//        }
-//    }
-
-
 }
 catch (Return__ retValue)
 {
