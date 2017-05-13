@@ -119,14 +119,20 @@ $insert polymorphicCode
 \@Base::\@Base()
 :
 $insert 4 baseclasscode
-    d_acceptedTokens__ = d_requiredTokens__;
-    d_token__ = _UNDETERMINED_;
-    d_nextToken__ = _UNDETERMINED_;
 }
 // base/clearin
 void \@Base::clearin()
 {
-    d_token__ = d_nextToken__ = _UNDETERMINED_;
+    d_nErrors__ = 0;
+    d_stackIdx__ = -1;
+    d_stateStack__.clear();
+    d_nextToken__ = _UNDETERMINED_;
+    d_token__ = _UNDETERMINED_;
+    d_recovery__ = false;
+    d_acceptedTokens__ = d_requiredTokens__;
+    d_val__ = STYPE__{};
+
+    push__(0);
 }
 // base/debugfunctions
 $insert debugfunctions
@@ -217,7 +223,6 @@ inline size_t \@Base::top__() const
 }
 // derived/errorrecovery
 void \@::errorRecovery()
-try
 {
     // When an error has occurred, pop elements off the stack until the top
     // state has an error-item. If none is found, the default recovery
@@ -263,59 +268,57 @@ $insert 4 debug "errorRecovery(): state " << top__() << " is an ERROR state"
                                                 // token (we're now in an
                                                 // ERROR state).
 
-    while (true)
-    {
-        try
-        {
-            if (s_state[d_state__]->d_type & REQ_TOKEN)
-                nextToken();                    // obtain next token
-            
-            int action = lookup(true);
+    d_recovery__ = true;
 
-            if (action > 0)                 // push a new state
-            {
-                push__(action);
-                popToken__();
-$insert 16 debug "errorRecovery() SHIFT state " << action +
-$insert 16 debug ", continue with " << symbol__(d_token__)
-
-                if (d_terminalToken__)
-                {
-$insert 20 debug "errorRecovery() COMPLETED: next state " +
-$insert 20 debug action << ", no token yet"
-
-                    d_acceptedTokens__ = 0;
-                    return;
-                }
-            }
-            else if (action < 0)
-            {
-                // no actions executed on recovery but save an already 
-                // available token:
-                if (d_token__ != _UNDETERMINED_)
-                    pushToken__(d_token__);
- 
-                                            // next token is the rule's LHS
-                reduce__(s_productionInfo[-action]); 
-$insert 16 debug "errorRecovery() REDUCE by rule " << -action +
-$insert 16 debug ", token = " << symbol__(d_token__)
-            }
-            else
-                ABORT();                    // abort when accepting during
-                                            // error recovery
-        }
-        catch (...)
-        {
-            if (d_token__ == _EOF_)
-                ABORT();                    // saw inappropriate _EOF_
-                      
-            popToken__();                   // failing token now skipped
-        }
-    }
-}
-catch (ErrorRecovery__)       // This is: DEFAULT_RECOVERY_MODE
-{
-    ABORT();
+//     while (true)
+//     {
+//         try
+//         {
+//             if (s_state[d_state__]->d_type & REQ_TOKEN)
+//                 nextToken();                    // obtain next token
+//             
+//             int action = lookup(true);
+// 
+//             if (action > 0)                 // push a new state
+//             {
+//                 push__(action);
+//                 popToken__();
+// $insert 16 debug "errorRecovery() SHIFT state " << action +
+// $insert 16 debug ", continue with " << symbol__(d_token__)
+// 
+//                 if (d_terminalToken__)
+//                 {
+// $insert 20 debug "errorRecovery() COMPLETED: next state " +
+// $insert 20 debug action << ", no token yet"
+// 
+//                     d_acceptedTokens__ = 0;
+//                     return;
+//                 }
+//             }
+//             else if (action < 0)
+//             {
+//                 // no actions executed on recovery but save an already 
+//                 // available token:
+//                 if (d_token__ != _UNDETERMINED_)
+//                     pushToken__(d_token__);
+//  
+//                                             // next token is the rule's LHS
+//                 reduce__(s_productionInfo[-action]); 
+// $insert 16 debug "errorRecovery() REDUCE by rule " << -action +
+// $insert 16 debug ", token = " << symbol__(d_token__)
+//             }
+//             else
+//                 ABORT();                    // abort when accepting during
+//                                             // error recovery
+//         }
+//         catch (...)
+//         {
+//             if (d_token__ == _EOF_)
+//                 ABORT();                    // saw inappropriate _EOF_
+//                       
+//             popToken__();                   // failing token now skipped
+//         }
+//     }
 }
 // derived/executeaction
 void \@::executeAction(int production)
@@ -371,6 +374,62 @@ $insert 0 debuglookup
 
     return action;
 }
+// derived/nextcycle
+void \@::nextCycle__()
+try
+{
+    if (s_state[d_state__]->d_type & REQ_TOKEN)
+        nextToken();                // obtain next token
+
+
+    int action = lookup(false);     // lookup d_token__ in d_state__
+
+    if (action > 0)                 // SHIFT: push a new state
+    {
+        push__(action);
+        popToken__();               // token processed
+
+        if (d_recovery__ and d_terminalToken__)
+        {
+$insert 12 debug "errorRecovery() COMPLETED: next state " << action
+            d_recovery__ = false;
+            d_acceptedTokens__ = 0;
+        }
+        return;
+    }
+
+    if (action < 0)            // REDUCE: execute and pop.
+    {
+        if (not d_recovery__)
+            executeAction(-action);
+        else 
+        {
+            if (d_token__ != _UNDETERMINED_)
+                pushToken__(d_token__);
+$insert 12 debug "errorRecovery() REDUCE by rule " << -action << ", token = " << symbol__(d_token__)
+        }
+                                    // next token is the rule's LHS
+        reduce__(s_productionInfo[-action]); 
+        return;
+    }
+
+    if (d_recovery__)
+        ABORT();
+    else 
+        ACCEPT();
+}
+catch (ErrorRecovery__)
+{
+    if (not d_recovery__)
+        errorRecovery();
+    else
+    {
+        if (d_token__ == _EOF_)
+            ABORT();
+        popToken__();               // skip the failing token
+    }
+}
+
 // derived/nexttoken
 void \@::nextToken()
 {
@@ -436,45 +495,51 @@ try
     //     file.
 
 $insert 4 debug "parse(): Parsing starts"
-    push__(0);                              // initial state
-    clearin();                              // clear the tokens.
+    clearin();                              // initialize, push(0)
 
     while (true)
     {
 $insert prompt
-        try
-        {
-            if (s_state[d_state__]->d_type & REQ_TOKEN)
-                nextToken();                // obtain next token
-
-
-            int action = lookup(false);     // lookup d_token__ in d_state__
-
-            if (action > 0)                 // SHIFT: push a new state
-            {
-                push__(action);
-                popToken__();               // token processed
-            }
-            else if (action < 0)            // REDUCE: execute and pop.
-            {
-                executeAction(-action);
-                                            // next token is the rule's LHS
-                reduce__(s_productionInfo[-action]); 
-            }
-            else 
-                ACCEPT();
-        }
-        catch (ErrorRecovery__)
-        {
-            errorRecovery();
-        }
+        nextCycle__();
     }
+
+
+//        try
+//        {
+//            if (s_state[d_state__]->d_type & REQ_TOKEN)
+//                nextToken();                // obtain next token
+//
+//
+//            int action = lookup(false);     // lookup d_token__ in d_state__
+//
+//            if (action > 0)                 // SHIFT: push a new state
+//            {
+//                push__(action);
+//                popToken__();               // token processed
+//            }
+//            else if (action < 0)            // REDUCE: execute and pop.
+//            {
+//                executeAction(-action);
+//                                            // next token is the rule's LHS
+//                reduce__(s_productionInfo[-action]); 
+//            }
+//            else 
+//                ACCEPT();
+//        }
+//        catch (ErrorRecovery__)
+//        {
+//            errorRecovery();
+//        }
+//    }
+
+
 }
 catch (Return__ retValue)
 {
 $insert 4 debug "parse(): returns " << retValue
     return retValue;
 }
+
 // derived/tail
 
 $insert namespace-close

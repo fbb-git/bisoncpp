@@ -30,42 +30,48 @@ try
     //     file.
 
 $insert 4 debug "parse(): Parsing starts"
-    push__(0);                              // initial state
-    clearin();                              // clear the tokens.
+    clearin();                              // initialize, push(0)
 
     while (true)
     {
 $insert prompt
-        try
-        {
-            if (s_state[d_state__]->d_type & REQ_TOKEN)
-                nextToken();                // obtain next token
-
-
-            int action = lookup(false);     // lookup d_token__ in d_state__
-
-            if (action > 0)                 // SHIFT: push a new state
-            {
-                push__(action);
-                popToken__();               // token processed
-            }
-            else if (action < 0)            // REDUCE: execute and pop.
-            {
-                executeAction(-action);
-                                            // next token is the rule's LHS
-                reduce__(s_productionInfo[-action]); 
-            }
-            else 
-                ACCEPT();
-        }
-        catch (ErrorRecovery__)
-        {
-            errorRecovery();
-        }
+        nextCycle__();
     }
+
+
+//        try
+//        {
+//            if (s_state[d_state__]->d_type & REQ_TOKEN)
+//                nextToken();                // obtain next token
+//
+//
+//            int action = lookup(false);     // lookup d_token__ in d_state__
+//
+//            if (action > 0)                 // SHIFT: push a new state
+//            {
+//                push__(action);
+//                popToken__();               // token processed
+//            }
+//            else if (action < 0)            // REDUCE: execute and pop.
+//            {
+//                executeAction(-action);
+//                                            // next token is the rule's LHS
+//                reduce__(s_productionInfo[-action]); 
+//            }
+//            else 
+//                ACCEPT();
+//        }
+//        catch (ErrorRecovery__)
+//        {
+//            errorRecovery();
+//        }
+//    }
+
+
 }
 catch (Return__ retValue)
 {
 $insert 4 debug "parse(): returns " << retValue
     return retValue;
 }
+

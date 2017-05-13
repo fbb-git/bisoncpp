@@ -1,4 +1,13 @@
 void \@Base::clearin()
 {
-    d_token__ = d_nextToken__ = _UNDETERMINED_;
+    d_nErrors__ = 0;
+    d_stackIdx__ = -1;
+    d_stateStack__.clear();
+    d_nextToken__ = _UNDETERMINED_;
+    d_token__ = _UNDETERMINED_;
+    d_recovery__ = false;
+    d_acceptedTokens__ = d_requiredTokens__;
+    d_val__ = STYPE__{};
+
+    push__(0);
 }

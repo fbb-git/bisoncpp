@@ -1,7 +1,4 @@
 \@Base::\@Base()
 :
 $insert 4 baseclasscode
-    d_acceptedTokens__ = d_requiredTokens__;
-    d_token__ = _UNDETERMINED_;
-    d_nextToken__ = _UNDETERMINED_;
 }

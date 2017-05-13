@@ -340,6 +340,7 @@ class Parser: public ParserBase
         void executeAction(int ruleNr);
         void errorRecovery();
         int lookup(bool recovery);
+        void nextCycle__();
         void nextToken();
         void print__();
         void exceptionHandler__(std::exception const &exc);
