@@ -2,8 +2,8 @@ int \@::parse()
 try 
 {
     // The parsing algorithm:
-    // Initially, state 0 is pushed on the stack, and d_token__ as well as
-    // d_nextToken__ are initialized to _UNDETERMINED_. 
+    // Initially, state 0 is pushed on the stack, and all relevant variables
+    // are initialized by Base::clearin__.
     //
     // Then, in an eternal loop:
     //

@@ -7,7 +7,7 @@ void \@::nextToken()
     if (d_token__ != _UNDETERMINED_)        // no need for a token: got one
         return;                             // already
 
-    if (d_nextToken__ != _UNDETERMINED_)
+    if (d_next__.first != _UNDETERMINED_)
     {
         popToken__();                       // consume pending token
 $insert 8 debug "nextToken(): popped " << symbol__(d_token__) << stype__(", semantic = ", d_val__)

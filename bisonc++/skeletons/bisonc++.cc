@@ -126,7 +126,10 @@ void \@Base::clearin()
     d_nErrors__ = 0;
     d_stackIdx__ = -1;
     d_stateStack__.clear();
-    d_nextToken__ = _UNDETERMINED_;
+
+//FBB    d_nextToken__ = _UNDETERMINED_;
+    d_next__ = TokenPair{ _UNDETERMINED_, STYPE__{} };
+
     d_token__ = _UNDETERMINED_;
     d_recovery__ = false;
     d_acceptedTokens__ = d_requiredTokens__;
@@ -169,12 +172,19 @@ $insert 4 debug stype__("semantic: ", vs__(0))
 // base/poptoken
 void \@Base::popToken__()
 {
-    d_token__ = d_nextToken__;
+    d_token__ = d_next__.first;
+    d_val__ = std::move(d_next__.second);
 
-    d_val__ = std::move(d_nextVal__);
-    d_nextVal__ = STYPE__();
+    d_next__.first = _UNDETERMINED_;
 
-    d_nextToken__ = _UNDETERMINED_;
+//FBB
+
+//    d_token__ = d_nextToken__;
+//    d_val__ = std::move(d_nextVal__);
+
+//    d_nextVal__ = STYPE__();
+
+//    d_nextToken__ = _UNDETERMINED_;
 }
 // base/push
 void \@Base::push__(size_t state)
@@ -199,8 +209,9 @@ $insert 4 debug  "push(state " << state << stype__(", semantic TOS = ", d_val__,
 // base/pushtoken
 void \@Base::pushToken__(int token)
 {
-    d_nextToken__ = d_token__;
-    d_nextVal__ = std::move(d_val__);
+    d_next__ = TokenPair{ d_token__, std::move(d_val__) };
+//FBB    d_nextToken__ = d_token__;
+//FBB    d_nextVal__ = std::move(d_val__);
     d_token__ = token;
 }
 // base/reduce
@@ -250,12 +261,9 @@ $insert 8 debug "errorRecovery(): pop state " << top__()
     }
 $insert 4 debug "errorRecovery(): state " << top__() << " is an ERROR state"
 
-    // In the error state, lookup a token allowing us to proceed.
-    // Continuation may be possible following multiple reductions,
-    // but eventuall a shift will be used, requiring the retrieval of
-    // a terminal token. If a retrieved token doesn't match, the catch below 
-    // will ensure the next token is requested in the while(true) block
-    // implemented below:
+    // In the error state, looking up a token allows us to proceed.
+    // Continuation may be require multiple reductions, but eventually a
+    // terminal-token shift is used. See nextCycle__ for details.
 
     int lastToken = d_token__;                  // give the unexpected token a
                                                 // chance to be processed
@@ -269,56 +277,6 @@ $insert 4 debug "errorRecovery(): state " << top__() << " is an ERROR state"
                                                 // ERROR state).
 
     d_recovery__ = true;
-
-//     while (true)
-//     {
-//         try
-//         {
-//             if (s_state[d_state__]->d_type & REQ_TOKEN)
-//                 nextToken();                    // obtain next token
-//             
-//             int action = lookup(true);
-// 
-//             if (action > 0)                 // push a new state
-//             {
-//                 push__(action);
-//                 popToken__();
-// $insert 16 debug "errorRecovery() SHIFT state " << action +
-// $insert 16 debug ", continue with " << symbol__(d_token__)
-// 
-//                 if (d_terminalToken__)
-//                 {
-// $insert 20 debug "errorRecovery() COMPLETED: next state " +
-// $insert 20 debug action << ", no token yet"
-// 
-//                     d_acceptedTokens__ = 0;
-//                     return;
-//                 }
-//             }
-//             else if (action < 0)
-//             {
-//                 // no actions executed on recovery but save an already 
-//                 // available token:
-//                 if (d_token__ != _UNDETERMINED_)
-//                     pushToken__(d_token__);
-//  
-//                                             // next token is the rule's LHS
-//                 reduce__(s_productionInfo[-action]); 
-// $insert 16 debug "errorRecovery() REDUCE by rule " << -action +
-// $insert 16 debug ", token = " << symbol__(d_token__)
-//             }
-//             else
-//                 ABORT();                    // abort when accepting during
-//                                             // error recovery
-//         }
-//         catch (...)
-//         {
-//             if (d_token__ == _EOF_)
-//                 ABORT();                    // saw inappropriate _EOF_
-//                       
-//             popToken__();                   // failing token now skipped
-//         }
-//     }
 }
 // derived/executeaction
 void \@::executeAction(int production)
@@ -440,7 +398,7 @@ void \@::nextToken()
     if (d_token__ != _UNDETERMINED_)        // no need for a token: got one
         return;                             // already
 
-    if (d_nextToken__ != _UNDETERMINED_)
+    if (d_next__.first != _UNDETERMINED_)
     {
         popToken__();                       // consume pending token
 $insert 8 debug "nextToken(): popped " << symbol__(d_token__) << stype__(", semantic = ", d_val__)
@@ -467,22 +425,17 @@ int \@::parse()
 try 
 {
     // The parsing algorithm:
-    // Initially, state 0 is pushed on the stack, and d_token__ as well as
-    // d_nextToken__ are initialized to _UNDETERMINED_. 
+    // Initially, state 0 is pushed on the stack, and all relevant variables
+    // are initialized by Base::clearin__.
     //
     // Then, in an eternal loop:
     //
-    //  1. If a state does not have REQ_TOKEN no token is assigned to
-    //     d_token__. If the state has REQ_TOKEN, nextToken() is called to
-    //      determine d_nextToken__ and d_token__ is set to
-    //     d_nextToken__. nextToken() will not call lex() unless d_nextToken__
-    //     is  _UNDETERMINED_. 
+    //  1. If a state is a REQ_TOKEN type, then the next token is obtained
+    //     from nextToken().  This may very well be the currently available
+    //     token. When retrieving a terminal token d_terminal is set to true.
     //
-    //  2. lookup() is called: 
-    //     d_token__ is stored in the final element's d_token field of the
-    //     state's SR_ array. 
-    //
-    //  3. The current token is looked up in the state's SR_ array
+    //  2. lookup() is called, d_token__ is looked up in the current state's
+    //     SR_ array.
     //
     //  4. Depending on the result of the lookup() function the next state is
     //     shifted on the parser's stack, a reduction by some rule is applied,
@@ -491,8 +444,7 @@ try
     //     reduction is executed.
     //
     //  5. An error occurs if d_token__ is not found, and the state has no
-    //     default reduction. Error handling was described at the top of this
-    //     file.
+    //     default reduction.
 
 $insert 4 debug "parse(): Parsing starts"
     clearin();                              // initialize, push(0)
@@ -502,37 +454,6 @@ $insert 4 debug "parse(): Parsing starts"
 $insert prompt
         nextCycle__();
     }
-
-
-//        try
-//        {
-//            if (s_state[d_state__]->d_type & REQ_TOKEN)
-//                nextToken();                // obtain next token
-//
-//
-//            int action = lookup(false);     // lookup d_token__ in d_state__
-//
-//            if (action > 0)                 // SHIFT: push a new state
-//            {
-//                push__(action);
-//                popToken__();               // token processed
-//            }
-//            else if (action < 0)            // REDUCE: execute and pop.
-//            {
-//                executeAction(-action);
-//                                            // next token is the rule's LHS
-//                reduce__(s_productionInfo[-action]); 
-//            }
-//            else 
-//                ACCEPT();
-//        }
-//        catch (ErrorRecovery__)
-//        {
-//            errorRecovery();
-//        }
-//    }
-
-
 }
 catch (Return__ retValue)
 {

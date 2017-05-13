@@ -3,7 +3,10 @@ void \@Base::clearin()
     d_nErrors__ = 0;
     d_stackIdx__ = -1;
     d_stateStack__.clear();
-    d_nextToken__ = _UNDETERMINED_;
+
+//FBB    d_nextToken__ = _UNDETERMINED_;
+    d_next__ = TokenPair{ _UNDETERMINED_, STYPE__{} };
+
     d_token__ = _UNDETERMINED_;
     d_recovery__ = false;
     d_acceptedTokens__ = d_requiredTokens__;

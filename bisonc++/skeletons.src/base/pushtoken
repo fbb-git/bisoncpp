@@ -1,6 +1,7 @@
 void \@Base::pushToken__(int token)
 {
-    d_nextToken__ = d_token__;
-    d_nextVal__ = std::move(d_val__);
+    d_next__ = TokenPair{ d_token__, std::move(d_val__) };
+//FBB    d_nextToken__ = d_token__;
+//FBB    d_nextVal__ = std::move(d_val__);
     d_token__ = token;
 }

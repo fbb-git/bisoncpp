@@ -23,8 +23,10 @@ $insert LTYPE
 $insert STYPE
 
     private:
-                        // state   semval
+                        // state  semval
         typedef std::pair<size_t, STYPE__> StatePair;
+                       // token   semval
+        typedef std::pair<int,    STYPE__> TokenPair;
 
         int d_stackIdx__ = -1;
         std::vector<StatePair>   d_stateStack__;
@@ -42,19 +44,22 @@ $insert LTYPEstack
             DEFAULT_RECOVERY_MODE__,
             UNEXPECTED_TOKEN__,
         };
-        bool        d_actionCases__ = false;
+
+        bool        d_actionCases__ = false;    // set by options/directives
         bool        d_debug__ = true;
-        size_t      d_nErrors__;
         size_t      d_requiredTokens__;
+
+        size_t      d_nErrors__;                // initialized by clearin()
         size_t      d_acceptedTokens__;
         int         d_token__;
-        int         d_nextToken__;
         size_t      d_state__;
 
         StatePair *d_vsp__;           // points to the topmost value stack
 
         STYPE__     d_val__;
-        STYPE__     d_nextVal__;
+
+        TokenPair   d_next__;
+
         bool        d_terminalToken__;
         bool        d_recovery__;
 
