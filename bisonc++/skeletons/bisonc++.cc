@@ -126,11 +126,8 @@ void \@Base::clearin()
     d_nErrors__ = 0;
     d_stackIdx__ = -1;
     d_stateStack__.clear();
-
-//FBB    d_nextToken__ = _UNDETERMINED_;
-    d_next__ = TokenPair{ _UNDETERMINED_, STYPE__{} };
-
     d_token__ = _UNDETERMINED_;
+    d_next__ = TokenPair{ _UNDETERMINED_, STYPE__{} };
     d_recovery__ = false;
     d_acceptedTokens__ = d_requiredTokens__;
     d_val__ = STYPE__{};
@@ -150,6 +147,43 @@ void \@Base::setDebug(DebugMode__ mode)
 {
     d_actionCases__ = mode & ACTIONCASES;
     d_debug__ =       mode & ON;
+}
+// base/lookup
+int \@Base::lookup__() const
+{
+    // if the final transition is negative, then we should reduce by the rule
+    // given by its positive value.
+
+    SR__ const *sr = s_state[d_state__];
+    SR__ const *last = sr + sr->d_lastIdx;
+
+    for ( ; ++sr != last; )           // visit all but the last SR entries
+    {
+        if (sr->d_token == d_token__)
+            return sr->d_action;
+    }
+
+    if (sr == last)   // reached the last element
+    {
+        if (sr->d_action < 0)   // default reduction
+        {
+$insert 12 debug "lookup(" << d_state__ << ", " << symbol__(d_token__) << "): default reduction by rule " << -sr->d_action
+            return sr->d_action;                
+        }
+$insert 8 debug "lookup(" << d_state__ << ", " << symbol__(d_token__) << "): Not found. " << (d_recovery__ ? "Continue" : "Start") << " error recovery." 
+
+        // No default reduction, so token not found, so error.
+        throw UNEXPECTED_TOKEN__;
+    }
+
+    // not at the last element: inspect the nature of the action
+    // (< 0: reduce, 0: ACCEPT, > 0: shift)
+
+    int action = sr->d_action;
+
+$insert 0 debuglookup
+
+    return action;
 }
 // base/pop
 void \@Base::pop__(size_t count)
@@ -176,15 +210,6 @@ void \@Base::popToken__()
     d_val__ = std::move(d_next__.second);
 
     d_next__.first = _UNDETERMINED_;
-
-//FBB
-
-//    d_token__ = d_nextToken__;
-//    d_val__ = std::move(d_nextVal__);
-
-//    d_nextVal__ = STYPE__();
-
-//    d_nextToken__ = _UNDETERMINED_;
 }
 // base/push
 void \@Base::push__(size_t state)
@@ -210,14 +235,10 @@ $insert 4 debug  "push(state " << state << stype__(", semantic TOS = ", d_val__,
 void \@Base::pushToken__(int token)
 {
     d_next__ = TokenPair{ d_token__, std::move(d_val__) };
-//FBB    d_nextToken__ = d_token__;
-//FBB    d_nextVal__ = std::move(d_val__);
     d_token__ = token;
 }
 // base/reduce
-bool g_terminalToken;
-
-inline void \@Base::reduce__(PI__ const &pi)
+void \@Base::reduce__(PI__ const &pi)
 {
     d_token__ = pi.d_nonTerm;
     pop__(pi.d_size);
@@ -270,7 +291,7 @@ $insert 4 debug "errorRecovery(): state " << top__() << " is an ERROR state"
                                                 // again.
 
     pushToken__(_error_);                       // specify _error_ as next token
-    push__(lookup(true));                       // push the error state
+    push__(lookup__());                         // push the error state
 
     d_token__ = lastToken;                      // reactivate the unexpected
                                                 // token (we're now in an
@@ -299,39 +320,6 @@ catch (std::exception const &exc)
 {
     exceptionHandler__(exc);
 }
-// derived/lookup
-int \@::lookup(bool recovery)
-{
-    // if the final transition is negative, then we should reduce by the rule
-    // given by its positive value. Note that the `recovery' parameter is only
-    // used with the --debug option
-
-$insert 0 threading
-
-    if (elementPtr == lastElementPtr)   // reached the last element
-    {
-        if (elementPtr->d_action < 0)   // default reduction
-        {
-$insert 12 debug "lookup(" << d_state__ << ", " << symbol__(d_token__) +
-$insert 12 debug "): default reduction by rule " << -elementPtr->d_action
-            return elementPtr->d_action;                
-        }
-$insert 8 debug "lookup(" << d_state__ << ", " << symbol__(d_token__) << "): Not " +
-$insert 8 debug "found. " << (recovery ? "Continue" : "Start") << " error recovery." 
-
-        // No default reduction, so token not found, so error.
-        throw UNEXPECTED_TOKEN__;
-    }
-
-    // not at the last element: inspect the nature of the action
-    // (< 0: reduce, 0: ACCEPT, > 0: shift)
-
-    int action = elementPtr->d_action;
-
-$insert 0 debuglookup
-
-    return action;
-}
 // derived/nextcycle
 void \@::nextCycle__()
 try
@@ -340,7 +328,7 @@ try
         nextToken();                // obtain next token
 
 
-    int action = lookup(false);     // lookup d_token__ in d_state__
+    int action = lookup__();        // lookup d_token__ in d_state__
 
     if (action > 0)                 // SHIFT: push a new state
     {

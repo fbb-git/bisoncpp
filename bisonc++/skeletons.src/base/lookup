@@ -1,0 +1,36 @@
+int \@Base::lookup__() const
+{
+    // if the final transition is negative, then we should reduce by the rule
+    // given by its positive value.
+
+    SR__ const *sr = s_state[d_state__];
+    SR__ const *last = sr + sr->d_lastIdx;
+
+    for ( ; ++sr != last; )           // visit all but the last SR entries
+    {
+        if (sr->d_token == d_token__)
+            return sr->d_action;
+    }
+
+    if (sr == last)   // reached the last element
+    {
+        if (sr->d_action < 0)   // default reduction
+        {
+$insert 12 debug "lookup(" << d_state__ << ", " << symbol__(d_token__) << "): default reduction by rule " << -sr->d_action
+            return sr->d_action;                
+        }
+$insert 8 debug "lookup(" << d_state__ << ", " << symbol__(d_token__) << "): Not found. " << (d_recovery__ ? "Continue" : "Start") << " error recovery." 
+
+        // No default reduction, so token not found, so error.
+        throw UNEXPECTED_TOKEN__;
+    }
+
+    // not at the last element: inspect the nature of the action
+    // (< 0: reduce, 0: ACCEPT, > 0: shift)
+
+    int action = sr->d_action;
+
+$insert 0 debuglookup
+
+    return action;
+}

@@ -124,7 +124,6 @@ class Generator
         void scannerObject(std::ostream &out) const;
         void staticData(std::ostream &out) const;
         void stype(std::ostream &out) const;
-        void threading(std::ostream &out) const;
         void tokens(std::ostream &out) const;
         void warnTagMismatches(std::ostream &out) const;
 

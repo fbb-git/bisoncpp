@@ -1,6 +1,4 @@
-bool g_terminalToken;
-
-inline void \@Base::reduce__(PI__ const &pi)
+void \@Base::reduce__(PI__ const &pi)
 {
     d_token__ = pi.d_nonTerm;
     pop__(pi.d_size);

@@ -35,7 +35,7 @@ $insert 4 debug "errorRecovery(): state " << top__() << " is an ERROR state"
                                                 // again.
 
     pushToken__(_error_);                       // specify _error_ as next token
-    push__(lookup(true));                       // push the error state
+    push__(lookup__());                         // push the error state
 
     d_token__ = lastToken;                      // reactivate the unexpected
                                                 // token (we're now in an

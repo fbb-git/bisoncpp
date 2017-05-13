@@ -29,7 +29,7 @@ Generator::Map Generator::s_insert =
     {"baseclasscode",               &Generator::baseClassCode},
     {"actioncases",                 &Generator::actionCases},
     {"staticdata",                  &Generator::staticData},
-    {"threading",                   &Generator::threading},
+//    {"threading",                   &Generator::threading},
     {"tokens",                      &Generator::tokens},
     {"warnTagMismatches",           &Generator::warnTagMismatches},
     {"LTYPE",                       &Generator::ltype},

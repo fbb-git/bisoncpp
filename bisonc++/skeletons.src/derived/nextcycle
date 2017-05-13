@@ -5,7 +5,7 @@ try
         nextToken();                // obtain next token
 
 
-    int action = lookup(false);     // lookup d_token__ in d_state__
+    int action = lookup__();        // lookup d_token__ in d_state__
 
     if (action > 0)                 // SHIFT: push a new state
     {

@@ -5,6 +5,7 @@ for x in base/comment \
          base/base1 \
     base/clearin \
     base/debugfunctions \
+    base/lookup \
     base/pop \
     base/poptoken \
     base/push \
@@ -19,7 +20,6 @@ done
 for x in \
     derived/errorrecovery \
     derived/executeaction \
-    derived/lookup \
     derived/nextcycle \
     derived/nexttoken \
     derived/print \

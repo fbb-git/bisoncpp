@@ -85,6 +85,7 @@ $insert debugdecl
         void clearin();
         bool actionCases() const;
         bool debug() const;
+        int  lookup__() const;
         void pop__(size_t count = 1);
         void push__(size_t nextState);
         void popToken__();

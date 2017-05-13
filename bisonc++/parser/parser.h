@@ -339,7 +339,9 @@ class Parser: public ParserBase
     // support functions for parse():
         void executeAction(int ruleNr);
         void errorRecovery();
-        int lookup(bool recovery);
+
+//FBB        int lookup(bool recovery);
+
         void nextCycle__();
         void nextToken();
         void print__();
