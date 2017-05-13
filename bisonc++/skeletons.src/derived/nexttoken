@@ -19,6 +19,7 @@ $insert 8 debug "nextToken(): popped " << symbol__(d_token__) << stype__(", sema
         d_token__ = lex();
         if (d_token__ <= 0)
             d_token__ = _EOF_;
+        d_terminalToken__ = true;
     }
     print();
 $insert 4 debug "nextToken(): using " << symbol__(d_token__) << stype__(", semantic = ", d_val__)

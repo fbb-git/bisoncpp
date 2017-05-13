@@ -1,7 +1,11 @@
+bool g_terminalToken;
+
 inline void \@Base::reduce__(PI__ const &pi)
 {
     d_token__ = pi.d_nonTerm;
     pop__(pi.d_size);
+
+    d_terminalToken__ = false;
 
 $insert 4 debug "reduce(): by rule " << (&pi - s_productionInfo) +
 $insert 4 debug " to N-terminal " << symbol__(d_token__) << stype__(", semantic = ", d_val__)

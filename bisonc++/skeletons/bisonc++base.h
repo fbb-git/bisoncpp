@@ -66,6 +66,9 @@ $insert LTYPEstack
 
         STYPE__     d_val__;
         STYPE__     d_nextVal__;
+        bool        d_terminalToken__;
+        bool        d_recovery__;
+
 $insert LTYPEdata
 
         \@Base();

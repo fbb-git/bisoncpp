@@ -198,10 +198,14 @@ void \@Base::pushToken__(int token)
     d_token__ = token;
 }
 // base/reduce
+bool g_terminalToken;
+
 inline void \@Base::reduce__(PI__ const &pi)
 {
     d_token__ = pi.d_nonTerm;
     pop__(pi.d_size);
+
+    d_terminalToken__ = false;
 
 $insert 4 debug "reduce(): by rule " << (&pi - s_productionInfo) +
 $insert 4 debug " to N-terminal " << symbol__(d_token__) << stype__(", semantic = ", d_val__)
@@ -259,17 +263,12 @@ $insert 4 debug "errorRecovery(): state " << top__() << " is an ERROR state"
                                                 // token (we're now in an
                                                 // ERROR state).
 
-    bool gotToken = true;                       // the next token is a terminal
-
     while (true)
     {
         try
         {
             if (s_state[d_state__]->d_type & REQ_TOKEN)
-            {
-                gotToken = d_token__ == _UNDETERMINED_;
                 nextToken();                    // obtain next token
-            }
             
             int action = lookup(true);
 
@@ -280,7 +279,7 @@ $insert 4 debug "errorRecovery(): state " << top__() << " is an ERROR state"
 $insert 16 debug "errorRecovery() SHIFT state " << action +
 $insert 16 debug ", continue with " << symbol__(d_token__)
 
-                if (gotToken)
+                if (d_terminalToken__)
                 {
 $insert 20 debug "errorRecovery() COMPLETED: next state " +
 $insert 20 debug action << ", no token yet"
@@ -394,6 +393,7 @@ $insert 8 debug "nextToken(): popped " << symbol__(d_token__) << stype__(", sema
         d_token__ = lex();
         if (d_token__ <= 0)
             d_token__ = _EOF_;
+        d_terminalToken__ = true;
     }
     print();
 $insert 4 debug "nextToken(): using " << symbol__(d_token__) << stype__(", semantic = ", d_val__)
