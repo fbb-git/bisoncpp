@@ -84,10 +84,7 @@ $insert debugdecl
         void shift__(int state);
         void errorVerbose__();
         size_t top__() const;
-        STYPE__ &vs__(size_t idx);      // value stack element idx 
-            // counts back fm the current element in the production rule.
-            // E.g.:    rule: item1 item2 item3 {}
-            //                  3     2     1    0
+        STYPE__ &vs__(int idx);             // value stack element idx 
 
     public:
         void setDebug(bool mode);

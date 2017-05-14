@@ -128,6 +128,7 @@ void \@Base::clearin__()
     d_nErrors__ = 0;
     d_stackIdx = -1;
     d_stateStack.clear();
+$insert 4 LTYPEclear
     d_token__ = _UNDETERMINED_;
     d_next__ = TokenPair{ _UNDETERMINED_, STYPE__{} };
     d_recovery__ = false;
@@ -227,9 +228,8 @@ void \@Base::push__(size_t state)
 $insert 8 LTYPEresize
     }
 
-$insert 4 LTYPEpush
-
     ++d_stackIdx;
+$insert 4 LTYPEpush
     d_stateStack[d_stackIdx] = 
                     StatePair{ d_state__ = state, std::move(d_val__) };
 

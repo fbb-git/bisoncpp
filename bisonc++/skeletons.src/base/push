@@ -8,9 +8,8 @@ void \@Base::push__(size_t state)
 $insert 8 LTYPEresize
     }
 
-$insert 4 LTYPEpush
-
     ++d_stackIdx;
+$insert 4 LTYPEpush
     d_stateStack[d_stackIdx] = 
                     StatePair{ d_state__ = state, std::move(d_val__) };
 

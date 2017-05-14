@@ -104,6 +104,7 @@ class Generator
         void lex(std::ostream &out) const;
         void ltype(std::ostream &out) const;
         void ltypeData(std::ostream &out) const;
+        void ltypeClear(std::ostream &out) const;
         void ltypePop(std::ostream &out) const;
         void ltypePush(std::ostream &out) const;
         void ltypeResize(std::ostream &out) const;

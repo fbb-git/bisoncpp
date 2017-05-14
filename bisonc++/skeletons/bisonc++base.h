@@ -96,10 +96,10 @@ $insert debugdecl
         void shift__(int state);
         void errorVerbose__();
         size_t top__() const;
-        STYPE__ &vs__(size_t idx);      // value stack element idx 
+        STYPE__ &vs__(int idx);             // value stack element idx 
             // counts back fm the current element in the production rule.
             // E.g.:    rule: item1 item2 item3 {}
-            //                  3     2     1    0
+            //                  -3    -2    -1   0
 
     public:
         void setDebug(bool mode);
@@ -150,10 +150,10 @@ inline \@Base::DebugMode__ operator|(\@Base::DebugMode__ lhs,
 };
 
 // hdr/vs
-inline \@Base::STYPE__ &\@Base::vs__(size_t idx) 
+inline \@Base::STYPE__ &\@Base::vs__(int idx) 
 {
 //    return *(d_vsp__ - idx);
-    return (d_vsp__ - idx)->second;
+    return (d_vsp__ + idx)->second;
 }
 
 // hdr/tail
