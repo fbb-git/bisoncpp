@@ -7,54 +7,57 @@ RuleValue Parser::binary(RuleValue v1, int operation, RuleValue const &v2)
         "Function names have no values. Forgot arguments?"
     );
 
+    RuleValue v1x{ rvalue(v1) };
+    RuleValue v2x{ rvalue(v2) };
+
     switch (operation)
     {
         case '+':
-            v1 += v2;
+            v1x += v2x;
         break;
 
         case '-':
-            v1 -= v2;
+            v1x -= v2x;
         break;
 
         case '*':
-            v1 *= v2;
+            v1x *= v2x;
         break;
 
         case '/':
-            div0(v1, v2);
-            v1 /= v2;
+            div0(v1x, v2x);
+            v1x /= v2x;
         break;
 
         case '%':
-            div0(v1, v2);
-            integral(v1, v2);
-            v1 %= v2;
+            div0(v1x, v2x);
+            integral(v1x, v2x);
+            v1x %= v2x;
         break;
 
         case '&':
-            integral(v1, v2);
-            v1 &= v2;
+            integral(v1x, v2x);
+            v1x &= v2x;
         break;
 
         case '^':
-            v1 ^= v2;
+            v1x ^= v2x;
         break;
 
         case '|':
-            v1 |= v2;
+            v1x |= v2x;
         break;
 
         case RIGHTSHIFT:
-            v1 >>= v2;
+            v1x >>= v2x;
         break;
 
         case LEFTSHIFT:
-            v1 <<= v2;
+            v1x <<= v2x;
         break;
     }
 
-    return v1;
+    return v1x;
 }
 
 
