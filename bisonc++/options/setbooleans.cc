@@ -22,4 +22,7 @@ void Options::setBooleans()
 
     if (d_arg.option(0, "prompt"))
         d_prompt = true;
+
+    if (d_arg.option(0, "thread-safe"))
+        d_threadSafe = true;
 }

@@ -56,6 +56,9 @@ bisonc++ (6.00.00)
     at each cycle when processing its input (which should not be provided on
     the standard input stream).
 
+  * `thread-safe' can now also be specified as a directive. Previously it
+    could only be specified as option.
+
 TODO  * The build script now properly recognizes the 'strip' option
 
 TODO: * Documentation was updated to reflect the above modifications

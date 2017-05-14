@@ -319,6 +319,11 @@ _directiveSpec:
         d_options.setPrompt();
     }
 |
+    THREAD_SAFE
+    {
+        d_options.setThreadSafe();
+    }
+|
     ERROR_VERBOSE
     {
         d_options.setErrorVerbose();

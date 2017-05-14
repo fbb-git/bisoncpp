@@ -46,7 +46,6 @@ vector<Generator::AtBool> Generator::s_atBol =
     AtBool("@insert-stype", &Generator::ifInsertStype),
     AtBool("@printtokens",  &Generator::ifPrintTokens),
     AtBool("@ltype",        &Generator::ifLtype),
-    AtBool("@thread-safe",  &Generator::ifThreadSafe),
     AtBool("@else",         &Generator::atElse),
     AtBool("@end",          &Generator::atEnd),
 };

@@ -61,6 +61,7 @@ struct Options
         bool        d_printTokens       = false;
         bool        d_strongTags        = true;
         bool        d_prompt            = false;
+        bool        d_threadSafe        = false;
     
         size_t      d_requiredTokens = 0;
         size_t      d_stackExpansion = 0;
@@ -147,6 +148,7 @@ struct Options
         void setPreInclude();
         void setPrintTokens();
         void setPrompt();
+        void setThreadSafe();
         void setRequiredTokens(size_t nRequiredTokens);
         void setScannerClassName();
         void setScannerInclude();
@@ -180,6 +182,7 @@ struct Options
         bool polymorphic() const;
         bool strongTags() const;
         bool prompt() const;
+        bool threadSafe() const;
 
         OptInfo const &tagMismatches() const;
         OptInfo const &constructorChecks() const;  
@@ -302,6 +305,11 @@ inline bool Options::prompt() const
     return d_prompt;
 }
 
+inline bool Options::threadSafe() const
+{
+    return d_threadSafe;
+}
+
 inline bool Options::errorVerbose() const
 {
     return d_errorVerbose;
@@ -405,6 +413,11 @@ inline std::string const &Options::scannerTokenFunction() const
 inline void Options::setPrompt()
 {
     d_prompt = true;
+}
+
+inline void Options::setThreadSafe()
+{
+    d_threadSafe = true;
 }
 
 inline void Options::setBaseClassHeader()

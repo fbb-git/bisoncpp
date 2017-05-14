@@ -45,12 +45,7 @@ $insert class.ih
 //                                      ( < 0: reduce, 
 //                                          0: ACCEPT,
 //                                        > 0: next state)
-// Last element:    {set to d_token__,    action to perform}
 //      }
-
-// When the --thread-safe option is specified, all static data are defined as
-// const. If --thread-safe is not provided, the state-tables are not defined
-// as const, since the lookup() function below will modify them
 
 // base/declarations
 $insert debugincludes
@@ -482,6 +477,7 @@ catch (Return__ retValue)
 $insert 4 debug "parse(): returns " << retValue << " or " << d_nErrors__ 
     return retValue or d_nErrors__;
 }
+
 
 // derived/tail
 

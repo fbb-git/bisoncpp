@@ -77,7 +77,6 @@ $insert LTYPEstack
 
 $insert LTYPEdata
 
-    protected:
         \@Base();
 
 $insert debugdecl
@@ -90,7 +89,6 @@ $insert debugdecl
         int  lookup__() const;
         void pop__(size_t count = 1);
         void push__(size_t nextState);
-        void acceptMsgIdx__();
         void popToken__();
         void pushToken__(int token);
         void redoToken__();
@@ -99,12 +97,6 @@ $insert debugdecl
         void errorVerbose__();
         size_t top__() const;
         STYPE__ &vs__(int idx);             // value stack element idx 
-            // counts back fm the current element in the production rule.
-            // E.g.:    rule: item1 item2 item3 {}
-            //                  -3    -2    -1   0
-
-        size_t msgIdx__() const;
-        void msgIdx__(size_t idx);
 
     public:
         void setDebug(bool mode);
@@ -157,7 +149,6 @@ inline \@Base::DebugMode__ operator|(\@Base::DebugMode__ lhs,
 // hdr/vs
 inline \@Base::STYPE__ &\@Base::vs__(int idx) 
 {
-//    return *(d_vsp__ - idx);
     return (d_vsp__ + idx)->second;
 }
 

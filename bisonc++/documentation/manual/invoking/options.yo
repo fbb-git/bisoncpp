@@ -297,7 +297,16 @@ IFDEF(man)(\
             by bic() itself when it is reading its input file(s). If
             that is what you want, use the tt(--own-tokens) option.
 
-    it() label(REQUIRED) laoption(required-tokens)(number)nl()
+    it() loption(prompt)nl()
+           When adding debugging code (using the tt(debug) option or
+            directive) the debug information is displayed continuously while
+            the parser processes its input. When using the tt(prompt) option
+            (or directive) the generated parser displays a prompt (a question
+            mark) at each step of the parsing process. Caveat: when using this
+            option the parser's input cannot be provided at the parser's
+            standard input stream.
+
+   it() label(REQUIRED) laoption(required-tokens)(number)nl()
            Following a syntactic error, require at least tt(number)
             successfully processed tokens before another syntactic error can
             be reported. By default tt(number) is zero.
@@ -402,7 +411,10 @@ IFDEF(man)(\
             called. 
 
     it() loption(thread-safe)nl() 
-           No static data are modified, making bic() thread-safe.
+           Only used with polymorphic semantic values, and then only required
+            when the parser is used in multiple threads: it ensures that each
+            thread's polymorphic code only accesses its own parser's error
+            counting variable.
 
     it() loption(usage)nl()
             Writes basic usage information to the standard output stream and

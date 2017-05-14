@@ -183,6 +183,7 @@ NR      [[:digit:]]+
                                     begin(StartCondition__::pxstring);
                                     return Parser::TARGET_DIRECTORY;
                                 }
+%thread-safe                    return Parser::THREAD_SAFE;
 %token                          return Parser::TOKEN;
 %type                           return Parser::TYPE;
 %union                          return Parser::UNION;

@@ -131,7 +131,6 @@ class Generator
         void ifInsertStype(bool &accept) const;
         void ifPrintTokens(bool &accept) const;
         void ifLtype(bool &accept) const;
-        void ifThreadSafe(bool &accept) const;
         void atElse(bool &accept) const;
         void atEnd(bool &accept) const;
 

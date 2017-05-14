@@ -13,7 +13,7 @@ Generator::Generator(Rules const &rules,
     d_nameSpacedClassname(d_nameSpace + d_options.className()),
     d_genDebug(d_options.genDebug()),
     d_printTokens(d_options.printTokens()),
-    d_threadSafe(d_arg.option(0, "thread-safe")),
+    d_threadSafe(d_options.threadSafe()),
     d_polymorphic(polymorphic),
 
     d_writer(d_baseClassScope, rules)

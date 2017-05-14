@@ -75,7 +75,7 @@ namespace
 
         Arg::LongOption{"tag-mismatches", Arg::Required},   // also directive
         Arg::LongOption{"target-directory", Arg::Required}, // also directive
-        Arg::LongOption{"thread-safe"},
+        Arg::LongOption{"thread-safe"},                     // also directive
 
         Arg::LongOption{"usage", 'h'},                                     
 
