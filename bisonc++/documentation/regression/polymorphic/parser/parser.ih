@@ -6,9 +6,9 @@
 #include "parser.h"
 
 
-inline void Parser::error(char const *msg)
+inline void Parser::error()
 {
-    std::cerr << msg << '\n';
+    std::cerr << "Syntax error\n";
 }
 
 // $insert lex
@@ -22,7 +22,7 @@ inline void Parser::print()
     print__();           // displays tokens if --print was specified
 }
 
-inline void Parser::exceptionHandler__(std::exception const &exc)         
+inline void Parser::exceptionHandler(std::exception const &exc)         
 {
     throw;              // re-implement to handle exceptions thrown by actions
 }

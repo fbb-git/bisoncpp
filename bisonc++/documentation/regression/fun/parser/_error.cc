@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-void Parser::error(char const *)
+void Parser::error()
 {
     if (!d_error)
         cout << "At " << d_scanner.matched() << ": error in expression.\n"
