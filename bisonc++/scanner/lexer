@@ -152,6 +152,7 @@ NR      [[:digit:]]+
 %polymorphic                    return Parser::POLYMORPHIC;
 %prec                           return Parser::PREC;
 %print-tokens                   return Parser::PRINT_TOKENS;
+%prompt                         return Parser::PROMPT;
 %required-tokens                return Parser::REQUIRED;
 %right                          return Parser::RIGHT;
 %scanner[ \t]+                  {

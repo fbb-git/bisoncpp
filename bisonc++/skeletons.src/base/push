@@ -1,0 +1,26 @@
+void \@Base::push__(size_t state)
+{
+    size_t currentSize = d_stateStack.size();
+    if (static_cast<size_t>(d_stackIdx + 1) == currentSize)
+    {
+        size_t newSize = currentSize + STACK_EXPANSION__;
+        d_stateStack.resize(newSize);
+$insert 8 LTYPEresize
+    }
+
+    ++d_stackIdx;
+$insert 4 LTYPEpush
+    d_stateStack[d_stackIdx] = 
+                    StatePair{ d_state__ = state, std::move(d_val__) };
+
+    d_vsp__ = &d_stateStack[d_stackIdx];
+
+    if (d_stackIdx == 0)
+    {
+$insert 4 debug  "\nPUSH 0 (initializing the state stack)"
+    }
+    else
+    {
+$insert 4 debug  "\nPUSH:   [" << (d_vsp__ - 1)->first << ", " << symbol__(d_token__) << "] -> " << state << stype__(" (semantic TOS = ", d_val__, ")")
+    }
+}

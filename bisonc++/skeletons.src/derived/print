@@ -1,0 +1,4 @@
+void \@::print__()
+{
+$insert print
+}

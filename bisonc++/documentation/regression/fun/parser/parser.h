@@ -61,7 +61,7 @@ class Parser: public ParserBase
     private:
         RuleValue call(RuleValue const &funName, RuleValue &argv);
 
-        void error(char const *msg);    // called on (syntax) errors
+        void error();                   // called on (syntax) errors
                                         // called on semantic errors
         void error(bool ifTrue, char const *msg); 
 
@@ -103,12 +103,12 @@ class Parser: public ParserBase
         RuleValue       identValue();
 
     // support functions for parse():
-        void executeAction(int ruleNr);
-        void errorRecovery();
-        int lookup(bool recovery);
-        void nextToken();
+        void executeAction__(int ruleNr);
+        void errorRecovery__();
+        void nextCycle__();
+        void nextToken__();
         void print__();
-        void exceptionHandler__(std::exception const &exc);
+        void exceptionHandler(std::exception const &exc);
 };
 
 inline Parser::Parser()

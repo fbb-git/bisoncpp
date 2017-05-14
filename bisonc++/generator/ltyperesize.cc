@@ -7,6 +7,6 @@ void Generator::ltypeResize(ostream &out) const
 
     key(out);
 
-    out << "d_locationStack__.resize(newSize);\n";
+    out << "d_locationStack.resize(newSize);\n";
 }
 

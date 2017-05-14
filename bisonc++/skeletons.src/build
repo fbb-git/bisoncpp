@@ -1,0 +1,57 @@
+#!/bin/bash
+
+for x in base/comment \
+         base/declarations \
+         base/base1 \
+    base/clearin \
+    base/debugfunctions \
+    base/lookup \
+    base/pop \
+    base/poptoken \
+    base/push \
+    base/pushtoken \
+    base/redotoken \
+    base/reduce \
+    base/shift \
+    base/top
+do
+    echo "// $x" >> bisonc++.cc
+    cat $x >> bisonc++.cc
+    echo >> bisonc++.cc
+done
+
+for x in \
+    derived/errorrecovery \
+    derived/executeaction \
+    derived/nextcycle \
+    derived/nexttoken \
+    derived/print \
+    derived/parse \
+    derived/tail
+do
+    echo "// $x" >> bisonc++.cc
+    cat $x >> bisonc++.cc
+    echo >> bisonc++.cc
+done
+
+for x in hdr/includes \
+         hdr/baseclass \
+    hdr/abort \
+    hdr/accept \
+    hdr/debug \
+    hdr/error \
+    hdr/opbitand \
+    hdr/opbitor \
+    hdr/vs \
+    hdr/tail
+do
+    echo "// $x" >> bisonc++base.h
+    cat $x >> bisonc++base.h
+    echo >> bisonc++base.h
+done
+
+mv bisonc++* ../skeletons/
+
+
+
+

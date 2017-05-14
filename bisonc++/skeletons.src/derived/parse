@@ -1,0 +1,40 @@
+int \@::parse()
+try 
+{
+    // The parsing algorithm:
+    // Initially, state 0 is pushed on the stack, and all relevant variables
+    // are initialized by Base::clearin__.
+    //
+    // Then, in an eternal loop:
+    //
+    //  1. If a state is a REQ_TOKEN type, then the next token is obtained
+    //     from nextToken().  This may very well be the currently available
+    //     token. When retrieving a terminal token d_terminal is set to true.
+    //
+    //  2. lookup() is called, d_token__ is looked up in the current state's
+    //     SR_ array.
+    //
+    //  4. Depending on the result of the lookup() function the next state is
+    //     shifted on the parser's stack, a reduction by some rule is applied,
+    //     or the parsing function returns ACCEPT(). When a reduction is
+    //     called for, any action that may have been defined for that
+    //     reduction is executed.
+    //
+    //  5. An error occurs if d_token__ is not found, and the state has no
+    //     default reduction.
+
+$insert 4 debug "parse(): Parsing starts"
+    clearin__();                            // initialize, push(0)
+
+    while (true)
+    {
+$insert prompt
+        nextCycle__();
+    }
+}
+catch (Return__ retValue)
+{
+$insert 4 debug "parse(): returns " << retValue << " or " << d_nErrors__ 
+    return retValue or d_nErrors__;
+}
+

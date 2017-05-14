@@ -1,13 +1,12 @@
-%no-lines
+//%debug
+//%print-tokens
+//%no-lines
 %filenames parser
 %default-actions off
 %scanner ../scanner/scanner.h
 
 %baseclass-preinclude preheaders.h
 
-%debug
-
-%print-tokens
 
 %token BASECLASS_HEADER BASECLASS_PREINCLUDE BLOCK CLASS_HEADER CLASS_NAME
         CONSTRUCTOR_CHECKS DEBUGFLAG DEFAULT_ACTIONS ERROR_VERBOSE EXPECT
@@ -17,6 +16,7 @@
         SCANNER SCANNER_CLASS_NAME SCANNER_MATCHED_TEXT_FUNCTION
         SCANNER_TOKEN_FUNCTION STACK_EXPANSION START STRING STYPE
         TARGET_DIRECTORY TOKEN TWO_PERCENTS TYPE UNION WARN_TAGS WEAK_TAGS
+        PROMPT
         
 %polymorphic    BOOL:       bool;
                 SIZE_T:     size_t;

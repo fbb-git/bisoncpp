@@ -10,5 +10,5 @@ if (d_debug__)
     else
         s_out__ <<  "next state: " << action;
 
-    s_out__ << "\n" << dflush__;
+    s_out__ << '\n' << dflush__;
 }

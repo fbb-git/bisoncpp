@@ -1,18 +1,11 @@
 #include "generator.ih"
 
-void Generator::warnTagMismatches(ostream &out) const
-{
-    if (d_options.tagMismatches().value != Options::ON)
-        return;
-
-    key(out);
-
-    // idOfTag: defined by staticdata.cc
-
-    out << R"(
+namespace {
+    char const *iftag =  
+R"(
     if (tag() != tg)
     {
-        if (*s_nErrors__ != 0)
+        if (*t_nErrors != 0)
             const_cast<SType *>(this)->assign<tg>();
         else
         {
@@ -24,5 +17,19 @@ void Generator::warnTagMismatches(ostream &out) const
             throw 1;        // ABORTs
         }
     }
-    )" << '\n';
+)";
+
+} // namespace
+
+void Generator::warnTagMismatches(ostream &out) const
+{
+    if (d_options.tagMismatches().value != Options::ON)
+        return;
+
+    key(out);
+
+    // idOfTag: defined by staticdata.cc
+
+    out << iftag << '\n';
 }
+

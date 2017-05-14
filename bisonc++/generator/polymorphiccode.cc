@@ -28,6 +28,15 @@ void Generator::polymorphicCode(ostream &out) const
     ifstream in;
     Exception::open(in,  d_options.polymorphicCodeSkeleton()); 
 
+    out << "namespace Meta__\n"
+           "{\n"
+           "\n";
+
+    if (d_threadSafe)
+        out << "std::thread_local ";
+
+    out << "size_t const *t_nErrors;\n";
+
     filter(in, out, false);
 }
 

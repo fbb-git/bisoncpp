@@ -20,6 +20,7 @@ namespace FBB
 }
 
 #undef Parser
+
 class Parser: public ParserBase
 {
             // actions to taken given tokens returned by the lexical scanner
@@ -330,19 +331,19 @@ class Parser: public ParserBase
         Symbol *useSymbol();
         Terminal *useTerminal();
 
-        void error(char const *msg);    // called on (syntax) errors
+        void error();                   // called on (syntax) errors
+        void exceptionHandler(std::exception const &exc);
         int lex();                      // returns the next token from the
                                         // lexical scanner. 
         void print();                   // use, e.g., d_token, d_loc
-
-    // support functions for parse():
-        void executeAction(int ruleNr);
-        void errorRecovery();
-        int lookup(bool recovery);
-        void nextToken();
-        void print__();
-        void exceptionHandler__(std::exception const &exc);
-
+                                                         
+                                                         
+    // support functions for parse():                    
+        void executeAction__(int ruleNr);                
+        void errorRecovery__();                          
+        void nextCycle__();                              
+        void nextToken__();                              
+        void print__();                                     
                                         // used in, e.g., handleDollar
                                         // to obtain # elements for
                                         // end- or mid-rule actions

@@ -1,0 +1,45 @@
+void \@::nextCycle__()
+try
+{
+    if (s_state[d_state__]->d_type & REQ_TOKEN)
+        nextToken__();              // obtain next token
+
+
+    int action = lookup__();        // lookup d_token__ in d_state__
+
+    if (action > 0)                 // SHIFT: push a new state
+    {
+        shift__(action);
+        return;
+    }
+
+    if (action < 0)            // REDUCE: execute and pop.
+    {
+$insert 8 debug "\nREDUCE: rule " << -action
+
+        if (d_recovery__)
+            redoToken__();
+        else
+            executeAction__(-action);
+                                            // next token is the rule's LHS
+        reduce__(-action); 
+        return;
+    }
+
+    if (d_recovery__)
+        ABORT();
+    else 
+        ACCEPT();
+}
+catch (ErrorRecovery__)
+{
+    if (not d_recovery__)
+        errorRecovery__();
+    else
+    {
+        if (d_token__ == _EOF_)
+            ABORT();
+        popToken__();               // skip the failing token
+    }
+}
+

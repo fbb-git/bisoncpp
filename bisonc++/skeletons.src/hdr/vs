@@ -1,0 +1,4 @@
+inline \@Base::STYPE__ &\@Base::vs__(int idx) 
+{
+    return (d_vsp__ + idx)->second;
+}

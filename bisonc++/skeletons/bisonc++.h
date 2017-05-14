@@ -11,7 +11,7 @@ $insert namespace-open
     // #undef directive in the previous line references to \@ 
     // are read as \@Base.
     // If you need to include additional headers in this file 
-    // you should do so beyond these comment-lines.
+    // you should do so after these comment-lines.
 
 
 class \@: public \@Base
@@ -23,18 +23,18 @@ $insert 4 scannerobject
         int parse();
 
     private:
-        void error(char const *msg);    // called on (syntax) errors
+        void error();                   // called on (syntax) errors
         int lex();                      // returns the next token from the
                                         // lexical scanner. 
         void print();                   // use, e.g., d_token, d_loc
+        void exceptionHandler(std::exception const &exc);
 
     // support functions for parse():
-        void executeAction(int ruleNr);
-        void errorRecovery();
-        int lookup(bool recovery);
-        void nextToken();
+        void executeAction__(int ruleNr);
+        void errorRecovery__();
+        void nextCycle__();
+        void nextToken__();
         void print__();
-        void exceptionHandler__(std::exception const &exc);
 };
 
 $insert namespace-close

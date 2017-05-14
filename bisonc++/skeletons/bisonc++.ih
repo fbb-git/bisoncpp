@@ -4,9 +4,9 @@ $insert class.h
 
 $insert namespace-open
 
-inline void \@::error(char const *msg)
+inline void \@::error()
 {
-    std::cerr << msg << '\n';
+    std::cerr << "Syntax error\n";
 }
 
 $insert lex
@@ -16,7 +16,7 @@ inline void \@::print()
     print__();           // displays tokens if --print was specified
 }
 
-inline void \@::exceptionHandler__(std::exception const &exc)         
+inline void \@::exceptionHandler(std::exception const &exc)         
 {
     throw;              // re-implement to handle exceptions thrown by actions
 }

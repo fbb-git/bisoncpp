@@ -1,3 +1,4 @@
+// hdr/includes
 #ifndef \@$Base_h_included
 #define \@$Base_h_included
 
@@ -7,6 +8,8 @@
 $insert polyincludes
 $insert preincludes
 $insert debugincludes
+
+// hdr/baseclass
 
 namespace // anonymous
 {
@@ -32,10 +35,14 @@ $insert LTYPE
 $insert STYPE
 
     private:
-        size_t d_msgIdx__ = 0;
-        int d_stackIdx__ = -1;
-        std::vector<std::pair<size_t, size_t>> d_stateStack__;
-        std::vector<STYPE__>  d_valueStack__;
+                        // state  semval
+        typedef std::pair<size_t, STYPE__> StatePair;
+                       // token   semval
+        typedef std::pair<int,    STYPE__> TokenPair;
+
+        int d_stackIdx = -1;
+        std::vector<StatePair> d_stateStack;
+
 $insert LTYPEstack
 
     protected:
@@ -49,18 +56,25 @@ $insert LTYPEstack
             DEFAULT_RECOVERY_MODE__,
             UNEXPECTED_TOKEN__,
         };
-        size_t const *d_s_nErrors__;            // saves Meta__::s_nErrors__
-        bool        d_actionCases__ = false;
+
+        bool        d_actionCases__ = false;    // set by options/directives
         bool        d_debug__ = true;
-        size_t      d_nErrors__ = 0;
         size_t      d_requiredTokens__;
+
+        size_t      d_nErrors__;                // initialized by clearin()
         size_t      d_acceptedTokens__;
         int         d_token__;
-        int         d_nextToken__;
         size_t      d_state__;
-        STYPE__    *d_vsp__;
+
+        StatePair *d_vsp__;           // points to the topmost value stack
+
         STYPE__     d_val__;
-        STYPE__     d_nextVal__;
+
+        TokenPair   d_next__;
+
+        bool        d_terminalToken__;
+        bool        d_recovery__;
+
 $insert LTYPEdata
 
     protected:
@@ -70,17 +84,24 @@ $insert debugdecl
         void ABORT() const;
         void ACCEPT() const;
         void ERROR() const;
-        void clearin();
-        bool actionCases() const;
         bool debug() const;
+
+        void clearin__();
+        int  lookup__() const;
         void pop__(size_t count = 1);
         void push__(size_t nextState);
         void acceptMsgIdx__();
         void popToken__();
         void pushToken__(int token);
-        void reduce__(PI__ const &productionInfo);
+        void redoToken__();
+        void reduce__(int rule);
+        void shift__(int state);
         void errorVerbose__();
         size_t top__() const;
+        STYPE__ &vs__(int idx);             // value stack element idx 
+            // counts back fm the current element in the production rule.
+            // E.g.:    rule: item1 item2 item3 {}
+            //                  -3    -2    -1   0
 
         size_t msgIdx__() const;
         void msgIdx__(size_t idx);
@@ -90,55 +111,35 @@ $insert debugdecl
         void setDebug(DebugMode__ mode);
 }; 
 
-inline \@Base::DebugMode__ operator|(\@Base::DebugMode__ lhs, 
-                                     \@Base::DebugMode__ rhs)
-{
-    return static_cast<\@Base::DebugMode__>(static_cast<int>(lhs) | rhs);
-};
-
-inline void \@Base::acceptMsgIdx__() 
-{
-    d_stateStack__[d_stackIdx__].second = d_msgIdx__;
-}
-
-inline size_t \@Base::msgIdx__() const
-{
-    return d_stateStack__[d_stackIdx__].second;
-}
-
-inline void \@Base::msgIdx__(size_t idx)
-{
-    d_msgIdx__ = idx;
-}
-
-inline bool \@Base::debug() const
-{
-    return d_debug__;
-}
-
-inline bool \@Base::actionCases() const
-{
-    return d_actionCases__;
-}
-
+// hdr/abort
 inline void \@Base::ABORT() const
 {
 $insert 4 debug "ABORT(): Parsing unsuccessful"
     throw PARSE_ABORT__;
 }
 
+// hdr/accept
 inline void \@Base::ACCEPT() const
 {
 $insert 4 debug "ACCEPT(): Parsing successful"
     throw PARSE_ACCEPT__;
 }
 
+
+// hdr/debug
+inline bool \@Base::debug() const
+{
+    return d_debug__;
+}
+
+// hdr/error
 inline void \@Base::ERROR() const
 {
 $insert 4 debug "ERROR(): Forced error condition"
     throw UNEXPECTED_TOKEN__;
 }
 
+// hdr/opbitand
 inline \@Base::DebugMode__ operator&(\@Base::DebugMode__ lhs,
                                      \@Base::DebugMode__ rhs)
 {
@@ -146,6 +147,21 @@ inline \@Base::DebugMode__ operator&(\@Base::DebugMode__ lhs,
             static_cast<int>(lhs) & rhs);
 }
 
+// hdr/opbitor
+inline \@Base::DebugMode__ operator|(\@Base::DebugMode__ lhs, 
+                                     \@Base::DebugMode__ rhs)
+{
+    return static_cast<\@Base::DebugMode__>(static_cast<int>(lhs) | rhs);
+};
+
+// hdr/vs
+inline \@Base::STYPE__ &\@Base::vs__(int idx) 
+{
+//    return *(d_vsp__ - idx);
+    return (d_vsp__ + idx)->second;
+}
+
+// hdr/tail
 // For convenience, when including ParserBase.h its symbols are available as
 // symbols in the class Parser, too.
 #define \@ \@Base
@@ -153,5 +169,6 @@ inline \@Base::DebugMode__ operator&(\@Base::DebugMode__ lhs,
 $insert namespace-close
 
 #endif
+
 
 

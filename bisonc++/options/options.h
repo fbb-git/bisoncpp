@@ -60,6 +60,7 @@ struct Options
         bool        d_polymorphic       = false;
         bool        d_printTokens       = false;
         bool        d_strongTags        = true;
+        bool        d_prompt            = false;
     
         size_t      d_requiredTokens = 0;
         size_t      d_stackExpansion = 0;
@@ -145,6 +146,7 @@ struct Options
         void setPolymorphicDecl();
         void setPreInclude();
         void setPrintTokens();
+        void setPrompt();
         void setRequiredTokens(size_t nRequiredTokens);
         void setScannerClassName();
         void setScannerInclude();
@@ -177,6 +179,7 @@ struct Options
         bool lspNeeded() const;
         bool polymorphic() const;
         bool strongTags() const;
+        bool prompt() const;
 
         OptInfo const &tagMismatches() const;
         OptInfo const &constructorChecks() const;  
@@ -294,6 +297,11 @@ inline std::string const &Options::classSkeleton() const
     return d_classSkeleton;
 }
 
+inline bool Options::prompt() const
+{
+    return d_prompt;
+}
+
 inline bool Options::errorVerbose() const
 {
     return d_errorVerbose;
@@ -392,6 +400,11 @@ inline std::string const &Options::scannerMatchedTextFunction() const
 inline std::string const &Options::scannerTokenFunction() const
 {
     return d_scannerTokenFunction;
+}
+
+inline void Options::setPrompt()
+{
+    d_prompt = true;
 }
 
 inline void Options::setBaseClassHeader()
