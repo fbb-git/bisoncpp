@@ -1,0 +1,15 @@
+void \@Base::startRecovery__()
+{
+    int lastToken = d_token;                    // give the unexpected token a
+                                                // chance to be processed
+                                                // again.
+
+    pushToken__(_error_);                       // specify _error_ as next token
+    push__(lookup__());                         // push the error state
+
+    d_token = lastToken;                        // reactivate the unexpected
+                                                // token (we're now in an
+                                                // ERROR state).
+
+    d_recovery = true;
+}

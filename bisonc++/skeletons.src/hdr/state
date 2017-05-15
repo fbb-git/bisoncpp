@@ -1,0 +1,4 @@
+inline size_t \@Base::state__() const
+{
+    return d_state;
+}

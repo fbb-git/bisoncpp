@@ -3,12 +3,12 @@ int \@Base::lookup__() const
     // if the final transition is negative, then we should reduce by the rule
     // given by its positive value.
 
-    SR__ const *sr = s_state[d_state__];
+    SR__ const *sr = s_state[d_state];
     SR__ const *last = sr + sr->d_lastIdx;
 
     for ( ; ++sr != last; )           // visit all but the last SR entries
     {
-        if (sr->d_token == d_token__)
+        if (sr->d_token == d_token)
             return sr->d_action;
     }
 
@@ -16,7 +16,7 @@ int \@Base::lookup__() const
     {
         if (sr->d_action < 0)   // default reduction
         {
-$insert 12 debug "\nLOOKUP: [" << d_state__ << ", " << symbol__(d_token__) << "] -> default reduce using rule " << -sr->d_action
+$insert 12 debug "\nLOOKUP: [" << state__() << ", " << symbol__(d_token) << "] -> default reduce using rule " << -sr->d_action
             return sr->d_action;                
         }
 

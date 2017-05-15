@@ -11,7 +11,7 @@ try
     //     from nextToken().  This may very well be the currently available
     //     token. When retrieving a terminal token d_terminal is set to true.
     //
-    //  2. lookup() is called, d_token__ is looked up in the current state's
+    //  2. lookup() is called, d_token is looked up in the current state's
     //     SR_ array.
     //
     //  4. Depending on the result of the lookup() function the next state is
@@ -20,7 +20,7 @@ try
     //     called for, any action that may have been defined for that
     //     reduction is executed.
     //
-    //  5. An error occurs if d_token__ is not found, and the state has no
+    //  5. An error occurs if d_token is not found, and the state has no
     //     default reduction.
 
 $insert 4 debug "parse(): Parsing starts"

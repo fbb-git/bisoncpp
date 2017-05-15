@@ -1,0 +1,4 @@
+inline int \@Base::savedToken__() const
+{
+    return d_next.first;
+}

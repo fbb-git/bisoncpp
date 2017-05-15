@@ -1,5 +1,5 @@
 void \@Base::redoToken__()
 {
-    if (d_token__ != _UNDETERMINED_)
-        pushToken__(d_token__);
+    if (d_token != _UNDETERMINED_)
+        pushToken__(d_token);
 }

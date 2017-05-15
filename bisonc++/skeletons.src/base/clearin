@@ -4,9 +4,9 @@ void \@Base::clearin__()
     d_stackIdx = -1;
     d_stateStack.clear();
 $insert 4 LTYPEclear
-    d_token__ = _UNDETERMINED_;
-    d_next__ = TokenPair{ _UNDETERMINED_, STYPE__{} };
-    d_recovery__ = false;
+    d_token = _UNDETERMINED_;
+    d_next = TokenPair{ _UNDETERMINED_, STYPE__{} };
+    d_recovery = false;
     d_acceptedTokens__ = d_requiredTokens__;
     d_val__ = STYPE__{};
 

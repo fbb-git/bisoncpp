@@ -1,8 +1,8 @@
 void \@::executeAction__(int production)
 try
 {
-    if (d_token__ != _UNDETERMINED_)
-        pushToken__(d_token__);     // save an already available token
+    if (token__() != _UNDETERMINED_)
+        pushToken__(token__());     // save an already available token
 $insert 4 debug "execute action " << production << " ..."
 $insert executeactioncases
     switch (production)

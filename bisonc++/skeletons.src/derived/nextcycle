@@ -1,11 +1,11 @@
 void \@::nextCycle__()
 try
 {
-    if (s_state[d_state__]->d_type & REQ_TOKEN)
+    if (s_state[state__()]->d_type & REQ_TOKEN)
         nextToken__();              // obtain next token
 
 
-    int action = lookup__();        // lookup d_token__ in d_state__
+    int action = lookup__();        // lookup d_token in d_state
 
     if (action > 0)                 // SHIFT: push a new state
     {
@@ -17,7 +17,7 @@ try
     {
 $insert 8 debug "\nREDUCE: rule " << -action
 
-        if (d_recovery__)
+        if (recovery__())
             redoToken__();
         else
             executeAction__(-action);
@@ -26,18 +26,18 @@ $insert 8 debug "\nREDUCE: rule " << -action
         return;
     }
 
-    if (d_recovery__)
+    if (recovery__())
         ABORT();
     else 
         ACCEPT();
 }
 catch (ErrorRecovery__)
 {
-    if (not d_recovery__)
+    if (not recovery__())
         errorRecovery__();
     else
     {
-        if (d_token__ == _EOF_)
+        if (token__() == _EOF_)
             ABORT();
         popToken__();               // skip the failing token
     }

@@ -10,7 +10,7 @@ string Parser::s_semanticValue {"d_val__"};
 string Parser::s_semanticValueStack {"vs__("};  
                                     // name of the semantic value stack
                                     // used by the generated parser
-char Parser::s_locationValueStack[] = "d_lsp__";  
+char Parser::s_locationValueStack[] = "lsp__(";  
                                     // name of the location value stack
                                     // used by the generated parser
 char Parser::s_locationValue[] = "d_loc__";  

@@ -5,6 +5,7 @@ for x in base/comment \
          base/base1 \
     base/clearin \
     base/debugfunctions \
+    base/lex \
     base/lookup \
     base/pop \
     base/poptoken \
@@ -13,6 +14,7 @@ for x in base/comment \
     base/redotoken \
     base/reduce \
     base/shift \
+    base/startrecovery \
     base/top
 do
     echo "// $x" >> bisonc++.cc
@@ -38,10 +40,14 @@ for x in hdr/includes \
          hdr/baseclass \
     hdr/abort \
     hdr/accept \
-    hdr/debug \
     hdr/error \
+    hdr/savedtoken \
     hdr/opbitand \
     hdr/opbitor \
+    hdr/recovery \
+    hdr/stacksize \
+    hdr/state \
+    hdr/token \
     hdr/vs \
     hdr/tail
 do

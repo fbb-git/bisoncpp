@@ -1,7 +1,7 @@
 if (d_debug__)
 {
-    s_out__ <<  "encountered " << symbol__(d_token__) << " in state " <<
-                d_state__ << ": ";
+    s_out__ <<  "encountered " << symbol__(token__()) << " in state " <<
+                state__() << ": ";
 
     if (action < 0)             // a reduction was found
         s_out__ << ": reducing by rule " << -action;

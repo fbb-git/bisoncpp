@@ -1,2 +1,7 @@
 LTYPE__   d_loc__;
-LTYPE__  *d_lsp__;
+
+LTYPE__  const &lsp__(int idx) const
+{
+    return *(d_lsp + idx);
+}
+

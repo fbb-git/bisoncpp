@@ -1,30 +1,27 @@
 void \@::nextToken__()
 {
-    // If d_token__ is _UNDETERMINED_ then if d_nextToken__ is _UNDETERMINED_ 
-    // another token is obtained from lex(). Then d_nextToken__ is assigned to
-    // d_token__.
+    // If d_token is _UNDETERMINED_ then if savedToken__() is _UNDETERMINED_ 
+    // another token is obtained from lex(). Then savedToken__() is assigned
+    // to d_token.
 
-    if (d_token__ != _UNDETERMINED_)        // no need for a token: got one
+    if (token__() != _UNDETERMINED_)        // no need for a token: got one
     {
-$insert 8 debug "available token " << symbol__(d_token__)
+$insert 8 debug "available token " << symbol__(token__())
         return;                             // already
     }
 
-    if (d_next__.first != _UNDETERMINED_)
+    if (savedToken__() != _UNDETERMINED_)
     {
         popToken__();                       // consume pending token
-$insert 8 debug "retrieved token " << symbol__(d_token__) << stype__(", semantic = ", d_val__)
+$insert 8 debug "retrieved token " << symbol__(token__()) << stype__(", semantic = ", d_val__)
     }
     else
     {
         ++d_acceptedTokens__;               // accept another token (see
                                             // errorRecover())
-        d_token__ = lex();
-        if (d_token__ <= 0)
-            d_token__ = _EOF_;
-        d_terminalToken__ = true;
+        lex__(lex());
         print__();
-$insert 8 debug "scanner token " << symbol__(d_token__)
+$insert 8 debug "scanner token " << symbol__(token__())
     }
     print();
 }

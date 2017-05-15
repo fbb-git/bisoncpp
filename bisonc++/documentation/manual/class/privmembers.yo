@@ -22,16 +22,8 @@ internally'' is used should not be called by user-defined code.
         bf(bison++) in that tt(YYACCEPT) could not be called from outside of
         the parsing member function.
 
-    it() bf(void Base::clearin+nop()()):nl()
-       This member replaces bf(bison)(++)'s macro tt(yyclearin) and causes
-        bf(bisonc++) to request another token from its tt(lex+nop()()) member,
-        even if the current token has not yet been processed. It is a useful
-        member when the parser should be reset to its initial state, e.g.,
-        between successive calls of tt(parse). In this situation the scanner
-        must probably be reloaded with new information as well.
-
-    it() bf(bool Base::debug() const):nl()
-       This member returns the current value of the debug variable.
+    it() bf(void Base::clearin__+nop()()()):nl()
+       Used internally.
 
     it() bf(void Base::ERROR+nop()() const throw(ErrorRecovery__)):nl()
        This member can be called from any member function (called from any of
@@ -41,7 +33,7 @@ internally'' is used should not be called by user-defined code.
         bf(bison++) in that tt(YYERROR) could not be called from outside of
         the parsing member function.
 
-    it() bf(void error(char const *msg)):nl()
+    it() bf(void error()):nl()
       By default implemented inline in the tt(parser.ih) internal header file,
        it writes a simple message to the standard error stream. It is called
        when a syntactic error is encountered, and its default implementation
@@ -53,7 +45,7 @@ internally'' is used should not be called by user-defined code.
     it() bf(void Base::errorVerbose__+nop()()):nl()
        Used internally.
 
-    it() bf(void exceptionHandler__(std::exception const &exc)):nl()
+    it() bf(void exceptionHandler(std::exception const &exc)):nl()
        This member's default implementation is provided inline in the
         tt(parser.ih) internal header file. It consists of a mere tt(throw)
         statement, rethrowing a caught exception.
@@ -70,7 +62,7 @@ internally'' is used should not be called by user-defined code.
         simply checks for semantic errors (like divisions by zero) 
         throwing exceptions if such errors are observed.
 
-       The member tt(exceptionHandler__) receives and may handle such
+       The member tt(exceptionHandler) receives and may handle such
         exceptions without necessarily ending the parsing process. It receives
         any tt(std::exception) thrown by the parser's actions, as though the
         action block itself was surrounded by a tt(try ... catch) statement.
@@ -91,30 +83,7 @@ void Parser::exceptionHandler__(std::exception const &exc)
 }
         )
 
-        bf(Note:) Parser-class header files (e.g., Parser.h) and parser-class
-    internal header files (e.g., Parser.ih) generated with bic() < 4.02.00
-    require two small hand-modifications when using bic() >= 4.02.00:
-
-    In Parser.h, just below the declaration 
-        verb(
-void print__();
-    )
-    add:
-    verb(
-void exceptionHandler__(std::exception const &exc);
-    )
-
-    In Parser.ih, assuming the name of the generated class is `Parser', add the
-    following member definition (if a namespace is used: within the
-    namespace's scope):
-        verb(
-inline void Parser::exceptionHandler__(std::exception const &exc)
-{
-    throw;  // re-implement to handle exceptions thrown by actions
-}
-    )
-
-    it() bf(void executeAction+nop()(int)):nl()
+    it() bf(void executeAction__+nop()(int)):nl()
        Used internally.
 
     it() bf(int lex()):nl()
@@ -127,10 +96,18 @@ inline void Parser::exceptionHandler__(std::exception const &exc)
        enumeration. Zero or negative token values are interpreted as `end of
        input'.
 
-    it() bf(int lookup+nop()(bool)):nl()
+    it() bf(int Base::lookup+nop()()):nl()
        Used internally.
 
-    it() bf(void nextToken+nop()()):nl()
+    it() bf(LTYPE__ const *lsp__() const):nl()
+       Returns the currrent value of the location stack pointer (only
+        available when tt(%lsp-needed, %ltype) or tt(%locationstruct) was
+        specified.
+
+    it() bf(void nextCycle__+nop()()):nl()
+       Used internally.
+
+    it() bf(void nextToken__+nop()()):nl()
        Used internally.
 
     it() bf(void Base::pop__+nop()()):nl()
@@ -157,7 +134,16 @@ inline void Parser::exceptionHandler__(std::exception const &exc)
     it() bf(void Base::pushToken__+nop()()):nl()
        Used internally.
 
-    it() bf(void Base::reduce__+nop()()):nl()
+    it() bf(void Base::shift__+nop()(int state)):nl()
+       Used internally.
+
+    it() bf(size_t stackSize__+nop()() const):nl()
+       Returns the current number of elements in the parser's state-stack.
+
+    it() bf(size_t state__+nop()() const):nl()
+       Returns the current state.
+
+    it() bf(void Base::reduce__+nop()(int rule)):nl()
        Used internally.
 
     it() bf(void Base::symbol__+nop()()):nl()
@@ -165,5 +151,11 @@ inline void Parser::exceptionHandler__(std::exception const &exc)
 
     it() bf(void Base::top__+nop()()):nl()
        Used internally.
+
+    it() bf(void Base::vs__+nop()(int idx)):nl()
+       Used internally.
     )
+
+
+
 

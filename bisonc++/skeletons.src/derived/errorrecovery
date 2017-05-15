@@ -8,7 +8,7 @@ void \@::errorRecovery__()
     // then the error recovery will fall back to the default recovery mode.
     // (i.e., parsing terminates)
 
-$insert 4 debug "\nERROR:  [" << top__() << ", " << symbol__(d_token__) << "] -> ??. Errors: " << (d_nErrors__ + 1)
+$insert 4 debug "\nERROR:  [" << top__() << ", " << symbol__(token__()) << "] -> ??. Errors: " << (d_nErrors__ + 1)
 
 
     if (d_acceptedTokens__ >= d_requiredTokens__)// only generate an error-
@@ -30,16 +30,5 @@ $insert 4 debug "Reached ERROR state " << top__()
     // Continuation may be require multiple reductions, but eventually a
     // terminal-token shift is used. See nextCycle__ for details.
 
-    int lastToken = d_token__;                  // give the unexpected token a
-                                                // chance to be processed
-                                                // again.
-
-    pushToken__(_error_);                       // specify _error_ as next token
-    push__(lookup__());                         // push the error state
-
-    d_token__ = lastToken;                      // reactivate the unexpected
-                                                // token (we're now in an
-                                                // ERROR state).
-
-    d_recovery__ = true;
+    startRecovery__();
 }
