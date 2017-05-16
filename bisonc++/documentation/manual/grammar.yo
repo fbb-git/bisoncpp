@@ -76,7 +76,7 @@ includefile(directives/intro.yo)
     includefile(directives/print.yo)
 
     subsect(%prompt: show prompts when using debug) 
-    includefile(directives/print.yo)
+    includefile(directives/prompt.yo)
 
     subsect(%required-tokens: defining the minimum number of tokens between
         error reports) 
@@ -106,6 +106,10 @@ includefile(directives/intro.yo)
     subsect(%tag-mismatches: check for tag-mismatches with polymorphic
         semantic values)
     includefile(directives/tagmismatches.yo)
+
+    subsect(%thread-safe: use thread-local data with polymorphic semantic
+            values) 
+    includefile(directives/threadsafe.yo)
 
     lsubsect(TOKTYPENAMES)(%token: defining token names)
     includefile(directives/tokens.yo)

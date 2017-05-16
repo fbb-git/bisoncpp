@@ -12,9 +12,9 @@ the parser.
         parsing functions. They are:
         verb(
     PARSE_ACCEPT   =  0,
-    _UNDETERMINED_ = -2,
-    _EOF_          = -1,
-    _error_        = 256,
+    UNDETERMINED__ = -2,
+    EOF__          = -1,
+    errTok__        = 256,
        )
        These tokens are used by the parser to determine whether another token
         should be requested from the lexical scanner, and to handle

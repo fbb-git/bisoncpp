@@ -95,7 +95,7 @@ subsubsect(Error recovery --debug output)
     parse(): Parsing starts
     push(state 0)
     ==
-    lookup(0, `_UNDETERMINED_'): default reduction by rule 2
+    lookup(0, `UNDETERMINED__'): default reduction by rule 2
     executeAction(): of rule 2 ...
     ... action of rule 2 completed
     pop(0) from stack having size 1
@@ -111,7 +111,7 @@ Syntax error
     lookup(1, `a' (97)): Not found. Start error recovery.
     errorRecovery(): 1 error(s) so far. State = 1
     errorRecovery(): state 1 is an ERROR state
-    lookup(1, `_error_'): shift 3 (`_error_' processed)
+    lookup(1, `errTok__'): shift 3 (`errTok__' processed)
     push(state 3)
     lookup(3, `a' (97)): default reduction by rule 3
     pop(1) from stack having size 3
@@ -134,10 +134,10 @@ Syntax error
     nextToken(): using `NR'
     lookup(1, `NR'): shift 4 (`NR' processed)
     push(state 4)
-    errorRecovery() SHIFT state 4, continue with `_UNDETERMINED_'
+    errorRecovery() SHIFT state 4, continue with `UNDETERMINED__'
     errorRecovery() COMPLETED: next state 4, no token yet
     ==
-    lookup(4, `_UNDETERMINED_'): default reduction by rule 4
+    lookup(4, `UNDETERMINED__'): default reduction by rule 4
     executeAction(): of rule 4 ...
     ... action of rule 4 completed
     pop(1) from stack having size 3
@@ -148,8 +148,8 @@ Syntax error
     push(state 2)
     ==
 [input terminated here]
-    nextToken(): using `_EOF_'
-    lookup(2, `_EOF_'): default reduction by rule 1
+    nextToken(): using `EOF__'
+    lookup(2, `EOF__'): default reduction by rule 1
     executeAction(): of rule 1 ...
     ... action of rule 1 completed
     pop(2) from stack having size 3
@@ -159,7 +159,7 @@ Syntax error
     lookup(0, `start'): shift 1 (`start' processed)
     push(state 1)
     ==
-    lookup(1, `_EOF_'): ACCEPT
+    lookup(1, `EOF__'): ACCEPT
     ACCEPT(): Parsing successful
     parse(): returns 0
     )

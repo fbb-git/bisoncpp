@@ -26,7 +26,7 @@ State 0
               Lookahead set { <EOF> }
 
     All production rules (using dot == 0) of:
-      input   Lookahead set { _error_ NUM '-' '\n' '(' <EOF> }
+      input   Lookahead set { errTok__ NUM '-' '\n' '(' <EOF> }
 
     on input:    shift, and go to state 1
 
@@ -39,13 +39,13 @@ State 1
               Lookahead set { <EOF> }
 
     input -> input  . line   (rule 2)
-              Lookahead set { _error_ NUM '-' '\n' '(' <EOF> }
+              Lookahead set { errTok__ NUM '-' '\n' '(' <EOF> }
 
     All production rules (using dot == 0) of:
-      line    Lookahead set { _error_ NUM '-' '\n' '(' <EOF> }
+      line    Lookahead set { errTok__ NUM '-' '\n' '(' <EOF> }
       exp     Lookahead set { '-' '+' '*' '/' '^' '\n' }
 
-    on _error_:  shift, and go to state 2
+    on errTok__:  shift, and go to state 2
     on NUM:      shift, and go to state 3
     on '-':      shift, and go to state 4
     on '\n':     shift, and go to state 6
@@ -53,10 +53,10 @@ State 1
     on line:     shift, and go to state 5
     on exp:      shift, and go to state 7
 
-State 2 (inherited terminal: _error_)
+State 2 (inherited terminal: errTok__)
 
-    line -> _error_  . '\n'   (rule 5)
-              Lookahead set { _error_ NUM '-' '\n' '(' <EOF> }
+    line -> errTok__  . '\n'   (rule 5)
+              Lookahead set { errTok__ NUM '-' '\n' '(' <EOF> }
 
     on '\n':     shift, and go to state 9
 
@@ -85,7 +85,7 @@ State 4 (inherited terminal: '-')
 State 5
 
     input -> input line  .   (rule 2)
-              Lookahead set { _error_ NUM '-' '\n' '(' <EOF> }
+              Lookahead set { errTok__ NUM '-' '\n' '(' <EOF> }
 
 
     _default_:   reduce, using production
@@ -94,7 +94,7 @@ State 5
 State 6 (inherited terminal: '\n')
 
     line -> '\n'  .   (rule 3)
-              Lookahead set { _error_ NUM '-' '\n' '(' <EOF> }
+              Lookahead set { errTok__ NUM '-' '\n' '(' <EOF> }
 
 
     _default_:   reduce, using production
@@ -103,7 +103,7 @@ State 6 (inherited terminal: '\n')
 State 7
 
     line -> exp  . '\n'   (rule 4)
-              Lookahead set { _error_ NUM '-' '\n' '(' <EOF> }
+              Lookahead set { errTok__ NUM '-' '\n' '(' <EOF> }
 
     exp -> exp  . '+' exp   (rule 7)
               Lookahead set { '-' '+' '*' '/' '^' '\n' }
@@ -142,8 +142,8 @@ State 8 (inherited terminal: '(')
 
 State 9 (inherited terminal: '\n')
 
-    line -> _error_ '\n'  .   (rule 5)
-              Lookahead set { _error_ NUM '-' '\n' '(' <EOF> }
+    line -> errTok__ '\n'  .   (rule 5)
+              Lookahead set { errTok__ NUM '-' '\n' '(' <EOF> }
 
 
     _default_:   reduce, using production
@@ -246,7 +246,7 @@ State 15 (inherited terminal: '^')
 State 16 (inherited terminal: '\n')
 
     line -> exp '\n'  .   (rule 4)
-              Lookahead set { _error_ NUM '-' '\n' '(' <EOF> }
+              Lookahead set { errTok__ NUM '-' '\n' '(' <EOF> }
 
 
     _default_:   reduce, using production
