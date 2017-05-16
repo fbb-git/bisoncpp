@@ -20,8 +20,8 @@ $insert class.ih
 // caught by the error-recovery function.
 
 // The error-recovery function will pop elements off the stack until a state
-// having bit flag ERR_ITEM is found. This state has a transition on _error_
-// which is applied. In this _error_ state, while the current token is not a
+// having bit flag ERR_ITEM is found. This state has a transition on errTok__
+// which is applied. In this errTok__ state, while the current token is not a
 // proper continuation, new tokens are obtained by nextToken(). If such a
 // token is found, error recovery is successful and the token is
 // handled according to the error state's SR table and parsing continues.
@@ -59,7 +59,7 @@ namespace // anonymous
         PARSE_ACCEPT     = 0,   // `ACCEPT' TRANSITION
         UNDETERMINED__   = -2,
         EOF__            = -1,
-        _error_          = 256
+        errTok__         = 256
     };
     enum StateType       // modify statetype/data.cc when this enum changes
     {
@@ -298,7 +298,7 @@ void \@Base::startRecovery__()
                                                 // chance to be processed
                                                 // again.
 
-    pushToken__(_error_);                       // specify _error_ as next token
+    pushToken__(errTok__);                       // specify errTok__ as next token
     push__(lookup__());                         // push the error state
 
     d_token = lastToken;                        // reactivate the unexpected

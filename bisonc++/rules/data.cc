@@ -6,7 +6,7 @@ size_t Rules::s_acceptProductionNr;
 
 Symbol *Rules::s_startSymbol;
     
-Terminal Rules::s_errorTerminal("error",  "_error_", 
+Terminal Rules::s_errorTerminal("error",  "errTok__", 
                                                 Symbol::SYMBOLIC_TERMINAL);
 
 Terminal Rules::s_eofTerminal("EOF",  "EOF__",  Symbol::SYMBOLIC_TERMINAL);

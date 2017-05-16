@@ -11,7 +11,7 @@ void Writer::symbolicNames() const
                         // UNDETERMINED__ is also used in generator/print.cc
         "    SMapVal(-2, \"UNDETERMINED__\"),  // predefined symbols\n"
         "    SMapVal(-1, \"EOF__\"),\n"
-        "    SMapVal(256, \"_error_\"),\n"
+        "    SMapVal(256, \"errTok__\"),\n"
         "\n";
 
     for (auto terminal: d_rules.terminals())

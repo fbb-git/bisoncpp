@@ -4,7 +4,7 @@ void \@Base::startRecovery__()
                                                 // chance to be processed
                                                 // again.
 
-    pushToken__(_error_);                       // specify _error_ as next token
+    pushToken__(errTok__);                       // specify errTok__ as next token
     push__(lookup__());                         // push the error state
 
     d_token = lastToken;                        // reactivate the unexpected

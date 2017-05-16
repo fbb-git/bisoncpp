@@ -9,7 +9,7 @@ namespace // anonymous
         PARSE_ACCEPT     = 0,   // `ACCEPT' TRANSITION
         UNDETERMINED__   = -2,
         EOF__            = -1,
-        _error_          = 256
+        errTok__         = 256
     };
     enum StateType       // modify statetype/data.cc when this enum changes
     {
