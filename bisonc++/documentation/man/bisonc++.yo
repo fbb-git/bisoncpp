@@ -188,6 +188,15 @@ be added to their identifiers: tt(executeAction, errorRecovery, nextToken).
 section of the generated parser class.
     )
 
+    Previously, several data members of the parser's base class were directly
+accessible to the parser class. Bic() version 6.00.00 restricts access to
+those members.  They can still be read, but no longer modified by the parser
+class. This applies to the following members:
+        itemization(
+    itt(d_token__): use tt(int token__()) instead;
+    itt(d_state__): use tt(size_t state__()) instead;
+        )
+
 manpagesection(OPTIONS)
     includefile(../manual/invoking/options.yo)
 
