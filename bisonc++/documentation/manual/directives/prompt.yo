@@ -1,0 +1,12 @@
+Syntax: bf(%prompt) 
+
+When adding debugging code (using the tt(debug) option or directive) debug
+information is displayed continuously while the parser processes its
+input. When using the tt(prompt) directive the generated parser displays a
+prompt (a question mark) at each step of the parsing process. 
+
+Caveat: when using this option the parser's input cannot be provided at the
+parser's standard input stream.
+
+Instead of using the tt(%prompt) directive the tt(--prompt) option can also be
+used. 

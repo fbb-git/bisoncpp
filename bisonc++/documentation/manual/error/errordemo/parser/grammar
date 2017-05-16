@@ -1,0 +1,22 @@
+%filenames parser
+%debug
+
+%token NR
+
+%left '+'
+
+%%
+
+start:
+    start expr
+|
+    // empty
+;
+
+expr:
+    error
+|
+    NR
+|
+    expr '+' expr
+;

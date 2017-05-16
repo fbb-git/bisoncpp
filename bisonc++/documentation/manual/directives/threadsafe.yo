@@ -1,0 +1,9 @@
+Syntax: bf(%thread-safe) 
+
+Only used with polymorphic semantic values, and then only required when the
+same parser is used in multiple threads: it ensures that each thread's
+polymorphic code only accesses the errors counter (i.e., tt(d_nErrors__)) 
+of its own parser.
+
+Instead of using the tt(%thread-safe) directive the tt(--thread-safe) option
+can also be used.
