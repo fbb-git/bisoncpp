@@ -39,7 +39,7 @@ void Writer::srTable(State const *sp,  std::string const &baseclassScope,
     transitions(table, sp->next());
 
     if (acceptState)
-        table << Rules::eofTerminal() << "PARSE_ACCEPT" << def;
+        table << Rules::eofTerminal() << "PARSE_ACCEPT__" << def;
 
     reductions(table, *sp);        
 

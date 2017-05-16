@@ -56,7 +56,7 @@ namespace // anonymous
 
     enum ReservedTokens
     {
-        PARSE_ACCEPT     = 0,   // `ACCEPT' TRANSITION
+        PARSE_ACCEPT__   = 0,   // `ACCEPT' TRANSITION
         UNDETERMINED__   = -2,
         EOF__            = -1,
         errTok__         = 256
