@@ -4,7 +4,7 @@ $insert class.ih
 // The FIRST element of SR arrays shown below uses `d_type', defining the
 // state's type, and `d_lastIdx' containing the last element's index. If
 // d_lastIdx contains the REQ_TOKEN bitflag (see below) then the state needs
-// a token: if in this state d_token is UNDETERMINED__, nextToken() will be
+// a token: if in this state d_token is Reserved__::UNDETERMINED__, nextToken() will be
 // called
 
 // The LAST element of SR arrays uses `d_token' containing the last retrieved

@@ -7,7 +7,7 @@ the parser.
     it() bf(char const author[]):nl()
        Defining the name and e-mail address of Bic()'s author.
 
-    it() bf(ReservedTokens):nl()
+    it() bf(Reserved__):nl()
        This enumeration defines some token values used internally by the
         parsing functions. They are:
         verb(

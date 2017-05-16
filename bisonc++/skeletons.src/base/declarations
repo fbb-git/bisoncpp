@@ -4,7 +4,7 @@ namespace // anonymous
 {
     char const author[] = "Frank B. Brokken (f.b.brokken@rug.nl)";
 
-    enum ReservedTokens
+    enum Reserved__
     {
         PARSE_ACCEPT__   = 0,   // `ACCEPT' TRANSITION
         UNDETERMINED__   = -2,
