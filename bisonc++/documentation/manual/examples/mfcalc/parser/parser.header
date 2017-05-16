@@ -26,9 +26,9 @@ class Parser: public ParserBase
         int parse();
 
     private:
-        void error(char const *msg)
+        void error()
         {
-            std::cerr << msg << '\n';
+            std::cerr << "Syntax error\n";
         }
 
         // $insert lex
@@ -38,11 +38,11 @@ class Parser: public ParserBase
         {}
 
     // support functions for parse():
-
-        void executeAction(int d_production);
-        size_t errorRecovery();
-        int lookup(int token);
-        int nextToken();
+        void executeAction__(int ruleNr);
+        void errorRecovery__();
+        void nextCycle__();
+        void nextToken__();
+        void print__();
 };
 
 

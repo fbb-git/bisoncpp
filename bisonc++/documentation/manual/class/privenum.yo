@@ -5,15 +5,11 @@ the parser's base class.
     it() bf(Base::ErrorRecovery__):nl()
         This enumeration defines two values:
         verb(
-    DEFAULT_RECOVERY_MODE__,
     UNEXPECTED_TOKEN__
         )
-       The tt(DEFAULT_RECOVERY_MODE__) terminates the parsing process. The
-        non-default recovery procedure is available once an tt(error) token is
-        used in a production rule. When the parsing process throws
-        tt(UNEXPECTED_TOKEN__) the recovery procedure is started (i.e., it is
-        started whenever a syntactic error is encountered or 
-        tt(ERROR)tt(()) is called). 
+       When the parsing process throws tt(UNEXPECTED_TOKEN__) the recovery
+        procedure is started (i.e., it is started whenever a syntactic error
+        is encountered or tt(ERROR)tt(()) is called).
 
         The recovery procedure consists of (1) looking for the first state on
         the state-stack having an error-production, followed by (2) handling

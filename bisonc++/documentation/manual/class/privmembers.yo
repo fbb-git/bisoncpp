@@ -62,12 +62,12 @@ or masked by user-defined code.
         be used to factor out code that is common to various action blocks.
 
         The next example shows an explicit implementation of
-        tt(exceptionHandler__): any tt(std::exception) thrown by the parser's
+        tt(exceptionHandler): any tt(std::exception) thrown by the parser's
         action blocks is caught, showing the exception's message, and
         increasing the parser's error count. After this parsing continues as
         if no exception had been thrown:
         verb(
-void Parser::exceptionHandler__(std::exception const &exc)
+void Parser::exceptionHandler(std::exception const &exc)
 {
     std::cout << exc.what() << '\n';
     ++d_nErrors__;

@@ -11,7 +11,6 @@ the parser.
        This enumeration defines some token values used internally by the
         parsing functions. They are:
         verb(
-    PARSE_ACCEPT   =  0,
     UNDETERMINED__ = -2,
     EOF__          = -1,
     errTok__        = 256,
@@ -35,6 +34,11 @@ the parser.
        )
        These tokens are used by the parser to define the types of the various
         states of the analyzed grammar.
+
+    it() bf(StateTransition)
+       This enumeration only defines a single symbolic constant: tt(ACCEPT__),
+        which is used in the state transition tables to indicate that the
+        em(accepting state) has been reached.
 
     it() bf(PI__) (Production Info):nl()
        This tt(struct) provides information about production rules. It has two

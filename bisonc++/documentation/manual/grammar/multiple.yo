@@ -1,7 +1,16 @@
-Most programs that use b() parse only one language and therefore contain
-only one b() parser. But what if you want to parse more than one language
-with the same program? Since b() constructs em(class) rather than a
-em(parsing function), this problem can easily be solved: simply define your
-second (third, fourth, ...) parser class, each having its own unique
-class-name, using the tt(%class-name) directive, and construct parser objects
-of each of the defined classes.
+Most programs that use b() parse only one language and therefore only need one
+b() parser. But what if you want to parse more than one language with the same
+program? Since b() constructs a em(class) rather than a em(parsing function),
+this problem can easily be solved: simply define your second (third, fourth,
+...) parser class, each having its own unique class-name, using the
+tt(%class-name) directive, and construct parser objects of each of the defined
+classes.
+
+In multi-threaded programs each thread can create its own parser object, and
+then call that object's tt(parse) function: b() does not use static data that
+are modified by the generated parser. In multi-threaded programs, when the
+parser uses polymorphic semantic values, the option tt(--thread-safe) or the
+directive tt(%thread-safe) should be specified to ensure that the code
+handling the polymorphic semantic data types accesses the error-counter data
+member of their own parser object.
+
