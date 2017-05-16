@@ -154,7 +154,7 @@ void \@Base::lex__(int token)
     d_token = token;
 
     if (d_token <= 0)
-        d_token = EOF__;
+        d_token = Reserved__::EOF__;
 
     d_terminalToken = true;
 }
@@ -409,7 +409,7 @@ catch (ErrorRecovery__)
         errorRecovery__();
     else
     {
-        if (token__() == EOF__)
+        if (token__() == Reserved__::EOF__)
             ABORT();
         popToken__();               // skip the failing token
     }

@@ -37,7 +37,7 @@ catch (ErrorRecovery__)
         errorRecovery__();
     else
     {
-        if (token__() == EOF__)
+        if (token__() == Reserved__::EOF__)
             ABORT();
         popToken__();               // skip the failing token
     }
