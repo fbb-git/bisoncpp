@@ -36,7 +36,7 @@ int g_echo = ON;
 void main(int argc, list argv)
 {
     string option;
-    string strip;
+    string psType;          // program or strip
     int idx;
 
     for (idx = listlen(argv); idx--; )
@@ -94,20 +94,23 @@ void main(int argc, list argv)
         exit(0);
     }
 
-    if (argv[2] == "strip")
-        strip = "strip";
+    if (argv[2] == "strip") 
+        psType = "strip";
+    else
+        psType = "program";
     
     if (option == "program")
     {
         precompileHeaders();
-        system("icmbuild program " + strip);
+        system("icmbuild " + psType);
         exit(0);
     }
 
     if (option == "oxref")
     {
         precompileHeaders();
-        system("icmbuild program " + strip);
+
+        system("icmbuild " + psType);
         run("oxref -fxs tmp/main.o tmp/lib" LIBRARY ".a > " PROGRAM ".xref");
         exit(0);
     }
@@ -117,7 +120,7 @@ void main(int argc, list argv)
         chdir("scanner");
         system("flexc++ -i scanner.ih lexer");
         chdir("..");
-        system("icmbuild program " + strip);
+        system("icmbuild " + psType);
         exit(0);
     }
 
