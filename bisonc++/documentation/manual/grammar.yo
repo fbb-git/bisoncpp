@@ -65,14 +65,17 @@ includefile(directives/intro.yo)
     subsect(%no-lines: suppressing `#line' directives)
     includefile(directives/lines.yo)
 
-    subsect(%prec: overruling default precedences)
-    includefile(directives/prec.yo)
-
     subsect(%polymorphic: using polymorphism to define multiple semantic
             values) 
     includefile(directives/polymorphic.yo)
 
+    subsect(%prec: overruling default precedences)
+    includefile(directives/prec.yo)
+
     subsect(%print-tokens: displaying tokens and matched text) 
+    includefile(directives/print.yo)
+
+    subsect(%prompt: show prompts when using debug) 
     includefile(directives/print.yo)
 
     subsect(%required-tokens: defining the minimum number of tokens between
