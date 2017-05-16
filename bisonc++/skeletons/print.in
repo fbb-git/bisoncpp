@@ -1,8 +1,8 @@
 
-enum { _UNDETERMINED_ = -2 };
+enum { UNDETERMINED__ = -2 };
 
 std::cout << "Token: " << symbol__(token__()) << ", text: `";
-if (token__() == _UNDETERMINED_)
+if (token__() == UNDETERMINED__)
     std::cout << "'\n";
 else
     std::cout << \@matchedtextfunction << "'\n";

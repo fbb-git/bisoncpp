@@ -1,16 +1,16 @@
 void \@::nextToken__()
 {
-    // If d_token is _UNDETERMINED_ then if savedToken__() is _UNDETERMINED_ 
+    // If d_token is UNDETERMINED__ then if savedToken__() is UNDETERMINED__ 
     // another token is obtained from lex(). Then savedToken__() is assigned
     // to d_token.
 
-    if (token__() != _UNDETERMINED_)        // no need for a token: got one
+    if (token__() != UNDETERMINED__)        // no need for a token: got one
     {
 $insert 8 debug "available token " << symbol__(token__())
         return;                             // already
     }
 
-    if (savedToken__() != _UNDETERMINED_)
+    if (savedToken__() != UNDETERMINED__)
     {
         popToken__();                       // consume pending token
 $insert 8 debug "retrieved token " << symbol__(token__()) << stype__(", semantic = ", d_val__)

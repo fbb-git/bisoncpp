@@ -5,7 +5,7 @@ $insert class.ih
 // The FIRST element of SR arrays shown below uses `d_type', defining the
 // state's type, and `d_lastIdx' containing the last element's index. If
 // d_lastIdx contains the REQ_TOKEN bitflag (see below) then the state needs
-// a token: if in this state d_token is _UNDETERMINED_, nextToken() will be
+// a token: if in this state d_token is UNDETERMINED__, nextToken() will be
 // called
 
 // The LAST element of SR arrays uses `d_token' containing the last retrieved
@@ -57,7 +57,7 @@ namespace // anonymous
     enum ReservedTokens
     {
         PARSE_ACCEPT     = 0,   // `ACCEPT' TRANSITION
-        _UNDETERMINED_   = -2,
+        UNDETERMINED__   = -2,
         _EOF_            = -1,
         _error_          = 256
     };
@@ -124,8 +124,8 @@ void \@Base::clearin__()
     d_stackIdx = -1;
     d_stateStack.clear();
 $insert 4 LTYPEclear
-    d_token = _UNDETERMINED_;
-    d_next = TokenPair{ _UNDETERMINED_, STYPE__{} };
+    d_token = UNDETERMINED__;
+    d_next = TokenPair{ UNDETERMINED__, STYPE__{} };
     d_recovery = false;
     d_acceptedTokens__ = d_requiredTokens__;
     d_val__ = STYPE__{};
@@ -220,7 +220,7 @@ void \@Base::popToken__()
     d_token = d_next.first;
     d_val__ = std::move(d_next.second);
 
-    d_next.first = _UNDETERMINED_;
+    d_next.first = UNDETERMINED__;
 }
 
 // base/push
@@ -261,7 +261,7 @@ void \@Base::pushToken__(int token)
 // base/redotoken
 void \@Base::redoToken__()
 {
-    if (d_token != _UNDETERMINED_)
+    if (d_token != UNDETERMINED__)
         pushToken__(d_token);
 }
 
@@ -354,7 +354,7 @@ $insert 4 debug "Reached ERROR state " << top__()
 void \@::executeAction__(int production)
 try
 {
-    if (token__() != _UNDETERMINED_)
+    if (token__() != UNDETERMINED__)
         pushToken__(token__());     // save an already available token
 $insert 4 debug "execute action " << production << " ..."
 $insert executeactioncases
@@ -419,17 +419,17 @@ catch (ErrorRecovery__)
 // derived/nexttoken
 void \@::nextToken__()
 {
-    // If d_token is _UNDETERMINED_ then if savedToken__() is _UNDETERMINED_ 
+    // If d_token is UNDETERMINED__ then if savedToken__() is UNDETERMINED__ 
     // another token is obtained from lex(). Then savedToken__() is assigned
     // to d_token.
 
-    if (token__() != _UNDETERMINED_)        // no need for a token: got one
+    if (token__() != UNDETERMINED__)        // no need for a token: got one
     {
 $insert 8 debug "available token " << symbol__(token__())
         return;                             // already
     }
 
-    if (savedToken__() != _UNDETERMINED_)
+    if (savedToken__() != UNDETERMINED__)
     {
         popToken__();                       // consume pending token
 $insert 8 debug "retrieved token " << symbol__(token__()) << stype__(", semantic = ", d_val__)
