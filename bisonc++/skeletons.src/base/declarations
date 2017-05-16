@@ -6,7 +6,6 @@ namespace // anonymous
 
     enum Reserved__
     {
-        PARSE_ACCEPT__   = 0,   // `ACCEPT' TRANSITION
         UNDETERMINED__   = -2,
         EOF__            = -1,
         errTok__         = 256
@@ -22,6 +21,11 @@ namespace // anonymous
         REQ_DEF,    // REQ_TOKEN | DEF_RED
         ERR_REQ_DEF // ERR_ITEM | REQ_TOKEN | DEF_RED
     };    
+    enum StateTransition
+    {
+        ACCEPT__   = 0,     // `ACCEPT' TRANSITION
+    };
+
     struct PI__     // Production Info
     {
         size_t d_nonTerm; // identification number of this production's

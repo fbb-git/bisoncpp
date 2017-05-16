@@ -56,7 +56,6 @@ namespace // anonymous
 
     enum Reserved__
     {
-        PARSE_ACCEPT__   = 0,   // `ACCEPT' TRANSITION
         UNDETERMINED__   = -2,
         EOF__            = -1,
         errTok__         = 256
@@ -72,6 +71,11 @@ namespace // anonymous
         REQ_DEF,    // REQ_TOKEN | DEF_RED
         ERR_REQ_DEF // ERR_ITEM | REQ_TOKEN | DEF_RED
     };    
+    enum StateTransition
+    {
+        ACCEPT__   = 0,     // `ACCEPT' TRANSITION
+    };
+
     struct PI__     // Production Info
     {
         size_t d_nonTerm; // identification number of this production's
@@ -114,6 +118,7 @@ $insert polymorphicCode
 // base/base1
 \@Base::\@Base()
 :
+    d_token(Reserved__::UNDETERMINED__),
 $insert 4 baseclasscode
 }
 
@@ -294,16 +299,16 @@ $insert 8 debug "ERROR RECOVERED: next state " << action
 // base/startrecovery
 void \@Base::startRecovery__()
 {
-    int lastToken = d_token;                    // give the unexpected token a
-                                                // chance to be processed
-                                                // again.
+    int lastToken = d_token;                // give the unexpected token a
+                                            // chance to be processed
+                                            // again.
 
-    pushToken__(errTok__);                       // specify errTok__ as next token
-    push__(lookup__());                         // push the error state
+    pushToken__(Reserved__::errTok__);      // specify errTok__ as next token
+    push__(lookup__());                     // push the error state
 
-    d_token = lastToken;                        // reactivate the unexpected
-                                                // token (we're now in an
-                                                // ERROR state).
+    d_token = lastToken;                    // reactivate the unexpected
+                                            // token (we're now in an
+                                            // ERROR state).
 
     d_recovery = true;
 }
@@ -418,26 +423,27 @@ catch (ErrorRecovery__)
 
 // derived/nexttoken
 void \@::nextToken__()
-{
-    // If d_token is Reserved__::UNDETERMINED__ then if savedToken__() is Reserved__::UNDETERMINED__ 
-    // another token is obtained from lex(). Then savedToken__() is assigned
-    // to d_token.
+{ 
+    // If d_token is Reserved__::UNDETERMINED__ then if savedToken__() is
+    // Reserved__::UNDETERMINED__ another token is obtained from lex(). Then
+    // savedToken__() is assigned to d_token.
 
-    if (token__() != Reserved__::UNDETERMINED__)        // no need for a token: got one
+                                    // no need for a token: got one already
+    if (token__() != Reserved__::UNDETERMINED__) 
     {
 $insert 8 debug "available token " << symbol__(token__())
-        return;                             // already
+        return;                             
     }
 
     if (savedToken__() != Reserved__::UNDETERMINED__)
     {
-        popToken__();                       // consume pending token
+        popToken__();               // consume pending token
 $insert 8 debug "retrieved token " << symbol__(token__()) << stype__(", semantic = ", d_val__)
     }
     else
     {
-        ++d_acceptedTokens__;               // accept another token (see
-                                            // errorRecover())
+        ++d_acceptedTokens__;       // accept another token (see
+                                    // errorRecover())
         lex__(lex());
         print__();
 $insert 8 debug "scanner token " << symbol__(token__())

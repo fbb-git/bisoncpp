@@ -30,14 +30,14 @@ $insert STYPE
 
         int d_stackIdx = -1;
         std::vector<StatePair> d_stateStack;
-        StatePair  *d_vsp;           // points to the topmost value stack
-        size_t      d_state;
+        StatePair  *d_vsp = 0;       // points to the topmost value stack
+        size_t      d_state = 0;
 
         TokenPair   d_next;
         int         d_token;
 
-        bool        d_terminalToken;
-        bool        d_recovery;
+        bool        d_terminalToken = false;
+        bool        d_recovery = false;
 
 $insert LTYPEstack
 
@@ -49,7 +49,6 @@ $insert LTYPEstack
         };
         enum ErrorRecovery__
         {
-            DEFAULT_RECOVERY_MODE__,
             UNEXPECTED_TOKEN__,
         };
 
