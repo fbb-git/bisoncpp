@@ -58,7 +58,7 @@ namespace // anonymous
     {
         PARSE_ACCEPT     = 0,   // `ACCEPT' TRANSITION
         UNDETERMINED__   = -2,
-        _EOF_            = -1,
+        EOF__            = -1,
         _error_          = 256
     };
     enum StateType       // modify statetype/data.cc when this enum changes
@@ -154,7 +154,7 @@ void \@Base::lex__(int token)
     d_token = token;
 
     if (d_token <= 0)
-        d_token = _EOF_;
+        d_token = EOF__;
 
     d_terminalToken = true;
 }
@@ -409,7 +409,7 @@ catch (ErrorRecovery__)
         errorRecovery__();
     else
     {
-        if (token__() == _EOF_)
+        if (token__() == EOF__)
             ABORT();
         popToken__();               // skip the failing token
     }

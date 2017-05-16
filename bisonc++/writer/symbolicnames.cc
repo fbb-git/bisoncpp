@@ -10,7 +10,7 @@ void Writer::symbolicNames() const
         "{\n"
                         // UNDETERMINED__ is also used in generator/print.cc
         "    SMapVal(-2, \"UNDETERMINED__\"),  // predefined symbols\n"
-        "    SMapVal(-1, \"_EOF_\"),\n"
+        "    SMapVal(-1, \"EOF__\"),\n"
         "    SMapVal(256, \"_error_\"),\n"
         "\n";
 

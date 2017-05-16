@@ -1183,7 +1183,7 @@ bisonc++ (1.6.0)
     %prec specification or as the priority of their first terminal token.
 
   * The accepting State no longer has default reductions. It doesn't need them
-    since _EOF_ in those states terminates the parser. Accepting States
+    since EOF__ in those states terminates the parser. Accepting States
     now have search sentinels, allowing the parser to do proper error
     recovery. 
 

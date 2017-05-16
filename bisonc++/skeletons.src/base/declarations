@@ -8,7 +8,7 @@ namespace // anonymous
     {
         PARSE_ACCEPT     = 0,   // `ACCEPT' TRANSITION
         UNDETERMINED__   = -2,
-        _EOF_            = -1,
+        EOF__            = -1,
         _error_          = 256
     };
     enum StateType       // modify statetype/data.cc when this enum changes
