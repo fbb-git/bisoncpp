@@ -32,5 +32,6 @@ token. If you need only certain fields, then the lexical scanner
 only has to provide those fields. 
 
     Be advised that using this or corresponding (custom-defined, see sections
-ref(LTYPE) and ref(LOCSTRUCT)) may slow down the parsing process noticeably.
+ref(LTYPE) and ref(LOCSTRUCT)) constructions may somewhat slow down the
+parsing process.
     )

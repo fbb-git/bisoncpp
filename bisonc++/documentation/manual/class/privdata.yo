@@ -38,9 +38,6 @@ members inherited from the parser's base class.
         bf(d_loc__) variable through the pointer to bf(d_loc__) stored inside
         the lexical scanner.
 
-    it() bf(LTYPE__ d_lsp__):nl()
-       The location stack pointer. Used internally.
-
     it() bf(size_t d_nErrors__):nl()
        The number of errors counted by tt(parse()). It is initialized by the
         parser's base class initializer, and is updated while tt(parse())
@@ -48,29 +45,17 @@ members inherited from the parser's base class.
         of errors counted by tt(parse()). Errors are not counted if suppressed
         (i.e., if tt(d_acceptedTokens__) is less than tt(d_requiredTokens__)).
 
-    it() bf(size_t d_nextToken__):nl()
-       A pending token. 
-        Do not modify.
-
     it() bf(size_t d_requiredTokens__):nl()
        Defines the minimum number of accepted tokens that the tt(parse())
         function must have processed before a syntactic error can be
         generated. 
-
-    it() bf(int d_state__):nl()
-       The current parsing state. 
-        Do not modify.
-
-    it() bf(int d_token__):nl()
-       The current token. 
-        Do not modify.
 
     it() label(DVAL) bf(STYPE__ d_val__):nl()
        The semantic value of a returned token or nonterminal symbol. With
         nonterminal tokens it is assigned a value through the action rule's
         symbol bf($$). Lexical scanners may be offered the facility to assign
         a semantic value to this variable in parallel with a returned
-        token. In order to allow a scanner access to bf(d_val__),
+        token. To allow a scanner access to bf(d_val__),
         bf(d_val__)'s address should be passed to the scanner. This can be
         realized, for example, by defining a member bf(void setSval(STYPE__
         *)) in the lexical scanner, which is then called from the parser's
@@ -119,14 +104,4 @@ members inherited from the parser's base class.
         values of the defined polymorphic data types. More complex assignments
         are also possible, using em(tagged assignments)+IFDEF(MANUAL)(, as
         explained in section ref(POLYTYPE))().
-
-    it() bf(LTYPE__ d_vsp__):nl()
-       The semantic value stack pointer. 
-        Do not modify.
     )
-
-
-
-
-
-

@@ -1,11 +1,11 @@
 includefile(error/intro.yo)
 
-sect(Syntactical Error Recovery)
+sect(Syntactic Error Recovery)
 includefile(error/syntactical.yo)
 
     subsect(Error Recovery)
     includefile(error/recovery.yo)
 
-sect(Semantical Error Recovery)
+sect(Semantic Error Recovery)
 includefile(error/semantical.yo)
 

@@ -20,9 +20,9 @@ the parser.
         error-conditions. 
 
     it() bf(StateType):nl()
-       This enumeration defines several moe token values used internally by
-        the parsing functions. They are:
-        verb(
+       This enumeration defines several additional token values used
+        internally by the parsing functions. They are:
+       verb(
         NORMAL,
         ERR_ITEM,
         REQ_TOKEN,

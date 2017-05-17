@@ -36,9 +36,9 @@ void State::allStates()
     "or:\n"
     "   0 (removed by precedence): On C ...\n"
     "       in which case a production rule's precedence took priority\n"
-    "Also, reduction item(s) may be listed\n"
-    "\n"
-    "\n";
+    "Also, reduction item(s) may be listed\n";
+
+    imsg << '\n';
 
     copy(s_state.begin(), s_state.end(), 
                 ostream_iterator<State const *>(imsg, "\n"));

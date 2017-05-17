@@ -87,7 +87,7 @@ void Parser::exceptionHandler(std::exception const &exc)
     it() bf(void print()):nl()
       By default implemented inline in the tt(parser.ih) internal header file,
        this member calls tt(print__) to display the last received token and
-       corrseponding matched text. The tt(print__) member is only implemented
+       corresponding matched text. The tt(print__) member is only implemented
        if the tt(--print-tokens) option or tt(%print-tokens) directive was
        used when the parsing function was generated. Calling tt(print__) from
        tt(print) is unconditional, but can easily be controlled by the using
@@ -118,8 +118,8 @@ be modified or masked by user-defined code:
     it() bf(int lex__(int token))
     it() bf(int Base::lookup+nop()())
     it() bf(LTYPE__ const &lsp__(int) const)nl()
-       (only available when tt(%lsp-needed, %ltype) or
-        tt(%locationstruct) was specified.)
+        (only available when tt(%lsp-needed, %ltype) or
+        tt(%locationstruct) was specified).
     it() bf(void nextCycle__+nop()())
     it() bf(void nextToken__+nop()())
     it() bf(void Base::pop__+nop()())

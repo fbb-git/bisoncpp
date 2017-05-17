@@ -1,4 +1,4 @@
-Semantical error recovery once again requires judgment on the part of the
+Semantic error recovery once again requires judgment on the part of the
 grammar-writer. For example, an assignment expression may be syntactically
 defined as
         verb(
@@ -10,7 +10,7 @@ identifier, a dereferenced pointer expression or some other
 address-expression. The right-hand side is a so-called em(rvalue): this may be
 any value: any expression will do.
 
-    A rule like the above leaves room for many different semantical errors:
+    A rule like the above leaves room for many different semantic errors:
     itemization(
     it() Since the rule's LHS equals tt(expr), em(any) expression is accepted
 by the parser. E.g.,
@@ -18,16 +18,16 @@ by the parser. E.g.,
     3 = 12
         )
     So, the action associated with this rule should em(check) whether the
-expression's left-hand side is actually an lvalue. If not, a em(semantical)
+expression's left-hand side is actually an lvalue. If not, a em(semantic)
 error should be reported;
     it() In a typed language (like bf(C++)), not all assignments are
 possible. E.g., it is not acceptable to assign a bf(std:string) value
-to a bf(double) variable. When conflicting types are used, a em(semantical)
+to a bf(double) variable. When conflicting types are used, a em(semantic)
 error should be reported;
     it() In a language requiring variables to be defined or declared before
 they are used (like bf(C++)) the parser should check whether a variable is
 actually defined or declared when it is used in an expression. If not, a
-em(semantical) error should be reported
+em(semantic) error should be reported
     )
     A parser that should be able to detect semantic errors normally uses a
 counter counting the number of semantic errors, e.g., tt(size_t
@@ -39,7 +39,7 @@ additional rule, becoming the augmented grammar's start symbol which simply
 calls the former start symbol. For example, if tt(input) was the name of the
 original start-symbol, augment the grammar as follows to ensure a
 bf(PARSE_ABORT) return value of the tt(parse()) member when either syntactic
-or semantical errors were detected:
+or semantic errors were detected:
         verb(
     semantic_input:                 // new start-symbol
         input
@@ -49,5 +49,5 @@ or semantical errors were detected:
         }
         )
     Returning from the parser's tt(parse()) member the number of syntactic
-and semantical errors could then be printed, whereupon the program might
+and semantic errors could then be printed, whereupon the program might
 terminate. 

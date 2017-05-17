@@ -5,6 +5,8 @@ void Rules::showTerminals() const
     if (!imsg.isActive())
         return;
 
+    imsg.setTag("");
+
     imsg << "\n"
             "Symbolic Terminal tokens:\n";
 
