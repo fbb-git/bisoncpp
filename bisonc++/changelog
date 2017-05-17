@@ -61,7 +61,18 @@ bisonc++ (6.00.00)
 
   * Documentation was updated to reflect the above modifications
 
-TODO  * The build script now properly recognizes the 'strip' option
+  * The build script now properly recognizes the 'strip' option
+
+  * By default precompiled headers are used. The option -P was removed from
+    the `build' script: if precompiled headers should not be used, then
+    remove the line 
+
+        #define PRECOMP             "-x c++-header"
+
+    in the 'icmconf' file or turn it into comment by prefixing two slashes:
+
+        //#define PRECOMP             "-x c++-header"
+
 
 
 bisonc++ (5.03.00)

@@ -1,7 +1,7 @@
 oxref by Frank B. Brokken (f.b.brokken@rug.nl)
 oxref V1.00.06 2012-2015
 
-CREATED Tue, 16 May 2017 09:24:33 +0000
+CREATED Wed, 17 May 2017 14:25:35 +0000
 CROSS REFERENCE FOR: -fxs tmp/main.o tmp/libmodules.a 
 ----------------------------------------------------------------------
 
@@ -361,28 +361,6 @@ containsKernelItem(Item const&, unsigned long, std::vector<StateItem, std::alloc
     haskernel.cc: State::hasKernel(std::vector<Item, std::allocator<Item> > const&) const
 
 cxx11]
-  Full name: Parser::s_hiddenName[abi:cxx11]
-  Source:    data.cc 
-  Used By:
-    nexthiddenname.cc: Parser::nextHiddenName[abi:cxx11]()
-
-cxx11]
-  Full name: Parser::s_semanticValue[abi:cxx11]
-  Source:    data.cc 
-  Used By:
-    dvalpolypar.cc: Parser::dvalPolyPar(int, Block&, AtDollar const&)
-    dvalpolyreplace.cc: Parser::dvalPolyReplace(bool, Block&, AtDollar const&, char const*)
-    dvalreplace.cc: Parser::dvalReplace(bool, Block&, AtDollar const&, char const*)
-    dvalunionreplace.cc: Parser::dvalUnionReplace(bool, Block&, AtDollar const&, char const*)
-    installdefaultaction.cc: Parser::installDefaultAction(Production const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
-
-cxx11]
-  Full name: Parser::s_semanticValueStack[abi:cxx11]
-  Source:    data.cc 
-  Used By:
-    svselement.cc: Parser::svsElement[abi:cxx11](int, int) const
-
-cxx11]
   Full name: Parser::s_stype[abi:cxx11]
   Source:    data.cc 
   Used By:
@@ -392,10 +370,10 @@ cxx11]
     typeindex.cc: Parser::typeIndex(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
 
 cxx11]
-  Full name: Parser::s_undefined[abi:cxx11]
+  Full name: Generator::s_insert[abi:cxx11]
   Source:    data.cc 
   Used By:
-    blkerr.cc: Parser::blkErr(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+    insert.cc: Generator::insert(std::ostream&) const
 
 cxx11]
   Full name: Parser::s_defaultAction[abi:cxx11]
@@ -416,10 +394,38 @@ cxx11]
     parse.cc: Parser::executeAction__(int)
 
 cxx11]
-  Full name: Generator::s_insert[abi:cxx11]
+  Full name: Parser::s_undefined[abi:cxx11]
   Source:    data.cc 
   Used By:
-    insert.cc: Generator::insert(std::ostream&) const
+    blkerr.cc: Parser::blkErr(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Production const&)
+
+cxx11]
+  Full name: Options::s_value[abi:cxx11]
+  Source:    data.cc 
+  Used By:
+    valueof.cc: Options::valueOf(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Options::Value, unsigned int)
+
+cxx11]
+  Full name: Parser::s_semanticValueStack[abi:cxx11]
+  Source:    data.cc 
+  Used By:
+    svselement.cc: Parser::svsElement[abi:cxx11](int, int) const
+
+cxx11]
+  Full name: Parser::s_semanticValue[abi:cxx11]
+  Source:    data.cc 
+  Used By:
+    dvalpolypar.cc: Parser::dvalPolyPar(int, Block&, AtDollar const&)
+    dvalpolyreplace.cc: Parser::dvalPolyReplace(bool, Block&, AtDollar const&, char const*)
+    dvalreplace.cc: Parser::dvalReplace(bool, Block&, AtDollar const&, char const*)
+    dvalunionreplace.cc: Parser::dvalUnionReplace(bool, Block&, AtDollar const&, char const*)
+    installdefaultaction.cc: Parser::installDefaultAction(Production const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+
+cxx11]
+  Full name: Parser::s_hiddenName[abi:cxx11]
+  Source:    data.cc 
+  Used By:
+    nexthiddenname.cc: Parser::nextHiddenName[abi:cxx11]()
 
 cxx11]
   Full name: Production::s_fileName[abi:cxx11]
@@ -430,12 +436,6 @@ cxx11]
     installdefaultaction.cc: Parser::installDefaultAction(Production const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
     showconflicts.cc: RRConflict::showConflicts(Rules const&) const
     showconflicts.cc: SRConflict::showConflicts(Rules const&) const
-
-cxx11]
-  Full name: Options::s_value[abi:cxx11]
-  Source:    data.cc 
-  Used By:
-    valueof.cc: Options::valueOf(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Options::Value, unsigned int)
 
 cxx11]()
   Full name: Scanner::canonicalQuote[abi:cxx11]()
@@ -452,16 +452,10 @@ cxx11]()
     nestedblock.cc: Parser::nestedBlock(Block&)
 
 cxx11]() const
-  Full name: Generator::atMatchedTextFunction[abi:cxx11]() const
-  Source:    atmatchedtextfunction.cc 
+  Full name: Options::baseclassHeaderName[abi:cxx11]() const
+  Source:    baseclassheadername.cc 
   Used By:
-    data.cc: GLOBALS data.cc 1data.o
-
-cxx11]() const
-  Full name: Generator::atLtype[abi:cxx11]() const
-  Source:    atltype.cc 
-  Used By:
-    data.cc: GLOBALS data.cc 1data.o
+    conflicts.cc: Generator::conflicts() const
 
 cxx11]() const
   Full name: Generator::atClassname[abi:cxx11]() const
@@ -470,14 +464,20 @@ cxx11]() const
     data.cc: GLOBALS data.cc 1data.o
 
 cxx11]() const
-  Full name: Options::baseclassHeaderName[abi:cxx11]() const
-  Source:    baseclassheadername.cc 
-  Used By:
-    conflicts.cc: Generator::conflicts() const
-
-cxx11]() const
   Full name: Generator::atTokenFunction[abi:cxx11]() const
   Source:    attokenfunction.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 1data.o
+
+cxx11]() const
+  Full name: Generator::atMatchedTextFunction[abi:cxx11]() const
+  Source:    atmatchedtextfunction.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 1data.o
+
+cxx11]() const
+  Full name: Generator::atLtype[abi:cxx11]() const
+  Source:    atltype.cc 
   Used By:
     data.cc: GLOBALS data.cc 1data.o
 

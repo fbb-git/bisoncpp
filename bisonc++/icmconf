@@ -32,5 +32,9 @@
 #define COMPILER_OPTIONS    ""
 #define LINKER_OPTIONS      ""
 #define IH                  ".ih"
+
+    // put // in front of the next #define if precompiled headers should
+    // not be used:
 #define PRECOMP             "-x c++-header"
+
 #define DEFCOM              "program"
