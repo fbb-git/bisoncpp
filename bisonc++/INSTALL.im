@@ -23,7 +23,7 @@
 #define CXX                 "g++"
 
     // the compiler options to use.
-#define CXXFLAGS            "--std=c++14 -Wall -O2 -fdiagnostics-color=never"
+#define CXXFLAGS            "-Wall -O2 -fdiagnostics-color=never"
 
 #define LDFLAGS             ""
     // flags passed to the linker

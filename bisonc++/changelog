@@ -68,6 +68,8 @@ bisonc++ (6.00.00)
     Be advised that using -P removes all existing .ih.gch files from the
     directory containing 'main.ih' and from all its immediate subdirectories.
 
+  * Removed the compiler option --std=c++14, since that's by now the default.
+
  -- Frank B. Brokken <f.b.brokken@rug.nl>  Thu, 18 May 2017 09:46:19 +0200
 
 bisonc++ (5.03.00)
