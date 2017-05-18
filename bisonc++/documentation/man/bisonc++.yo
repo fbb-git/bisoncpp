@@ -1,6 +1,7 @@
 DELETEMACRO(file)
 
-NOUSERMACRO( setDebug lex yylex matched YYText file)
+NOUSERMACRO( setDebug lex yylex matched YYText file exceptionHandler lookup
+             error)
 
 includefile(../../release.yo)
 

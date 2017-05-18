@@ -61,16 +61,6 @@ void main(int argc, list argv)
 
     echo(g_echo);
 
-    if (precomp)
-        exec(P_NOCHECK, 
-            "sed -i 's,^//#define PRECOMP,#define PRECOMP,' icmconf");
-    else
-    {
-        exec(P_NOCHECK, 
-            "sed -i 's,^#define PRECOMP,//#define PRECOMP,' icmconf");
-        exec(P_NOCHECK, "rm -f *.ih.gch */*.ih.gch");
-    }
-    
     option = argv[1];
 
     if (option == "clean")
@@ -97,11 +87,23 @@ void main(int argc, list argv)
     if (option == "manual")
         manual();
 
+
+    if (precomp)
+        exec(P_NOCHECK, 
+            "sed -i 's,^//#define PRECOMP,#define PRECOMP,' icmconf");
+    else
+    {
+        exec(P_NOCHECK, 
+            "sed -i 's,^#define PRECOMP,//#define PRECOMP,' icmconf");
+        exec(P_NOCHECK, "rm -f *.ih.gch */*.ih.gch");
+    }
+    
     if (option == "library")
     {
         system("icmbuild library");
         exit(0);
     }
+
 
     if (argv[2] == "strip") 
         psType = "strip";

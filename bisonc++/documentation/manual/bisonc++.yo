@@ -1,5 +1,6 @@
 NOUSERMACRO(LALR LR parse lex error main name setLoc setDebug clearin debug
-            throw print ParserBase ACCEPT ABORT setVal setSval yylex)
+            throw print ParserBase ACCEPT ABORT setVal setSval yylex
+            productions exceptionHandler)
 
 DEFINEMACRO(b)(0)(bf(bisonc++))
 DEFINEMACRO(B)(0)(bf(Bisonc++))

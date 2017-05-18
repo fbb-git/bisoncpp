@@ -58,7 +58,7 @@ or masked by user-defined code.
         any tt(std::exception) thrown by the parser's actions, as though the
         action block itself was surrounded by a tt(try ... catch) statement.
         It is of course still possible to use an explicit tt(try ... catch)
-        statement within action blocks. However, tt(exceptionHandler__) can
+        statement within action blocks. However, tt(exceptionHandler) can
         be used to factor out code that is common to various action blocks.
 
         The next example shows an explicit implementation of
