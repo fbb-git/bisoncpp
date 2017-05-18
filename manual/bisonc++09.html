@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<title> <div style="text-align: center"><strong >Bisonc++</strong> (Version 5.03.00) User Guide</div> </title>
+<title> <div style="text-align: center"><strong >Bisonc++</strong> (Version 6.00.00) User Guide</div> </title>
 <style type="text/css">
     figure {text-align: center;}
     img {vertical-align: center;}
@@ -13,9 +13,9 @@
     <li> <a href="bisonc++08.html">Previous Chapter</a>
 </ul>
 <hr>
-<a name="INVOKING"></a><a name="l130"></a>
+<a name="INVOKING"></a><a name="l131"></a>
 <h1 >Chapter 9: Invoking Bisonc++</h1>
-<a name="OPTIONS"></a><a name="l131"></a>
+<a name="OPTIONS"></a><a name="l132"></a>
 <h2 >9.1: Bisonc++ options</h2>
     Where available, single letter options are listed between parentheses
 beyond their associated long-option variants. Single letter options require
@@ -312,6 +312,15 @@ This option does <em >not</em> show the tokens returned and text matched
             by <strong >bisonc++</strong> itself when it is reading its input <strong >s</strong>. If
             that is what you want, use the <code >--own-tokens</code> option.
 <p>
+<li> <strong >--prompt</strong><br/>
+           When adding debugging code (using the <code >debug</code> option or
+            directive) the debug information is displayed continuously while
+            the parser processes its input. When using the <code >prompt</code> option
+            (or directive) the generated parser displays a prompt (a question
+            mark) at each step of the parsing process. Caveat: when using this
+            option the parser's input cannot be provided at the parser's
+            standard input stream.
+<p>
 <li> <a name="REQUIRED"></a> <strong >--required-tokens</strong>=<code >number</code><br/>
            Following a syntactic error, require at least <code >number</code>
             successfully processed tokens before another syntactic error can
@@ -426,7 +435,10 @@ It is an error if this option is used and the scanner token
             called. 
 <p>
 <li> <strong >--thread-safe</strong><br/> 
-           No static data are modified, making <strong >bisonc++</strong> thread-safe.
+           Only used with polymorphic semantic values, and then only required
+            when the parser is used in multiple threads: it ensures that each
+            thread's polymorphic code only accesses its own parser's error
+            counting variable.
 <p>
 <li> <strong >--usage</strong><br/>
             Writes basic usage information to the standard output stream and
@@ -446,7 +458,7 @@ It is an error if this option is used and the scanner token
 <p>
 </ul>
 <p>
-<a name="l132"></a>
+<a name="l133"></a>
 <h2 >9.2: Bisonc++ usage</h2>
 When <strong >bisonc++</strong> is called without any arguments it generates the following usage
 information: 
@@ -457,124 +469,172 @@ information:
 
 bisonc++ by Frank B. Brokken (f.b.brokken@rug.nl)
 
-LALR(1) Parser Generator V 5.03.00
+LALR(1) Parser Generator V 6.00.00
 Copyright (c) GPL 2005-2017. NO WARRANTY.
 Designed after `bison++' (1.21.9-1) by Alain Coetmeur &lt;coetmeur@icdc.fr&gt;
 
 Usage: bisonc++ [OPTIONS] file
 Where:
   [OPTIONS] - zero or more optional arguments (int options between
-              parentheses. Short options require arguments if their
-              long option variants do too):
-   --analyze-only (-A): only analyze the grammar; except for possibly
-           the verbose grammar description file no files are written.
+              parentheses. Short options require arguments if their long
+              option variants do too).
+
+   --analyze-only (-A): 
+           only analyze the grammar; except for possibly the verbose grammar
+           description file no files are written.
+
    --baseclass-header=&lt;header&gt; (-b):
            filename holding the base class definition.
+
    --baseclass-preinclude=&lt;header&gt; (-H):
-           preinclude header in the base-class header file.
-           Use [header] to include &lt;header&gt;, otherwise "header"
-           will be included.
+           preinclude header in the base-class header file.  Use [header] to
+           include &lt;header&gt;, otherwise \"header\" will be included.
+
    --baseclass-skeleton=&lt;skeleton&gt; (-B):
            location of the baseclass header skeleton.
+
    --class-header=&lt;header&gt; (-c):
            filename holding the parser class definition.
+
    --class-name=&lt;name&gt;:
            the name of the generated C++ class.
+
    --class-skeleton=&lt;skeleton&gt; (-C):
            location of the class header skeleton.
+
    --construction:
            write details about the grammar analysis to stdout.
+
    --debug:
            generates debug output statements in the generated parse
            function's source.
+
    --default-actions=&lt;off|quiet|warn|std&gt; (-d):
-           unless 'off', add a $$ = $1 action block to production rules
-           not defining final action blocks.
+           unless 'off', add a $$ = $1 action block to production rules not
+           defining final action blocks.
+
    --error-verbose:
            the parse function will dump the parser's state stack to stdout
            when a syntactic error is reported
+
    --filenames=&lt;filename&gt; (-f):
            filename of output files (overruling the default filename).
+
    --flex:
            use the traditional `flex' interface.
+
    --help (-h):
            produce this information (and terminate).
+
    --implementation-header=&lt;header&gt; (-i):
            filename holding the implementation header.
+
    --implementation-skeleton=&lt;skeleton&gt; (-I):
            location of the implementation header skeleton.
+
    --insert-stype:
            show selected semantic values in the output generated by
            --debug. Ignored unless --debug was specified.
+
    --max-inclusion-depth=&lt;value&gt;:
            sets the maximum number of nested grammar files (default: 10).
+
    --namespace=&lt;namespace&gt; (-n):
            define the parser in the mentioned namespace.
+
    --no-baseclass-header:
            don't create the parser's base class header.
+
    --no-decoration (-D):
            do not include the user-defined actions when generating the
            parser's tt(parse) member.
+
    --no-lines:
            don't put #line directives in generated output, overruling the 
            %lines directive.
+
    --no-parse-member:
            don't create the member parse().
+
    --own-debug:
            bisonc++ displays the actions of its parser while processing
            its input file(s) (implies --verbose).
+
    --own-tokens (-T):
            bisonc++ displays the tokens and corresponding matched text,
            received from its lexcial scanner.
+
    --parsefun-skeleton=&lt;parserskel&gt; (-P):
            location of the parse function's skeleton.
+
    --parsefun-source=&lt;source&gt; (-p):
            filename holding the parse function's source.
+
    --polymorphic-code-skeleton=&lt;skeleton&gt; (-L):
            location of the non-inline polymorphic functions skeleton.
+
    --polymorphic-skeleton=&lt;skeleton&gt; (-M):
            location of the polymorphic semantic values skeleton.
+
    --print-tokens (-t):
-           the print() member of the generated parser class displays
-           the tokens and their corresponding matched text.
+           the print() member of the generated parser class displays the
+           tokens and their corresponding matched text.
+
+   --prompt:
+           in combination with --debug: show a prompt before performing the
+           next parse-cycle (caveat: the lexical scanner should not read from
+           the standard input).
+
    --required-tokens=&lt;value&gt;:
-           minimum number of successfully processed tokens between
-           errors (default: 0).
+           minimum number of successfully processed tokens between errors
+           (default: 0).
+
    --scanner=&lt;header-file&gt; (-s):
            include `header-file' declaring the class Scanner, and call
            d_scanner.yylex() from Parser::lex().
+
    --scanner-class-name=&lt;scanner class name&gt;:
-           specifies the name of the scanner class: this option is
-           only interpreted if --scanner (or %scanner) is also used.
+           specifies the name of the scanner class: this option is only
+           interpreted if --scanner (or %scanner) is also used.
+
    --scanner-debug:
            extensive display of the actions of bisonc++'s scanner
+
    --scanner-matched-text-function=&lt;function call&gt;:
-           specifies the function to call returning the text matched by
-           the lexical scanner when returning a token
+           specifies the function to call returning the text matched by the
+           lexical scanner when returning a token
+
    --scanner-token-function=&lt;scanner token function&gt;:
            specifies the function to call by the parser's lex() function
-           returning the next token returned by the lexcial scanner
-           (by default d_scanner.yylex() when --scanner is used)
+           returning the next token returned by the lexcial scanner (by
+           default d_scanner.yylex() when --scanner is used)
+
    --show-filenames:
-           show the names of the used/generated files on the standard
-           error stream.
+           show the names of the used/generated files on the standard error
+           stream.
+
    --skeleton-directory=&lt;skeleton-directory&gt; (-S):
            location of the skeleton directory.
+
    --tag-mismatches=&lt;off|on&gt;:
-           unless 'off', issue a warning if no $$ statement was detected
-           in an action block, or if no default $$ = $1 action can be
-           added to a production rule without final action block, or
-           if run-time a tag-mismatch is observed.
+           unless 'off', issue a warning if no $$ statement was detected in an
+           action block, or if no default $$ = $1 action can be added to a
+           production rule without final action block, or if run-time a
+           tag-mismatch is observed.
+
    --target-directory=&lt;pathname&gt;:
            pathname defines the directory where generated files should be
-           written. By default this is the directory where bisonc++ is
-           called.
+           written. By default this is the directory where bisonc++ is called.
+
    --thread-safe:
-           no static data are modified, making bisonc++'s generated
-           code thread-safe.
+           provide thread-safe access by polymorphic semantic values to the
+           generated code's error-counter.
+
    --usage: produce this information (and terminate).
+
    --verbose (-V):
-           generate verbose description of the analyzed grammar.
+           generate verbose description of the analyzed grammar. 
+
    --version (-v):
            display bisonc++'s version and terminate.
 
@@ -589,4 +649,3 @@ Where:
 <hr>
 </body>
 </html>
-<!- -->

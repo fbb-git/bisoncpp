@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<title> <div style="text-align: center"><strong >Bisonc++</strong> (Version 5.03.00) User Guide</div> </title>
+<title> <div style="text-align: center"><strong >Bisonc++</strong> (Version 6.00.00) User Guide</div> </title>
 <style type="text/css">
     figure {text-align: center;}
     img {vertical-align: center;}
@@ -14,7 +14,7 @@
     <li> <a href="bisonc++07.html">Next Chapter</a>
 </ul>
 <hr>
-<a name="l85"></a>
+<a name="l87"></a>
 <h1 >Chapter 6: Examples</h1>
 Now we show and explain three sample programs written using <strong >bisonc++</strong>: a reverse
 polish notation calculator, an algebraic (infix) notation calculator, and a
@@ -42,7 +42,7 @@ source archive contains the various source files ready for use.
         the multi-function calculator.
     </ul>
 <p>
-<a name="RPN"></a><a name="l86"></a>
+<a name="RPN"></a><a name="l88"></a>
 <h2 >6.1: Rpn: a Reverse Polish Notation Calculator</h2>
 The first example is about a simple double-precision reverse polish notation
 calculator (a calculator using postfix operators). This example provides a
@@ -52,7 +52,7 @@ example illustrates how operator precedence is handled.
 All sources for this calculator are found in the <a href="examples/rpn/">examples/rpn/</a>
 directory.
 <p>
-<a name="l87"></a>
+<a name="l89"></a>
 <h3 >6.1.1: Declarations for the `rpn' calculator</h3>
     Here are the directives that are used for the reverse polish notation
 calculator. As in <strong >C++</strong>, end-of-line comments may be used.
@@ -76,7 +76,7 @@ uses the type <code >int</code> as the semantic value type, but a calculator usu
 uses floating point values the directive <code >%stype double</code> is used to indicate
 that the calculator uses `<code >double</code>' as the type for its semantic values.
 <p>
-<a name="l88"></a>
+<a name="l90"></a>
 <h3 >6.1.2: Grammar rules for the `rpn' calculator</h3>
     Here are the grammar rules for the reverse polish notation calculator.
         <pre>
@@ -153,7 +153,7 @@ for the nonterminal that the production rule is defining. Assigning a value to
 of production rules are referred to as <code >$1</code> (the first element of a
 production rule), <code >$2</code> (the second element), and so on.
 <p>
-<a name="l89"></a>
+<a name="l91"></a>
 <h4 >6.1.2.1: Explanation of `input'</h4>
         Consider the definition of <code >input</code>:
         <pre>
@@ -186,7 +186,7 @@ The parser's parsing function continues to process input until a grammatical
 error is encountered or untilthe lexical analyzer returns the end-of-file
 token. 
 <p>
-<a name="l90"></a>
+<a name="l92"></a>
 <h4 >6.1.2.2: Explanation of `line'</h4>
         Next consider the definition of the <code >line</code> nonterminal:
         <pre>
@@ -216,7 +216,7 @@ becomes a bug if that value is ever used, but we don't use it: once <code >rpn</
 has printed the value of the user's input line, that value is no longer
 needed.
 <p>
-<a name="l91"></a>
+<a name="l93"></a>
 <h4 >6.1.2.3: Explanation of `expr'</h4>
         The <code >exp</code> nonterminal has several rules, one for each kind of
 expression. The first rule handles the simplest kind of expression: just a
@@ -283,7 +283,7 @@ in the first rule (the one that uses <code >NUM</code>).
 The formatting shown here shows  the recommended layout, but <strong >bisonc++</strong> does not
 require it. You can alter whitespace as much as you like.
 <p>
-<a name="RPNLEX"></a><a name="l92"></a>
+<a name="RPNLEX"></a><a name="l94"></a>
 <h3 >6.1.3: The Lexical Scanner used by `rpn'</h3>
     The lexical analyzer's job is to convert characters or sequences of characters
 read from the input stream into tokens. <strong >Bisonc++</strong>'s parser obtains its tokens by
@@ -346,7 +346,7 @@ int Parser::lex()
 </pre>
 
 <p>
-<a name="l93"></a>
+<a name="l95"></a>
 <h3 >6.1.4: The Controlling Function `main()'</h3>
     In keeping with the spirit of this example, the calcuator's
 <code >main</code> function is a very small one.  It
@@ -364,7 +364,7 @@ int main()
 </pre>
 
 <p>
-<a name="l94"></a>
+<a name="l96"></a>
 <h3 >6.1.5: The error reporting member `error()'</h3>
     When <code >parse</code> encounters a <em >syntax error</em>, it calls the error reporting
 member function (<code >error</code>) to print an error message. A very basic in-line
@@ -380,7 +380,7 @@ value. No error production rules were used for <code >rpn</code>, so the calcula
 terminates at the first syntax error.. Not very nice in a real-life
 calculator, but it is acceptable for this first example.
 <p>
-<a name="l95"></a>
+<a name="l97"></a>
 <h3 >6.1.6: Running Bisonc++ to generate the Parser</h3>
     Before running <strong >bisonc++</strong>, we should decide how to organize the program's source
 code, using one or more source files. Even though the example is simple, it is
@@ -415,7 +415,7 @@ by the programmer, e.g., to add new members to to the parser class. These two
 files will not be overwritten by <strong >bisonc++</strong>, unless explicitly instructed to do
 so. 
 <p>
-<a name="l96"></a>
+<a name="l98"></a>
 <h3 >6.1.7: Constructing and running `rpn'</h3>
     Here is how to compile and run the parser file:
         <pre>
@@ -462,7 +462,7 @@ Here is an example session using the calculator:
 </pre>
 
 <p>
-<a name="CALC"></a><a name="l97"></a>
+<a name="CALC"></a><a name="l99"></a>
 <h2 >6.2: `calc': an Infix Notation Calculator</h2>
 We now modify <code >rpn</code> to handle infix operators instead of postfix. Infix
 notation requires us to define operator precedence and to extend the grammar
@@ -576,7 +576,7 @@ Here is a sample run of <code >calc</code>:
 </pre>
 
 <p>
-<a name="ERROR"></a><a name="l98"></a>
+<a name="ERROR"></a><a name="l100"></a>
 <h2 >6.3: Basic Error Recovery</h2>
 Up to this point, error-recovery hasn't yet been covered i.e., how to continue
 parsing after the parser detects a syntax error. By default <code >parse</code> returns
@@ -626,7 +626,7 @@ may call <code >ERROR()</code>, resulting in the same procedure as the one that'
 for syntax errors: all subsequenct tokens are skipped until a token has been
 encountered that can follow the reserved symbol <code >error</code>.
 <p>
-<a name="MFCALC"></a><a name="l99"></a>
+<a name="MFCALC"></a><a name="l101"></a>
 <h2 >6.4: `mfcalc': a Multi-Function Calculator</h2>
 Now that the basics of using <strong >bisonc++</strong> have been discussed, it is time to move on to
 a more advanced problem. The above calculators provided only offer the
@@ -666,7 +666,7 @@ variables. Here is a sample session with the multi-function calculator:
 
 Note that multiple assignment and nested function calls are supported.
 <p>
-<a name="l100"></a>
+<a name="l102"></a>
 <h3 >6.4.1: The Declaration Section for `mfcalc'</h3>
     The grammar specification file for the <code >mfcalc</code> calculator shows several new
 features. Here is the <strong >bisonc++</strong> directive section for the <code >mfcalc</code> multi-function
@@ -698,7 +698,7 @@ part of the declaraction section as used in the actual grammar file):
 specification language, allowing semantic values to have different data types.
     <ul>
     <li> The <code >%union</code> directive (given in lines 1 through 6) allows semantic
-values to have various data types (see section <a href="bisonc++04.html#UNION">4.5.29</a>). It is used
+values to have various data types (see section <a href="bisonc++04.html#UNION">4.5.31</a>). It is used
 instead of <code >%stype</code>, and defines <code >Parser::STYPE__</code> as a the union type:
 all semantic values now have this type. Now semantic values can have any of
 the types that are defined as the union's fields.
@@ -723,7 +723,7 @@ the specified union field type.
 13: by making the assignment operator right-associative we can allow
 <em >sequential assignments</em> of the form <code >a = b = c = expression</code>.
 <p>
-<a name="l101"></a>
+<a name="l103"></a>
 <h3 >6.4.2: Grammar Rules for `mfcalc'</h3>
     Here are the grammar rules for the multi-function calculator. Most of them are
 copied directly from <code >calc</code>. Three rules, mentioning <code >VAR</code> or
@@ -803,7 +803,7 @@ exp:
 </pre>
 
 <p>
-<a name="l102"></a>
+<a name="l104"></a>
 <h3 >6.4.3: The `mfcalc' Symbol- and Function Tables</h3>
     The multi-function calculator needs a symbol table for keeping track of the
 names and meanings of variables and functions. This doesn't affect the grammar
@@ -872,7 +872,7 @@ unordered_map&lt;string, double (*)(double)&gt; Parser::s_functions
     By simply editing the definition of <code >s_funTab</code>, additional
 functions can be added to the calculator.
 <p>
-<a name="MFLEX"></a><a name="l103"></a>
+<a name="MFLEX"></a><a name="l105"></a>
 <h3 >6.4.4: The new `lex()' member</h3>
     In <code >mfcalc</code>, the parser's member function <code >lex()</code> must now recognize
 variables, function names, numeric values, and the single-character arithmetic
@@ -984,7 +984,7 @@ int Parser::lex()
 </pre>
 
 <p>
-<a name="l104"></a>
+<a name="l106"></a>
 <h3 >6.4.5: Constructing `mfcalc'</h3>
     In order to construct <code >mfcalc</code>, the following steps are suggested:
     <ul>
@@ -1014,7 +1014,7 @@ int Parser::lex()
 
     </ul>
 <p>
-<a name="EXERCISES"></a><a name="l105"></a>
+<a name="EXERCISES"></a><a name="l107"></a>
 <h2 >6.5: Exercises</h2>
 Here are some suggestions for you to consider to improve <code >mfcalc</code>'s
 implementation and operating mode:
@@ -1046,4 +1046,3 @@ recovery.
 <hr>
 </body>
 </html>
-<!- -->
