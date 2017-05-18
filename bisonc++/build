@@ -37,6 +37,7 @@ void main(int argc, list argv)
     string option;
     string psType;          // program or strip
     int idx;
+    int precomp = 1;
 
     for (idx = listlen(argv); idx--; )
     {
@@ -44,6 +45,11 @@ void main(int argc, list argv)
         {
             g_echo = OFF;
             argv -= (list)"-q";
+        }
+        else if (argv[idx] == "-P")
+        {
+            precomp = 0;
+            argv -= (list)"-P";
         }
         else if (strfind(argv[idx], "LOG:") == 0)
         {
@@ -55,6 +61,16 @@ void main(int argc, list argv)
 
     echo(g_echo);
 
+    if (precomp)
+        exec(P_NOCHECK, 
+            "sed -i 's,^//#define PRECOMP,#define PRECOMP,' icmconf");
+    else
+    {
+        exec(P_NOCHECK, 
+            "sed -i 's,^#define PRECOMP,//#define PRECOMP,' icmconf");
+        exec(P_NOCHECK, "rm -f *.ih.gch */*.ih.gch");
+    }
+    
     option = argv[1];
 
     if (option == "clean")
@@ -114,44 +130,44 @@ void main(int argc, list argv)
         exit(0);
     }
 
-    printf("Usage: build [-q] what\n"
-        "Where\n"
-        "   [-q]:   run quietly, do not show executed commands\n"
-        "`what' is one of:\n"
-        "   clean                - clean up remnants of previous "
-                                                            "compilations\n"
-        "   distclean            - clean + fully remove tmp/\n"
-        "   library              - build " PROGRAM "'s library\n"
-        "   man                  - build the man-page (requires Yodl)\n"
-        "   manual               - build the manual (requires Yodl)\n"
-        "   program [strip]      - build " PROGRAM " (optionally strip the\n"
-        "                          executable)\n"
-        "   oxref [strip]        - same a `program', also builds xref file\n"
-        "                          using oxref\n"
-        "   scanner [strip]      - build new scanner, then 'build program'\n"
-        "   install [LOG:path] selection [base] -\n"
-        "                         to install the software in the locations "
-                                                                "defined \n"
-        "                         in the INSTALL.im file, optionally below "
-                                                                "base.\n"
-        "                         LOG:path is optional: if specified `path' "
-                                                                "is the\n"
-        "                         logfile on which the installation log is "
-                                                                "written.\n"
-        "                         selection can be\n"
-        "                               x, to install all components,\n"
-        "                         or a combination of:\n"
-        "                               a (additional documentation),\n"
-        "                               b (binary program),\n"
-        "                               d (standard documentation),\n"
-        "                               m (man-pages)\n"
-        "                               s (skeleton files)\n"
-        "                               u (user guide)\n"
-        "   uninstall logfile   - remove files and empty directories listed\n"
-        "                         in the file 'logfile'\n"
-        "   github               - prepare github's gh-pages update\n"
-        "                          (internal use only)\n"
-        "\n"
+    printf("Usage: build [-q -P] what\n"
+    "Where\n"
+    "   -q:   run quietly, do not show executed commands\n"
+    "   -P:   do not use precompiled headers\n"
+    "`what' is one of:\n"
+    "   clean                - clean up remnants of previous compilations\n"
+    "   distclean            - clean + fully remove tmp/\n"
+    "   library              - build " PROGRAM "'s library\n"
+    "   man                  - build the man-page (requires Yodl)\n"
+    "   manual               - build the manual (requires Yodl)\n"
+    "   program [strip]      - build " PROGRAM " (optionally strip the "
+                                                                "executable)\n"
+    "   oxref [strip]        - same a `program', also builds xref file using "
+                                                                "oxref\n"
+    "   scanner [strip]      - build new scanner, then 'build program'\n"
+    "   install [LOG:path] selection [base] -\n"
+    "                         to install the software in the locations "
+                                                            "defined \n"
+    "                         in the INSTALL.im file, optionally below "
+                                                            "base.\n"
+    "                         LOG:path is optional: if specified `path' "
+                                                            "is the\n"
+    "                         logfile on which the installation log is "
+                                                            "written.\n"
+    "                         selection can be\n"
+    "                               x, to install all components,\n"
+    "                         or a combination of:\n"
+    "                               a (additional documentation),\n"
+    "                               b (binary program),\n"
+    "                               d (standard documentation),\n"
+    "                               m (man-pages)\n"
+    "                               s (skeleton files)\n"
+    "                               u (user guide)\n"
+    "   uninstall logfile   - remove files and empty directories listed\n"
+    "                         in the file 'logfile'\n"
+    "   github               - prepare github's gh-pages update\n"
+    "                          (internal use only)\n"
+    "\n"
     );
     exit(0);
 }

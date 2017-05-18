@@ -1,6 +1,3 @@
-
-enum { Reserved__::UNDETERMINED__ = -2 };
-
 std::cout << "Token: " << symbol__(token__()) << ", text: `";
 if (token__() == Reserved__::UNDETERMINED__)
     std::cout << "'\n";

@@ -63,17 +63,12 @@ bisonc++ (6.00.00)
 
   * The build script now properly recognizes the 'strip' option
 
-  * By default precompiled headers are used. The option -P was removed from
-    the `build' script: if precompiled headers should not be used, then
-    remove the line 
+  * By default precompiled headers are used. The option -P (cf. log entry 
+    'bisonc++ (4.12.03)' below) is now opertational. 
+    Be advised that using -P removes all existing .ih.gch files from the
+    directory containing 'main.ih' and from all its immediate subdirectories.
 
-        #define PRECOMP             "-x c++-header"
-
-    in the 'icmconf' file or turn it into comment by prefixing two slashes:
-
-        //#define PRECOMP             "-x c++-header"
-
-
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Thu, 18 May 2017 09:46:19 +0200
 
 bisonc++ (5.03.00)
 
