@@ -79,6 +79,7 @@ Semantic<tg_>::Semantic()
 template <Tag__ tg_>
 Semantic<tg_>::Semantic(Semantic<tg_> const &other)
 :
+    Base(),
     d_data(other.d_data)
 {
     d_baseTag = other.d_baseTag;
