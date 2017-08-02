@@ -23,7 +23,7 @@ void Generator::polymorphic(ostream &out) const
         "extern ";
 
     if (d_threadSafe)
-        out << "std::thread_local ";
+        out << "thread_local ";
 
     out << "size_t const *t_nErrors;\n";
 
