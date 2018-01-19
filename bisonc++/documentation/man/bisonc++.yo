@@ -24,11 +24,6 @@ DEFINEMACRO(soption)(1)(\
 
 DEFINEMACRO(itx)(0)()
 DEFINEMACRO(itemlist)(1)(ARG1)
-DEFINEMACRO(tr)(3)(\
-    row(cell(ARG1)cell()\
-        cell(ARG2)cell()\
-        cell(ARG3)))
-
 
 DEFINEMACRO(bic)(0)(bf(bisonc++))
 DEFINEMACRO(b)(0)(bf(bisonc++))

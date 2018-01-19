@@ -1,3 +1,11 @@
+bisonc++ (6.00.01)
+
+  * Removed std:: in front of thread_local in generated code
+
+  * Removed definitions of the Yodl tr-macro from .yo files: it is a
+    predefined macro in Yodl 4.02.00, and is not used in de documentation.
+
+
 bisonc++ (6.00.00)
 
   * The generated code was rewritten. The protected interface of ParserBase
