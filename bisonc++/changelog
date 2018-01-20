@@ -1,10 +1,11 @@
-bisonc++ (6.00.01)
+bisonc++ (6.01.00)
 
   * Removed std:: in front of thread_local in generated code
 
   * Removed definitions of the Yodl tr-macro from .yo files: it is a
     predefined macro in Yodl 4.02.00, and is not used in de documentation.
 
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 20 Jan 2018 11:40:25 +0100
 
 bisonc++ (6.00.00)
 
