@@ -1,1 +1,1 @@
-1+2+3+4
+../bison++Example.NEW/test.txt

@@ -5,15 +5,10 @@ explicitly mentioned, but a fairly recent one is assumed.
 Required software for building Bisonc++
 ---------------------------------------
 
-libbobcat-dev (>= 4.02.00),
+    The most recent versions of:
 
-To use the provided build-script:
-
-    icmake (>= 8.01.00)
-
-To construct the manual and map-page:
-        
-    yodl (>= 3.08.01)
-
+        icmake              (for using the provided build-script)
+        libbobcat-dev
+        yodl                (for constructing the manual and man-pages)
 
 
