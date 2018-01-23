@@ -167,6 +167,9 @@ void install(string request, string dest)
         printf("  installing the user-guide at `", target, "'\n");
         logInstall("tmp/manual", "", target);
 
+        printf("  installing rpn sources at `", target + "examples/'\n");
+        logRecursive("tmp/manual/examples", target + "examples/");
+
         destInstall(dest, base + "u");
 
         logInstalled(dest, "u");
