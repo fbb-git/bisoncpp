@@ -31,7 +31,7 @@ void manual()
     run("mv *.html " HTMLDEST);
     run("cp -r grammar/poly " HTMLDEST);
     run("cp -r grammar/essence " HTMLDEST);
-    run("cp -r examples/rpn/* " HTMLDEST "/examples");
+    run("cp -r examples/rpn " HTMLDEST "/examples");
 
     exit(0);
 }
