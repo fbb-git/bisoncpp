@@ -2,7 +2,8 @@ mailto(f.b.brokken@rug.nl)
 
 notableofcontents()
 
-htmlbodyopt(#FFFAF0)(#27408B)
+htmlbodyopt(text)(#27408B)
+htmlbodyopt(bgcolor)(#FFFAF0)
 
 affiliation()
 article(Overview of rpn files)()()

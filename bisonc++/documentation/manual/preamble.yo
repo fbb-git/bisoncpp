@@ -44,13 +44,6 @@ IFDEF(latex)
 DEFINEMACRO(itx)(0)(it())
 DEFINEMACRO(itemlist)(1)(ARG1)
 
-COMMENT(
-DEFINEMACRO(tr)(3)(\
-    row(cell(ARG1)cell(verb(   ))\
-        htmlcommand(<td valign="top">)ARG2+htmlcommand(</td>)cell(verb(   ))\
-        cell(ARG3)))
-END)
-
 DEFINEMACRO(turl)(2)(\
     IFDEF(html)\
         (htmlcommand(<a target=_top href="ARG2">)ARG1+htmlcommand(</a>))\

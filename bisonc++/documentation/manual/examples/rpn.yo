@@ -3,5 +3,5 @@ calculator (a calculator using postfix operators). This example provides a
 good starting point, since operator precedence is not an issue. The second
 example illustrates how operator precedence is handled.
 
-All sources for this calculator are found in the lurl(examples/rpn/)
-directory.
+All sources for this calculator are found in the
+url(examples/rpn/)(examples/rpn/index.html) directory.
