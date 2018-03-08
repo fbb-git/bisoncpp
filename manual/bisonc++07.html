@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<title> <div style="text-align: center"><strong >Bisonc++</strong> (Version 6.01.01) User Guide</div> </title>
+<title> <div style="text-align: center"><strong >Bisonc++</strong> (Version 6.01.03) User Guide</div> </title>
 <style type="text/css">
     figure {text-align: center;}
     img {vertical-align: center;}
@@ -1551,42 +1551,8 @@ grammar.
 <p>
 For example, here is an erroneous attempt to define a sequence of zero or more
 words:
-        <pre>
-    %stype char *
-    %token WORD
-
-    %%
-
-    sequence: 
-        // empty 
-        { 
-            cout &lt;&lt; "empty sequence\n"; 
-        }
-    | 
-        maybeword
-    | 
-        sequence WORD
-        { 
-            cout &lt;&lt; "added word " &lt;&lt; $2 &lt;&lt; endl;
-        }
-    ;
-
-    maybeword: 
-        // empty 
-        { 
-            cout &lt;&lt; "empty maybeword\n"; 
-        }
-    | 
-        WORD
-        { 
-            cout &lt;&lt; "single word " &lt;&lt; $1 &lt;&lt; endl;
-        }
-    ;
-
-</pre>
-
-<p>
-The error is an ambiguity: there is more than one way to parse a single
+        
+    The error is an ambiguity: there is more than one way to parse a single
 word into a sequence. It could be reduced to a maybeword and then into a
 sequence via the second rule. Alternatively, nothing-at-all could be reduced
 into a sequence via the first rule, and this could be combined with the word
