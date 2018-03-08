@@ -6,7 +6,7 @@ holding tt(main), and a file tt(parser/lex.cc) containing the lexical
 scanner's implementation. Note that I've put all the parser's files in a
 separate directory as well (also see section ref(LAYOUT)).
 
-In  url(rpn's parser)(examples/rpn/parser) directory the file tt(grammar)
+In  url(rpn's parser)(demos/rpn/parser) directory the file tt(grammar)
 contains the grammar specification. B() constructs a parser class and a
 parsing member function from this file after issuing the command:
         verb(

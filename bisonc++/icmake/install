@@ -70,9 +70,9 @@ void install(string request, string dest)
         printf("  installing original bison's docs below `", target + "'\n");
         logRecursive("documentation/html", target);
 
-        target = base + "a/" ADD + "/examples/";
+        target = base + "a/" ADD + "/demos/";
         printf("  installing examples below `", target + "'\n");
-        logRecursive("documentation/examples", target);
+        logRecursive("documentation/demos", target);
 
         logRecursive("documentation/man/calculator", target + "/calculator/");
 
@@ -167,8 +167,8 @@ void install(string request, string dest)
         printf("  installing the user-guide at `", target, "'\n");
         logInstall("tmp/manual", "", target);
 
-        printf("  installing rpn sources at `", target + "examples/'\n");
-        logRecursive("tmp/manual/examples", target + "examples/");
+        printf("  installing rpn sources at `", target + "/demos/'\n");
+        logRecursive("tmp/manual/demos", target + "/demos/");
 
         destInstall(dest, base + "u");
 

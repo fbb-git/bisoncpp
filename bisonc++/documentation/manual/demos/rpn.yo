@@ -4,4 +4,4 @@ good starting point, since operator precedence is not an issue. The second
 example illustrates how operator precedence is handled.
 
 All sources for this calculator are found in the
-url(examples/rpn/)(examples/rpn/index.html) directory.
+url(demos/rpn/)(demos/rpn/index.html) directory.

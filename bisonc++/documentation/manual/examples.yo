@@ -1,63 +1,63 @@
-includefile(examples/intro)
+includefile(demos/intro)
 
 lsect(RPN)(Rpn: a Reverse Polish Notation Calculator)
-includefile(examples/rpn.yo)
+includefile(demos/rpn.yo)
 
     subsect(Declarations for the `rpn' calculator)
-    includefile(examples/rpndecl)
+    includefile(demos/rpndecl)
 
     subsect(Grammar rules for the `rpn' calculator)
-    includefile(examples/rpngram)
+    includefile(demos/rpngram)
 
         subsubsect(Explanation of `input')
-        includefile(examples/rpninput)
+        includefile(demos/rpninput)
 
         subsubsect(Explanation of `line')
-        includefile(examples/rpnline)
+        includefile(demos/rpnline)
 
         subsubsect(Explanation of `expr')
-        includefile(examples/rpnexpr)
+        includefile(demos/rpnexpr)
 
     lsubsect(RPNLEX)(The Lexical Scanner used by `rpn')
-    includefile(examples/rpnlex)
+    includefile(demos/rpnlex)
 
     subsect(The Controlling Function `main()')
-    includefile(examples/rpnmain)
+    includefile(demos/rpnmain)
 
     subsect(The error reporting member `error()')
-    includefile(examples/rpnerror)
+    includefile(demos/rpnerror)
 
     subsect(Running Bisonc++ to generate the Parser)
-    includefile(examples/rpnparser)
+    includefile(demos/rpnparser)
 
     subsect(Constructing and running `rpn')
-    includefile(examples/rpnconstruct)
+    includefile(demos/rpnconstruct)
 
 
 lsect(CALC)(`calc': an Infix Notation Calculator)
-includefile(examples/calc.yo)
+includefile(demos/calc.yo)
 
 lsect(ERROR)(Basic Error Recovery)
-includefile(examples/errors.yo)
+includefile(demos/errors.yo)
 
 lsect(MFCALC)(`mfcalc': a Multi-Function Calculator)
-includefile(examples/mfcalc.yo)
+includefile(demos/mfcalc.yo)
 
     subsect(The Declaration Section for `mfcalc')
-    includefile(examples/mfdecl.yo)
+    includefile(demos/mfdecl.yo)
 
     subsect(Grammar Rules for `mfcalc')
-    includefile(examples/mfgrammar.yo)
+    includefile(demos/mfgrammar.yo)
 
     subsect(The `mfcalc' Symbol- and Function Tables)
-    includefile(examples/mftables.yo)
+    includefile(demos/mftables.yo)
 
     lsubsect(MFLEX)(The new `lex()' member)
-    includefile(examples/mflex.yo)
+    includefile(demos/mflex.yo)
 
     subsect(Constructing `mfcalc')
-    includefile(examples/mfbuild.yo)
+    includefile(demos/mfbuild.yo)
 
 lsect(EXERCISES)(Exercises)
-includefile(examples/exercises.yo)
+includefile(demos/exercises.yo)
 
