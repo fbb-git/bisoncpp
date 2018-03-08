@@ -20,7 +20,7 @@ void Writer::srTables() const
         State::begin(), State::end(),
         [&](State const *state)
         {
-            srTable(state, d_baseclass, table, *d_out);
+            srTable(state, table, *d_out);
         }
     );
 

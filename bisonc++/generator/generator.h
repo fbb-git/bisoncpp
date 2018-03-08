@@ -148,8 +148,7 @@ class Generator
         static void replace(std::string &str, char ch, 
                        std::string const &replacement);
         void insert(std::ostream &out, size_t indent, char const *skel) const;
-        void bolAt(std::ostream &out, std::string &line, std::istream &in,
-                                                        bool &accept) const;
+        void bolAt(std::string &line, bool &accept) const;
 
         template <typename AtType> 
         typename std::vector<AtType>::const_iterator find(

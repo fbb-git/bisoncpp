@@ -8,5 +8,5 @@
 void Rules::updatePrecedences()
 {   
     for (auto production: d_production)
-        updatePrecedence(production, d_terminal);
+        updatePrecedence(production);
 }

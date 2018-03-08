@@ -111,8 +111,7 @@ class State
     private:
         State(size_t idx);
 
-        void addDependents(Next const &next, Symbol const *symbol, 
-                           size_t itemIdx);
+        void addDependents(Symbol const *symbol, size_t itemIdx);
                             // from notreducible from setitems: determine all 
                             // dependent state items and X-link d_itemVector 
                             // and d_nextVector
@@ -138,7 +137,7 @@ class State
 
                             // add the productions of `symbol' to d_itemVector,
                             // make them depend on d_itemVector[idx]
-        void addProductions(Symbol const *symbol, size_t idx);
+        void addProductions(Symbol const *symbol);
 
         Next::ConstIter nextFind(Symbol const *symbol) const;
 

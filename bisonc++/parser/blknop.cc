@@ -1,5 +1,8 @@
 #include "parser.ih"
 
-void Parser::blkNop(string const &ruleType, Production const &prod)
+// unused parameters are required when initializing s_defaultAction in data.cc
+
+void Parser::blkNop([[maybe_unused]] string const &ruleType, 
+                    [[maybe_unused]] Production const &prod)
 {
 }

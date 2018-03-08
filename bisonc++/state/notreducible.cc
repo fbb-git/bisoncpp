@@ -11,7 +11,7 @@ void State::notReducible(size_t idx)        // idx: item index in d_itemVector
 
     Next::ConstIter next;
     if (nextContains(&next, symbol)) // the symbol is in d_nextVector
-        addDependents(*next, symbol, idx);
+        addDependents(symbol, idx);
     else                            // symbol not yet in d_nextVector
         addNext(symbol, idx);
 }

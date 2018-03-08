@@ -11,14 +11,14 @@
 // d_nextVector.back()'s kernel adds idx (as the item at d_itemVector[idx]) to
 // its kernel-list. 
 
-void State::addProductions(Symbol const *symbol, size_t idx)
+void State::addProductions(Symbol const *symbol)
 {
                             // obtain all productions of `symbol'
     Production::Vector const &productions = 
                         NonTerminal::downcast(symbol)->productions();
 
     for (auto production: productions)
-        StateItem::addProduction(production, d_itemVector, idx);
+        StateItem::addProduction(production, d_itemVector);
 }
 
 

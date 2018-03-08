@@ -5,10 +5,8 @@
     // A conflict was observed as item 'reducibleItemIdx' and
     // 'shiftableItemIdx' have identical LA symbols
     //
-void SRConflict::handleSRconflict(
-        size_t shiftableItemIdx,
-        Next::ConstIter const &next, 
-        size_t reducibleItemIdx)
+void SRConflict::handleSRconflict(Next::ConstIter const &next, 
+                                  size_t reducibleItemIdx)
 {
     typedef Enum::Solution Solution;
 

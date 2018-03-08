@@ -189,8 +189,7 @@ class Rules
 
     private:
         static bool isTerminal(Symbol const *symbol);
-        static void updatePrecedence(Production *production, 
-                                     Terminal::Vector const &tv);
+        static void updatePrecedence(Production *production);
 };
 
 inline Rules::Rules()

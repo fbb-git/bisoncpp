@@ -101,7 +101,7 @@ inline void Scanner::preCode()
 {
 }
 
-inline void Scanner::postCode(PostEnum__  type)
+inline void Scanner::postCode([[maybe_unused]] PostEnum__  type)
 {
 }
 

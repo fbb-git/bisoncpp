@@ -1,3 +1,10 @@
+bisonc++ (6.01.02)
+
+  * Added C++-17 attributes [[maybe_notused]] to bisonc++'s code, and removed
+    unused parameters unless required.
+  
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Thu, 08 Mar 2018 20:16:50 +0100
+
 bisonc++ (6.01.01)
 
   * Fixed a missing destination for the link to the sources of the rpn

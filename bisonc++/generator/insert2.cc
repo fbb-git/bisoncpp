@@ -13,7 +13,7 @@ void Generator::insert(ostream &out, size_t indent, char const *skel) const
     while (getline(in, line))
     {
         if (line.find('@') == 0)        // @ immediately at BOL
-            bolAt(out, line, in, accept);
+            bolAt(line, accept);
         else if (accept)
         {
             replaceBaseFlag(line);

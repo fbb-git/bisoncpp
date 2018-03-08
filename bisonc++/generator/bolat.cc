@@ -1,7 +1,6 @@
 #include "generator.ih"
 
-void Generator::bolAt(ostream &out, string &line, istream &in, bool &accept) 
-                                                                        const
+void Generator::bolAt(string &line, bool &accept) const
 {
     auto iter = find(line, 0, s_atBol);
 

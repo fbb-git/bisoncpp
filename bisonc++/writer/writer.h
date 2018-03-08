@@ -43,7 +43,6 @@ class Writer
         static void productionInfo(Production const *production, 
                                    std::ostream &out);
         static void srTable(State const *state, 
-                            std::string const &baseclassScope,
                             FBB::Table &table, std::ostream &out);
         static void transitions(FBB::Table &table, Next::Vector const &next);
         static void transition(Next const &next, FBB::Table &table);

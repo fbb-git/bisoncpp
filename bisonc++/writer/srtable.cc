@@ -1,7 +1,6 @@
 #include "writer.ih"
 
-void Writer::srTable(State const *sp,  std::string const &baseclassScope,
-                     FBB::Table &table, std::ostream &out)
+void Writer::srTable(State const *sp, FBB::Table &table, std::ostream &out)
 {
     bool acceptState = sp->isAcceptState();
 

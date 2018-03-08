@@ -10,7 +10,7 @@ void State::addNext(Symbol const *symbol, size_t idx)
                     // add all production rules of `symbol' to
                     // d_itemVector.
     if (symbol->isNonTerminal())        // set dependent elements
-        addProductions(symbol, idx);
+        addProductions(symbol);
     else
         ++d_nTerminalTransitions;
 }

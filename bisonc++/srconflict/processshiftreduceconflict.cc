@@ -11,6 +11,6 @@
 void SRConflict::processShiftReduceConflict(Next::ConstIter const &next, 
                                             size_t reducibleItemIdx)
 {
-    for (auto shiftableItemIdx: next->kernel())
-        handleSRconflict(shiftableItemIdx, next, reducibleItemIdx);
+    for ([[maybe_unused]] auto shiftableItemIdx: next->kernel())
+        handleSRconflict(next, reducibleItemIdx);
 }

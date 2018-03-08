@@ -70,7 +70,8 @@ inline int Parser::lex()
     return d_scanner.lex();
 }
 
-inline void Parser::exceptionHandler(std::exception const &exc)
+inline void Parser::exceptionHandler(
+                            [[maybe_unused]] std::exception const &exc)
 {
     throw;  // re-implement to handle exceptions thrown by actions
 }

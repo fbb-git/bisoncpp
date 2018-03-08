@@ -58,8 +58,7 @@ class StateItem
                                             // production rule of this item.
 
         static void addProduction(Production const *production, 
-                                  StateItem::Vector &stateItem,
-                                  size_t idx);
+                                  StateItem::Vector &stateItem);
 
         static bool containsKernelItem(Item const &item, 
                                        size_t nKernelItems,
@@ -85,7 +84,7 @@ inline void StateItem::setLA(LookaheadSet const &laSet)
 }
 
 inline void StateItem::addProduction(Production const *production, 
-                              StateItem::Vector &stateItem, size_t idx)
+                                     StateItem::Vector &stateItem)
 {
     stateItem.push_back(StateItem(Item(production)));
 }
