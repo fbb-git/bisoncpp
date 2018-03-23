@@ -1,14 +1,14 @@
-if (d_debug__)
+if (d_debug_)
 {
-    s_out__ <<  "encountered " << symbol__(token__()) << " in state " <<
-                state__() << ": ";
+    s_out_ <<  "encountered " << symbol_(token_()) << " in state " <<
+                state_() << ": ";
 
     if (action < 0)             // a reduction was found
-        s_out__ << ": reducing by rule " << -action;
+        s_out_ << ": reducing by rule " << -action;
     else if (action == 0)
-        s_out__ <<  "ACCEPT";
+        s_out_ <<  "ACCEPT";
     else
-        s_out__ <<  "next state: " << action;
+        s_out_ <<  "next state: " << action;
 
-    s_out__ << '\n' << dflush__;
+    s_out_ << '\n' << dflush_;
 }

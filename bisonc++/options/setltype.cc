@@ -8,7 +8,7 @@ void Options::setLtype()
         emsg << "`;' in %ltype type-definition `" << *d_matched << 
                 '\'' << endl;
     else
-        d_locationDecl = "typedef " + *d_matched += " LTYPE__;\n";
+        d_locationDecl = "typedef " + *d_matched += " LTYPE_;\n";
 }
 
 

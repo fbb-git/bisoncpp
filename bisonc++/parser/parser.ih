@@ -51,7 +51,7 @@ inline int Parser::nComponents(int nElements)
 inline void Parser::print()
 {
     if (d_arg.option('T'))
-        print__();
+        print_();
 }
 
 inline void Parser::setNegativeDollarIndices()

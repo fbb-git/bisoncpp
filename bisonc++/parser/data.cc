@@ -4,19 +4,19 @@ size_t Parser::s_nHidden;
 
 ostringstream Parser::s_hiddenName;
 
-string Parser::s_semanticValue {"d_val__"};   
+string Parser::s_semanticValue {"d_val_"};   
                                     // name of the semantic value variable
                                     // used by the generated parser.
-string Parser::s_semanticValueStack {"vs__("};  
+string Parser::s_semanticValueStack {"vs_("};  
                                     // name of the semantic value stack
                                     // used by the generated parser
-char Parser::s_locationValueStack[] = "lsp__(";  
+char Parser::s_locationValueStack[] = "lsp_(";  
                                     // name of the location value stack
                                     // used by the generated parser
-char Parser::s_locationValue[] = "d_loc__";  
+char Parser::s_locationValue[] = "d_loc_";  
                                     // name of the location value variable
                                     // used by the generated parser (@0)
-string Parser::s_stype = "STYPE__"; // generic semantic value for POLYMORPHIC
+string Parser::s_stype = "STYPE_"; // generic semantic value for POLYMORPHIC
 
 string const Parser::s_undefined{"<undefined>"};
 

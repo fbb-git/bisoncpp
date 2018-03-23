@@ -4,9 +4,9 @@ before, please note the following new and modified features:
    it() The generated code was redesigned. Large parts of the protected
     interface of the parser's base class and names of tt(parse())-related
     members in the generated parser class were modified. The names of all
-    accessible members in tt(parserbase.h) and tt(parser.h) now have two
-    trailing underscore characters.  Predefined members in tt(parser.ih) no
-    longer have trailing underscores, and can be redefined (but must be
+    accessible members in tt(parserbase.h) and tt(parser.h) end in a single
+    underscore character.  Predefined members in tt(parser.ih) no longer have
+    trailing underscore characters, and can be redefined (but must be
     available).  The traditional tt(error(char const *)) member in fact never
     uses its argument (and bic() only passes the default "Syntax error"
     argument). Its prototype now no longer defines a parameter.  Here's an
@@ -19,17 +19,17 @@ quote(
     rowline()
     row(cell(tt(void error(char const *))) cell() cell(tt(void error())))
     row()
-    row(cell(tt(void exceptionHandler__(...))) cell() 
+    row(cell(tt(void exceptionHandler_(...))) cell() 
                                         cell(tt(void exceptionHandler(...))))
     row()
     row(cell(tt(void errorRecovery())) cell() 
-                                        cell(tt(void errorRecovery__())))
+                                        cell(tt(void errorRecovery_())))
     row(cell(tt(void executeAction(int))) cell() 
-                                        cell(tt(void executeAction__(int))))
-    row(cell(tt(void nextToken())) cell() cell(tt(void nextToken__())))
+                                        cell(tt(void executeAction_(int))))
+    row(cell(tt(void nextToken())) cell() cell(tt(void nextToken_())))
     rowline()
     row(cell()cell()cell(bf(added:)))
-    row(cell()cell()cell(tt(void nextCycle__())))
+    row(cell()cell()cell(tt(void nextCycle_())))
     rowline()
     row(cell()cell()cell(bf(remove:)))
     row(cell()cell()cell(tt(int lookup(bool))))

@@ -6,7 +6,7 @@ void Writer::productions() const
 
     *d_out << "\n"
             "// Productions Info Records:\n" <<
-            "PI__ const s_productionInfo[] = \n"
+            "PI_ const s_productionInfo[] = \n"
             "{\n"
             "     {0, 0}, // not used: reduction values are negative\n";
 

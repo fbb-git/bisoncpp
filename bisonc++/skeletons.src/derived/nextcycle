@@ -1,15 +1,15 @@
-void \@::nextCycle__()
+void \@::nextCycle_()
 try
 {
-    if (s_state[state__()]->d_type & REQ_TOKEN)
-        nextToken__();              // obtain next token
+    if (s_state[state_()]->d_type & REQ_TOKEN)
+        nextToken_();              // obtain next token
 
 
-    int action = lookup__();        // lookup d_token in d_state
+    int action = lookup_();        // lookup d_token in d_state
 
     if (action > 0)                 // SHIFT: push a new state
     {
-        shift__(action);
+        shift_(action);
         return;
     }
 
@@ -17,29 +17,29 @@ try
     {
 $insert 8 debug "\nREDUCE: rule " << -action
 
-        if (recovery__())
-            redoToken__();
+        if (recovery_())
+            redoToken_();
         else
-            executeAction__(-action);
+            executeAction_(-action);
                                             // next token is the rule's LHS
-        reduce__(-action); 
+        reduce_(-action); 
         return;
     }
 
-    if (recovery__())
+    if (recovery_())
         ABORT();
     else 
         ACCEPT();
 }
-catch (ErrorRecovery__)
+catch (ErrorRecovery_)
 {
-    if (not recovery__())
-        errorRecovery__();
+    if (not recovery_())
+        errorRecovery_();
     else
     {
-        if (token__() == Reserved__::EOF__)
+        if (token_() == Reserved_::EOF_)
             ABORT();
-        popToken__();               // skip the failing token
+        popToken_();               // skip the failing token
     }
 }
 

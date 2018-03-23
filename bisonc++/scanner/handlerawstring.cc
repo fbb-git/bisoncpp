@@ -9,5 +9,5 @@ void Scanner::rawString()
     d_rawString.back() = '"';
 
     more();
-    begin(StartCondition__::rawstring);
+    begin(StartCondition_::rawstring);
 }

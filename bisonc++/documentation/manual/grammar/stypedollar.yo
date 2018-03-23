@@ -3,7 +3,7 @@
 
     A value is assigned to the rule's nonterminal's semantic value. The
 right-hand side (rhs) of the assignment expression must be an expression of a
-type that can be assigned to the tt(STYPE__) type.
+type that can be assigned to the tt(STYPE_) type.
 
     itt($$(expr))
 
@@ -21,13 +21,13 @@ nonterminal.
 
     itt($$.)
 
-    If tt(STYPE__) is a class-type then this dollar-notation is shorthand
+    If tt(STYPE_) is a class-type then this dollar-notation is shorthand
 for the member selector operator, applied to the rule's nonterminal's semantic
 value.
 
     itt($$->)
 
-    If tt(STYPE__) is a class-type then this dollar-notation is shorthand
+    If tt(STYPE_) is a class-type then this dollar-notation is shorthand
 for the pointer to member operator, applied to the rule's nonterminal's
 semantic value.
 
@@ -43,13 +43,13 @@ current production rule's first component's semantic value.
 
     itt($1.)
 
-    If tt(STYPE__) is a class-type then this dollar-notation is shorthand
+    If tt(STYPE_) is a class-type then this dollar-notation is shorthand
 for the member selector operator, applied to the current production rule's
 first component's semantic value.
 
     itt($1->)
 
-    If tt(STYPE__) is a class-type then this dollar-notation is shorthand
+    If tt(STYPE_) is a class-type then this dollar-notation is shorthand
 for the pointer to member operator, applied to the current production rule's
 first component's semantic value.
 
@@ -67,14 +67,14 @@ nonterminal.
  
     itt($-1.)
 
-    If tt(STYPE__) is a class-type then this dollar-notation is shorthand
+    If tt(STYPE_) is a class-type then this dollar-notation is shorthand
 for the member selector operator, applied to the semantic value
 of some production rule element, 1 element before the current rule's
 nonterminal.
 
     itt($-1->)
 
-    If tt(STYPE__) is a class-type then this dollar-notation is shorthand
+    If tt(STYPE_) is a class-type then this dollar-notation is shorthand
 for the pointer to member operator, applied to the semantic value
 of some production rule element, 1 element before the current rule's
 nonterminal.

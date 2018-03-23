@@ -1,15 +1,15 @@
-void \@::executeAction__(int production)
+void \@::executeAction_(int production)
 try
 {
-    if (token__() != Reserved__::UNDETERMINED__)
-        pushToken__(token__());     // save an already available token
+    if (token_() != Reserved_::UNDETERMINED_)
+        pushToken_(token_());     // save an already available token
 $insert 4 debug "execute action " << production << " ..."
 $insert executeactioncases
     switch (production)
     {
 $insert 8 actioncases
     }
-$insert 4 debug "... completed" << stype__(", semantic: ", vs__(0))
+$insert 4 debug "... completed" << stype_(", semantic: ", vs_(0))
 }
 catch (std::exception const &exc)
 {

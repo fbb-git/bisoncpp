@@ -13,7 +13,7 @@ enums, members and types (in the following overview parser class-name prefixes
         constructors do not have to explicitly initialize the parser's base
         class.
 
-    it() bf(DebugMode__):nl() 
+    it() bf(DebugMode_):nl() 
        The values of this tt(enum) are used to configure the type of debug
         information that will be displayed (assuming that the tt(debug)
         option/directive was specified when bic() generated the parser's
@@ -33,18 +33,18 @@ enums, members and types (in the following overview parser class-name prefixes
         mismatch was observed.
 
         The tt(bit_or) operator can be used to combine tt(ON) and
-        tt(ACTIONCASES) (see the member function tt(setDebug(DebugMode__
+        tt(ACTIONCASES) (see the member function tt(setDebug(DebugMode_
         mode)) below).
 
-    it() bf(LTYPE__):nl() 
+    it() bf(LTYPE_):nl() 
            The parser's location type (user-definable). Available only when
             either tt(%lsp-needed, %ltype) or tt(%locationstruct) has been
             declared. 
 
-    it() bf(STYPE__):nl()
+    it() bf(STYPE_):nl()
             The parser's stack-type (user-definable), defaults to bf(int).
 
-    it() bf(Tokens__):nl()
+    it() bf(Tokens_):nl()
        The enumeration type of all the symbolic tokens defined in the grammar
         file (i.e., bic()'s input file). The scanner should be prepared to
         return these symbolic tokens. Note that, since the symbolic tokens are
@@ -66,7 +66,7 @@ enums, members and types (in the following overview parser class-name prefixes
         default; to activate the debug output call tt(setDebug(true)), to
         suppress the debug output call tt(setDebug(false)).
 
-    it() bf(void setDebug(DebugMode__ mode)):nl()
+    it() bf(void setDebug(DebugMode_ mode)):nl()
        This member can also be used to activate or deactivate the debug-code
         compiled into the parsing function. Like tt(setDebug(bool)) it is
         always defined but only operational if the tt(debug) directive option
@@ -74,21 +74,21 @@ enums, members and types (in the following overview parser class-name prefixes
         is em(not) active by default; to activate, call
         tt(setDebug(Parser::ON), setDebug(Parser::ACTIONCASES)), or 
         tt(setDebug(Parser::ON | Parser::ACTIONCASES)). To suppress the
-        debug code output call tt(setDebug(Parser__::OFF)) or simply
+        debug code output call tt(setDebug(Parser_::OFF)) or simply
         tt(setDebug(false)).
     )
 
 When the tt(%polymorphic) directive is used:
     itemization(
-    it() bf(Meta__):nl()
+    it() bf(Meta_):nl()
            Templates and classes that are required for implementing the
-            polymorphic semantic values are all declared in the tt(Meta__)
-            namespace. The tt(Meta__) namespace itself is nested under the
+            polymorphic semantic values are all declared in the tt(Meta_)
+            namespace. The tt(Meta_) namespace itself is nested under the
             namespace that may have been declared by the tt(%namespace)
             directive.
     
-    it() bf(Tag__):nl()
-           The (strongly typed) tt(enum class Tag__) contains all the
+    it() bf(Tag_):nl()
+           The (strongly typed) tt(enum class Tag_) contains all the
             tag-identifiers specified by the tt(%polymorphic) directive. It is
             declared outside of the Parser's class, but within the namespace
             that may have been declared by the tt(%namespace) directive.

@@ -6,11 +6,11 @@ values.  Its tt(%polymorphic) directive looks like this:
     Furthermore, the grammar declares tokens tt(INT) and tt(IDENTIFIER), and
 pre-associates the tt(TEXT) tag with the tt(identifier) nonterminal,
 associates the tt(INT) tag with the tt(int) nonterminal. The tt(combi)
-nonterminal is associated with the generic tt(STYPE__) semantic value type:
+nonterminal is associated with the generic tt(STYPE_) semantic value type:
         verb(
     %type <TEXT>    identifier
     %type <INT>     int
-    %type <STYPE__> combi
+    %type <STYPE_> combi
         )
     
     The parser's grammar is simple, expecting input lines, formatted
@@ -48,9 +48,9 @@ tt(INT) tag and tt(identifier) is asociated with the tt(TEXT) tag.
 The tt(combi) rule, which is used in one of the production rules of
 `tt(rule)', accepts a single tt(int) value, as well as an identifier. So it
 cannot be associated with a single polymorphic type. But as it is associated
-with the generic tt(STYPE__) type, it can pass on any polymorphic value. In
+with the generic tt(STYPE_) type, it can pass on any polymorphic value. In
 tt(rule's) production rule the generic semantic value is then simply passed on
-to tt(process), expecting a plain tt(STYPE__ const &). The function
+to tt(process), expecting a plain tt(STYPE_ const &). The function
 tt(process) has to inspect the semantic value's tag to learn what
 kind of value is stored inside the received semantic value. Here are the
 definition of the tt(combi) nonterminal and action blocks for the tt(rule)
@@ -90,12 +90,12 @@ The function tt(process), called from tt(combi's) action block, inspects the
 semantic value's tag to select the proper way of handling the received
 semantic value. Here is its implementation:
         verb(
-    void Parser::process(STYPE__ &semVal) const
+    void Parser::process(STYPE_ &semVal) const
     {
-        if (semVal.tag() == Tag__::INT)
-            cout << "Saw an int-value: " << semVal.get<Tag__::INT>() << '\n';
+        if (semVal.tag() == Tag_::INT)
+            cout << "Saw an int-value: " << semVal.get<Tag_::INT>() << '\n';
         else
-            cout << "Saw text: " << semVal.get<Tag__::TEXT>() << '\n';
+            cout << "Saw text: " << semVal.get<Tag_::TEXT>() << '\n';
     }
         )
 

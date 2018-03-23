@@ -20,7 +20,7 @@ int Parser::lex()
     if (c == '.' || isdigit(c))     // if a digit char was found
     {
         std::cin.putback(c);        // return the character
-        std::cin >> d_val__;        // extract a number
+        std::cin >> d_val_;        // extract a number
         return NUM;                 // return the NUM token
     }
 

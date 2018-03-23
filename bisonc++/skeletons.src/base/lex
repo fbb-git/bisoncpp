@@ -1,9 +1,9 @@
-void \@Base::lex__(int token)
+void \@Base::lex_(int token)
 {
     d_token = token;
 
     if (d_token <= 0)
-        d_token = Reserved__::EOF__;
+        d_token = Reserved_::EOF_;
 
     d_terminalToken = true;
 }

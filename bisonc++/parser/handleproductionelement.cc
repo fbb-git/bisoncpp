@@ -2,7 +2,7 @@
 
     // See also README.polymorphic-technical
 
-void Parser::handleProductionElement(STYPE__ &last)
+void Parser::handleProductionElement(STYPE_ &last)
 {
         // maybe also when currentRule == 0 ? See addProduction
     if (!d_rules.hasRules())    // may happen if the first rule could not be
@@ -16,16 +16,16 @@ void Parser::handleProductionElement(STYPE__ &last)
 
     switch (last.tag())
     {
-        case Tag__::TERMINAL:
-            d_rules.addElement(last.get<Tag__::TERMINAL>());
+        case Tag_::TERMINAL:
+            d_rules.addElement(last.get<Tag_::TERMINAL>());
             checkFirstType();
         break;
-        case Tag__::SYMBOL:
-            d_rules.addElement(last.get<Tag__::SYMBOL>());
+        case Tag_::SYMBOL:
+            d_rules.addElement(last.get<Tag_::SYMBOL>());
             checkFirstType();
         break;
-        case Tag__::BLOCK:
-            installAction(last.get<Tag__::BLOCK>());
+        case Tag_::BLOCK:
+            installAction(last.get<Tag_::BLOCK>());
         break;
 
         default:            // can't occur, but prevents a warning

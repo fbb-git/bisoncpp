@@ -5,7 +5,7 @@ showing the actual parsing process on the standard output
 stream. 
 
 When specified, debug output is shown by default, but its activity may be
-controlled using the tt(setDebug(bool on-off)) or tt(setDebug(DebugMode__))
+controlled using the tt(setDebug(bool on-off)) or tt(setDebug(DebugMode_))
 members. Note that no tt(#ifdef DEBUG) macros are used anymore. Rerun b()
 without the bf(--debug) option to generate an equivalent parser not containing
 the debugging code.

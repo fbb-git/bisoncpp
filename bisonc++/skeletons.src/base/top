@@ -1,4 +1,4 @@
-inline size_t \@Base::top__() const
+inline size_t \@Base::top_() const
 {
     return d_stateStack[d_stackIdx].first;
 }

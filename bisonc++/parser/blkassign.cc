@@ -7,6 +7,6 @@ void Parser::blkAssign([[maybe_unused]] string const &ruleType,
 {
     installDefaultAction(
         prod, 
-        svsElement(prod.size(), 1) + ".get<Tag__::" + prod[0].sType() + ">()"
+        svsElement(prod.size(), 1) + ".get<Tag_::" + prod[0].sType() + ">()"
     );
 }

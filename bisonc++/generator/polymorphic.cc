@@ -8,7 +8,7 @@ void Generator::polymorphic(ostream &out) const
     key(out);
 
     out <<                                        // Tags
-        "enum " << (d_options.strongTags() ? "class " : "") << "Tag__\n"
+        "enum " << (d_options.strongTags() ? "class " : "") << "Tag_\n"
         "{\n";
 
     for (auto &poly: d_polymorphic)
@@ -17,7 +17,7 @@ void Generator::polymorphic(ostream &out) const
     out << 
         "};\n"
         "\n"
-        "namespace Meta__\n"
+        "namespace Meta_\n"
         "{\n"
         "\n"
         "extern ";

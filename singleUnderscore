@@ -1,0 +1,12 @@
+#!/bin/bash
+
+cd bisonc++
+
+    # file all text files
+files=`find ./ -type f -exec perl -e 'print "{}\n" if (-T "{}");' \;`
+
+for file in `echo ${files}`
+do
+    sed -i 's/__\b/_/g' $file
+done
+

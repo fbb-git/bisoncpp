@@ -113,7 +113,7 @@ typedef struct yyltype
 #   if defined (alloca) || defined (_ALLOCA_H)
 #    define YYSTACK_ALLOC alloca
 #   else
-#    ifdef __GNUC__
+#    ifdef __GNUC_
 #     define YYSTACK_ALLOC __builtin_alloca
 #    endif
 #   endif
@@ -124,7 +124,7 @@ typedef struct yyltype
    /* Pacify GCC's `empty if-body' warning. */
 #  define YYSTACK_FREE(Ptr) do { /* empty */; } while (0)
 # else
-#  if defined (__STDC__) || defined (__cplusplus)
+#  if defined (__STDC_) || defined (__cplusplus)
 #   include <stdlib.h> /* INFRINGES ON USER NAME SPACE */
 #   define YYSIZE_T size_t
 #  endif
@@ -157,7 +157,7 @@ union yyalloc
 /* Copy COUNT objects from FROM to TO.  The source and destination do
    not overlap.  */
 # ifndef YYCOPY
-#  if 1 < __GNUC__
+#  if 1 < __GNUC_
 #   define YYCOPY(To, From, Count) \
       __builtin_memcpy (To, From, (Count) * sizeof (*(From)))
 #  else
@@ -190,7 +190,7 @@ union yyalloc
 
 #endif
 
-#if defined (__STDC__) || defined (__cplusplus)
+#if defined (__STDC_) || defined (__cplusplus)
    typedef signed char yysigned_char;
 #else
    typedef short yysigned_char;
@@ -356,14 +356,14 @@ static const size_t char yystos[] =
        4,    10
 };
 
-#if ! defined (YYSIZE_T) && defined (__SIZE_TYPE__)
-# define YYSIZE_T __SIZE_TYPE__
+#if ! defined (YYSIZE_T) && defined (__SIZE_TYPE_)
+# define YYSIZE_T __SIZE_TYPE_
 #endif
 #if ! defined (YYSIZE_T) && defined (size_t)
 # define YYSIZE_T size_t
 #endif
 #if ! defined (YYSIZE_T)
-# if defined (__STDC__) || defined (__cplusplus)
+# if defined (__STDC_) || defined (__cplusplus)
 #  include <stddef.h> /* INFRINGES ON USER NAME SPACE */
 #  define YYSIZE_T size_t
 # endif
@@ -475,12 +475,12 @@ int yydebug;
 #if YYERROR_VERBOSE
 
 # ifndef yystrlen
-#  if defined (__GLIBC__) && defined (_STRING_H)
+#  if defined (__GLIBC_) && defined (_STRING_H)
 #   define yystrlen strlen
 #  else
 /* Return the length of YYSTR.  */
 static YYSIZE_T
-#   if defined (__STDC__) || defined (__cplusplus)
+#   if defined (__STDC_) || defined (__cplusplus)
 yystrlen (const char *yystr)
 #   else
 yystrlen (yystr)
@@ -498,13 +498,13 @@ yystrlen (yystr)
 # endif
 
 # ifndef yystpcpy
-#  if defined (__GLIBC__) && defined (_STRING_H) && defined (_GNU_SOURCE)
+#  if defined (__GLIBC_) && defined (_STRING_H) && defined (_GNU_SOURCE)
 #   define yystpcpy stpcpy
 #  else
 /* Copy YYSRC to YYDEST, returning the address of the terminating '\0' in
    YYDEST.  */
 static char *
-#   if defined (__STDC__) || defined (__cplusplus)
+#   if defined (__STDC_) || defined (__cplusplus)
 yystpcpy (char *yydest, const char *yysrc)
 #   else
 yystpcpy (yydest, yysrc)
@@ -533,7 +533,7 @@ yystpcpy (yydest, yysrc)
 `-----------------------------*/
 
 static void
-#if defined (__STDC__) || defined (__cplusplus)
+#if defined (__STDC_) || defined (__cplusplus)
 yysymprint (FILE* yyout, int yytype, YYSTYPE yyvalue)
 #else
 yysymprint (yyout, yytype, yyvalue)
@@ -570,7 +570,7 @@ yysymprint (yyout, yytype, yyvalue)
 `-----------------------------------------------*/
 
 static void
-#if defined (__STDC__) || defined (__cplusplus)
+#if defined (__STDC_) || defined (__cplusplus)
 yydestruct (int yytype, YYSTYPE yyvalue)
 #else
 yydestruct (yytype, yyvalue)
@@ -597,7 +597,7 @@ yydestruct (yytype, yyvalue)
    to the proper pointer type.  */
 
 #ifdef YYPARSE_PARAM
-# if defined (__STDC__) || defined (__cplusplus)
+# if defined (__STDC_) || defined (__cplusplus)
 #  define YYPARSE_PARAM_ARG void *YYPARSE_PARAM
 #  define YYPARSE_PARAM_DECL
 # else
@@ -610,7 +610,7 @@ yydestruct (yytype, yyvalue)
 #endif /* !YYPARSE_PARAM */
 
 /* Prevent warning if -Wstrict-prototypes.  */
-#ifdef __GNUC__
+#ifdef __GNUC_
 # ifdef YYPARSE_PARAM
 int yyparse (void *);
 # else

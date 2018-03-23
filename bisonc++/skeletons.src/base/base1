@@ -1,5 +1,5 @@
 \@Base::\@Base()
 :
-    d_token(Reserved__::UNDETERMINED__),
+    d_token(Reserved_::UNDETERMINED_),
 $insert 4 baseclasscode
 }

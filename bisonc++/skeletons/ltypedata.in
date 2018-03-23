@@ -1,6 +1,6 @@
-LTYPE__   d_loc__;
+LTYPE_   d_loc_;
 
-LTYPE__  const &lsp__(int idx) const
+LTYPE_  const &lsp_(int idx) const
 {
     return *(d_lsp + idx);
 }

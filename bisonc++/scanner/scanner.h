@@ -60,13 +60,13 @@ class Scanner: public ScannerBase
         void assignment();
 
         void print();
-        int lex__();
-        int executeAction__(size_t ruleNr);
+        int lex_();
+        int executeAction_(size_t ruleNr);
 
         void preCode();     // re-implement this function for code that must 
                             // be exec'ed before the patternmatching starts
 
-        void postCode(PostEnum__  type);
+        void postCode(PostEnum_  type);
 
         bool handleXstring(size_t nRedo);   // performs pushStream
         int eoln();
@@ -94,20 +94,20 @@ class Scanner: public ScannerBase
 // $insert inlineLexFunction
 inline int Scanner::lex()
 {
-    return lex__();
+    return lex_();
 }
 
 inline void Scanner::preCode() 
 {
 }
 
-inline void Scanner::postCode([[maybe_unused]] PostEnum__  type)
+inline void Scanner::postCode([[maybe_unused]] PostEnum_  type)
 {
 }
 
 inline void Scanner::print() 
 {
-    print__();
+    print_();
 }
 
 inline Block &Scanner::block()
@@ -132,7 +132,7 @@ inline bool Scanner::hasBlock() const
 
 inline void Scanner::beginTypeSpec()
 {
-    begin(StartCondition__::typespec);
+    begin(StartCondition_::typespec);
 }
 
 #endif // Scanner_H_INCLUDED_

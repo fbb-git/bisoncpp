@@ -6,7 +6,7 @@ those members are used during the parsing process, andshould not be modified
 or masked by user-defined code.
 
     itemization(
-    it() bf(void Base::ABORT() const throw(Return__)):nl()
+    it() bf(void Base::ABORT() const throw(Return_)):nl()
        This member can be called from any member function (called from any of
         the parser's action blocks) to indicate a failure while parsing thus
         terminating the parsing function with an error value 1. Note that this
@@ -14,7 +14,7 @@ or masked by user-defined code.
         defined by bf(bison++) in that tt(YYABORT) could not be called from
         outside of the parsing member function.
 
-    it() bf(void Base::ACCEPT() const throw(Return__)):nl()
+    it() bf(void Base::ACCEPT() const throw(Return_)):nl()
        This member can be called from any member function (called from any of
         the parser's action blocks) to indicate successful parsing and thus
         terminating the parsing function. Note that this offers a marked
@@ -22,7 +22,7 @@ or masked by user-defined code.
         bf(bison++) in that tt(YYACCEPT) could not be called from outside of
         the parsing member function.
 
-    it() bf(void Base::ERROR+nop()() const throw(ErrorRecovery__)):nl()
+    it() bf(void Base::ERROR+nop()() const throw(ErrorRecovery_)):nl()
        This member can be called from any member function (called from any of
         the parser's action blocks) to generate an error, and results in the
         parser executing its error recovery code. Note that this offers a
@@ -70,7 +70,7 @@ or masked by user-defined code.
 void Parser::exceptionHandler(std::exception const &exc)
 {
     std::cout << exc.what() << '\n';
-    ++d_nErrors__;
+    ++d_nErrors_;
 }
         )
 
@@ -80,29 +80,29 @@ void Parser::exceptionHandler(std::exception const &exc)
        directive (see above); alternatively it em(must) be implemented by the
        programmer. It interfaces to the lexical scanner, and should return the
        next token produced by the lexical scanner, either as a plain character
-       or as one of the symbolic tokens defined in the tt(Parser::Tokens__)
+       or as one of the symbolic tokens defined in the tt(Parser::Tokens_)
        enumeration. Zero or negative token values are interpreted as `end of
        input'.
 
     it() bf(void print()):nl()
       By default implemented inline in the tt(parser.ih) internal header file,
-       this member calls tt(print__) to display the last received token and
-       corresponding matched text. The tt(print__) member is only implemented
+       this member calls tt(print_) to display the last received token and
+       corresponding matched text. The tt(print_) member is only implemented
        if the tt(--print-tokens) option or tt(%print-tokens) directive was
-       used when the parsing function was generated. Calling tt(print__) from
+       used when the parsing function was generated. Calling tt(print_) from
        tt(print) is unconditional, but can easily be controlled by the using
        program, by defining, e.g., a command-line option.
 
-    it() bf(size_t stackSize__+nop()() const):nl()
+    it() bf(size_t stackSize_+nop()() const):nl()
        Returns the current number of elements in the parser's state-stack.
 
-    it() bf(size_t state__+nop()() const):nl()
+    it() bf(size_t state_+nop()() const):nl()
        Returns the current parsing-state.
 
-    it() bf(bool Base::recovery__+nop()() const):nl()
+    it() bf(bool Base::recovery_+nop()() const):nl()
        Returns tt(true) while recovering from a syntax error.
 
-    it() bf(int Base::token__+nop()() const):nl()
+    it() bf(int Base::token_+nop()() const):nl()
        Returns the currently considered token.
     )
 
@@ -111,31 +111,31 @@ be modified or masked by user-defined code:
 
     itemization(
     it() bf(Base::ParserBase())
-    it() bf(void Base::clearin__+nop()()())
-    it() bf(void errorRecovery__+nop()())
-    it() bf(void Base::errorVerbose__+nop()())
-    it() bf(void executeAction__+nop()(int))
-    it() bf(int lex__(int token))
+    it() bf(void Base::clearin_+nop()()())
+    it() bf(void errorRecovery_+nop()())
+    it() bf(void Base::errorVerbose_+nop()())
+    it() bf(void executeAction_+nop()(int))
+    it() bf(int lex_(int token))
     it() bf(int Base::lookup+nop()())
-    it() bf(LTYPE__ const &lsp__(int) const)nl()
+    it() bf(LTYPE_ const &lsp_(int) const)nl()
         (only available when tt(%lsp-needed, %ltype) or
         tt(%locationstruct) was specified).
-    it() bf(void nextCycle__+nop()())
-    it() bf(void nextToken__+nop()())
-    it() bf(void Base::pop__+nop()())
-    it() bf(void Base::popToken__+nop()())
-    it() bf(void print__()())
-    it() bf(void Base::push__+nop()())
-    it() bf(void Base::pushToken__+nop()())
-    it() bf(void Base::shift__+nop()(int state))
-    it() bf(void Base::redoToken__+nop()(int rule))
-    it() bf(void Base::reduce__+nop()(int rule))
-    it() bf(void Base::savedToken__+nop()())
-    it() bf(void Base::symbol__+nop()())
-    it() bf(void Base::startRecovert__+nop()())
-    it() bf(void Base::top__+nop()())
-    it() bf(int Base::token__+nop()() const)
-    it() bf(void Base::vs__+nop()(int idx))
+    it() bf(void nextCycle_+nop()())
+    it() bf(void nextToken_+nop()())
+    it() bf(void Base::pop_+nop()())
+    it() bf(void Base::popToken_+nop()())
+    it() bf(void print_()())
+    it() bf(void Base::push_+nop()())
+    it() bf(void Base::pushToken_+nop()())
+    it() bf(void Base::shift_+nop()(int state))
+    it() bf(void Base::redoToken_+nop()(int rule))
+    it() bf(void Base::reduce_+nop()(int rule))
+    it() bf(void Base::savedToken_+nop()())
+    it() bf(void Base::symbol_+nop()())
+    it() bf(void Base::startRecovert_+nop()())
+    it() bf(void Base::top_+nop()())
+    it() bf(int Base::token_+nop()() const)
+    it() bf(void Base::vs_+nop()(int idx))
     )
 
 

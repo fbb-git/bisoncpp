@@ -12,29 +12,29 @@
 // $insert classHead
 class Scanner: public ScannerBase
 {
-    Parser::LTYPE__ *d_loc;
-    Parser::STYPE__ *d_val;
+    Parser::LTYPE_ *d_loc;
+    Parser::STYPE_ *d_val;
 
     public:
-        Scanner(Parser::LTYPE__ *loc, Parser::STYPE__ *val);
+        Scanner(Parser::LTYPE_ *loc, Parser::STYPE_ *val);
         
         // $insert lexFunctionDecl
         int lex();
 
     private:
-        int lex__();
-        int executeAction__(size_t ruleNr);
+        int lex_();
+        int executeAction_(size_t ruleNr);
 
         void print();
         void preCode();     // re-implement this function for code that must 
                             // be exec'ed before the patternmatching starts
-        void postCode(PostEnum__);
+        void postCode(PostEnum_);
 };
 
-inline void Scanner::postCode(PostEnum__)
+inline void Scanner::postCode(PostEnum_)
 {}
 
-inline Scanner::Scanner(Parser::LTYPE__ *loc, Parser::STYPE__ *val)
+inline Scanner::Scanner(Parser::LTYPE_ *loc, Parser::STYPE_ *val)
 :
     ScannerBase(std::cin, std::cout),
     d_loc(loc),
@@ -48,7 +48,7 @@ inline void Scanner::preCode()
 
 inline void Scanner::print() 
 {
-    print__();
+    print_();
 }
 
 

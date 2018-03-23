@@ -15,8 +15,8 @@ addElement(Symbol*)
   Full name: Rules::addElement(Symbol*)
   Source:    addelement.cc 
   Used By:
-    handleproductionelement.cc: Parser::handleProductionElement(Meta__::SType&)
-    handleproductionelements.cc: Parser::handleProductionElements(Meta__::SType&, Meta__::SType const&)
+    handleproductionelement.cc: Parser::handleProductionElement(Meta_::SType&)
+    handleproductionelements.cc: Parser::handleProductionElements(Meta_::SType&, Meta_::SType const&)
     nestedblock.cc: Parser::nestedBlock(Block&)
     augmentgrammar.cc: Rules::augmentGrammar(Symbol*)
 
@@ -43,14 +43,14 @@ addPolymorphic(std::__cxx11::basic_string<char, std::char_traits<char>, std::all
   Full name: Parser::addPolymorphic(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    addpolymorphic.cc 
   Used By:
-    parse.cc: Parser::executeAction__(int)
+    parse.cc: Parser::executeAction_(int)
 
 addProduction(unsigned long)
   Full name: Rules::addProduction(unsigned long)
   Source:    addproduction.cc 
   Used By:
     openrule.cc: Parser::openRule(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
-    parse.cc: Parser::executeAction__(int)
+    parse.cc: Parser::executeAction_(int)
     augmentgrammar.cc: Rules::augmentGrammar(Symbol*)
 
 addProductions(Symbol const*, unsigned long)
@@ -81,13 +81,13 @@ assign(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<c
   Full name: Options::assign(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, Options::PathType, char const*)
   Source:    assign.cc 
   Used By:
-    parse.cc: Parser::executeAction__(int)
+    parse.cc: Parser::executeAction_(int)
 
 assignment()
   Full name: Scanner::assignment()
   Source:    assignment.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 assignNonTerminalNumbers()
   Full name: Rules::assignNonTerminalNumbers()
@@ -100,7 +100,7 @@ atDollar(unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>,
   Source:    atdollar.cc 
   Used By:
     assignment.cc: Scanner::assignment()
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 AtDollar(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, bool)
   Full name: AtDollar::AtDollar(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, bool)
@@ -251,20 +251,20 @@ checkEndOfRawString()
   Full name: Scanner::checkEndOfRawString()
   Source:    checkendofrawstring.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 checkField(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Full name: Parser::checkField(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    checkfield.cc 
   Used By:
-    parse.cc: Parser::executeAction__(int)
+    parse.cc: Parser::executeAction_(int)
 
 checkFirstType()
   Full name: Parser::checkFirstType()
   Source:    checkfirsttype.cc 
   Used By:
-    handleproductionelement.cc: Parser::handleProductionElement(Meta__::SType&)
-    parse.cc: Parser::executeAction__(int)
+    handleproductionelement.cc: Parser::handleProductionElement(Meta_::SType&)
+    parse.cc: Parser::executeAction_(int)
 
 checkRemoved(std::ostream&) const
   Full name: Next::checkRemoved(std::ostream&) const
@@ -321,7 +321,7 @@ close()
   Full name: Block::close()
   Source:    close.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 comparePrecedence(Symbol const*, Symbol const*)
   Full name: Terminal::comparePrecedence(Symbol const*, Symbol const*)
@@ -382,7 +382,7 @@ cxx11]
     defaultpolymorphicaction.cc: Parser::defaultPolymorphicAction(Production const&)
 
 cxx11]
-  Full name: ScannerBase::s_out__[abi:cxx11]
+  Full name: ScannerBase::s_out_[abi:cxx11]
   Source:    lex.cc 
   Used By:
     checkendofrawstring.cc: Scanner::checkEndOfRawString()
@@ -391,7 +391,7 @@ cxx11]
     handlexstring.cc: Scanner::handleXstring(unsigned long)
     returnquoted.cc: Scanner::returnQuoted(void (Scanner::*)())
     returntypespec.cc: Scanner::returnTypeSpec()
-    parse.cc: Parser::executeAction__(int)
+    parse.cc: Parser::executeAction_(int)
 
 cxx11]
   Full name: Parser::s_undefined[abi:cxx11]
@@ -441,7 +441,7 @@ cxx11]()
   Full name: Scanner::canonicalQuote[abi:cxx11]()
   Source:    canonicalquote.cc 
   Used By:
-    parse.cc: Parser::executeAction__(int)
+    parse.cc: Parser::executeAction_(int)
     setprecedence.cc: Parser::setPrecedence(unsigned long)
     useterminal.cc: Parser::useTerminal()
 
@@ -576,13 +576,13 @@ defineTerminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::all
   Source:    defineterminal.cc 
   Used By:
     definetokenname.cc: Parser::defineTokenName(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, bool)
-    parse.cc: Parser::executeAction__(int)
+    parse.cc: Parser::executeAction_(int)
 
 defineTokenName(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, bool)
   Full name: Parser::defineTokenName(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, bool)
   Source:    definetokenname.cc 
   Used By:
-    parse.cc: Parser::executeAction__(int)
+    parse.cc: Parser::executeAction_(int)
 
 derivable(Symbol const*)
   Full name: Grammar::derivable(Symbol const*)
@@ -609,8 +609,8 @@ determineLAsets()
   Used By:
     define.cc: State::define(Rules const&)
 
-dflush__(std::ostream&)
-  Full name: ScannerBase::dflush__(std::ostream&)
+dflush_(std::ostream&)
+  Full name: ScannerBase::dflush_(std::ostream&)
   Source:    lex.cc 
   Used By:
     checkendofrawstring.cc: Scanner::checkEndOfRawString()
@@ -619,7 +619,7 @@ dflush__(std::ostream&)
     handlexstring.cc: Scanner::handleXstring(unsigned long)
     returnquoted.cc: Scanner::returnQuoted(void (Scanner::*)())
     returntypespec.cc: Scanner::returnTypeSpec()
-    parse.cc: Parser::executeAction__(int)
+    parse.cc: Parser::executeAction_(int)
 
 distributeLAsetOf(StateItem&)
   Full name: State::distributeLAsetOf(StateItem&)
@@ -744,7 +744,7 @@ eoln()
   Full name: Scanner::eoln()
   Source:    eoln.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 errExisting(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const
   Full name: Generator::errExisting(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const
@@ -775,7 +775,7 @@ error()
   Full name: Parser::error()
   Source:    error.cc 
   Used By:
-    parse.cc: Parser::errorRecovery__()
+    parse.cc: Parser::errorRecovery_()
 
 errorVerbose(std::ostream&) const
   Full name: Generator::errorVerbose(std::ostream&) const
@@ -787,7 +787,7 @@ escape()
   Full name: Scanner::escape()
   Source:    escape.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 executeActionCases(std::ostream&) const
   Full name: Generator::executeActionCases(std::ostream&) const
@@ -805,7 +805,7 @@ expectRules()
   Full name: Parser::expectRules()
   Source:    expectrules.cc 
   Used By:
-    parse.cc: Parser::executeAction__(int)
+    parse.cc: Parser::executeAction_(int)
 
 filename(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Full name: Generator::filename(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
@@ -857,17 +857,17 @@ grep(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<cha
   Used By:
     errexisting.cc: Generator::errExisting(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const
 
-handleProductionElement(Meta__::SType&)
-  Full name: Parser::handleProductionElement(Meta__::SType&)
+handleProductionElement(Meta_::SType&)
+  Full name: Parser::handleProductionElement(Meta_::SType&)
   Source:    handleproductionelement.cc 
   Used By:
-    parse.cc: Parser::executeAction__(int)
+    parse.cc: Parser::executeAction_(int)
 
-handleProductionElements(Meta__::SType&, Meta__::SType const&)
-  Full name: Parser::handleProductionElements(Meta__::SType&, Meta__::SType const&)
+handleProductionElements(Meta_::SType&, Meta_::SType const&)
+  Full name: Parser::handleProductionElements(Meta_::SType&, Meta_::SType const&)
   Source:    handleproductionelements.cc 
   Used By:
-    parse.cc: Parser::executeAction__(int)
+    parse.cc: Parser::executeAction_(int)
 
 handleSRconflict(unsigned long, __gnu_cxx::__normal_iterator<Next const*, std::vector<Next, std::allocator<Next> > > const&, unsigned long)
   Full name: SRConflict::handleSRconflict(unsigned long, __gnu_cxx::__normal_iterator<Next const*, std::vector<Next, std::allocator<Next> > > const&, unsigned long)
@@ -879,7 +879,7 @@ handleXstring(unsigned long)
   Full name: Scanner::handleXstring(unsigned long)
   Source:    handlexstring.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 hasKernel(std::vector<Item, std::allocator<Item> > const&) const
   Full name: State::hasKernel(std::vector<Item, std::allocator<Item> > const&) const
@@ -891,7 +891,7 @@ hexadecimal()
   Full name: Scanner::hexadecimal()
   Source:    hexadecimal.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 idOfTag(std::ostream&) const
   Full name: Generator::idOfTag(std::ostream&) const
@@ -899,8 +899,8 @@ idOfTag(std::ostream&) const
   Used By:
     data.cc: GLOBALS data.cc 1data.o
 
-idOfTag__
-  Full name: Meta__::idOfTag__
+idOfTag_
+  Full name: Meta_::idOfTag_
   Source:    parse.cc 
   Used By:
     handleproductionelement.cc: GLOBALS handleproductionelement.cc 16handleproductionelement.o
@@ -1079,7 +1079,7 @@ installAction(Block&)
   Full name: Parser::installAction(Block&)
   Source:    installaction.cc 
   Used By:
-    handleproductionelement.cc: Parser::handleProductionElement(Meta__::SType&)
+    handleproductionelement.cc: Parser::handleProductionElement(Meta_::SType&)
 
 installDefaultAction(Production const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Full name: Parser::installDefaultAction(Production const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
@@ -1190,8 +1190,8 @@ lex(std::ostream&) const
   Used By:
     data.cc: GLOBALS data.cc 1data.o
 
-lex__()
-  Full name: Scanner::lex__()
+lex_()
+  Full name: Scanner::lex_()
   Source:    lex.cc 
   Used By:
     parse.cc: GLOBALS parse.cc 16parse.o
@@ -1285,7 +1285,7 @@ multiCharQuote()
   Full name: Scanner::multiCharQuote()
   Source:    multicharquote.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 multiplyDefined(Symbol const*)
   Full name: Parser::multiplyDefined(Symbol const*)
@@ -1325,7 +1325,7 @@ nestedBlock(Block&)
   Full name: Parser::nestedBlock(Block&)
   Source:    nestedblock.cc 
   Used By:
-    handleproductionelements.cc: Parser::handleProductionElements(Meta__::SType&, Meta__::SType const&)
+    handleproductionelements.cc: Parser::handleProductionElements(Meta_::SType&, Meta_::SType const&)
 
 newRule(NonTerminal*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned long)
   Full name: Rules::newRule(NonTerminal*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned long)
@@ -1385,26 +1385,26 @@ octal()
   Full name: Scanner::octal()
   Source:    octal.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 open(unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Full name: Block::open(unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    open.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
     installdefaultaction.cc: Parser::installDefaultAction(Production const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
 
 openRule(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Full name: Parser::openRule(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    openrule.cc 
   Used By:
-    parse.cc: Parser::executeAction__(int)
+    parse.cc: Parser::executeAction_(int)
 
 operator()(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Full name: Block::operator()(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    opfuncharp.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 operator+=(FirstSet const&)
   Full name: FirstSet::operator+=(FirstSet const&)
@@ -1547,7 +1547,7 @@ popStream()
   Full name: Scanner::popStream()
   Source:    popstream.cc 
   Used By:
-    lex.cc: Scanner::lex__()
+    lex.cc: Scanner::lex_()
 
 popStream()
   Full name: ScannerBase::popStream()
@@ -1620,7 +1620,7 @@ rawString()
   Full name: Scanner::rawString()
   Source:    handlerawstring.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 redo(unsigned long)
   Full name: ScannerBase::redo(unsigned long)
@@ -1705,13 +1705,13 @@ returnQuoted(void (Scanner::*)())
   Full name: Scanner::returnQuoted(void (Scanner::*)())
   Source:    returnquoted.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 returnTypeSpec()
   Full name: Scanner::returnTypeSpec()
   Source:    returntypespec.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 RmReduction(unsigned long, unsigned long, Symbol const*, bool)
   Full name: RmReduction::RmReduction(unsigned long, unsigned long, Symbol const*, bool)
@@ -1782,8 +1782,8 @@ s_counter
     setfirst.cc: NonTerminal::setFirst(NonTerminal*)
     determinefirst.cc: Rules::determineFirst()
 
-s_debug__
-  Full name: ScannerBase::s_debug__
+s_debug_
+  Full name: ScannerBase::s_debug_
   Source:    lex.cc 
   Used By:
     checkendofrawstring.cc: Scanner::checkEndOfRawString()
@@ -1792,7 +1792,7 @@ s_debug__
     handlexstring.cc: Scanner::handleXstring(unsigned long)
     returnquoted.cc: Scanner::returnQuoted(void (Scanner::*)())
     returntypespec.cc: Scanner::returnTypeSpec()
-    parse.cc: Parser::executeAction__(int)
+    parse.cc: Parser::executeAction_(int)
 
 s_defaultBaseClassSkeleton
   Full name: Options::s_defaultBaseClassSkeleton
@@ -1874,8 +1874,8 @@ s_defaultStackExpansion
     setaccessorvariables.cc: Options::setAccessorVariables()
     setstackexpansion.cc: Options::setStackExpansion(unsigned long)
 
-s_dfaBase__
-  Full name: ScannerBase::s_dfaBase__
+s_dfaBase_
+  Full name: ScannerBase::s_dfaBase_
   Source:    lex.cc 
   Used By:
     checkendofrawstring.cc: Scanner::checkEndOfRawString()
@@ -1884,7 +1884,7 @@ s_dfaBase__
     handlexstring.cc: Scanner::handleXstring(unsigned long)
     returnquoted.cc: Scanner::returnQuoted(void (Scanner::*)())
     returntypespec.cc: Scanner::returnTypeSpec()
-    parse.cc: Parser::executeAction__(int)
+    parse.cc: Parser::executeAction_(int)
 
 s_eofTerminal
   Full name: Rules::s_eofTerminal
@@ -2019,7 +2019,7 @@ s_nExpectedConflicts
   Full name: Rules::s_nExpectedConflicts
   Source:    data.cc 
   Used By:
-    parse.cc: Parser::executeAction__(int)
+    parse.cc: Parser::executeAction_(int)
     define.cc: State::define(Rules const&)
 
 s_nHidden
@@ -2057,7 +2057,7 @@ s_precedence
   Source:    data.cc 
   Used By:
     expectrules.cc: Parser::expectRules()
-    parse.cc: Parser::executeAction__(int)
+    parse.cc: Parser::executeAction_(int)
     terminal1.cc: Terminal::Terminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Symbol::Type, unsigned long, Terminal::Association, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
     terminal2.cc: Terminal::Terminal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Symbol::Type)
 
@@ -2220,7 +2220,7 @@ setConstructorChecks(std::__cxx11::basic_string<char, std::char_traits<char>, st
   Full name: Options::setConstructorChecks(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned long)
   Source:    setconstructorchecks.cc 
   Used By:
-    parse.cc: Parser::executeAction__(int)
+    parse.cc: Parser::executeAction_(int)
 
 setDebug(bool)
   Full name: ParserBase::setDebug(bool)
@@ -2239,7 +2239,7 @@ setDefaultAction(std::__cxx11::basic_string<char, std::char_traits<char>, std::a
   Source:    setdefaultaction.cc 
   Used By:
     expectrules.cc: Parser::expectRules()
-    parse.cc: Parser::executeAction__(int)
+    parse.cc: Parser::executeAction_(int)
     setparsingoptions.cc: Options::setParsingOptions()
 
 setDollarDollarPatterns()
@@ -2284,20 +2284,20 @@ setLineNrs() const
   Used By:
     eoln.cc: Scanner::eoln()
     handlexstring.cc: Scanner::handleXstring(unsigned long)
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
     settags.cc: Scanner::setTags() const
 
 setLocationDecl(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Full name: Options::setLocationDecl(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    setlocationdecl.cc 
   Used By:
-    parse.cc: Parser::executeAction__(int)
+    parse.cc: Parser::executeAction_(int)
 
 setLtype()
   Full name: Options::setLtype()
   Source:    setltype.cc 
   Used By:
-    parse.cc: Parser::executeAction__(int)
+    parse.cc: Parser::executeAction_(int)
 
 setNonTerminalTypes()
   Full name: Rules::setNonTerminalTypes()
@@ -2345,7 +2345,7 @@ setPolymorphicDecl()
   Full name: Parser::setPolymorphicDecl()
   Source:    setpolymorphicdecl.cc 
   Used By:
-    parse.cc: Parser::executeAction__(int)
+    parse.cc: Parser::executeAction_(int)
 
 setPrecedence(Terminal const*)
   Full name: Rules::setPrecedence(Terminal const*)
@@ -2364,13 +2364,13 @@ setPrecedence(unsigned long)
   Full name: Parser::setPrecedence(unsigned long)
   Source:    setprecedence.cc 
   Used By:
-    parse.cc: Parser::executeAction__(int)
+    parse.cc: Parser::executeAction_(int)
 
 setPrintTokens()
   Full name: Options::setPrintTokens()
   Source:    setprinttokens.cc 
   Used By:
-    parse.cc: Parser::executeAction__(int)
+    parse.cc: Parser::executeAction_(int)
 
 setQuotedStrings()
   Full name: Options::setQuotedStrings()
@@ -2388,7 +2388,7 @@ setRequiredTokens(unsigned long)
   Full name: Options::setRequiredTokens(unsigned long)
   Source:    setrequiredtokens.cc 
   Used By:
-    parse.cc: Parser::executeAction__(int)
+    parse.cc: Parser::executeAction_(int)
 
 setSkeletons()
   Full name: Options::setSkeletons()
@@ -2400,25 +2400,25 @@ setStackExpansion(unsigned long)
   Full name: Options::setStackExpansion(unsigned long)
   Source:    setstackexpansion.cc 
   Used By:
-    parse.cc: Parser::executeAction__(int)
+    parse.cc: Parser::executeAction_(int)
 
 setStart()
   Full name: Parser::setStart()
   Source:    setstart.cc 
   Used By:
-    parse.cc: Parser::executeAction__(int)
+    parse.cc: Parser::executeAction_(int)
 
 setStype()
   Full name: Options::setStype()
   Source:    setstype.cc 
   Used By:
-    parse.cc: Parser::executeAction__(int)
+    parse.cc: Parser::executeAction_(int)
 
 setTagMismatches(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned long)
   Full name: Options::setTagMismatches(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned long)
   Source:    settagmismatches.cc 
   Used By:
-    parse.cc: Parser::executeAction__(int)
+    parse.cc: Parser::executeAction_(int)
     setparsingoptions.cc: Options::setParsingOptions()
 
 setTagNr(unsigned long)
@@ -2445,7 +2445,7 @@ setUnionDecl()
   Full name: Parser::setUnionDecl()
   Source:    setuniondecl.cc 
   Used By:
-    parse.cc: Parser::executeAction__(int)
+    parse.cc: Parser::executeAction_(int)
 
 setUnionDecl(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Full name: Options::setUnionDecl(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
@@ -2798,7 +2798,7 @@ symbolicNames() const
     staticdata.cc: Generator::staticData(std::ostream&) const
 
 t_nErrors
-  Full name: Meta__::t_nErrors
+  Full name: Meta_::t_nErrors
   Source:    parse.cc 
   Used By:
     handleproductionelement.cc: GLOBALS handleproductionelement.cc 16handleproductionelement.o
@@ -2902,7 +2902,7 @@ updateDefaultActionLineNr()
   Full name: Parser::updateDefaultActionLineNr()
   Source:    updatedefaultactionlinenr.cc 
   Used By:
-    parse.cc: Parser::executeAction__(int)
+    parse.cc: Parser::executeAction_(int)
 
 updateDefaultActionLineNr(unsigned long)
   Full name: Rules::updateDefaultActionLineNr(unsigned long)
@@ -2933,13 +2933,13 @@ useSymbol()
   Full name: Parser::useSymbol()
   Source:    usesymbol.cc 
   Used By:
-    parse.cc: Parser::executeAction__(int)
+    parse.cc: Parser::executeAction_(int)
 
 useTerminal()
   Full name: Parser::useTerminal()
   Source:    useterminal.cc 
   Used By:
-    parse.cc: Parser::executeAction__(int)
+    parse.cc: Parser::executeAction_(int)
 
 v_firstSet() const
   Full name: NonTerminal::v_firstSet() const
@@ -3041,7 +3041,7 @@ year
     usage.cc: usage(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
 
 ~Base()
-  Full name: Meta__::Base::~Base()
+  Full name: Meta_::Base::~Base()
   Source:    parse.cc 
   Used By:
     handleproductionelement.cc: GLOBALS handleproductionelement.cc 16handleproductionelement.o

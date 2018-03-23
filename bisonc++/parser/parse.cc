@@ -8,7 +8,7 @@
 // The FIRST element of SR arrays shown below uses `d_type', defining the
 // state's type, and `d_lastIdx' containing the last element's index. If
 // d_lastIdx contains the REQ_TOKEN bitflag (see below) then the state needs
-// a token: if in this state d_token is Reserved__::UNDETERMINED__, nextToken() will be
+// a token: if in this state d_token is Reserved_::UNDETERMINED_, nextToken() will be
 // called
 
 // The LAST element of SR arrays uses `d_token' containing the last retrieved
@@ -19,12 +19,12 @@
 // rule to reduce to.
 
 // `lookup()' tries to find d_token in the current SR array. If it fails, and
-// there is no default reduction UNEXPECTED_TOKEN__ is thrown, which is then
+// there is no default reduction UNEXPECTED_TOKEN_ is thrown, which is then
 // caught by the error-recovery function.
 
 // The error-recovery function will pop elements off the stack until a state
-// having bit flag ERR_ITEM is found. This state has a transition on errTok__
-// which is applied. In this errTok__ state, while the current token is not a
+// having bit flag ERR_ITEM is found. This state has a transition on errTok_
+// which is applied. In this errTok_ state, while the current token is not a
 // proper continuation, new tokens are obtained by nextToken(). If such a
 // token is found, error recovery is successful and the token is
 // handled according to the error state's SR table and parsing continues.
@@ -56,11 +56,11 @@ namespace // anonymous
 {
     char const author[] = "Frank B. Brokken (f.b.brokken@rug.nl)";
 
-    enum Reserved__
+    enum Reserved_
     {
-        UNDETERMINED__   = -2,
-        EOF__            = -1,
-        errTok__         = 256
+        UNDETERMINED_   = -2,
+        EOF_            = -1,
+        errTok_         = 256
     };
     enum StateType       // modify statetype/data.cc when this enum changes
     {
@@ -75,17 +75,17 @@ namespace // anonymous
     };    
     enum StateTransition
     {
-        ACCEPT__   = 0,     // `ACCEPT' TRANSITION
+        ACCEPT_   = 0,     // `ACCEPT' TRANSITION
     };
 
-    struct PI__     // Production Info
+    struct PI_     // Production Info
     {
         size_t d_nonTerm; // identification number of this production's
                             // non-terminal 
         size_t d_size;    // number of elements in this production 
     };
 
-    struct SR__     // Shift Reduce info, see its description above
+    struct SR_     // Shift Reduce info, see its description above
     {
         union
         {
@@ -108,11 +108,11 @@ namespace // anonymous
     
     enum                        // size to expand the state-stack with when
     {                           // full
-        STACK_EXPANSION__ = 10
+        STACK_EXPANSION_ = 10
     };
 
 // Productions Info Records:
-PI__ const s_productionInfo[] = 
+PI_ const s_productionInfo[] = 
 {
      {0, 0}, // not used: reduction values are negative
      {310, 4}, // 1: input ->  directives _two_percents rules optTwo_percents
@@ -213,7 +213,7 @@ PI__ const s_productionInfo[] =
      {362, 3}, // 96: _directiveSpec ->  _polymorphic _polyspecs optSemiCol
      {362, 1}, // 97: _directiveSpec (WEAK_TAGS) ->  WEAK_TAGS
      {362, 2}, // 98: _directiveSpec (IDENTIFIER) ->  _tag_mismatches IDENTIFIER
-     {362, 1}, // 99: _directiveSpec (errTok__) ->  errTok__
+     {362, 1}, // 99: _directiveSpec (errTok_) ->  errTok_
      {363, 1}, // 100: _directive ->  _directiveSpec
      {311, 2}, // 101: directives ->  directives _directive
      {311, 0}, // 102: directives ->  <empty>
@@ -237,10 +237,10 @@ PI__ const s_productionInfo[] =
      {372, 1}, // 120: input_$ ->  input
 };
 
-// State info and SR__ transitions for each state.
+// State info and SR_ transitions for each state.
 
 
-SR__ s_0[] =
+SR_ s_0[] =
 {
     { { DEF_RED}, {    3} },              
     { {     310}, {    1} }, // input     
@@ -248,14 +248,14 @@ SR__ s_0[] =
     { {       0}, { -102} },              
 };
 
-SR__ s_1[] =
+SR_ s_1[] =
 {
     { { REQ_TOKEN}, {        2} }, 
-    { {     EOF__}, { ACCEPT__} }, 
+    { {     EOF_}, { ACCEPT_} }, 
     { {         0}, {        0} }, 
 };
 
-SR__ s_2[] =
+SR_ s_2[] =
 {
     { {  ERR_REQ}, { 76} },                                  
     { {      312}, {  3} }, // _two_percents                 
@@ -302,7 +302,7 @@ SR__ s_2[] =
     { {      358}, { 44} }, // _polymorphic                  
     { {      301}, { 45} }, // WEAK_TAGS                     
     { {      357}, { 46} }, // _tag_mismatches               
-    { { errTok__}, { 47} }, // errTok__                      
+    { { errTok_}, { 47} }, // errTok_                      
     { {      257}, { 48} }, // BASECLASS_HEADER              
     { {      258}, { 49} }, // BASECLASS_PREINCLUDE          
     { {      260}, { 50} }, // CLASS_HEADER                  
@@ -336,247 +336,247 @@ SR__ s_2[] =
     { {        0}, {  0} },                                  
 };
 
-SR__ s_3[] =
+SR_ s_3[] =
 {
     { { DEF_RED}, {    2} },         
     { {     313}, {   78} }, // rules
     { {       0}, { -119} },         
 };
 
-SR__ s_4[] =
+SR_ s_4[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -101} }, 
 };
 
-SR__ s_5[] =
+SR_ s_5[] =
 {
     { { DEF_RED}, {  1} }, 
     { {       0}, { -2} }, 
 };
 
-SR__ s_6[] =
+SR_ s_6[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -100} }, 
 };
 
-SR__ s_7[] =
+SR_ s_7[] =
 {
     { { REQ_TOKEN}, {  2} },          
     { {       293}, { 79} }, // STRING
     { {         0}, {  0} },          
 };
 
-SR__ s_8[] =
+SR_ s_8[] =
 {
     { { REQ_TOKEN}, {  2} },          
     { {       293}, { 80} }, // STRING
     { {         0}, {  0} },          
 };
 
-SR__ s_9[] =
+SR_ s_9[] =
 {
     { { REQ_TOKEN}, {  2} },          
     { {       293}, { 81} }, // STRING
     { {         0}, {  0} },          
 };
 
-SR__ s_10[] =
+SR_ s_10[] =
 {
     { { REQ_TOKEN}, {  2} },              
     { {       269}, { 82} }, // IDENTIFIER
     { {         0}, {  0} },              
 };
 
-SR__ s_11[] =
+SR_ s_11[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -63} }, 
 };
 
-SR__ s_12[] =
+SR_ s_12[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -64} }, 
 };
 
-SR__ s_13[] =
+SR_ s_13[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -65} }, 
 };
 
-SR__ s_14[] =
+SR_ s_14[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -66} }, 
 };
 
-SR__ s_15[] =
+SR_ s_15[] =
 {
     { { REQ_TOKEN}, {  2} },          
     { {       279}, { 83} }, // NUMBER
     { {         0}, {  0} },          
 };
 
-SR__ s_16[] =
+SR_ s_16[] =
 {
     { { REQ_TOKEN}, {  2} },          
     { {       293}, { 84} }, // STRING
     { {         0}, {  0} },          
 };
 
-SR__ s_17[] =
+SR_ s_17[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -69} }, 
 };
 
-SR__ s_18[] =
+SR_ s_18[] =
 {
     { { REQ_TOKEN}, {  2} },          
     { {       293}, { 85} }, // STRING
     { {         0}, {  0} },          
 };
 
-SR__ s_19[] =
+SR_ s_19[] =
 {
     { { DEF_RED}, {   2} },                        
     { {     329}, {  86} }, // _incrementPrecedence
     { {       0}, { -23} },                        
 };
 
-SR__ s_20[] =
+SR_ s_20[] =
 {
     { { REQ_TOKEN}, {  2} },         
     { {       259}, { 87} }, // BLOCK
     { {         0}, {  0} },         
 };
 
-SR__ s_21[] =
+SR_ s_21[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -73} }, 
 };
 
-SR__ s_22[] =
+SR_ s_22[] =
 {
     { { REQ_TOKEN}, {  2} },          
     { {       293}, { 88} }, // STRING
     { {         0}, {  0} },          
 };
 
-SR__ s_23[] =
+SR_ s_23[] =
 {
     { { REQ_TOKEN}, {  2} },              
     { {       269}, { 89} }, // IDENTIFIER
     { {         0}, {  0} },              
 };
 
-SR__ s_24[] =
+SR_ s_24[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -76} }, 
 };
 
-SR__ s_25[] =
+SR_ s_25[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -77} }, 
 };
 
-SR__ s_26[] =
+SR_ s_26[] =
 {
     { { DEF_RED}, {   2} },                        
     { {     329}, {  90} }, // _incrementPrecedence
     { {       0}, { -23} },                        
 };
 
-SR__ s_27[] =
+SR_ s_27[] =
 {
     { { REQ_TOKEN}, {  2} },          
     { {       293}, { 91} }, // STRING
     { {         0}, {  0} },          
 };
 
-SR__ s_28[] =
+SR_ s_28[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -80} }, 
 };
 
-SR__ s_29[] =
+SR_ s_29[] =
 {
     { { REQ_TOKEN}, {  2} },          
     { {       279}, { 92} }, // NUMBER
     { {         0}, {  0} },          
 };
 
-SR__ s_30[] =
+SR_ s_30[] =
 {
     { { DEF_RED}, {   2} },                        
     { {     329}, {  93} }, // _incrementPrecedence
     { {       0}, { -23} },                        
 };
 
-SR__ s_31[] =
+SR_ s_31[] =
 {
     { { REQ_TOKEN}, {  2} },          
     { {       293}, { 94} }, // STRING
     { {         0}, {  0} },          
 };
 
-SR__ s_32[] =
+SR_ s_32[] =
 {
     { { REQ_TOKEN}, {  2} },          
     { {       293}, { 95} }, // STRING
     { {         0}, {  0} },          
 };
 
-SR__ s_33[] =
+SR_ s_33[] =
 {
     { { REQ_TOKEN}, {  2} },          
     { {       293}, { 96} }, // STRING
     { {         0}, {  0} },          
 };
 
-SR__ s_34[] =
+SR_ s_34[] =
 {
     { { REQ_TOKEN}, {  2} },          
     { {       293}, { 97} }, // STRING
     { {         0}, {  0} },          
 };
 
-SR__ s_35[] =
+SR_ s_35[] =
 {
     { { REQ_TOKEN}, {  2} },          
     { {       279}, { 98} }, // NUMBER
     { {         0}, {  0} },          
 };
 
-SR__ s_36[] =
+SR_ s_36[] =
 {
     { { REQ_TOKEN}, {  2} },              
     { {       269}, { 99} }, // IDENTIFIER
     { {         0}, {  0} },              
 };
 
-SR__ s_37[] =
+SR_ s_37[] =
 {
     { { REQ_TOKEN}, {   2} },          
     { {       293}, { 100} }, // STRING
     { {         0}, {   0} },          
 };
 
-SR__ s_38[] =
+SR_ s_38[] =
 {
     { { REQ_TOKEN}, {   2} },          
     { {       293}, { 101} }, // STRING
     { {         0}, {   0} },          
 };
 
-SR__ s_39[] =
+SR_ s_39[] =
 {
     { { REQ_DEF}, {   5} },               
     { {     321}, { 102} }, // optTypename
@@ -586,7 +586,7 @@ SR__ s_39[] =
     { {       0}, { -11} },               
 };
 
-SR__ s_40[] =
+SR_ s_40[] =
 {
     { { REQ_TOKEN}, {   3} },            
     { {       316}, { 106} }, // typename
@@ -594,28 +594,28 @@ SR__ s_40[] =
     { {         0}, {   0} },            
 };
 
-SR__ s_41[] =
+SR_ s_41[] =
 {
     { { REQ_TOKEN}, {   2} },         
     { {       259}, { 107} }, // BLOCK
     { {         0}, {   0} },         
 };
 
-SR__ s_42[] =
+SR_ s_42[] =
 {
     { { REQ_TOKEN}, {   2} },              
     { {       269}, { 108} }, // IDENTIFIER
     { {         0}, {   0} },              
 };
 
-SR__ s_43[] =
+SR_ s_43[] =
 {
     { { REQ_TOKEN}, {   2} },              
     { {       269}, { 109} }, // IDENTIFIER
     { {         0}, {   0} },              
 };
 
-SR__ s_44[] =
+SR_ s_44[] =
 {
     { { REQ_TOKEN}, {   5} },              
     { {       361}, { 110} }, // _polyspecs
@@ -625,210 +625,210 @@ SR__ s_44[] =
     { {         0}, {   0} },              
 };
 
-SR__ s_45[] =
+SR_ s_45[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -97} }, 
 };
 
-SR__ s_46[] =
+SR_ s_46[] =
 {
     { { REQ_TOKEN}, {   2} },              
     { {       269}, { 114} }, // IDENTIFIER
     { {         0}, {   0} },              
 };
 
-SR__ s_47[] =
+SR_ s_47[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -99} }, 
 };
 
-SR__ s_48[] =
+SR_ s_48[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -16} }, 
 };
 
-SR__ s_49[] =
+SR_ s_49[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -17} }, 
 };
 
-SR__ s_50[] =
+SR_ s_50[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -18} }, 
 };
 
-SR__ s_51[] =
+SR_ s_51[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -19} }, 
 };
 
-SR__ s_52[] =
+SR_ s_52[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -20} }, 
 };
 
-SR__ s_53[] =
+SR_ s_53[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -21} }, 
 };
 
-SR__ s_54[] =
+SR_ s_54[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -22} }, 
 };
 
-SR__ s_55[] =
+SR_ s_55[] =
 {
     { { DEF_RED}, {   2} },               
     { {     331}, { 115} }, // _typesymbol
     { {       0}, { -48} },               
 };
 
-SR__ s_56[] =
+SR_ s_56[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -25} }, 
 };
 
-SR__ s_57[] =
+SR_ s_57[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -26} }, 
 };
 
-SR__ s_58[] =
+SR_ s_58[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -27} }, 
 };
 
-SR__ s_59[] =
+SR_ s_59[] =
 {
     { { DEF_RED}, {   2} },               
     { {     331}, { 116} }, // _typesymbol
     { {       0}, { -48} },               
 };
 
-SR__ s_60[] =
+SR_ s_60[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -29} }, 
 };
 
-SR__ s_61[] =
+SR_ s_61[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -31} }, 
 };
 
-SR__ s_62[] =
+SR_ s_62[] =
 {
     { { DEF_RED}, {   2} },               
     { {     331}, { 117} }, // _typesymbol
     { {       0}, { -48} },               
 };
 
-SR__ s_63[] =
+SR_ s_63[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -33} }, 
 };
 
-SR__ s_64[] =
+SR_ s_64[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -34} }, 
 };
 
-SR__ s_65[] =
+SR_ s_65[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -35} }, 
 };
 
-SR__ s_66[] =
+SR_ s_66[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -36} }, 
 };
 
-SR__ s_67[] =
+SR_ s_67[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -37} }, 
 };
 
-SR__ s_68[] =
+SR_ s_68[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -38} }, 
 };
 
-SR__ s_69[] =
+SR_ s_69[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -47} }, 
 };
 
-SR__ s_70[] =
+SR_ s_70[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -45} }, 
 };
 
-SR__ s_71[] =
+SR_ s_71[] =
 {
     { { DEF_RED}, {   2} },               
     { {     331}, { 118} }, // _typesymbol
     { {       0}, { -48} },               
 };
 
-SR__ s_72[] =
+SR_ s_72[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -46} }, 
 };
 
-SR__ s_73[] =
+SR_ s_73[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -50} }, 
 };
 
-SR__ s_74[] =
+SR_ s_74[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -51} }, 
 };
 
-SR__ s_75[] =
+SR_ s_75[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -52} }, 
 };
 
-SR__ s_76[] =
+SR_ s_76[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -54} }, 
 };
 
-SR__ s_77[] =
+SR_ s_77[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -53} }, 
 };
 
-SR__ s_78[] =
+SR_ s_78[] =
 {
     { { REQ_DEF}, {   7} },                   
     { {     314}, { 119} }, // optTwo_percents
@@ -840,49 +840,49 @@ SR__ s_78[] =
     { {       0}, { -15} },                   
 };
 
-SR__ s_79[] =
+SR_ s_79[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -59} }, 
 };
 
-SR__ s_80[] =
+SR_ s_80[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -60} }, 
 };
 
-SR__ s_81[] =
+SR_ s_81[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -61} }, 
 };
 
-SR__ s_82[] =
+SR_ s_82[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -62} }, 
 };
 
-SR__ s_83[] =
+SR_ s_83[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -67} }, 
 };
 
-SR__ s_84[] =
+SR_ s_84[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -68} }, 
 };
 
-SR__ s_85[] =
+SR_ s_85[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -70} }, 
 };
 
-SR__ s_86[] =
+SR_ s_86[] =
 {
     { { REQ_DEF}, {   5} },               
     { {     321}, { 124} }, // optTypename
@@ -892,7 +892,7 @@ SR__ s_86[] =
     { {       0}, { -11} },               
 };
 
-SR__ s_87[] =
+SR_ s_87[] =
 {
     { { REQ_DEF}, {   3} },              
     { {     319}, { 125} }, // optSemiCol
@@ -900,19 +900,19 @@ SR__ s_87[] =
     { {       0}, { -10} },              
 };
 
-SR__ s_88[] =
+SR_ s_88[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -74} }, 
 };
 
-SR__ s_89[] =
+SR_ s_89[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -75} }, 
 };
 
-SR__ s_90[] =
+SR_ s_90[] =
 {
     { { REQ_DEF}, {   5} },               
     { {     321}, { 127} }, // optTypename
@@ -922,19 +922,19 @@ SR__ s_90[] =
     { {       0}, { -11} },               
 };
 
-SR__ s_91[] =
+SR_ s_91[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -79} }, 
 };
 
-SR__ s_92[] =
+SR_ s_92[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -81} }, 
 };
 
-SR__ s_93[] =
+SR_ s_93[] =
 {
     { { REQ_DEF}, {   5} },               
     { {     321}, { 128} }, // optTypename
@@ -944,75 +944,75 @@ SR__ s_93[] =
     { {       0}, { -11} },               
 };
 
-SR__ s_94[] =
+SR_ s_94[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -83} }, 
 };
 
-SR__ s_95[] =
+SR_ s_95[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -84} }, 
 };
 
-SR__ s_96[] =
+SR_ s_96[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -85} }, 
 };
 
-SR__ s_97[] =
+SR_ s_97[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -86} }, 
 };
 
-SR__ s_98[] =
+SR_ s_98[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -87} }, 
 };
 
-SR__ s_99[] =
+SR_ s_99[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -88} }, 
 };
 
-SR__ s_100[] =
+SR_ s_100[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -89} }, 
 };
 
-SR__ s_101[] =
+SR_ s_101[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -90} }, 
 };
 
-SR__ s_102[] =
+SR_ s_102[] =
 {
     { { DEF_RED}, {   2} },                   
     { {     337}, { 129} }, // _pushPrecedence
     { {       0}, { -30} },                   
 };
 
-SR__ s_103[] =
+SR_ s_103[] =
 {
     { { DEF_RED}, {   2} },              
     { {     320}, { 130} }, // _tokenname
     { {       0}, { -11} },              
 };
 
-SR__ s_104[] =
+SR_ s_104[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -13} }, 
 };
 
-SR__ s_105[] =
+SR_ s_105[] =
 {
     { { REQ_TOKEN}, {   3} },              
     { {       315}, { 131} }, // identifier
@@ -1020,7 +1020,7 @@ SR__ s_105[] =
     { {         0}, {   0} },              
 };
 
-SR__ s_106[] =
+SR_ s_106[] =
 {
     { { DEF_RED}, {   3} },               
     { {     349}, { 132} }, // _symbols   
@@ -1028,7 +1028,7 @@ SR__ s_106[] =
     { {       0}, { -39} },               
 };
 
-SR__ s_107[] =
+SR_ s_107[] =
 {
     { { REQ_DEF}, {   3} },              
     { {     319}, { 134} }, // optSemiCol
@@ -1036,19 +1036,19 @@ SR__ s_107[] =
     { {       0}, { -10} },              
 };
 
-SR__ s_108[] =
+SR_ s_108[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -94} }, 
 };
 
-SR__ s_109[] =
+SR_ s_109[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -95} }, 
 };
 
-SR__ s_110[] =
+SR_ s_110[] =
 {
     { { REQ_DEF}, {   3} },              
     { {     319}, { 135} }, // optSemiCol
@@ -1056,13 +1056,13 @@ SR__ s_110[] =
     { {       0}, { -10} },              
 };
 
-SR__ s_111[] =
+SR_ s_111[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -58} }, 
 };
 
-SR__ s_112[] =
+SR_ s_112[] =
 {
     { { REQ_TOKEN}, {   3} },             
     { {       359}, { 137} }, // _typespec
@@ -1070,61 +1070,61 @@ SR__ s_112[] =
     { {         0}, {   0} },             
 };
 
-SR__ s_113[] =
+SR_ s_113[] =
 {
     { { DEF_RED}, {  1} }, 
     { {       0}, { -3} }, 
 };
 
-SR__ s_114[] =
+SR_ s_114[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -98} }, 
 };
 
-SR__ s_115[] =
+SR_ s_115[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -24} }, 
 };
 
-SR__ s_116[] =
+SR_ s_116[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -28} }, 
 };
 
-SR__ s_117[] =
+SR_ s_117[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -32} }, 
 };
 
-SR__ s_118[] =
+SR_ s_118[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -49} }, 
 };
 
-SR__ s_119[] =
+SR_ s_119[] =
 {
     { { DEF_RED}, {  1} }, 
     { {       0}, { -1} }, 
 };
 
-SR__ s_120[] =
+SR_ s_120[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -118} }, 
 };
 
-SR__ s_121[] =
+SR_ s_121[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -14} }, 
 };
 
-SR__ s_122[] =
+SR_ s_122[] =
 {
     { { REQ_DEF}, {    9} },                       
     { {     369}, {  139} }, // _productionList    
@@ -1138,14 +1138,14 @@ SR__ s_122[] =
     { {       0}, { -112} },                       
 };
 
-SR__ s_123[] =
+SR_ s_123[] =
 {
     { { REQ_TOKEN}, {   2} },       
     { {        58}, { 147} }, // ':'
     { {         0}, {   0} },       
 };
 
-SR__ s_124[] =
+SR_ s_124[] =
 {
     { { DEF_RED}, {   3} },               
     { {     349}, { 148} }, // _symbols   
@@ -1153,19 +1153,19 @@ SR__ s_124[] =
     { {       0}, { -39} },               
 };
 
-SR__ s_125[] =
+SR_ s_125[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -72} }, 
 };
 
-SR__ s_126[] =
+SR_ s_126[] =
 {
     { { DEF_RED}, {  1} }, 
     { {       0}, { -9} }, 
 };
 
-SR__ s_127[] =
+SR_ s_127[] =
 {
     { { DEF_RED}, {   3} },               
     { {     349}, { 149} }, // _symbols   
@@ -1173,7 +1173,7 @@ SR__ s_127[] =
     { {       0}, { -39} },               
 };
 
-SR__ s_128[] =
+SR_ s_128[] =
 {
     { { DEF_RED}, {   3} },               
     { {     349}, { 150} }, // _symbols   
@@ -1181,7 +1181,7 @@ SR__ s_128[] =
     { {       0}, { -39} },               
 };
 
-SR__ s_129[] =
+SR_ s_129[] =
 {
     { { DEF_RED}, {   3} },               
     { {     349}, { 151} }, // _symbols   
@@ -1189,26 +1189,26 @@ SR__ s_129[] =
     { {       0}, { -39} },               
 };
 
-SR__ s_130[] =
+SR_ s_130[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -12} }, 
 };
 
-SR__ s_131[] =
+SR_ s_131[] =
 {
     { { REQ_TOKEN}, {   2} },       
     { {        62}, { 152} }, // '>'
     { {         0}, {   0} },       
 };
 
-SR__ s_132[] =
+SR_ s_132[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -92} }, 
 };
 
-SR__ s_133[] =
+SR_ s_133[] =
 {
     { { REQ_TOKEN}, {   6} },               
     { {       348}, { 153} }, // _symbolList
@@ -1219,19 +1219,19 @@ SR__ s_133[] =
     { {         0}, {   0} },               
 };
 
-SR__ s_134[] =
+SR_ s_134[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -93} }, 
 };
 
-SR__ s_135[] =
+SR_ s_135[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -96} }, 
 };
 
-SR__ s_136[] =
+SR_ s_136[] =
 {
     { { REQ_DEF}, {   4} },              
     { {     360}, { 157} }, // _polyspec 
@@ -1240,7 +1240,7 @@ SR__ s_136[] =
     { {       0}, {  -9} },              
 };
 
-SR__ s_137[] =
+SR_ s_137[] =
 {
     { { REQ_TOKEN}, {   3} },              
     { {       315}, { 158} }, // identifier
@@ -1248,13 +1248,13 @@ SR__ s_137[] =
     { {         0}, {   0} },              
 };
 
-SR__ s_138[] =
+SR_ s_138[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -55} }, 
 };
 
-SR__ s_139[] =
+SR_ s_139[] =
 {
     { { REQ_TOKEN}, {   4} },                        
     { {        59}, { 159} }, // ';'                 
@@ -1263,13 +1263,13 @@ SR__ s_139[] =
     { {         0}, {   0} },                        
 };
 
-SR__ s_140[] =
+SR_ s_140[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -115} }, 
 };
 
-SR__ s_141[] =
+SR_ s_141[] =
 {
     { { REQ_DEF}, {    6} },                      
     { {     365}, {  162} }, // _productionElement
@@ -1280,31 +1280,31 @@ SR__ s_141[] =
     { {       0}, { -111} },                      
 };
 
-SR__ s_142[] =
+SR_ s_142[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -110} }, 
 };
 
-SR__ s_143[] =
+SR_ s_143[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -105} }, 
 };
 
-SR__ s_144[] =
+SR_ s_144[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -106} }, 
 };
 
-SR__ s_145[] =
+SR_ s_145[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -107} }, 
 };
 
-SR__ s_146[] =
+SR_ s_146[] =
 {
     { { REQ_TOKEN}, {   4} },              
     { {       364}, { 163} }, // _precSpec 
@@ -1313,50 +1313,50 @@ SR__ s_146[] =
     { {         0}, {   0} },              
 };
 
-SR__ s_147[] =
+SR_ s_147[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -116} }, 
 };
 
-SR__ s_148[] =
+SR_ s_148[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -71} }, 
 };
 
-SR__ s_149[] =
+SR_ s_149[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -78} }, 
 };
 
-SR__ s_150[] =
+SR_ s_150[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -82} }, 
 };
 
-SR__ s_151[] =
+SR_ s_151[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -91} }, 
 };
 
-SR__ s_152[] =
+SR_ s_152[] =
 {
     { { DEF_RED}, {  1} }, 
     { {       0}, { -4} }, 
 };
 
-SR__ s_153[] =
+SR_ s_153[] =
 {
     { {  REQ_DEF}, {  47} },                                 
     { {      319}, { 166} }, // optSemiCol                   
     { {      317}, { 167} }, // optComma                     
     { {       59}, { 126} }, // ';'                          
     { {       44}, { 168} }, // ','                          
-    { { errTok__}, { -10} }, // errTok__                     
+    { { errTok_}, { -10} }, // errTok_                     
     { {      257}, { -10} }, // BASECLASS_HEADER             
     { {      258}, { -10} }, // BASECLASS_PREINCLUDE         
     { {      260}, { -10} }, // CLASS_HEADER                 
@@ -1401,19 +1401,19 @@ SR__ s_153[] =
     { {        0}, {  -6} },                                 
 };
 
-SR__ s_154[] =
+SR_ s_154[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -43} }, 
 };
 
-SR__ s_155[] =
+SR_ s_155[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -40} }, 
 };
 
-SR__ s_156[] =
+SR_ s_156[] =
 {
     { { REQ_DEF}, {   3} },             
     { {     318}, { 169} }, // optNumber
@@ -1421,25 +1421,25 @@ SR__ s_156[] =
     { {       0}, {  -8} },             
 };
 
-SR__ s_157[] =
+SR_ s_157[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -57} }, 
 };
 
-SR__ s_158[] =
+SR_ s_158[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -56} }, 
 };
 
-SR__ s_159[] =
+SR_ s_159[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -117} }, 
 };
 
-SR__ s_160[] =
+SR_ s_160[] =
 {
     { { REQ_DEF}, {    8} },                       
     { {     367}, {  171} }, // _production        
@@ -1452,43 +1452,43 @@ SR__ s_160[] =
     { {       0}, { -112} },                       
 };
 
-SR__ s_161[] =
+SR_ s_161[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -113} }, 
 };
 
-SR__ s_162[] =
+SR_ s_162[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -109} }, 
 };
 
-SR__ s_163[] =
+SR_ s_163[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -108} }, 
 };
 
-SR__ s_164[] =
+SR_ s_164[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -103} }, 
 };
 
-SR__ s_165[] =
+SR_ s_165[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -104} }, 
 };
 
-SR__ s_166[] =
+SR_ s_166[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -44} }, 
 };
 
-SR__ s_167[] =
+SR_ s_167[] =
 {
     { { REQ_TOKEN}, {   5} },              
     { {       347}, { 172} }, // _symbol   
@@ -1498,31 +1498,31 @@ SR__ s_167[] =
     { {         0}, {   0} },              
 };
 
-SR__ s_168[] =
+SR_ s_168[] =
 {
     { { DEF_RED}, {  1} }, 
     { {       0}, { -5} }, 
 };
 
-SR__ s_169[] =
+SR_ s_169[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -41} }, 
 };
 
-SR__ s_170[] =
+SR_ s_170[] =
 {
     { { DEF_RED}, {  1} }, 
     { {       0}, { -7} }, 
 };
 
-SR__ s_171[] =
+SR_ s_171[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -114} }, 
 };
 
-SR__ s_172[] =
+SR_ s_172[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -42} }, 
@@ -1530,7 +1530,7 @@ SR__ s_172[] =
 
 
 // State array:
-SR__ *s_state[] =
+SR_ *s_state[] =
 {
   s_0,  s_1,  s_2,  s_3,  s_4,  s_5,  s_6,  s_7,  s_8,  s_9,
   s_10,  s_11,  s_12,  s_13,  s_14,  s_15,  s_16,  s_17,  s_18,  s_19,
@@ -1557,12 +1557,12 @@ SR__ *s_state[] =
 
 
 // $insert polymorphicCode
-namespace Meta__
+namespace Meta_
 {
 
 size_t const *t_nErrors;
 // $insert idoftag
-char const *idOfTag__[] = {
+char const *idOfTag_[] = {
     "TERMINAL",
     "BLOCK",
     "TEXT",
@@ -1572,12 +1572,12 @@ char const *idOfTag__[] = {
     "<undefined>"
 };
 
-size_t const *s_nErrors__;
+size_t const *s_nErrors_;
 
 Base::~Base()
 {}
 
-}   // namespace Meta__
+}   // namespace Meta_
 
 // If the parsing function call (i.e., parse()' needs arguments, then provide
 // an overloaded function.  The code below doesn't rely on parameters, so no
@@ -1589,61 +1589,61 @@ Base::~Base()
 // base/base1
 ParserBase::ParserBase()
 :
-    d_token(Reserved__::UNDETERMINED__),
+    d_token(Reserved_::UNDETERMINED_),
     // $insert baseclasscode
-    d_requiredTokens__(0)
+    d_requiredTokens_(0)
 {
-    Meta__::t_nErrors = &d_nErrors__;
+    Meta_::t_nErrors = &d_nErrors_;
 }
 
 // base/clearin
-void ParserBase::clearin__()
+void ParserBase::clearin_()
 {
-    d_nErrors__ = 0;
+    d_nErrors_ = 0;
     d_stackIdx = -1;
     d_stateStack.clear();
-    d_token = Reserved__::UNDETERMINED__;
-    d_next = TokenPair{ Reserved__::UNDETERMINED__, STYPE__{} };
+    d_token = Reserved_::UNDETERMINED_;
+    d_next = TokenPair{ Reserved_::UNDETERMINED_, STYPE_{} };
     d_recovery = false;
-    d_acceptedTokens__ = d_requiredTokens__;
-    d_val__ = STYPE__{};
+    d_acceptedTokens_ = d_requiredTokens_;
+    d_val_ = STYPE_{};
 
-    push__(0);
+    push_(0);
 }
 
 // base/debugfunctions
 
 void ParserBase::setDebug(bool mode)
 {
-    d_actionCases__ = false;
-    d_debug__ = mode;
+    d_actionCases_ = false;
+    d_debug_ = mode;
 }
 
-void ParserBase::setDebug(DebugMode__ mode)
+void ParserBase::setDebug(DebugMode_ mode)
 {
-    d_actionCases__ = mode & ACTIONCASES;
-    d_debug__ =       mode & ON;
+    d_actionCases_ = mode & ACTIONCASES;
+    d_debug_ =       mode & ON;
 }
 
 // base/lex
-void ParserBase::lex__(int token)
+void ParserBase::lex_(int token)
 {
     d_token = token;
 
     if (d_token <= 0)
-        d_token = Reserved__::EOF__;
+        d_token = Reserved_::EOF_;
 
     d_terminalToken = true;
 }
 
 // base/lookup
-int ParserBase::lookup__() const
+int ParserBase::lookup_() const
 {
     // if the final transition is negative, then we should reduce by the rule
     // given by its positive value.
 
-    SR__ const *sr = s_state[d_state];
-    SR__ const *last = sr + sr->d_lastIdx;
+    SR_ const *sr = s_state[d_state];
+    SR_ const *last = sr + sr->d_lastIdx;
 
     for ( ; ++sr != last; )           // visit all but the last SR entries
     {
@@ -1659,7 +1659,7 @@ int ParserBase::lookup__() const
         }
 
         // No default reduction, so token not found, so error.
-        throw UNEXPECTED_TOKEN__;
+        throw UNEXPECTED_TOKEN_;
     }
 
     // not at the last element: inspect the nature of the action
@@ -1672,7 +1672,7 @@ int ParserBase::lookup__() const
 }
 
 // base/pop
-void ParserBase::pop__(size_t count)
+void ParserBase::pop_(size_t count)
 {
     if (d_stackIdx < static_cast<int>(count))
     {
@@ -1686,27 +1686,27 @@ void ParserBase::pop__(size_t count)
 }
 
 // base/poptoken
-void ParserBase::popToken__()
+void ParserBase::popToken_()
 {
     d_token = d_next.first;
-    d_val__ = std::move(d_next.second);
+    d_val_ = std::move(d_next.second);
 
-    d_next.first = Reserved__::UNDETERMINED__;
+    d_next.first = Reserved_::UNDETERMINED_;
 }
 
 // base/push
-void ParserBase::push__(size_t state)
+void ParserBase::push_(size_t state)
 {
     size_t currentSize = d_stateStack.size();
-    if (stackSize__() == currentSize)
+    if (stackSize_() == currentSize)
     {
-        size_t newSize = currentSize + STACK_EXPANSION__;
+        size_t newSize = currentSize + STACK_EXPANSION_;
         d_stateStack.resize(newSize);
     }
 
     ++d_stackIdx;
     d_stateStack[d_stackIdx] = 
-                    StatePair{ d_state = state, std::move(d_val__) };
+                    StatePair{ d_state = state, std::move(d_val_) };
 
     d_vsp = &d_stateStack[d_stackIdx];
 
@@ -1719,52 +1719,52 @@ void ParserBase::push__(size_t state)
 }
 
 // base/pushtoken
-void ParserBase::pushToken__(int token)
+void ParserBase::pushToken_(int token)
 {
-    d_next = TokenPair{ d_token, std::move(d_val__) };
+    d_next = TokenPair{ d_token, std::move(d_val_) };
     d_token = token;
 }
 
 // base/redotoken
-void ParserBase::redoToken__()
+void ParserBase::redoToken_()
 {
-    if (d_token != Reserved__::UNDETERMINED__)
-        pushToken__(d_token);
+    if (d_token != Reserved_::UNDETERMINED_)
+        pushToken_(d_token);
 }
 
 // base/reduce
-void ParserBase::reduce__(int rule)
+void ParserBase::reduce_(int rule)
 {
-    PI__ const &pi = s_productionInfo[rule];
+    PI_ const &pi = s_productionInfo[rule];
 
     d_token = pi.d_nonTerm;
-    pop__(pi.d_size);
+    pop_(pi.d_size);
 
     d_terminalToken = false;
 }
 
 // base/shift
-void ParserBase::shift__(int action)
+void ParserBase::shift_(int action)
 {
-    push__(action);
-    popToken__();               // token processed
+    push_(action);
+    popToken_();               // token processed
 
     if (d_recovery and d_terminalToken)
     {
         d_recovery = false;
-        d_acceptedTokens__ = 0;
+        d_acceptedTokens_ = 0;
     }
 }
 
 // base/startrecovery
-void ParserBase::startRecovery__()
+void ParserBase::startRecovery_()
 {
     int lastToken = d_token;                // give the unexpected token a
                                             // chance to be processed
                                             // again.
 
-    pushToken__(Reserved__::errTok__);      // specify errTok__ as next token
-    push__(lookup__());                     // push the error state
+    pushToken_(Reserved_::errTok_);      // specify errTok_ as next token
+    push_(lookup_());                     // push the error state
 
     d_token = lastToken;                    // reactivate the unexpected
                                             // token (we're now in an
@@ -1774,13 +1774,13 @@ void ParserBase::startRecovery__()
 }
 
 // base/top
-inline size_t ParserBase::top__() const
+inline size_t ParserBase::top_() const
 {
     return d_stateStack[d_stackIdx].first;
 }
 
 // derived/errorrecovery
-void Parser::errorRecovery__()
+void Parser::errorRecovery_()
 {
     // When an error has occurred, pop elements off the stack until the top
     // state has an error-item. If none is found, the default recovery
@@ -1792,31 +1792,31 @@ void Parser::errorRecovery__()
 
 
 
-    if (d_acceptedTokens__ >= d_requiredTokens__)// only generate an error-
+    if (d_acceptedTokens_ >= d_requiredTokens_)// only generate an error-
     {                                           // message if enough tokens 
-        ++d_nErrors__;                          // were accepted. Otherwise
+        ++d_nErrors_;                          // were accepted. Otherwise
         error();                                // simply skip input
     }
 
     // get the error state
-    while (not (s_state[top__()][0].d_type & ERR_ITEM))
+    while (not (s_state[top_()][0].d_type & ERR_ITEM))
     {
-        pop__();
+        pop_();
     }
 
     // In the error state, looking up a token allows us to proceed.
     // Continuation may be require multiple reductions, but eventually a
-    // terminal-token shift is used. See nextCycle__ for details.
+    // terminal-token shift is used. See nextCycle_ for details.
 
-    startRecovery__();
+    startRecovery_();
 }
 
 // derived/executeaction
-void Parser::executeAction__(int production)
+void Parser::executeAction_(int production)
 try
 {
-    if (token__() != Reserved__::UNDETERMINED__)
-        pushToken__(token__());     // save an already available token
+    if (token_() != Reserved_::UNDETERMINED_)
+        pushToken_(token_());     // save an already available token
     switch (production)
     {
         // $insert actioncases
@@ -1831,28 +1831,28 @@ try
         case 3:
 #line 3 "inc/identifier"
         {
-         d_val__ = d_matched;
+         d_val_ = d_matched;
          }
         break;
 
         case 4:
 #line 5 "inc/typename"
         {
-         checkField(vs__(-1).get<Tag__::TEXT>()); 
+         checkField(vs_(-1).get<Tag_::TEXT>()); 
          }
         break;
 
         case 7:
 #line 9 "inc/opt"
         {
-         d_val__ = true;
+         d_val_ = true;
          }
         break;
 
         case 8:
 #line 13 "inc/opt"
         {
-         d_val__ = false;
+         d_val_ = false;
          }
         break;
 
@@ -1980,7 +1980,7 @@ try
         case 30:
 #line 101 "inc/directives"
         {
-         d_val__ = Terminal::sPrecedence();
+         d_val_ = Terminal::sPrecedence();
          Terminal::resetPrecedence();
          }
         break;
@@ -2058,7 +2058,7 @@ try
         case 41:
 #line 178 "inc/directives"
         { 
-         defineTokenName(vs__(-1).get<Tag__::TEXT>(), vs__(0).get<Tag__::BOOL>()); 
+         defineTokenName(vs_(-1).get<Tag_::TEXT>(), vs_(0).get<Tag_::BOOL>()); 
          }
         break;
 
@@ -2143,7 +2143,7 @@ try
         case 56:
 #line 275 "inc/directives"
         {
-         addPolymorphic(vs__(-2).get<Tag__::TEXT>(), vs__(0).get<Tag__::TEXT>());
+         addPolymorphic(vs_(-2).get<Tag_::TEXT>(), vs_(0).get<Tag_::TEXT>());
          }
         break;
 
@@ -2353,7 +2353,7 @@ try
         case 91:
 #line 473 "inc/directives"
         {
-         Terminal::set_sPrecedence(vs__(-1).get<Tag__::SIZE_T>());
+         Terminal::set_sPrecedence(vs_(-1).get<Tag_::SIZE_T>());
          }
         break;
 
@@ -2403,50 +2403,50 @@ try
         case 103:
 #line 3 "inc/rules"
         {
-         d_val__.assign<Tag__::SIZE_T>(IDENTIFIER);
+         d_val_.assign<Tag_::SIZE_T>(IDENTIFIER);
          }
         break;
 
         case 104:
 #line 8 "inc/rules"
         {
-         d_val__.assign<Tag__::SIZE_T>(QUOTE);
+         d_val_.assign<Tag_::SIZE_T>(QUOTE);
          }
         break;
 
         case 105:
 #line 15 "inc/rules"
         {
-         d_val__ = useTerminal();
+         d_val_ = useTerminal();
          }
         break;
 
         case 106:
 #line 20 "inc/rules"
         {
-         d_val__ = useSymbol();
+         d_val_ = useSymbol();
          }
         break;
 
         case 107:
 #line 25 "inc/rules"
         {
-         d_val__ = d_scanner.block();
+         d_val_ = d_scanner.block();
          }
         break;
 
         case 108:
 #line 31 "inc/rules"
         {
-         setPrecedence(vs__(0).get<Tag__::SIZE_T>());
-         d_val__ = STYPE__{};
+         setPrecedence(vs_(0).get<Tag_::SIZE_T>());
+         d_val_ = STYPE_{};
          }
         break;
 
         case 109:
 #line 39 "inc/rules"
         {
-         d_val__ = handleProductionElements(vs__(-1), vs__(0));
+         d_val_ = handleProductionElements(vs_(-1), vs_(0));
          
          
          }
@@ -2455,14 +2455,14 @@ try
         case 110:
 #line 46 "inc/rules"
         {
-         d_val__ = vs__(0);
+         d_val_ = vs_(0);
          }
         break;
 
         case 111:
 #line 53 "inc/rules"
         {
-         handleProductionElement(vs__(0));
+         handleProductionElement(vs_(0));
          
          
          }
@@ -2487,7 +2487,7 @@ try
         case 116:
 #line 84 "inc/rules"
         {
-         openRule(vs__(-1).get<Tag__::TEXT>());
+         openRule(vs_(-1).get<Tag_::TEXT>());
          }
         break;
 
@@ -2506,80 +2506,80 @@ catch (std::exception const &exc)
 }
 
 // derived/nextcycle
-void Parser::nextCycle__()
+void Parser::nextCycle_()
 try
 {
-    if (s_state[state__()]->d_type & REQ_TOKEN)
-        nextToken__();              // obtain next token
+    if (s_state[state_()]->d_type & REQ_TOKEN)
+        nextToken_();              // obtain next token
 
 
-    int action = lookup__();        // lookup d_token in d_state
+    int action = lookup_();        // lookup d_token in d_state
 
     if (action > 0)                 // SHIFT: push a new state
     {
-        shift__(action);
+        shift_(action);
         return;
     }
 
     if (action < 0)            // REDUCE: execute and pop.
     {
 
-        if (recovery__())
-            redoToken__();
+        if (recovery_())
+            redoToken_();
         else
-            executeAction__(-action);
+            executeAction_(-action);
                                             // next token is the rule's LHS
-        reduce__(-action); 
+        reduce_(-action); 
         return;
     }
 
-    if (recovery__())
+    if (recovery_())
         ABORT();
     else 
         ACCEPT();
 }
-catch (ErrorRecovery__)
+catch (ErrorRecovery_)
 {
-    if (not recovery__())
-        errorRecovery__();
+    if (not recovery_())
+        errorRecovery_();
     else
     {
-        if (token__() == Reserved__::EOF__)
+        if (token_() == Reserved_::EOF_)
             ABORT();
-        popToken__();               // skip the failing token
+        popToken_();               // skip the failing token
     }
 }
 
 
 // derived/nexttoken
-void Parser::nextToken__()
+void Parser::nextToken_()
 { 
-    // If d_token is Reserved__::UNDETERMINED__ then if savedToken__() is
-    // Reserved__::UNDETERMINED__ another token is obtained from lex(). Then
-    // savedToken__() is assigned to d_token.
+    // If d_token is Reserved_::UNDETERMINED_ then if savedToken_() is
+    // Reserved_::UNDETERMINED_ another token is obtained from lex(). Then
+    // savedToken_() is assigned to d_token.
 
                                     // no need for a token: got one already
-    if (token__() != Reserved__::UNDETERMINED__) 
+    if (token_() != Reserved_::UNDETERMINED_) 
     {
         return;                             
     }
 
-    if (savedToken__() != Reserved__::UNDETERMINED__)
+    if (savedToken_() != Reserved_::UNDETERMINED_)
     {
-        popToken__();               // consume pending token
+        popToken_();               // consume pending token
     }
     else
     {
-        ++d_acceptedTokens__;       // accept another token (see
+        ++d_acceptedTokens_;       // accept another token (see
                                     // errorRecover())
-        lex__(lex());
-        print__();
+        lex_(lex());
+        print_();
     }
     print();
 }
 
 // derived/print
-void Parser::print__()
+void Parser::print_()
 {
 // $insert print
 }
@@ -2590,7 +2590,7 @@ try
 {
     // The parsing algorithm:
     // Initially, state 0 is pushed on the stack, and all relevant variables
-    // are initialized by Base::clearin__.
+    // are initialized by Base::clearin_.
     //
     // Then, in an eternal loop:
     //
@@ -2610,17 +2610,17 @@ try
     //  5. An error occurs if d_token is not found, and the state has no
     //     default reduction.
 
-    clearin__();                            // initialize, push(0)
+    clearin_();                            // initialize, push(0)
 
     while (true)
     {
 // $insert prompt
-        nextCycle__();
+        nextCycle_();
     }
 }
-catch (Return__ retValue)
+catch (Return_ retValue)
 {
-    return retValue or d_nErrors__;
+    return retValue or d_nErrors_;
 }
 
 

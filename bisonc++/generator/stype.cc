@@ -7,5 +7,5 @@ void Generator::stype(ostream &out) const
     if (!d_options.stype().empty())
         out << d_options.stype() << '\n';
     else
-        out << "typedef int STYPE__;\n";
+        out << "typedef int STYPE_;\n";
 }

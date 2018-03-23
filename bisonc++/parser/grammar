@@ -30,8 +30,8 @@
 %type <SIZE_T>  _pushPrecedence _precSpec
 
    // NEW: USE THIS TO ASSIGN A GENERIC POLYMORPHIC VALUE TO (NON-)TERMINALS
-    // these (non-)terminals MUST explicitly return an STYPE__
-%type <STYPE__> _productionElements _productionElement
+    // these (non-)terminals MUST explicitly return an STYPE_
+%type <STYPE_> _productionElements _productionElement
 
 %%
 

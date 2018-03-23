@@ -10,7 +10,7 @@ void Scanner::returnTypeSpec()
     
     setMatched(String::trim(trimmed));
 
-    begin(StartCondition__::INITIAL);
+    begin(StartCondition_::INITIAL);
 
     leave(Parser::IDENTIFIER);
 }

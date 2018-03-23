@@ -24,8 +24,8 @@
 
     // the compiler options to use.
 #define CXXFLAGS            "-Wall -O2 " \
-                            "-fdiagnostics-color=never "
-// "-Wunused-parameter -Werror"
+                            "-fdiagnostics-color=never "\
+ "-Wunused-parameter -Werror"
 
 #define LDFLAGS             ""
     // flags passed to the linker

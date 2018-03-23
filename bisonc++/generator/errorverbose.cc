@@ -6,5 +6,5 @@ void Generator::errorVerbose(ostream &out) const
         return;
 
     key(out);
-    out << "errorVerbose__();\n";
+    out << "errorVerbose_();\n";
 }

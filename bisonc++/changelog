@@ -46,16 +46,16 @@ bisonc++ (6.00.00)
         --------------------------------------------------------
         void error(char const *);    void error();
     
-        void exceptionHandler__(...  void exceptionHandler(...
+        void exceptionHandler_(...  void exceptionHandler(...
     
-        void errorRecovery();        void errorRecovery__();
-        void executeAction(int);     void executeAction__(int);
-        void nextToken();            void nextToken__();
+        void errorRecovery();        void errorRecovery_();
+        void executeAction(int);     void executeAction_(int);
+        void nextToken();            void nextToken_();
         --------------------------------------------------------
     
                                      added:
                                      ---------------------------
-                                     void nextCycle__();
+                                     void nextCycle_();
                                      ---------------------------
                                      removed:
                                      ---------------------------
@@ -152,12 +152,12 @@ bisonc++ (5.02.00)
 
 bisonc++ (5.01.00)
 
-  * Reimplemented polymorphic semantic values: the Meta__::Base class now is
+  * Reimplemented polymorphic semantic values: the Meta_::Base class now is
     a virtual bease class.
 
-  * Some templated operator& functions cannot handle two DebugMode__
+  * Some templated operator& functions cannot handle two DebugMode_
     arguments. To prevent compilation errors in those cases a 
-    DebugMode__ operator&(DebugMode__, DebugMode__) function was added to
+    DebugMode_ operator&(DebugMode_, DebugMode_) function was added to
     the parserbase-skeleton.
 
   * The documentation erroneously referred to an undefined --action-cases
@@ -240,18 +240,18 @@ bisonc++ (5.00.00)
 
   * API:
 
-    New member: setDebug(DebugMode__), shows the action case
+    New member: setDebug(DebugMode_), shows the action case
     just before executing the action block.
 
     The SType::data() member is now obsolete and has been removed.
 
-    The semantic value type STYPE__ (the class Meta__::SType) member `valid()
-    const' returns true if its member tag() returns a valid Tag__, otherwise
-    it returns false.  False is returned for default constructed STYPE__
-    values.  Previous implementations of STYPE__ implemented an undocumented
+    The semantic value type STYPE_ (the class Meta_::SType) member `valid()
+    const' returns true if its member tag() returns a valid Tag_, otherwise
+    it returns false.  False is returned for default constructed STYPE_
+    values.  Previous implementations of STYPE_ implemented an undocumented
     member pointer (->) operator for calling get() and data(). This operator
     is no longer available. Instead of -> the member selector operator (.)
-    should be used. E.g., stype.get<Tag__::INT>().
+    should be used. E.g., stype.get<Tag_::INT>().
 
     The member SType::emplace (See the 4.13.00 log entry) was renamed to
     SType::assign: it doesn't emplace, but assign. The construction 
@@ -377,7 +377,7 @@ bisonc++ (4.11.00)
     (re)builds the manual. The same holds true for 'build man'.
 
   * The in version 4.08.00 removed const members were reinstalled, as they are
-    required in situations where, e.g., a function defines an STYPE__ const *
+    required in situations where, e.g., a function defines an STYPE_ const *
     parameter.
 
   * Added 'build uninstall'. This command only works if, when calling one of
@@ -486,7 +486,7 @@ bisonc++ (4.08.00)
 
   * The implementation of polymorphic semantic values was simplified.  Const
     members were removed from polymorphic semantic value classes; ReturnType
-    get<Tag__>() const and ReturnType data<Tag__>() const are no longer
+    get<Tag_>() const and ReturnType data<Tag_>() const are no longer
     required and were removed.
 
  -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 02 Mar 2014 11:51:38 +0100
@@ -594,14 +594,14 @@ bisonc++ (4.02.01)
     two hand-modifications when used in combination with bisonc++ >= 4.02.00:
 
     In Parser.h, just below the declaration 
-        void print__();
+        void print_();
     add:
-        void exceptionHandler__(std::exception const &exc);
+        void exceptionHandler_(std::exception const &exc);
 
     In Parser.hh, assuming the name of the generated class is `Parser', add
     the following member definition (if a namespace is used: within the
     namespace's scope):
-        inline void Parser::exceptionHandler__(std::exception const &exc)
+        inline void Parser::exceptionHandler_(std::exception const &exc)
         {
             throw;  // re-implement to handle exceptions thrown by actions
         }
@@ -669,10 +669,10 @@ bisonc++ (4.00.00)
     extended with sections about polymorphic semantic values.
 
   * Implemented the %weak-tags directive. By default %polymorphic declares 
-    an `enum class Tag__', resulting in strongly typed polymorphic tags. If
+    an `enum class Tag_', resulting in strongly typed polymorphic tags. If
     the traditional tag declaration is preferred, the %weak-tags directive can
     be specified in addition to %polymorphic, resulting in the declaration
-    `enum Tag__'.
+    `enum Tag_'.
 
   * The previously used class spSemBase and derivatives (e.g., SemBase,
     Semantic) are now obsolete and the directories sembase and spsembase
@@ -681,10 +681,10 @@ bisonc++ (4.00.00)
   * The Parser's inline functions are all private and were moved to the
     parser's .hh file. This doesn't affect current implementations, as
     parser.h and parser.hh are only generated once, but newly generated
-    parsers no longer define the Parser's inline members (error, print__, and
+    parsers no longer define the Parser's inline members (error, print_, and
     lex) in parser.h but in parser.hh
 
-  * @@ can be used (instead of d_loc__) to refer to a rule's location stack
+  * @@ can be used (instead of d_loc_) to refer to a rule's location stack
     value. 
 
   * The generated parser now uses unordered_maps instead of maps.
@@ -724,9 +724,9 @@ bisonc++ (3.00.00)
   * NOTE: Existing Parser class interfaces (i.e. parser.h) must be
     (hand-) modified by declaring a private member 
 
-        void print__();
+        void print_();
 
-    See the man-page and/or manual for details about print__.
+    See the man-page and/or manual for details about print_.
 
   * All regression tests (in documentation/regression) are now expecting
     that flexc++ (>= 0.93.00) is available.
@@ -905,10 +905,10 @@ bisonc++ (2.4.5)
 bisonc++ (2.4.4)
 
   * typed terminal tokens (as used in, e.g., %type<fieldname>) were not
-    included in the parserbase's Tokens__ enum since their symbol type is left
+    included in the parserbase's Tokens_ enum since their symbol type is left
     at UNDETERMINED. tokens used in type lists can also be non-terminals, in
     which case their symbol type is changed accordingly. In 2.4.4. a symbol is
-    selected for inclusion in the Tokens__ enum if it's a terminal token but
+    selected for inclusion in the Tokens_ enum if it's a terminal token but
     also if it's a symbol that has been used in the grammar although its 
     symbol type is left at UNDETERMINED (in generator/selectsymbolic.cc)
 
@@ -957,7 +957,7 @@ bisonc++ (2.4.0)
     token where the next token for the reduction should have been be
     mentioned, and an empty field in the table itself.
 
-    NOTE that in these situations d_val__ MUST be set by the scanner, as the
+    NOTE that in these situations d_val_ MUST be set by the scanner, as the
     reduction requires another token, and only once that token is available
     the reduction to, e.g., 'ident' can be performed, but at that time
     YYText() has already gone and is inaccessible in an action block like:
@@ -991,7 +991,7 @@ bisonc++ (2.3.1)
     nested blocks. The function saveDollar1() prepends the code to save $$
     from $1 of the rule in which the nested block was defined. In
     share/bisonc++ the function executeAction() no longer saves the semantic
-    value's TOS value as d_val__ but the rule's $1 value.
+    value's TOS value as d_val_ but the rule's $1 value.
 
   * To allow extraction of the archive under Cygwin (Windows) the directory
     parser/spec/aux was renamed to parser/spec/auxiliary (as Windows can't
@@ -1026,7 +1026,7 @@ bisonc++ (2.3.0)
     specified if the new command-line option --insert-stype is provided. Of
     course, in this case users should make sure that the semantic value is
     actually insertable (e.g., by providing an overloaded operator
-    std::ostream &std::operator<<(std::ostream &out, STYPE__ const &semVal).
+    std::ostream &std::operator<<(std::ostream &out, STYPE_ const &semVal).
 
 bisonc++ (2.2.0)
 
@@ -1067,30 +1067,30 @@ bisonc++ (2.0.0)
     -------------------------------------------------------------------------
     old name                        change into new name:           Protected
     -------------------------------------------------------------------------
-    Parser::LTYPE                   Parser::LTYPE__
-    Parser::STYPE                   Parser::STYPE__
-    Parser::Tokens                  Parser::Tokens__
+    Parser::LTYPE                   Parser::LTYPE_
+    Parser::STYPE                   Parser::STYPE_
+    Parser::Tokens                  Parser::Tokens_
 
-    Parser::DEFAULT_RECOVERY_MODE   Parser::DEFAULT_RECOVERY_MODE__ Yes
-    Parser::ErrorRecovery           Parser::ErrorRecovery__         Yes
-    Parser::Return                  Parser::Return__                Yes
-    Parser::UNEXPECTED_TOKEN        Parser::UNEXPECTED_TOKEN__      Yes
-    Parser::d_debug                 Parser::d_debug__               Yes
-    Parser::d_loc                   Parser::d_loc__                 Yes
-    Parser::d_lsp                   Parser::d_lsp__                 Yes
-    Parser::d_nErrors               Parser::d_nErrors__             Yes
-    Parser::d_nextToken             Parser::d_nextToken__           Yes
-    Parser::d_state                 Parser::d_state__               Yes
-    Parser::d_token                 Parser::d_token__               Yes
-    Parser::d_val                   Parser::d_val__                 Yes
-    Parser::d_vsp                   Parser::d_vsp__                 Yes
+    Parser::DEFAULT_RECOVERY_MODE   Parser::DEFAULT_RECOVERY_MODE_ Yes
+    Parser::ErrorRecovery           Parser::ErrorRecovery_         Yes
+    Parser::Return                  Parser::Return_                Yes
+    Parser::UNEXPECTED_TOKEN        Parser::UNEXPECTED_TOKEN_      Yes
+    Parser::d_debug                 Parser::d_debug_               Yes
+    Parser::d_loc                   Parser::d_loc_                 Yes
+    Parser::d_lsp                   Parser::d_lsp_                 Yes
+    Parser::d_nErrors               Parser::d_nErrors_             Yes
+    Parser::d_nextToken             Parser::d_nextToken_           Yes
+    Parser::d_state                 Parser::d_state_               Yes
+    Parser::d_token                 Parser::d_token_               Yes
+    Parser::d_val                   Parser::d_val_                 Yes
+    Parser::d_vsp                   Parser::d_vsp_                 Yes
     -------------------------------------------------------------------------
 
     The symbols marked `Protected' can only occur in classes that were derived
     from the parser class generated by Bisonc++. Unless you derived a class
     from the parser class generated by Bisonc++ these changes should not
     affect your code. The first three symbols may have been used in other
-    classes as well (for an example now using LTYPE__ and STYPE__ see the file 
+    classes as well (for an example now using LTYPE_ and STYPE_ see the file 
     documentation/regression/location/scanner/scanner.h).
 
     Note that the only required modification in all these cases is to append
@@ -1110,7 +1110,7 @@ bisonc++ (2.0.0)
     the restrictions cannot be completely resolved without giving up backward
     compatibility, they can be relieved greatly. Tokens cannot be ABORT,
     ACCEPT, ERROR, clearin, debug, error and setDebug. Furthermore, tokens
-    should not end in two underscores (__).
+    should not end in two underscores (_).
 
   * Implemented various new options and directives:
 
@@ -1154,7 +1154,7 @@ bisonc++ (2.0.0)
     warning is displayed.
 
   * Token Handling in the generated parsing member function was improved: the
-    share/bisonc++.cc skeleton now defines pushToken__() and popToken__() as
+    share/bisonc++.cc skeleton now defines pushToken_() and popToken_() as
     the standard interface to the tiny two-element token stack. The member
     nextToken() was redesigned.
 
@@ -1221,7 +1221,7 @@ bisonc++ (1.6.0)
     %prec specification or as the priority of their first terminal token.
 
   * The accepting State no longer has default reductions. It doesn't need them
-    since EOF__ in those states terminates the parser. Accepting States
+    since EOF_ in those states terminates the parser. Accepting States
     now have search sentinels, allowing the parser to do proper error
     recovery. 
 

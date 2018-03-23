@@ -103,11 +103,11 @@ class Parser: public ParserBase
         RuleValue       identValue();
 
     // support functions for parse():
-        void executeAction__(int ruleNr);
-        void errorRecovery__();
-        void nextCycle__();
-        void nextToken__();
-        void print__();
+        void executeAction_(int ruleNr);
+        void errorRecovery_();
+        void nextCycle_();
+        void nextToken_();
+        void print_();
         void exceptionHandler(std::exception const &exc);
 };
 

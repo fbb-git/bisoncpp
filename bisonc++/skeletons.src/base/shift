@@ -1,12 +1,12 @@
-void \@Base::shift__(int action)
+void \@Base::shift_(int action)
 {
-    push__(action);
-    popToken__();               // token processed
+    push_(action);
+    popToken_();               // token processed
 
     if (d_recovery and d_terminalToken)
     {
 $insert 8 debug "ERROR RECOVERED: next state " << action
         d_recovery = false;
-        d_acceptedTokens__ = 0;
+        d_acceptedTokens_ = 0;
     }
 }

@@ -8,7 +8,7 @@ void Generator::executeActionCases(ostream &out) const
     key(out);
 
     out << R"(
-    if (d_actionCases__)
-        s_out__ << "executeAction case " << production << '\n' << dflush__;
+    if (d_actionCases_)
+        s_out_ << "executeAction case " << production << '\n' << dflush_;
 )";
 }

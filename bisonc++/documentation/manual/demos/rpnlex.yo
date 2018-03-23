@@ -16,7 +16,7 @@ a bf(C++) enumeration. In the current example, therefore, tt(NUM) becomes an
 enumeration value, returned by the tt(lex) member as the `value' tt(NUM).
 
 Semantic values of nonterminals are stored in the parser's data member
-tt(d_val__) (comparable to the variable tt(yylval) used by, e.g., Bison). This
+tt(d_val_) (comparable to the variable tt(yylval) used by, e.g., Bison). This
 data member has tt(int) as its default type, but by specifying tt(%stype) in
 the grammar file's directive section this default type is modified (to, e.g.,
 tt(double)).

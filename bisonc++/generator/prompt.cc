@@ -3,16 +3,16 @@
 namespace {
     char const *noPrompt = 
 R"(
-        if (d_debug__)
-            s_out__ << '\n';
+        if (d_debug_)
+            s_out_ << '\n';
 )";
 
     char const *doPrompt = 
 R"(
-        if (d_debug__)
+        if (d_debug_)
         {
-            s_out__ << "\n================\n"
-                       "? " << dflush__;
+            s_out_ << "\n================\n"
+                       "? " << dflush_;
             std::string s;
             getline(std::cin, s);
         }

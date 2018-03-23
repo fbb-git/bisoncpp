@@ -22,13 +22,13 @@ the em(type-definition). Types specified at the tt(%polymorphic)
 type-definitions must be built-in types or class-type declarations. Since
 bic() version 4.12.00 the types no longer have to be default-constructible.
 
-As the parser's generic semantic value type is called tt(STYPE__), and as
-functions called by the parser may return tt(STYPE__) values and may expect
-tt(STYPE__) arguments, grammar symbols can also be associated with the generic
-tt(STYPE__) semantic type using tt(%type <STYPE__>) directives.
+As the parser's generic semantic value type is called tt(STYPE_), and as
+functions called by the parser may return tt(STYPE_) values and may expect
+tt(STYPE_) arguments, grammar symbols can also be associated with the generic
+tt(STYPE_) semantic type using tt(%type <STYPE_>) directives.
 
-To prevent ambiguities the generic tt(STYPE__) type cannot be specified as a
-polymorphic type. E.g., a specification like tt(GENERIC: STYPE__) cannot be
+To prevent ambiguities the generic tt(STYPE_) type cannot be specified as a
+polymorphic type. E.g., a specification like tt(GENERIC: STYPE_) cannot be
 used when defining the tag/type pairs at the tt(%polymorphic)
 directive.                
 

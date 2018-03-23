@@ -1,7 +1,7 @@
 @ltype
 \@ltype
 @else
-struct LTYPE__
+struct LTYPE_
 {
     int timestamp;
     int first_line;

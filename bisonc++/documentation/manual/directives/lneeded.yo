@@ -4,7 +4,7 @@ When this directive is specified the standard location stack is added to the
 generated parser class.  The standard location type (defined in the parser's
 base class) is equal to the following struct:
            verb(
-    struct LTYPE__
+    struct LTYPE_
     {
         int timestamp;
         int first_line;

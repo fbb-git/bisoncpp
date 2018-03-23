@@ -4,5 +4,5 @@
 void Parser::warnDefaultAction(Production const &prod) 
 {
     wmsg << '`' << &prod << 
-            "': installed $$ = STYPE__{} action block" << endl;
+            "': installed $$ = STYPE_{} action block" << endl;
 }

@@ -11,7 +11,7 @@ bool Parser::dvalPolyPar(int nElements, Block &block, AtDollar const &atd)
                     tag.empty() ? 
                         "("s                                // )
                     : 
-                        ".assign<Tag__::" + tag + ">("      // )
+                        ".assign<Tag_::" + tag + ">("      // )
                 )
             );
 

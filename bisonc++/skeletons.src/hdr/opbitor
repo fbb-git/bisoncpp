@@ -1,5 +1,5 @@
-inline \@Base::DebugMode__ operator|(\@Base::DebugMode__ lhs, 
-                                     \@Base::DebugMode__ rhs)
+inline \@Base::DebugMode_ operator|(\@Base::DebugMode_ lhs, 
+                                     \@Base::DebugMode_ rhs)
 {
-    return static_cast<\@Base::DebugMode__>(static_cast<int>(lhs) | rhs);
+    return static_cast<\@Base::DebugMode_>(static_cast<int>(lhs) | rhs);
 };

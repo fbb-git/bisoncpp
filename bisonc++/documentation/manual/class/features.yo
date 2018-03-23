@@ -13,7 +13,7 @@ is associated with, respectively, the rule's nonterminal and the production
 rule's n+sups(th) component. The default structure is defined like this (see
 also section ref(LSPNEEDED)):
            verb(
-    struct LTYPE__
+    struct LTYPE_
     {
         int timestamp;
         int first_line;

@@ -23,7 +23,7 @@ The parser's tt(lex) member has these characteristics:
     it() If the first non-blank character is a dot or number, a number is
         extracted from the standard input. Since the semantic value data
         member of tt(mfcalc)'s parser (tt(d_val)) is itself also a tt(union),
-        the numerical value can be extracted into tt(d_val__.u_val), and a
+        the numerical value can be extracted into tt(d_val_.u_val), and a
         tt(NUM) token can be returned.
     it() If the first non-blank character is not a letter, then a
         single-character token was received and the character's value is
@@ -31,12 +31,12 @@ The parser's tt(lex) member has these characteristics:
     it() Otherwise the read character is a letter. This character and all
         subsequent alpha-numeric characters are extracted to construct the
         name of an identifier. Then this identifier is searched for in the
-        tt(s_functions) map. If found, tt(d_val__.u_fun) is given the function's
+        tt(s_functions) map. If found, tt(d_val_.u_fun) is given the function's
         address, found as the value of the tt(s_functions) map element
         corresponding to the read identifier, and token tt(FNCT) is returned.
         If the symbol is not found in tt(s_functions) the address of the
         value ofn tt(d_symbols) associated with the received identifier is
-        assigned to tt(d_val__.u_symbol) and token tt(VAR) is returned. Note
+        assigned to tt(d_val_.u_symbol) and token tt(VAR) is returned. Note
         that this automatically defines newly used variables, since
         tt(d_symbols[name]) automatically inserts a new element in a map if
         tt(d_symbol[name]) wasn't already there.

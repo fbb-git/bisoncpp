@@ -12,8 +12,8 @@ void Generator::polymorphicCode(ostream &out) const
     if (d_options.constructorChecks().value == Options::ON)
     {
         if (not d_options.polymorphic())
-            out << "static_assert(std::is_default_constructible<STYPE__>\n" << 
-                "    \"No default constructor for STYPE__\");\n";
+            out << "static_assert(std::is_default_constructible<STYPE_>\n" << 
+                "    \"No default constructor for STYPE_\");\n";
         else
         {
             for (auto &poly: d_polymorphic)
@@ -28,7 +28,7 @@ void Generator::polymorphicCode(ostream &out) const
     ifstream in;
     Exception::open(in,  d_options.polymorphicCodeSkeleton()); 
 
-    out << "namespace Meta__\n"
+    out << "namespace Meta_\n"
            "{\n"
            "\n";
 

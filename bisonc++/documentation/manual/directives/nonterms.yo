@@ -20,6 +20,6 @@ type specification.
 
     When the semantic value type of a terminal symbol is defined the
 em(lexical scanner) rather than the parser's actions must assign the
-appropriate semantic value to link(d_val__)(DVAL) just prior to returning the
+appropriate semantic value to link(d_val_)(DVAL) just prior to returning the
 token. To associate terminal symbols with semantic values, terminal symbols
 can also be specified in a tt(%type) directive.

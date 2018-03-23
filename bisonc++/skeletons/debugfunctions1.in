@@ -1,16 +1,16 @@
-std::ostringstream \@Base::s_out__;
-std::ostream &\@Base::dflush__(std::ostream &out)
+std::ostringstream \@Base::s_out_;
+std::ostream &\@Base::dflush_(std::ostream &out)
 {
-    std::ostringstream &s_out__ = dynamic_cast<std::ostringstream &>(out);
+    std::ostringstream &s_out_ = dynamic_cast<std::ostringstream &>(out);
 
-    std::cout << "    " << s_out__.str() << std::flush;
-    s_out__.clear();
-    s_out__.str("");
+    std::cout << "    " << s_out_.str() << std::flush;
+    s_out_.clear();
+    s_out_.str("");
     return out;
 }
 
-std::string \@Base::stype__(char const *pre, 
-                 STYPE__ const &semVal, char const *post) const
+std::string \@Base::stype_(char const *pre, 
+                 STYPE_ const &semVal, char const *post) const
 {
 @insert-stype
     using namespace std;
