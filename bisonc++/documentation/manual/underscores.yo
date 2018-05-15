@@ -1,0 +1,30 @@
+    Starting with version 6.02.00 b() reserved identifiers no longer end
+    in two underscore characters, but in one. This modification was necessary
+    because according to the bf(C++) standard identifiers having two or more
+    consecutive underscore characters are reserved by the language. In
+    practice this could require some minor modifications of existing source
+    files using b()'s facilities, most likely limited to changing tt(Tokens__)
+    into tt(Tokens_) and changing tt(Meta__) into tt(Meta_).
+
+The complete list of affected names is:
+    description(
+    dit(Enums:) quote(
+DebugMode_, ErrorRecovery_, Return_, Tag_, Tokens_
+)
+    dit(Enums values:) quote(
+PARSE_ABORT_, PARSE_ACCEPT_, UNEXPECTED_TOKEN_, sizeofTag_
+)
+    dit(Type / namespace designators:) quote(
+Meta_, PI_, STYPE_
+)
+    dit(Member functions:) quote(
+clearin_, errorRecovery_, errorVerbose_, executeAction_, lex_, 
+lookup_, nextCycle_, nextToken_, popToken_, pop_, print_, 
+pushToken_, push_, recovery_, redoToken_, reduce_, savedToken_, 
+shift_, stackSize_, startRecovery_, state_, token_, top_, vs_,
+)
+    dit(Protected data members:) quote(
+d_acceptedTokens_, d_actionCases_, d_debug_, d_nErrors_,
+d_requiredTokens_, d_val_, idOfTag_, s_nErrors_
+)
+    )
