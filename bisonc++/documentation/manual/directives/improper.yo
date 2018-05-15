@@ -3,7 +3,7 @@ with identifiers that are defined in the parser's base class.
 
 In particular, 
     itemization(
-    it() no token should end in two underscores (tt(_)). 
+    it() no token should end in an underscore (tt(_)). 
     it() some identifiers are reserved and cannot be used as tokens. They are:
         verb(
     ABORT, ACCEPT, ERROR, clearin, debug, error, setDebug

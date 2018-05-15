@@ -72,15 +72,19 @@ the following sections:
     it() bf(AUTHOR): at the end of this man-page.
     )
 
-    All identifiers ending in two underscore characters are reserved for
-bic(). Member functions ending in two underscore characters must not be
-redefined. Data members ending in two underscore characters are available in
+    All identifiers ending in an underscore character are reserved for
+bic(). Member functions ending in an underscore character must not be
+redefined. Data members ending in an underscore character are available in
 the generated parser class, and may be modified by user-defined members of the
 parser class. Some members like (tt(error, exceptionHandler, lex)) are defined
 in the parser class and must remain present, but their implementations may be
 altered by the user. Members for which no default implementation is provided
 in the parser's internal header file (e.g., tt(Parser.ih)) may not be
 redefined or masked by user-provided code.
+
+manpagesection(UNDERSCORES)
+
+    includefile(../manual/underscores.yo)
 
 manpagesection(PUBLIC SYMBOLS)
 
@@ -179,17 +183,17 @@ necessary alternatives are mentioned:
     itemization(
     it() bf(bool Base::debug() const): use the tt(d_debug_) data member;
     it() bf(void error(char const *)): replaced by bf(void error+nop()());
-    it() bf(void exceptionHandler_(std::exception const &exc)): omit final
+    it() bf(void exceptionHandler_(std::exception const &exc)): omit the final
         underscores: bf(void exceptionHandler(std::exception const
         &exc))
-     it() bf(void executeAction+nop()(int)): add two underscores to the
+     it() bf(void executeAction+nop()(int)): add one underscore to the
         declaration in the parser class interface: bf(void
         executeAction_+nop()(int))
     it() bf(int lookup+nop()(bool)): omit this member from the parser class
         interface.
     it() bf(void nextCycle_+nop()(int)): add this member declaration to the
         parser class interface.
-    it() bf(void nextToken+nop()(int)): add two underscores to the declaration
+    it() bf(void nextToken+nop()(int)): add one underscore to the declaration
         in the parser class interface: bf(void nextToken_+nop()(int))
 
     it() bf(size_t d_nextToken_): removed from the interface.

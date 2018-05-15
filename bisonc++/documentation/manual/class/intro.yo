@@ -40,8 +40,8 @@ and may flag the (un)successful parsing of the information given to the parser
 (terminating the parsing function tt(parse)).
 
 Symbols defined in the generated parser and parser base class usually end in
-two underscore characters. Such symbols should not be masked or
-redefined. Some members have names not ending in two underscore
-characters. Those names have either historically been used (like tt(parse) and
+an underscore character. Such symbols should not be masked or
+redefined. Some members have names not ending in an underscore
+character. Those names have either historically been used (like tt(parse) and
 tt(ERROR)) or they can be redefined by the user (like tt(int lex()) and
 tt(void print())). Their specific requirements are documented below.

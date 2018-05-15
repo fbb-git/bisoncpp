@@ -89,6 +89,9 @@ This manual page contains the following sections:
     it() bf(AUTHOR): at the end of this man-page.
     )
 
+manpagesection(UNDERSCORES)
+
+    includefile(../manual/underscores.yo)
 
 manpagesection(DIRECTIVES)
 
@@ -685,7 +688,7 @@ manpagesection(RESTRICTIONS ON TOKEN NAMES)
     To avoid collisions with names defined by the parser's (base) class, the
 following identifiers should not be used as token names:
     itemization(
-    it() Identifiers ending in two underscores;
+    it() Identifiers ending in an underscore;
     it() Any of the following identifiers: tt(ABORT, ACCEPT, ERROR, clearin,
         debug), or tt(setDebug).
     )

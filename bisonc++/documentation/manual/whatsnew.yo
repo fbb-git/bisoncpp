@@ -1,11 +1,14 @@
 If you're new to b(), you can safely skip this section. If you used b()
 before, please note the following new and modified features:
     itemization(
+   it() 
+includefile(underscores)
+
    it() The generated code was redesigned. Large parts of the protected
     interface of the parser's base class and names of tt(parse())-related
     members in the generated parser class were modified. The names of all
-    accessible members in tt(parserbase.h) and tt(parser.h) now have two
-    trailing underscore characters.  Predefined members in tt(parser.ih) no
+    accessible members in tt(parserbase.h) and tt(parser.h) now end in a
+    trailing underscore character.  Predefined members in tt(parser.ih) no
     longer have trailing underscores, and can be redefined (but must be
     available).  The traditional tt(error(char const *)) member in fact never
     uses its argument (and bic() only passes the default "Syntax error"
