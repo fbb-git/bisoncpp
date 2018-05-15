@@ -1,7 +1,7 @@
-void \@Base::popToken__()
+void \@Base::popToken_()
 {
     d_token = d_next.first;
-    d_val__ = std::move(d_next.second);
+    d_val_ = std::move(d_next.second);
 
-    d_next.first = Reserved__::UNDETERMINED__;
+    d_next.first = Reserved_::UNDETERMINED_;
 }

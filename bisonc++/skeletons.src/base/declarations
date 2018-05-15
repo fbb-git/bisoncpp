@@ -4,11 +4,11 @@ namespace // anonymous
 {
     char const author[] = "Frank B. Brokken (f.b.brokken@rug.nl)";
 
-    enum Reserved__
+    enum Reserved_
     {
-        UNDETERMINED__   = -2,
-        EOF__            = -1,
-        errTok__         = 256
+        UNDETERMINED_   = -2,
+        EOF_            = -1,
+        errTok_         = 256
     };
     enum StateType       // modify statetype/data.cc when this enum changes
     {
@@ -23,17 +23,17 @@ namespace // anonymous
     };    
     enum StateTransition
     {
-        ACCEPT__   = 0,     // `ACCEPT' TRANSITION
+        ACCEPT_   = 0,     // `ACCEPT' TRANSITION
     };
 
-    struct PI__     // Production Info
+    struct PI_     // Production Info
     {
         size_t d_nonTerm; // identification number of this production's
                             // non-terminal 
         size_t d_size;    // number of elements in this production 
     };
 
-    struct SR__     // Shift Reduce info, see its description above
+    struct SR_     // Shift Reduce info, see its description above
     {
         union
         {

@@ -260,10 +260,10 @@ match. When bic() detects a type mismatches it issues errors.
     it() bf(%locationstruct) tt(struct-definition) 
  
            Defines the organization of the location-struct data type
-            tt(LTYPE__). This struct should be specified analogously to the
+            tt(LTYPE_). This struct should be specified analogously to the
             way the parser's stacktype is defined using tt(%union) (see
-            below). The location struct is named tt(LTYPE__). By default (if
-            neither tt(locationstruct) nor tt(LTYPE__) is specified) the
+            below). The location struct is named tt(LTYPE_). By default (if
+            neither tt(locationstruct) nor tt(LTYPE_) is specified) the
             standard location struct (see the next directive) is used:
 
     it() bf(%lsp-needed) 
@@ -271,7 +271,7 @@ match. When bic() detects a type mismatches it issues errors.
            This directive results in bic() generating a parser using 
             the standard location stack.  This stack's default type is:
            verb(
-    struct LTYPE__
+    struct LTYPE_
     {
         int timestamp;
         int first_line;
@@ -281,11 +281,11 @@ match. When bic() detects a type mismatches it issues errors.
         char *text;
     };
            )
-           Bic() does em(not) provide the elements of the tt(LTYPE__) struct
+           Bic() does em(not) provide the elements of the tt(LTYPE_) struct
             with values. Action blocks of production rules may refer to the
             location stack element associated with a production element using
             tt(@) variables, like tt(@1.timestamp, @3.text, @5). The rule's
-            location struct itself may be referred to as either tt(d_loc__) or
+            location struct itself may be referred to as either tt(d_loc_) or
             tt(@@).
 
     it() bf(%ltype typename) 
@@ -295,7 +295,7 @@ match. When bic() detects a type mismatches it issues errors.
             type (e.g., tt(size_t)). It should not be used if a
             tt(%locationstruct) specification is defined (see below). Within
             the parser class, this type is available as the type
-            `tt(LTYPE__)'.  All text on the line following tt(%ltype) is used
+            `tt(LTYPE_)'.  All text on the line following tt(%ltype) is used
             for the tt(typename) specification. It should therefore not
             contain comment or any other characters that are not part of the
             actual type definition.
@@ -321,7 +321,7 @@ match. When bic() detects a type mismatches it issues errors.
             dollar-indices are commonly used to implement inherited
             attributes, and should normally be avoided. When used, they can be
             specified like tt($-1), or like tt($<type>-1), where tt(type) is
-            empty; an tt(STYPE__) tag; or a field-name. However, note that in
+            empty; an tt(STYPE_) tag; or a field-name. However, note that in
             combination with the tt(%polymorphic) directive (see below) only
             the tt($-i) format can be used.
 
@@ -393,7 +393,7 @@ production rule's priority. A well known application of tt(%prec) is:
     it() bf(%print-tokens)
 
            The tt(print) directive provides an implementation of the Parser
-            class's tt(print__) function displaying the current token value
+            class's tt(print_) function displaying the current token value
             and the text matched by the lexical scanner as received by the
             generated tt(parse) function.
 
@@ -508,7 +508,7 @@ production rule's priority. A well known application of tt(%prec) is:
             mutually exclusive directives.
 
            Within the parser class, the semantic value type is available as
-            the type `tt(STYPE__)'. All text on the line following tt(%stype)
+            the type `tt(STYPE_)'. All text on the line following tt(%stype)
             is used for the tt(typename) specification. It should therefore
             not contain comment or any other characters that are not part of
             the actual type definition.
@@ -569,14 +569,14 @@ grammar's action block the error was encountered.
     it() bf(%union) tt(union-definition) 
 
            Acts identically to the identically named bf(bison) and bf(bison++)
-            declaration.  Bic() generates a union, named tt(STYPE__), as its
+            declaration.  Bic() generates a union, named tt(STYPE_), as its
             semantic type.  
 
     it() bf(%weak-tags) 
 
            This directive is ignored unless the tt(%polymorphic)
             directive was specified. It results in the declaration of tt(enum
-            Tag__) rather than tt(enum class Tag__). When in doubt, don't use
+            Tag_) rather than tt(enum class Tag_). When in doubt, don't use
             this directive.
     )
 
@@ -638,28 +638,28 @@ elements are placed inside the namespace that is specified by the
 tt(%namespace) directive):
     itemization(
     it() All semantic value type identifiers are collected in a strongly typed
-`tt(Tag__)' enumeration. E.g.,
+`tt(Tag_)' enumeration. E.g.,
         verb(
-    enum class Tag__
+    enum class Tag_
     {
         INT,
         STRING,
         VECT
     };
         )
-    it() An anonymous tt(enum) defining the symbolic constant tt(sizeofTag__)
-        equal to the number of tags in the tt(Tag__) enumeration.
+    it() An anonymous tt(enum) defining the symbolic constant tt(sizeofTag_)
+        equal to the number of tags in the tt(Tag_) enumeration.
 
-    it() The namespace tt(Meta__) contains almost all of the code
+    it() The namespace tt(Meta_) contains almost all of the code
 implementing polymorphic values.
     )
 
-The namespace  tt(Meta__) contains, among other classes the class tt(SType).
-The parser's semantic value type tt(STYPE__) is equal to tt(Meta__::SType).
+The namespace  tt(Meta_) contains, among other classes the class tt(SType).
+The parser's semantic value type tt(STYPE_) is equal to tt(Meta_::SType).
 
-bf(STYPE__ equals Meta__::SType)
+bf(STYPE_ equals Meta_::SType)
 
-tt(Meta__::SType) provides the standard user interface for using polymorphic
+tt(Meta_::SType) provides the standard user interface for using polymorphic
 semantic data types. It declares the following public interface:
 
     includefile(../manual/grammar/stypeinterface)

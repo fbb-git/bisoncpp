@@ -20,7 +20,7 @@ class Parser: public ParserBase
 
     private:
         int intValue() const;
-        void process(STYPE__ const &semVal) const;
+        void process(STYPE_ const &semVal) const;
 
         void error(char const *msg);    // called on (syntax) errors
         int lex();                      // returns the next token from the
@@ -32,8 +32,8 @@ class Parser: public ParserBase
         void errorRecovery();
         int lookup(bool recovery);
         void nextToken();
-        void print__();
-        void exceptionHandler__(std::exception const &exc);
+        void print_();
+        void exceptionHandler_(std::exception const &exc);
 };
 
 

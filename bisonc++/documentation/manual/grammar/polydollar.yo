@@ -9,7 +9,7 @@ type. If the types don't match the compiler issues a compilation error when
 compiling tt(parse.cc). Casting the rhs to the correct value type is possible,
 but in that case the function call operator (see the next item) is preferred,
 as it does not require casting. If no semantic value type was associated with
-$$ then the assignment tt($$ = STYPE__{}) can be used.
+$$ then the assignment tt($$ = STYPE_{}) can be used.
 
     itt($$(expr))
 
@@ -26,7 +26,7 @@ polymorphic type that might have been associated with the rule's nonterminal.
     itt($$)
 
     If no polymorphic type was associated with the rule's nonterminal then
-this is shorthand for a reference to the rule's plain tt(STYPE__) value. If a
+this is shorthand for a reference to the rule's plain tt(STYPE_) value. If a
 polymorphic value type was associated with the rule's nonterminal then this
 shorthand represents a reference to a value of that particular type.
 
@@ -34,7 +34,7 @@ shorthand represents a reference to a value of that particular type.
 
     If no polymorphic type was associated with the rule's nonterminal then
 this is shorthand for the member selector operator, applied to a reference to
-the rule's nonterminal's tt(STYPE__) value.  If a polymorphic value type was
+the rule's nonterminal's tt(STYPE_) value.  If a polymorphic value type was
 associated with the rule's nonterminal then this shorthand represents the
 member selector operator, applied to a reference of that particular type.
 
@@ -42,21 +42,21 @@ member selector operator, applied to a reference of that particular type.
 
     If no polymorphic type was associated with the rule's nonterminal then
 this is shorthand for the pointer to member operator, applied to a reference
-to the rule's nonterminal's tt(STYPE__) value.  If a polymorphic value type
+to the rule's nonterminal's tt(STYPE_) value.  If a polymorphic value type
 was associated with the rule's nonterminal then this shorthand represents the
 pointer to member operator, applied to a reference of that particular type.
 
     itt(_$1)
 
     This refers to the current production rule's first component's generic
-tt(STYPE__) value.
+tt(STYPE_) value.
 
     itt($1)
 
     This shorthand refers to the semantic value of the production rule's
 first element. If it was associated with a polymorphic type, then tt($1)
 refers to a value of that particular type. If no association was defined then
-tt($1) represents a generic tt(STYPE__) value.
+tt($1) represents a generic tt(STYPE_) value.
 
     itt($1.)
 
@@ -64,7 +64,7 @@ tt($1) represents a generic tt(STYPE__) value.
 with a polymorphic type, then tt($1.) is shorthand for the member selector
 operator, applied to the value of the associated polymorphic type. If no
 association was defined then tt($1.) is shorthand for the member selector
-operator, applied to the first component's generic tt(STYPE__) value.
+operator, applied to the first component's generic tt(STYPE_) value.
 
     itt($1->)
 
@@ -72,17 +72,17 @@ operator, applied to the first component's generic tt(STYPE__) value.
 with a polymorphic type, then tt($1->) is shorthand for the pointer to member 
 operator, applied to the value of the associated polymorphic type. If no
 association was defined then tt($1.) is shorthand for the pointer to member 
-operator, applied to the first component's generic tt(STYPE__) value.
+operator, applied to the first component's generic tt(STYPE_) value.
 
     itt(_$-1)
 
-    This refers to the generic (tt(STYPE__)) value of a component in a
+    This refers to the generic (tt(STYPE_)) value of a component in a
 production rule, listed immediately before the current rule's nonterminal ($-2
 refers to a component used two elements before the current nonterminal, etc.).
 
     itt($-1)
 
-    Same: this refers to the generic (tt(STYPE__)) value of a component in a
+    Same: this refers to the generic (tt(STYPE_)) value of a component in a
 production rule, listed immediately before the current rule's nonterminal ($-2
 refers to a component used two elements before the current nonterminal, etc.).
 
@@ -90,13 +90,13 @@ refers to a component used two elements before the current nonterminal, etc.).
     itt($-1.)
 
     This is shorthand for the member selector operator applied to to the
-generic tt(STYPE__) value of some production rule element, 1 element before
+generic tt(STYPE_) value of some production rule element, 1 element before
 the current rule's nonterminal.
 
     itt($-1->)
 
     This is shorthand for the pointer to member operator applied to to the
-generic tt(STYPE__) value of some production rule element, 1 element before
+generic tt(STYPE_) value of some production rule element, 1 element before
 the current rule's nonterminal.
 
     itt($<tag>-1)

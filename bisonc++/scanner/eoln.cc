@@ -2,7 +2,7 @@
 
 int Scanner::eoln()
 {
-    begin(StartCondition__::INITIAL);
+    begin(StartCondition_::INITIAL);
     setLineNrs();
     return '\n';
 }

@@ -11,7 +11,7 @@ bool Parser::dvalPolyReplace(bool midRule, Block &block, AtDollar const &atd,
                     tag.empty() ? 
                         ""s 
                     : 
-                        ".get<Tag__::" + tag + ">()"
+                        ".get<Tag_::" + tag + ">()"
                 ) + suffix);
 
     return midRule || block.assignment();

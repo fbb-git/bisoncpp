@@ -1,9 +1,9 @@
 #include "parser.ih"
 
-void Parser::process(STYPE__ const &semVal) const
+void Parser::process(STYPE_ const &semVal) const
 {
-    if (semVal.tag() == Tag__::INT)
-        cout << "Saw an int-value: " << semVal.get<Tag__::INT>() << '\n';
+    if (semVal.tag() == Tag_::INT)
+        cout << "Saw an int-value: " << semVal.get<Tag_::INT>() << '\n';
     else
-        cout << "Saw text: " << semVal.get<Tag__::TEXT>() << '\n';
+        cout << "Saw text: " << semVal.get<Tag_::TEXT>() << '\n';
 }

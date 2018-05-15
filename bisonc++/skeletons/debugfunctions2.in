@@ -1,4 +1,4 @@
-std::string \@Base::symbol__(int value) const
+std::string \@Base::symbol_(int value) const
 {
     using namespace std;
     ostringstream ostr;

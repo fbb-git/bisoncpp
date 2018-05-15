@@ -1,6 +1,6 @@
-static std::ostringstream s_out__;
+static std::ostringstream s_out_;
 
-std::string symbol__(int value) const;
-std::string stype__(char const *pre, STYPE__ const &semVal,
+std::string symbol_(int value) const;
+std::string stype_(char const *pre, STYPE_ const &semVal,
                     char const *post = "") const;
-static std::ostream &dflush__(std::ostream &out);
+static std::ostream &dflush_(std::ostream &out);

@@ -13,7 +13,7 @@ $insert debugincludes
 
 namespace // anonymous
 {
-    struct PI__;
+    struct PI_;
 }
 
 $insert namespace-open
@@ -23,7 +23,7 @@ $insert polymorphic
 class \@Base
 {
     public:
-        enum DebugMode__
+        enum DebugMode_
         {
             OFF           = 0,
             ON            = 1 << 0,
@@ -36,9 +36,9 @@ $insert STYPE
 
     private:
                         // state  semval
-        typedef std::pair<size_t, STYPE__> StatePair;
+        typedef std::pair<size_t, STYPE_> StatePair;
                        // token   semval
-        typedef std::pair<int,    STYPE__> TokenPair;
+        typedef std::pair<int,    STYPE_> TokenPair;
 
         int d_stackIdx = -1;
         std::vector<StatePair> d_stateStack;
@@ -54,22 +54,22 @@ $insert STYPE
 $insert LTYPEstack
 
     protected:
-        enum Return__
+        enum Return_
         {
-            PARSE_ACCEPT__ = 0,   // values used as parse()'s return values
-            PARSE_ABORT__  = 1
+            PARSE_ACCEPT_ = 0,   // values used as parse()'s return values
+            PARSE_ABORT_  = 1
         };
-        enum ErrorRecovery__
+        enum ErrorRecovery_
         {
-            UNEXPECTED_TOKEN__,
+            UNEXPECTED_TOKEN_,
         };
 
-        bool        d_actionCases__ = false;    // set by options/directives
-        bool        d_debug__ = true;
-        size_t      d_requiredTokens__;
-        size_t      d_nErrors__;                // initialized by clearin()
-        size_t      d_acceptedTokens__;
-        STYPE__     d_val__;
+        bool        d_actionCases_ = false;    // set by options/directives
+        bool        d_debug_ = true;
+        size_t      d_requiredTokens_;
+        size_t      d_nErrors_;                // initialized by clearin()
+        size_t      d_acceptedTokens_;
+        STYPE_     d_val_;
 
 $insert LTYPEdata
 
@@ -80,43 +80,43 @@ $insert debugdecl
         void ACCEPT() const;
         void ERROR() const;
 
-        STYPE__ &vs__(int idx);             // value stack element idx 
-        int  lookup__() const;
-        int  savedToken__() const;
-        int  token__() const;
-        size_t stackSize__() const;
-        size_t state__() const;
-        size_t top__() const;
-        void clearin__();
-        void errorVerbose__();
-        void lex__(int token);
-        void popToken__();
-        void pop__(size_t count = 1);
-        void pushToken__(int token);
-        void push__(size_t nextState);
-        void redoToken__();
-        bool recovery__() const;
-        void reduce__(int rule);
-        void shift__(int state);
-        void startRecovery__();
+        STYPE_ &vs_(int idx);             // value stack element idx 
+        int  lookup_() const;
+        int  savedToken_() const;
+        int  token_() const;
+        size_t stackSize_() const;
+        size_t state_() const;
+        size_t top_() const;
+        void clearin_();
+        void errorVerbose_();
+        void lex_(int token);
+        void popToken_();
+        void pop_(size_t count = 1);
+        void pushToken_(int token);
+        void push_(size_t nextState);
+        void redoToken_();
+        bool recovery_() const;
+        void reduce_(int rule);
+        void shift_(int state);
+        void startRecovery_();
 
     public:
         void setDebug(bool mode);
-        void setDebug(DebugMode__ mode);
+        void setDebug(DebugMode_ mode);
 }; 
 
 // hdr/abort
 inline void \@Base::ABORT() const
 {
 $insert 4 debug "ABORT(): Parsing unsuccessful"
-    throw PARSE_ABORT__;
+    throw PARSE_ABORT_;
 }
 
 // hdr/accept
 inline void \@Base::ACCEPT() const
 {
 $insert 4 debug "ACCEPT(): Parsing successful"
-    throw PARSE_ACCEPT__;
+    throw PARSE_ACCEPT_;
 }
 
 
@@ -124,56 +124,56 @@ $insert 4 debug "ACCEPT(): Parsing successful"
 inline void \@Base::ERROR() const
 {
 $insert 4 debug "ERROR(): Forced error condition"
-    throw UNEXPECTED_TOKEN__;
+    throw UNEXPECTED_TOKEN_;
 }
 
 // hdr/savedtoken
-inline int \@Base::savedToken__() const
+inline int \@Base::savedToken_() const
 {
     return d_next.first;
 }
 
 // hdr/opbitand
-inline \@Base::DebugMode__ operator&(\@Base::DebugMode__ lhs,
-                                     \@Base::DebugMode__ rhs)
+inline \@Base::DebugMode_ operator&(\@Base::DebugMode_ lhs,
+                                     \@Base::DebugMode_ rhs)
 {
-    return static_cast<\@Base::DebugMode__>(
+    return static_cast<\@Base::DebugMode_>(
             static_cast<int>(lhs) & rhs);
 }
 
 // hdr/opbitor
-inline \@Base::DebugMode__ operator|(\@Base::DebugMode__ lhs, 
-                                     \@Base::DebugMode__ rhs)
+inline \@Base::DebugMode_ operator|(\@Base::DebugMode_ lhs, 
+                                     \@Base::DebugMode_ rhs)
 {
-    return static_cast<\@Base::DebugMode__>(static_cast<int>(lhs) | rhs);
+    return static_cast<\@Base::DebugMode_>(static_cast<int>(lhs) | rhs);
 };
 
 // hdr/recovery
-inline bool \@Base::recovery__() const
+inline bool \@Base::recovery_() const
 {
     return d_recovery;
 }
 
 // hdr/stacksize
-inline size_t \@Base::stackSize__() const
+inline size_t \@Base::stackSize_() const
 {
     return d_stackIdx + 1;
 }
 
 // hdr/state
-inline size_t \@Base::state__() const
+inline size_t \@Base::state_() const
 {
     return d_state;
 }
 
 // hdr/token
-inline int \@Base::token__() const
+inline int \@Base::token_() const
 {
     return d_token;
 }
 
 // hdr/vs
-inline \@Base::STYPE__ &\@Base::vs__(int idx) 
+inline \@Base::STYPE_ &\@Base::vs_(int idx) 
 {
     return (d_vsp + idx)->second;
 }

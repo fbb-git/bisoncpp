@@ -9,11 +9,11 @@
 #include "scanner.ih"
 
 
-    // s_ranges__: use (unsigned) characters as index to obtain
+    // s_ranges_: use (unsigned) characters as index to obtain
     //           that character's range-number.
     //           The range for EOF is defined in a constant in the
     //           class header file
-size_t const ScannerBase::s_ranges__[] =
+size_t const ScannerBase::s_ranges_[] =
 {
      0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
      4, 4, 4, 4, 4, 4, 4, 5, 6, 7, 8, 9,10,11,12,13,14,15,16,16,17,18,19,20,20,
@@ -29,17 +29,17 @@ size_t const ScannerBase::s_ranges__[] =
 };
 
 // $insert startcondinfo
-    // s_dfa__ contains the rows of *all* DFAs ordered by start state.  The
-    // enum class StartCondition__is defined in the baseclass header.
-    // StartCondition__::INITIAL is always 0.  Each entry defines the row to
+    // s_dfa_ contains the rows of *all* DFAs ordered by start state.  The
+    // enum class StartCondition_is defined in the baseclass header.
+    // StartCondition_::INITIAL is always 0.  Each entry defines the row to
     // transit to if the column's character range was sensed. Row numbers are
-    // relative to the used DFA, and d_dfaBase__ is set to the first row of
+    // relative to the used DFA, and d_dfaBase_ is set to the first row of
     // the subset to use.  The row's final two values are respectively the
     // rule that may be matched at this state, and the rule's FINAL flag. If
     // the final value equals FINAL (= 1) then, if there's no continuation,
     // the rule is matched. If the BOL flag (8) is also set (so FINAL + BOL (=
     // 9) is set) then the rule only matches when d_atBOL is also true.
-int const ScannerBase::s_dfa__[][71] =
+int const ScannerBase::s_dfa_[][71] =
 {
     // INITIAL
     { 1, 2, 3, 1, 1, 2, 1, 4, 1, 1, 5, 1, 6, 1, 1, 1, 1, 1, 1, 7,
@@ -2215,19 +2215,19 @@ int const ScannerBase::s_dfa__[][71] =
 };
 
 
-int const (*ScannerBase::s_dfaBase__[])[71] =
+int const (*ScannerBase::s_dfaBase_[])[71] =
 {
-    s_dfa__ + 0,
-    s_dfa__ + 429,
-    s_dfa__ + 435,
-    s_dfa__ + 441,
-    s_dfa__ + 446,
-    s_dfa__ + 452,
-    s_dfa__ + 457,
-    s_dfa__ + 462,
-    s_dfa__ + 482,
-    s_dfa__ + 528,
-    s_dfa__ + 536,
+    s_dfa_ + 0,
+    s_dfa_ + 429,
+    s_dfa_ + 435,
+    s_dfa_ + 441,
+    s_dfa_ + 446,
+    s_dfa_ + 452,
+    s_dfa_ + 457,
+    s_dfa_ + 462,
+    s_dfa_ + 482,
+    s_dfa_ + 528,
+    s_dfa_ + 536,
 };
 
 size_t ScannerBase::s_istreamNr = 0;
@@ -2254,14 +2254,14 @@ size_t ScannerBase::Input::get()
         [[fallthrough]]
 
         default:
-            if (s_debug__)
+            if (s_debug_)
             {
-                s_out__ << "Input::get() returns ";
+                s_out_ << "Input::get() returns ";
                 if (isprint(ch))
-                    s_out__ << '`' << static_cast<char>(ch) << '\'';
+                    s_out_ << '`' << static_cast<char>(ch) << '\'';
                 else
-                    s_out__ << "(int)" << static_cast<int>(ch);
-                s_out__ << '\n' << dflush__;
+                    s_out_ << "(int)" << static_cast<int>(ch);
+                s_out_ << '\n' << dflush_;
             }
         return ch;
     }
@@ -2289,8 +2289,8 @@ void ScannerBase::Input::reRead(size_t ch)
 {
     if (ch < 0x100)
     {
-        if (s_debug__)
-            s_out__ << "Input::reRead(" << ch << ")\n" << dflush__;
+        if (s_debug_)
+            s_out_ << "Input::reRead(" << ch << ")\n" << dflush_;
         if (ch == '\n')
             --d_lineNr;
         d_deque.push_front(ch);
@@ -2310,10 +2310,10 @@ ScannerBase::ScannerBase(std::istream &in, std::ostream &out)
 // $insert interactiveInit
     d_in(0),
     d_input(new std::istream(in.rdbuf())),
-    d_dfaBase__(s_dfa__)
+    d_dfaBase_(s_dfa_)
 {}
 
-void ScannerBase::switchStream__(std::istream &in, size_t lineNr)
+void ScannerBase::switchStream_(std::istream &in, size_t lineNr)
 {
     d_input.close();
     d_input = Input(new std::istream(in.rdbuf()), lineNr);
@@ -2327,12 +2327,12 @@ ScannerBase::ScannerBase(std::string const &infilename, std::string const &outfi
           outfilename == ""     ? new std::ostream(std::cerr.rdbuf()) :
                                   new std::ofstream(outfilename)),
     d_input(new std::ifstream(infilename)),
-    d_dfaBase__(s_dfa__)
+    d_dfaBase_(s_dfa_)
 {}
 
 void ScannerBase::switchStreams(std::istream &in, std::ostream &out)
 {
-    switchStream__(in, 1);
+    switchStream_(in, 1);
     switchOstream(out);
 }
 
@@ -2344,26 +2344,26 @@ void ScannerBase::switchOstream(std::ostream &out)
 }
 
 // $insert debugFunctions
-bool    ScannerBase::s_debug__ = true;
-std::ostringstream ScannerBase::s_out__;
+bool    ScannerBase::s_debug_ = true;
+std::ostringstream ScannerBase::s_out_;
 
 void ScannerBase::setDebug(bool onOff)
 {
-    s_debug__ = onOff;
+    s_debug_ = onOff;
 }
 
 bool ScannerBase::debug() const
 {
-    return s_debug__;
+    return s_debug_;
 }
 
-std::ostream &ScannerBase::dflush__(std::ostream &out)
+std::ostream &ScannerBase::dflush_(std::ostream &out)
 {
-    std::ostringstream &s_out__ = dynamic_cast<std::ostringstream &>(out);
+    std::ostringstream &s_out_ = dynamic_cast<std::ostringstream &>(out);
 
-    std::cout << "    " << s_out__.str() << std::flush;
-    s_out__.clear();
-    s_out__.str("");
+    std::cout << "    " << s_out_.str() << std::flush;
+    s_out_.clear();
+    s_out_.str("");
     return out;
 }
 
@@ -2419,7 +2419,7 @@ void ScannerBase::pushStream(std::string const &name)
 
 void ScannerBase::p_pushStream(std::string const &name, std::istream *streamPtr)
 {
-    if (d_streamStack.size() == s_maxSizeofStreamStack__)
+    if (d_streamStack.size() == s_maxSizeofStreamStack_)
     {
         delete streamPtr;
         throw std::length_error("Max stream stack size exceeded");
@@ -2451,23 +2451,23 @@ bool ScannerBase::popStream()
 
   // See the manual's section `Run-time operations' section for an explanation
   // of this member.
-ScannerBase::ActionType__ ScannerBase::actionType__(size_t range)
+ScannerBase::ActionType_ ScannerBase::actionType_(size_t range)
 {
-    d_nextState = d_dfaBase__[d_state][range];
+    d_nextState = d_dfaBase_[d_state][range];
 
     if (d_nextState != -1)                  // transition is possible
-        return ActionType__::CONTINUE;
+        return ActionType_::CONTINUE;
 
     if (knownFinalState())                  // FINAL state reached
-        return ActionType__::MATCH;         
+        return ActionType_::MATCH;         
 
     if (d_matched.size())
-        return ActionType__::ECHO_FIRST;    // no match, echo the 1st char
+        return ActionType_::ECHO_FIRST;    // no match, echo the 1st char
 
-    return range != s_rangeOfEOF__ ? 
-                ActionType__::ECHO_CH 
+    return range != s_rangeOfEOF_ ? 
+                ActionType_::ECHO_CH 
             : 
-                ActionType__::RETURN;
+                ActionType_::RETURN;
 }
 
 void ScannerBase::accept(size_t nChars)          // old name: less
@@ -2491,11 +2491,11 @@ void ScannerBase::setMatchedSize(size_t length)
   // d_atBOL is updated. Finally the rule's index is returned.
   // The numbers behind the finalPtr assignments are explained in the 
   // manual's `Run-time operations' section.
-size_t ScannerBase::matched__(size_t ch)
+size_t ScannerBase::matched_(size_t ch)
 {
     // $insert debug
-    if (s_debug__)
-        s_out__ <<  "MATCH" << "\n" << dflush__;
+    if (s_debug_)
+        s_out_ <<  "MATCH" << "\n" << dflush_;
     d_input.reRead(ch);
 
     FinalData *finalPtr;
@@ -2532,35 +2532,35 @@ size_t ScannerBase::matched__(size_t ch)
     d_atBOL = d_matched.back() == '\n';
 
     // $insert debug
-    if (s_debug__)
-        s_out__ <<  "match buffer contains `" << d_matched << "'" << "\n" << dflush__;
+    if (s_debug_)
+        s_out_ <<  "match buffer contains `" << d_matched << "'" << "\n" << dflush_;
 
     return finalPtr->rule;
 }
 
-size_t ScannerBase::getRange__(int ch)       // using int to prevent casts
+size_t ScannerBase::getRange_(int ch)       // using int to prevent casts
 {
-    return ch == AT_EOF ? as<size_t>(s_rangeOfEOF__) : s_ranges__[ch];
+    return ch == AT_EOF ? as<size_t>(s_rangeOfEOF_) : s_ranges_[ch];
 }
 
   // At this point d_nextState contains the next state and continuation is
   // possible. The just read char. is appended to d_match
-void ScannerBase::continue__(int ch)
+void ScannerBase::continue_(int ch)
 {
     // $insert debug
-    if (s_debug__)
-        s_out__ <<  "CONTINUE, NEXT STATE: " << d_nextState << "\n" << dflush__;
+    if (s_debug_)
+        s_out_ <<  "CONTINUE, NEXT STATE: " << d_nextState << "\n" << dflush_;
     d_state = d_nextState;
 
     if (ch != AT_EOF)
         d_matched += ch;
 }
 
-void ScannerBase::echoCh__(size_t ch)
+void ScannerBase::echoCh_(size_t ch)
 {
     // $insert debug
-    if (s_debug__)
-        s_out__ <<  "ECHO_CH"  << "\n" << dflush__;
+    if (s_debug_)
+        s_out_ <<  "ECHO_CH"  << "\n" << dflush_;
     *d_out << as<char>(ch);
     d_atBOL = ch == '\n';
 }
@@ -2571,44 +2571,44 @@ void ScannerBase::echoCh__(size_t ch)
    // the buffer. The first char. in the buffer is echoed to stderr. 
    // If there isn't any 1st char yet then the current char doesn't fit any
    // rules and that char is then echoed
-void ScannerBase::echoFirst__(size_t ch)
+void ScannerBase::echoFirst_(size_t ch)
 {
     // $insert debug
-    if (s_debug__)
-        s_out__ <<  "ECHO_FIRST" << "\n" << dflush__;
+    if (s_debug_)
+        s_out_ <<  "ECHO_FIRST" << "\n" << dflush_;
     d_input.reRead(ch);
     d_input.reRead(d_matched, 1);
-    echoCh__(d_matched[0]);
+    echoCh_(d_matched[0]);
 }
 
     // Update the rules associated with the current state, do this separately
     // for BOL and std rules.
     // If a rule was set, update the rule index and the current d_matched
     // length. 
-void ScannerBase::updateFinals__()
+void ScannerBase::updateFinals_()
 {
     size_t len = d_matched.size();
 
-    int const *rf = d_dfaBase__[d_state] + s_finIdx__;
+    int const *rf = d_dfaBase_[d_state] + s_finIdx_;
 
     if (rf[0] != -1)        // update to the latest std rule
     {
         // $insert debug
-        if (s_debug__)
-            s_out__ <<  "latest std rule: " << rf[0] << ", len = " << len << "\n" << dflush__;
+        if (s_debug_)
+            s_out_ <<  "latest std rule: " << rf[0] << ", len = " << len << "\n" << dflush_;
         d_final.std = FinalData { as<size_t>(rf[0]), len };
     }
 
     if (rf[1] != -1)        // update to the latest bol rule
     {
         // $insert debug
-        if (s_debug__)
-            s_out__ <<  "latest BOL rule: " << rf[0] << ", len = " << len << "\n" << dflush__;
+        if (s_debug_)
+            s_out_ <<  "latest BOL rule: " << rf[0] << ", len = " << len << "\n" << dflush_;
         d_final.bol = FinalData { as<size_t>(rf[1]), len };
     }
 }
 
-void ScannerBase::reset__()
+void ScannerBase::reset_()
 {
     d_final = Final{ 
                     FinalData{s_unavailable, 0}, 
@@ -2624,12 +2624,12 @@ void ScannerBase::reset__()
     d_more = false;
 }
 
-int Scanner::executeAction__(size_t ruleIdx)
+int Scanner::executeAction_(size_t ruleIdx)
 try
 {
     // $insert debug
-    if (s_debug__)
-        s_out__ <<   "Executing actions of rule " << ruleIdx << "\n" << dflush__;
+    if (s_debug_)
+        s_out_ <<   "Executing actions of rule " << ruleIdx << "\n" << dflush_;
     switch (ruleIdx)
     {
         // $insert actions
@@ -2639,7 +2639,7 @@ try
             {
                 
                 d_block.open(lineNr(), filename()); 
-                begin(StartCondition__::block);
+                begin(StartCondition_::block);
             }
         }
         break;
@@ -2667,7 +2667,7 @@ try
 #line 49 "lexer"
             {
                 d_commentChar[0] = ' ';
-                begin(StartCondition__::comment);
+                begin(StartCondition_::comment);
             }
         }
         break;
@@ -2683,7 +2683,7 @@ try
             {
                 if (d_block.close())
                 {
-                    begin(StartCondition__::INITIAL);
+                    begin(StartCondition_::INITIAL);
                     return Parser::BLOCK;
                 }
             }
@@ -2693,7 +2693,7 @@ try
         {
 #line 70 "lexer"
             {
-                begin(StartCondition__::string);
+                begin(StartCondition_::string);
                 more();
             }
         }
@@ -2702,7 +2702,7 @@ try
         {
 #line 75 "lexer"
             {
-                begin(StartCondition__::quote);
+                begin(StartCondition_::quote);
                 more();
             }
         }
@@ -2741,7 +2741,7 @@ try
         {
 #line 106 "lexer"
             {
-                begin(StartCondition__::pxstring);
+                begin(StartCondition_::pxstring);
                 return Parser::BASECLASS_HEADER;
             }
         }
@@ -2750,7 +2750,7 @@ try
         {
 #line 110 "lexer"
             {
-                begin(StartCondition__::pxstring);
+                begin(StartCondition_::pxstring);
                 return Parser::BASECLASS_PREINCLUDE;
             }
         }
@@ -2759,7 +2759,7 @@ try
         {
 #line 114 "lexer"
             {
-                begin(StartCondition__::pxstring);
+                begin(StartCondition_::pxstring);
                 return Parser::CLASS_HEADER;
             }
         }
@@ -2804,7 +2804,7 @@ try
         {
 #line 124 "lexer"
             {
-                begin(StartCondition__::pxstring);
+                begin(StartCondition_::pxstring);
                 return Parser::FILENAMES;
             }
         }
@@ -2819,7 +2819,7 @@ try
         {
 #line 129 "lexer"
             {
-                begin(StartCondition__::pxstring);
+                begin(StartCondition_::pxstring);
                 return Parser::IMPLEMENTATION_HEADER;
             }
         }
@@ -2828,7 +2828,7 @@ try
         {
 #line 133 "lexer"
             {
-                begin(StartCondition__::pxstring);
+                begin(StartCondition_::pxstring);
                 d_include = true;
             }
         }
@@ -2855,7 +2855,7 @@ try
         {
 #line 140 "lexer"
             {
-                begin(StartCondition__::xstring);
+                begin(StartCondition_::xstring);
                 return Parser::LTYPE;
             }
         }
@@ -2888,7 +2888,7 @@ try
         {
 #line 148 "lexer"
             {
-                begin(StartCondition__::pxstring);
+                begin(StartCondition_::pxstring);
                 return Parser::PARSEFUN_SOURCE;
             }
         }
@@ -2933,7 +2933,7 @@ try
         {
 #line 158 "lexer"
             {
-                begin(StartCondition__::pxstring);
+                begin(StartCondition_::pxstring);
                 return Parser::SCANNER;
             }
         }
@@ -2942,7 +2942,7 @@ try
         {
 #line 162 "lexer"
             {
-                begin(StartCondition__::pxstring);
+                begin(StartCondition_::pxstring);
                 return Parser::SCANNER_CLASS_NAME;
             }
         }
@@ -2951,7 +2951,7 @@ try
         {
 #line 166 "lexer"
             {
-                begin(StartCondition__::pxstring);
+                begin(StartCondition_::pxstring);
                 return Parser::SCANNER_TOKEN_FUNCTION;
             }
         }
@@ -2960,7 +2960,7 @@ try
         {
 #line 170 "lexer"
             {
-                begin(StartCondition__::pxstring);
+                begin(StartCondition_::pxstring);
                 return 
                 Parser::SCANNER_MATCHED_TEXT_FUNCTION;
             }
@@ -2982,7 +2982,7 @@ try
         {
 #line 177 "lexer"
             {
-                begin(StartCondition__::xstring);
+                begin(StartCondition_::xstring);
                 return Parser::STYPE;
             }
         }
@@ -2997,7 +2997,7 @@ try
         {
 #line 182 "lexer"
             {
-                begin(StartCondition__::pxstring);
+                begin(StartCondition_::pxstring);
                 return Parser::TARGET_DIRECTORY;
             }
         }
@@ -3042,7 +3042,7 @@ try
         {
 #line 193 "lexer"
             {
-                begin(StartCondition__::quote);
+                begin(StartCondition_::quote);
                 more();
             }
         }
@@ -3051,7 +3051,7 @@ try
         {
 #line 198 "lexer"
             {
-                begin(StartCondition__::string);
+                begin(StartCondition_::string);
                 more();
             }
         }
@@ -3082,7 +3082,7 @@ try
 #line 215 "lexer"
             {
                 more();
-                begin(StartCondition__::string);
+                begin(StartCondition_::string);
             }
         }
         break;
@@ -3091,7 +3091,7 @@ try
 #line 219 "lexer"
             {
                 more();
-                begin(StartCondition__::pstring);
+                begin(StartCondition_::pstring);
             }
         }
         break;
@@ -3100,7 +3100,7 @@ try
 #line 223 "lexer"
             {
                 accept(0);
-                begin(StartCondition__::xstring);
+                begin(StartCondition_::xstring);
             }
         }
         break;
@@ -3205,11 +3205,11 @@ try
 #line 282 "lexer"
             {
                 if (!d_block)
-                begin(StartCondition__::INITIAL);
+                begin(StartCondition_::INITIAL);
                 else
                 {
                     d_block += d_commentChar;
-                    begin(StartCondition__::block);
+                    begin(StartCondition_::block);
                 }
             }
         }
@@ -3231,10 +3231,10 @@ try
 #line 301 "lexer"
             {
                 if (d_block(d_matched))
-                begin(StartCondition__::block);
+                begin(StartCondition_::block);
                 else
                 {
-                    begin(StartCondition__::INITIAL);
+                    begin(StartCondition_::INITIAL);
                     escape();
                     return Parser::QUOTE;
                 }
@@ -3269,7 +3269,7 @@ try
         case 102:
         {
 #line 329 "lexer"
-            begin(StartCondition__::typecomment);
+            begin(StartCondition_::typecomment);
         }
         break;
         case 103:
@@ -3281,80 +3281,80 @@ try
         case 105:
         {
 #line 336 "lexer"
-            begin(StartCondition__::typespec);
+            begin(StartCondition_::typespec);
         }
         break;
     }
     // $insert debug
-    if (s_debug__)
-        s_out__ <<  "Rule " << ruleIdx << " did not do 'return'" << "\n" << dflush__;
-    noReturn__();
+    if (s_debug_)
+        s_out_ <<  "Rule " << ruleIdx << " did not do 'return'" << "\n" << dflush_;
+    noReturn_();
     return 0;
 }
-catch (Leave__ value)
+catch (Leave_ value)
 {
     return static_cast<int>(value);
 }
 
-int Scanner::lex__()
+int Scanner::lex_()
 {
-    reset__();
+    reset_();
     preCode();
 
     while (true)
     {
-        size_t ch = get__();                // fetch next char
-        size_t range = getRange__(ch);      // determine the range
+        size_t ch = get_();                // fetch next char
+        size_t range = getRange_(ch);      // determine the range
 
-        updateFinals__();                    // update the state's Final info
+        updateFinals_();                    // update the state's Final info
 
-        switch (actionType__(range))        // determine the action
+        switch (actionType_(range))        // determine the action
         {
-            case ActionType__::CONTINUE:
-                continue__(ch);
+            case ActionType_::CONTINUE:
+                continue_(ch);
             continue;
 
-            case ActionType__::MATCH:
+            case ActionType_::MATCH:
             {
-                d_token__ = executeAction__(matched__(ch));
-                if (return__())
+                d_token_ = executeAction_(matched_(ch));
+                if (return_())
                 {
                     print();
-                    postCode(PostEnum__::RETURN);
-                    return d_token__;
+                    postCode(PostEnum_::RETURN);
+                    return d_token_;
                 }
                 break;
             }
 
-            case ActionType__::ECHO_FIRST:
-                echoFirst__(ch);
+            case ActionType_::ECHO_FIRST:
+                echoFirst_(ch);
             break;
 
-            case ActionType__::ECHO_CH:
-                echoCh__(ch);
+            case ActionType_::ECHO_CH:
+                echoCh_(ch);
             break;
 
-            case ActionType__::RETURN:
+            case ActionType_::RETURN:
                 // $insert debug
-                if (s_debug__)
-                    s_out__ <<   "EOF_REACHED" << "\n" << dflush__;
+                if (s_debug_)
+                    s_out_ <<   "EOF_REACHED" << "\n" << dflush_;
                 if (!popStream())
                 {
-                     postCode(PostEnum__::END);
+                     postCode(PostEnum_::END);
                      return 0;
                 }
-                postCode(PostEnum__::POP);
+                postCode(PostEnum_::POP);
              continue;
         } // switch
 
-        postCode(PostEnum__::WIP);
+        postCode(PostEnum_::WIP);
 
-        reset__();
+        reset_();
         preCode();
     } // while
 }
 
-void ScannerBase::print__() const
+void ScannerBase::print_() const
 {
 }
 

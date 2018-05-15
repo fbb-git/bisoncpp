@@ -4,7 +4,7 @@ void Writer::insert(Terminal::ConstVector const &tokens) const
 {
     *d_out << "\n"
             "    // Symbolic tokens:\n"
-            "    enum Tokens__\n"
+            "    enum Tokens_\n"
             "    {\n";
 
     size_t lastTokenValue = 0;

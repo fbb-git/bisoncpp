@@ -4,5 +4,5 @@ Syntax:    bf(%negative-dollar-indices)
 grammar's action blocks. Zero or negative dollar-indices are commonly used to
 implement inherited attributes and should normally be avoided. When used they
 can be specified like tt($-1), or like tt($<type>-1), where tt(type) is an
-tt(STYPE__) tag; or a tt(%union) field-name. See also sections ref(ACTIONS),
+tt(STYPE_) tag; or a tt(%union) field-name. See also sections ref(ACTIONS),
 ref(SPECIAL), and ref(POLYMORPHIC).

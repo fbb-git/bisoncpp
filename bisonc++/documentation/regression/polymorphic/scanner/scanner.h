@@ -21,16 +21,16 @@ class Scanner: public ScannerBase
         int lex();
 
     private:
-        int lex__();
-        int executeAction__(size_t ruleNr);
+        int lex_();
+        int executeAction_(size_t ruleNr);
 
         void print();
         void preCode();     // re-implement this function for code that must 
                             // be exec'ed before the patternmatching starts
-        void postCode(PostEnum__);
+        void postCode(PostEnum_);
 };
 
-inline void Scanner::postCode(PostEnum__)
+inline void Scanner::postCode(PostEnum_)
 {}
 
 
@@ -44,7 +44,7 @@ inline Scanner::Scanner(SemVal *semval)
 // $insert inlineLexFunction
 inline int Scanner::lex()
 {
-    return lex__();
+    return lex_();
 }
 
 inline void Scanner::preCode() 
@@ -54,7 +54,7 @@ inline void Scanner::preCode()
 
 inline void Scanner::print() 
 {
-    print__();
+    print_();
 }
 
 

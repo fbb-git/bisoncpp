@@ -112,8 +112,8 @@ typedef struct yyltype
 #   if defined (alloca) || defined (_ALLOCA_H)
 #    define YYSTACK_ALLOC alloca
 #   else
-#    ifdef __GNUC__
-#     define YYSTACK_ALLOC __builtin_alloca
+#    ifdef _GNUC_
+#     define YYSTACK_ALLOC _builtin_alloca
 #    endif
 #   endif
 #  endif
@@ -123,7 +123,7 @@ typedef struct yyltype
    /* Pacify GCC's `empty if-body' warning. */
 #  define YYSTACK_FREE(Ptr) do { /* empty */; } while (0)
 # else
-#  if defined (__STDC__) || defined (__cplusplus)
+#  if defined (_STDC_) || defined (_cplusplus)
 #   include <stdlib.h> /* INFRINGES ON USER NAME SPACE */
 #   define YYSIZE_T size_t
 #  endif
@@ -134,7 +134,7 @@ typedef struct yyltype
 
 
 #if (! defined (yyoverflow) \
-     && (! defined (__cplusplus) \
+     && (! defined (_cplusplus) \
 	 || (YYLTYPE_IS_TRIVIAL && YYSTYPE_IS_TRIVIAL)))
 
 /* A type that is properly aligned for any stack member.  */
@@ -156,9 +156,9 @@ union yyalloc
 /* Copy COUNT objects from FROM to TO.  The source and destination do
    not overlap.  */
 # ifndef YYCOPY
-#  if 1 < __GNUC__
+#  if 1 < _GNUC_
 #   define YYCOPY(To, From, Count) \
-      __builtin_memcpy (To, From, (Count) * sizeof (*(From)))
+      _builtin_memcpy (To, From, (Count) * sizeof (*(From)))
 #  else
 #   define YYCOPY(To, From, Count)		\
       do					\
@@ -189,7 +189,7 @@ union yyalloc
 
 #endif
 
-#if defined (__STDC__) || defined (__cplusplus)
+#if defined (_STDC_) || defined (_cplusplus)
    typedef signed char yysigned_char;
 #else
    typedef short yysigned_char;
@@ -348,14 +348,14 @@ static const size_t char yystos[] =
        0,     3,     5,     6,     0,     3
 };
 
-#if ! defined (YYSIZE_T) && defined (__SIZE_TYPE__)
-# define YYSIZE_T __SIZE_TYPE__
+#if ! defined (YYSIZE_T) && defined (_SIZE_TYPE_)
+# define YYSIZE_T _SIZE_TYPE_
 #endif
 #if ! defined (YYSIZE_T) && defined (size_t)
 # define YYSIZE_T size_t
 #endif
 #if ! defined (YYSIZE_T)
-# if defined (__STDC__) || defined (__cplusplus)
+# if defined (_STDC_) || defined (_cplusplus)
 #  include <stddef.h> /* INFRINGES ON USER NAME SPACE */
 #  define YYSIZE_T size_t
 # endif
@@ -467,12 +467,12 @@ int yydebug;
 #if YYERROR_VERBOSE
 
 # ifndef yystrlen
-#  if defined (__GLIBC__) && defined (_STRING_H)
+#  if defined (_GLIBC_) && defined (_STRING_H)
 #   define yystrlen strlen
 #  else
 /* Return the length of YYSTR.  */
 static YYSIZE_T
-#   if defined (__STDC__) || defined (__cplusplus)
+#   if defined (_STDC_) || defined (_cplusplus)
 yystrlen (const char *yystr)
 #   else
 yystrlen (yystr)
@@ -490,13 +490,13 @@ yystrlen (yystr)
 # endif
 
 # ifndef yystpcpy
-#  if defined (__GLIBC__) && defined (_STRING_H) && defined (_GNU_SOURCE)
+#  if defined (_GLIBC_) && defined (_STRING_H) && defined (_GNU_SOURCE)
 #   define yystpcpy stpcpy
 #  else
 /* Copy YYSRC to YYDEST, returning the address of the terminating '\0' in
    YYDEST.  */
 static char *
-#   if defined (__STDC__) || defined (__cplusplus)
+#   if defined (_STDC_) || defined (_cplusplus)
 yystpcpy (char *yydest, const char *yysrc)
 #   else
 yystpcpy (yydest, yysrc)
@@ -525,7 +525,7 @@ yystpcpy (yydest, yysrc)
 `-----------------------------*/
 
 static void
-#if defined (__STDC__) || defined (__cplusplus)
+#if defined (_STDC_) || defined (_cplusplus)
 yysymprint (FILE* yyout, int yytype, YYSTYPE yyvalue)
 #else
 yysymprint (yyout, yytype, yyvalue)
@@ -562,7 +562,7 @@ yysymprint (yyout, yytype, yyvalue)
 `-----------------------------------------------*/
 
 static void
-#if defined (__STDC__) || defined (__cplusplus)
+#if defined (_STDC_) || defined (_cplusplus)
 yydestruct (int yytype, YYSTYPE yyvalue)
 #else
 yydestruct (yytype, yyvalue)
@@ -589,7 +589,7 @@ yydestruct (yytype, yyvalue)
    to the proper pointer type.  */
 
 #ifdef YYPARSE_PARAM
-# if defined (__STDC__) || defined (__cplusplus)
+# if defined (_STDC_) || defined (_cplusplus)
 #  define YYPARSE_PARAM_ARG void *YYPARSE_PARAM
 #  define YYPARSE_PARAM_DECL
 # else
@@ -602,7 +602,7 @@ yydestruct (yytype, yyvalue)
 #endif /* !YYPARSE_PARAM */
 
 /* Prevent warning if -Wstrict-prototypes.  */
-#ifdef __GNUC__
+#ifdef _GNUC_
 # ifdef YYPARSE_PARAM
 int yyparse (void *);
 # else

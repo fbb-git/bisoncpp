@@ -52,7 +52,7 @@ class Parser: public ParserBase
     std::string d_expect;
 
     std::string d_field;                // %union field or %polymorphic
-                                        // Tag__ value in %type specifications
+                                        // Tag_ value in %type specifications
 
     bool        d_typeDirective = false;// true following %type
     bool        d_negativeDollarIndicesOK = false;
@@ -134,7 +134,7 @@ class Parser: public ParserBase
             // no action block + error message
         void blkErr(std::string const &ruleType, Production const &prod);
 
-            // a $$ = STYPE__{} action block
+            // a $$ = STYPE_{} action block
         void blkSTYPE(std::string const &ruleType, Production const &prod);
 
             // a $$ = $1.get... action block
@@ -305,9 +305,9 @@ class Parser: public ParserBase
         size_t extractIndex(int *idx, size_t pos);
         size_t extractType(std::string *type, size_t pos, Block &block);
 
-        STYPE__ handleProductionElements(STYPE__ &first, 
-                                         STYPE__ const &second);
-        void handleProductionElement(STYPE__ &last);
+        STYPE_ handleProductionElements(STYPE_ &first, 
+                                         STYPE_ const &second);
+        void handleProductionElement(STYPE_ &last);
 
 
         void installAction(Block &block);
@@ -339,11 +339,11 @@ class Parser: public ParserBase
                                                          
                                                          
     // support functions for parse():                    
-        void executeAction__(int ruleNr);                
-        void errorRecovery__();                          
-        void nextCycle__();                              
-        void nextToken__();                              
-        void print__();                                     
+        void executeAction_(int ruleNr);                
+        void errorRecovery_();                          
+        void nextCycle_();                              
+        void nextToken_();                              
+        void print_();                                     
                                         // used in, e.g., handleDollar
                                         // to obtain # elements for
                                         // end- or mid-rule actions

@@ -5,11 +5,11 @@ void Scanner::returnQuoted(void (Scanner::*handler)())
     if (d_block)
     {
         d_block += d_matched;   
-        begin(StartCondition__::block);
+        begin(StartCondition_::block);
     }
     else
     {
-        begin(StartCondition__::INITIAL);
+        begin(StartCondition_::INITIAL);
         (this->*handler)();         // handles quoted 
                                     //          octal constant  (octal) or
                                     //          hex constant    (hexadecimal)

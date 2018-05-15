@@ -29,10 +29,10 @@ class ScannerBase
     };
 
 protected:
-    enum Leave__
+    enum Leave_
     {};
 
-    enum class ActionType__
+    enum class ActionType_
     {
         CONTINUE,               // transition succeeded, go on
         ECHO_CH,                // echo ch itself (d_matched empty)
@@ -41,18 +41,18 @@ protected:
         RETURN,                 // no further continuation, lex returns 0.
     };
 
-    enum class PostEnum__
+    enum class PostEnum_
     {
-        END,                    // postCode called when lex__() ends 
+        END,                    // postCode called when lex_() ends 
         POP,                    // postCode called after switching files
-        RETURN,                 // postCode called when lex__() returns
+        RETURN,                 // postCode called when lex_() returns
         WIP                     // postCode called when a non-returning rule
                                 // was matched
     };
 
 public:
     // $insert startcondenum
-    enum class StartCondition__{
+    enum class StartCondition_{
         INITIAL,
         xstring,
         pstring,
@@ -153,36 +153,36 @@ private:
     std::string::iterator d_lopTail;
     std::string::iterator d_lopEnd;
 
-    size_t          d_lopPending;           // # pending input chars at lop1__
+    size_t          d_lopPending;           // # pending input chars at lop1_
     bool            d_return;               // return after a rule's action 
     bool            d_more = false;         // set to true by more()
 
     size_t (ScannerBase::*d_get)() = &ScannerBase::getInput;
 
 protected:
-    std::istream   *d_in__;
-    int d_token__;                          // returned by lex__
+    std::istream   *d_in_;
+    int d_token_;                          // returned by lex_
 
     // $insert debugDecl
-        static bool s_debug__;
-        static std::ostringstream s_out__;
-        static std::ostream &dflush__(std::ostream &out);
+        static bool s_debug_;
+        static std::ostringstream s_out_;
+        static std::ostream &dflush_(std::ostream &out);
    private:
 
 
-    int     const (*d_dfaBase__)[71];
+    int     const (*d_dfaBase_)[71];
 
-    static int     const s_dfa__[][71];
-    static int     const (*s_dfaBase__[])[71];
-    enum: bool { s_interactive__ = false };
+    static int     const s_dfa_[][71];
+    static int     const (*s_dfaBase_[])[71];
+    enum: bool { s_interactive_ = false };
     enum: size_t {
-        s_rangeOfEOF__           = 68,
-        s_finIdx__               = 69,
-        s_nRules__               = 106,
-        s_maxSizeofStreamStack__ = 10
+        s_rangeOfEOF_           = 68,
+        s_finIdx_               = 69,
+        s_nRules_               = 106,
+        s_maxSizeofStreamStack_ = 10
     };
-    static size_t  const s_ranges__[];
-    static size_t  const s_rf__[][2];
+    static size_t  const s_ranges_[];
+    static size_t  const s_rf_[][2];
 
 public:
     ScannerBase(ScannerBase const &other)             = delete;
@@ -244,40 +244,40 @@ protected:
     void            setFilename(std::string const &name);
     void            setMatched(std::string const &text);
 
-    static std::string istreamName__();
+    static std::string istreamName_();
         
-        // members used by lex__(): they end in __ and should not be used
+        // members used by lex_(): they end in _ and should not be used
         // otherwise.
 
-    ActionType__    actionType__(size_t range); // next action
-    bool            return__();                 // 'return' from codeblock
-    size_t          matched__(size_t ch);       // handles a matched rule
-    size_t          getRange__(int ch);         // convert char to range
-    size_t          get__();                    // next character
-    size_t          state__() const;            // current state 
-    void            continue__(int ch);         // handles a transition
-    void            echoCh__(size_t ch);        // echoes ch, sets d_atBOL
-    void            echoFirst__(size_t ch);     // handles unknown input
-    void            updateFinals__();           // update a state's Final info
-    void            noReturn__();               // d_return to false
-    void            print__() const;            // optionally print token
-    void            pushFront__(size_t ch);     // return char to Input
-    void            reset__();                  // prepare for new cycle
+    ActionType_    actionType_(size_t range); // next action
+    bool            return_();                 // 'return' from codeblock
+    size_t          matched_(size_t ch);       // handles a matched rule
+    size_t          getRange_(int ch);         // convert char to range
+    size_t          get_();                    // next character
+    size_t          state_() const;            // current state 
+    void            continue_(int ch);         // handles a transition
+    void            echoCh_(size_t ch);        // echoes ch, sets d_atBOL
+    void            echoFirst_(size_t ch);     // handles unknown input
+    void            updateFinals_();           // update a state's Final info
+    void            noReturn_();               // d_return to false
+    void            print_() const;            // optionally print token
+    void            pushFront_(size_t ch);     // return char to Input
+    void            reset_();                  // prepare for new cycle
                                                 // next input stream:
-    void            switchStream__(std::istream &in, size_t lineNr);   
-    void            lopf__(size_t tail);        // matched fixed size tail
-    void            lop1__(int lopSC);          // matched ab for a/b
-    void            lop2__();                   // matches the LOP's b tail
-    void            lop3__();                   // catch-all while matching b
-    void            lop4__();                   // matches the LOP's a head
+    void            switchStream_(std::istream &in, size_t lineNr);   
+    void            lopf_(size_t tail);        // matched fixed size tail
+    void            lop1_(int lopSC);          // matched ab for a/b
+    void            lop2_();                   // matches the LOP's b tail
+    void            lop3_();                   // catch-all while matching b
+    void            lop4_();                   // matches the LOP's a head
 
 // $insert startconddecl
-    StartCondition__ startCondition() const;   // current start condition
-    void            begin(StartCondition__ startCondition);
+    StartCondition_ startCondition() const;   // current start condition
+    void            begin(StartCondition_ startCondition);
 
 private:
-    static StartCondition__ constexpr SC(int sc);
-    static int constexpr SC(StartCondition__ sc);
+    static StartCondition_ constexpr SC(int sc);
+    static int constexpr SC(StartCondition_ sc);
 
     size_t getInput();
     size_t getLOP();
@@ -296,27 +296,27 @@ inline ScannerBase::~ScannerBase()
 }
 
 // $insert startcondimpl
-inline ScannerBase::StartCondition__ constexpr ScannerBase::SC(int sc)
+inline ScannerBase::StartCondition_ constexpr ScannerBase::SC(int sc)
 {
-    return as<StartCondition__>(sc);
+    return as<StartCondition_>(sc);
 }
 
-inline int constexpr ScannerBase::SC(StartCondition__ sc)
+inline int constexpr ScannerBase::SC(StartCondition_ sc)
 {
     return as<int>(sc);
 }
 
-inline ScannerBase::StartCondition__ ScannerBase::startCondition() const
+inline ScannerBase::StartCondition_ ScannerBase::startCondition() const
 {
     return SC(d_startCondition);
 }
 
-inline void ScannerBase::begin(StartCondition__ startCondition)
+inline void ScannerBase::begin(StartCondition_ startCondition)
 {
-    if (s_debug__)
-        s_out__ << "Switching to StartCondition__ # " << as<int>(startCondition) << '\n';
-    // d_state is reset to 0 by reset__()
-    d_dfaBase__ = s_dfaBase__[d_startCondition = SC(startCondition)];
+    if (s_debug_)
+        s_out_ << "Switching to StartCondition_ # " << as<int>(startCondition) << '\n';
+    // d_state is reset to 0 by reset_()
+    d_dfaBase_ = s_dfaBase_[d_startCondition = SC(startCondition)];
 }
 
 template <typename ReturnType, typename ArgType>
@@ -383,7 +383,7 @@ inline size_t ScannerBase::length() const
 
 inline void ScannerBase::leave(int retValue) const
 {
-    throw as<Leave__>(retValue);
+    throw as<Leave_>(retValue);
 }
 
 inline size_t ScannerBase::lineNr() const
@@ -396,12 +396,12 @@ inline void ScannerBase::more()
     d_more = true;
 }
 
-inline size_t ScannerBase::state__() const
+inline size_t ScannerBase::state_() const
 {
     return d_state;
 }
 
-inline size_t ScannerBase::get__()
+inline size_t ScannerBase::get_()
 {
     return (this->*d_get)();
 }
@@ -411,12 +411,12 @@ inline size_t ScannerBase::getInput()
     return d_input.get();
 }
 
-inline bool ScannerBase::return__()
+inline bool ScannerBase::return_()
 {
     return d_return;
 }
 
-inline void ScannerBase::noReturn__()
+inline void ScannerBase::noReturn_()
 {
     d_return = false;
 }

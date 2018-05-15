@@ -1,3 +1,55 @@
+PARSE_ABORT_  = 1
+PARSE_ACCEPT_ = 0,   // values used as parse()'s return values
+STYPE_;
+UNEXPECTED_TOKEN_,
+
+d_acceptedTokens_;
+d_actionCases_ = false;    // set by options/directives
+d_debug_ = true;
+d_nErrors_;                // initialized by clearin()
+d_requiredTokens_;
+d_val_;
+
+enum DebugMode_
+enum ErrorRecovery_
+enum Return_
+enum Tokens_
+enum class Tag_
+enum { sizeofTag_ = 6 };
+
+idOfTag_[];
+
+s_nErrors_;
+
+namespace Meta_
+
+clearin_();
+errorRecovery_();                          
+errorVerbose_();
+executeAction_(int ruleNr);                
+lex_(int token);
+lookup_() const;
+nextCycle_();                              
+nextToken_();                              
+popToken_();
+pop_(size_t count = 1);
+print_();                                     
+pushToken_(int token);
+push_(size_t nextState);
+recovery_() const;
+redoToken_();
+reduce_(int rule);
+savedToken_() const;
+shift_(int state);
+stackSize_() const;
+startRecovery_();
+state_() const;
+struct PI_;
+token_() const;
+top_() const;
+vs_(int idx);
+
+
 bisonc++ (6.01.03)
 
   * To avoid lintian reports about missing examples the 'examples/'

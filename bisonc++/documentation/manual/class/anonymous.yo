@@ -7,13 +7,13 @@ the parser.
     it() bf(char const author[]):nl()
        Defining the name and e-mail address of Bic()'s author.
 
-    it() bf(Reserved__):nl()
+    it() bf(Reserved_):nl()
        This enumeration defines some token values used internally by the
         parsing functions. They are:
         verb(
-    UNDETERMINED__ = -2,
-    EOF__          = -1,
-    errTok__        = 256,
+    UNDETERMINED_ = -2,
+    EOF_          = -1,
+    errTok_        = 256,
        )
        These tokens are used by the parser to determine whether another token
         should be requested from the lexical scanner, and to handle
@@ -36,25 +36,25 @@ the parser.
         states of the analyzed grammar.
 
     it() bf(StateTransition)
-       This enumeration only defines a single symbolic constant: tt(ACCEPT__),
+       This enumeration only defines a single symbolic constant: tt(ACCEPT_),
         which is used in the state transition tables to indicate that the
         em(accepting state) has been reached.
 
-    it() bf(PI__) (Production Info):nl()
+    it() bf(PI_) (Production Info):nl()
        This tt(struct) provides information about production rules. It has two
         fields: tt(d_nonTerm) is the identification number of the production's
         nonterminal, tt(d_size) represents the number of elements of the
         productin rule.
 
-    it() bf(static PI__ s_productionInfo):nl()
+    it() bf(static PI_ s_productionInfo):nl()
        Used internally by the parsing function.
 
-    it() bf(SR__) (Shift-Reduce Info):nl()
+    it() bf(SR_) (Shift-Reduce Info):nl()
        This tt(struct) provides the shift/reduce information for the various
-        grammatic states. tt(SR__) values are collected in arrays, one array
+        grammatic states. tt(SR_) values are collected in arrays, one array
         per grammatic state. These array, named tt(s_)tt(<nr>), 
         where tt<nr> is a state number are defined in the anonymous namespace
-        as well. The tt(SR__) elements consist of two unions,
+        as well. The tt(SR_) elements consist of two unions,
         defining fields that are applicable to, respectively, the first,
         intermediate and the last array elements.nl()
        The first element of each array consists of (1st field) a tt(StateType)
@@ -70,14 +70,14 @@ the parser.
         error or default action has been defined for the state, and
         error-recovery is attepted.
 
-    it() bf(STACK_EXPANSION__):nl()
+    it() bf(STACK_EXPANSION_):nl()
        An enumeration value specifying the number of additional elements that
         are added to the state- and semantic value stacks when full.
 
-    it() bf(static SR__ s_<nr>[]):nl()
+    it() bf(static SR_ s_<nr>[]):nl()
        Here, tt(<nr>) is a numerical value representing a state number.
        Used internally by the parsing function.
 
-    it() bf(static SR__ *s_state[]):nl()
+    it() bf(static SR_ *s_state[]):nl()
        Used internally by the parsing function.
     )

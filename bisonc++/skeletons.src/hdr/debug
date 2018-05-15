@@ -1,4 +1,4 @@
 inline bool \@Base::debug() const
 {
-    return d_debug__;
+    return d_debug_;
 }

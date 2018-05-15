@@ -4,7 +4,7 @@
 tt(typename) should be the name of an alternate default-constructible type
 (e.g., bf(size_t)). It should not be used together with a
 link(%locationstruct)(LOCSTRUCT) specification. From inside the parser class,
-this type may be referred to as bf(LTYPE__).
+this type may be referred to as bf(LTYPE_).
 
     Any text following tt(%ltype) up to the end of the line, up to the first
 of a series of trailing blanks or tabs or up to a comment-token (tt(//) or

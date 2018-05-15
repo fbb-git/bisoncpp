@@ -1,7 +1,7 @@
 #include "parser.ih"
 
-Parser::STYPE__ Parser::handleProductionElements(STYPE__ &first, 
-                                                 STYPE__ const &second)
+Parser::STYPE_ Parser::handleProductionElements(STYPE_ &first, 
+                                                 STYPE_ const &second)
 {
     if (not first.valid())      // the first PTag was a %prec specification
         return second;  
@@ -14,14 +14,14 @@ Parser::STYPE__ Parser::handleProductionElements(STYPE__ &first,
 
     switch (first.tag())
     {
-        case Tag__::TERMINAL:
-            d_rules.addElement(first.get<Tag__::TERMINAL>());
+        case Tag_::TERMINAL:
+            d_rules.addElement(first.get<Tag_::TERMINAL>());
         break;
-        case Tag__::SYMBOL:
-            d_rules.addElement(first.get<Tag__::SYMBOL>());
+        case Tag_::SYMBOL:
+            d_rules.addElement(first.get<Tag_::SYMBOL>());
         break;
-        case Tag__::BLOCK:
-            nestedBlock(first.get<Tag__::BLOCK>());
+        case Tag_::BLOCK:
+            nestedBlock(first.get<Tag_::BLOCK>());
         break;
 
         default:            // can't occur, but used to keep the 

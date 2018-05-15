@@ -1,4 +1,4 @@
-void \@::errorRecovery__()
+void \@::errorRecovery_()
 {
     // When an error has occurred, pop elements off the stack until the top
     // state has an error-item. If none is found, the default recovery
@@ -8,27 +8,27 @@ void \@::errorRecovery__()
     // then the error recovery will fall back to the default recovery mode.
     // (i.e., parsing terminates)
 
-$insert 4 debug "\nERROR:  [" << top__() << ", " << symbol__(token__()) << "] -> ??. Errors: " << (d_nErrors__ + 1)
+$insert 4 debug "\nERROR:  [" << top_() << ", " << symbol_(token_()) << "] -> ??. Errors: " << (d_nErrors_ + 1)
 
 
-    if (d_acceptedTokens__ >= d_requiredTokens__)// only generate an error-
+    if (d_acceptedTokens_ >= d_requiredTokens_)// only generate an error-
     {                                           // message if enough tokens 
-        ++d_nErrors__;                          // were accepted. Otherwise
+        ++d_nErrors_;                          // were accepted. Otherwise
         error();                                // simply skip input
 $insert 8 errorverbose
     }
 
     // get the error state
-    while (not (s_state[top__()][0].d_type & ERR_ITEM))
+    while (not (s_state[top_()][0].d_type & ERR_ITEM))
     {
-$insert 8 debug "pop state: " << top__() << " (not an ERROR state)"
-        pop__();
+$insert 8 debug "pop state: " << top_() << " (not an ERROR state)"
+        pop_();
     }
-$insert 4 debug "Reached ERROR state " << top__()
+$insert 4 debug "Reached ERROR state " << top_()
 
     // In the error state, looking up a token allows us to proceed.
     // Continuation may be require multiple reductions, but eventually a
-    // terminal-token shift is used. See nextCycle__ for details.
+    // terminal-token shift is used. See nextCycle_ for details.
 
-    startRecovery__();
+    startRecovery_();
 }

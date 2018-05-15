@@ -1,4 +1,4 @@
-inline int \@Base::token__() const
+inline int \@Base::token_() const
 {
     return d_token;
 }

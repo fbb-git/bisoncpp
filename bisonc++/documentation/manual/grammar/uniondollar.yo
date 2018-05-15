@@ -5,18 +5,18 @@ itemization(
 rule's nonterminal was associated with one of the union's field types, then
 the matching union field receives the value of the assignment expression's
 right-hand side. If no association was defined then the variable representing
-the nonterminal's semantic value is a plain union (i.e., tt(STYPE__))
+the nonterminal's semantic value is a plain union (i.e., tt(STYPE_))
 variable.
 
     itt($$(expr))
 
     tt(Expr's) value is assigned to the rule's nonterminal's plain union
-(i.e., tt(STYPE__)) type. Any association that may have been defined between
+(i.e., tt(STYPE_)) type. Any association that may have been defined between
 the nonterminal and a union field is ignored.
 
     itt(_$$)
 
-    This refers to the rule's nonterminal's plain union (i.e., tt(STYPE__))
+    This refers to the rule's nonterminal's plain union (i.e., tt(STYPE_))
 type. Any association that may have been defined between the nonterminal and a
 union field is ignored.
 
@@ -25,7 +25,7 @@ union field is ignored.
     This refers to the rule's nonterminal's semantic value. If it was
 associated with one of the union's types, then tt($$) refers to the associated
 union field. If no association was defined then tt($$) represents a plain
-union (i.e., tt(STYPE__)) type of variable.
+union (i.e., tt(STYPE_)) type of variable.
 
     itt($$.)
 
@@ -33,7 +33,7 @@ union (i.e., tt(STYPE__)) type of variable.
 union's types, then tt($$.) is shorthand for the member selector operator,
 applied to the associated union field type. If no association was defined then
 tt($$.) is shorthand for the field selector operator, applied to the
-nonterminal's semantic value's plain union (i.e., tt(STYPE__)) type.
+nonterminal's semantic value's plain union (i.e., tt(STYPE_)) type.
 
     itt($$->)
 
@@ -47,14 +47,14 @@ for plain union types.
     itt(_$1)
 
     This refers to the current production rule's first component's plain 
-union (tt(STYPE__)) value.
+union (tt(STYPE_)) value.
 
     itt($1)
 
     This shorthand refers to the semantic value of the production rule's
 first element. If it was associated with one of the union's types, then tt($1)
 refers to the associated union field. If no association was defined then
-tt($1) represents a plain union (i.e., tt(STYPE__)) type of variable.
+tt($1) represents a plain union (i.e., tt(STYPE_)) type of variable.
 
     itt($1.)
 
@@ -63,7 +63,7 @@ with one of the union's types, then tt($1.) is shorthand for the member
 selector operator, applied to the associated union field type. If no
 association was defined then tt($1.) is shorthand for the field selector
 operator, applied to the first component's semantic value's plain union (i.e.,
-tt(STYPE__)) type.
+tt(STYPE_)) type.
 
     itt($1->)
 
@@ -76,13 +76,13 @@ is not defined for plain union types.
 
     itt(_$-1)
 
-    This refers to the plain union (tt(STYPE__)) value of a component in a
+    This refers to the plain union (tt(STYPE_)) value of a component in a
 production rule, listed immediately before the current rule's nonterminal ($-2
 refers to a component used two elements before the current nonterminal, etc.).
 
     itt($-1)
 
-    Same: this refers to the plain union (tt(STYPE__)) value of a component in
+    Same: this refers to the plain union (tt(STYPE_)) value of a component in
 a production rule, listed immediately before the current rule's nonterminal
 ($-2 refers to a component used two elements before the current nonterminal,
 etc.).
@@ -90,13 +90,13 @@ etc.).
     itt($-1.)
 
     This is shorthand for the field selector operator applied to to the plain
-union (tt(STYPE__)) value of some production rule element, 1 element before
+union (tt(STYPE_)) value of some production rule element, 1 element before
 the current rule's nonterminal.
 
     itt($-1->)
 
     This shorthand refers to tho pointer to member operator applied to the
-plain union (tt(STYPE__)) value of some production rule element, 1 element
+plain union (tt(STYPE_)) value of some production rule element, 1 element
 before the current rule's nonterminal. Its use results in an error message, as
 the pointer to member operator is not defined for plain union types.
 

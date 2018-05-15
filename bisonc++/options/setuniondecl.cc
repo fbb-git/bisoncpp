@@ -6,6 +6,6 @@
 void Options::setUnionDecl(std::string const &block)
 {
     if (isFirstStypeDefinition())
-        d_stackDecl = "union STYPE__\n" + block + ";\n";
+        d_stackDecl = "union STYPE_\n" + block + ";\n";
 }
 

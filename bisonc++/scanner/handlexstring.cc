@@ -8,12 +8,12 @@ bool Scanner::handleXstring(size_t nRedo)
 
     if (d_block)
     {
-        begin(StartCondition__::block);
+        begin(StartCondition_::block);
         d_block += d_matched;
         return false;
     }
 
-    begin(StartCondition__::INITIAL);
+    begin(StartCondition_::INITIAL);
 
     if (not d_include)
        return true;

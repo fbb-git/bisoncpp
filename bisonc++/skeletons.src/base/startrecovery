@@ -1,11 +1,11 @@
-void \@Base::startRecovery__()
+void \@Base::startRecovery_()
 {
     int lastToken = d_token;                // give the unexpected token a
                                             // chance to be processed
                                             // again.
 
-    pushToken__(Reserved__::errTok__);      // specify errTok__ as next token
-    push__(lookup__());                     // push the error state
+    pushToken_(Reserved_::errTok_);      // specify errTok_ as next token
+    push_(lookup_());                     // push the error state
 
     d_token = lastToken;                    // reactivate the unexpected
                                             // token (we're now in an

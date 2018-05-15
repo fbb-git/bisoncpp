@@ -18,14 +18,14 @@ class Scanner: public ScannerBase
         int lex();
 
     private:
-        int lex__();
-        int executeAction__(size_t ruleNr);
+        int lex_();
+        int executeAction_(size_t ruleNr);
 
         void print();
         void preCode();     // re-implement this function for code that must 
                             // be exec'ed before the patternmatching starts
 
-        void postCode(PostEnum__ type);    
+        void postCode(PostEnum_ type);    
                             // re-implement this function for code that must 
                             // be exec'ed after the rules's actions.
 };
@@ -42,14 +42,14 @@ inline void Scanner::preCode()
     // optionally replace by your own code
 }
 
-inline void Scanner::postCode(PostEnum__ type) 
+inline void Scanner::postCode(PostEnum_ type) 
 {
     // optionally replace by your own code
 }
 
 inline void Scanner::print() 
 {
-    print__();
+    print_();
 }
 
 

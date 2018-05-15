@@ -20,7 +20,7 @@ int Parser::lex()
     if (c == '.' || isdigit (c))    // if a digit char was found
     {
         cin.putback(c);        // return the character
-        cin >> d_val__.u_val;    // extract a number
+        cin >> d_val_.u_val;    // extract a number
         return NUM;                 // return the NUM token
     }
     
@@ -50,13 +50,13 @@ int Parser::lex()
                                 // Got it, so return FPTR 
     if (function != s_functions.end())  
     {
-        d_val__.u_fun = function->second;
+        d_val_.u_fun = function->second;
         return FNCT;
     }
                                 // no function, so return a VAR. Set
                                 // u_symbol to the symbol's address in the
                                 // d_symbol map. The map will add the
                                 // symbol if not yet there.
-    d_val__.u_symbol = &d_symbols[word];
+    d_val_.u_symbol = &d_symbols[word];
     return VAR;            
 }

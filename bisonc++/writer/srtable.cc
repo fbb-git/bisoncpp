@@ -21,7 +21,7 @@ void Writer::srTable(State const *sp, FBB::Table &table, std::ostream &out)
 
 
     out << "\n"                     // Write the table header
-        "SR__ " << s_threadConst << "s_" << sp->idx() << "[] =\n"
+        "SR_ " << s_threadConst << "s_" << sp->idx() << "[] =\n"
         "{\n";
 
     table.clear();
@@ -38,7 +38,7 @@ void Writer::srTable(State const *sp, FBB::Table &table, std::ostream &out)
     transitions(table, sp->next());
 
     if (acceptState)
-        table << Rules::eofTerminal() << "ACCEPT__" << def;
+        table << Rules::eofTerminal() << "ACCEPT_" << def;
 
     reductions(table, *sp);        
 

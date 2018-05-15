@@ -123,7 +123,7 @@ includefile(directives/intro.yo)
     lsubsect(UNION)(%union: using a 'union' to define multiple semantic values) 
     includefile(directives/union.yo)
 
-    subsect(%weak-tags: %polymorphic declaring 'enum Tag__')
+    subsect(%weak-tags: %polymorphic declaring 'enum Tag_')
     includefile(directives/weaktags.yo)
 
     subsect(Directives controlling the names of generated files)

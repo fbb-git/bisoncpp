@@ -26,7 +26,7 @@ specification language, allowing semantic values to have different data types.
     itemization(
     it() The tt(%union) directive (given in lines 1 through 6) allows semantic
 values to have various data types (see section ref(UNION)). It is used
-instead of tt(%stype), and defines tt(Parser::STYPE__) as a the union type:
+instead of tt(%stype), and defines tt(Parser::STYPE_) as a the union type:
 all semantic values now have this type. Now semantic values can have any of
 the types that are defined as the union's fields.
     it() The tt(%type) directive is used to associate (non)terminal tokens with

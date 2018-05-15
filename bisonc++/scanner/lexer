@@ -23,7 +23,7 @@ NR      [[:digit:]]+
 "{"         {
                     // open or count a nested a block 
                 d_block.open(lineNr(), filename()); 
-                begin(StartCondition__::block);
+                begin(StartCondition_::block);
             }
 
     //  The whitespace-eating RegExes (REs) will normally simply consume the
@@ -48,7 +48,7 @@ NR      [[:digit:]]+
     //  the scanner will return to its block-miniscanner state
 "/*"         {
                  d_commentChar[0] = ' ';
-                 begin(StartCondition__::comment);
+                 begin(StartCondition_::comment);
              }
 }
 
@@ -62,18 +62,18 @@ NR      [[:digit:]]+
     "}"         {
                     if (d_block.close())    // close a block
                     {
-                        begin(StartCondition__::INITIAL);
+                        begin(StartCondition_::INITIAL);
                         return Parser::BLOCK;
                     }
                 }
     
     "\""        {
-                    begin(StartCondition__::string);
+                    begin(StartCondition_::string);
                     more();
                 }
     
     "'"         {
-                    begin(StartCondition__::quote);
+                    begin(StartCondition_::quote);
                     more();
                 }
 
@@ -104,15 +104,15 @@ NR      [[:digit:]]+
 }
 
 %baseclass-header[ \t]+         {
-                                    begin(StartCondition__::pxstring);
+                                    begin(StartCondition_::pxstring);
                                     return Parser::BASECLASS_HEADER;
                                 }
 %baseclass-preinclude[ \t]+     {
-                                    begin(StartCondition__::pxstring);
+                                    begin(StartCondition_::pxstring);
                                     return Parser::BASECLASS_PREINCLUDE;
                                 }
 %class-header[ \t]+             {
-                                    begin(StartCondition__::pxstring);
+                                    begin(StartCondition_::pxstring);
                                     return Parser::CLASS_HEADER;
                                 }
 %class-name                     return Parser::CLASS_NAME;
@@ -122,23 +122,23 @@ NR      [[:digit:]]+
 %error-verbose                  return Parser::ERROR_VERBOSE;
 %expect                         return Parser::EXPECT;
 %filenames[ \t]+                {
-                                    begin(StartCondition__::pxstring);
+                                    begin(StartCondition_::pxstring);
                                     return Parser::FILENAMES;
                                 }
 "%flex"                         return Parser::FLEX;
 %implementation-header[ \t]+    {
-                                    begin(StartCondition__::pxstring);
+                                    begin(StartCondition_::pxstring);
                                     return Parser::IMPLEMENTATION_HEADER;
                                 }
 %include[ \t]+                  {
-                                    begin(StartCondition__::pxstring);
+                                    begin(StartCondition_::pxstring);
                                     d_include = true;
                                 }
 %left                           return Parser::LEFT;
 %locationstruct                 return Parser::LOCATIONSTRUCT;
 %lsp-needed                     return Parser::LSP_NEEDED;
 %ltype[ \t]+                    {
-                                    begin(StartCondition__::xstring);
+                                    begin(StartCondition_::xstring);
                                     return Parser::LTYPE;
                                 }
 %namespace                      return Parser::NAMESPACE;
@@ -146,7 +146,7 @@ NR      [[:digit:]]+
 %no-lines                       return Parser::NOLINES;
 %nonassoc                       return Parser::NONASSOC;
 %parsefun-source[ \t]+          {
-                                    begin(StartCondition__::pxstring);
+                                    begin(StartCondition_::pxstring);
                                     return Parser::PARSEFUN_SOURCE;
                                 }
 %polymorphic                    return Parser::POLYMORPHIC;
@@ -156,31 +156,31 @@ NR      [[:digit:]]+
 %required-tokens                return Parser::REQUIRED;
 %right                          return Parser::RIGHT;
 %scanner[ \t]+                  {
-                                    begin(StartCondition__::pxstring);
+                                    begin(StartCondition_::pxstring);
                                     return Parser::SCANNER;
                                 }
 %scanner-class-name[ \t]+       {
-                                    begin(StartCondition__::pxstring);
+                                    begin(StartCondition_::pxstring);
                                     return Parser::SCANNER_CLASS_NAME;
                                 }
 %scanner-token-function[ \t]+   {
-                                    begin(StartCondition__::pxstring);
+                                    begin(StartCondition_::pxstring);
                                     return Parser::SCANNER_TOKEN_FUNCTION;
                                 }
 %scanner-matched-text-function[ \t]+ {
-                                    begin(StartCondition__::pxstring);
+                                    begin(StartCondition_::pxstring);
                                     return 
                                         Parser::SCANNER_MATCHED_TEXT_FUNCTION;
                                 }
 %stack-expansion[ \t]+          return Parser::STACK_EXPANSION;
 %start                          return Parser::START;
 %stype[ \t]+                    {
-                                    begin(StartCondition__::xstring);
+                                    begin(StartCondition_::xstring);
                                     return Parser::STYPE;
                                 }
 %tag-mismatches                 return Parser::WARN_TAGS;
 %target-directory[ \t]+         {
-                                    begin(StartCondition__::pxstring);
+                                    begin(StartCondition_::pxstring);
                                     return Parser::TARGET_DIRECTORY;
                                 }
 %thread-safe                    return Parser::THREAD_SAFE;
@@ -191,12 +191,12 @@ NR      [[:digit:]]+
 "%%"                            return Parser::TWO_PERCENTS;
 
 "'"                             {
-                                    begin(StartCondition__::quote);
+                                    begin(StartCondition_::quote);
                                     more();
                                 }
 
 "\""                            {
-                                    begin(StartCondition__::string);
+                                    begin(StartCondition_::string);
                                     more();
                                 }
 
@@ -214,15 +214,15 @@ NR      [[:digit:]]+
 <pxstring>{
     "\""    {
                 more();
-                begin(StartCondition__::string);
+                begin(StartCondition_::string);
             }
     "<"     {
                 more();
-                begin(StartCondition__::pstring);
+                begin(StartCondition_::pstring);
             }
     .       {
                 accept(0);
-                begin(StartCondition__::xstring);
+                begin(StartCondition_::xstring);
             }
     \n      return eoln();
 }
@@ -281,11 +281,11 @@ NR      [[:digit:]]+
                     }
 "*/"               {
                        if (!d_block)
-                           begin(StartCondition__::INITIAL);
+                           begin(StartCondition_::INITIAL);
                        else
                        {
                            d_block += d_commentChar;
-                           begin(StartCondition__::block);
+                           begin(StartCondition_::block);
                        }
                    }
 }
@@ -300,10 +300,10 @@ NR      [[:digit:]]+
                      
 "\\"[abfnrtv]"'"     {
                          if (d_block(d_matched))
-                             begin(StartCondition__::block);
+                             begin(StartCondition_::block);
                          else
                          {
-                             begin(StartCondition__::INITIAL);
+                             begin(StartCondition_::INITIAL);
                              escape();       // quoted escape char
                              return Parser::QUOTE;
                          }
@@ -326,12 +326,12 @@ NR      [[:digit:]]+
 
     "//".*          // ignore EOLN comment
 
-    "/*"            begin(StartCondition__::typecomment);
+    "/*"            begin(StartCondition_::typecomment);
     
     [;%]            returnTypeSpec();   // back to INITIAL, returns IDENTIFIER
 }
 
 <typecomment>{
     .|\n            // ignored
-    "*/"            begin(StartCondition__::typespec);
+    "*/"            begin(StartCondition_::typespec);
 }

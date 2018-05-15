@@ -1,5 +1,5 @@
 The tt(%union) directive is used to specify a union of semantic value types.
-Although each semantic value type can be used for each tt(STYPE__) variable,
+Although each semantic value type can be used for each tt(STYPE_) variable,
 (non)terminals are in practice associated with a single type. These
 associations are automatically applied through b()'s  dollar-notations.
 

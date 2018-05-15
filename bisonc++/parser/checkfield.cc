@@ -13,7 +13,7 @@ void Parser::checkField(std::string const &field)
         case POLYMORPHIC:
             if 
             (
-                field != s_stype        // STYPE__ is OK
+                field != s_stype        // STYPE_ is OK
                 &&
                 d_polymorphic.find(field) == d_polymorphic.end()
             )

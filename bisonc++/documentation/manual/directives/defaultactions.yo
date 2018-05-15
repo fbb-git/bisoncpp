@@ -50,9 +50,9 @@ action block is added to the production rule.
     it() If no type is associated with the rule then no default action block
         is added if no type was associated with the production rule's first
         element either; otherwise an error is issued.
-    it() If the rule's type is tt(STYPE__) then, if no type is associated
+    it() If the rule's type is tt(STYPE_) then, if no type is associated
         with the production rule's first element it is initialized to
-        tt(STYPE__); otherwise it is initialized with the first element's
+        tt(STYPE_); otherwise it is initialized with the first element's
         semantic value.
     it() If the rule is associated with a polymorphic tag then, if the same
         tag was associated with production rule's first element it is

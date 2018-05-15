@@ -19,5 +19,5 @@ tt(%stype, %union) and tt(%polymorphic) are mutually exclusive: only one
 of these directives can be used.  
 
 Sources including the generated parser class header file should refer to the
-semantic value typename as bf(STYPE__).
+semantic value typename as bf(STYPE_).
 

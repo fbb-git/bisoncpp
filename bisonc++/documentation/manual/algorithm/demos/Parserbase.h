@@ -15,7 +15,7 @@
 
 namespace // anonymous
 {
-    struct PI__;
+    struct PI_;
 }
 
 
@@ -25,63 +25,63 @@ class ParserBase
 // $insert tokens
 
     // Symbolic tokens:
-    enum Tokens__
+    enum Tokens_
     {
         ID = 257,
         UNARY,
     };
 
 // $insert STYPE
-typedef int STYPE__;
+typedef int STYPE_;
 
     private:
-        int d_stackIdx__;
-        std::vector<size_t>   d_stateStack__;
-        std::vector<STYPE__>  d_valueStack__;
+        int d_stackIdx_;
+        std::vector<size_t>   d_stateStack_;
+        std::vector<STYPE_>  d_valueStack_;
 
     protected:
-        enum Return__
+        enum Return_
         {
-            PARSE_ACCEPT__ = 0,   // values used as parse()'s return values
-            PARSE_ABORT__  = 1
+            PARSE_ACCEPT_ = 0,   // values used as parse()'s return values
+            PARSE_ABORT_  = 1
         };
-        enum ErrorRecovery__
+        enum ErrorRecovery_
         {
-            DEFAULT_RECOVERY_MODE__,
-            UNEXPECTED_TOKEN__,
+            DEFAULT_RECOVERY_MODE_,
+            UNEXPECTED_TOKEN_,
         };
-        bool        d_debug__;
-        size_t      d_nErrors__;
-        size_t      d_requiredTokens__;
-        size_t      d_acceptedTokens__;
-        int         d_token__;
-        int         d_nextToken__;
-        size_t      d_state__;
-        STYPE__    *d_vsp__;
-        STYPE__     d_val__;
-        STYPE__     d_nextVal__;
+        bool        d_debug_;
+        size_t      d_nErrors_;
+        size_t      d_requiredTokens_;
+        size_t      d_acceptedTokens_;
+        int         d_token_;
+        int         d_nextToken_;
+        size_t      d_state_;
+        STYPE_    *d_vsp_;
+        STYPE_     d_val_;
+        STYPE_     d_nextVal_;
 
         ParserBase();
 
 // $insert debugdecl
-        static std::ostringstream s_out__;
+        static std::ostringstream s_out_;
 
-        std::string symbol__(int value) const;
-        std::string stype__(char const *pre, STYPE__ const &semVal,
+        std::string symbol_(int value) const;
+        std::string stype_(char const *pre, STYPE_ const &semVal,
                             char const *post = "") const;
-        static std::ostream &dflush__(std::ostream &out);
+        static std::ostream &dflush_(std::ostream &out);
         void ABORT() const;
         void ACCEPT() const;
         void ERROR() const;
         void clearin();
         bool debug() const;
-        void pop__(size_t count = 1);
-        void push__(size_t nextState);
-        void popToken__();
-        void pushToken__(int token);
-        void reduce__(PI__ const &productionInfo);
-        void errorVerbose__();
-        size_t top__() const;
+        void pop_(size_t count = 1);
+        void push_(size_t nextState);
+        void popToken_();
+        void pushToken_(int token);
+        void reduce_(PI_ const &productionInfo);
+        void errorVerbose_();
+        size_t top_() const;
 
     public:
         void setDebug(bool mode);
@@ -89,36 +89,36 @@ typedef int STYPE__;
 
 inline bool ParserBase::debug() const
 {
-    return d_debug__;
+    return d_debug_;
 }
 
 inline void ParserBase::setDebug(bool mode)
 {
-    d_debug__ = mode;
+    d_debug_ = mode;
 }
 
 inline void ParserBase::ABORT() const
 {
     // $insert debug
-    if (d_debug__)
-        s_out__ <<  "ABORT(): Parsing unsuccessful" << "\n" << dflush__;
-    throw PARSE_ABORT__;
+    if (d_debug_)
+        s_out_ <<  "ABORT(): Parsing unsuccessful" << "\n" << dflush_;
+    throw PARSE_ABORT_;
 }
 
 inline void ParserBase::ACCEPT() const
 {
     // $insert debug
-    if (d_debug__)
-        s_out__ <<  "ACCEPT(): Parsing successful" << "\n" << dflush__;
-    throw PARSE_ACCEPT__;
+    if (d_debug_)
+        s_out_ <<  "ACCEPT(): Parsing successful" << "\n" << dflush_;
+    throw PARSE_ACCEPT_;
 }
 
 inline void ParserBase::ERROR() const
 {
     // $insert debug
-    if (d_debug__)
-        s_out__ <<  "ERROR(): Forced error condition" << "\n" << dflush__;
-    throw UNEXPECTED_TOKEN__;
+    if (d_debug_)
+        s_out_ <<  "ERROR(): Forced error condition" << "\n" << dflush_;
+    throw UNEXPECTED_TOKEN_;
 }
 
 

@@ -1,10 +1,10 @@
 The tt(%polymorphic) directive is used to specify a series of semantic value
 types. (Non)terminals can be associated with exactly one of these types, or
-with the generic tt(STYPE__) semantic value type. When the latter type is used
-either another tt(STYPE__) value can be assigned to it, or a value of one of
+with the generic tt(STYPE_) semantic value type. When the latter type is used
+either another tt(STYPE_) value can be assigned to it, or a value of one of
 the defined polymorphic value types can be assigned to it.  At any time an
-tt(STYPE__) can only hold one single value type. Polymorphic semantic types
-are type safe: types cannot be confused. Furthermore, as tt(STYPE__) objects
+tt(STYPE_) can only hold one single value type. Polymorphic semantic types
+are type safe: types cannot be confused. Furthermore, as tt(STYPE_) objects
 are responsible for their own memory management, memory leaks cannot occur,
 assuming that the different semantic value types do not leak.
 

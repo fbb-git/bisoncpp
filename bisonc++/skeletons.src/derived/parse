@@ -3,7 +3,7 @@ try
 {
     // The parsing algorithm:
     // Initially, state 0 is pushed on the stack, and all relevant variables
-    // are initialized by Base::clearin__.
+    // are initialized by Base::clearin_.
     //
     // Then, in an eternal loop:
     //
@@ -24,17 +24,17 @@ try
     //     default reduction.
 
 $insert 4 debug "parse(): Parsing starts"
-    clearin__();                            // initialize, push(0)
+    clearin_();                            // initialize, push(0)
 
     while (true)
     {
 $insert prompt
-        nextCycle__();
+        nextCycle_();
     }
 }
-catch (Return__ retValue)
+catch (Return_ retValue)
 {
-$insert 4 debug "parse(): returns " << retValue << " or " << d_nErrors__ 
-    return retValue or d_nErrors__;
+$insert 4 debug "parse(): returns " << retValue << " or " << d_nErrors_ 
+    return retValue or d_nErrors_;
 }
 

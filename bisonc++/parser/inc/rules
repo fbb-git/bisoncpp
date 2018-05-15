@@ -30,7 +30,7 @@ _productionElement:
     _precSpec
     {
         setPrecedence($2);
-        $$ = STYPE__{};
+        $$ = STYPE_{};
     }
 ;
 

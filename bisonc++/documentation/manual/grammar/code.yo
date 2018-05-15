@@ -4,27 +4,27 @@ templates; most are defined in tt(parserbase.h); an occasional implementation
 is added to the tt(parse.cc) source file.
 
 To minimize namespace pollution most of the extra code is contained in a
-namespace of its own: tt(Meta__). If the tt(%namespace) directive was used
-then tt(Meta__) is nested under the namespace declared by that directive. The
-name tt(Meta__) provides a hint to the fact that much of the code implementing
+namespace of its own: tt(Meta_). If the tt(%namespace) directive was used
+then tt(Meta_) is nested under the namespace declared by that directive. The
+name tt(Meta_) provides a hint to the fact that much of the code implementing
 polymorphic semantic values uses template meta programming.
 
-bf(The enumeration 'enum class Tag__')
+bf(The enumeration 'enum class Tag_')
 
-One notable exception to the above is the enumeration tt(Tag__). To simplify
-its use it is declared outside of tt(Meta__) (but inside the tt(%namespace)
+One notable exception to the above is the enumeration tt(Tag_). To simplify
+its use it is declared outside of tt(Meta_) (but inside the tt(%namespace)
 namespace, if specified). Its tags are declared at the tt(%polymorphic)
-directive. tt(Targs__) is a strongly typed enumeration. The tt(%weak-tags)
-directive can be used to declare a pre C++-11 standard `tt(enum Tag__)'.
+directive. tt(Targs_) is a strongly typed enumeration. The tt(%weak-tags)
+directive can be used to declare a pre C++-11 standard `tt(enum Tag_)'.
 
-bf(The namespace Meta__)
+bf(The namespace Meta_)
 
 Below, tt(DataType) refers to the semantic value's data type that is
-associated with a tt(Tag__) identifier.
+associated with a tt(Tag_) identifier.
 
-Several classes are defined in the namespace tt(Meta__). The most important
+Several classes are defined in the namespace tt(Meta_). The most important
 class is tt(SType), providing the interface to the semantic value
-types. The class tt(SType) becomes the parser's tt(STYPE__) type. Each
+types. The class tt(SType) becomes the parser's tt(STYPE_) type. Each
 tt(SType) object is either a default tt(SType) object, not containing a
 semantic value, or it contains a semantic value of a single tt(DataType).  All
 operations related to semantic values are handled by this class.

@@ -1,4 +1,4 @@
-inline bool \@Base::recovery__() const
+inline bool \@Base::recovery_() const
 {
     return d_recovery;
 }

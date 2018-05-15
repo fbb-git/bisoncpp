@@ -9,10 +9,10 @@ R"(
             const_cast<SType *>(this)->assign<tg>();
         else
         {
-            std::cerr << "[Fatal] calling `.get<Tag__::" << 
-                idOfTag__[static_cast<int>(tg)] << 
+            std::cerr << "[Fatal] calling `.get<Tag_::" << 
+                idOfTag_[static_cast<int>(tg)] << 
                 ">()', but Tag " <<
-                idOfTag__[static_cast<int>(tag())] << " is encountered. Try "
+                idOfTag_[static_cast<int>(tag())] << " is encountered. Try "
                 "option --debug and call setDebug(Parser::ACTIONCASES)\n";
             throw 1;        // ABORTs
         }

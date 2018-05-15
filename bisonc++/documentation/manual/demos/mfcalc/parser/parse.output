@@ -29,7 +29,7 @@ State 0
               Lookahead set { <EOF> }
 
     All production rules (using dot == 0) of:
-      input   Lookahead set { errTok__ NUM VAR FNCT '-' '\n' '(' <EOF> }
+      input   Lookahead set { errTok_ NUM VAR FNCT '-' '\n' '(' <EOF> }
 
     on input:    shift, and go to state 1
 
@@ -42,13 +42,13 @@ State 1
               Lookahead set { <EOF> }
 
     input -> input  . line   (rule 2)
-              Lookahead set { errTok__ NUM VAR FNCT '-' '\n' '(' <EOF> }
+              Lookahead set { errTok_ NUM VAR FNCT '-' '\n' '(' <EOF> }
 
     All production rules (using dot == 0) of:
       exp     Lookahead set { '-' '+' '*' '/' '^' '\n' }
-      line    Lookahead set { errTok__ NUM VAR FNCT '-' '\n' '(' <EOF> }
+      line    Lookahead set { errTok_ NUM VAR FNCT '-' '\n' '(' <EOF> }
 
-    on errTok__:  shift, and go to state 2
+    on errTok_:  shift, and go to state 2
     on NUM:      shift, and go to state 3
     on VAR:      shift, and go to state 4
     on FNCT:     shift, and go to state 5
@@ -58,10 +58,10 @@ State 1
     on exp:      shift, and go to state 6
     on line:     shift, and go to state 8
 
-State 2 (inherited terminal: errTok__)
+State 2 (inherited terminal: errTok_)
 
-    line -> errTok__  . '\n'   (rule 5)
-              Lookahead set { errTok__ NUM VAR FNCT '-' '\n' '(' <EOF> }
+    line -> errTok_  . '\n'   (rule 5)
+              Lookahead set { errTok_ NUM VAR FNCT '-' '\n' '(' <EOF> }
 
     on '\n':     shift, and go to state 11
 
@@ -112,7 +112,7 @@ State 6
               Lookahead set { '-' '+' '*' '/' '^' '\n' }
 
     line -> exp  . '\n'   (rule 4)
-              Lookahead set { errTok__ NUM VAR FNCT '-' '\n' '(' <EOF> }
+              Lookahead set { errTok_ NUM VAR FNCT '-' '\n' '(' <EOF> }
 
     on '-':      shift, and go to state 14
     on '+':      shift, and go to state 15
@@ -139,7 +139,7 @@ State 7 (inherited terminal: '-')
 State 8
 
     input -> input line  .   (rule 2)
-              Lookahead set { errTok__ NUM VAR FNCT '-' '\n' '(' <EOF> }
+              Lookahead set { errTok_ NUM VAR FNCT '-' '\n' '(' <EOF> }
 
 
     _default_:   reduce, using production
@@ -148,7 +148,7 @@ State 8
 State 9 (inherited terminal: '\n')
 
     line -> '\n'  .   (rule 3)
-              Lookahead set { errTok__ NUM VAR FNCT '-' '\n' '(' <EOF> }
+              Lookahead set { errTok_ NUM VAR FNCT '-' '\n' '(' <EOF> }
 
 
     _default_:   reduce, using production
@@ -171,8 +171,8 @@ State 10 (inherited terminal: '(')
 
 State 11 (inherited terminal: '\n')
 
-    line -> errTok__ '\n'  .   (rule 5)
-              Lookahead set { errTok__ NUM VAR FNCT '-' '\n' '(' <EOF> }
+    line -> errTok_ '\n'  .   (rule 5)
+              Lookahead set { errTok_ NUM VAR FNCT '-' '\n' '(' <EOF> }
 
 
     _default_:   reduce, using production
@@ -286,7 +286,7 @@ State 18 (inherited terminal: '^')
 State 19 (inherited terminal: '\n')
 
     line -> exp '\n'  .   (rule 4)
-              Lookahead set { errTok__ NUM VAR FNCT '-' '\n' '(' <EOF> }
+              Lookahead set { errTok_ NUM VAR FNCT '-' '\n' '(' <EOF> }
 
 
     _default_:   reduce, using production

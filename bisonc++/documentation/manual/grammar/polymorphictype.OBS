@@ -35,7 +35,7 @@ block in which it is used. Likewise, $-1 constructions refer to values of
 elements of production rules that are specified before the current rule's
 nonterminal, and in theory any negative number could be used.
 
-The term `value of' indicates the generic tt(STYPE__) value of an
+The term `value of' indicates the generic tt(STYPE_) value of an
 element. When a rule element is associated with a polymorphic type, then the
 term `semantic value of' is used.
 
@@ -51,7 +51,7 @@ equals $$'s semantic value type. If the types don't match the compiler issues
 a compilation error when compiling tt(parse.cc). Casting the rhs to the
 correct value type is possible, but in that case the function call operator is
 preferred, which does not require casting. If no semantic value type was
-associated with $$ then the assignment tt($$ = STYPE__{}) can be used.
+associated with $$ then the assignment tt($$ = STYPE_{}) can be used.
 
     itt($$(expr))
 
@@ -62,7 +62,7 @@ tt(expr).
 
     itt(_$$)
 
-    This refers to the rule's return value (i.e., tt(d_val__)). No allowance
+    This refers to the rule's return value (i.e., tt(d_val_)). No allowance
 is made for associated types.
 
     itt($$)
@@ -95,7 +95,7 @@ production rule's first element. No allowance is made for associated types.
 
     This construction refers to the semantic value of the production rule's
 first element. If no semantic value was associated with $1 then this is
-shorthand for the tt(STYPE__) value that's available for the production rule's
+shorthand for the tt(STYPE_) value that's available for the production rule's
 element 1.  If a semantic value was associated with $1 then $1 refers to the
 semantic value associated with the production rule's element 1.
 
@@ -197,7 +197,7 @@ includefile(polytablenotes)
 bf(Direct semantic value assignments) (`$$(args)'):
 
     Production rules associated with polymorphic tags and production rules
-associated with tt(%type <STYPE__>) should assign values of matching types to
+associated with tt(%type <STYPE_>) should assign values of matching types to
 the rules' semantic values. If a matching value type is available from a
 production rule's component it can directly be used to assign the semantic
 value of the rule's left-hand side nonterminal. E.g., $$ = $1 returns the
@@ -217,9 +217,9 @@ production rule:
         )
     In such cases the appropriate semantic value must be initialized. 
 
-Bic() translates phrases like tt($$ = xyz) into tt(d_val__.get<tag>() =
+Bic() translates phrases like tt($$ = xyz) into tt(d_val_.get<tag>() =
 xyz) (where tt(tag) is the production rule's left-hand side nonterminal's
-polymorphic tag, and tt(d_val__) (see below) is the parser's data member
+polymorphic tag, and tt(d_val_) (see below) is the parser's data member
 containing the action block's semantic value). The function tt(get) returns a
 reference to a value of the type matching tt(tag), but that value isn't
 available yet: in this case it is the action block's duty to initialize it.
@@ -234,30 +234,30 @@ tt($$) and the open-parenthesis). tt(Args) are at least one, comma-separated
 arguments. For tagged nonterminals bic() translates a tt($$(args))
 expression into
         verb(
-    d_val__.assign<tag>(args).
+    d_val_.assign<tag>(args).
         )
     where `tt(tag)' is the tag associated with the production rule's left-hand
 side nonterminal. For nonterminals that are associated with a
-tt(%type<STYPE__>) specification only one argument can be passed to
+tt(%type<STYPE_>) specification only one argument can be passed to
 tt($$(arg)), which translates to
         verb(
-    d_val__ = (arg);
+    d_val_ = (arg);
         )
     The tt($$(args)) syntax cannot be used for untagged production rules.
 
-If a nonterminal is associated with tt(%type<STYPE__>) and its production
+If a nonterminal is associated with tt(%type<STYPE_>) and its production
 rule calls a function returning a value of a known tagged type, then an
 explicit tt(assign) call can be used. E.g.,
         verb(
     Symbol useSymbol();             // available function
 
     %polymorphic SYMBOL: Symbol;    // directives
-    %type<STYPE__> rule
+    %type<STYPE_> rule
     
     rule:                           // grammar rule
         IDENTIFIER
         {
-            $$.assign<Tag__::SYMBOL>(useSymbol());
+            $$.assign<Tag_::SYMBOL>(useSymbol());
         }
     ;
         
@@ -265,15 +265,15 @@ bf(Member calls) (`$$.', `$1.', `($$)', `($1)', etc.):)
 
     When `$$.' or `$1.' is used default tags are ignored. A warning is issued
 that the default tag is ignored. This syntax allows members of the semantic
-value type (tt(STYPE__)) to be called explicitly. The default tag is only
+value type (tt(STYPE_)) to be called explicitly. The default tag is only
 ignored if there are no additional characters (e.g., blanks, closing
 parentheses) between the dollar-expressions and the member selector operator
 (e.g., no tags are used with $1.member(), but tags are used with
 tt(($1).member())). In fact, notations like tt(($$), ($1)), etc. are synonym
-to using tt($$.get<Tag__::TYPE>(), $1.get<Tag__::TYPE>())
+to using tt($$.get<Tag_::TYPE>(), $1.get<Tag_::TYPE>())
 
 The opposite, overriding default tag associations, is
-accomplished using constructions like $<STYPE__>$ and $<STYPE__>1.
+accomplished using constructions like $<STYPE_>$ and $<STYPE_>1.
 
 When negative dollar indices are used, the appropriate tag must explicitly be
 specified. The next example shows how this is realized in the grammar
@@ -289,7 +289,7 @@ specification file itself:
     
     arg:
         {
-            call($-1.get<Tag__::INT>());
+            call($-1.get<Tag_::INT>());
         }
     ;
         )
@@ -314,24 +314,24 @@ function tt(call) itself, as shown next:
         )
     Here, the function tt(call) could be implemented like this:
         verb(
-    void call(STYPE__ &st)
+    void call(STYPE_ &st)
     {
-        st.get<Tag__::INT>() = 5;
+        st.get<Tag_::INT>() = 5;
     }
         )
 
 Semantic values may also directly be associated with terminal tokens. In that
 case it is the lexical scanner's responsibility to assign a properly typed
-value to the parser's tt(STYPE__ d_val__) data member. When the lexical
-scanner receives a pointer to the parser's tt(d_val__) data member (using,
-e.g., a member tt(setSval(STYPE__ *dval)))
+value to the parser's tt(STYPE_ d_val_) data member. When the lexical
+scanner receives a pointer to the parser's tt(d_val_) data member (using,
+e.g., a member tt(setSval(STYPE_ *dval)))
     IFDEF(manual)((cf. section ref(PRIVDATA)))(), 
 then the lecical scanner must use em(tagged assignment) as shown in the above
 example to reach the different polymorphic types. The lexical scanner, having
-defined a tt(Parser::STYPE__ *d_val) data member could then use statements
+defined a tt(Parser::STYPE_ *d_val) data member could then use statements
 like
         verb(
-    d_val.assign<Tag__::INT>(stoi(matched()));
+    d_val.assign<Tag_::INT>(stoi(matched()));
         )
     to assign an tt(int) value to the parser's semantic value, which is then
 available to the parser when the lexical scanner's tt(lex) function returns as

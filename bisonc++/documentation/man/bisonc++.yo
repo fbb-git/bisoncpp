@@ -171,7 +171,7 @@ modifications:
 default implementation is provided in the parser's internal header file. The
 current implementation directly inserts the text tt(Syntax error) into the
 standard output stream;
-    itt(void exceptionHandler__(std::exception const &exc)) was changed to
+    itt(void exceptionHandler_(std::exception const &exc)) was changed to
 tt(void exceptionHandler(std::exception const &exc)). A
 default implementation is provided in the parser's internal header file, and
 only its trailing underscore characters need to be removed;
@@ -180,7 +180,7 @@ previously generated parser class;
     it() The following members are declared without two trailing underscore
 characters in the generated parser class. Two underscore characters should
 be added to their identifiers: tt(executeAction, errorRecovery, nextToken).
-    it() The member tt(void nextCycle__()) must be declared in the private
+    it() The member tt(void nextCycle_()) must be declared in the private
 section of the generated parser class.
     )
 
@@ -189,8 +189,8 @@ accessible to the parser class. Bic() version 6.00.00 restricts access to
 those members.  They can still be read, but no longer modified by the parser
 class. This applies to the following members:
         itemization(
-    itt(d_token__): use tt(int token__()) instead;
-    itt(d_state__): use tt(size_t state__()) instead;
+    itt(d_token_): use tt(int token_()) instead;
+    itt(d_state_): use tt(size_t state_()) instead;
         )
 
 manpagesection(OPTIONS)
@@ -290,10 +290,10 @@ manpagesection(FILES)
         was specified.
     it() bf(debugfunctions1.in): skeleton defining the members declared in
         tt(debugdecl.in).
-    it() bf(debugfunctions2.in): skeleton implementing tt(symbol__), which is
+    it() bf(debugfunctions2.in): skeleton implementing tt(symbol_), which is
         only needed when the tt(print-tokens) option or directive was
         specified. 
-    it() bf(debugfunctions3.in): skeleton implementing tt(errorVerbose__),
+    it() bf(debugfunctions3.in): skeleton implementing tt(errorVerbose_),
         which is only needed when the tt(error-verbose) option or directive was
         specified.
     it() bf(debugincludes.in): skeleton specifying the header files
@@ -305,7 +305,7 @@ manpagesection(FILES)
     it() bf(lex.in): skeleton implementing the tt(Parser::lex) function.
     it() bf(ltypedata.in): skeleton declaring the location variables
     it() bf(ltype.in): skeleton defining the default or user defined
-        tt(LTYPE__).
+        tt(LTYPE_).
     it() bf(print.in): skeleton implementing the actions of tt(Parser::print)
         if the tt(print-tokens) option or directive was specified.
     )

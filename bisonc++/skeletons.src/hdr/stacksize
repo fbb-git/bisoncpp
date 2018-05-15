@@ -1,4 +1,4 @@
-inline size_t \@Base::stackSize__() const
+inline size_t \@Base::stackSize_() const
 {
     return d_stackIdx + 1;
 }

@@ -12,7 +12,7 @@
 
 namespace // anonymous
 {
-    struct PI__;
+    struct PI_;
 }
 
 
@@ -20,7 +20,7 @@ namespace // anonymous
 class ParserBase
 {
     public:
-        enum DebugMode__
+        enum DebugMode_
         {
             OFF           = 0,
             ON            = 1 << 0,
@@ -30,7 +30,7 @@ class ParserBase
 // $insert tokens
 
     // Symbolic tokens:
-    enum Tokens__
+    enum Tokens_
     {
         NUMBER = 257,
         EOLN,
@@ -38,47 +38,47 @@ class ParserBase
     };
 
 // $insert STYPE
-typedef int STYPE__;
+typedef int STYPE_;
 
     private:
                         // state  semval
-        typedef std::pair<size_t, STYPE__> StatePair;
+        typedef std::pair<size_t, STYPE_> StatePair;
                        // token   semval
-        typedef std::pair<int,    STYPE__> TokenPair;
+        typedef std::pair<int,    STYPE_> TokenPair;
 
         int d_stackIdx = -1;
         std::vector<StatePair> d_stateStack;
 
 
     protected:
-        enum Return__
+        enum Return_
         {
-            PARSE_ACCEPT__ = 0,   // values used as parse()'s return values
-            PARSE_ABORT__  = 1
+            PARSE_ACCEPT_ = 0,   // values used as parse()'s return values
+            PARSE_ABORT_  = 1
         };
-        enum ErrorRecovery__
+        enum ErrorRecovery_
         {
-            DEFAULT_RECOVERY_MODE__,
-            UNEXPECTED_TOKEN__,
+            DEFAULT_RECOVERY_MODE_,
+            UNEXPECTED_TOKEN_,
         };
 
-        bool        d_actionCases__ = false;    // set by options/directives
-        bool        d_debug__ = true;
-        size_t      d_requiredTokens__;
+        bool        d_actionCases_ = false;    // set by options/directives
+        bool        d_debug_ = true;
+        size_t      d_requiredTokens_;
 
-        size_t      d_nErrors__;                // initialized by clearin()
-        size_t      d_acceptedTokens__;
-        int         d_token__;
-        size_t      d_state__;
+        size_t      d_nErrors_;                // initialized by clearin()
+        size_t      d_acceptedTokens_;
+        int         d_token_;
+        size_t      d_state_;
 
-        StatePair *d_vsp__;           // points to the topmost value stack
+        StatePair *d_vsp_;           // points to the topmost value stack
 
-        STYPE__     d_val__;
+        STYPE_     d_val_;
 
-        TokenPair   d_next__;
+        TokenPair   d_next_;
 
-        bool        d_terminalToken__;
-        bool        d_recovery__;
+        bool        d_terminalToken_;
+        bool        d_recovery_;
 
 
         ParserBase();
@@ -88,68 +88,68 @@ typedef int STYPE__;
         void ERROR() const;
         bool debug() const;
 
-        void clearin__();
-        int  lookup__() const;
-        void pop__(size_t count = 1);
-        void push__(size_t nextState);
-        void popToken__();
-        void pushToken__(int token);
-        void redoToken__();
-        void reduce__(int rule);
-        void shift__(int state);
-        void errorVerbose__();
-        size_t top__() const;
-        STYPE__ &vs__(int idx);             // value stack element idx 
+        void clearin_();
+        int  lookup_() const;
+        void pop_(size_t count = 1);
+        void push_(size_t nextState);
+        void popToken_();
+        void pushToken_(int token);
+        void redoToken_();
+        void reduce_(int rule);
+        void shift_(int state);
+        void errorVerbose_();
+        size_t top_() const;
+        STYPE_ &vs_(int idx);             // value stack element idx 
 
     public:
         void setDebug(bool mode);
-        void setDebug(DebugMode__ mode);
+        void setDebug(DebugMode_ mode);
 }; 
 
 // hdr/abort
 inline void ParserBase::ABORT() const
 {
-    throw PARSE_ABORT__;
+    throw PARSE_ABORT_;
 }
 
 // hdr/accept
 inline void ParserBase::ACCEPT() const
 {
-    throw PARSE_ACCEPT__;
+    throw PARSE_ACCEPT_;
 }
 
 
 // hdr/debug
 inline bool ParserBase::debug() const
 {
-    return d_debug__;
+    return d_debug_;
 }
 
 // hdr/error
 inline void ParserBase::ERROR() const
 {
-    throw UNEXPECTED_TOKEN__;
+    throw UNEXPECTED_TOKEN_;
 }
 
 // hdr/opbitand
-inline ParserBase::DebugMode__ operator&(ParserBase::DebugMode__ lhs,
-                                     ParserBase::DebugMode__ rhs)
+inline ParserBase::DebugMode_ operator&(ParserBase::DebugMode_ lhs,
+                                     ParserBase::DebugMode_ rhs)
 {
-    return static_cast<ParserBase::DebugMode__>(
+    return static_cast<ParserBase::DebugMode_>(
             static_cast<int>(lhs) & rhs);
 }
 
 // hdr/opbitor
-inline ParserBase::DebugMode__ operator|(ParserBase::DebugMode__ lhs, 
-                                     ParserBase::DebugMode__ rhs)
+inline ParserBase::DebugMode_ operator|(ParserBase::DebugMode_ lhs, 
+                                     ParserBase::DebugMode_ rhs)
 {
-    return static_cast<ParserBase::DebugMode__>(static_cast<int>(lhs) | rhs);
+    return static_cast<ParserBase::DebugMode_>(static_cast<int>(lhs) | rhs);
 };
 
 // hdr/vs
-inline ParserBase::STYPE__ &ParserBase::vs__(int idx) 
+inline ParserBase::STYPE_ &ParserBase::vs_(int idx) 
 {
-    return (d_vsp__ + idx)->second;
+    return (d_vsp_ + idx)->second;
 }
 
 // hdr/tail

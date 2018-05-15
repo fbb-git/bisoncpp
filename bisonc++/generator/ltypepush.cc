@@ -7,6 +7,6 @@ void Generator::ltypePush(ostream &out) const
 
     key(out);
 
-    out << "*(d_lsp = &d_locationStack[d_stackIdx]) = d_loc__;\n";
+    out << "*(d_lsp = &d_locationStack[d_stackIdx]) = d_loc_;\n";
 }
 

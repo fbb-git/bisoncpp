@@ -1,10 +1,10 @@
-void \@Base::reduce__(int rule)
+void \@Base::reduce_(int rule)
 {
-    PI__ const &pi = s_productionInfo[rule];
+    PI_ const &pi = s_productionInfo[rule];
 
     d_token = pi.d_nonTerm;
-$insert 4 debug "rule " << (&pi - s_productionInfo) << ": pop " << pi.d_size << " elements. Next will be: [" << d_stateStack[d_stackIdx - pi.d_size].first << ", " << symbol__(d_token) << ']'
-    pop__(pi.d_size);
+$insert 4 debug "rule " << (&pi - s_productionInfo) << ": pop " << pi.d_size << " elements. Next will be: [" << d_stateStack[d_stackIdx - pi.d_size].first << ", " << symbol_(d_token) << ']'
+    pop_(pi.d_size);
 
     d_terminalToken = false;
 }

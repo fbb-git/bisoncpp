@@ -1,4 +1,4 @@
-enum class Tag__    
+enum class Tag_    
 
     defines the tags that are associated with the various semantic value
     types. Examples of tags:
@@ -6,26 +6,26 @@ enum class Tag__
         VECTOR,
         TEXTTYPE,
 
-namespace Meta__
+namespace Meta_
 
     1. defines struct templates TagOf that, when provided with the actual data
-       types, provide the associated Tag__ as
+       types, provide the associated Tag_ as
             TagOf<data-type>::tag
        Example:
 
         template <>
         struct TagOf<FlexTypes::TextType>
         {
-            static Tag__ const tag = Tag__::TEXTTYPE;
+            static Tag_ const tag = Tag_::TEXTTYPE;
         };
 
     2. defines struct templates TypeOf that, when provided with a tag,
        provides the associated data type as 
-            typename TypeOf<Tag__>::type
+            typename TypeOf<Tag_>::type
        Example:
 
         template <>
-        struct TypeOf<Tag__::VECTOR>
+        struct TypeOf<Tag_::VECTOR>
         {
             typedef std::vector<std::string> type;
         };
@@ -41,19 +41,19 @@ to offsets.
 Class organization and inner working of polymorphic values
 ==========================================================
 
-    During a short time interval the Meta__ class Base implemented polymorphic
+    During a short time interval the Meta_ class Base implemented polymorphic
 behavior without using virtual members. Although this is possible, it also
 results in a somewhat artificial implementation, as C++ offers a clean
 definition and implentation of polymorphism. Therefore, shortly after
 releasing bisonc++ 5.00.00 bisonc++ now generates a standard polymorphic
-implementation of the class Meta__::Base.
+implementation of the class Meta_::Base.
 
-The class Meta__::Base has the following interface:
+The class Meta_::Base has the following interface:
 
     class Base
     {
         protected:
-            Tag__ d_baseTag;    // The tag is assigned by Semantic.
+            Tag_ d_baseTag;    // The tag is assigned by Semantic.
     
         public:
             Base();
@@ -61,7 +61,7 @@ The class Meta__::Base has the following interface:
     
             virtual ~Base();
     
-            Tag__ tag() const;
+            Tag_ tag() const;
             Base *clone() const;
             void *data() const;        
     
@@ -70,11 +70,11 @@ The class Meta__::Base has the following interface:
             virtual Base *vClone() const;
     };
 
-Base is used as Semantic<Tag__> class template's base class, where the various
+Base is used as Semantic<Tag_> class template's base class, where the various
 semantic value types are distinguished by their associated
-Tags. Semantic<Tag__>'s interface is:
+Tags. Semantic<Tag_>'s interface is:
 
-    template <Tag__ tg_>
+    template <Tag_ tg_>
     class Semantic: public Base
     {
         typedef typename TypeOf<tg_>::type SemType;
@@ -92,7 +92,7 @@ Tags. Semantic<Tag__>'s interface is:
             void *vData() const override;
     };
 
-Semantic<Tag__> implementations implement a wrapper class around the various
+Semantic<Tag_> implementations implement a wrapper class around the various
 semantic values. Each instantiation offers a SemType semantic value data type
 (explicitly defined here to simplify references to it) and a SemType d_data
 member.
@@ -103,11 +103,11 @@ Semantic(Params)'s constructor, perfectly forwarding its arguments to d_data's
 constructor. 
 
 
-The generated parser's STYPE__ is the class Meta__::SType. It is a wrapper
+The generated parser's STYPE_ is the class Meta_::SType. It is a wrapper
 aound a Base *d_base data member. The d_base pointer either points to a plain
 Base object (not offering any usable data, but simplifying SType's
 implementation somewhat because tests for 0-pointers can be omitted) ) or to a
-Semantic<Tag__> object, containing an associated SemType value. Meta__::SType
+Semantic<Tag_> object, containing an associated SemType value. Meta_::SType
 offers this interface:
 
     class SType
@@ -130,16 +130,16 @@ offers this interface:
             template <typename Type>
             SType &operator=(Type const &value);
     
-            template <Tag__ tag, typename ...Args>
+            template <Tag_ tag, typename ...Args>
             void assign(Args &&...args);
         
-            template <Tag__ tag>
+            template <Tag_ tag>
             typename TypeOf<tag>::type &get();
     
-            template <Tag__ tag>
+            template <Tag_ tag>
             typename TypeOf<tag>::type const &get() const;
     
-            Tag__ tag() const;
+            Tag_ tag() const;
     
             bool valid() const;
     
@@ -151,20 +151,20 @@ objects can be constructed by default (initializing d_base to point to a Base
 object), from an existing SType object, or from an existing SemType object, in
 which case d_base will point to a new, copy constructed SemType. In the latter
 case Type must be a defined polymorphic semantic type, as this allows the
-compiler to deduct the correct Tag__. If raw arguments are available from
+compiler to deduct the correct Tag_. If raw arguments are available from
 which a SemType can be constructed the assign member can be used, which
-requires an explicit Tag__ template value argument.
+requires an explicit Tag_ template value argument.
 
 The two get members call the same Base::data member. This member calls the
 virtual member vData, returning the SemType value stored in the
-Semantic<Tag__> object to where d_base points, or throwing an
+Semantic<Tag_> object to where d_base points, or throwing an
 exception. Once the SType object goes out of scope it calls delete d_base,
 destroying the object to where d_base points. 
 
 
 
     // The class SType wraps a pointer to Base.  It becomes the polymorphic
-    // STYPE__ type It also defines a get member, allowing constructions like
+    // STYPE_ type It also defines a get member, allowing constructions like
     // $$.get<INT> to be used.  Instantiations of its operator= member
     // template are used to assign semantic values to the SType object.
 

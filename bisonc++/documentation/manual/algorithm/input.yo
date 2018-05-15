@@ -23,28 +23,28 @@ to the parser: they are private data structures defined in the parser's base
 class. The parsing member tt(parse()) may use the following member functions
 to manipulate these stacks:
     itemization(
-    itt(push__(stateIdx)) pushes tt(stateIdx) on the state stack and pushes
-the current semantic value (i.e., tt(LTYPE_ d_val__)) on the value stack;
-    itt(pop__(size_t count = 1)) removes tt(count) elements from the two
+    itt(push_(stateIdx)) pushes tt(stateIdx) on the state stack and pushes
+the current semantic value (i.e., tt(LTYPE_ d_val_)) on the value stack;
+    itt(pop_(size_t count = 1)) removes tt(count) elements from the two
 stacks;
-    itt(top__()) returns the state currently on top of the state stack;
+    itt(top_()) returns the state currently on top of the state stack;
     )
 
 Apart from the state- and semantic stacks, the S/R algorithm itself sometimes
 needs to push a token on a two-element stack. Rather than using a formal
-stack, two variables (tt(d_token__) and tt(d_nextToken__)) are used to
-implement this little token-stack. The member function tt(pushToken__())
-pushes a new value on the token stack, the member tt(popToken__())
+stack, two variables (tt(d_token_) and tt(d_nextToken_)) are used to
+implement this little token-stack. The member function tt(pushToken_())
+pushes a new value on the token stack, the member tt(popToken_())
 pops a previously pushed value from the token stack. At any time,
-tt(d_token__) contains the topmost element of the token stack.
+tt(d_token_) contains the topmost element of the token stack.
 
 The member tt(nextToken()) determines the next token to be processed. If the
 token stack contains a value it is returned. Otherwise, tt(lex()) is called to
 obtain the next token to be pushed on the token stack.
 
 The member tt(lookup()) looks up the current token in the current state's
-tt(SR__) table. For this a simple linear search algorithm is used. If
-searching fails to find an action for the token an tt(UNEXPECTED_TOKEN__)
+tt(SR_) table. For this a simple linear search algorithm is used. If
+searching fails to find an action for the token an tt(UNEXPECTED_TOKEN_)
 exception is thrown, which starts the error recovery. If an action was found, 
 it is returned.
 
@@ -71,7 +71,7 @@ action;
     it() If a shifting action was called for  the next state is pushed on
 the stack and the token is popped off the token stack.
     it() If a reduction was called for that rule's action block is executed
-followed by a reduction of the production rule (performed by tt(reduce__())):
+followed by a reduction of the production rule (performed by tt(reduce_())):
 the semantic and state stacks are reduced by the number of elements found in
 that production rule, and the production rule's LHS is pushed on the token
 stack

@@ -22,7 +22,7 @@ class Parser: public ParserBase
     public:
         Parser()
         :
-            d_scanner(&d_loc__, &d_val__)
+            d_scanner(&d_loc_, &d_val_)
         {}
         
         int parse();
@@ -34,11 +34,11 @@ class Parser: public ParserBase
         void print();                   // use, e.g., d_token, d_loc
 
     // support functions for parse():
-        void executeAction__(int ruleNr);
-        void errorRecovery__();
-        void nextToken__();
-        void nextCycle__();
-        void print__();
+        void executeAction_(int ruleNr);
+        void errorRecovery_();
+        void nextToken_();
+        void nextCycle_();
+        void print_();
 };
 
 inline void Parser::error()
@@ -54,7 +54,7 @@ inline int Parser::lex()
 
 inline void Parser::print()         
 {
-    print__();           // displays tokens if --print was specified
+    print_();           // displays tokens if --print was specified
 }
 
 

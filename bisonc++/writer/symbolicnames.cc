@@ -8,11 +8,11 @@ void Writer::symbolicNames() const
         "\n"
         "SMapVal s_symArr[] =\n"
         "{\n"
-             // Reserved__::UNDETERMINED__ is also used in generator/print.cc
-        "    SMapVal(-2, \"Reserved__::UNDETERMINED__\"),  "
+             // Reserved_::UNDETERMINED_ is also used in generator/print.cc
+        "    SMapVal(-2, \"Reserved_::UNDETERMINED_\"),  "
                                                     "// predefined symbols\n"
-        "    SMapVal(-1, \"Reserved__::EOF__\"),\n"
-        "    SMapVal(256, \"errTok__\"),\n"
+        "    SMapVal(-1, \"Reserved_::EOF_\"),\n"
+        "    SMapVal(256, \"errTok_\"),\n"
         "\n";
 
     for (auto terminal: d_rules.terminals())

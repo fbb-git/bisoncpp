@@ -18,7 +18,7 @@ and
        can be used for all polymorphic semantic value types. tt(Type) must
         (maybe after casting) exactly match one of the defined polymorphic
         semantic types, because tt(Type) is used to determine the appropriate
-        tt(Meta__::Tag__) value.
+        tt(Meta_::Tag_) value.
 
         When tt(operator=(Type const &value)) is used, the left-hand side
         tt(SType) object receives a copy of tt(value); when tt(operator=(Type
@@ -26,36 +26,36 @@ and
         tt(SType) object;
 
     it() tt(void assign<tag>(Args &&...args)) 
-       The tt(tag) template argument must be a tt(Tag__) value. This member
+       The tt(tag) template argument must be a tt(Tag_) value. This member
         function constructs a semantic value of the type matching tt(tag) from
         the arguments that are passed to this member (zero arguments are OK if
         the type associated with tt(tag) supports default construction). The
         constructed value (not a copy of this value) is then stored in the
-        tt(STYPE__) object for which tt(assign) has been called.
+        tt(STYPE_) object for which tt(assign) has been called.
 
-        As a tt(Meta__::Tag__) value must be specified when using tt(assign)
+        As a tt(Meta_::Tag_) value must be specified when using tt(assign)
         the compiler can use the explicit tag to convert tt(assign's) arguments
         to an tt(SType) object of the type matching the specified tag.
 
         The member tt(assign) can be used to store a specific polymorphic
-        semantic value in an tt(STYPE__) object. It differs from the set of
+        semantic value in an tt(STYPE_) object. It differs from the set of
         tt(operator=(Type)) members in that tt(assign) accepts multiple
         arguments to construct the requested tt(SType) value from, whereas the
         tt(operator=) members only accept single arguments of defined
         polymorphic types.
     
-        To initialize an tt(STYPE__) object with a default tt(STYPE__) value,
-        direct assignment can be used (e.g., tt(d_lval__ = STYPE__{})).
+        To initialize an tt(STYPE_) object with a default tt(STYPE_) value,
+        direct assignment can be used (e.g., tt(d_lval_ = STYPE_{})).
 
     it() tt(DataType &get<tag>()), and tt(DataType const &get<tag>() const)
        These members return references to the object's semantic values. The
-        tt(tag) must be a tt(Tag__) value: its specification tells the
+        tt(tag) must be a tt(Tag_) value: its specification tells the
         compiler which semantic value type it must use.
  
         When the option/directive tt(tag-mismatches on) was specified then
         tt(get), when called from the generated tt(parse) function, performs a
         run-time check to confirm that the specified tag corresponds to
-        object's actual tt(Tag__) value. If a mismatch is observed, then the
+        object's actual tt(Tag_) value. If a mismatch is observed, then the
         parsing function aborts with a fatal error message. When 
         shorthand notations (like tt($$) and tt($1)) are used in production
         rules' action blocks, then bic() can determine the correct tt(tag),
@@ -75,21 +75,21 @@ and
         program reports the fatal error tells you in which of the grammar's
         action block the error was encountered.
 
-    it() tt(Tag__ tag() const)
+    it() tt(Tag_ tag() const)
        The tag matching the semantic value's polymorphic type is returned. The
-        returned value is a valid tt(Tag__) value when the tt(SType) object's
+        returned value is a valid tt(Tag_) value when the tt(SType) object's
         tt(valid) member returns tt(true);
 
-       By default, or after assigning a plain (default) tt(STYPE__) object to
-        an tt(STYPE__) object (e.g., using a statement like tt($$ =
-        STYPE__{})), tt(valid) returns tt(false), and the tt(tag) member
-        returns tt(Meta__::sizeofTag__).
+       By default, or after assigning a plain (default) tt(STYPE_) object to
+        an tt(STYPE_) object (e.g., using a statement like tt($$ =
+        STYPE_{})), tt(valid) returns tt(false), and the tt(tag) member
+        returns tt(Meta_::sizeofTag_).
 
     it() tt(bool valid() const) 
 
         The value tt(true) is returned if the object contains a semantic
-        value. Otherwise tt(false) is returned. Note that default tt(STYPE__)
-        values can be assigned to tt(STYPE__) objects, but they do not
+        value. Otherwise tt(false) is returned. Note that default tt(STYPE_)
+        values can be assigned to tt(STYPE_) objects, but they do not
         represent valid semantic values. See also the previous description of
         the tt(tag) member.
    )

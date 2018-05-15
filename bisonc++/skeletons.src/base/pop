@@ -1,9 +1,9 @@
-void \@Base::pop__(size_t count)
+void \@Base::pop_(size_t count)
 {
-$insert 4 debug "pop " << count << " elements from the stack having size " << stackSize__()
+$insert 4 debug "pop " << count << " elements from the stack having size " << stackSize_()
     if (d_stackIdx < static_cast<int>(count))
     {
-$insert 8 debug "Terminating parse(): state stack underflow  at token " << symbol__(d_token)
+$insert 8 debug "Terminating parse(): state stack underflow  at token " << symbol_(d_token)
         ABORT();
     }
 
@@ -12,5 +12,5 @@ $insert 8 debug "Terminating parse(): state stack underflow  at token " << symbo
     d_vsp = &d_stateStack[d_stackIdx];
 
 $insert 4 LTYPEpop
-$insert 4 debug "next: [" << state__() << ", " << symbol__(d_token) << ']' << stype__(". Semantic: ", vs__(0))
+$insert 4 debug "next: [" << state_() << ", " << symbol_(d_token) << ']' << stype_(". Semantic: ", vs_(0))
 }
