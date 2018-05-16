@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<title> <div style="text-align: center"><strong >Bisonc++</strong> (Version 6.01.03) User Guide</div> </title>
+<title> <div style="text-align: center"><strong >Bisonc++</strong> (Version 6.02.00) User Guide</div> </title>
 <style type="text/css">
     figure {text-align: center;}
     img {vertical-align: center;}
@@ -397,7 +397,7 @@ showing the actual parsing process on the standard output
 stream. 
 <p>
 When specified, debug output is shown by default, but its activity may be
-controlled using the <code >setDebug(bool on-off)</code> or <code >setDebug(DebugMode__)</code>
+controlled using the <code >setDebug(bool on-off)</code> or <code >setDebug(DebugMode_)</code>
 members. Note that no <code >#ifdef DEBUG</code> macros are used anymore. Rerun <strong >bisonc++</strong>
 without the <strong >--debug</strong> option to generate an equivalent parser not containing
 the debugging code.
@@ -456,9 +456,9 @@ action block is added to the production rule.
     <li> If no type is associated with the rule then no default action block
         is added if no type was associated with the production rule's first
         element either; otherwise an error is issued.
-    <li> If the rule's type is <code >STYPE__</code> then, if no type is associated
+    <li> If the rule's type is <code >STYPE_</code> then, if no type is associated
         with the production rule's first element it is initialized to
-        <code >STYPE__</code>; otherwise it is initialized with the first element's
+        <code >STYPE_</code>; otherwise it is initialized with the first element's
         semantic value.
     <li> If the rule is associated with a polymorphic tag then, if the same
         tag was associated with production rule's first element it is
@@ -592,11 +592,11 @@ symbolic tokens mentioned with these directives should not be defined using
 <h3 >4.5.10: %locationstruct: specifying a dedicated location struct</h3>
     Syntax: <strong >%locationstruct</strong> <code >struct-definition</code> 
 <p>
-Defines the organization of the location-struct data type <strong >LTYPE__</strong>. This
+Defines the organization of the location-struct data type <strong >LTYPE_</strong>. This
 struct should be specified analogously to the way the parser's stacktype is
 defined using <strong >%union</strong> (see below). The location struct type is named
-<strong >LTYPE__</strong>. If neither <strong >locationstruct</strong> nor <strong >LTYPE__</strong> is specified, the
-default <a href="bisonc++04.html#LSPNEEDED">LTYPE__</a> struct is used.
+<strong >LTYPE_</strong>. If neither <strong >locationstruct</strong> nor <strong >LTYPE_</strong> is specified, the
+default <a href="bisonc++04.html#LSPNEEDED">LTYPE_</a> struct is used.
 <p>
 <a name="LSPNEEDED"></a><a name="l30"></a>
 <h3 >4.5.11: %lsp-needed: using the default location type</h3>
@@ -607,7 +607,7 @@ generated parser class.  The standard location type (defined in the parser's
 base class) is equal to the following struct:
            <pre>
 
-    struct LTYPE__
+    struct LTYPE_
     {
         int timestamp;
         int first_line;
@@ -631,7 +631,7 @@ Specifies a user-defined token location type.  If <strong >%ltype</strong> is us
 <code >typename</code> should be the name of an alternate default-constructible type
 (e.g., <strong >size_t</strong>). It should not be used together with a
 <a href="bisonc++04.html#LOCSTRUCT">%locationstruct</a> specification. From inside the parser class,
-this type may be referred to as <strong >LTYPE__</strong>.
+this type may be referred to as <strong >LTYPE_</strong>.
 <p>
 Any text following <code >%ltype</code> up to the end of the line, up to the first
 of a series of trailing blanks or tabs or up to a comment-token (<code >//</code> or
@@ -663,7 +663,7 @@ Accept (do not generate warnings) zero- or negative dollar-indices in the
 grammar's action blocks. Zero or negative dollar-indices are commonly used to
 implement inherited attributes and should normally be avoided. When used they
 can be specified like <code >$-1</code>, or like <code >$&lt;type&gt;-1</code>, where <code >type</code> is an
-<code >STYPE__</code> tag; or a <code >%union</code> field-name. See also sections <a href="bisonc++04.html#ACTIONS">4.6.2</a>,
+<code >STYPE_</code> tag; or a <code >%union</code> field-name. See also sections <a href="bisonc++04.html#ACTIONS">4.6.2</a>,
 <a href="bisonc++05.html#SPECIAL">5.6</a>, and <a href="bisonc++04.html#POLYMORPHIC">4.6.1</a>.
 <p>
 <a name="l34"></a>
@@ -903,11 +903,11 @@ giving it its appropriate priority and associativity. E.g.,
     Syntax: <strong >%print-tokens</strong> 
 <p>
 The <code >%print-tokens</code> directive provides an implementation of the Parser
-class's <code >print__</code> function displaying the current token value and the text
+class's <code >print_</code> function displaying the current token value and the text
 matched by the lexical scanner as received by the generated <code >parse</code>
 function.
 <p>
-The <code >print__</code> function is also implemented if the <code >--print</code>
+The <code >print_</code> function is also implemented if the <code >--print</code>
 command-line option is provided.
 <p>
 <a name="l38"></a>
@@ -1063,7 +1063,7 @@ of a series of trailing blanks or tabs or up to a comment-token (<code >//</code
 of these directives can be used.  
 <p>
 Sources including the generated parser class header file should refer to the
-semantic value typename as <strong >STYPE__</strong>.
+semantic value typename as <strong >STYPE_</strong>.
 <p>
 <a name="l46"></a>
 <h3 >4.5.27: %tag-mismatches: check for tag-mismatches with polymorphic
@@ -1092,7 +1092,7 @@ grammar's action block the error was encountered.
 <p>
 Only used with polymorphic semantic values, and then only required when the
 same parser is used in multiple threads: it ensures that each thread's
-polymorphic code only accesses the errors counter (i.e., <code >d_nErrors__</code>) 
+polymorphic code only accesses the errors counter (i.e., <code >d_nErrors_</code>) 
 of its own parser.
 <p>
 Instead of using the <code >%thread-safe</code> directive the <code >--thread-safe</code> option
@@ -1134,7 +1134,7 @@ with identifiers that are defined in the parser's base class.
 <p>
 In particular, 
     <ul>
-    <li> no token should end in two underscores (<code >__</code>). 
+    <li> no token should end in an underscore (<code >_</code>). 
     <li> some identifiers are reserved and cannot be used as tokens. They are:
         <pre>
 
@@ -1171,7 +1171,7 @@ type specification.
 <p>
 When the semantic value type of a terminal symbol is defined the
 <em >lexical scanner</em> rather than the parser's actions must assign the
-appropriate semantic value to <a href="bisonc++05.html#DVAL">d_val__</a> just prior to returning the
+appropriate semantic value to <a href="bisonc++05.html#DVAL">d_val_</a> just prior to returning the
 token. To associate terminal symbols with semantic values, terminal symbols
 can also be specified in a <code >%type</code> directive.
 <p>
@@ -1229,20 +1229,20 @@ errors.
 of these directives can be used.  
 <p>
 <a name="l52"></a>
-<h3 >4.5.32: %weak-tags: %polymorphic declaring 'enum Tag__'</h3>
+<h3 >4.5.32: %weak-tags: %polymorphic declaring 'enum Tag_'</h3>
     Syntax: <strong >%weak-tags</strong>
 <p>
 By default, the <code >%polymorphic</code> directive declares a strongly typed enum:
-<code >enum class Tag__</code>, and code generated by <strong >bisonc++</strong> always uses the <code >Tag__</code>
+<code >enum class Tag_</code>, and code generated by <strong >bisonc++</strong> always uses the <code >Tag_</code>
 scope when referring to tag identifiers. It is often possible (by
 pre-associating tokens with tags, using <code >%type</code> directives) to avoid 
 the use of tags in user-code.
 <p>
-If tags <em >are</em> explicitly used, then they must be prefixed with the <code >Tag__</code>
+If tags <em >are</em> explicitly used, then they must be prefixed with the <code >Tag_</code>
 scope. Before the arrival of the C++-11 standard strongly typed enumerations
 didn't exist, and explicit enum-type scope prefixes were usually omitted.
 <p>
-The <code >%weak-tags</code> directive can be specified when the <code >Tag__</code> enum should
+The <code >%weak-tags</code> directive can be specified when the <code >Tag_</code> enum should
 <em >not</em> be declared as a strongly typed enum. This directive should not be
 used, unless you know what you're doing.
 <p>
@@ -1413,13 +1413,13 @@ the <em >type-definition</em>. Types specified at the <code >%polymorphic</code>
 type-definitions must be built-in types or class-type declarations. Since
 <strong >bisonc++</strong> version 4.12.00 the types no longer have to be default-constructible.
 <p>
-As the parser's generic semantic value type is called <code >STYPE__</code>, and as
-functions called by the parser may return <code >STYPE__</code> values and may expect
-<code >STYPE__</code> arguments, grammar symbols can also be associated with the generic
-<code >STYPE__</code> semantic type using <code >%type &lt;STYPE__&gt;</code> directives.
+As the parser's generic semantic value type is called <code >STYPE_</code>, and as
+functions called by the parser may return <code >STYPE_</code> values and may expect
+<code >STYPE_</code> arguments, grammar symbols can also be associated with the generic
+<code >STYPE_</code> semantic type using <code >%type &lt;STYPE_&gt;</code> directives.
 <p>
-To prevent ambiguities the generic <code >STYPE__</code> type cannot be specified as a
-polymorphic type. E.g., a specification like <code >GENERIC: STYPE__</code> cannot be
+To prevent ambiguities the generic <code >STYPE_</code> type cannot be specified as a
+polymorphic type. E.g., a specification like <code >GENERIC: STYPE_</code> cannot be
 used when defining the tag/type pairs at the <code >%polymorphic</code>
 directive.                
 <p>
@@ -1436,27 +1436,27 @@ templates; most are defined in <code >parserbase.h</code>; an occasional impleme
 is added to the <code >parse.cc</code> source file.
 <p>
 To minimize namespace pollution most of the extra code is contained in a
-namespace of its own: <code >Meta__</code>. If the <code >%namespace</code> directive was used
-then <code >Meta__</code> is nested under the namespace declared by that directive. The
-name <code >Meta__</code> provides a hint to the fact that much of the code implementing
+namespace of its own: <code >Meta_</code>. If the <code >%namespace</code> directive was used
+then <code >Meta_</code> is nested under the namespace declared by that directive. The
+name <code >Meta_</code> provides a hint to the fact that much of the code implementing
 polymorphic semantic values uses template meta programming.
 <p>
-<strong >The enumeration 'enum class Tag__'</strong>
+<strong >The enumeration 'enum class Tag_'</strong>
 <p>
-One notable exception to the above is the enumeration <code >Tag__</code>. To simplify
-its use it is declared outside of <code >Meta__</code> (but inside the <code >%namespace</code>
+One notable exception to the above is the enumeration <code >Tag_</code>. To simplify
+its use it is declared outside of <code >Meta_</code> (but inside the <code >%namespace</code>
 namespace, if specified). Its tags are declared at the <code >%polymorphic</code>
-directive. <code >Targs__</code> is a strongly typed enumeration. The <code >%weak-tags</code>
-directive can be used to declare a pre C++-11 standard `<code >enum Tag__</code>'.
+directive. <code >Targs_</code> is a strongly typed enumeration. The <code >%weak-tags</code>
+directive can be used to declare a pre C++-11 standard `<code >enum Tag_</code>'.
 <p>
-<strong >The namespace Meta__</strong>
+<strong >The namespace Meta_</strong>
 <p>
 Below, <code >DataType</code> refers to the semantic value's data type that is
-associated with a <code >Tag__</code> identifier.
+associated with a <code >Tag_</code> identifier.
 <p>
-Several classes are defined in the namespace <code >Meta__</code>. The most important
+Several classes are defined in the namespace <code >Meta_</code>. The most important
 class is <code >SType</code>, providing the interface to the semantic value
-types. The class <code >SType</code> becomes the parser's <code >STYPE__</code> type. Each
+types. The class <code >SType</code> becomes the parser's <code >STYPE_</code> type. Each
 <code >SType</code> object is either a default <code >SType</code> object, not containing a
 semantic value, or it contains a semantic value of a single <code >DataType</code>.  All
 operations related to semantic values are handled by this class.
@@ -1486,7 +1486,7 @@ and
        can be used for all polymorphic semantic value types. <code >Type</code> must
         (maybe after casting) exactly match one of the defined polymorphic
         semantic types, because <code >Type</code> is used to determine the appropriate
-        <code >Meta__::Tag__</code> value.
+        <code >Meta_::Tag_</code> value.
 <p>
 When <code >operator=(Type const &amp;value)</code> is used, the left-hand side
         <code >SType</code> object receives a copy of <code >value</code>; when <code >operator=(Type
@@ -1494,36 +1494,36 @@ When <code >operator=(Type const &amp;value)</code> is used, the left-hand side
         <code >SType</code> object;
 <p>
 <li> <code >void assign&lt;tag&gt;(Args &amp;&amp;...args)</code> 
-       The <code >tag</code> template argument must be a <code >Tag__</code> value. This member
+       The <code >tag</code> template argument must be a <code >Tag_</code> value. This member
         function constructs a semantic value of the type matching <code >tag</code> from
         the arguments that are passed to this member (zero arguments are OK if
         the type associated with <code >tag</code> supports default construction). The
         constructed value (not a copy of this value) is then stored in the
-        <code >STYPE__</code> object for which <code >assign</code> has been called.
+        <code >STYPE_</code> object for which <code >assign</code> has been called.
 <p>
-As a <code >Meta__::Tag__</code> value must be specified when using <code >assign</code>
+As a <code >Meta_::Tag_</code> value must be specified when using <code >assign</code>
         the compiler can use the explicit tag to convert <code >assign's</code> arguments
         to an <code >SType</code> object of the type matching the specified tag.
 <p>
 The member <code >assign</code> can be used to store a specific polymorphic
-        semantic value in an <code >STYPE__</code> object. It differs from the set of
+        semantic value in an <code >STYPE_</code> object. It differs from the set of
         <code >operator=(Type)</code> members in that <code >assign</code> accepts multiple
         arguments to construct the requested <code >SType</code> value from, whereas the
         <code >operator=</code> members only accept single arguments of defined
         polymorphic types.
 <p>
-To initialize an <code >STYPE__</code> object with a default <code >STYPE__</code> value,
-        direct assignment can be used (e.g., <code >d_lval__ = STYPE__{}</code>).
+To initialize an <code >STYPE_</code> object with a default <code >STYPE_</code> value,
+        direct assignment can be used (e.g., <code >d_lval_ = STYPE_{}</code>).
 <p>
 <li> <code >DataType &amp;get&lt;tag&gt;()</code>, and <code >DataType const &amp;get&lt;tag&gt;() const</code>
        These members return references to the object's semantic values. The
-        <code >tag</code> must be a <code >Tag__</code> value: its specification tells the
+        <code >tag</code> must be a <code >Tag_</code> value: its specification tells the
         compiler which semantic value type it must use.
 <p>
 When the option/directive <code >tag-mismatches on</code> was specified then
         <code >get</code>, when called from the generated <code >parse</code> function, performs a
         run-time check to confirm that the specified tag corresponds to
-        object's actual <code >Tag__</code> value. If a mismatch is observed, then the
+        object's actual <code >Tag_</code> value. If a mismatch is observed, then the
         parsing function aborts with a fatal error message. When 
         shorthand notations (like <code >$$</code> and <code >$1</code>) are used in production
         rules' action blocks, then <strong >bisonc++</strong> can determine the correct <code >tag</code>,
@@ -1546,21 +1546,21 @@ Following this the case-entry numbers of the <code >switch</code> which is
         program reports the fatal error tells you in which of the grammar's
         action block the error was encountered.
 <p>
-<li> <code >Tag__ tag() const</code>
+<li> <code >Tag_ tag() const</code>
        The tag matching the semantic value's polymorphic type is returned. The
-        returned value is a valid <code >Tag__</code> value when the <code >SType</code> object's
+        returned value is a valid <code >Tag_</code> value when the <code >SType</code> object's
         <code >valid</code> member returns <code >true</code>;
 <p>
-By default, or after assigning a plain (default) <code >STYPE__</code> object to
-        an <code >STYPE__</code> object (e.g., using a statement like <code >$$ =
-        STYPE__{}</code>), <code >valid</code> returns <code >false</code>, and the <code >tag</code> member
-        returns <code >Meta__::sizeofTag__</code>.
+By default, or after assigning a plain (default) <code >STYPE_</code> object to
+        an <code >STYPE_</code> object (e.g., using a statement like <code >$$ =
+        STYPE_{}</code>), <code >valid</code> returns <code >false</code>, and the <code >tag</code> member
+        returns <code >Meta_::sizeofTag_</code>.
 <p>
 <li> <code >bool valid() const</code> 
 <p>
 The value <code >true</code> is returned if the object contains a semantic
-        value. Otherwise <code >false</code> is returned. Note that default <code >STYPE__</code>
-        values can be assigned to <code >STYPE__</code> objects, but they do not
+        value. Otherwise <code >false</code> is returned. Note that default <code >STYPE_</code>
+        values can be assigned to <code >STYPE_</code> objects, but they do not
         represent valid semantic values. See also the previous description of
         the <code >tag</code> member.
    </ul>
@@ -1578,12 +1578,12 @@ values.  Its <code >%polymorphic</code> directive looks like this:
     Furthermore, the grammar declares tokens <code >INT</code> and <code >IDENTIFIER</code>, and
 pre-associates the <code >TEXT</code> tag with the <code >identifier</code> nonterminal,
 associates the <code >INT</code> tag with the <code >int</code> nonterminal. The <code >combi</code>
-nonterminal is associated with the generic <code >STYPE__</code> semantic value type:
+nonterminal is associated with the generic <code >STYPE_</code> semantic value type:
         <pre>
 
     %type &lt;TEXT&gt;    identifier
     %type &lt;INT&gt;     int
-    %type &lt;STYPE__&gt; combi
+    %type &lt;STYPE_&gt; combi
         
 </pre>
 
@@ -1629,9 +1629,9 @@ These simple assignments can be used as <code >int</code> is pre-associated with
 The <code >combi</code> rule, which is used in one of the production rules of
 `<code >rule</code>', accepts a single <code >int</code> value, as well as an identifier. So it
 cannot be associated with a single polymorphic type. But as it is associated
-with the generic <code >STYPE__</code> type, it can pass on any polymorphic value. In
+with the generic <code >STYPE_</code> type, it can pass on any polymorphic value. In
 <code >rule's</code> production rule the generic semantic value is then simply passed on
-to <code >process</code>, expecting a plain <code >STYPE__ const &amp;</code>. The function
+to <code >process</code>, expecting a plain <code >STYPE_ const &amp;</code>. The function
 <code >process</code> has to inspect the semantic value's tag to learn what
 kind of value is stored inside the received semantic value. Here are the
 definition of the <code >combi</code> nonterminal and action blocks for the <code >rule</code>
@@ -1675,12 +1675,12 @@ semantic value's tag to select the proper way of handling the received
 semantic value. Here is its implementation:
         <pre>
 
-    void Parser::process(STYPE__ &amp;semVal) const
+    void Parser::process(STYPE_ &amp;semVal) const
     {
-        if (semVal.tag() == Tag__::INT)
-            cout &lt;&lt; "Saw an int-value: " &lt;&lt; semVal.get&lt;Tag__::INT&gt;() &lt;&lt; '\n';
+        if (semVal.tag() == Tag_::INT)
+            cout &lt;&lt; "Saw an int-value: " &lt;&lt; semVal.get&lt;Tag_::INT&gt;() &lt;&lt; '\n';
         else
-            cout &lt;&lt; "Saw text: " &lt;&lt; semVal.get&lt;Tag__::TEXT&gt;() &lt;&lt; '\n';
+            cout &lt;&lt; "Saw text: " &lt;&lt; semVal.get&lt;Tag_::TEXT&gt;() &lt;&lt; '\n';
     }
         
 </pre>
@@ -1830,7 +1830,7 @@ Here is the overview:
 <p>
 A value is assigned to the rule's nonterminal's semantic value. The
 right-hand side (rhs) of the assignment expression must be an expression of a
-type that can be assigned to the <code >STYPE__</code> type.
+type that can be assigned to the <code >STYPE_</code> type.
 <p>
 <li><code >$$(expr)</code>
 <p>
@@ -1848,13 +1848,13 @@ nonterminal.
 <p>
 <li><code >$$.</code>
 <p>
-If <code >STYPE__</code> is a class-type then this dollar-notation is shorthand
+If <code >STYPE_</code> is a class-type then this dollar-notation is shorthand
 for the member selector operator, applied to the rule's nonterminal's semantic
 value.
 <p>
 <li><code >$$-&gt;</code>
 <p>
-If <code >STYPE__</code> is a class-type then this dollar-notation is shorthand
+If <code >STYPE_</code> is a class-type then this dollar-notation is shorthand
 for the pointer to member operator, applied to the rule's nonterminal's
 semantic value.
 <p>
@@ -1870,13 +1870,13 @@ current production rule's first component's semantic value.
 <p>
 <li><code >$1.</code>
 <p>
-If <code >STYPE__</code> is a class-type then this dollar-notation is shorthand
+If <code >STYPE_</code> is a class-type then this dollar-notation is shorthand
 for the member selector operator, applied to the current production rule's
 first component's semantic value.
 <p>
 <li><code >$1-&gt;</code>
 <p>
-If <code >STYPE__</code> is a class-type then this dollar-notation is shorthand
+If <code >STYPE_</code> is a class-type then this dollar-notation is shorthand
 for the pointer to member operator, applied to the current production rule's
 first component's semantic value.
 <p>
@@ -1894,14 +1894,14 @@ nonterminal.
 <p>
 <li><code >$-1.</code>
 <p>
-If <code >STYPE__</code> is a class-type then this dollar-notation is shorthand
+If <code >STYPE_</code> is a class-type then this dollar-notation is shorthand
 for the member selector operator, applied to the semantic value
 of some production rule element, 1 element before the current rule's
 nonterminal.
 <p>
 <li><code >$-1-&gt;</code>
 <p>
-If <code >STYPE__</code> is a class-type then this dollar-notation is shorthand
+If <code >STYPE_</code> is a class-type then this dollar-notation is shorthand
 for the pointer to member operator, applied to the semantic value
 of some production rule element, 1 element before the current rule's
 nonterminal.
@@ -1910,7 +1910,7 @@ nonterminal.
 <a name="l68"></a>
 <h4 >4.6.2.2: %union shorthand notations</h4>
         The <code >%union</code> directive is used to specify a union of semantic value types.
-Although each semantic value type can be used for each <code >STYPE__</code> variable,
+Although each semantic value type can be used for each <code >STYPE_</code> variable,
 (non)terminals are in practice associated with a single type. These
 associations are automatically applied through <strong >bisonc++</strong>'s  dollar-notations.
 <p>
@@ -1928,11 +1928,11 @@ numbered dollar references can also be used.
 <h4 >4.6.2.3: %polymorphic shorthand notations</h4>
         The <code >%polymorphic</code> directive is used to specify a series of semantic value
 types. (Non)terminals can be associated with exactly one of these types, or
-with the generic <code >STYPE__</code> semantic value type. When the latter type is used
-either another <code >STYPE__</code> value can be assigned to it, or a value of one of
+with the generic <code >STYPE_</code> semantic value type. When the latter type is used
+either another <code >STYPE_</code> value can be assigned to it, or a value of one of
 the defined polymorphic value types can be assigned to it.  At any time an
-<code >STYPE__</code> can only hold one single value type. Polymorphic semantic types
-are type safe: types cannot be confused. Furthermore, as <code >STYPE__</code> objects
+<code >STYPE_</code> can only hold one single value type. Polymorphic semantic types
+are type safe: types cannot be confused. Furthermore, as <code >STYPE_</code> objects
 are responsible for their own memory management, memory leaks cannot occur,
 assuming that the different semantic value types do not leak.
 <p>
@@ -1952,7 +1952,7 @@ type. If the types don't match the compiler issues a compilation error when
 compiling <code >parse.cc</code>. Casting the rhs to the correct value type is possible,
 but in that case the function call operator (see the next item) is preferred,
 as it does not require casting. If no semantic value type was associated with
-$$ then the assignment <code >$$ = STYPE__{}</code> can be used.
+$$ then the assignment <code >$$ = STYPE_{}</code> can be used.
 <p>
 <li><code >$$(expr)</code>
 <p>
@@ -1969,7 +1969,7 @@ polymorphic type that might have been associated with the rule's nonterminal.
 <li><code >$$</code>
 <p>
 If no polymorphic type was associated with the rule's nonterminal then
-this is shorthand for a reference to the rule's plain <code >STYPE__</code> value. If a
+this is shorthand for a reference to the rule's plain <code >STYPE_</code> value. If a
 polymorphic value type was associated with the rule's nonterminal then this
 shorthand represents a reference to a value of that particular type.
 <p>
@@ -1977,7 +1977,7 @@ shorthand represents a reference to a value of that particular type.
 <p>
 If no polymorphic type was associated with the rule's nonterminal then
 this is shorthand for the member selector operator, applied to a reference to
-the rule's nonterminal's <code >STYPE__</code> value.  If a polymorphic value type was
+the rule's nonterminal's <code >STYPE_</code> value.  If a polymorphic value type was
 associated with the rule's nonterminal then this shorthand represents the
 member selector operator, applied to a reference of that particular type.
 <p>
@@ -1985,21 +1985,21 @@ member selector operator, applied to a reference of that particular type.
 <p>
 If no polymorphic type was associated with the rule's nonterminal then
 this is shorthand for the pointer to member operator, applied to a reference
-to the rule's nonterminal's <code >STYPE__</code> value.  If a polymorphic value type
+to the rule's nonterminal's <code >STYPE_</code> value.  If a polymorphic value type
 was associated with the rule's nonterminal then this shorthand represents the
 pointer to member operator, applied to a reference of that particular type.
 <p>
 <li><code >_$1</code>
 <p>
 This refers to the current production rule's first component's generic
-<code >STYPE__</code> value.
+<code >STYPE_</code> value.
 <p>
 <li><code >$1</code>
 <p>
 This shorthand refers to the semantic value of the production rule's
 first element. If it was associated with a polymorphic type, then <code >$1</code>
 refers to a value of that particular type. If no association was defined then
-<code >$1</code> represents a generic <code >STYPE__</code> value.
+<code >$1</code> represents a generic <code >STYPE_</code> value.
 <p>
 <li><code >$1.</code>
 <p>
@@ -2007,7 +2007,7 @@ If the production rule's first component's semantic value was associated
 with a polymorphic type, then <code >$1.</code> is shorthand for the member selector
 operator, applied to the value of the associated polymorphic type. If no
 association was defined then <code >$1.</code> is shorthand for the member selector
-operator, applied to the first component's generic <code >STYPE__</code> value.
+operator, applied to the first component's generic <code >STYPE_</code> value.
 <p>
 <li><code >$1-&gt;</code>
 <p>
@@ -2015,30 +2015,30 @@ If the production rule's first component's semantic value was associated
 with a polymorphic type, then <code >$1-&gt;</code> is shorthand for the pointer to member 
 operator, applied to the value of the associated polymorphic type. If no
 association was defined then <code >$1.</code> is shorthand for the pointer to member 
-operator, applied to the first component's generic <code >STYPE__</code> value.
+operator, applied to the first component's generic <code >STYPE_</code> value.
 <p>
 <li><code >_$-1</code>
 <p>
-This refers to the generic (<code >STYPE__</code>) value of a component in a
+This refers to the generic (<code >STYPE_</code>) value of a component in a
 production rule, listed immediately before the current rule's nonterminal ($-2
 refers to a component used two elements before the current nonterminal, etc.).
 <p>
 <li><code >$-1</code>
 <p>
-Same: this refers to the generic (<code >STYPE__</code>) value of a component in a
+Same: this refers to the generic (<code >STYPE_</code>) value of a component in a
 production rule, listed immediately before the current rule's nonterminal ($-2
 refers to a component used two elements before the current nonterminal, etc.).
 <p>
 <li><code >$-1.</code>
 <p>
 This is shorthand for the member selector operator applied to to the
-generic <code >STYPE__</code> value of some production rule element, 1 element before
+generic <code >STYPE_</code> value of some production rule element, 1 element before
 the current rule's nonterminal.
 <p>
 <li><code >$-1-&gt;</code>
 <p>
 This is shorthand for the pointer to member operator applied to to the
-generic <code >STYPE__</code> value of some production rule element, 1 element before
+generic <code >STYPE_</code> value of some production rule element, 1 element before
 the current rule's nonterminal.
 <p>
 <li><code >$&lt;tag&gt;-1</code>

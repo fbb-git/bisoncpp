@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<title> <div style="text-align: center"><strong >Bisonc++</strong> (Version 6.01.03) User Guide</div> </title>
+<title> <div style="text-align: center"><strong >Bisonc++</strong> (Version 6.02.00) User Guide</div> </title>
 <style type="text/css">
     figure {text-align: center;}
     img {vertical-align: center;}
@@ -310,7 +310,7 @@ a <strong >C++</strong> enumeration. In the current example, therefore, <code >N
 enumeration value, returned by the <code >lex</code> member as the `value' <code >NUM</code>.
 <p>
 Semantic values of nonterminals are stored in the parser's data member
-<code >d_val__</code> (comparable to the variable <code >yylval</code> used by, e.g., Bison). This
+<code >d_val_</code> (comparable to the variable <code >yylval</code> used by, e.g., Bison). This
 data member has <code >int</code> as its default type, but by specifying <code >%stype</code> in
 the grammar file's directive section this default type is modified (to, e.g.,
 <code >double</code>).
@@ -343,7 +343,7 @@ int Parser::lex()
     if (c == '.' || isdigit(c))     // if a digit char was found
     {
         std::cin.putback(c);        // return the character
-        std::cin &gt;&gt; d_val__;        // extract a number
+        std::cin &gt;&gt; d_val_;        // extract a number
         return NUM;                 // return the NUM token
     }
 
@@ -706,7 +706,7 @@ specification language, allowing semantic values to have different data types.
     <ul>
     <li> The <code >%union</code> directive (given in lines 1 through 6) allows semantic
 values to have various data types (see section <a href="bisonc++04.html#UNION">4.5.31</a>). It is used
-instead of <code >%stype</code>, and defines <code >Parser::STYPE__</code> as a the union type:
+instead of <code >%stype</code>, and defines <code >Parser::STYPE_</code> as a the union type:
 all semantic values now have this type. Now semantic values can have any of
 the types that are defined as the union's fields.
     <li> The <code >%type</code> directive is used to associate (non)terminal tokens with
@@ -906,7 +906,7 @@ The parser's <code >lex</code> member has these characteristics:
     <li> If the first non-blank character is a dot or number, a number is
         extracted from the standard input. Since the semantic value data
         member of <code >mfcalc</code>'s parser (<code >d_val</code>) is itself also a <code >union</code>,
-        the numerical value can be extracted into <code >d_val__.u_val</code>, and a
+        the numerical value can be extracted into <code >d_val_.u_val</code>, and a
         <code >NUM</code> token can be returned.
     <li> If the first non-blank character is not a letter, then a
         single-character token was received and the character's value is
@@ -914,12 +914,12 @@ The parser's <code >lex</code> member has these characteristics:
     <li> Otherwise the read character is a letter. This character and all
         subsequent alpha-numeric characters are extracted to construct the
         name of an identifier. Then this identifier is searched for in the
-        <code >s_functions</code> map. If found, <code >d_val__.u_fun</code> is given the function's
+        <code >s_functions</code> map. If found, <code >d_val_.u_fun</code> is given the function's
         address, found as the value of the <code >s_functions</code> map element
         corresponding to the read identifier, and token <code >FNCT</code> is returned.
         If the symbol is not found in <code >s_functions</code> the address of the
         value ofn <code >d_symbols</code> associated with the received identifier is
-        assigned to <code >d_val__.u_symbol</code> and token <code >VAR</code> is returned. Note
+        assigned to <code >d_val_.u_symbol</code> and token <code >VAR</code> is returned. Note
         that this automatically defines newly used variables, since
         <code >d_symbols[name]</code> automatically inserts a new element in a map if
         <code >d_symbol[name]</code> wasn't already there.
@@ -948,7 +948,7 @@ int Parser::lex()
     if (c == '.' || isdigit (c))    // if a digit char was found
     {
         cin.putback(c);        // return the character
-        cin &gt;&gt; d_val__.u_val;    // extract a number
+        cin &gt;&gt; d_val_.u_val;    // extract a number
         return NUM;                 // return the NUM token
     }
     
@@ -978,14 +978,14 @@ int Parser::lex()
                                 // Got it, so return FPTR 
     if (function != s_functions.end())  
     {
-        d_val__.u_fun = function-&gt;second;
+        d_val_.u_fun = function-&gt;second;
         return FNCT;
     }
                                 // no function, so return a VAR. Set
                                 // u_symbol to the symbol's address in the
                                 // d_symbol map. The map will add the
                                 // symbol if not yet there.
-    d_val__.u_symbol = &amp;d_symbols[word];
+    d_val_.u_symbol = &amp;d_symbols[word];
     return VAR;            
 }
 </pre>

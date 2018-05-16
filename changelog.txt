@@ -1,3 +1,31 @@
+bisonc++ (6.02.00)
+
+ *  Starting with version 6.02.00 bisonc++ reserved identifiers no longer end
+    in two underscore characters, but in one. This modification was necessary
+    because according to the C++ standard identifiers having two or more
+    consecutive underscore characters are reserved by the language. In
+    practice this could require some minor modifications of existing source
+    files using bisonc++'s facilities, most likely limited to changing
+    Tokens__ into Tokens_ and changing Meta__ into Meta_.
+
+    The complete list of affected names is:
+
+    Enums:  DebugMode_, ErrorRecovery_, Return_, Tag_, Tokens_;
+
+    Enum values: PARSE_ABORT_, PARSE_ACCEPT_, UNEXPECTED_TOKEN_, sizeofTag_;
+
+    Type / namespace designators: Meta_, PI_, STYPE_;
+
+    Member functions: clearin_, errorRecovery_, errorVerbose_, executeAction_,
+        lex_, lookup_, nextCycle_, nextToken_, popToken_, pop_, print_, 
+        pushToken_, push_, recovery_, redoToken_, reduce_, savedToken_, 
+        shift_, stackSize_, startRecovery_, state_, token_, top_, vs_,
+
+    Protected data members: d_acceptedTokens_, d_actionCases_, d_debug_,
+        d_nErrors_, d_requiredTokens_, d_val_, idOfTag_, s_nErrors_
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 15 May 2018 20:58:45 +0200
+
 bisonc++ (6.01.03)
 
   * To avoid lintian reports about missing examples the 'examples/'

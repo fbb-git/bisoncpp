@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<title> <div style="text-align: center"><strong >Bisonc++</strong> (Version 6.01.03) User Guide</div> </title>
+<title> <div style="text-align: center"><strong >Bisonc++</strong> (Version 6.02.00) User Guide</div> </title>
 <style type="text/css">
     figure {text-align: center;}
     img {vertical-align: center;}
@@ -147,13 +147,13 @@ scanner is probably correct. The previous token ought to be discarded using
 <h3 >8.1.1: Error Recovery</h3>
     <strong >Bisonc++</strong> implements a simple error recovery mechanism. When the <code >lookup()</code>
 function cannot find an action for the current token in the current state it
-throws an <code >UNEXPECTED_TOKEN__</code> exception. 
+throws an <code >UNEXPECTED_TOKEN_</code> exception. 
 <p>
 This exception is caught by the parsing function, calling the
 <code >errorRecovery()</code> member function. By default, this member function 
 terminates the parsing process. The non-default recovery procedure is
 available once an <code >error</code> token is used in a production rule. When the
-parsing process throws <strong >UNEXPECTED_TOKEN__</strong> the recovery procedure is
+parsing process throws <strong >UNEXPECTED_TOKEN_</strong> the recovery procedure is
 started (i.e., it is started whenever a syntactical error is encountered or
 <code >ERROR()</code> is called).
 <p>
@@ -220,7 +220,7 @@ The rules are:
 
     1: start -&gt;  start expr
     2: start -&gt;  &lt;empty&gt;
-    3: expr (errTok__) -&gt;  errTok__
+    3: expr (errTok_) -&gt;  errTok_
     4: expr (NR) -&gt;  NR
     5: expr ('+') -&gt;  expr '+' expr
     6: start_$ -&gt;  start
@@ -241,7 +241,7 @@ State 1:
 6: start_$ -&gt; start  . 
 1: start -&gt; start  . expr 
   0:   On expr to state 2
-  1:   On errTok__ to state 3
+  1:   On errTok_ to state 3
   2:   On NR to state 4
 
 
@@ -253,8 +253,8 @@ State 2:
 
 
 State 3:
-3: expr -&gt; errTok__  . 
-  Reduce by 3: expr -&gt; errTok__  . 
+3: expr -&gt; errTok_  . 
+  Reduce by 3: expr -&gt; errTok_  . 
 
 
 State 4:
@@ -265,7 +265,7 @@ State 4:
 State 5:
 5: expr -&gt; expr '+'  . expr 
   0:   On expr to state 6
-  1:   On errTok__ to state 3
+  1:   On errTok_ to state 3
   2:   On NR to state 4
 
 
@@ -296,7 +296,7 @@ the input
 PUSH 0 (initializing the state stack)
     
 
-LOOKUP: [0, 'Reserved__::UNDETERMINED__'] -&gt; default reduce using rule 2
+LOOKUP: [0, 'Reserved_::UNDETERMINED_'] -&gt; default reduce using rule 2
     
 REDUCE: rule 2
     execute action 2 ...
@@ -314,7 +314,7 @@ ERROR:  [1, `a' (97)] -&gt; ??. Errors: 1
 Syntax error
     Reached ERROR state 1
     
-PUSH:   [1, 'errTok__'] -&gt; 3
+PUSH:   [1, 'errTok_'] -&gt; 3
     
 
 LOOKUP: [3, `a' (97)] -&gt; default reduce using rule 3
@@ -348,7 +348,7 @@ PUSH:   [1, 'NR'] -&gt; 4
     ERROR RECOVERED: next state 4
     
 
-LOOKUP: [4, 'Reserved__::UNDETERMINED__'] -&gt; default reduce using rule 4
+LOOKUP: [4, 'Reserved_::UNDETERMINED_'] -&gt; default reduce using rule 4
     
 REDUCE: rule 4
     execute action 4 ...
@@ -361,9 +361,9 @@ available token 'expr'
     
 PUSH:   [1, 'expr'] -&gt; 2
     
-scanner token 'Reserved__::EOF__'
+scanner token 'Reserved_::EOF_'
     
-LOOKUP: [2, 'Reserved__::EOF__'] -&gt; default reduce using rule 1
+LOOKUP: [2, 'Reserved_::EOF_'] -&gt; default reduce using rule 1
     
 REDUCE: rule 1
     execute action 1 ...
@@ -375,7 +375,7 @@ REDUCE: rule 1
 
 PUSH:   [0, 'start'] -&gt; 1
     
-available token 'Reserved__::EOF__'
+available token 'Reserved_::EOF_'
     ACCEPT(): Parsing successful
     parse(): returns 0 or 1
     
@@ -384,7 +384,7 @@ available token 'Reserved__::EOF__'
 <p>
 The final debug message should be interpreted as a <strong >C++</strong> expression: the
 0 indicates that <code >Parse::ACCEPT</code> rather than <code >Parser::ABORT</code> was called,
-the 1 shows the value of <code >d_nErrors__</code>. Consequently, <code >parse()</code> returns 1
+the 1 shows the value of <code >d_nErrors_</code>. Consequently, <code >parse()</code> returns 1
 (i.e., <code >`0 or 1'</code>).
 <p>
 <a name="l130"></a>

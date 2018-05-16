@@ -17,7 +17,7 @@
 <body>
 <hr/>
 <h1 id="title">bisonc++api(3)</h1>
-<h2 id="author">bisonc++ API<br/>(bisonc++.6.01.03.tar.gz)</h2>
+<h2 id="author">bisonc++ API<br/>(bisonc++.6.02.00.tar.gz)</h2>
 <h2 id="date">2005-2018</h2>
 
 
@@ -52,15 +52,48 @@ the following sections:
     <li> <strong >AUTHOR</strong>: at the end of this man-page.
     </ul>
 <p>
-All identifiers ending in two underscore characters are reserved for
-<strong >bisonc++</strong>. Member functions ending in two underscore characters must not be
-redefined. Data members ending in two underscore characters are available in
+All identifiers ending in an underscore character are reserved for
+<strong >bisonc++</strong>. Member functions ending in an underscore character must not be
+redefined. Data members ending in an underscore character are available in
 the generated parser class, and may be modified by user-defined members of the
 parser class. Some members like (<em >error, exceptionHandler, lex</em>) are defined
 in the parser class and must remain present, but their implementations may be
 altered by the user. Members for which no default implementation is provided
 in the parser's internal header file (e.g., <em >Parser.ih</em>) may not be
 redefined or masked by user-provided code.
+<p>
+<h2 >UNDERSCORES</h2>
+<p>
+    Starting with version 6.02.00 <strong >bisonc++</strong> reserved identifiers no longer end
+    in two underscore characters, but in one. This modification was necessary
+    because according to the <strong >C++</strong> standard identifiers having two or more
+    consecutive underscore characters are reserved by the language. In
+    practice this could require some minor modifications of existing source
+    files using <strong >bisonc++</strong>'s facilities, most likely limited to changing <em >Tokens__</em>
+    into <em >Tokens_</em> and changing <em >Meta__</em> into <em >Meta_</em>.
+<p>
+The complete list of affected names is:
+    <dl>
+    <dt ><strong>Enums:</strong></dt> <blockquote >
+DebugMode_, ErrorRecovery_, Return_, Tag_, Tokens_
+</blockquote>
+    <dt ><strong>Enums values:</strong></dt> <blockquote >
+PARSE_ABORT_, PARSE_ACCEPT_, UNEXPECTED_TOKEN_, sizeofTag_
+</blockquote>
+    <dt ><strong>Type / namespace designators:</strong></dt> <blockquote >
+Meta_, PI_, STYPE_
+</blockquote>
+    <dt ><strong>Member functions:</strong></dt> <blockquote >
+clearin_, errorRecovery_, errorVerbose_, executeAction_, lex_, 
+lookup_, nextCycle_, nextToken_, popToken_, pop_, print_, 
+pushToken_, push_, recovery_, redoToken_, reduce_, savedToken_, 
+shift_, stackSize_, startRecovery_, state_, token_, top_, vs_,
+</blockquote>
+    <dt ><strong>Protected data members:</strong></dt> <blockquote >
+d_acceptedTokens_, d_actionCases_, d_debug_, d_nErrors_,
+d_requiredTokens_, d_val_, idOfTag_, s_nErrors_
+</blockquote>
+    </dl>
 <p>
 <h2 >PUBLIC SYMBOLS</h2>
 <p>
@@ -79,7 +112,7 @@ enums, members and types (in the following overview parser class-name prefixes
         constructors do not have to explicitly initialize the parser's base
         class.
 <p>
-<li> <strong >DebugMode__</strong>:<br/> 
+<li> <strong >DebugMode_</strong>:<br/> 
        The values of this <em >enum</em> are used to configure the type of debug
         information that will be displayed (assuming that the <em >debug</em>
         option/directive was specified when <strong >bisonc++</strong> generated the parser's
@@ -99,18 +132,18 @@ enums, members and types (in the following overview parser class-name prefixes
         mismatch was observed.
 <p>
 The <em >bit_or</em> operator can be used to combine <em >ON</em> and
-        <em >ACTIONCASES</em> (see the member function <em >setDebug(DebugMode__
+        <em >ACTIONCASES</em> (see the member function <em >setDebug(DebugMode_
         mode)</em> below).
 <p>
-<li> <strong >LTYPE__</strong>:<br/> 
+<li> <strong >LTYPE_</strong>:<br/> 
            The parser's location type (user-definable). Available only when
             either <em >%lsp-needed, %ltype</em> or <em >%locationstruct</em> has been
             declared. 
 <p>
-<li> <strong >STYPE__</strong>:<br/>
+<li> <strong >STYPE_</strong>:<br/>
             The parser's stack-type (user-definable), defaults to <strong >int</strong>.
 <p>
-<li> <strong >Tokens__</strong>:<br/>
+<li> <strong >Tokens_</strong>:<br/>
        The enumeration type of all the symbolic tokens defined in the grammar
         file (i.e., <strong >bisonc++</strong>'s input file). The scanner should be prepared to
         return these symbolic tokens. Note that, since the symbolic tokens are
@@ -132,7 +165,7 @@ The <em >bit_or</em> operator can be used to combine <em >ON</em> and
         default; to activate the debug output call <em >setDebug(true)</em>, to
         suppress the debug output call <em >setDebug(false)</em>.
 <p>
-<li> <strong >void setDebug(DebugMode__ mode)</strong>:<br/>
+<li> <strong >void setDebug(DebugMode_ mode)</strong>:<br/>
        This member can also be used to activate or deactivate the debug-code
         compiled into the parsing function. Like <em >setDebug(bool)</em> it is
         always defined but only operational if the <em >debug</em> directive option
@@ -140,21 +173,21 @@ The <em >bit_or</em> operator can be used to combine <em >ON</em> and
         is <em >not</em> active by default; to activate, call
         <em >setDebug(Parser::ON), setDebug(Parser::ACTIONCASES)</em>, or 
         <em >setDebug(Parser::ON | Parser::ACTIONCASES)</em>. To suppress the
-        debug code output call <em >setDebug(Parser__::OFF)</em> or simply
+        debug code output call <em >setDebug(Parser_::OFF)</em> or simply
         <em >setDebug(false)</em>.
     </ul>
 <p>
 When the <em >%polymorphic</em> directive is used:
     <ul>
-    <li> <strong >Meta__</strong>:<br/>
+    <li> <strong >Meta_</strong>:<br/>
            Templates and classes that are required for implementing the
-            polymorphic semantic values are all declared in the <em >Meta__</em>
-            namespace. The <em >Meta__</em> namespace itself is nested under the
+            polymorphic semantic values are all declared in the <em >Meta_</em>
+            namespace. The <em >Meta_</em> namespace itself is nested under the
             namespace that may have been declared by the <em >%namespace</em>
             directive.
 <p>
-<li> <strong >Tag__</strong>:<br/>
-           The (strongly typed) <em >enum class Tag__</em> contains all the
+<li> <strong >Tag_</strong>:<br/>
+           The (strongly typed) <em >enum class Tag_</em> contains all the
             tag-identifiers specified by the <em >%polymorphic</em> directive. It is
             declared outside of the Parser's class, but within the namespace
             that may have been declared by the <em >%namespace</em> directive.
@@ -166,15 +199,15 @@ When the <em >%polymorphic</em> directive is used:
 classes generated by <strong >bisonc++</strong>. They are actually protected members inherited from
 the parser's base class.
     <ul>
-    <li> <strong >Base::ErrorRecovery__</strong>:<br/>
+    <li> <strong >Base::ErrorRecovery_</strong>:<br/>
         This enumeration defines one values:
         <pre>
 
-    UNEXPECTED_TOKEN__
+    UNEXPECTED_TOKEN_
         
 </pre>
 
-       When the parsing process throws <em >UNEXPECTED_TOKEN__</em> the recovery
+       When the parsing process throws <em >UNEXPECTED_TOKEN_</em> the recovery
         procedure is started (i.e., it is started whenever a syntactic error
         is encountered or <em >ERROR</em><em >()</em> is called).
 <p>
@@ -190,7 +223,7 @@ If the error recovery procedure fails (i.e., if no acceptable token is
         ever encountered) error recovery falls back to the default recovery
         mode: the parsing process terminates.
 <p>
-<li> <strong >Base::Return__</strong>:<br/>
+<li> <strong >Base::Return_</strong>:<br/>
         This enumeration defines two values:
         <pre>
 
@@ -204,8 +237,8 @@ If the error recovery procedure fails (i.e., if no acceptable token is
 <p>
 When the <em >%polymorphic</em> directive is used:
     <ul>
-    <li> <strong >Meta__::sizeofTag__</strong>:<br/>
-           <em >sizeofTag__</em> defines the number of tags that were defined for 
+    <li> <strong >Meta_::sizeofTag_</strong>:<br/>
+           <em >sizeofTag_</em> defines the number of tags that were defined for 
             polymorphic semantic values.
     </ul>
 <p>
@@ -219,7 +252,7 @@ those members are used during the parsing process, andshould not be modified
 or masked by user-defined code.
 <p>
 <ul>
-    <li> <strong >void Base::ABORT() const throw(Return__)</strong>:<br/>
+    <li> <strong >void Base::ABORT() const throw(Return_)</strong>:<br/>
        This member can be called from any member function (called from any of
         the parser's action blocks) to indicate a failure while parsing thus
         terminating the parsing function with an error value 1. Note that this
@@ -227,7 +260,7 @@ or masked by user-defined code.
         defined by <strong >bison++</strong> in that <em >YYABORT</em> could not be called from
         outside of the parsing member function.
 <p>
-<li> <strong >void Base::ACCEPT() const throw(Return__)</strong>:<br/>
+<li> <strong >void Base::ACCEPT() const throw(Return_)</strong>:<br/>
        This member can be called from any member function (called from any of
         the parser's action blocks) to indicate successful parsing and thus
         terminating the parsing function. Note that this offers a marked
@@ -235,7 +268,7 @@ or masked by user-defined code.
         <strong >bison++</strong> in that <em >YYACCEPT</em> could not be called from outside of
         the parsing member function.
 <p>
-<li> <strong >void Base::ERROR() const throw(ErrorRecovery__)</strong>:<br/>
+<li> <strong >void Base::ERROR() const throw(ErrorRecovery_)</strong>:<br/>
        This member can be called from any member function (called from any of
         the parser's action blocks) to generate an error, and results in the
         parser executing its error recovery code. Note that this offers a
@@ -284,7 +317,7 @@ The next example shows an explicit implementation of
 void Parser::exceptionHandler(std::exception const &amp;exc)
 {
     std::cout &lt;&lt; exc.what() &lt;&lt; '\n';
-    ++d_nErrors__;
+    ++d_nErrors_;
 }
         
 </pre>
@@ -296,29 +329,29 @@ void Parser::exceptionHandler(std::exception const &amp;exc)
        directive (see above); alternatively it <em >must</em> be implemented by the
        programmer. It interfaces to the lexical scanner, and should return the
        next token produced by the lexical scanner, either as a plain character
-       or as one of the symbolic tokens defined in the <em >Parser::Tokens__</em>
+       or as one of the symbolic tokens defined in the <em >Parser::Tokens_</em>
        enumeration. Zero or negative token values are interpreted as `end of
        input'.
 <p>
 <li> <strong >void print()</strong>:<br/>
       By default implemented inline in the <em >parser.ih</em> internal header file,
-       this member calls <em >print__</em> to display the last received token and
-       corresponding matched text. The <em >print__</em> member is only implemented
+       this member calls <em >print_</em> to display the last received token and
+       corresponding matched text. The <em >print_</em> member is only implemented
        if the <em >--print-tokens</em> option or <em >%print-tokens</em> directive was
-       used when the parsing function was generated. Calling <em >print__</em> from
+       used when the parsing function was generated. Calling <em >print_</em> from
        <em >print</em> is unconditional, but can easily be controlled by the using
        program, by defining, e.g., a command-line option.
 <p>
-<li> <strong >size_t stackSize__() const</strong>:<br/>
+<li> <strong >size_t stackSize_() const</strong>:<br/>
        Returns the current number of elements in the parser's state-stack.
 <p>
-<li> <strong >size_t state__() const</strong>:<br/>
+<li> <strong >size_t state_() const</strong>:<br/>
        Returns the current parsing-state.
 <p>
-<li> <strong >bool Base::recovery__() const</strong>:<br/>
+<li> <strong >bool Base::recovery_() const</strong>:<br/>
        Returns <em >true</em> while recovering from a syntax error.
 <p>
-<li> <strong >int Base::token__() const</strong>:<br/>
+<li> <strong >int Base::token_() const</strong>:<br/>
        Returns the currently considered token.
     </ul>
 <p>
@@ -327,31 +360,31 @@ be modified or masked by user-defined code:
 <p>
 <ul>
     <li> <strong >Base::ParserBase()</strong>
-    <li> <strong >void Base::clearin__()()</strong>
-    <li> <strong >void errorRecovery__()</strong>
-    <li> <strong >void Base::errorVerbose__()</strong>
-    <li> <strong >void executeAction__(int)</strong>
-    <li> <strong >int lex__(int token)</strong>
+    <li> <strong >void Base::clearin_()()</strong>
+    <li> <strong >void errorRecovery_()</strong>
+    <li> <strong >void Base::errorVerbose_()</strong>
+    <li> <strong >void executeAction_(int)</strong>
+    <li> <strong >int lex_(int token)</strong>
     <li> <strong >int Base::lookup()</strong>
-    <li> <strong >LTYPE__ const &amp;lsp__(int) const</strong><br/>
+    <li> <strong >LTYPE_ const &amp;lsp_(int) const</strong><br/>
         (only available when <em >%lsp-needed, %ltype</em> or
         <em >%locationstruct</em> was specified).
-    <li> <strong >void nextCycle__()</strong>
-    <li> <strong >void nextToken__()</strong>
-    <li> <strong >void Base::pop__()</strong>
-    <li> <strong >void Base::popToken__()</strong>
-    <li> <strong >void print__()()</strong>
-    <li> <strong >void Base::push__()</strong>
-    <li> <strong >void Base::pushToken__()</strong>
-    <li> <strong >void Base::shift__(int state)</strong>
-    <li> <strong >void Base::redoToken__(int rule)</strong>
-    <li> <strong >void Base::reduce__(int rule)</strong>
-    <li> <strong >void Base::savedToken__()</strong>
-    <li> <strong >void Base::symbol__()</strong>
-    <li> <strong >void Base::startRecovert__()</strong>
-    <li> <strong >void Base::top__()</strong>
-    <li> <strong >int Base::token__() const</strong>
-    <li> <strong >void Base::vs__(int idx)</strong>
+    <li> <strong >void nextCycle_()</strong>
+    <li> <strong >void nextToken_()</strong>
+    <li> <strong >void Base::pop_()</strong>
+    <li> <strong >void Base::popToken_()</strong>
+    <li> <strong >void print_()()</strong>
+    <li> <strong >void Base::push_()</strong>
+    <li> <strong >void Base::pushToken_()</strong>
+    <li> <strong >void Base::shift_(int state)</strong>
+    <li> <strong >void Base::redoToken_(int rule)</strong>
+    <li> <strong >void Base::reduce_(int rule)</strong>
+    <li> <strong >void Base::savedToken_()</strong>
+    <li> <strong >void Base::symbol_()</strong>
+    <li> <strong >void Base::startRecovert_()</strong>
+    <li> <strong >void Base::top_()</strong>
+    <li> <strong >int Base::token_() const</strong>
+    <li> <strong >void Base::vs_(int idx)</strong>
     </ul>
 <p>
 <h2 >PRIVATE DATA MEMBERS</h2>
@@ -360,21 +393,21 @@ The following data members can be used by members of parser classes
 generated by <strong >bisonc++</strong>. All data members are actually protected members inherited
 from the parser's base class.
     <ul>
-    <li> <strong >size_t d_acceptedTokens__</strong>:<br/>
+    <li> <strong >size_t d_acceptedTokens_</strong>:<br/>
        Counts the number of accepted tokens since the start of the <em >parse()</em>
         function or since the last detected syntactic error. It is initialized
-        to <em >d_requiredTokens__</em> to allow an early error to be detected as
+        to <em >d_requiredTokens_</em> to allow an early error to be detected as
         well. 
-    <li> <strong >bool d_actionCases__</strong>:<br/>
+    <li> <strong >bool d_actionCases_</strong>:<br/>
        When the <em >debug</em> option has been specified, this variable (<em >false</em>
         by default) determines whether the number of action block which is
         about to be executed by the parser's member <em >executeAction</em> will be
         displayed to the standard output stream.
-    <li> <strong >bool d_debug__</strong>:<br/>
+    <li> <strong >bool d_debug_</strong>:<br/>
        When the <em >debug</em> option has been specified, this variable (<em >true</em>
         by default) determines whether debug information is actually
         displayed.
-    <li> <strong >LTYPE__ d_loc__</strong>:<br/>
+    <li> <strong >LTYPE_ d_loc_</strong>:<br/>
        The location type value associated with a terminal token. It can be
         used by, e.g., lexical scanners to pass location information of a
         matched token to the parser in parallel with a returned token. It is
@@ -382,44 +415,44 @@ from the parser's base class.
         been defined. <br/>
        Lexical scanners may be offered the facility to assign a value to this
         variable in parallel with a returned token. In order to allow a
-        scanner access to <em >d_loc__</em>, <em >d_loc__</em>'s address should be passed
+        scanner access to <em >d_loc_</em>, <em >d_loc_</em>'s address should be passed
         to the scanner. This can be realized, for example, by defining a
-        member <em >void setLoc(STYPE__ *)</em> in the lexical scanner, which is
+        member <em >void setLoc(STYPE_ *)</em> in the lexical scanner, which is
         then called from the parser's constructor as follows:
        <pre>
 
-            d_scanner.setSLoc(&amp;d_loc__);
+            d_scanner.setSLoc(&amp;d_loc_);
        
 </pre>
 
        Subsequently, the lexical scanner may assign a value to the parser's
-        <em >d_loc__</em> variable through the pointer to <em >d_loc__</em> stored inside
+        <em >d_loc_</em> variable through the pointer to <em >d_loc_</em> stored inside
         the lexical scanner.
 <p>
-<li> <strong >size_t d_nErrors__</strong>:<br/>
+<li> <strong >size_t d_nErrors_</strong>:<br/>
        The number of errors counted by <em >parse</em>. It is initialized by the
         parser's base class initializer, and is updated while <em >parse</em>
         executes. When <em >parse</em> has returned it contains the total number
         of errors counted by <em >parse</em>. Errors are not counted if suppressed
-        (i.e., if <em >d_acceptedTokens__</em> is less than <em >d_requiredTokens__</em>).
+        (i.e., if <em >d_acceptedTokens_</em> is less than <em >d_requiredTokens_</em>).
 <p>
-<li> <strong >size_t d_requiredTokens__</strong>:<br/>
+<li> <strong >size_t d_requiredTokens_</strong>:<br/>
        Defines the minimum number of accepted tokens that the <em >parse</em>
         function must have processed before a syntactic error can be
         generated. 
 <p>
-<li> <strong >STYPE__ d_val__</strong>:<br/>
+<li> <strong >STYPE_ d_val_</strong>:<br/>
        The semantic value of a returned token or nonterminal symbol. With
         nonterminal tokens it is assigned a value through the action rule's
         symbol <em >$$</em>. Lexical scanners may be offered the facility to assign
         a semantic value to this variable in parallel with a returned
-        token. In order to allow a scanner access to <em >d_val__</em>,
-        <em >d_val__</em>'s address should be passed to the scanner. This can be
-        realized, for example, by passing <em >d_val__</em>'s address to the lexical
+        token. In order to allow a scanner access to <em >d_val_</em>,
+        <em >d_val_</em>'s address should be passed to the scanner. This can be
+        realized, for example, by passing <em >d_val_</em>'s address to the lexical
         scanner's constructor.
 <p>
 Subsequently, the lexical scanner may assign a value to the parser's
-        <em >d_val__</em> variable through the pointer to <em >d_val__</em> stored in a
+        <em >d_val_</em> variable through the pointer to <em >d_val_</em> stored in a
         data member of the lexical scanner.
 <p>
 Note that in some cases this approach <em >must</em> be used to make
@@ -430,7 +463,7 @@ Note that in some cases this approach <em >must</em> be used to make
         text. 
 <p>
 If <em >STYPE</em> is a polymorphic semantic value, specific requirements for
-        assigning values to  <em >d_val__</em> apply.
+        assigning values to  <em >d_val_</em> apply.
         .
     </ul>
 <p>
@@ -440,25 +473,25 @@ With <strong >bisonc++</strong> version 6.00.00 the following members were modif
 necessary alternatives are mentioned:
 <p>
 <ul>
-    <li> <strong >bool Base::debug() const</strong>: use the <em >d_debug__</em> data member;
+    <li> <strong >bool Base::debug() const</strong>: use the <em >d_debug_</em> data member;
     <li> <strong >void error(char const *)</strong>: replaced by <strong >void error()</strong>;
-    <li> <strong >void exceptionHandler__(std::exception const &amp;exc)</strong>: omit final
+    <li> <strong >void exceptionHandler_(std::exception const &amp;exc)</strong>: omit the final
         underscores: <strong >void exceptionHandler(std::exception const
         &amp;exc)</strong>
-     <li> <strong >void executeAction(int)</strong>: add two underscores to the
+     <li> <strong >void executeAction(int)</strong>: add one underscore to the
         declaration in the parser class interface: <strong >void
-        executeAction__(int)</strong>
+        executeAction_(int)</strong>
     <li> <strong >int lookup(bool)</strong>: omit this member from the parser class
         interface.
-    <li> <strong >void nextCycle__(int)</strong>: add this member declaration to the
+    <li> <strong >void nextCycle_(int)</strong>: add this member declaration to the
         parser class interface.
-    <li> <strong >void nextToken(int)</strong>: add two underscores to the declaration
-        in the parser class interface: <strong >void nextToken__(int)</strong>
+    <li> <strong >void nextToken(int)</strong>: add one underscore to the declaration
+        in the parser class interface: <strong >void nextToken_(int)</strong>
 <p>
-<li> <strong >size_t d_nextToken__</strong>: removed from the interface.
-    <li> <strong >int d_state__</strong>: use <em >state__()</em>.
-    <li> <strong >int d_token__</strong>: use <em >token__()</em>.
-    <li> <strong >LTYPE__ d_vsp__</strong>: removed from the interface. Use <em >vsp__()</em>
+<li> <strong >size_t d_nextToken_</strong>: removed from the interface.
+    <li> <strong >int d_state_</strong>: use <em >state_()</em>.
+    <li> <strong >int d_token_</strong>: use <em >token_()</em>.
+    <li> <strong >LTYPE_ d_vsp_</strong>: removed from the interface. Use <em >vsp_()</em>
         instead. 
     </ul>
 <p>
@@ -473,14 +506,14 @@ the parser.
     <li> <strong >char const author[]</strong>:<br/>
        Defining the name and e-mail address of <strong >Bisonc++</strong>'s author.
 <p>
-<li> <strong >Reserved__</strong>:<br/>
+<li> <strong >Reserved_</strong>:<br/>
        This enumeration defines some token values used internally by the
         parsing functions. They are:
         <pre>
 
-    UNDETERMINED__ = -2,
-    EOF__          = -1,
-    errTok__        = 256,
+    UNDETERMINED_ = -2,
+    EOF_          = -1,
+    errTok_        = 256,
        
 </pre>
 
@@ -508,25 +541,25 @@ the parser.
         states of the analyzed grammar.
 <p>
 <li> <strong >StateTransition</strong>
-       This enumeration only defines a single symbolic constant: <em >ACCEPT__</em>,
+       This enumeration only defines a single symbolic constant: <em >ACCEPT_</em>,
         which is used in the state transition tables to indicate that the
         <em >accepting state</em> has been reached.
 <p>
-<li> <strong >PI__</strong> (Production Info):<br/>
+<li> <strong >PI_</strong> (Production Info):<br/>
        This <em >struct</em> provides information about production rules. It has two
         fields: <em >d_nonTerm</em> is the identification number of the production's
         nonterminal, <em >d_size</em> represents the number of elements of the
         productin rule.
 <p>
-<li> <strong >static PI__ s_productionInfo</strong>:<br/>
+<li> <strong >static PI_ s_productionInfo</strong>:<br/>
        Used internally by the parsing function.
 <p>
-<li> <strong >SR__</strong> (Shift-Reduce Info):<br/>
+<li> <strong >SR_</strong> (Shift-Reduce Info):<br/>
        This <em >struct</em> provides the shift/reduce information for the various
-        grammatic states. <em >SR__</em> values are collected in arrays, one array
+        grammatic states. <em >SR_</em> values are collected in arrays, one array
         per grammatic state. These array, named <em >s_</em><em >&lt;nr&gt;</em>, 
         where tt&lt;nr&gt; is a state number are defined in the anonymous namespace
-        as well. The <em >SR__</em> elements consist of two unions,
+        as well. The <em >SR_</em> elements consist of two unions,
         defining fields that are applicable to, respectively, the first,
         intermediate and the last array elements.<br/>
        The first element of each array consists of (1st field) a <em >StateType</em>
@@ -542,15 +575,15 @@ the parser.
         error or default action has been defined for the state, and
         error-recovery is attepted.
 <p>
-<li> <strong >STACK_EXPANSION__</strong>:<br/>
+<li> <strong >STACK_EXPANSION_</strong>:<br/>
        An enumeration value specifying the number of additional elements that
         are added to the state- and semantic value stacks when full.
 <p>
-<li> <strong >static SR__ s_&lt;nr&gt;[]</strong>:<br/>
+<li> <strong >static SR_ s_&lt;nr&gt;[]</strong>:<br/>
        Here, <em >&lt;nr&gt;</em> is a numerical value representing a state number.
        Used internally by the parsing function.
 <p>
-<li> <strong >static SR__ *s_state[]</strong>:<br/>
+<li> <strong >static SR_ *s_state[]</strong>:<br/>
        Used internally by the parsing function.
     </ul>
 <p>

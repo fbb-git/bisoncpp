@@ -17,7 +17,7 @@
 <body>
 <hr/>
 <h1 id="title">bisonc++input(7)</h1>
-<h2 id="author">bisonc++ grammar file organization<br/>(bisonc++.6.01.03.tar.gz)</h2>
+<h2 id="author">bisonc++ grammar file organization<br/>(bisonc++.6.02.00.tar.gz)</h2>
 <h2 id="date">2005-2018</h2>
 
 
@@ -77,6 +77,39 @@ This manual page contains the following sections:
             to tokens defined in the grammar from within a lexical scanner;
     <li> <strong >AUTHOR</strong>: at the end of this man-page.
     </ul>
+<p>
+<h2 >UNDERSCORES</h2>
+<p>
+    Starting with version 6.02.00 <strong >bisonc++</strong> reserved identifiers no longer end
+    in two underscore characters, but in one. This modification was necessary
+    because according to the <strong >C++</strong> standard identifiers having two or more
+    consecutive underscore characters are reserved by the language. In
+    practice this could require some minor modifications of existing source
+    files using <strong >bisonc++</strong>'s facilities, most likely limited to changing <em >Tokens__</em>
+    into <em >Tokens_</em> and changing <em >Meta__</em> into <em >Meta_</em>.
+<p>
+The complete list of affected names is:
+    <dl>
+    <dt ><strong>Enums:</strong></dt> <blockquote >
+DebugMode_, ErrorRecovery_, Return_, Tag_, Tokens_
+</blockquote>
+    <dt ><strong>Enums values:</strong></dt> <blockquote >
+PARSE_ABORT_, PARSE_ACCEPT_, UNEXPECTED_TOKEN_, sizeofTag_
+</blockquote>
+    <dt ><strong>Type / namespace designators:</strong></dt> <blockquote >
+Meta_, PI_, STYPE_
+</blockquote>
+    <dt ><strong>Member functions:</strong></dt> <blockquote >
+clearin_, errorRecovery_, errorVerbose_, executeAction_, lex_, 
+lookup_, nextCycle_, nextToken_, popToken_, pop_, print_, 
+pushToken_, push_, recovery_, redoToken_, reduce_, savedToken_, 
+shift_, stackSize_, startRecovery_, state_, token_, top_, vs_,
+</blockquote>
+    <dt ><strong>Protected data members:</strong></dt> <blockquote >
+d_acceptedTokens_, d_actionCases_, d_debug_, d_nErrors_,
+d_requiredTokens_, d_val_, idOfTag_, s_nErrors_
+</blockquote>
+    </dl>
 <p>
 <h2 >DIRECTIVES</h2>
 <p>
@@ -247,10 +280,10 @@ Defines the names of symbolic terminal tokens that must be treated
 <li> <strong >%locationstruct</strong> <em >struct-definition</em> 
 <p>
 Defines the organization of the location-struct data type
-            <em >LTYPE__</em>. This struct should be specified analogously to the
+            <em >LTYPE_</em>. This struct should be specified analogously to the
             way the parser's stacktype is defined using <em >%union</em> (see
-            below). The location struct is named <em >LTYPE__</em>. By default (if
-            neither <em >locationstruct</em> nor <em >LTYPE__</em> is specified) the
+            below). The location struct is named <em >LTYPE_</em>. By default (if
+            neither <em >locationstruct</em> nor <em >LTYPE_</em> is specified) the
             standard location struct (see the next directive) is used:
 <p>
 <li> <strong >%lsp-needed</strong> 
@@ -259,7 +292,7 @@ This directive results in <strong >bisonc++</strong> generating a parser using
             the standard location stack.  This stack's default type is:
            <pre>
 
-    struct LTYPE__
+    struct LTYPE_
     {
         int timestamp;
         int first_line;
@@ -271,11 +304,11 @@ This directive results in <strong >bisonc++</strong> generating a parser using
            
 </pre>
 
-           <strong >Bisonc++</strong> does <em >not</em> provide the elements of the <em >LTYPE__</em> struct
+           <strong >Bisonc++</strong> does <em >not</em> provide the elements of the <em >LTYPE_</em> struct
             with values. Action blocks of production rules may refer to the
             location stack element associated with a production element using
             <em >@</em> variables, like <em >@1.timestamp, @3.text, @5</em>. The rule's
-            location struct itself may be referred to as either <em >d_loc__</em> or
+            location struct itself may be referred to as either <em >d_loc_</em> or
             <em >@@</em>.
 <p>
 <li> <strong >%ltype typename</strong> 
@@ -285,7 +318,7 @@ Specifies a user-defined token location type.  If <em >%ltype</em> is
             type (e.g., <em >size_t</em>). It should not be used if a
             <em >%locationstruct</em> specification is defined (see below). Within
             the parser class, this type is available as the type
-            `<em >LTYPE__</em>'.  All text on the line following <em >%ltype</em> is used
+            `<em >LTYPE_</em>'.  All text on the line following <em >%ltype</em> is used
             for the <em >typename</em> specification. It should therefore not
             contain comment or any other characters that are not part of the
             actual type definition.
@@ -311,7 +344,7 @@ Do not generate warnings when zero- or negative dollar-indices are
             dollar-indices are commonly used to implement inherited
             attributes, and should normally be avoided. When used, they can be
             specified like <em >$-1</em>, or like <em >$&lt;type&gt;-1</em>, where <em >type</em> is
-            empty; an <em >STYPE__</em> tag; or a field-name. However, note that in
+            empty; an <em >STYPE_</em> tag; or a field-name. However, note that in
             combination with the <em >%polymorphic</em> directive (see below) only
             the <em >$-i</em> format can be used.
 <p>
@@ -389,7 +422,7 @@ Refer to <strong >bisonc++</strong>'s user manual for a more elaborate coverage 
 <li> <strong >%print-tokens</strong>
 <p>
 The <em >print</em> directive provides an implementation of the Parser
-            class's <em >print__</em> function displaying the current token value
+            class's <em >print_</em> function displaying the current token value
             and the text matched by the lexical scanner as received by the
             generated <em >parse</em> function.
 <p>
@@ -510,7 +543,7 @@ The type of the semantic value of nonterminal tokens.  By default
             mutually exclusive directives.
 <p>
 Within the parser class, the semantic value type is available as
-            the type `<em >STYPE__</em>'. All text on the line following <em >%stype</em>
+            the type `<em >STYPE_</em>'. All text on the line following <em >%stype</em>
             is used for the <em >typename</em> specification. It should therefore
             not contain comment or any other characters that are not part of
             the actual type definition.
@@ -571,14 +604,14 @@ In combination with <em >%polymorphic</em> or <em >%union</em>: associate the
 <li> <strong >%union</strong> <em >union-definition</em> 
 <p>
 Acts identically to the identically named <strong >bison</strong> and <strong >bison++</strong>
-            declaration.  <strong >Bisonc++</strong> generates a union, named <em >STYPE__</em>, as its
+            declaration.  <strong >Bisonc++</strong> generates a union, named <em >STYPE_</em>, as its
             semantic type.  
 <p>
 <li> <strong >%weak-tags</strong> 
 <p>
 This directive is ignored unless the <em >%polymorphic</em>
             directive was specified. It results in the declaration of <em >enum
-            Tag__</em> rather than <em >enum class Tag__</em>. When in doubt, don't use
+            Tag_</em> rather than <em >enum class Tag_</em>. When in doubt, don't use
             this directive.
     </ul>
 <p>
@@ -649,10 +682,10 @@ elements are placed inside the namespace that is specified by the
 <em >%namespace</em> directive):
     <ul>
     <li> All semantic value type identifiers are collected in a strongly typed
-`<em >Tag__</em>' enumeration. E.g.,
+`<em >Tag_</em>' enumeration. E.g.,
         <pre>
 
-    enum class Tag__
+    enum class Tag_
     {
         INT,
         STRING,
@@ -661,19 +694,19 @@ elements are placed inside the namespace that is specified by the
         
 </pre>
 
-    <li> An anonymous <em >enum</em> defining the symbolic constant <em >sizeofTag__</em>
-        equal to the number of tags in the <em >Tag__</em> enumeration.
+    <li> An anonymous <em >enum</em> defining the symbolic constant <em >sizeofTag_</em>
+        equal to the number of tags in the <em >Tag_</em> enumeration.
 <p>
-<li> The namespace <em >Meta__</em> contains almost all of the code
+<li> The namespace <em >Meta_</em> contains almost all of the code
 implementing polymorphic values.
     </ul>
 <p>
-The namespace  <em >Meta__</em> contains, among other classes the class <em >SType</em>.
-The parser's semantic value type <em >STYPE__</em> is equal to <em >Meta__::SType</em>.
+The namespace  <em >Meta_</em> contains, among other classes the class <em >SType</em>.
+The parser's semantic value type <em >STYPE_</em> is equal to <em >Meta_::SType</em>.
 <p>
-<strong >STYPE__ equals Meta__::SType</strong>
+<strong >STYPE_ equals Meta_::SType</strong>
 <p>
-<em >Meta__::SType</em> provides the standard user interface for using polymorphic
+<em >Meta_::SType</em> provides the standard user interface for using polymorphic
 semantic data types. It declares the following public interface:
 <p>
     <ul>
@@ -699,7 +732,7 @@ and
        can be used for all polymorphic semantic value types. <em >Type</em> must
         (maybe after casting) exactly match one of the defined polymorphic
         semantic types, because <em >Type</em> is used to determine the appropriate
-        <em >Meta__::Tag__</em> value.
+        <em >Meta_::Tag_</em> value.
 <p>
 When <em >operator=(Type const &amp;value)</em> is used, the left-hand side
         <em >SType</em> object receives a copy of <em >value</em>; when <em >operator=(Type
@@ -707,36 +740,36 @@ When <em >operator=(Type const &amp;value)</em> is used, the left-hand side
         <em >SType</em> object;
 <p>
 <li> <em >void assign&lt;tag&gt;(Args &amp;&amp;...args)</em> 
-       The <em >tag</em> template argument must be a <em >Tag__</em> value. This member
+       The <em >tag</em> template argument must be a <em >Tag_</em> value. This member
         function constructs a semantic value of the type matching <em >tag</em> from
         the arguments that are passed to this member (zero arguments are OK if
         the type associated with <em >tag</em> supports default construction). The
         constructed value (not a copy of this value) is then stored in the
-        <em >STYPE__</em> object for which <em >assign</em> has been called.
+        <em >STYPE_</em> object for which <em >assign</em> has been called.
 <p>
-As a <em >Meta__::Tag__</em> value must be specified when using <em >assign</em>
+As a <em >Meta_::Tag_</em> value must be specified when using <em >assign</em>
         the compiler can use the explicit tag to convert <em >assign's</em> arguments
         to an <em >SType</em> object of the type matching the specified tag.
 <p>
 The member <em >assign</em> can be used to store a specific polymorphic
-        semantic value in an <em >STYPE__</em> object. It differs from the set of
+        semantic value in an <em >STYPE_</em> object. It differs from the set of
         <em >operator=(Type)</em> members in that <em >assign</em> accepts multiple
         arguments to construct the requested <em >SType</em> value from, whereas the
         <em >operator=</em> members only accept single arguments of defined
         polymorphic types.
 <p>
-To initialize an <em >STYPE__</em> object with a default <em >STYPE__</em> value,
-        direct assignment can be used (e.g., <em >d_lval__ = STYPE__{}</em>).
+To initialize an <em >STYPE_</em> object with a default <em >STYPE_</em> value,
+        direct assignment can be used (e.g., <em >d_lval_ = STYPE_{}</em>).
 <p>
 <li> <em >DataType &amp;get&lt;tag&gt;()</em>, and <em >DataType const &amp;get&lt;tag&gt;() const</em>
        These members return references to the object's semantic values. The
-        <em >tag</em> must be a <em >Tag__</em> value: its specification tells the
+        <em >tag</em> must be a <em >Tag_</em> value: its specification tells the
         compiler which semantic value type it must use.
 <p>
 When the option/directive <em >tag-mismatches on</em> was specified then
         <em >get</em>, when called from the generated <em >parse</em> function, performs a
         run-time check to confirm that the specified tag corresponds to
-        object's actual <em >Tag__</em> value. If a mismatch is observed, then the
+        object's actual <em >Tag_</em> value. If a mismatch is observed, then the
         parsing function aborts with a fatal error message. When 
         shorthand notations (like <em >$$</em> and <em >$1</em>) are used in production
         rules' action blocks, then <strong >bisonc++</strong> can determine the correct <em >tag</em>,
@@ -759,21 +792,21 @@ Following this the case-entry numbers of the <em >switch</em> which is
         program reports the fatal error tells you in which of the grammar's
         action block the error was encountered.
 <p>
-<li> <em >Tag__ tag() const</em>
+<li> <em >Tag_ tag() const</em>
        The tag matching the semantic value's polymorphic type is returned. The
-        returned value is a valid <em >Tag__</em> value when the <em >SType</em> object's
+        returned value is a valid <em >Tag_</em> value when the <em >SType</em> object's
         <em >valid</em> member returns <em >true</em>;
 <p>
-By default, or after assigning a plain (default) <em >STYPE__</em> object to
-        an <em >STYPE__</em> object (e.g., using a statement like <em >$$ =
-        STYPE__{}</em>), <em >valid</em> returns <em >false</em>, and the <em >tag</em> member
-        returns <em >Meta__::sizeofTag__</em>.
+By default, or after assigning a plain (default) <em >STYPE_</em> object to
+        an <em >STYPE_</em> object (e.g., using a statement like <em >$$ =
+        STYPE_{}</em>), <em >valid</em> returns <em >false</em>, and the <em >tag</em> member
+        returns <em >Meta_::sizeofTag_</em>.
 <p>
 <li> <em >bool valid() const</em> 
 <p>
 The value <em >true</em> is returned if the object contains a semantic
-        value. Otherwise <em >false</em> is returned. Note that default <em >STYPE__</em>
-        values can be assigned to <em >STYPE__</em> objects, but they do not
+        value. Otherwise <em >false</em> is returned. Note that default <em >STYPE_</em>
+        values can be assigned to <em >STYPE_</em> objects, but they do not
         represent valid semantic values. See also the previous description of
         the <em >tag</em> member.
    </ul>
@@ -791,7 +824,7 @@ type) the following dollar-notations are available:
 <p>
 A value is assigned to the rule's nonterminal's semantic value. The
 right-hand side (rhs) of the assignment expression must be an expression of a
-type that can be assigned to the <em >STYPE__</em> type.
+type that can be assigned to the <em >STYPE_</em> type.
 <p>
 <li> <em >$$(expr)</em>
 <p>
@@ -809,13 +842,13 @@ nonterminal.
 <p>
 <li> <em >$$.</em>
 <p>
-If <em >STYPE__</em> is a class-type then this dollar-notation is shorthand
+If <em >STYPE_</em> is a class-type then this dollar-notation is shorthand
 for the member selector operator, applied to the rule's nonterminal's semantic
 value.
 <p>
 <li> <em >$$-&gt;</em>
 <p>
-If <em >STYPE__</em> is a class-type then this dollar-notation is shorthand
+If <em >STYPE_</em> is a class-type then this dollar-notation is shorthand
 for the pointer to member operator, applied to the rule's nonterminal's
 semantic value.
 <p>
@@ -831,13 +864,13 @@ current production rule's first component's semantic value.
 <p>
 <li> <em >$1.</em>
 <p>
-If <em >STYPE__</em> is a class-type then this dollar-notation is shorthand
+If <em >STYPE_</em> is a class-type then this dollar-notation is shorthand
 for the member selector operator, applied to the current production rule's
 first component's semantic value.
 <p>
 <li> <em >$1-&gt;</em>
 <p>
-If <em >STYPE__</em> is a class-type then this dollar-notation is shorthand
+If <em >STYPE_</em> is a class-type then this dollar-notation is shorthand
 for the pointer to member operator, applied to the current production rule's
 first component's semantic value.
 <p>
@@ -855,14 +888,14 @@ nonterminal.
 <p>
 <li> <em >$-1.</em>
 <p>
-If <em >STYPE__</em> is a class-type then this dollar-notation is shorthand
+If <em >STYPE_</em> is a class-type then this dollar-notation is shorthand
 for the member selector operator, applied to the semantic value
 of some production rule element, 1 element before the current rule's
 nonterminal.
 <p>
 <li> <em >$-1-&gt;</em>
 <p>
-If <em >STYPE__</em> is a class-type then this dollar-notation is shorthand
+If <em >STYPE_</em> is a class-type then this dollar-notation is shorthand
 for the pointer to member operator, applied to the semantic value
 of some production rule element, 1 element before the current rule's
 nonterminal.
@@ -876,18 +909,18 @@ A value is assigned to the rule's nonterminal's semantic value. If the
 rule's nonterminal was associated with one of the union's field types, then
 the matching union field receives the value of the assignment expression's
 right-hand side. If no association was defined then the variable representing
-the nonterminal's semantic value is a plain union (i.e., <em >STYPE__</em>)
+the nonterminal's semantic value is a plain union (i.e., <em >STYPE_</em>)
 variable.
 <p>
 <li> <em >$$(expr)</em>
 <p>
 <em >Expr's</em> value is assigned to the rule's nonterminal's plain union
-(i.e., <em >STYPE__</em>) type. Any association that may have been defined between
+(i.e., <em >STYPE_</em>) type. Any association that may have been defined between
 the nonterminal and a union field is ignored.
 <p>
 <li> <em >_$$</em>
 <p>
-This refers to the rule's nonterminal's plain union (i.e., <em >STYPE__</em>)
+This refers to the rule's nonterminal's plain union (i.e., <em >STYPE_</em>)
 type. Any association that may have been defined between the nonterminal and a
 union field is ignored.
 <p>
@@ -896,7 +929,7 @@ union field is ignored.
 This refers to the rule's nonterminal's semantic value. If it was
 associated with one of the union's types, then <em >$$</em> refers to the associated
 union field. If no association was defined then <em >$$</em> represents a plain
-union (i.e., <em >STYPE__</em>) type of variable.
+union (i.e., <em >STYPE_</em>) type of variable.
 <p>
 <li> <em >$$.</em>
 <p>
@@ -904,7 +937,7 @@ If the rule's nonterminal's semantic value was associated with one of the
 union's types, then <em >$$.</em> is shorthand for the member selector operator,
 applied to the associated union field type. If no association was defined then
 <em >$$.</em> is shorthand for the field selector operator, applied to the
-nonterminal's semantic value's plain union (i.e., <em >STYPE__</em>) type.
+nonterminal's semantic value's plain union (i.e., <em >STYPE_</em>) type.
 <p>
 <li> <em >$$-&gt;</em>
 <p>
@@ -917,14 +950,14 @@ for plain union types.
 <li> <em >_$1</em>
 <p>
 This refers to the current production rule's first component's plain 
-union (<em >STYPE__</em>) value.
+union (<em >STYPE_</em>) value.
 <p>
 <li> <em >$1</em>
 <p>
 This shorthand refers to the semantic value of the production rule's
 first element. If it was associated with one of the union's types, then <em >$1</em>
 refers to the associated union field. If no association was defined then
-<em >$1</em> represents a plain union (i.e., <em >STYPE__</em>) type of variable.
+<em >$1</em> represents a plain union (i.e., <em >STYPE_</em>) type of variable.
 <p>
 <li> <em >$1.</em>
 <p>
@@ -933,7 +966,7 @@ with one of the union's types, then <em >$1.</em> is shorthand for the member
 selector operator, applied to the associated union field type. If no
 association was defined then <em >$1.</em> is shorthand for the field selector
 operator, applied to the first component's semantic value's plain union (i.e.,
-<em >STYPE__</em>) type.
+<em >STYPE_</em>) type.
 <p>
 <li> <em >$1-&gt;</em>
 <p>
@@ -945,13 +978,13 @@ is not defined for plain union types.
 <p>
 <li> <em >_$-1</em>
 <p>
-This refers to the plain union (<em >STYPE__</em>) value of a component in a
+This refers to the plain union (<em >STYPE_</em>) value of a component in a
 production rule, listed immediately before the current rule's nonterminal ($-2
 refers to a component used two elements before the current nonterminal, etc.).
 <p>
 <li> <em >$-1</em>
 <p>
-Same: this refers to the plain union (<em >STYPE__</em>) value of a component in
+Same: this refers to the plain union (<em >STYPE_</em>) value of a component in
 a production rule, listed immediately before the current rule's nonterminal
 ($-2 refers to a component used two elements before the current nonterminal,
 etc.).
@@ -959,13 +992,13 @@ etc.).
 <li> <em >$-1.</em>
 <p>
 This is shorthand for the field selector operator applied to to the plain
-union (<em >STYPE__</em>) value of some production rule element, 1 element before
+union (<em >STYPE_</em>) value of some production rule element, 1 element before
 the current rule's nonterminal.
 <p>
 <li> <em >$-1-&gt;</em>
 <p>
 This shorthand refers to tho pointer to member operator applied to the
-plain union (<em >STYPE__</em>) value of some production rule element, 1 element
+plain union (<em >STYPE_</em>) value of some production rule element, 1 element
 before the current rule's nonterminal. Its use results in an error message, as
 the pointer to member operator is not defined for plain union types.
 <p>
@@ -1002,7 +1035,7 @@ type. If the types don't match the compiler issues a compilation error when
 compiling <em >parse.cc</em>. Casting the rhs to the correct value type is possible,
 but in that case the function call operator (see the next item) is preferred,
 as it does not require casting. If no semantic value type was associated with
-$$ then the assignment <em >$$ = STYPE__{}</em> can be used.
+$$ then the assignment <em >$$ = STYPE_{}</em> can be used.
 <p>
 <li> <em >$$(expr)</em>
 <p>
@@ -1019,7 +1052,7 @@ polymorphic type that might have been associated with the rule's nonterminal.
 <li> <em >$$</em>
 <p>
 If no polymorphic type was associated with the rule's nonterminal then
-this is shorthand for a reference to the rule's plain <em >STYPE__</em> value. If a
+this is shorthand for a reference to the rule's plain <em >STYPE_</em> value. If a
 polymorphic value type was associated with the rule's nonterminal then this
 shorthand represents a reference to a value of that particular type.
 <p>
@@ -1027,7 +1060,7 @@ shorthand represents a reference to a value of that particular type.
 <p>
 If no polymorphic type was associated with the rule's nonterminal then
 this is shorthand for the member selector operator, applied to a reference to
-the rule's nonterminal's <em >STYPE__</em> value.  If a polymorphic value type was
+the rule's nonterminal's <em >STYPE_</em> value.  If a polymorphic value type was
 associated with the rule's nonterminal then this shorthand represents the
 member selector operator, applied to a reference of that particular type.
 <p>
@@ -1035,21 +1068,21 @@ member selector operator, applied to a reference of that particular type.
 <p>
 If no polymorphic type was associated with the rule's nonterminal then
 this is shorthand for the pointer to member operator, applied to a reference
-to the rule's nonterminal's <em >STYPE__</em> value.  If a polymorphic value type
+to the rule's nonterminal's <em >STYPE_</em> value.  If a polymorphic value type
 was associated with the rule's nonterminal then this shorthand represents the
 pointer to member operator, applied to a reference of that particular type.
 <p>
 <li> <em >_$1</em>
 <p>
 This refers to the current production rule's first component's generic
-<em >STYPE__</em> value.
+<em >STYPE_</em> value.
 <p>
 <li> <em >$1</em>
 <p>
 This shorthand refers to the semantic value of the production rule's
 first element. If it was associated with a polymorphic type, then <em >$1</em>
 refers to a value of that particular type. If no association was defined then
-<em >$1</em> represents a generic <em >STYPE__</em> value.
+<em >$1</em> represents a generic <em >STYPE_</em> value.
 <p>
 <li> <em >$1.</em>
 <p>
@@ -1057,7 +1090,7 @@ If the production rule's first component's semantic value was associated
 with a polymorphic type, then <em >$1.</em> is shorthand for the member selector
 operator, applied to the value of the associated polymorphic type. If no
 association was defined then <em >$1.</em> is shorthand for the member selector
-operator, applied to the first component's generic <em >STYPE__</em> value.
+operator, applied to the first component's generic <em >STYPE_</em> value.
 <p>
 <li> <em >$1-&gt;</em>
 <p>
@@ -1065,30 +1098,30 @@ If the production rule's first component's semantic value was associated
 with a polymorphic type, then <em >$1-&gt;</em> is shorthand for the pointer to member 
 operator, applied to the value of the associated polymorphic type. If no
 association was defined then <em >$1.</em> is shorthand for the pointer to member 
-operator, applied to the first component's generic <em >STYPE__</em> value.
+operator, applied to the first component's generic <em >STYPE_</em> value.
 <p>
 <li> <em >_$-1</em>
 <p>
-This refers to the generic (<em >STYPE__</em>) value of a component in a
+This refers to the generic (<em >STYPE_</em>) value of a component in a
 production rule, listed immediately before the current rule's nonterminal ($-2
 refers to a component used two elements before the current nonterminal, etc.).
 <p>
 <li> <em >$-1</em>
 <p>
-Same: this refers to the generic (<em >STYPE__</em>) value of a component in a
+Same: this refers to the generic (<em >STYPE_</em>) value of a component in a
 production rule, listed immediately before the current rule's nonterminal ($-2
 refers to a component used two elements before the current nonterminal, etc.).
 <p>
 <li> <em >$-1.</em>
 <p>
 This is shorthand for the member selector operator applied to to the
-generic <em >STYPE__</em> value of some production rule element, 1 element before
+generic <em >STYPE_</em> value of some production rule element, 1 element before
 the current rule's nonterminal.
 <p>
 <li> <em >$-1-&gt;</em>
 <p>
 This is shorthand for the pointer to member operator applied to to the
-generic <em >STYPE__</em> value of some production rule element, 1 element before
+generic <em >STYPE_</em> value of some production rule element, 1 element before
 the current rule's nonterminal.
 <p>
 <li> <em >$&lt;tag&gt;-1</em>
@@ -1136,7 +1169,7 @@ applied here as well.
 To avoid collisions with names defined by the parser's (base) class, the
 following identifiers should not be used as token names:
     <ul>
-    <li> Identifiers ending in two underscores;
+    <li> Identifiers ending in an underscore;
     <li> Any of the following identifiers: <em >ABORT, ACCEPT, ERROR, clearin,
         debug</em>, or <em >setDebug</em>.
     </ul>
@@ -1289,7 +1322,7 @@ following files from its skeletons:
 
 namespace // anonymous
 {
-    struct PI__;
+    struct PI_;
 }
 
 
@@ -1297,7 +1330,7 @@ namespace // anonymous
 class ParserBase
 {
     public:
-        enum DebugMode__
+        enum DebugMode_
         {
             OFF           = 0,
             ON            = 1 &lt;&lt; 0,
@@ -1307,7 +1340,7 @@ class ParserBase
 // $insert tokens
 
     // Symbolic tokens:
-    enum Tokens__
+    enum Tokens_
     {
         NUMBER = 257,
         EOLN,
@@ -1315,47 +1348,47 @@ class ParserBase
     };
 
 // $insert STYPE
-typedef int STYPE__;
+typedef int STYPE_;
 
     private:
                         // state  semval
-        typedef std::pair&lt;size_t, STYPE__&gt; StatePair;
+        typedef std::pair&lt;size_t, STYPE_&gt; StatePair;
                        // token   semval
-        typedef std::pair&lt;int,    STYPE__&gt; TokenPair;
+        typedef std::pair&lt;int,    STYPE_&gt; TokenPair;
 
         int d_stackIdx = -1;
         std::vector&lt;StatePair&gt; d_stateStack;
 
 
     protected:
-        enum Return__
+        enum Return_
         {
-            PARSE_ACCEPT__ = 0,   // values used as parse()'s return values
-            PARSE_ABORT__  = 1
+            PARSE_ACCEPT_ = 0,   // values used as parse()'s return values
+            PARSE_ABORT_  = 1
         };
-        enum ErrorRecovery__
+        enum ErrorRecovery_
         {
-            DEFAULT_RECOVERY_MODE__,
-            UNEXPECTED_TOKEN__,
+            DEFAULT_RECOVERY_MODE_,
+            UNEXPECTED_TOKEN_,
         };
 
-        bool        d_actionCases__ = false;    // set by options/directives
-        bool        d_debug__ = true;
-        size_t      d_requiredTokens__;
+        bool        d_actionCases_ = false;    // set by options/directives
+        bool        d_debug_ = true;
+        size_t      d_requiredTokens_;
 
-        size_t      d_nErrors__;                // initialized by clearin()
-        size_t      d_acceptedTokens__;
-        int         d_token__;
-        size_t      d_state__;
+        size_t      d_nErrors_;                // initialized by clearin()
+        size_t      d_acceptedTokens_;
+        int         d_token_;
+        size_t      d_state_;
 
-        StatePair *d_vsp__;           // points to the topmost value stack
+        StatePair *d_vsp_;           // points to the topmost value stack
 
-        STYPE__     d_val__;
+        STYPE_     d_val_;
 
-        TokenPair   d_next__;
+        TokenPair   d_next_;
 
-        bool        d_terminalToken__;
-        bool        d_recovery__;
+        bool        d_terminalToken_;
+        bool        d_recovery_;
 
 
         ParserBase();
@@ -1365,68 +1398,68 @@ typedef int STYPE__;
         void ERROR() const;
         bool debug() const;
 
-        void clearin__();
-        int  lookup__() const;
-        void pop__(size_t count = 1);
-        void push__(size_t nextState);
-        void popToken__();
-        void pushToken__(int token);
-        void redoToken__();
-        void reduce__(int rule);
-        void shift__(int state);
-        void errorVerbose__();
-        size_t top__() const;
-        STYPE__ &amp;vs__(int idx);             // value stack element idx 
+        void clearin_();
+        int  lookup_() const;
+        void pop_(size_t count = 1);
+        void push_(size_t nextState);
+        void popToken_();
+        void pushToken_(int token);
+        void redoToken_();
+        void reduce_(int rule);
+        void shift_(int state);
+        void errorVerbose_();
+        size_t top_() const;
+        STYPE_ &amp;vs_(int idx);             // value stack element idx 
 
     public:
         void setDebug(bool mode);
-        void setDebug(DebugMode__ mode);
+        void setDebug(DebugMode_ mode);
 }; 
 
 // hdr/abort
 inline void ParserBase::ABORT() const
 {
-    throw PARSE_ABORT__;
+    throw PARSE_ABORT_;
 }
 
 // hdr/accept
 inline void ParserBase::ACCEPT() const
 {
-    throw PARSE_ACCEPT__;
+    throw PARSE_ACCEPT_;
 }
 
 
 // hdr/debug
 inline bool ParserBase::debug() const
 {
-    return d_debug__;
+    return d_debug_;
 }
 
 // hdr/error
 inline void ParserBase::ERROR() const
 {
-    throw UNEXPECTED_TOKEN__;
+    throw UNEXPECTED_TOKEN_;
 }
 
 // hdr/opbitand
-inline ParserBase::DebugMode__ operator&amp;(ParserBase::DebugMode__ lhs,
-                                     ParserBase::DebugMode__ rhs)
+inline ParserBase::DebugMode_ operator&amp;(ParserBase::DebugMode_ lhs,
+                                     ParserBase::DebugMode_ rhs)
 {
-    return static_cast&lt;ParserBase::DebugMode__&gt;(
+    return static_cast&lt;ParserBase::DebugMode_&gt;(
             static_cast&lt;int&gt;(lhs) &amp; rhs);
 }
 
 // hdr/opbitor
-inline ParserBase::DebugMode__ operator|(ParserBase::DebugMode__ lhs, 
-                                     ParserBase::DebugMode__ rhs)
+inline ParserBase::DebugMode_ operator|(ParserBase::DebugMode_ lhs, 
+                                     ParserBase::DebugMode_ rhs)
 {
-    return static_cast&lt;ParserBase::DebugMode__&gt;(static_cast&lt;int&gt;(lhs) | rhs);
+    return static_cast&lt;ParserBase::DebugMode_&gt;(static_cast&lt;int&gt;(lhs) | rhs);
 };
 
 // hdr/vs
-inline ParserBase::STYPE__ &amp;ParserBase::vs__(int idx) 
+inline ParserBase::STYPE_ &amp;ParserBase::vs_(int idx) 
 {
-    return (d_vsp__ + idx)-&gt;second;
+    return (d_vsp_ + idx)-&gt;second;
 }
 
 // hdr/tail
@@ -1484,11 +1517,11 @@ class Parser: public ParserBase
         void done();
 
     // support functions for parse():
-        void executeAction__(int ruleNr);
-        void errorRecovery__();
-        void nextCycle__();
-        void nextToken__();
-        void print__();
+        void executeAction_(int ruleNr);
+        void errorRecovery_();
+        void nextCycle_();
+        void nextToken_();
+        void print_();
         void exceptionHandler(std::exception const &amp;exc);
 };
 
@@ -1560,7 +1593,7 @@ inline int Parser::lex()
 
 inline void Parser::print()         
 {
-    print__();           // displays tokens if --print was specified
+    print_();           // displays tokens if --print was specified
 }
 
 inline void Parser::exceptionHandler(std::exception const &amp;exc)         

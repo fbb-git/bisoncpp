@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<title> <div style="text-align: center"><strong >Bisonc++</strong> (Version 6.01.03) User Guide</div> </title>
+<title> <div style="text-align: center"><strong >Bisonc++</strong> (Version 6.02.00) User Guide</div> </title>
 <style type="text/css">
     figure {text-align: center;}
     img {vertical-align: center;}
@@ -56,15 +56,47 @@ B. Brokken</a>. The program's first version was
 constructed between November 2004 and May 2005.
 <p>
 <a name="l2"></a>
-<h2 >1.1: What's new in version 6.01.03</h2>
+<h2 >1.1: What's new in version 6.02.00</h2>
     If you're new to <strong >bisonc++</strong>, you can safely skip this section. If you used <strong >bisonc++</strong>
 before, please note the following new and modified features:
     <ul>
-   <li> The generated code was redesigned. Large parts of the protected
+   <li> 
+    Starting with version 6.02.00 <strong >bisonc++</strong> reserved identifiers no longer end
+    in two underscore characters, but in one. This modification was necessary
+    because according to the <strong >C++</strong> standard identifiers having two or more
+    consecutive underscore characters are reserved by the language. In
+    practice this could require some minor modifications of existing source
+    files using <strong >bisonc++</strong>'s facilities, most likely limited to changing <code >Tokens__</code>
+    into <code >Tokens_</code> and changing <code >Meta__</code> into <code >Meta_</code>.
+<p>
+The complete list of affected names is:
+    <dl>
+    <dt ><strong>Enums:</strong></dt> <blockquote >
+DebugMode_, ErrorRecovery_, Return_, Tag_, Tokens_
+</blockquote>
+    <dt ><strong>Enums values:</strong></dt> <blockquote >
+PARSE_ABORT_, PARSE_ACCEPT_, UNEXPECTED_TOKEN_, sizeofTag_
+</blockquote>
+    <dt ><strong>Type / namespace designators:</strong></dt> <blockquote >
+Meta_, PI_, STYPE_
+</blockquote>
+    <dt ><strong>Member functions:</strong></dt> <blockquote >
+clearin_, errorRecovery_, errorVerbose_, executeAction_, lex_, 
+lookup_, nextCycle_, nextToken_, popToken_, pop_, print_, 
+pushToken_, push_, recovery_, redoToken_, reduce_, savedToken_, 
+shift_, stackSize_, startRecovery_, state_, token_, top_, vs_,
+</blockquote>
+    <dt ><strong>Protected data members:</strong></dt> <blockquote >
+d_acceptedTokens_, d_actionCases_, d_debug_, d_nErrors_,
+d_requiredTokens_, d_val_, idOfTag_, s_nErrors_
+</blockquote>
+    </dl>
+<p>
+<li> The generated code was redesigned. Large parts of the protected
     interface of the parser's base class and names of <code >parse()</code>-related
     members in the generated parser class were modified. The names of all
-    accessible members in <code >parserbase.h</code> and <code >parser.h</code> now have two
-    trailing underscore characters.  Predefined members in <code >parser.ih</code> no
+    accessible members in <code >parserbase.h</code> and <code >parser.h</code> now end in a
+    trailing underscore character.  Predefined members in <code >parser.ih</code> no
     longer have trailing underscores, and can be redefined (but must be
     available).  The traditional <code >error(char const *)</code> member in fact never
     uses its argument (and <strong >bisonc++</strong> only passes the default "Syntax error"
@@ -97,7 +129,7 @@ before, please note the following new and modified features:
 
     
 <tr >
-<td > <code >void exceptionHandler__(...)</code></td> <td > </td> 
+<td > <code >void exceptionHandler_(...)</code></td> <td > </td> 
                                         <td > <code >void exceptionHandler(...)</code></td>
  
 </tr>
@@ -110,20 +142,20 @@ before, please note the following new and modified features:
     
 <tr >
 <td > <code >void errorRecovery()</code></td> <td > </td> 
-                                        <td > <code >void errorRecovery__()</code></td>
+                                        <td > <code >void errorRecovery_()</code></td>
  
 </tr>
 
     
 <tr >
 <td > <code >void executeAction(int)</code></td> <td > </td> 
-                                        <td > <code >void executeAction__(int)</code></td>
+                                        <td > <code >void executeAction_(int)</code></td>
  
 </tr>
 
     
 <tr >
-<td > <code >void nextToken()</code></td> <td > </td> <td > <code >void nextToken__()</code></td>
+<td > <code >void nextToken()</code></td> <td > </td> <td > <code >void nextToken_()</code></td>
  
 </tr>
 
@@ -137,7 +169,7 @@ before, please note the following new and modified features:
 
     
 <tr >
-<td > </td><td > </td><td > <code >void nextCycle__()</code></td>
+<td > </td><td > </td><td > <code >void nextCycle_()</code></td>
  
 </tr>
 
